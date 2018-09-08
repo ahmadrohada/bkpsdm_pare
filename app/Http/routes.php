@@ -25,6 +25,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 
 	Route::resource('users','API\UsersAPIController');
+	
 
 	//========================================================================================================//
 	//====================== PERJANJIAN KINERNA SKPD =========================================================//
