@@ -1,0 +1,96 @@
+#detail-field{
+	background-color:transparent; 
+	border:none; 
+	width:100%;
+	font-family: isi;
+	font-size:11pt; 
+	pointer-events: none;
+}
+
+#detail-field:focus{
+	border:none;
+	outline: none;
+	box-shadow:none;
+	
+}
+
+
+
+input[readonly],
+input[disabled],
+select[readonly],
+select[disabled],
+textarea[readonly],
+textarea[disabled]{
+  /** font-family: inherit; **/
+  font-size:12px; 
+  line-height: inherit;
+  font-family: isi;
+}
+
+
+.login-header{
+	font-family: mainandra;
+}
+
+.login-footer{
+	font-family: isi;
+}
+
+
+
+h5.modal-title,.header-title,h4.modal-title{
+	font-family: mainandra;
+	font-size:13pt;
+	color:#3b4f3b;
+	
+}
+
+h1{
+	font-family: mainandra !important;
+}
+
+span.logo-lg{
+	font-family: mainandra !important;
+}
+
+p.label-perjanjian-kinerja{
+	font-family: isi_2;
+}
+
+span.form-control{
+	font-family: isi_2;
+}
+
+li.user-header{
+	font-family: mainandra !important;
+}
+
+@font-face {
+			font-family: mainandra;
+			src: url('./fonts/MAIAN.TTF');
+			font-weight: normal;
+}
+
+@font-face {
+			font-family: isi;
+			src: url('./fonts/rm_typerighter.ttf');
+			font-weight: normal;
+}
+
+@font-face {
+			font-family: isi_2;
+			src: url('./fonts/consola.TTF');
+			font-weight: normal;
+}
+
+@font-face {
+	font-family: nama;
+	src: url('{{ assets("./fonts/consola.TTF")}}');
+	font-weight: normal;
+}
+
+.toolbar{
+	float : left;
+}
+
