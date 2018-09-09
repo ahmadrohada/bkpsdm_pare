@@ -28,7 +28,7 @@
 		<table id="indikator_sasaran_table" class="table table-striped table-hover table-condensed" >
 			<thead>
 				<tr>
-					<th>NO</th>
+					<th>No</th>
 					<th >INDIKATOR SASARAN</th>
 					<th >TARGET</th>
 					<th ><i class="fa fa-tags"></i></th>
