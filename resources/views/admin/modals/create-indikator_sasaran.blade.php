@@ -30,15 +30,23 @@
                         </div>
 
 
-                        <div class="form-group target">
-                            <label>Target</label>
-                            <div class="input-group ">
-                                <input type="text" class="form-control" name="target" required>
-                                <span class="input-group-addon target">%</span>
-                            </div>
-                        </div>
 
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group target">
+									<label>Target</label>
+									<input type="text" class="form-control" name="target" required>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group satuan">
+									<label>Satuan</label>
+									<input type="text" class="form-control" name="satuan" required>
+								</div>
+							</div>
+						</div>
 
+                        
 
                         </div>
                         <div class="modal-footer">
@@ -72,6 +80,10 @@ $(document).ready(function() {
 
 	$(document).on('click', '.target', function(){
 		$('.target').removeClass('has-error');
+	});
+
+	$(document).on('click', '.satuan', function(){
+		$('.satuan').removeClass('has-error');
 	});
 
 

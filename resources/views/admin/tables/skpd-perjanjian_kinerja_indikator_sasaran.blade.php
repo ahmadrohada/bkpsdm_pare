@@ -59,7 +59,7 @@ $(document).ready(function() {
 	$(document).on('click','.create_indikator_sasaran',function(e){
 		$('.sasaran_perjanjian_kinerja_label').html( '{!! $sasaran->sasaran->label !!}' );
 		$('.sasaran_perjanjian_kinerja_id').val( '{!! $sasaran->id !!}' );	
-		$('.create-indikator_sasaran').find('[name=label],[name=target]').val('');
+		$('.create-indikator_sasaran_modal').find('[name=label],[name=target],[name=satuan]').val('');
 
 	});
 

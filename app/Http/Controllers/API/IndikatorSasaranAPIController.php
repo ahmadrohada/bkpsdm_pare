@@ -72,6 +72,7 @@ class IndikatorSasaranAPIController extends Controller {
                 //'label.required' => ':attribute Indikator Sasaran Harus diisi. ',
                 'label.required' => 'Label Indikator Sasaran Harus diisi. ',
                 'target.required' => 'Target tidak boleh kosong. ',
+                'satuan.required' => 'Satuan tidak boleh kosong. ',
         ];
 
         $validator = Validator::make(
@@ -79,7 +80,8 @@ class IndikatorSasaranAPIController extends Controller {
                         array(
                             'sasaran_perjanjian_kinerja_id' => 'required',
                             'label'                         => 'required|max:200',
-                            'target'                        => 'required'
+                            'target'                        => 'required',
+                            'satuan'                        => 'required'
                         ),
                         $messages
         );
@@ -95,7 +97,7 @@ class IndikatorSasaranAPIController extends Controller {
         $indikator_sasaran->label                           = Input::get('label');
         $indikator_sasaran->sasaran_perjanjian_kinerja_id   = Input::get('sasaran_perjanjian_kinerja_id');
         $indikator_sasaran->target                          = Input::get('target');
-        $indikator_sasaran->satuan                          = '%';
+        $indikator_sasaran->satuan                          = Input::get('satuan');;
 
         if ( $indikator_sasaran->save()){
             return \Response::make('sukses', 200);
