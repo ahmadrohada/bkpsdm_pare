@@ -43,7 +43,6 @@
 				</div>
 				
 			</div>
-						
 		</div>	
 				
 			<div class="form-horizontal panel-info col-md-6" style="margin-top:40px;">
