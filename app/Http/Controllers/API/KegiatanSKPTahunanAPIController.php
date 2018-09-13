@@ -53,7 +53,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                 ->leftjoin('kegiatan_skp_tahunan as keg', function($join)
                 {
                     $join->on('keg.kegiatan_perjanjian_kinerja_id','=','kegiatan.id');
-                    $join->Where('keg.skp_tahunan_id','=','7');
+                    $join->Where('keg.skp_tahunan_id','=','11');
                 })
                
                 ->select([   
