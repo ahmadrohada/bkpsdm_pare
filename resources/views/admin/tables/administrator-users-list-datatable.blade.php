@@ -41,11 +41,11 @@
 				processing      : true,
 				serverSide      : true,
 				searching      	: true,
-				paging          : false,
+				paging          : true,
 				dom 			: '<"toolbar">frtip',
-				lengthMenu		: [2,10],
+				lengthMenu		: [10,20,50],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,3 ] }
+									{ className: "text-center", targets: [ 0,2 ] }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/administrator_pegawai_list") }}',
