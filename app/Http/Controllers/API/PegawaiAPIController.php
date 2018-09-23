@@ -84,16 +84,15 @@ class PegawaiAPIController extends Controller {
         \DB::statement(\DB::raw('set @rownum='.$request->get('start')));
         //\DB::statement(\DB::raw('set @rownum=0'));
       
-        $dt = \DB::table('db_pare_2018.users AS user')
-        ->join('demo_asn.tb_pegawai AS pegawai', 'user.id_pegawai', '=', 'pegawai.id')
+        $dt = \DB::table('demo_asn.tb_pegawai AS pegawai')
         ->join('demo_asn.tb_history_jabatan AS a', 'a.id_pegawai','=','pegawai.id')
         ->where('a.status', '=', 'active')
         ->join('demo_asn.m_skpd AS jabatan', 'jabatan.id','=','a.id_skpd')
         ->join('demo_asn.m_skpd AS unit_kerja', 'a.id_jabatan','=','unit_kerja.id')
         ->join('demo_asn.m_unit_kerja AS skpd', 'unit_kerja.id_skpd','=','skpd.id')
         ->select([   'pegawai.nama',
-                    'user.username AS username',
-                    'user.id AS user_id',
+                    //'user.username AS username',
+                    'pegawai.id AS user_id',
                     'pegawai.nip',
                     'pegawai.gelardpn',
                     'pegawai.gelarblk',
