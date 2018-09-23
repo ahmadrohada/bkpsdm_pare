@@ -37,7 +37,7 @@
 						</div>
 						-->
 						<div class="pull-right">
-						  <a href="/bkpsdm_pare/logout" class="btn btn-default btn-flat">Sign out</a>
+						  <a href="/bkpsdm_pare/public/logout" class="btn btn-default btn-flat">Sign out</a>
 						</div>
 					  </li>
 					</ul>
