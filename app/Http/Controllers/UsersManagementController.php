@@ -47,7 +47,7 @@ class UsersManagementController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function showUsersAdministrator()
+	/* public function showPegawaiAdministrator()
 	{
 
         $user                   = \Auth::user();
@@ -91,60 +91,67 @@ class UsersManagementController extends Controller {
                 'total_users_new'         => $total_users_new,
         	]
         ); 
-    }
+    } */
     
-    public function administrator_data_users(Request $request)
+    public function showPegawaiAdministrator(Request $request)
     {
             
         
-        \DB::statement(\DB::raw('set @rownum=0'));
-        $users = User::select([
-                    \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-                    'users.id',
-                    'users.id_pegawai',
-                    'users.username'
-                    
-                    ])->where('active','1');
-            
-        
+        $user                   = \Auth::user();
+        $users 			        = \DB::table('users')->get();
 
-        $datatables = Datatables::of($users)
-        ->addColumn('action', function ($x) {
-            return '<a href="user/'.$x->id.'/edit" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</a>'
-					.' <a href="user/'.$x->id.'" class="btn btn-xs btn-primary"><i class="fa  fa-eye"></i> Lihat</a>';
-        })->addColumn('nama', function ($user) {
+        $total_pegawai 	        =  $dt = Pegawai::WHERE('status','active')->count();
 
-            if ( $user->pegawai->gelardpn == null ) { $titik = ""; }else{ $titik = "."; }
-            if ( $user->pegawai->gelarblk == null )  { $koma = ""; }else {$koma = ", "; }
+        $total_users 	        =  $dt = \DB::table('db_pare_2018.users AS user')
+                                        ->join('demo_asn.tb_pegawai AS pegawai', 'user.id_pegawai', '=', 'pegawai.id')
+                                        ->join('demo_asn.tb_history_jabatan AS a', 'a.id_pegawai','=','pegawai.id')
+                                        ->where('a.status', '=', 'active')->count();
 
+                                        /* ->join('demo_asn.m_skpd AS jabatan', 'jabatan.id','=','a.id_skpd')
+                                        ->join('demo_asn.m_skpd AS unit_kerja', 'a.id_jabatan','=','unit_kerja.id')
+                                        ->join('demo_asn.m_unit_kerja AS skpd', 'unit_kerja.id_skpd','=','skpd.id'); */
 
-            return $user->pegawai->gelardpn.$titik.ucwords(strtolower($user->pegawai->nama)).$koma.$user->pegawai->gelarblk ;
- 
+        $attemptsAllowed        = 4;
 
-        })->addColumn('nip', function ($user) {
-            return $user->pegawai->nip ;
-        }) ->addColumn('skpd', function ($user) {
-
-            // output dari " $user->pegawai->historyjabatan " hasilnya array,, jadi kudu di cari lagi,,
-
-            
-            $id_skpd    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
-            $skpd       = Skpd::where('id_skpd', $id_skpd)->first()->unit_kerja;
-            
-
-            
-           return ucwords(strtolower($skpd));
+        $total_users_confirmed  = $total_users;
+        $total_users_locked 	= 0;
 
 
+        $total_users_new        = 0;
 
-        });
 
-        
-        if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-        } 
+        $userRole               = $user->hasRole('user');
+        $admin_skpdRole         = $user->hasRole('admin_skpd');
+        $adminRole              = $user->hasRole('administrator');
 
-        return $datatables->make(true);
+        if($userRole)
+        {
+            $access = 'User';
+        } elseif ($admin_skpdRole) {
+            $access = 'Admin Skpd';
+        } elseif ($adminRole) {
+            $access = 'Administrator';
+        }
+
+
+         //CARI id skpd nya
+        $id_skpd    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+        $skpd       = Skpd::where('id_skpd', $id_skpd)->first()->unit_kerja;
+       
+       
+
+		return view('admin.pages.administrator-show-users', [
+                'users' 		          => $users,
+                'total_pegawai' 	      => $total_pegawai,
+        		'total_users' 	          => $total_users,
+				'nama_skpd' 	          => $skpd,
+        		'user' 			          => $user,
+        		'access' 	              => $access,
+                'total_users_confirmed'   => $total_users_confirmed,
+                'total_users_locked'      => $total_users_locked,
+                'total_users_new'         => $total_users_new,
+        	]
+        );   
 
         
     }

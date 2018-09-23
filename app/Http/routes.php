@@ -68,6 +68,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	//==================================  P E G A W A I =================================================//
 	//========================================================================================================//
+	Route::get('administrator_pegawai_list','API\PegawaiAPIController@administrator_pegawai_list');
+	
+	
 	Route::get('select_pegawai_list','API\PegawaiAPIController@select_pejabat_penilai_list');
 
 	//========================================================================================================//
@@ -198,9 +201,9 @@ Route::group(['middleware' => 'administrator'], function () {
 	// SHOW ALL USERS PAGE ROUTE
 	//Route::resource('rencana_kerja', 'RencanaKerjaController');
 	
-	Route::get('admin/users', [
+	Route::get('admin/lihat_pegawai', [
 		'as' 			=> '{username}',
-		'uses' 			=> 'UsersManagementController@showUsersAdministrator'
+		'uses' 			=> 'UsersManagementController@showPegawaiAdministrator'
 	]);
 
 	
