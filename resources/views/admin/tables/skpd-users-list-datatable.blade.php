@@ -38,11 +38,19 @@
 		//alert();
 		
 		$('#user_table').DataTable({
-				processing: true,
-				serverSide: true,
-				ajax		: {
-								url		: "{{ url('table_users') }}",
-								method	: 'GET',
+			processing      : true,
+				serverSide      : true,
+				searching      	: true,
+				paging          : true,
+				dom 			: '<"toolbar">frtip',
+				lengthMenu		: [10,20,50],
+				columnDefs		: [
+									{ className: "text-center", targets: [ 0,2 ] }
+								],
+				ajax			: {
+									url	: '{{ url("api_resource/skpd_pegawai_list") }}',
+									
+									delay:3000
 								},
 				columns	:[
 								{ data: 'rownum' , orderable: false,searchable:false},

@@ -69,6 +69,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//==================================  P E G A W A I =================================================//
 	//========================================================================================================//
 	Route::get('administrator_pegawai_list','API\PegawaiAPIController@administrator_pegawai_list');
+	Route::get('skpd_pegawai_list','API\PegawaiAPIController@skpd_pegawai_list');
 	
 	
 	Route::get('select_pegawai_list','API\PegawaiAPIController@select_pejabat_penilai_list');

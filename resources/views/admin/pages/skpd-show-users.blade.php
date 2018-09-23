@@ -23,7 +23,7 @@
 			
 				@include('admin.modules.users-snapshots-boxes')
 
- 				@include('admin.modules.skpd-users-list-datatable')
+ 				@include('admin.tables.skpd-users-list-datatable')
 		
 	    </section>
 	</div>
