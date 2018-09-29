@@ -10,14 +10,12 @@ return [
 	*/
 
 	// WELCOME PAGE MODULE
-	"welcomeTitle" 				=> "Welcome to PARE",
-	"welcomeMessage" 			=> " Hi there :username, thank you for taking the time to setup and use this Laravel Admin project I have built. I hope that you find this helpful and useful. Please star and/or fork this repo at:",
-	"welcomeFooter" 			=> "&copy; 2016 LaraAdmin",
+	"welcomeTitle" 				=> "Performance Agreement Report by Electronic",
+	"welcomeMessage" 			=> "  	Hai :username , Terima kasih sudah menggunakan aplikasi PARE",
+	"pareMessage" 				=> "  	Performance Agreement Report by Electronic atau PARE adalah sarana pelaporan PNS terhadap atasan secara online (e-kinerja), Di dalam aplikasi PARE ini terdapat Sasaran Kinerja Pegawai (SKP) setiap PNS yang disusun di awal tahun dan juga uraian tugas setiap PNS yang merupkan implementasi dari SKP yang sudah disusun. Adapun penilai adalah atasan langsung dan juga atasan langsung penilai PNS yang bersangkutan, tidak berbeda seperti halnya SKP manual yang selama ini dikerjakan. Pengisian aplikasi PARE berdampak kepada penghitungan pemberian TPP PNS yang bisa langsung dilihat perolehannya di dalam aplikasi PARE, dan juga untuk penilaian pemberian reward dan punishment untuk PNS.",
+	"welcomeFooter" 			=> "&copy; 2018 BKPSDM Karawang",
 
-	// TWITTER TIMELINE MODULE
-	"twitterCardTitleFollowers"	=>	"Twitter Followers",
-	"twitterCardTitleFollowing"	=>	"Twitter Following",
-	"twitterCardTitleTweets"	=>	"Tweets",
+	
 
 ];
 

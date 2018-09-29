@@ -27,6 +27,8 @@ use Validator;
 use Gravatar;
 use Input;
 
+
+
 class UsersManagementController extends Controller {
 
 	

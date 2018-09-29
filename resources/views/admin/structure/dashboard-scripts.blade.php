@@ -8,6 +8,9 @@
 	// $(document).ready(function() {
 	// 	$('.draggable').draggable();
 	// 	$('.resizable').resizable();
+	$('#myCarousel').carousel({
+  		interval: 4000
+ 	})
 	// });
 
 </script>
