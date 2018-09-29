@@ -68,12 +68,13 @@
                 </p>
                 <hr>
 
-               <!--  <strong><i class="fa   fa-paperclip margin-r-5"></i> Jabatan</strong>
+              <strong><i class="fa   fa-paperclip margin-r-5"></i> Jabatan</strong>
                 <p class="text-muted">
                 {{ Pustaka::capital_string(\Auth::user()->pegawai->history_jabatan->where('status','active')->first()->jabatan) }}
                 </p>
                 <hr>
-
+                
+                 <!--  
               <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
 
               <p>
