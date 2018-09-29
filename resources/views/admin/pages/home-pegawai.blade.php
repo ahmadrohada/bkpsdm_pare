@@ -1,7 +1,7 @@
 @extends('admin.layouts.dashboard')
 
 @section('template_title')
-	Welcome {{ $user->nama }}
+	Welcome {{ $user->username }}
 @endsection
 
 @section('template_fastload_css')
@@ -12,7 +12,8 @@
 	    <section class="content-header">
 
 			<h1>
-				{{ Lang::get('pages.dashboard-welcome',['username' => $user->nama] ) }} <small> {{ Lang::get('pages.dashboard-access-level',['access' => $access] ) }} </small>
+				<!-- {{ Lang::get('pages.dashboard-welcome',['username' => Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)] ) }} -->
+				Dashboard
 			</h1>
 
 			{!! Breadcrumbs::render() !!}
@@ -23,7 +24,7 @@
 			<div class="row">
 
 				{{-- LEFT/TOP COLUMN --}}
-			    <div class="col-lg-4 col-md-5 col-sm-12">
+			    <div class="col-lg-5 col-md-5 col-sm-12">
 
 			    	@include('admin.modules.profile-image-box')
 					<!--
@@ -33,10 +34,13 @@
 
 
 				{{-- LEFT/TOP COLUMN --}}
-				<div class="col-lg-8 col-md-7 col-sm-12">
+				<div class="col-lg-7 col-md-7 col-sm-12">
 
 					@include('admin.modules.welcome-msg')
-					@include('admin.modules.twitter.twitter-user-home-timeline')
+
+
+				
+
 
 				</div>
 			</div>

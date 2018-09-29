@@ -42,8 +42,8 @@
 				serverSide      : true,
 				searching      	: true,
 				paging          : true,
-				dom 			: '<"toolbar">frtip',
-				lengthMenu		: [10,20,50],
+				//dom 			: '<"toolbar">frtip',
+				lengthMenu		: [20,50,100],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2 ] }
 								],

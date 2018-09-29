@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+
+
 class UserController extends Controller
 {
 
@@ -30,10 +32,12 @@ class UserController extends Controller
 			$dashboard = 'pegawai';
         } elseif ($admin_skpdRole) {
             $access = 'Admin SKPD';
-			$dashboard = 'admin-skpd';
+            //$dashboard = 'admin-skpd';
+            $dashboard = 'pegawai';
         } elseif ($adminRole) {
             $access = 'Administrator';
-			$dashboard = 'administrator';
+            //$dashboard = 'administrator';
+            $dashboard = 'pegawai';
         }
 
         if(isset($dashboard))

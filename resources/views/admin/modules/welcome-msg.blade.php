@@ -1,18 +1,44 @@
-<div class="box draggable resizable">
-    <div class="box-header with-border">
-        <h3 class="box-title">
-            {{ Lang::get('modules.welcomeTitle') }}
-        </h3>
-        <div class="box-tools pull-right">
-            {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
-            {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
+<div class="box box-warning">
+    
+        
+		<div class="box-body box-comments">
+           
+            <img class="img-circle img-sm" src="{{asset('assets/images/form/logo.png')}}" alt="User Image">
+
+         	<div class="comment-text">
+                <span class="username">
+                    BKPSDM Karawang
+                </span><!-- /.username -->
+				{{ Lang::get('modules.pareMessage',['username' => $user->username] ) }}
+            </div>
+            <!-- /.comment-text -->
         </div>
-    </div>
-    <div class="box-body">
-        {{ Lang::get('modules.welcomeMessage',['username' => $user->name] ) }}
-        {!! HTML::link('https://github.com/jeremykenedy/laravel-admin', 'https://github.com/jeremykenedy/laravel-admin', array('target' => '_blank', 'title' => 'View Project on GitHub'), true) !!}
-    </div>
+        
     <div class="box-footer">
-        {{ Lang::get('modules.welcomeFooter') }}
+        <div id="myCarousel" class="carousel slide"> <!-- slider -->
+			<div class="carousel-inner">
+							<div class="active item"> <!-- item 2 -->
+								<img src="http://bkpsdm.karawangkab.go.id/sites/default/files/berita_gambar/IMG-20170810-WA0009.jpg" class="img-slide" alt="">
+							</div> <!-- end item -->
+							<div class="item"> <!-- item 2 -->
+								<img src="http://bkpsdm.karawangkab.go.id/sites/default/files/berita_gambar/IMG-20170808-WA0005.jpg" class="img-slide" alt="">
+							</div> <!-- end item -->
+							<div class="item"> <!-- item 2 -->
+								<img src="http://bkpsdm.karawangkab.go.id/sites/default/files/berita_gambar/IMG-20170810-WA0008.jpg" class="img-slide" alt="">
+							</div> <!-- end item -->
+							<div class="item"> <!-- item 2 -->
+								<img src="http://bkpsdm.karawangkab.go.id/sites/default/files/berita_gambar/IMG-20170810-WA0019.jpg" class="img-slide" alt="">
+							</div> <!-- end item -->
+							<div class="item"> <!-- item 2 -->
+								<img src="http://bkpsdm.karawangkab.go.id/sites/default/files/berita_gambar/IMG-20170810-WA0016.jpg" class="img-slide" alt="">
+							</div> <!-- end item -->
+							<div class="item"> <!-- item 2 -->
+								<img src="http://bkpsdm.karawangkab.go.id/sites/default/files/berita_gambar/IMG-20170810-WA0014.jpg" class="img-slide" alt="">
+							</div> <!-- end item -->
+							
+				</div> <!-- end carousel inner -->
+			    <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+			    <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+		    </div> <!-- end slider -->
     </div>
 </div>
