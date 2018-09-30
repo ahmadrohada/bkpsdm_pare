@@ -102,12 +102,90 @@ class UsersManagementController extends Controller {
         $user                   = \Auth::user();
         $users 			        = \DB::table('users')->get();
 
-        $total_pegawai 	        =  $dt = Pegawai::WHERE('status','active')->count();
+        $total_pegawai 	        =  $dt = Pegawai::WHERE('status','active')->WHERE('nip','!=','admin')->count();
 
-        $total_users 	        =  $dt = \DB::table('db_pare_2018.users AS user')
-                                        ->join('demo_asn.tb_pegawai AS pegawai', 'user.id_pegawai', '=', 'pegawai.id')
-                                        ->join('demo_asn.tb_history_jabatan AS a', 'a.id_pegawai','=','pegawai.id')
-                                        ->where('a.status', '=', 'active')->count();
+        $total_users 	        =  $dt = \DB::table('db_pare_2018.users AS users')
+                                            ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
+                                                $join   ->on('users.id_pegawai','=','pegawai.id');
+                                                $join   ->where('pegawai.status','=', 'active');
+                                            })
+                                            ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
+                                                $join   ->on('a.id_pegawai','=','pegawai.id');
+                                                $join   ->where('a.status','=', 'active');
+                                            })->count();
+
+                                        /* ->join('demo_asn.m_skpd AS jabatan', 'jabatan.id','=','a.id_skpd')
+                                        ->join('demo_asn.m_skpd AS unit_kerja', 'a.id_jabatan','=','unit_kerja.id')
+                                        ->join('demo_asn.m_unit_kerja AS skpd', 'unit_kerja.id_skpd','=','skpd.id'); */
+
+        $attemptsAllowed        = 4;
+
+        $total_users_confirmed  = $total_users;
+        $total_users_locked 	= 0;
+
+
+        $total_users_new        = 0;
+
+
+        $userRole               = $user->hasRole('user');
+        $admin_skpdRole         = $user->hasRole('admin_skpd');
+        $adminRole              = $user->hasRole('administrator');
+
+        if($userRole)
+        {
+            $access = 'User';
+        } elseif ($admin_skpdRole) {
+            $access = 'Admin Skpd';
+        } elseif ($adminRole) {
+            $access = 'Administrator';
+        }
+
+
+         //CARI id skpd nya
+        $id_skpd    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+        $skpd       = Skpd::where('id_skpd', $id_skpd)->first()->unit_kerja;
+       
+       
+
+		return view('admin.pages.administrator-show-pegawai', [
+                'users' 		          => $users,
+                'total_pegawai' 	      => $total_pegawai,
+        		'total_users' 	          => $total_users,
+				'nama_skpd' 	          => $skpd,
+        		'user' 			          => $user,
+        		'access' 	              => $access,
+                'total_users_confirmed'   => $total_users_confirmed,
+                'total_users_locked'      => $total_users_locked,
+                'total_users_new'         => $total_users_new,
+        	]
+        );   
+
+        
+    }
+
+
+    public function showUsersAdministrator(Request $request)
+    {
+            
+        
+        $user                   = \Auth::user();
+        $users 			        = \DB::table('users')->get();
+
+        $total_pegawai 	        =  $dt = Pegawai::WHERE('status','active')->WHERE('nip','!=','admin')->count();
+
+        $total_users 	        =  $dt = \DB::table('db_pare_2018.users AS users')
+                                            ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
+                                                $join   ->on('users.id_pegawai','=','pegawai.id');
+                                                $join   ->where('pegawai.status','=', 'active');
+                                            })
+                                            ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
+                                                $join   ->on('a.id_pegawai','=','pegawai.id');
+                                                $join   ->where('a.status','=', 'active');
+                                            })
+                                            ->leftjoin('demo_asn.m_unit_kerja AS b',function($join){
+                                                $join   ->on('b.id','=','a.id_unit_kerja');
+                                               
+                                            })->count();
 
                                         /* ->join('demo_asn.m_skpd AS jabatan', 'jabatan.id','=','a.id_skpd')
                                         ->join('demo_asn.m_skpd AS unit_kerja', 'a.id_jabatan','=','unit_kerja.id')
@@ -157,9 +235,6 @@ class UsersManagementController extends Controller {
 
         
     }
-
-
-
 
 
     public function showPegawaiSkpd()

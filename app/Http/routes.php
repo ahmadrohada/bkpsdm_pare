@@ -74,6 +74,13 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	Route::get('select_pegawai_list','API\PegawaiAPIController@select_pejabat_penilai_list');
 
+
+	//========================================================================================================//
+	//==================================  U S E R S / P E N G G U N A ========================================//
+	//========================================================================================================//
+	Route::get('administrator_users_list','API\PegawaiAPIController@administrator_users_list');
+
+
 	//========================================================================================================//
 	//============================  PEJABATA PENILAI SKP TAHUNAN ================================================//
 	//========================================================================================================//
@@ -207,6 +214,10 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'UsersManagementController@showPegawaiAdministrator'
 	]);
 
+	Route::get('admin/lihat_users', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'UsersManagementController@showUsersAdministrator'
+	]);
 	
 	//=================== RENCANA KERJA  =====================================//
 	
