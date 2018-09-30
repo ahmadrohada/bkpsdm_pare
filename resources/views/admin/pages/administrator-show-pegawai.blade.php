@@ -23,7 +23,7 @@
 			
 				@include('admin.modules.administrator-pegawai-snapshots-boxes')
 
- 				@include('admin.tables.administrator-users-list-datatable')
+ 				@include('admin.tables.administrator-pegawai-list-datatable')
 		
 	    </section>
 	</div>

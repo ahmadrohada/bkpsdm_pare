@@ -49,11 +49,11 @@
 									{	className: "hidden", targets: [4] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_users_list") }}',
+									url	: '{{ url("api_resource/administrator_pegawai_list") }}',
 									
 									delay:3000
 								},
-			
+				
 
 				columns	:[
 								{ data: 'rownum' , orderable: true,searchable:false},

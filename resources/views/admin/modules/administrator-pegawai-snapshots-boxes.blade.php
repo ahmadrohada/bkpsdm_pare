@@ -11,10 +11,11 @@
 	<div class="box-body">
 		<div class="row">
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-aqua">
+				<div class="small-box bg-aqua total_pegawai" style="cursor:pointer;" >
 					<div class="inner">
 						<h3>
 							{{$total_pegawai}}
+							
 						</h3>
 						<p>
 							<strong>Total Pegawai</strong>
@@ -26,7 +27,7 @@
 				</div>
 			</div>
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-green">
+				<div class="small-box bg-green total_users" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							{{$total_users_confirmed}}
@@ -41,7 +42,7 @@
 				</div>
 			</div>
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-red">
+				<div class="small-box bg-red" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							{{$total_users_locked}}
@@ -56,7 +57,7 @@
 				</div>
 			</div>
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-yellow">
+				<div class="small-box bg-yellow" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							{{$total_users_new}}
@@ -73,3 +74,19 @@
 		</div>
 	</div>
 </div>
+
+
+<script>
+$(document).ready(function(){
+
+    $(".total_pegawai").click(function(){
+		window.location.assign("lihat_pegawai");
+    });
+
+	 $(".total_users").click(function(){
+		window.location.assign("lihat_users");
+    });
+
+
+});
+</script>
