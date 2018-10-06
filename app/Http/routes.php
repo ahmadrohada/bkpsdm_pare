@@ -209,14 +209,19 @@ Route::group(['middleware' => 'administrator'], function () {
 	// SHOW ALL USERS PAGE ROUTE
 	//Route::resource('rencana_kerja', 'RencanaKerjaController');
 	
-	Route::get('admin/lihat_pegawai', [
+	Route::get('admin/pegawai', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'UsersManagementController@showPegawaiAdministrator'
 	]);
 
-	Route::get('admin/lihat_users', [
+	Route::get('admin/users', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'UsersManagementController@showUsersAdministrator'
+	]);
+
+	Route::get('admin/pegawai/{pegawai_id}', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'UsersManagementController@detailPegawaiAdministrator'
 	]);
 	
 	//=================== RENCANA KERJA  =====================================//
