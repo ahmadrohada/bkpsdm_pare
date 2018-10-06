@@ -18,6 +18,7 @@
 					<th>NAMA PEGAWAI</th>
 					<th>NIP</th>
 					<th>SKPD</th>
+					<th>STATUS</th></th>
 					<th>ACTION</th>
 				</tr>
 			</thead>
@@ -45,8 +46,8 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,2 ] },
-									{	className: "hidden", targets: [4] }
+									{ 	className: "text-center", targets: [ 0,2,4 ] },
+									{	className: "hidden", targets: [5] }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/administrator_users_list") }}',
@@ -60,6 +61,16 @@
 								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true},
 								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: true},
 								{ data: "skpd" , name:"skpd", orderable: true, searchable: true},
+								{ data: "status" , orderable: false,searchable:false,width:"90px",
+										"render": function ( data, type, row ) {
+
+										if ( row.status == '1'){
+											return  '<span  data-toggle="tooltip" title="Add" style="margin:1px;" ><a class="btn btn-info btn-xs " data-toggle="modal" data-target=".create-indikator_kegiatan_modal"  data-id="'+row.nama_pegawai+'"><i class="fa fa-plus" ></i></a></span>';
+										}else{
+											return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" ><a class="btn btn-success btn-xs " data-toggle="modal" data-target=".create-indikator_kegiatan_modal"  data-id="'+row.nama_pegawai+'"><i class="fa fa-edit" ></i></a></span>';
+										}
+									}
+								},
 								{ data: 'action', orderable: false, searchable: false ,width:"150px"}
 								
 							]

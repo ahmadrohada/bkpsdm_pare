@@ -1,7 +1,7 @@
 <li class="header">ADMINISTRATOR</li>
 
 <li>
-    {!! HTML::icon_link( "admin/lihat_pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_users_view'), "<span>".Lang::get('sidebar-nav.link_title_users_view')."</span>", array('title' => Lang::get('sidebar-nav.link_title_users_view'))) !!}
+    {!! HTML::icon_link( "admin/pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_users_view'), "<span>".Lang::get('sidebar-nav.link_title_users_view')."</span>", array('title' => Lang::get('sidebar-nav.link_title_users_view'))) !!}
 </li>
 
 <li>

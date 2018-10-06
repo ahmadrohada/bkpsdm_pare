@@ -80,11 +80,11 @@
 $(document).ready(function(){
 
     $(".total_pegawai").click(function(){
-		window.location.assign("lihat_pegawai");
+		window.location.assign("pegawai");
     });
 
-	 $(".total_users").click(function(){
-		window.location.assign("lihat_users");
+	$(".total_users").click(function(){
+		window.location.assign("users");
     });
 
 

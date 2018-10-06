@@ -9,7 +9,7 @@ use App\Models\Pegawai;
 use App\Models\SKPTahunan;
 use App\Models\Jabatan;
 use App\Models\HistoryJabatan;
-
+use App\Models\User;
 
 use App\Helpers\Pustaka;
 
@@ -92,7 +92,7 @@ class PegawaiAPIController extends Controller {
                                    
                                 })
                                 ->select([  'pegawai.nama',
-                                            'pegawai.id AS user_id',
+                                            'pegawai.id AS pegawai_id',
                                             'pegawai.nip',
                                             'pegawai.gelardpn',
                                             'pegawai.gelarblk',
@@ -109,8 +109,10 @@ class PegawaiAPIController extends Controller {
 
         $datatables = Datatables::of($dt)
         ->addColumn('action', function ($x) {
-            return '<a href="user/'.$x->user_id.'/edit" class="btn btn-xs btn-primary" style="margin-top:2px; width:70px;"><i class="fa fa-edit"></i> Edit</a>'
-					.' <a href="user/'.$x->user_id.'" class="btn btn-xs btn-primary" style="margin-top:2px; width:70px;"><i class="fa  fa-eye"></i> Lihat</a>';
+
+            $num_rows = User::WHERE('id_pegawai',$x->pegawai_id)->count();
+
+            return $num_rows;
         })->addColumn('nama_pegawai', function ($x) {
             
             return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
@@ -171,6 +173,10 @@ class PegawaiAPIController extends Controller {
         })->addColumn('nama_pegawai', function ($x) {
             
             return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
+        
+        })->addColumn('status', function ($x) {
+            
+            return '1';
         
         })->addColumn('skpd', function ($x) {
             
