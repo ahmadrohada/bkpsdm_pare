@@ -14,7 +14,7 @@ use App\Helpers\Pustaka;
 
 
 
-class UserController extends Controller
+class DashboardController extends Controller
 {
 
 //NEW AUTH
@@ -72,6 +72,7 @@ class UserController extends Controller
                             ->leftjoin('demo_asn.foto AS y ', function($join){
                                 $join   ->on('a.nip','=','y.nipbaru');
                             }) 
+                           
                             ->SELECT(   'tb_pegawai.*',
                                         'a.*',
                                         'b.unit_kerja AS unit_kerja',
@@ -80,6 +81,7 @@ class UserController extends Controller
                                         'e.jenis_jabatan AS jenis_jabatan',
                                         'f.golongan AS golongan',
                                         'y.isi AS foto'
+                                       
                                        
                                      
                                      
@@ -103,6 +105,8 @@ class UserController extends Controller
         $email          = $profil->email;
         $alamat         = $profil->alamat;
 
+        
+
         if ( $profil->foto != null  ){
             
 
@@ -110,6 +114,21 @@ class UserController extends Controller
 
         }else{
             $foto   = asset('assets/images/form/sample.jpg');
+        }
+
+
+        $d_info 	        =  $dt = \DB::table('db_pare_2018.dashboard_info AS info')
+                            ->WHERE('status','1')
+                            ->first();
+
+        if ($d_info){
+            $info    = $d_info->text_info;
+            $author  = $d_info->author;
+            $waktu   = Pustaka::balik($d_info->created_at);
+        }else{
+            $info    = "";
+            $author  = "";
+            $waktu   = "";
         }
 
 
@@ -134,6 +153,11 @@ class UserController extends Controller
                         'user' 			        => $user,
                         'access' 	            => $access,
                         'foto'                  => $foto,  
+
+
+                        'info'                  => $info,
+                        'author'                => $author,
+                        'waktu'                 => $waktu,
             ])->withUser($user)->withAccess($access);
         }else{
             \Auth::logout();

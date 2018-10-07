@@ -228,6 +228,9 @@ class UsersManagementController extends Controller {
                             ->leftjoin('demo_asn.foto AS y ', function($join){
                                 $join   ->on('a.nip','=','y.nipbaru');
                             }) 
+                            ->leftjoin('db_pare_2018.users AS g ', function($join){
+                                $join   ->on('g.id_pegawai','=','tb_pegawai.id');
+                            })
                             ->SELECT(   'tb_pegawai.*',
                                         'a.*',
                                         'b.unit_kerja AS unit_kerja',
@@ -235,7 +238,9 @@ class UsersManagementController extends Controller {
                                         'd.eselon AS eselon',
                                         'e.jenis_jabatan AS jenis_jabatan',
                                         'f.golongan AS golongan',
-                                        'y.isi AS foto'
+                                        'y.isi AS foto',
+                                        'g.username AS username',
+                                        'g.id AS user_id'
                                        
                                      
                                      
@@ -244,9 +249,12 @@ class UsersManagementController extends Controller {
                             ->first();
 
         //DETAIL PEGAWAI
+        
         $nama           = Pustaka::nama_pegawai($profil->gelardpn , $profil->nama , $profil->gelarblk);
         $nip            = $profil->nip;
         
+        $username       = $profil->username;
+
         $skpd           = Pustaka::capital_string($profil->skpd);
         $unit_kerja     = Pustaka::capital_string($profil->unit_kerja);
 
@@ -275,9 +283,14 @@ class UsersManagementController extends Controller {
 
 
 		return view('admin.pages.administrator-detail-pegawai', [
-               
+                'pegawai_id'            => $pegawai_id,
+                'user_id'               => $profil->user_id,
                 'nama'                  => $nama,
                 'nip'                   => $nip,
+
+                'username'              => $username,
+
+
                 'skpd'                  => $skpd,
                 'unit_kerja'            => $unit_kerja,
 
@@ -293,6 +306,8 @@ class UsersManagementController extends Controller {
                 'user' 			        => $user,
                 'access' 	            => $access,
                 'foto'                  => $foto,  
+
+
         	]
         );    
 

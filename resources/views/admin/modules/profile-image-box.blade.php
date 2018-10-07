@@ -44,17 +44,23 @@
 
 
         <div class="box-body" style="margin-top:-20px;">
-                
+                <input type="text" class="user_id" value="{{ $user_id }}" >
                 <hr>
-                <strong><i class="fa fa-university margin-r-5"></i> SKPD</strong>
+                <strong><i class="fa fa-user margin-r-5"></i> Usename</strong>
                 <p class="text-muted">
-                {{ $skpd }}
+                {{ $username }}
+                <span class="text-success pull-right ubah" style="cursor:pointer;">
+					ubah
+				</span>
                 </p>
 
                 <hr>
-                <strong><i class="fa  fa-tags margin-r-5"></i> Unit Kerja</strong>
+                <strong><i class="fa  fa-key margin-r-5"></i> Password</strong>
                 <p class="text-muted">
-                {{ $unit_kerja }}
+                ******** 
+                <span class="text-success pull-right reset" style="cursor:pointer;">
+					reset
+				</span>
                 </p>
 
                 
@@ -83,5 +89,39 @@
     </div>
 </div>
 
+@include('admin.modals.ubah-username')
+@include('admin.modals.reset-password')
 
-          
+
+@section('template_scripts')
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+
+        
+
+        
+		$(document).on('click','.ubah',function(e){
+			
+			user_id = $('.user_id').val();
+			//alert(user_id);
+
+            $(".ubah-username").modal('show');
+			//window.location.assign("lihat_users");
+		});
+
+        $(document).on('click','.reset',function(e){
+			
+			user_id = $('.user_id').val();
+			//alert(pegawai_id);
+
+            $(".reset-password").modal('show');
+			//window.location.assign("lihat_users");
+		});
+		
+		
+	});
+</script>
+
+@endsection

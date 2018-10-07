@@ -24,8 +24,11 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::resource('periode_tahunan','API\PeriodeTahunanAPIController');
 
 
-	Route::resource('users','API\UsersAPIController');
-	
+	//========================================================================================================//
+	//=================================================  U S E R =============================================//
+	//========================================================================================================//
+	//Route::resource('users','API\UsersAPIController');
+	Route::post('reset_password','API\UserAPIController@reset_password');
 
 	//========================================================================================================//
 	//====================== PERJANJIAN KINERNA SKPD =========================================================//
@@ -165,7 +168,7 @@ Route::group(['middleware' => 'auth'], function () {
 	// USER DASHBOARD ROUTE
 	Route::get('/dashboard', [
 	    'as' 		=> 'dashboard',  // INI untuk icon breadcrumb
-	    'uses' 		=> 'UserController@index'
+	    'uses' 		=> 'DashboardController@index'
 	]);
 
 	// USERS VIEWABLE PROFILE

@@ -1,17 +1,51 @@
-<div class="box box-success">
-    <div class="box-header with-border">
-        <h3 class="box-title">
-            Profil Pegawai 
-            
+<div class="box box-widget widget-user ">
+    <!-- Add the bg color to the header using any of the bg-* classes -->
+    <div class="widget-user-header bg-black" style="background: url('{{asset('assets/images/bg_profile.png')}}') center center;">
+        <h3 class="widget-user-username">
+        <font style="font-size:18px; color:white; text-shadow: 1px 1px 1px #000, 3px 3px 5px #000;">
+            {{ $nama  }}
+        </font>
         </h3>
-        <div class="box-tools pull-right">
-            {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
-            {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
-        </div>
+        <h5 class="widget-user-desc" style="text-shadow: 1px 1px 1px #000, 3px 3px 5px #000;">
+            {{ $nip }}
+        </h5>
     </div>
-	<div class="box-body" style="margin-left:20px;">
 
+    <div class="widget-user-image">
+        <img style="border: 3px solid white; padding: 0px; width: 100px; height: 100px; margin-top:0px;" class="img-circle" src="{{ $foto }}" alt="User Avatar">
+    </div>
+       
+    <div class="box-footer">
+        <div class="row" style="margin-top:15px;">
+
+
+            <div class="col-sm-4 border-right">
+                <div class="description-block">
+                    <h5 class="description-header text-warning">28</h5>
+                    <span class="description-text text-success">SKP</span>
+                </div>
+            </div>
+            <div class="col-sm-4 border-right">
+                <div class="description-block">
+                    <h5 class="description-header text-warning">24</h5>
+                    <span class="description-text text-success">CAPAIAN</span>
+                </div>
+            </div>
+            <div class="col-sm-4 border-right">
+                <div class="description-block">
+                    <h5 class="description-header text-warning">36</h5>
+                    <span class="description-text text-success">TPP</span>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+        <div class="box-body" style="margin-top:-20px;">
                 
+                <hr>
                 <strong><i class="fa fa-university margin-r-5"></i> SKPD</strong>
                 <p class="text-muted">
                 {{ $skpd }}
@@ -22,21 +56,14 @@
                 <p class="text-muted">
                 {{ $unit_kerja }}
                 </p>
-                <hr>
 
-                <strong><i class="fa    fa-sitemap margin-r-5"></i> Jabatan</strong>
-                <p class="text-muted">
-                {{ $jabatan }}
-                </p>
-
-               
                 <hr>
                 <strong><i class="fa   fa-bar-chart margin-r-5"></i> Eselon</strong>
                 <p class="text-muted">
                 {{ $jenis_jabatan }} / 
                 {{ $eselon }}
                 </p>
-
+                
                 <hr>
                 <strong><i class="fa  fa-users margin-r-5"></i> Golongan Terakhir</strong>
                 <p class="text-muted">
@@ -84,9 +111,11 @@
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
 
               -->
+            </div> 
+
 
     </div>
-
 </div>
+
 
           
