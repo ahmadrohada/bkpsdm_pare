@@ -291,7 +291,6 @@ class UsersManagementController extends Controller {
                 'alamat'                => $alamat,
 
                 'user' 			        => $user,
-                'pegawai'               => $pegawaix,
                 'access' 	            => $access,
                 'foto'                  => $foto,  
         	]
