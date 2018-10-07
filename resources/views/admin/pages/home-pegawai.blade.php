@@ -26,7 +26,7 @@
 				{{-- LEFT/TOP COLUMN --}}
 			    <div class="col-lg-5 col-md-5 col-sm-12">
 
-			    	@include('admin.modules.profile-image-box')
+			    	@include('admin.modules.dashboard-profile-image-box')
 					<!--
 			    	@include('admin.modules.weather.local-weather-card')
 					-->
@@ -36,7 +36,7 @@
 				{{-- LEFT/TOP COLUMN --}}
 				<div class="col-lg-7 col-md-7 col-sm-12">
 
-					@include('admin.modules.welcome-msg')
+					@include('admin.modules.welcome-info')
 
 
 				

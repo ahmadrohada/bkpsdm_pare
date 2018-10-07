@@ -7,9 +7,14 @@
 
          	<div class="comment-text">
                 <span class="username">
-                    BKPSDM Karawang
+                    {{ $author }}
+					<span class="text-muted pull-right">
+					{{ $waktu }}
+					</span>
                 </span><!-- /.username -->
-				{{ Lang::get('modules.pareMessage',['username' => $user->username] ) }}
+					<br>
+					{{ $info }}
+
             </div>
             <!-- /.comment-text -->
         </div>
