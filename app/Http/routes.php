@@ -29,6 +29,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	//Route::resource('users','API\UsersAPIController');
 	Route::post('reset_password','API\UserAPIController@reset_password');
+	Route::post('ubah_username','API\UserAPIController@ubah_username');
 
 	//========================================================================================================//
 	//====================== PERJANJIAN KINERNA SKPD =========================================================//
@@ -225,6 +226,12 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/pegawai/{pegawai_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'UsersManagementController@detailPegawaiAdministrator'
+	]);
+
+
+	Route::get('admin/pegawai/{pegawai_id}/add', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'UsersManagementController@addPegawaiAdministrator'
 	]);
 	
 	//=================== RENCANA KERJA  =====================================//
