@@ -65,7 +65,7 @@
 										if ( row.action == '1'){
 											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="../admin/pegawai/'+row.pegawai_id+'" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';
 										}else{
-											return  '<span  data-toggle="tooltip" title="Tambah" style="margin:1px;" class=""><a href="../admin/pegawai/'+row.pegawai_id+'" class="btn btn-xs btn-warning"><i class="fa fa-user-plus"></i></a></span>';
+											return  '<span  data-toggle="tooltip" title="Tambah" style="margin:1px;" class=""><a href="../admin/pegawai/'+row.pegawai_id+'/add" class="btn btn-xs btn-warning"><i class="fa fa-user-plus"></i></a></span>';
 											
 										}
 									}

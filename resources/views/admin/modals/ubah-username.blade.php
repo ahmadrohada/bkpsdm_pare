@@ -10,16 +10,16 @@
             <div class="modal-body">
 
 				<form role="form">
-					<div class="form-group">
+					<div class="form-group f_username">
 						<label for="usernameInput">Username</label>
-						<input type="text" class="form-control" value="{{ $username }}">
+						<input type="text" class="form-control new_username" value="{{ $username }}">
 						
 					</div>
 				</form>     
             </div>
 			<div class="box-footer">
-			<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-info pull-right">Simpan</button>
+			    <button type="button" class="btn btn-default pull-left " data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-info pull-right simpan">Simpan</button>
             </div>
 
         </div>
@@ -32,10 +32,54 @@
 $(document).ready(function() {
 
     
-    /* $(document).on('click','.add_sasaran_id',function(e){
-	
+    $(document).on('click','.simpan',function(e){
+        //alert(user_id);
 
-	}); */
+        new_username = $(".new_username").val();
+        $.ajax({
+			url		: '{{ url("api_resource/ubah_username") }}',
+			type	: 'POST',
+			data	:  { user_id:user_id , new_username:new_username },
+			success	: function(data , textStatus, jqXHR) {
+				
+				swal({
+                        title: "",
+                        text: "Sukses",
+                        type: "success",
+                        width: "200px",
+                        showConfirmButton: false,
+                        allowOutsideClick : false,
+                        timer: 1500
+				}).then(function () {
+						$('.ubah-username').modal('hide');
+
+                        window.location.reload(); 
+				},
+					function (dismiss) {
+						if (dismiss === 'timer') {
+							
+						}
+					}
+			)	
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
+
+                //alert('error');
+				var test = $.parseJSON(jqXHR.responseText);
+				var data= test.errors;
+				$.each(data, function(index,value){
+					//alert (index+":"+value);
+					if (index == 'new_username'){
+						$('.f_username').addClass('has-error');
+                        $('.new_username').focus();
+					}
+					
+				}); 
+			}
+			
+		  });
+
+	});
 
 
 

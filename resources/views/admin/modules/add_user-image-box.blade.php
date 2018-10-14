@@ -19,24 +19,6 @@
         <div class="row" style="margin-top:15px;">
 
 
-            <div class="col-sm-4 border-right">
-                <div class="description-block">
-                    <h5 class="description-header text-warning">28</h5>
-                    <span class="description-text text-success">SKP</span>
-                </div>
-            </div>
-            <div class="col-sm-4 border-right">
-                <div class="description-block">
-                    <h5 class="description-header text-warning">24</h5>
-                    <span class="description-text text-success">CAPAIAN</span>
-                </div>
-            </div>
-            <div class="col-sm-4 border-right">
-                <div class="description-block">
-                    <h5 class="description-header text-warning">36</h5>
-                    <span class="description-text text-success">TPP</span>
-                </div>
-            </div>
 
 
         </div>
