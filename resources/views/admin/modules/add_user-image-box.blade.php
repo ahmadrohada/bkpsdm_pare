@@ -26,26 +26,11 @@
 
 
         <div class="box-body" style="margin-top:-20px;">
-                <input type="hidden" class="user_id" value="{{ $user_id }}" >
+                <input type="hidden" class="pegawai_id" value="{{ $pegawai_id }}" >
+                <input type="hidden" class="nip" value="{{ $nip }}" >
                 <hr>
-                <strong><i class="fa fa-user margin-r-5"></i> Usename</strong>
-                <p class="text-muted">
-                {{ $username }}
-                <span class="text-success pull-right ubah" style="cursor:pointer;">
-					ubah
-				</span>
-                </p>
-
-                <hr>
-                <strong><i class="fa  fa-key margin-r-5"></i> Password</strong>
-                <p class="text-muted">
-                ******** 
-                <span class="text-success pull-right reset" style="cursor:pointer;">
-					reset
-				</span>
-                </p>
-
                 
+                <button class="btn btn-block btn-info add_user">Add to PARE</button>
                 
                  <!--  
               <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
@@ -71,8 +56,7 @@
     </div>
 </div>
 
-@include('admin.modals.ubah-username')
-@include('admin.modals.reset-password')
+@include('admin.modals.add-user')
 
 
 @section('template_scripts')
@@ -84,22 +68,13 @@
         
 
         
-		$(document).on('click','.ubah',function(e){
+		$(document).on('click','.add_user',function(e){
 			
-			user_id = $('.user_id').val();
-			//alert(user_id);
-
-            $(".ubah-username").modal('show');
-			//window.location.assign("lihat_users");
-		});
-
-        $(document).on('click','.reset',function(e){
-			
-			user_id = $('.user_id').val();
+			pegawai_id = $('.pegawai_id').val();
+            nip = $('.nip').val();
 			//alert(pegawai_id);
+            $(".add-user").modal('show');
 
-            $(".reset-password").modal('show');
-			//window.location.assign("lihat_users");
 		});
 		
 		

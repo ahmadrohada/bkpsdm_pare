@@ -198,9 +198,8 @@ class UsersManagementController extends Controller {
         }
 
        
-
-
-		return view('admin.pages.administrator-add-pegawai', [
+        if ( $profil->user_id === null  ){
+            return view('admin.pages.administrator-add-pegawai', [
                 'pegawai_id'            => $pegawai_id,
                 'user_id'               => $profil->user_id,
                 'nama'                  => $nama,
@@ -226,8 +225,43 @@ class UsersManagementController extends Controller {
                 'foto'                  => $foto,  
 
 
-        	]
-        );    
+        	    ]
+            );   
+        }else{
+            /* return view('admin.pages.administrator-detail-pegawai', [
+                'pegawai_id'            => $pegawai_id,
+                'user_id'               => $profil->user_id,
+                'nama'                  => $nama,
+                'nip'                   => $nip,
+
+                'username'              => $username,
+
+
+                'skpd'                  => $skpd,
+                'unit_kerja'            => $unit_kerja,
+
+                'jabatan'               => $jabatan,
+                'eselon'                => $eselon,
+                'jenis_jabatan'         => $jenis_jabatan,
+                'golongan'              => $golongan,
+                'tmt_jabatan'           => $tmt_jabatan,
+                'no_hp'                 => $no_hp,
+                'email'                 => $email,
+                'alamat'                => $alamat,
+
+                'user' 			        => $user,
+                'access' 	            => $access,
+                'foto'                  => $foto,  
+
+
+        	    ]
+            );   */
+            return redirect('/admin/pegawai/'.$pegawai_id)->with('status', 'Pegawai sudah terdaftar');
+
+        }
+
+
+		 
 
         
     }
@@ -768,7 +802,7 @@ class UsersManagementController extends Controller {
         $current_roles = array('3','2','1');
 
         $rules = array(
-            'name'              => 'required',
+            'name'            => 'required',
             'nip'             => 'required|nip',
         );
 
@@ -779,8 +813,8 @@ class UsersManagementController extends Controller {
                 $request, $validator
             );
         } else {
-            $user 				        = User::find($id);
-            $user->name                 = $request->input('name');
+            $user 				      = User::find($id);
+            $user->name               = $request->input('name');
             $user->nip                = $request->input('nip');
 
             $input = Input::only('role_id');

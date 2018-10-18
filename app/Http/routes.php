@@ -28,6 +28,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//=================================================  U S E R =============================================//
 	//========================================================================================================//
 	//Route::resource('users','API\UsersAPIController');
+	Route::get('administrator_users_list','API\PegawaiAPIController@administrator_users_list');
+	Route::post('add_user','API\UserAPIController@add_user');
 	Route::post('reset_password','API\UserAPIController@reset_password');
 	Route::post('ubah_username','API\UserAPIController@ubah_username');
 
@@ -77,12 +79,6 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	
 	Route::get('select_pegawai_list','API\PegawaiAPIController@select_pejabat_penilai_list');
-
-
-	//========================================================================================================//
-	//==================================  U S E R S / P E N G G U N A ========================================//
-	//========================================================================================================//
-	Route::get('administrator_users_list','API\PegawaiAPIController@administrator_users_list');
 
 
 	//========================================================================================================//
