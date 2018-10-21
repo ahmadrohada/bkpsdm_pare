@@ -28,10 +28,19 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//=================================================  U S E R =============================================//
 	//========================================================================================================//
 	//Route::resource('users','API\UsersAPIController');
-	Route::get('administrator_users_list','API\PegawaiAPIController@administrator_users_list');
+	Route::get('administrator_users_list','API\UserAPIController@administrator_users_list');
 	Route::post('add_user','API\UserAPIController@add_user');
 	Route::post('reset_password','API\UserAPIController@reset_password');
 	Route::post('ubah_username','API\UserAPIController@ubah_username');
+
+
+	//========================================================================================================//
+	//================================================= S   K   P  D  ========================================//
+	//========================================================================================================//
+	
+	Route::get('administrator_skpd_list','API\SKPDAPIController@administrator_skpd_list');
+
+
 
 	//========================================================================================================//
 	//====================== PERJANJIAN KINERNA SKPD =========================================================//
@@ -214,11 +223,6 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'UsersManagementController@showPegawaiAdministrator'
 	]);
 
-	Route::get('admin/users', [
-		'as' 			=> '{username}',
-		'uses' 			=> 'UsersManagementController@showUsersAdministrator'
-	]);
-
 	Route::get('admin/pegawai/{pegawai_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'UsersManagementController@detailPegawaiAdministrator'
@@ -229,6 +233,28 @@ Route::group(['middleware' => 'administrator'], function () {
 		'as' 			=> '{username}',
 		'uses' 			=> 'UsersManagementController@addPegawaiAdministrator'
 	]);
+
+
+	Route::get('admin/users', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'UsersManagementController@showUsersAdministrator'
+	]);
+
+	Route::get('admin/users/{user_id}', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'UsersManagementController@detailUserAdministrator'
+	]);
+
+
+	Route::get('admin/skpd', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'SKPDController@showSKPDAdministrator'
+	]);
+
+	/* Route::get('admin/skpd/{skpd_id}', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'SKPDController@detailSKPDAdministrator'
+	]); */
 	
 	//=================== RENCANA KERJA  =====================================//
 	

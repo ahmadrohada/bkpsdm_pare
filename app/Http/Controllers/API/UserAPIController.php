@@ -10,6 +10,7 @@ use App\Models\SKPTahunan;
 use App\Models\Jabatan;
 use App\Models\HistoryJabatan;
 use App\Models\User;
+use App\Models\RoleUSer;
 
 use App\Helpers\Pustaka;
 
@@ -30,7 +31,64 @@ Use Alert;
 
 class UserAPIController extends Controller {
 
-    
+    public function administrator_users_list(Request $request)
+    {
+        //\DB::statement(\DB::raw('set @rownum='.$request->get('start')));
+        \DB::statement(\DB::raw('set @rownum=0'));
+      
+        $dt = \DB::table('db_pare_2018.users AS users')
+                                ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
+                                    $join   ->on('users.id_pegawai','=','pegawai.id');
+                                    $join   ->where('pegawai.status','=', 'active');
+                                })
+                                ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
+                                    $join   ->on('a.id_pegawai','=','pegawai.id');
+                                    $join   ->where('a.status','=', 'active');
+                                })
+                                ->leftjoin('demo_asn.m_unit_kerja AS b',function($join){
+                                    $join   ->on('b.id','=','a.id_skpd');
+                                   
+                                })
+                                ->select([  'users.id AS user_id',
+                                            'pegawai.nama',
+                                            'pegawai.id AS pegawai_id',
+                                            'pegawai.nip',
+                                            'pegawai.gelardpn',
+                                            'pegawai.gelarblk',
+                                            'b.unit_kerja AS skpd',
+                                            \DB::raw('@rownum  := @rownum  + 1 AS rownum')
+                                        ])
+                                
+                                
+                                ->WHERE('pegawai.nip','!=','admin')
+                                ->WHERE('pegawai.status','active');
+        
+
+
+
+        $datatables = Datatables::of($dt)
+        ->addColumn('nama_pegawai', function ($x) {
+            
+            return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
+        
+        })->addColumn('status', function ($x) {
+            
+            return '1';
+        
+        })->addColumn('skpd', function ($x) {
+            
+            return Pustaka::capital_string($x->skpd);
+        
+        });
+
+        
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
 
     public function add_user(Request $request)
     {
@@ -72,6 +130,19 @@ class UserAPIController extends Controller {
 
 
             if ( $user->save() ){
+
+                $data_user = User::WHERE('id_pegawai', Input::get('pegawai_id') )
+                                ->SELECT('users.id AS user_id')
+                                ->first();
+
+
+
+                $role               = new RoleUSer;
+                $role->user_id      = $data_user->user_id;
+                $role->role_id      = '1';
+                $role->save();
+
+
                 return \Response::make('Berhasil', 200);
                 
                 //return redirect('/admin/pegawai/'.Input::get('pegawai_id'))->with('status', 'Pegawai berhasil didaftarkan');
