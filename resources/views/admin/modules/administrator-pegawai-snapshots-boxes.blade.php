@@ -37,22 +37,22 @@
 						</p>
 					</div>
 					<div class="icon">
-						<i class="ion ion-ios-people"></i>
+						<i class="fa fa-users"></i>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-red" style="cursor:pointer;">
+				<div class="small-box bg-red total_skpd" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							{{$total_users_locked}}
+							{{$total_skpd}}
 						</h3>
 						<p>
-							<strong>Locked</strong>
+							<strong>SKPD</strong>
 						</p>
 					</div>
 					<div class="icon">
-						<i class="fa fa-user-times"></i>
+						<i class="fa  fa-institution"></i>
 					</div>
 				</div>
 			</div>
@@ -85,6 +85,10 @@ $(document).ready(function(){
 
 	$(".total_users").click(function(){
 		window.location.assign("users");
+    });
+
+	$(".total_skpd").click(function(){
+		window.location.assign("skpd");
     });
 
 

@@ -1,8 +1,8 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">
-            
-        </h3>
+		<h1 class="box-title">
+            Data User
+        </h1>
 
         <div class="box-tools pull-right">
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
@@ -18,8 +18,7 @@
 					<th>NAMA PEGAWAI</th>
 					<th>NIP</th>
 					<th>SKPD</th>
-					<th>STATUS</th></th>
-					<th>ACTION</th>
+					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
 			</thead>
 			
@@ -46,8 +45,8 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,2,4 ] },
-									{	className: "hidden", targets: [5] }
+									{ 	className: "text-center", targets: [ 0,2,4 ] }/* ,
+									{	className: "hidden", targets: [5] } */
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/administrator_users_list") }}',
@@ -61,17 +60,12 @@
 								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true},
 								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: true},
 								{ data: "skpd" , name:"skpd", orderable: true, searchable: true},
-								{ data: "status" , orderable: false,searchable:false,width:"90px",
+								{ data: "  action" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
-
-										if ( row.status == '1'){
-											return  '<span  data-toggle="tooltip" title="Add" style="margin:1px;" ><a class="btn btn-info btn-xs " data-toggle="modal" data-target=".create-indikator_kegiatan_modal"  data-id="'+row.nama_pegawai+'"><i class="fa fa-plus" ></i></a></span>';
-										}else{
-											return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" ><a class="btn btn-success btn-xs " data-toggle="modal" data-target=".create-indikator_kegiatan_modal"  data-id="'+row.nama_pegawai+'"><i class="fa fa-edit" ></i></a></span>';
-										}
+											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="../admin/users/'+row.user_id+'" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';
+										
 									}
 								},
-								{ data: 'action', orderable: false, searchable: false ,width:"150px"}
 								
 							]
 			

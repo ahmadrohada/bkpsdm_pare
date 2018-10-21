@@ -12,7 +12,7 @@
 	    <section class="content-header">
 
 			<h1>
-				Data Pegawai Pemkab Karawang
+				<small>BKPSDM Pemkab Karawang</small>
 			</h1>
 
 			{!! Breadcrumbs::render('users') !!}

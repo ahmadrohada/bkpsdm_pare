@@ -125,73 +125,14 @@ class PegawaiAPIController extends Controller {
 
         
         if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
 
         return $datatables->make(true);
         
     }
 
-    public function administrator_users_list(Request $request)
-    {
-        //\DB::statement(\DB::raw('set @rownum='.$request->get('start')));
-        \DB::statement(\DB::raw('set @rownum=0'));
-      
-        $dt = \DB::table('db_pare_2018.users AS users')
-                                ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
-                                    $join   ->on('users.id_pegawai','=','pegawai.id');
-                                    $join   ->where('pegawai.status','=', 'active');
-                                })
-                                ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
-                                    $join   ->on('a.id_pegawai','=','pegawai.id');
-                                    $join   ->where('a.status','=', 'active');
-                                })
-                                ->leftjoin('demo_asn.m_unit_kerja AS b',function($join){
-                                    $join   ->on('b.id','=','a.id_skpd');
-                                   
-                                })
-                                ->select([  'pegawai.nama',
-                                            'pegawai.id AS user_id',
-                                            'pegawai.nip',
-                                            'pegawai.gelardpn',
-                                            'pegawai.gelarblk',
-                                            'b.unit_kerja AS skpd',
-                                            \DB::raw('@rownum  := @rownum  + 1 AS rownum')
-                                        ])
-                                
-                                
-                                ->WHERE('pegawai.nip','!=','admin')
-                                ->WHERE('pegawai.status','active');
-        
-
-
-
-        $datatables = Datatables::of($dt)
-        ->addColumn('action', function ($x) {
-            return '<a href="user/'.$x->user_id.'/edit" class="btn btn-xs btn-primary" style="margin-top:2px; width:70px;"><i class="fa fa-edit"></i> Edit</a>'
-					.' <a href="user/'.$x->user_id.'" class="btn btn-xs btn-primary" style="margin-top:2px; width:70px;"><i class="fa  fa-eye"></i> Lihat</a>';
-        })->addColumn('nama_pegawai', function ($x) {
-            
-            return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
-        
-        })->addColumn('status', function ($x) {
-            
-            return '1';
-        
-        })->addColumn('skpd', function ($x) {
-            
-            return Pustaka::capital_string($x->skpd);
-        
-        });
-
-        
-        if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-        } 
-
-        return $datatables->make(true);
-        
-    }
+    
    
     public function skpd_pegawai_list(Request $request)
     {
@@ -240,7 +181,7 @@ class PegawaiAPIController extends Controller {
 
         
         if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
 
         return $datatables->make(true);
