@@ -11,7 +11,7 @@ use App\Models\Jabatan;
 use App\Models\HistoryJabatan;
 use App\Models\User;
 use App\Models\RoleUSer;
-use App\Models\SKPD;
+use App\Models\Skpd;
 
 use App\Helpers\Pustaka;
 
