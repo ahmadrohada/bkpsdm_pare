@@ -15,7 +15,7 @@
 				<small>BKPSDM Pemkab Karawang</small>
 			</h1>
 
-			{!! Breadcrumbs::render('users') !!}
+			{!! Breadcrumbs::render('skpd') !!}
 
 	    </section>
 	    <section class="content">

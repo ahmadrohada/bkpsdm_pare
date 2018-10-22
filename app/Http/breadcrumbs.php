@@ -69,6 +69,13 @@ Breadcrumbs::register('create_user_admin_view', function($breadcrumbs)
 });
 
 
+// DASHBOARD > SKPD >
+Breadcrumbs::register('skpd', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skpd'), '/SKPD', ['icon' => Lang::get('sidebar-nav.link_icon_skpd')]);
+});
+
 // DASHBOARD > USERS > SHOW RENCANA KERJA
 Breadcrumbs::register('rencana_kerja', function($breadcrumbs)
 {

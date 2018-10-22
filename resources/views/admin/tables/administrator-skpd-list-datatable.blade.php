@@ -16,6 +16,8 @@
 				<tr class="success">
 					<th>NO</th>
 					<th>NAMA SKPD</th>
+					<th>JM UNIT KERJA</th>
+					<th>JM PEGAWAI</th>
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
 			</thead>
@@ -43,7 +45,7 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,2 ] }/* ,
+									{ 	className: "text-center", targets: [ 0,2,3,4 ] }/* ,
 									{	className: "hidden", targets: [5] } */
 								],
 				ajax			: {
@@ -55,8 +57,10 @@
 
 				columns	:[
 								{ data: 'rownum' , orderable: true,searchable:false},
-								{ data: "skpd" , name:"skpd", orderable: true, searchable: true},
-								{ data: "  action" , orderable: false,searchable:false,width:"50px",
+								{ data: "skpd" , name:"skpd.skpd", orderable: true, searchable: true},
+								{ data: "jm_unit_kerja" , orderable: false, searchable: false,width:"120px"},
+								{ data: "jm_pegawai" , orderable: false, searchable: false,width:"120px"},
+								{ data: "action" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
 											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="../admin/skpd/'+row.skpd_id+'" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';
 										
