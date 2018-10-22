@@ -56,10 +56,10 @@
 
 				columns	:[
 								{ data: 'rownum' , orderable: true,searchable:false},
-								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true},
-								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: true},
-								{ data: "skpd" , name:"skpd", orderable: true, searchable: true},
-								{ data: "  action" , orderable: false,searchable:false,width:"50px",
+								{ data: "nama_pegawai", name:"nama", orderable: true, searchable: true},
+								{ data: "nip" ,  name:"nip", orderable: true, searchable: true},
+								{ data: "skpd" , name:"b.unit_kerja", orderable: true, searchable: true},
+								{ data: "action" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
 
 										if ( row.action == '1'){

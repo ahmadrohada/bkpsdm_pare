@@ -59,8 +59,8 @@
 								{ data: 'rownum' , orderable: true,searchable:false},
 								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true},
 								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: true},
-								{ data: "skpd" , name:"skpd", orderable: true, searchable: true},
-								{ data: "  action" , orderable: false,searchable:false,width:"50px",
+								{ data: "skpd" , name:"b.unit_kerja", orderable: true, searchable: true},
+								{ data: "action" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
 											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="../admin/users/'+row.user_id+'" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';
 										

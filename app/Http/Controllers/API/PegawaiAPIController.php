@@ -82,27 +82,27 @@ class PegawaiAPIController extends Controller {
         //\DB::statement(\DB::raw('set @rownum='.$request->get('start')));
         \DB::statement(\DB::raw('set @rownum=0'));
       
-        $dt = \DB::table('demo_asn.tb_pegawai AS pegawai')
+        $dt = \DB::table('demo_asn.tb_pegawai')
                                 ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
-                                    $join   ->on('a.id_pegawai','=','pegawai.id');
+                                    $join   ->on('a.id_pegawai','=','tb_pegawai.id');
                                     $join   ->where('a.status','=', 'active');
                                 })
                                 ->leftjoin('demo_asn.m_unit_kerja AS b',function($join){
-                                    $join   ->on('b.id','=','a.id_unit_kerja');
+                                    $join   ->on('b.id','=','a.id_skpd');
                                    
                                 })
-                                ->select([  'pegawai.nama',
-                                            'pegawai.id AS pegawai_id',
-                                            'pegawai.nip',
-                                            'pegawai.gelardpn',
-                                            'pegawai.gelarblk',
+                                ->select([  'tb_pegawai.nama',
+                                            'tb_pegawai.id AS pegawai_id',
+                                            'tb_pegawai.nip',
+                                            'tb_pegawai.gelardpn',
+                                            'tb_pegawai.gelarblk',
                                             'b.unit_kerja AS skpd',
                                             \DB::raw('@rownum  := @rownum  + 1 AS rownum')
                                         ])
                                 
                                 
-                                ->WHERE('pegawai.nip','!=','admin')
-                                ->WHERE('pegawai.status','active');
+                                ->WHERE('tb_pegawai.nip','!=','admin')
+                                ->WHERE('tb_pegawai.status','active');
         
 
 

@@ -41,17 +41,40 @@ class SKPDAPIController extends Controller {
 
                 ->whereRaw('id = id_skpd AND id != 1 AND id != 6 AND id != 8 AND id != 10 AND id != 12 ')
                 ->select([  'skpd.id_skpd AS skpd_id',
-                    'skpd.skpd AS skpd',
-                    \DB::raw('@rownum  := @rownum  + 1 AS rownum')
+                            'skpd.id_unit_kerja AS unit_kerja_id',
+                            'skpd.skpd AS skpd',
+                            \DB::raw('@rownum  := @rownum  + 1 AS rownum')
                 ]);
         
 
 
 
         $datatables = Datatables::of($dt)
-        ->addColumn('status', function ($x) {
+        ->addColumn('jm_unit_kerja', function ($x) {
             
-            return '1';
+            $dx = SKPD::WHERE('parent_id',$x->skpd_id)
+                            ->SELECT('id AS parent_id')
+                            ->first();
+
+            $jm_uk = SKPD::WHERE('parent_id',$dx->parent_id)
+                            ->count();
+            
+
+
+
+            return  $jm_uk;
+        
+        })->addColumn('jm_pegawai', function ($x) {
+            
+         
+            $jm_p = HistoryJabatan::WHERE('status','active')
+                            ->WHERE('id_skpd',$x->skpd_id)
+                            ->count();
+            
+
+
+
+            return  $jm_p;
         
         })->addColumn('skpd', function ($x) {
             

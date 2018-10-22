@@ -89,6 +89,11 @@ return [
 	'link_title_add_kegiatan'    => 'Add Kegiatan',
 	'link_icon_add_kegiatan'     => 'fa-plus',
 	
+
+	// SKPD
+	
+	'link_title_skpd'    => 'SKPD',
+	'link_icon_skpd'     => 'fa-university',
 	
 	// SKP LINKS
 	
