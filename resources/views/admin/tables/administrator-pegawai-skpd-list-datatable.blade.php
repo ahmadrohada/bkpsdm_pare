@@ -1,7 +1,7 @@
 <div class="box box-primary">
     <div class="box-header with-border">
         <h1 class="box-title">
-            Data SKPD
+            Data Pegawai
         </h1>
 
         <div class="box-tools pull-right">
@@ -15,9 +15,9 @@
 			<thead>
 				<tr class="success">
 					<th>NO</th>
-					<th>NAMA SKPD</th>
-					<th>JM UNIT KERJA</th>
-					<th>JM PEGAWAI</th>
+					<th>NAMA PEGAWAI</th>
+					<th>NIP</th>
+					<th>SKPD</th>
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
 			</thead>
@@ -31,9 +31,9 @@
 
 @section('template_scripts')
 
-    @include('admin.structure.dashboard-scripts')
+@include('admin.structure.dashboard-scripts')
 
-	<script type="text/javascript">
+<script type="text/javascript">
 	$(document).ready(function() {
 		//alert();
 		
@@ -45,25 +45,30 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,2,3,4 ] }/* ,
-									{	className: "hidden", targets: [5] } */
+									{ 	className: "text-center", targets: [ 0,2 ] },
+									{ 	className: "hidden", targets: [ 3,4 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_skpd_list") }}',
-									
+									url	: '{{ url("api_resource/administrator_pegawai_skpd_list") }}',
+									data: { skpd_id : {{$skpd_id}} },
 									delay:3000
 								},
-			
+				
 
 				columns	:[
 								{ data: 'rownum' , orderable: true,searchable:false},
-								{ data: "skpd" , name:"skpd.skpd", orderable: true, searchable: true},
-								{ data: "jm_unit_kerja" , orderable: false, searchable: false,width:"120px"},
-								{ data: "jm_pegawai" , orderable: false, searchable: false,width:"120px"},
+								{ data: "nama_pegawai", name:"nama", orderable: true, searchable: true},
+								{ data: "nip" ,  name:"nip", orderable: true, searchable: true},
+								{ data: "skpd" , name:"b.unit_kerja", orderable: true, searchable: true},
 								{ data: "action" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
-											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="../admin/skpd/'+row.skpd_id+'/pegawai" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';
-										
+
+										if ( row.action == '1'){
+											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="../admin/pegawai/'+row.pegawai_id+'" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';
+										}else{
+											return  '<span  data-toggle="tooltip" title="Tambah" style="margin:1px;" class=""><a href="../admin/pegawai/'+row.pegawai_id+'/add" class="btn btn-xs btn-warning"><i class="fa fa-user-plus"></i></a></span>';
+											
+										}
 									}
 								},
 								
@@ -71,9 +76,16 @@
 			
 		});
 	
+	/* 	$(document).on('click','.lihat',function(e){
+			
+			pegawai_id = $(this).val();
+			alert(pegawai_id);
+
+			//window.location.assign("lihat_users");
+		}); */
 		
 		
-		});
-    </script>
+	});
+</script>
 
 @endsection
