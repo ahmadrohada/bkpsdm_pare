@@ -45,10 +45,31 @@ Use Alert;
 class SKPDController extends Controller {
     
     
-    protected function total_pegawai(){
-        return 	Pegawai::WHERE('status','active')->WHERE('nip','!=','admin')->count();
+    protected function total_pegawai( $skpd_id){
+        
+        return 	Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function($join){
+                                            //$x = $request->skpd;
+                                            $join   ->on('a.id_pegawai','=','tb_pegawai.id');
+                                            //$join   ->where('a.id_skpd','=', $skpd_id);
+                                            $join   ->where('a.status','=', 'active');
+                                    })
+                                    ->WHERE('a.id_skpd','=', $skpd_id)
+                                    ->WHERE('tb_pegawai.nip','!=','admin')
+                                    ->WHERE('tb_pegawai.status','active')
+                                    ->count();
     }
     
+
+    protected function total_unit_kerja( $skpd_id){
+        
+        return 	SKPD::WHERE('m_skpd.parent_id','=', $skpd_id)
+                                    ->rightjoin('demo_asn.m_skpd AS a', function($join){
+                                        $join   ->on('a.parent_id','=','m_skpd.id');
+                                    })
+                                    ->count();
+    }
+
+
     protected function total_users(){
         return 	\DB::table('db_pare_2018.users AS users')
                                 ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
@@ -110,7 +131,7 @@ class SKPDController extends Controller {
 
 		return view('admin.pages.administrator-show-skpd', [
                 'users' 		          => $users,
-                'total_pegawai' 	      => $this->total_pegawai(),
+                'total_pegawai' 	      => $this->total_pegawai(3),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
 				'nama_skpd' 	          => $skpd,
@@ -119,6 +140,56 @@ class SKPDController extends Controller {
                 'total_users_confirmed'   => $total_users_confirmed,
                 'total_users_locked'      => $total_users_locked,
                 'total_users_new'         => $total_users_new,
+        	]
+        );   
+
+        
+    }
+
+
+    public function pegawaiSKPDAdministrator(Request $request)
+    {
+            
+        $skpd_id     = $request->skpd_id;
+        //$user                   = \Auth::user();
+
+        
+        /* 
+        $attemptsAllowed        = 4;
+
+        $total_users_confirmed  = $this->total_users();
+        $total_users_locked 	= 67;
+
+
+        $total_users_new        = 78;
+
+
+        $userRole               = $user->hasRole('user');
+        $admin_skpdRole         = $user->hasRole('admin_skpd');
+        $adminRole              = $user->hasRole('administrator');
+
+        if($userRole)
+        {
+            $access = 'User';
+        } elseif ($admin_skpdRole) {
+            $access = 'Admin Skpd';
+        } elseif ($adminRole) {
+            $access = 'Administrator';
+        }
+
+        */
+        //nama SKPD 
+        $nama_skpd       = Skpd::where('id_skpd', $skpd_id)->first()->unit_kerja;
+
+		return view('admin.pages.administrator-pegawai-skpd', [
+                //'users' 		          => $users,
+                'skpd_id'                 => $skpd_id,
+                'nama_skpd'     	      => Pustaka::capital_string($nama_skpd),
+                'total_pegawai' 	      => $this->total_pegawai($skpd_id),
+                'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
+                'total_jabatan'           => 'x',
+                'total_renja'             => 'x',
+                
         	]
         );   
 
