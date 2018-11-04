@@ -118,8 +118,8 @@ class SKPDAPIController extends Controller {
 
         $id_skpd = $request->skpd_id ;
 
-        \DB::statement(\DB::raw('set @rownum='.$request->get('start')));
-        // \DB::statement(\DB::raw('set @rownum=0'));
+        //\DB::statement(\DB::raw('set @rownum='.$request->get('start')));
+        \DB::statement(\DB::raw('set @rownum=0'));
       
         $dt = \DB::table('db_pare_2018.users AS user')
         ->rightjoin('demo_asn.tb_pegawai AS pegawai', 'user.id_pegawai', '=', 'pegawai.id')
