@@ -41,7 +41,7 @@
 				processing      : true,
 				serverSide      : true,
 				searching      	: true,
-				paging          : true,
+				paging          : false,
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
