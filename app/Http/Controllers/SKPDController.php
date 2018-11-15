@@ -45,6 +45,17 @@ Use Alert;
 class SKPDController extends Controller {
     
     
+
+    protected function nama_skpd($skpd_id){
+            //nama SKPD 
+            $nama_skpd       = \DB::table('demo_asn.m_skpd AS skpd')
+                            ->WHERE('id',$skpd_id)
+                            ->SELECT(['skpd.skpd AS skpd'])
+                            ->first();
+            return $nama_skpd->skpd;
+    }
+
+
     protected function total_pegawai(){
         
         return 	Pegawai::WHERE('status','active')->WHERE('nip','!=','admin')->count();
@@ -127,22 +138,19 @@ class SKPDController extends Controller {
 
 
          //CARI id skpd nya
-        $id_skpd    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
-        $skpd       = Skpd::where('id_skpd', $id_skpd)->first()->unit_kerja;
        
-       
-
 		return view('admin.pages.administrator-show-skpd', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-				'nama_skpd' 	          => $skpd,
+				//'nama_skpd' 	          => $this->nama_skpd($skpd_id),
         		'user' 			          => $user,
         		'access' 	              => $access,
                 'total_users_confirmed'   => $total_users_confirmed,
                 'total_users_locked'      => $total_users_locked,
                 'total_users_new'         => $total_users_new,
+                'h_box'                   => 'box-danger',
         	]
         );   
 
@@ -155,20 +163,17 @@ class SKPDController extends Controller {
             
         $skpd_id     = $request->skpd_id;
         
-        //nama SKPD 
-        $nama_skpd       = \DB::table('demo_asn.m_skpd AS skpd')
-                            ->WHERE('id',$skpd_id)
-                            ->SELECT(['skpd.skpd AS skpd'])
-                            ->first();
+       
 
 		return view('admin.pages.administrator-pegawai-skpd', [
                 //'users' 		          => $users,
                 'skpd_id'                 => $skpd_id,
-                'nama_skpd'     	      => $nama_skpd->skpd,
+                'nama_skpd'     	      => $this->nama_skpd($skpd_id),
                 'total_pegawai' 	      => $this->total_pegawai_skpd($skpd_id),
                 'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
                 'total_jabatan'           => 'x',
                 'total_renja'             => 'x',
+                'h_box'                   => 'box-info',
                 
         	]
         );   
@@ -182,17 +187,17 @@ class SKPDController extends Controller {
             
         $skpd_id     = $request->skpd_id;
         
-        //nama SKPD 
-        $nama_skpd       = Skpd::where('id_skpd', $skpd_id)->first()->unit_kerja;
+         
 
 		return view('admin.pages.administrator-unit_kerja-skpd', [
                 //'users' 		          => $users,
                 'skpd_id'                 => $skpd_id,
-                'nama_skpd'     	      => Pustaka::capital_string($nama_skpd),
+                'nama_skpd'     	      => $this->nama_skpd($skpd_id),
                 'total_pegawai' 	      => $this->total_pegawai_skpd($skpd_id),
                 'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
                 'total_jabatan'           => 'x',
                 'total_renja'             => 'x',
+                'h_box'                   => 'box-danger',
                 
         	]
         );   
