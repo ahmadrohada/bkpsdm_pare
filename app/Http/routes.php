@@ -41,6 +41,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('administrator_skpd_list','API\SKPDAPIController@administrator_skpd_list');
 
 	Route::get('administrator_pegawai_skpd_list','API\SKPDAPIController@administrator_pegawai_skpd_list');
+
+	Route::get('administrator_unit_kerja_skpd_list','API\SKPDAPIController@administrator_unit_kerja_skpd_list');
 	
 
 
@@ -262,6 +264,10 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/skpd/{skpd_id}/pegawai', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'SKPDController@pegawaiSKPDAdministrator'
+	]);
+
+	Route::get('admin/skpd/{skpd_id}/unit_kerja', [
+		'uses' 			=> 'SKPDController@unit_kerjaSKPDAdministrator'
 	]);
 	
 	//=================== RENCANA KERJA  =====================================//
