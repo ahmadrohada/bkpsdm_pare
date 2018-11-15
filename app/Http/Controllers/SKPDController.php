@@ -45,12 +45,26 @@ Use Alert;
 class SKPDController extends Controller {
     
     
-    protected function total_pegawai( $skpd_id){
+
+    protected function nama_skpd($skpd_id){
+            //nama SKPD 
+            $nama_skpd       = \DB::table('demo_asn.m_skpd AS skpd')
+                            ->WHERE('id',$skpd_id)
+                            ->SELECT(['skpd.skpd AS skpd'])
+                            ->first();
+            return $nama_skpd->skpd;
+    }
+
+
+    protected function total_pegawai(){
+        
+        return 	Pegawai::WHERE('status','active')->WHERE('nip','!=','admin')->count();
+    }
+
+    protected function total_pegawai_skpd( $skpd_id){
         
         return 	Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function($join){
-                                            //$x = $request->skpd;
                                             $join   ->on('a.id_pegawai','=','tb_pegawai.id');
-                                            //$join   ->where('a.id_skpd','=', $skpd_id);
                                             $join   ->where('a.status','=', 'active');
                                     })
                                     ->WHERE('a.id_skpd','=', $skpd_id)
@@ -124,22 +138,19 @@ class SKPDController extends Controller {
 
 
          //CARI id skpd nya
-        $id_skpd    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
-        $skpd       = Skpd::where('id_skpd', $id_skpd)->first()->unit_kerja;
        
-       
-
 		return view('admin.pages.administrator-show-skpd', [
                 'users' 		          => $users,
-                'total_pegawai' 	      => $this->total_pegawai(3),
+                'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-				'nama_skpd' 	          => $skpd,
+				//'nama_skpd' 	          => $this->nama_skpd($skpd_id),
         		'user' 			          => $user,
         		'access' 	              => $access,
                 'total_users_confirmed'   => $total_users_confirmed,
                 'total_users_locked'      => $total_users_locked,
                 'total_users_new'         => $total_users_new,
+                'h_box'                   => 'box-danger',
         	]
         );   
 
@@ -151,44 +162,42 @@ class SKPDController extends Controller {
     {
             
         $skpd_id     = $request->skpd_id;
-        //$user                   = \Auth::user();
-
         
-        /* 
-        $attemptsAllowed        = 4;
-
-        $total_users_confirmed  = $this->total_users();
-        $total_users_locked 	= 67;
-
-
-        $total_users_new        = 78;
-
-
-        $userRole               = $user->hasRole('user');
-        $admin_skpdRole         = $user->hasRole('admin_skpd');
-        $adminRole              = $user->hasRole('administrator');
-
-        if($userRole)
-        {
-            $access = 'User';
-        } elseif ($admin_skpdRole) {
-            $access = 'Admin Skpd';
-        } elseif ($adminRole) {
-            $access = 'Administrator';
-        }
-
-        */
-        //nama SKPD 
-        $nama_skpd       = Skpd::where('id_skpd', $skpd_id)->first()->unit_kerja;
+       
 
 		return view('admin.pages.administrator-pegawai-skpd', [
                 //'users' 		          => $users,
                 'skpd_id'                 => $skpd_id,
-                'nama_skpd'     	      => Pustaka::capital_string($nama_skpd),
-                'total_pegawai' 	      => $this->total_pegawai($skpd_id),
+                'nama_skpd'     	      => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	      => $this->total_pegawai_skpd($skpd_id),
                 'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
                 'total_jabatan'           => 'x',
                 'total_renja'             => 'x',
+                'h_box'                   => 'box-info',
+                
+        	]
+        );   
+
+        
+    }
+
+
+    public function unit_kerjaSKPDAdministrator(Request $request)
+    {
+            
+        $skpd_id     = $request->skpd_id;
+        
+         
+
+		return view('admin.pages.administrator-unit_kerja-skpd', [
+                //'users' 		          => $users,
+                'skpd_id'                 => $skpd_id,
+                'nama_skpd'     	      => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	      => $this->total_pegawai_skpd($skpd_id),
+                'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
+                'total_jabatan'           => 'x',
+                'total_renja'             => 'x',
+                'h_box'                   => 'box-danger',
                 
         	]
         );   

@@ -342,6 +342,7 @@ class UsersManagementController extends Controller {
                 'total_users_confirmed'   => $total_users_confirmed,
                 'total_users_locked'      => $total_users_locked,
                 'total_users_new'         => $total_users_new,
+                'h_box'                   => 'box-info',
         	]
         );   
 
@@ -692,6 +693,7 @@ class UsersManagementController extends Controller {
                 'total_users_confirmed'   => $total_users_confirmed,
                 'total_users_locked'      => $total_users_locked,
                 'total_users_new'         => $total_users_new,
+                'h_box'                   => 'box-success',
         	]
         );   
 

@@ -1,4 +1,4 @@
-<div class="box box-success">
+<div class="box {{ $h_box}}">
     <div class="box-header with-border">
         <h3 class="box-title">
             <small> {{ $nama_skpd }} </small>

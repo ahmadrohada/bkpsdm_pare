@@ -1,4 +1,4 @@
-<div class="box box-primary">
+<div class="box box-danger">
     <div class="box-header with-border">
         <h1 class="box-title">
             Data SKPD
@@ -41,7 +41,7 @@
 				processing      : true,
 				serverSide      : true,
 				searching      	: true,
-				paging          : true,
+				paging          : false,
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
