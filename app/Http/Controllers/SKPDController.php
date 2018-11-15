@@ -137,14 +137,15 @@ class SKPDController extends Controller {
         }
 
 
-         //CARI id skpd nya
+        //CARI id skpd nya
+        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
 		return view('admin.pages.administrator-show-skpd', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-				//'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+				'nama_skpd' 	          => $this->nama_skpd($skpd_id),
         		'user' 			          => $user,
         		'access' 	              => $access,
                 'total_users_confirmed'   => $total_users_confirmed,
