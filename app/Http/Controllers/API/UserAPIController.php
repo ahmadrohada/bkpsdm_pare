@@ -33,61 +33,78 @@ class UserAPIController extends Controller {
 
     public function administrator_users_list(Request $request)
     {
-        //\DB::statement(\DB::raw('set @rownum='.$request->get('start')));
-        \DB::statement(\DB::raw('set @rownum=0'));
       
         $dt = \DB::table('db_pare_2018.users AS users')
-                                ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
-                                    $join   ->on('users.id_pegawai','=','pegawai.id');
-                                    $join   ->where('pegawai.status','=', 'active');
-                                })
-                                ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
-                                    $join   ->on('a.id_pegawai','=','pegawai.id');
-                                    $join   ->where('a.status','=', 'active');
-                                })
-                                ->leftjoin('demo_asn.m_unit_kerja AS b',function($join){
-                                    $join   ->on('b.id','=','a.id_skpd');
-                                   
-                                })
-                                ->select([  'users.id AS user_id',
-                                            'pegawai.nama',
-                                            'pegawai.id AS pegawai_id',
-                                            'pegawai.nip',
-                                            'pegawai.gelardpn',
-                                            'pegawai.gelarblk',
-                                            'b.unit_kerja AS skpd',
-                                            \DB::raw('@rownum  := @rownum  + 1 AS rownum')
-                                        ])
-                                
-                                
-                                ->WHERE('pegawai.nip','!=','admin')
-                                ->WHERE('pegawai.status','active');
+                    ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
+                        $join   ->on('users.id_pegawai','=','pegawai.id');
+                        
+                    })
+                    ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
+                        $join   ->on('a.id_pegawai','=','pegawai.id');
+                        $join   ->where('a.status','=', 'active');
+                                        
+                    })
+                    //eselon
+                    ->leftjoin('demo_asn.m_eselon AS eselon', 'a.id_eselon','=','eselon.id')
+    
+                    //golongan
+                    ->leftjoin('demo_asn.m_golongan AS golongan', 'a.id_golongan','=','golongan.id')
+                    
+                    //jabatan
+                    ->leftjoin('demo_asn.m_skpd AS jabatan', 'a.id_jabatan','=','jabatan.id')
+                    
+                    //skpd
+                    ->leftjoin('demo_asn.m_skpd AS skpd', 'a.id_skpd','=','skpd.id')
+    
+                    //unit_kerja
+                    ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
+                    ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
+                    
+
+                    
+                     ->select([ 'users.id AS user_id',
+                                'pegawai.nama AS nama',
+                                'pegawai.id AS pegawai_id',
+                                'pegawai.nip AS nip',
+                                'pegawai.gelardpn AS gelardpn',
+                                'pegawai.gelarblk AS gelarblk',
+                                'eselon.eselon AS eselon',
+                                'golongan.golongan AS golongan',
+                                'jabatan.skpd AS jabatan',
+                                'unit_kerja.unit_kerja',
+                                'skpd.skpd AS skpd'
+                                    
+                            ]) ;
         
 
 
 
         $datatables = Datatables::of($dt)
-        ->addColumn('nama_pegawai', function ($x) {
+        ->addColumn('action', function ($x) {
             
+            return User::WHERE('id_pegawai',$x->pegawai_id)->count();
+            
+        })->addColumn('nama_pegawai', function ($x) {
+                        
             return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
-        
-        })->addColumn('status', function ($x) {
-            
-            return '1';
-        
-        })->addColumn('skpd', function ($x) {
-            
-            return Pustaka::capital_string($x->skpd);
-        
+                    
+        })->addColumn('jabatan', function ($x) {
+                        
+            return Pustaka::capital_string($x->jabatan);
+                    
+        })->addColumn('unit_kerja', function ($x) {
+                        
+            return Pustaka::capital_string($x->unit_kerja);
+                    
         });
-
-        
+            
+                    
         if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
-
+            
         return $datatables->make(true);
-        
+                    
     }
 
     public function add_user(Request $request)

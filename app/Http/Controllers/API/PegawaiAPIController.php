@@ -79,30 +79,43 @@ class PegawaiAPIController extends Controller {
   
     public function administrator_pegawai_list(Request $request)
     {
-        //\DB::statement(\DB::raw('set @rownum='.$request->get('start')));
-        \DB::statement(\DB::raw('set @rownum=0'));
-      
-        $dt = \DB::table('demo_asn.tb_pegawai')
-                                ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
-                                    $join   ->on('a.id_pegawai','=','tb_pegawai.id');
-                                    $join   ->where('a.status','=', 'active');
-                                })
-                                ->leftjoin('demo_asn.m_unit_kerja AS b',function($join){
-                                    $join   ->on('b.id','=','a.id_skpd');
-                                   
-                                })
-                                ->select([  'tb_pegawai.nama',
-                                            'tb_pegawai.id AS pegawai_id',
-                                            'tb_pegawai.nip',
-                                            'tb_pegawai.gelardpn',
-                                            'tb_pegawai.gelarblk',
-                                            'b.unit_kerja AS skpd',
-                                            \DB::raw('@rownum  := @rownum  + 1 AS rownum')
-                                        ])
+       
+        
+        $dt = \DB::table('demo_asn.tb_pegawai AS pegawai')
+                ->rightjoin('demo_asn.tb_history_jabatan AS a', function($join){
+                                $join   ->on('a.id_pegawai','=','pegawai.id');
+                                    
+                            })
+                //eselon
+                ->leftjoin('demo_asn.m_eselon AS eselon', 'a.id_eselon','=','eselon.id')
+
+                //golongan
+                ->leftjoin('demo_asn.m_golongan AS golongan', 'a.id_golongan','=','golongan.id')
+                
+                //jabatan
+                ->leftjoin('demo_asn.m_skpd AS jabatan', 'a.id_jabatan','=','jabatan.id')
+                
+                //skpd
+                ->leftjoin('demo_asn.m_skpd AS skpd', 'a.id_skpd','=','skpd.id')
+
+                //unit_kerja
+                ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
+                ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
+                
+                 ->select([ 'pegawai.nama AS nama',
+                            'pegawai.id AS pegawai_id',
+                            'pegawai.nip AS nip',
+                            'pegawai.gelardpn AS gelardpn',
+                            'pegawai.gelarblk AS gelarblk',
+                            'eselon.eselon AS eselon',
+                            'golongan.golongan AS golongan',
+                            'jabatan.skpd AS jabatan',
+                            'unit_kerja.unit_kerja',
+                            'skpd.skpd AS skpd'
                                 
-                                
-                                ->WHERE('tb_pegawai.nip','!=','admin')
-                                ->WHERE('tb_pegawai.status','active');
+                        ])
+                //->where('a.id_skpd','=', $id_skpd)
+                ->where('a.status', '=', 'active');
         
 
 
@@ -110,12 +123,15 @@ class PegawaiAPIController extends Controller {
         $datatables = Datatables::of($dt)
         ->addColumn('action', function ($x) {
 
-            $num_rows = User::WHERE('id_pegawai',$x->pegawai_id)->count();
+            return User::WHERE('id_pegawai',$x->pegawai_id)->count();
 
-            return $num_rows;
         })->addColumn('nama_pegawai', function ($x) {
             
             return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
+        
+        })->addColumn('jabatan', function ($x) {
+            
+            return Pustaka::capital_string($x->jabatan);
         
         })->addColumn('skpd', function ($x) {
             

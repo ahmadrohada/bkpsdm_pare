@@ -15,8 +15,11 @@
 			<thead>
 				<tr class="success">
 					<th>NO</th>
-					<th>NAMA PEGAWAI</th>
 					<th>NIP</th>
+					<th>NAMA LENGKAP</th>
+					<th>ESL</th>
+					<th>GOL</th>
+					<th>JABATAN</th>
 					<th>SKPD</th>
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
@@ -29,9 +32,6 @@
 </div>
 
 
-@section('template_scripts')
-
-@include('admin.structure.dashboard-scripts')
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -42,10 +42,11 @@
 				serverSide      : true,
 				searching      	: true,
 				paging          : true,
+				order 			: [ 3 , 'asc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,2,4 ] }
+									{ 	className: "text-center", targets: [ 0,1,3,4,7] }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/administrator_pegawai_list") }}',
@@ -55,10 +56,17 @@
 				
 
 				columns	:[
-								{ data: 'rownum' , orderable: true,searchable:false},
-								{ data: "nama_pegawai", name:"nama", orderable: true, searchable: true},
-								{ data: "nip" ,  name:"nip", orderable: true, searchable: true},
-								{ data: "skpd" , name:"b.unit_kerja", orderable: true, searchable: true},
+								{ data: 'pegawai_id' , orderable: true,searchable:false,width:"50px",
+									"render": function ( data, type, row ,meta) {
+										return meta.row + meta.settings._iDisplayStart + 1 ;
+									}
+								},
+								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: true,width:"140px"},
+								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true},
+								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true,width:"40px"},
+								{ data: "golongan" ,  name:"golongan.golongan", orderable: true, searchable: true,width:"40px"},
+								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true},
+								{ data: "skpd" ,  name:"skpd.skpd", orderable: true, searchable: true},
 								{ data: "action" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
 
@@ -86,5 +94,3 @@
 		
 	});
 </script>
-
-@endsection

@@ -27,6 +27,7 @@
             </div>
           <div class="col-lg-7 col-md-7 col-sm-12">
               @include('admin.modules.profile-pegawai')
+							
           </div>
         </div>
 
@@ -37,5 +38,6 @@
 @section('template_scripts')
 
     @include('admin.structure.dashboard-scripts')
+		
 
 @endsection

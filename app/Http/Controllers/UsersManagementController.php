@@ -378,19 +378,9 @@ class UsersManagementController extends Controller {
         }
 
 
-        /* $dt = \DB::table('db_pare_2018.users AS users')
-        ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
-            $join   ->on('users.id_pegawai','=','pegawai.id');
-            $join   ->where('pegawai.status','=', 'active');
-        })
-        ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
-            $join   ->on('a.id_pegawai','=','pegawai.id');
-            $join   ->where('a.status','=', 'active');
-        }) */
-
         //Data profil pegawai
         
-        $profil = Pegawai::WHERE('tb_pegawai.id',$pegawai_id) 
+        /* $profil = Pegawai::WHERE('tb_pegawai.id',$pegawai_id) 
                             ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
                                         $join   ->on('a.id_pegawai','=','tb_pegawai.id');
                                         $join   ->where('a.status','=', 'active');
@@ -431,34 +421,85 @@ class UsersManagementController extends Controller {
                                      
                                      
                                      )
+                            ->first(); */
+
+        $dt = Pegawai::WHERE('tb_pegawai.id',$pegawai_id)
+                            ->rightjoin('demo_asn.tb_history_jabatan AS a', function($join){
+                                            $join   ->on('a.id_pegawai','=','tb_pegawai.id');
+                                                
+                                        })
+                            //eselon
+                            ->leftjoin('demo_asn.m_eselon AS eselon', 'a.id_eselon','=','eselon.id')
+            
+                            //jenis jabatan
+                            ->leftjoin('demo_asn.m_jenis_jabatan AS jenis_jabatan ', 'eselon.id_jenis_jabatan','=','jenis_jabatan.id' )
+
+                            //golongan
+                            ->leftjoin('demo_asn.m_golongan AS golongan', 'a.id_golongan','=','golongan.id')
+                            
+                            //jabatan
+                            ->leftjoin('demo_asn.m_skpd AS jabatan', 'a.id_jabatan','=','jabatan.id')
+                            
+                            
+
+                            //skpd
+                            ->leftjoin('demo_asn.m_skpd AS skpd', 'a.id_skpd','=','skpd.id')
+            
+                            //unit_kerja
+                            ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
+                            ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
+
+                            //foto
+                            ->leftjoin('demo_asn.foto AS foto ','a.nip','=','foto.nipbaru')
+                            
+                             ->select([ 'tb_pegawai.nama AS nama',
+                                        'tb_pegawai.id AS pegawai_id',
+                                        'tb_pegawai.nip AS nip',
+                                        'tb_pegawai.gelardpn AS gelardpn',
+                                        'tb_pegawai.gelarblk AS gelarblk',
+                                        'eselon.eselon AS eselon',
+                                        'jenis_jabatan.jenis_jabatan AS jenis_jabatan',
+                                        'golongan.golongan AS golongan',
+                                        'jabatan.skpd AS jabatan',
+                                        'unit_kerja.unit_kerja',
+                                        'skpd.skpd AS skpd',
+                                        'a.tmt_jabatan AS tmt_jabatan',
+                                        'tb_pegawai.no_hp',
+                                        'tb_pegawai.alamat',
+                                        'tb_pegawai.email',
+                                        'foto.isi AS foto'
+                                            
+                                    ])
+                            //->where('a.id_skpd','=', $id_skpd)
+                            ->where('a.status', '=', 'active')
                             ->first();
 
         //DETAIL PEGAWAI
         
-        $nama           = Pustaka::nama_pegawai($profil->gelardpn , $profil->nama , $profil->gelarblk);
-        $nip            = $profil->nip;
+        $nama           = Pustaka::nama_pegawai($dt->gelardpn , $dt->nama , $dt->gelarblk);
+        $nip            = $dt->nip;
         
-        $username       = $profil->username;
+        $username       = "nama user";
 
-        $skpd           = Pustaka::capital_string($profil->skpd);
-        $unit_kerja     = Pustaka::capital_string($profil->unit_kerja);
+        $skpd           = Pustaka::capital_string($dt->skpd);
+        $unit_kerja     = Pustaka::capital_string($dt->unit_kerja);
 
-        $jabatan        = Pustaka::capital_string($profil->jabatan);
-        $jenis_jabatan  = $profil->jenis_jabatan;
-        $eselon         = $profil->eselon;
-        $jenis_jabatan  = $profil->jenis_jabatan;
-        $golongan       = $profil->golongan;
-        $tmt_jabatan    = $profil->tmt_jabatan;
-        $no_hp          = $profil->no_hp;
-        $email          = $profil->email;
-        $alamat         = $profil->alamat;
+        $jabatan        = Pustaka::capital_string($dt->jabatan);
+        $jenis_jabatan  = $dt->jenis_jabatan;
+        $eselon         = $dt->eselon;
+        $jenis_jabatan  = $dt->jenis_jabatan;
+        $golongan       = $dt->golongan;
+        $tmt_jabatan    = $dt->tmt_jabatan;
+        $no_hp          = $dt->no_hp;
+        $email          = $dt->email;
+        $alamat         = $dt->alamat;
 
 
        
-        if ( $profil->foto != null  ){
+        if ( $dt->foto != null  ){
             
 
-            $foto   = 'data:image/jpeg;base64,'.base64_encode( $profil->foto );
+            $foto   = 'data:image/jpeg;base64,'.base64_encode( $dt->foto );
 
         }else{
             $foto   = asset('assets/images/form/sample.jpg');
@@ -469,7 +510,7 @@ class UsersManagementController extends Controller {
 
 		return view('admin.pages.administrator-detail-pegawai', [
                 'pegawai_id'            => $pegawai_id,
-                'user_id'               => $profil->user_id,
+                'user_id'               => "",
                 'nama'                  => $nama,
                 'nip'                   => $nip,
 
@@ -524,15 +565,6 @@ class UsersManagementController extends Controller {
         }
 
 
-        /* $dt = \DB::table('db_pare_2018.users AS users')
-        ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
-            $join   ->on('users.id_pegawai','=','pegawai.id');
-            $join   ->where('pegawai.status','=', 'active');
-        })
-        ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
-            $join   ->on('a.id_pegawai','=','pegawai.id');
-            $join   ->where('a.status','=', 'active');
-        }) */
 
         //Data profil pegawai
         
@@ -544,9 +576,12 @@ class UsersManagementController extends Controller {
                                         $join   ->on('a.id_pegawai','=','pegawai.id');
                                         $join   ->where('a.status','=', 'active');
                             })
-                            ->leftjoin('demo_asn.m_unit_kerja AS b ', function($join){
-                                $join   ->on('a.id_unit_kerja','=','b.id');
-                            })
+                           
+                            //unit_kerja
+                            ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
+                            ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
+                    
+
                             ->leftjoin('demo_asn.m_unit_kerja AS c ', function($join){
                                 $join   ->on('a.id_skpd','=','c.id');
                             })
@@ -564,7 +599,7 @@ class UsersManagementController extends Controller {
                             }) 
                             ->SELECT(   'pegawai.*',
                                         'a.*',
-                                        'b.unit_kerja AS unit_kerja',
+                                        'unit_kerja.unit_kerja AS unit_kerja',
                                         'c.unit_kerja AS skpd',
                                         'd.eselon AS eselon',
                                         'e.jenis_jabatan AS jenis_jabatan',
