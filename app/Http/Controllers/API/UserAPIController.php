@@ -10,7 +10,7 @@ use App\Models\SKPTahunan;
 use App\Models\Jabatan;
 use App\Models\HistoryJabatan;
 use App\Models\User;
-use App\Models\RoleUSer;
+use App\Models\RoleUser;
 
 use App\Helpers\Pustaka;
 
@@ -30,6 +30,48 @@ use Input;
 Use Alert;
 
 class UserAPIController extends Controller {
+
+
+
+    public function ubah_username(Request $request)
+    {
+        
+        $messages = [
+            'new_username.required'         => 'Username harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'new_username'    => 'required|min:3|max:18|regex:/^[A-Za-z][A-Za-z0-9]*$/',
+                        ),
+                        $messages
+        );
+    
+        if ( $validator->fails() ){
+            return response()->json(['errors'=>$validator->messages()],422);
+        }
+
+        $cek_user = User::WHERE('username', Input::get('new_username'))->WHERE('id','!=',Input::get('user_id'))->count();
+
+        if ( $cek_user === 1  ){
+            return response()->json(['errors'=>array(
+                                        'new_username'    => 'Username sudah digunakan',
+                                    )],422);
+        }
+
+        $profile = User::findOrFail(Input::get('user_id'));
+        $profile->username = Input::get('new_username');
+       
+        
+        if ( $profile->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+        
+    }
+
 
     public function administrator_users_list(Request $request)
     {
@@ -107,79 +149,7 @@ class UserAPIController extends Controller {
                     
     }
 
-    public function add_user(Request $request)
-    {
-        $cek_data = User::WHERE('id_pegawai',Input::get('pegawai_id'))->count();
-        //return $cek_data;
-
-        if ( $cek_data === 0 ){
-
-
-            $messages = [
-                'nip.required'         => 'NIP harus diisi',
-            ];
     
-            $validator = Validator::make(
-                            Input::all(),
-                            array(
-                                'nip'           => 'required|min:3',
-                                'pegawai_id'    => 'required',
-                            ),
-                            $messages
-            );
-        
-            if ( $validator->fails() ){
-                //$messages = $validator->messages();
-                return response()->json(['errors'=>$validator->messages()],422);
-                
-            }
-
-        
-            $user               = new User;
-            $user->id_pegawai   = Input::get('pegawai_id');
-            $user->username     = Input::get('nip');
-            $user->password     = Hash::make('bkd12345');
-
-            $user->active       = '1';
-            $user->resent       = '1';
-
-            
-
-
-            if ( $user->save() ){
-
-                $data_user = User::WHERE('id_pegawai', Input::get('pegawai_id') )
-                                ->SELECT('users.id AS user_id')
-                                ->first();
-
-
-
-                $role               = new RoleUSer;
-                $role->user_id      = $data_user->user_id;
-                $role->role_id      = '1';
-                $role->save();
-
-
-                return \Response::make('Berhasil', 200);
-                
-                //return redirect('/admin/pegawai/'.Input::get('pegawai_id'))->with('status', 'Pegawai berhasil didaftarkan');
-            }else{
-                return \Response::make('Gagal add pegawai', 500);
-            }
-            
-        
-
-
-        }else{
-            
-            return redirect('/admin/pegawai/'.Input::get('pegawai_id'))->with('status', 'Pegawai sudaah didaftarkan');
-        }
-
-
-
-        
-        
-    }
 
     public function reset_password(Request $request)
     {
@@ -195,41 +165,7 @@ class UserAPIController extends Controller {
     }
 
 
-    public function ubah_username(Request $request)
-    {
-        
-        
-
-
-        $messages = [
-            'new_username.required'         => 'Username harus diisi',
-        ];
-
-        $validator = Validator::make(
-                        Input::all(),
-                        array(
-                            'new_username'    => 'required|min:3',
-                        ),
-                        $messages
-        );
     
-        if ( $validator->fails() ){
-            //$messages = $validator->messages();
-            return response()->json(['errors'=>$validator->messages()],422);
-            
-        }
-        $profile = User::findOrFail(Input::get('user_id'));
-        $profile->username = Input::get('new_username');
-        //$profile->jeniskelamin = Input::get('jeniskelamin');
-       
-        
-        if ( $profile->save()){
-            return \Response::make('sukses', 200);
-        }else{
-            return \Response::make('error', 500);
-        } 
-        
-    }
 
    
 

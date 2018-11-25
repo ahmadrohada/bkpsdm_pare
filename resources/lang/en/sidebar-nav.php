@@ -64,7 +64,9 @@ return [
 	'link_icon_indikator_sasaran'     	=> 'fa-tasks',
 	
 
-
+	// HOME
+	'link_title_home'    		=> 'Home',
+	'link_icon_home'     		=> 'fa-home',
 	
 	// RENCANA KERJA LINKS
 	'link_title_renja'    		=> 'Rencana Kerja',

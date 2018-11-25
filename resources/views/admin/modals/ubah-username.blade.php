@@ -12,7 +12,7 @@
 				<form role="form">
 					<div class="form-group f_username">
 						<label for="usernameInput">Username</label>
-						<input type="text" class="form-control new_username" value="{{ $username }}">
+						<input type="text" class="form-control new_username" value="">
 						
 					</div>
 				</form>     
@@ -68,10 +68,11 @@ $(document).ready(function() {
 				var test = $.parseJSON(jqXHR.responseText);
 				var data= test.errors;
 				$.each(data, function(index,value){
-					//alert (index+":"+value);
+					alert (value);
 					if (index == 'new_username'){
 						$('.f_username').addClass('has-error');
                         $('.new_username').focus();
+						
 					}
 					
 				}); 
@@ -82,6 +83,9 @@ $(document).ready(function() {
 	});
 
 
+	$(document).on('click','.f_username',function(e){
+		$('.f_username').removeClass('has-error');
+	});
 
 
 });

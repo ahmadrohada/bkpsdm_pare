@@ -29,7 +29,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	//Route::resource('users','API\UsersAPIController');
 	Route::get('administrator_users_list','API\UserAPIController@administrator_users_list');
-	Route::post('add_user','API\UserAPIController@add_user');
+	Route::post('add_pegawai','API\PegawaiAPIController@add_pegawai');
 	Route::post('reset_password','API\UserAPIController@reset_password');
 	Route::post('ubah_username','API\UserAPIController@ubah_username');
 
@@ -40,7 +40,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	Route::get('administrator_skpd_list','API\SKPDAPIController@administrator_skpd_list');
 
-	Route::get('administrator_pegawai_skpd_list','API\SKPDAPIController@administrator_pegawai_skpd_list');
+	
 
 	Route::get('administrator_unit_kerja_skpd_list','API\SKPDAPIController@administrator_unit_kerja_skpd_list');
 	
@@ -94,6 +94,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	Route::get('select_pegawai_list','API\PegawaiAPIController@select_pejabat_penilai_list');
 
+	Route::get('administrator_pegawai_skpd_list','API\PegawaiAPIController@skpd_pegawai_list');
 
 	//========================================================================================================//
 	//============================  PEJABATA PENILAI SKP TAHUNAN ================================================//
@@ -225,35 +226,35 @@ Route::group(['middleware' => 'administrator'], function () {
 	
 	Route::get('admin/pegawai', [
 		'as' 			=> '{username}',
-		'uses' 			=> 'UsersManagementController@showPegawaiAdministrator'
+		'uses' 			=> 'PegawaiController@listPegawai'
 	]);
 
 	Route::get('admin/pegawai/{pegawai_id}', [
 		'as' 			=> '{username}',
-		'uses' 			=> 'UsersManagementController@detailPegawaiAdministrator'
+		'uses' 			=> 'PegawaiController@detailPegawai'
 	]);
 
 
 	Route::get('admin/pegawai/{pegawai_id}/add', [
 		'as' 			=> '{username}',
-		'uses' 			=> 'UsersManagementController@addPegawaiAdministrator'
+		'uses' 			=> 'PegawaiController@addPegawai'
 	]);
 
 
 	Route::get('admin/users', [
 		'as' 			=> '{username}',
-		'uses' 			=> 'UsersManagementController@showUsersAdministrator'
+		'uses' 			=> 'UserController@listUser'
 	]);
 
 	Route::get('admin/users/{user_id}', [
 		'as' 			=> '{username}',
-		'uses' 			=> 'UsersManagementController@detailUserAdministrator'
+		'uses' 			=> 'UserController@detailUser'
 	]);
 
 
 	Route::get('admin/skpd', [
 		'as' 			=> '{username}',
-		'uses' 			=> 'SKPDController@showSKPDAdministrator'
+		'uses' 			=> 'SKPDController@showSKPD'
 	]);
 
 	Route::get('admin/skpd/{skpd_id}', [
@@ -263,11 +264,11 @@ Route::group(['middleware' => 'administrator'], function () {
 
 	Route::get('admin/skpd/{skpd_id}/pegawai', [
 		'as' 			=> '{username}',
-		'uses' 			=> 'SKPDController@pegawaiSKPDAdministrator'
+		'uses' 			=> 'SKPDController@showSKPDPegawai'
 	]);
 
 	Route::get('admin/skpd/{skpd_id}/unit_kerja', [
-		'uses' 			=> 'SKPDController@unit_kerjaSKPDAdministrator'
+		'uses' 			=> 'SKPDController@showSKPDUnitKerja'
 	]);
 	
 	//=================== RENCANA KERJA  =====================================//
@@ -448,10 +449,17 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]);
 
 
-	Route::get('lihat_pegawai', [
+	Route::get('pegawai', [
 		'as' 			=> '',
-		'uses' 			=> 'UsersManagementController@showPegawaiSkpd'
+		'uses' 			=> 'SKPDController@showPegawai'
 	]);
+
+	Route::get('unit_kerja', [
+		'as' 			=> '',
+		'uses' 			=> 'SKPDController@showUnitKerja'
+	]);
+
+
 	// AJAX REQUEST 
 	Route::get('table_users', [
 		'as' 			=> '{username}',

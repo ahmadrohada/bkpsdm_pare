@@ -46,6 +46,7 @@ class SKPDController extends Controller {
     
     
 
+    //=======================================================================================//
     protected function nama_skpd($skpd_id){
             //nama SKPD 
             $nama_skpd       = \DB::table('demo_asn.m_skpd AS skpd')
@@ -55,11 +56,23 @@ class SKPDController extends Controller {
             return $nama_skpd->skpd;
     }
 
-
     protected function total_pegawai(){
         
         return 	Pegawai::WHERE('status','active')->WHERE('nip','!=','admin')->count();
+    } 
+    
+    protected function total_users(){
+        return 	\DB::table('db_pare_2018.users AS users')
+                                ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
+                                    $join   ->on('users.id_pegawai','=','pegawai.id');
+                                    $join   ->where('pegawai.status','=', 'active');
+                                })
+                                ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
+                                    $join   ->on('a.id_pegawai','=','pegawai.id');
+                                    $join   ->where('a.status','=', 'active');
+                                })->count();
     }
+    
 
     protected function total_pegawai_skpd( $skpd_id){
         
@@ -84,17 +97,7 @@ class SKPDController extends Controller {
     }
 
 
-    protected function total_users(){
-        return 	\DB::table('db_pare_2018.users AS users')
-                                ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
-                                    $join   ->on('users.id_pegawai','=','pegawai.id');
-                                    $join   ->where('pegawai.status','=', 'active');
-                                })
-                                ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
-                                    $join   ->on('a.id_pegawai','=','pegawai.id');
-                                    $join   ->where('a.status','=', 'active');
-                                })->count();
-    }
+   
     
 
     protected function total_skpd()
@@ -105,7 +108,7 @@ class SKPDController extends Controller {
                
 	}
 
-    public function showSKPDAdministrator(Request $request)
+    public function showSKPD(Request $request)
     {
             
         
@@ -159,14 +162,14 @@ class SKPDController extends Controller {
     }
 
 
-    public function pegawaiSKPDAdministrator(Request $request)
+    public function showSKPDPegawai(Request $request)
     {
             
         $skpd_id     = $request->skpd_id;
         
        
 
-		return view('admin.pages.administrator-pegawai-skpd', [
+		return view('admin.pages.skpd-pegawai', [
                 //'users' 		          => $users,
                 'skpd_id'                 => $skpd_id,
                 'nama_skpd'     	      => $this->nama_skpd($skpd_id),
@@ -183,14 +186,64 @@ class SKPDController extends Controller {
     }
 
 
-    public function unit_kerjaSKPDAdministrator(Request $request)
+    public function showSKPDUnitKerja(Request $request)
     {
             
         $skpd_id     = $request->skpd_id;
         
          
 
-		return view('admin.pages.administrator-unit_kerja-skpd', [
+		return view('admin.pages.skpd-unit_kerja', [
+                //'users' 		          => $users,
+                'skpd_id'                 => $skpd_id,
+                'nama_skpd'     	      => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	      => $this->total_pegawai_skpd($skpd_id),
+                'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
+                'total_jabatan'           => 'x',
+                'total_renja'             => 'x',
+                'h_box'                   => 'box-danger',
+                
+        	]
+        );   
+
+        
+    }
+
+    public function showPegawai(Request $request)
+    {
+            
+        $user                   = \Auth::user();
+        
+
+        //CARI id skpd nya
+       $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+       
+
+       return view('admin.pages.skpd-pegawai', [
+               //'users' 		          => $users,
+               'skpd_id'                 => $skpd_id,
+               'nama_skpd'     	      => $this->nama_skpd($skpd_id),
+               'total_pegawai' 	      => $this->total_pegawai_skpd($skpd_id),
+               'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
+               'total_jabatan'           => 'x',
+               'total_renja'             => 'x',
+               'h_box'                   => 'box-info',
+               
+           ]
+       );  
+
+        
+    }
+    
+    public function showUnitKerja(Request $request)
+    {
+            
+        $skpd_id      = \Auth::user()->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+
+        
+         
+
+		return view('admin.pages.administrator-skpd-unit_kerja', [
                 //'users' 		          => $users,
                 'skpd_id'                 => $skpd_id,
                 'nama_skpd'     	      => $this->nama_skpd($skpd_id),

@@ -1,7 +1,7 @@
 @extends('admin.layouts.dashboard')
 
 @section('template_title')
-	{{ $user->username }}
+	Administrator
 @endsection
 
 @section('template_fastload_css')
@@ -12,18 +12,18 @@
 	    <section class="content-header">
 
 			<h1>
-				Data Pegawai
+				{!! $nama_skpd !!}
 			</h1>
 
-			{!! Breadcrumbs::render('users') !!}
+			{!! Breadcrumbs::render('skpd') !!}
 
 	    </section>
 	    <section class="content">
 
 			
-				@include('admin.modules.users-snapshots-boxes')
+				@include('admin.modules.administrator-skpd-snapshots-boxes')
 
- 				@include('admin.tables.skpd-users-list-datatable')
+ 				@include('admin.tables.skpd-unit_kerja')
 		
 	    </section>
 	</div>
