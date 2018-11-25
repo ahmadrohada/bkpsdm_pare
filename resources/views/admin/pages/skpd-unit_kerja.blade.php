@@ -12,27 +12,20 @@
 	    <section class="content-header">
 
 			<h1>
-				Administrator
+				{!! $nama_skpd !!}
 			</h1>
 
-			{!! Breadcrumbs::render('users') !!}
+			{!! Breadcrumbs::render('skpd') !!}
 
 	    </section>
 	    <section class="content">
 
 			
-				@include('admin.modules.administrator-home-snapshots-boxes')
+				@include('admin.modules.administrator-skpd-snapshots-boxes')
 
- 				@include('admin.tables.administrator-pegawai-list-datatable')
+ 				@include('admin.tables.skpd-unit_kerja')
 		
 	    </section>
 	</div>
-@endsection
-
-
-@section('template_scripts')
-
-    @include('admin.structure.dashboard-scripts')
-
 @endsection
 

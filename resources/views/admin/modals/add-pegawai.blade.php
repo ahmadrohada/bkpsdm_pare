@@ -1,10 +1,10 @@
-<div class="modal fade add-user id="addUser" role="dialog" aria-labelledby="" aria-hidden="true">
+<div class="modal fade add-pegawai id="addPegawai" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    Add User
+                    Add Pegawai
                 </h4>
             </div>
             <div class="modal-body">
@@ -38,7 +38,7 @@ $(document).ready(function() {
         //alert(pegawai_id);
 
         $.ajax({
-			url		: '{{ url("api_resource/add_user") }}',
+			url		: '{{ url("api_resource/add_pegawai") }}',
 			type	: 'POST',
 			data	:  { pegawai_id:pegawai_id,nip:nip },
 			success	: function(data , textStatus, jqXHR) {
@@ -52,7 +52,7 @@ $(document).ready(function() {
                         allowOutsideClick : false,
                         timer: 1500
 				}).then(function () {
-						$('.add-user').modal('hide');
+						$('.add-pegawai').modal('hide');
 						window.location.reload();
 				},
 					function (dismiss) {

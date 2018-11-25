@@ -12,7 +12,7 @@
 	    <section class="content-header">
 
 			<h1>
-				<small>{!! $nama_skpd !!}</small>
+				{!! Pustaka::capital_string($nama_skpd) !!}
 			</h1>
 
 			{!! Breadcrumbs::render('skpd') !!}
@@ -23,7 +23,7 @@
 			
 				@include('admin.modules.administrator-skpd-snapshots-boxes')
 
- 				@include('admin.tables.administrator-unit_kerja-skpd-list-datatable')
+ 				@include('admin.tables.skpd-pegawai')
 		
 	    </section>
 	</div>

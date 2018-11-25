@@ -14,13 +14,13 @@
 		<table id="pegawai_table" class="table table-striped table-hover table-condensed">
 			<thead>
 				<tr class="success">
-					<th>NO</th>
-					<th>NAMA PEGAWAI</th>
+				<th>NO</th>
 					<th>NIP</th>
-					<th>ESELON</th>
+					<th>NAMA LENGKAP</th>
+					<th>ESL</th>
+					<th>GOL</th>
 					<th>JABATAN</th>
 					<th>UNIT KERJA</th>
-					
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
 			</thead>
@@ -49,8 +49,8 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,2,3,6 ] },
-									{ 	className: "hidden-xs", targets: [ 5 ] }
+									{ 	className: "text-center", targets: [ 0,1,3,4,7] }/* ,
+									{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/administrator_pegawai_skpd_list") }}',
@@ -65,9 +65,11 @@
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true},
+								
 								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: false},
+								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true},
 								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true},
+								{ data: "golongan" ,  name:"golongan.golongan", orderable: true, searchable: true},
 								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true},
 								{ data: "nama_unit_kerja" , name:"unit_kerja.unit_kerja", orderable: true, searchable: true},
 								{ data: "action" , orderable: false,searchable:false,width:"50px",

@@ -1,7 +1,7 @@
 <li class="header">ADMIN SKPD</li>
 
 <li>
-    {!! HTML::icon_link( "skpd/lihat_pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_users_view'), "<span>".Lang::get('sidebar-nav.link_title_users_view')."</span>", array('title' => Lang::get('sidebar-nav.link_title_users_view'))) !!}
+    {!! HTML::icon_link( "skpd/pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_home'), "<span>".Lang::get('sidebar-nav.link_title_home')."</span>", array('title' => Lang::get('sidebar-nav.link_title_home'))) !!}
 </li>
 
 <li>

@@ -1,8 +1,8 @@
 <div class="box {{ $h_box}}">
     <div class="box-header with-border">
-        <h3 class="box-title">
-            <small> {{ $nama_skpd }} </small>
-        </h3>
+		<h1 class="box-title">
+            
+        </h1>
         <div class="box-tools pull-right">
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}

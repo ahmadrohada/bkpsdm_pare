@@ -30,7 +30,7 @@
                 <input type="hidden" class="nip" value="{{ $nip }}" >
                 <hr>
                 
-                <button class="btn btn-block btn-info add_user">Add to PARE</button>
+                <button class="btn btn-block btn-info add_pegawai">Add to PARE</button>
                 
                  <!--  
               <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
@@ -56,7 +56,7 @@
     </div>
 </div>
 
-@include('admin.modals.add-user')
+@include('admin.modals.add-pegawai')
 
 
 @section('template_scripts')
@@ -68,12 +68,12 @@
         
 
         
-		$(document).on('click','.add_user',function(e){
+		$(document).on('click','.add_pegawai',function(e){
 			
 			pegawai_id = $('.pegawai_id').val();
             nip = $('.nip').val();
 			//alert(pegawai_id);
-            $(".add-user").modal('show');
+            $(".add-pegawai").modal('show');
 
 		});
 		

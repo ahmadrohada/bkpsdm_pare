@@ -106,6 +106,7 @@
 			
 			user_id = $('.user_id').val();
 			//alert(user_id);
+            $('.new_username').val('{{$username}}')
 
             $(".ubah-username").modal('show');
 			//window.location.assign("lihat_users");

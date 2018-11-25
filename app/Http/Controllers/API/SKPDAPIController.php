@@ -93,77 +93,12 @@ class SKPDAPIController extends Controller {
         
     }
 
-    public function administrator_pegawai_skpd_list(Request $request)
+   /*  public function administrator_pegawai_skpd_list(Request $request)
     {
         
-        $id_skpd = $request->skpd_id ;
-
         
-        $dt = \DB::table('demo_asn.tb_pegawai AS pegawai')
-                ->rightjoin('demo_asn.tb_history_jabatan AS a', function($join){
-                    $join   ->on('a.id_pegawai','=','pegawai.id');
-                    
-                })
-                
-
-                //eselon
-                ->leftjoin('demo_asn.m_eselon AS eselon', 'a.id_eselon','=','eselon.id')
-
-                //jabatan
-                ->leftjoin('demo_asn.m_skpd AS jabatan', 'a.id_jabatan','=','jabatan.id')
-
-
-                //unit_kerja
-                ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
-                ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
-
-                
-                ->select([  'pegawai.nama',
-                            'pegawai.id AS pegawai_id',
-                            'pegawai.nip',
-                            'pegawai.gelardpn',
-                            'pegawai.gelarblk',
-                            'eselon.eselon AS eselon',
-                            'jabatan.skpd AS jabatan',
-                            'unit_kerja.unit_kerja'
-                
-                        ])
-                       
-                ->where('a.id_skpd','=', $id_skpd)
-                ->where('a.status', '=', 'active');
-               
         
-        //unit kerja pegawai yaitu history_jabatan(id_unit_kerja)->m_skpd(parent_id)->m_unit_kerja(unit_kerja)
-
-
-        $datatables = Datatables::of($dt)
-        ->addColumn('nama_pegawai', function ($x) {
-            
-            return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
-        
-        })->addColumn('nama_unit_kerja', function ($x) {
-            
-            return Pustaka::capital_string($x->unit_kerja);
-        
-        })->addColumn('jabatan', function ($x) {
-            
-            return Pustaka::capital_string($x->jabatan);
-        
-        })->addColumn('action', function ($x) {
-
-            $num_rows = User::WHERE('id_pegawai',$x->pegawai_id)->count();
-
-            return $num_rows;
-        });
-
-        
-        if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-        } 
-
-        return $datatables->make(true);
-        
-    }
+    } */
 
 
     public function administrator_unit_kerja_skpd_list(Request $request)

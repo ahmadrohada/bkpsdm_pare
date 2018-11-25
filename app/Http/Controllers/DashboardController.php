@@ -28,28 +28,28 @@ class DashboardController extends Controller
     public function index()
     {
         $user           = \Auth::user();
-        $userRole       = $user->hasRole('pegawai');
+        $userRole       = $user->hasRole('personal');
         $admin_skpdRole = $user->hasRole('admin_skpd');
         $adminRole      = $user->hasRole('administrator');
 
         if($userRole)
         {
-            $access = 'Pegawai';
-			$dashboard = 'pegawai';
+            $access = 'Personal';
+			$dashboard = 'personal';
         } elseif ($admin_skpdRole) {
             $access = 'Admin SKPD';
             //$dashboard = 'admin-skpd';
-            $dashboard = 'pegawai';
+            $dashboard = 'personal';
         } elseif ($adminRole) {
             $access = 'Administrator';
             //$dashboard = 'administrator';
-            $dashboard = 'pegawai';
+            $dashboard = 'personal';
         }
 
 
 
 
-        $profil = Pegawai::WHERE('tb_pegawai.id','48') 
+        $profil = Pegawai::WHERE('tb_pegawai.id',  $user->id_pegawai) 
                             ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
                                         $join   ->on('a.id_pegawai','=','tb_pegawai.id');
                                         $join   ->where('a.status','=', 'active');

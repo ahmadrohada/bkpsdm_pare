@@ -1,7 +1,7 @@
 @extends('admin.layouts.dashboard')
 
 @section('template_title')
-	{{ $user->username }}
+		Administrator
 @endsection
 
 @section('template_fastload_css')
@@ -12,7 +12,7 @@
 	    <section class="content-header">
 
 			<h1>
-				<small>BKPSDM Pemkab Karawang</small>
+				Administrator
 			</h1>
 
 			{!! Breadcrumbs::render('users') !!}
@@ -21,7 +21,7 @@
 	    <section class="content">
 
 			
-				@include('admin.modules.administrator-pegawai-snapshots-boxes')
+				@include('admin.modules.administrator-home-snapshots-boxes')
 
  				@include('admin.tables.administrator-users-list-datatable')
 		

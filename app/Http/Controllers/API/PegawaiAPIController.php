@@ -4,12 +4,14 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\Pegawai;
 use App\Models\SKPTahunan;
 use App\Models\Jabatan;
 use App\Models\HistoryJabatan;
 use App\Models\User;
+use App\Models\RoleUser;
 
 use App\Helpers\Pustaka;
 
@@ -20,6 +22,80 @@ use Input;
 Use Alert;
 
 class PegawaiAPIController extends Controller {
+
+    public function add_pegawai(Request $request)
+    {
+        $cek_data = User::WHERE('id_pegawai',Input::get('pegawai_id'))->count();
+        //return $cek_data;
+
+        if ( $cek_data === 0 ){
+
+
+            $messages = [
+                'nip.required'         => 'NIP harus diisi',
+            ];
+    
+            $validator = Validator::make(
+                            Input::all(),
+                            array(
+                                'nip'           => 'required|min:3',
+                                'pegawai_id'    => 'required',
+                            ),
+                            $messages
+            );
+        
+            if ( $validator->fails() ){
+                //$messages = $validator->messages();
+                return response()->json(['errors'=>$validator->messages()],422);
+                
+            }
+
+        
+            $user               = new User;
+            $user->id_pegawai   = Input::get('pegawai_id');
+            $user->username     = Input::get('nip');
+            $user->password     = Hash::make('bkd12345');
+
+            $user->active       = '1';
+            $user->resent       = '1';
+
+            
+
+
+            if ( $user->save() ){
+
+                $data_user = User::WHERE('id_pegawai', Input::get('pegawai_id') )
+                                ->SELECT('users.id AS user_id')
+                                ->first();
+
+
+
+                $role               = new RoleUser;
+                $role->user_id      = $data_user->user_id;
+                $role->role_id      = '1';
+                $role->save();
+
+
+                return \Response::make('Berhasil', 200);
+                
+                //return redirect('/admin/pegawai/'.Input::get('pegawai_id'))->with('status', 'Pegawai berhasil didaftarkan');
+            }else{
+                return \Response::make('Gagal add pegawai', 500);
+            }
+            
+        
+
+
+        }else{
+            
+            return redirect('/admin/pegawai/'.Input::get('pegawai_id'))->with('status', 'Pegawai sudaah didaftarkan');
+        }
+
+
+
+        
+        
+    }
 
 
     public function select_pegawai_list(Request $request)
@@ -152,40 +228,52 @@ class PegawaiAPIController extends Controller {
    
     public function skpd_pegawai_list(Request $request)
     {
-        $id_skpd_admin      = \Auth::user()->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+        $id_skpd = $request->skpd_id ;
 
-        \DB::statement(\DB::raw('set @rownum='.$request->get('start')));
-        // \DB::statement(\DB::raw('set @rownum=0'));
-      
-        $dt = \DB::table('db_pare_2018.users AS user')
-        ->join('demo_asn.tb_pegawai AS pegawai', 'user.id_pegawai', '=', 'pegawai.id')
-        ->join('demo_asn.tb_history_jabatan AS a', 'a.id_pegawai','=','pegawai.id')
-        ->where('a.status', '=', 'active')
-        ->join('demo_asn.m_skpd AS jabatan', 'jabatan.id','=','a.id_skpd')
-        ->join('demo_asn.m_skpd AS unit_kerja', 'a.id_jabatan','=','unit_kerja.id')
-        ->join('demo_asn.m_unit_kerja AS skpd', 'unit_kerja.id_skpd','=','skpd.id')
-        ->select([   'pegawai.nama',
-                    'user.username AS username',
-                    'user.id AS user_id',
-                    'pegawai.nip',
-                    'pegawai.gelardpn',
-                    'pegawai.gelarblk',
-                    'a.jabatan',
-                    'a.id_jabatan',
-                    'unit_kerja.id AS unit_kerja_id',
-                    'unit_kerja.skpd AS unit_kerja',
-                    'skpd.unit_kerja AS skpd',
-                    \DB::raw('@rownum  := @rownum  + 1 AS rownum')
-                ]);
         
+        $dt = \DB::table('demo_asn.tb_pegawai AS pegawai')
+                ->rightjoin('demo_asn.tb_history_jabatan AS a', function($join){
+                    $join   ->on('a.id_pegawai','=','pegawai.id');
+                    
+                })
+                
 
+                //eselon
+                ->leftjoin('demo_asn.m_eselon AS eselon', 'a.id_eselon','=','eselon.id')
+
+                 //golongan
+                 ->leftjoin('demo_asn.m_golongan AS golongan', 'a.id_golongan','=','golongan.id')
+
+                //jabatan
+                ->leftjoin('demo_asn.m_skpd AS jabatan', 'a.id_jabatan','=','jabatan.id')
+
+
+                //unit_kerja
+                ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
+                ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
+
+                
+                ->select([  'pegawai.nama',
+                            'pegawai.id AS pegawai_id',
+                            'pegawai.nip',
+                            'pegawai.gelardpn',
+                            'pegawai.gelarblk',
+                            'eselon.eselon AS eselon',
+                            'golongan.golongan AS golongan',
+                            'jabatan.skpd AS jabatan',
+                            'unit_kerja.unit_kerja'
+                
+                        ])
+                       
+                ->where('a.id_skpd','=', $id_skpd)
+                ->where('a.status', '=', 'active');
+               
+        
+        //unit kerja pegawai yaitu history_jabatan(id_unit_kerja)->m_skpd(parent_id)->m_unit_kerja(unit_kerja)
 
 
         $datatables = Datatables::of($dt)
-        ->addColumn('action', function ($x) {
-            return '<a href="user/'.$x->user_id.'/edit" class="btn btn-xs btn-primary" style="margin-top:2px; width:70px;"><i class="fa fa-edit"></i> Edit</a>'
-					.' <a href="user/'.$x->user_id.'" class="btn btn-xs btn-primary" style="margin-top:2px; width:70px;"><i class="fa  fa-eye"></i> Lihat</a>';
-        })->addColumn('nama_pegawai', function ($x) {
+        ->addColumn('nama_pegawai', function ($x) {
             
             return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
         
@@ -193,6 +281,15 @@ class PegawaiAPIController extends Controller {
             
             return Pustaka::capital_string($x->unit_kerja);
         
+        })->addColumn('jabatan', function ($x) {
+            
+            return Pustaka::capital_string($x->jabatan);
+        
+        })->addColumn('action', function ($x) {
+
+            $num_rows = User::WHERE('id_pegawai',$x->pegawai_id)->count();
+
+            return $num_rows;
         });
 
         
@@ -201,7 +298,6 @@ class PegawaiAPIController extends Controller {
         } 
 
         return $datatables->make(true);
-        
-    }
+    } 
 
 }
