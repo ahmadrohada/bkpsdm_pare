@@ -15,7 +15,7 @@
 			{{ Pustaka::capital_string($nama_skpd) }}
 			</h1>
 
-			{!! Breadcrumbs::render('skpd-pegawai') !!}
+			{!! Breadcrumbs::render('skpd') !!}
 
 	    </section>
 	    <section class="content">
@@ -23,7 +23,7 @@
 			
 				@include('admin.modules.skpd-home-snapshots-boxes')
 
- 				@include('admin.tables.skpd-pegawai')
+ 				@include('admin.tables.skpd-rkpd')
 		
 	    </section>
 	</div>

@@ -94,60 +94,7 @@ class UserController extends Controller {
 
 
 
-    public function listUser(Request $request)
-    {
-            
-        
-        $user                   = \Auth::user();
-        $users 			        = \DB::table('users')->get();
-
-       
-        $attemptsAllowed        = 4;
-
-        $total_users_confirmed  = $this->total_users();
-        $total_users_locked 	= 0;
-
-
-        $total_users_new        = 0;
-
-
-        $userRole               = $user->hasRole('user');
-        $admin_skpdRole         = $user->hasRole('admin_skpd');
-        $adminRole              = $user->hasRole('administrator');
-
-        if($userRole)
-        {
-            $access = 'User';
-        } elseif ($admin_skpdRole) {
-            $access = 'Admin Skpd';
-        } elseif ($adminRole) {
-            $access = 'Administrator';
-        }
-
-
-         //CARI id skpd nya
-        $id_skpd    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
-        $skpd       = Skpd::where('id_skpd', $id_skpd)->first()->unit_kerja;
-       
-       
-
-		return view('admin.pages.administrator-show-users', [
-                'users' 		          => $users,
-                'total_pegawai' 	      => $this->total_pegawai(),
-                'total_users' 	          => $this->total_users(),
-                'total_skpd'              => $this->total_skpd(),
-				'nama_skpd' 	          => $skpd,
-        		'user' 			          => $user,
-        		'access' 	              => $access,
-                'total_users_confirmed'   => $total_users_confirmed,
-                'total_users_locked'      => $total_users_locked,
-                'total_users_new'         => $total_users_new,
-                'h_box'                   => 'box-success',
-        	]
-        );   
-
-        
-    }
+    
 
 
     

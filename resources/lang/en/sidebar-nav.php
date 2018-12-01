@@ -52,6 +52,9 @@ return [
 	'icon_admin_user_edit' 		=> 'fa-cog',
 
 
+	//PEGAWAI
+	'link_title_pegawai'    		=> 'pegawai',
+	'link_icon_pegawai'     		=> 'fa-users',
 
 	// PERJANJIAN KINERJA LINKS
 	'link_title_perjanjian_kinerja'     => 'Perjanjian Kinerja',
@@ -96,6 +99,11 @@ return [
 	
 	'link_title_skpd'    => 'SKPD',
 	'link_icon_skpd'     => 'fa-university',
+
+	// SKPD
+	
+	'link_title_unit_kerja'    => 'Unit Kerja',
+	'link_icon_unit_kerja'     => 'fa-university',
 	
 	// SKP LINKS
 	

@@ -58,7 +58,7 @@
                 </p>
 
                 <hr>
-                <strong><i class="fa   fa-bar-chart margin-r-5"></i> Eselon</strong>
+                <strong><i class="fa   fa-bar-chart margin-r-5"></i>Jenis Jabatan / Eselon</strong>
                 <p class="text-muted">
                 {{ $jenis_jabatan }} / 
                 {{ $eselon }}

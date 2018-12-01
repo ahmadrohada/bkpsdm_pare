@@ -54,21 +54,26 @@ class DashboardController extends Controller
                                         $join   ->on('a.id_pegawai','=','tb_pegawai.id');
                                         $join   ->where('a.status','=', 'active');
                             })
-                            ->leftjoin('demo_asn.m_unit_kerja AS b ', function($join){
-                                $join   ->on('a.id_unit_kerja','=','b.id');
-                            })
-                            ->leftjoin('demo_asn.m_unit_kerja AS c ', function($join){
-                                $join   ->on('a.id_skpd','=','c.id');
-                            })
-                            ->leftjoin('demo_asn.m_eselon AS d ', function($join){
-                                $join   ->on('a.id_eselon','=','d.id');
-                            })
+
+                            //unit_kerja
+                            ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
+                            ->leftjoin('demo_asn.m_unit_kerja AS b', 's_skpd.parent_id','=','b.id')
+                    
+                            //skpd
+                            ->leftjoin('demo_asn.m_skpd AS c', 'a.id_skpd','=','c.id')
+
+
+                            //eselon
+                            ->leftjoin('demo_asn.m_eselon AS d', 'a.id_eselon','=','d.id')
+    
+                            //jenis_jabatan
                             ->leftjoin('demo_asn.m_jenis_jabatan AS e ', function($join){
                                 $join   ->on('d.id_jenis_jabatan','=','e.id');
                             })
-                            ->leftjoin('demo_asn.m_golongan AS f ', function($join){
-                                $join   ->on('a.id_golongan','=','f.id');
-                            })
+
+                            //golongan
+                            ->leftjoin('demo_asn.m_golongan AS f', 'a.id_golongan','=','f.id')
+                    
                             ->leftjoin('demo_asn.foto AS y ', function($join){
                                 $join   ->on('a.nip','=','y.nipbaru');
                             }) 
@@ -76,7 +81,7 @@ class DashboardController extends Controller
                             ->SELECT(   'tb_pegawai.*',
                                         'a.*',
                                         'b.unit_kerja AS unit_kerja',
-                                        'c.unit_kerja AS skpd',
+                                        'c.skpd AS skpd',
                                         'd.eselon AS eselon',
                                         'e.jenis_jabatan AS jenis_jabatan',
                                         'f.golongan AS golongan',

@@ -76,6 +76,20 @@ Breadcrumbs::register('skpd', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skpd'), '/SKPD', ['icon' => Lang::get('sidebar-nav.link_icon_skpd')]);
 });
 
+// DASHBOARD > SKPD > PEGAWAI >
+Breadcrumbs::register('skpd-pegawai', function($breadcrumbs)
+{
+    $breadcrumbs->parent('skpd');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_pegawai'), '/Pegawai', ['icon' => Lang::get('sidebar-nav.link_icon_pegawai')]);
+});
+
+// DASHBOARD > SKPD > UNIT KERJA >
+Breadcrumbs::register('skpd-unit_kerja', function($breadcrumbs)
+{
+    $breadcrumbs->parent('skpd');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_unit_kerja'), '/unit-kerja', ['icon' => Lang::get('sidebar-nav.link_icon_unit_kerja')]);
+});
+
 // DASHBOARD > USERS > SHOW RENCANA KERJA
 Breadcrumbs::register('rencana_kerja', function($breadcrumbs)
 {
