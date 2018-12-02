@@ -4,6 +4,7 @@
     {!! HTML::icon_link( "skpd/pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_home'), "<span>".Lang::get('sidebar-nav.link_title_home')."</span>", array('title' => Lang::get('sidebar-nav.link_title_home'))) !!}
 </li>
 
+<!--
 <li>
     {!! HTML::icon_link( "skpd/peta-jabatan", 'fa '.Lang::get('sidebar-nav.link_icon_peta_jabatan'), "<span>".Lang::get('sidebar-nav.link_title_peta_jabatan')."</span>", array('title' => Lang::get('sidebar-nav.link_title_peta_jabatan'))) !!}
 </li>
@@ -31,6 +32,7 @@
 </li>
 
 
+
  
 <li class="treeview">
     {!! HTML::icon_link( "skpd/skp", 'fa '.Lang::get('sidebar-nav.link_icon_skp'), "<span>".Lang::get('sidebar-nav.link_title_skp')."</span><i class='fa ".Lang::get('sidebar-nav.caret_folded')." pull-right'></i>", array('title' => Lang::get('sidebar-nav.link_title_skp'))) !!}
@@ -43,3 +45,7 @@
 		</li>
 	</ul>
 </li>
+
+
+
+-->

@@ -22,6 +22,8 @@ use App\Models\Program;
 use App\Models\IndikatorProgram;
 use App\Models\Kegiatan;
 use App\Models\IndikatorKegiatan;
+use App\Models\RencanaKerja;
+use App\Models\PetaJabatan;
 
 
 
@@ -108,59 +110,6 @@ class SKPDController extends Controller {
                
 	}
 
-    public function showSKPD(Request $request)
-    {
-            
-        
-        $user                   = \Auth::user();
-        $users 			        = \DB::table('users')->get();
-
-        
-        
-        $attemptsAllowed        = 4;
-
-        $total_users_confirmed  = $this->total_users();
-        $total_users_locked 	= 67;
-
-
-        $total_users_new        = 78;
-
-
-        $userRole               = $user->hasRole('user');
-        $admin_skpdRole         = $user->hasRole('admin_skpd');
-        $adminRole              = $user->hasRole('administrator');
-
-        if($userRole)
-        {
-            $access = 'User';
-        } elseif ($admin_skpdRole) {
-            $access = 'Admin Skpd';
-        } elseif ($adminRole) {
-            $access = 'Administrator';
-        }
-
-
-        //CARI id skpd nya
-        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
-       
-		return view('admin.pages.administrator-show-skpd', [
-                'users' 		          => $users,
-                'total_pegawai' 	      => $this->total_pegawai(),
-                'total_users' 	          => $this->total_users(),
-                'total_skpd'              => $this->total_skpd(),
-				'nama_skpd' 	          => $this->nama_skpd($skpd_id),
-        		'user' 			          => $user,
-        		'access' 	              => $access,
-                'total_users_confirmed'   => $total_users_confirmed,
-                'total_users_locked'      => $total_users_locked,
-                'total_users_new'         => $total_users_new,
-                'h_box'                   => 'box-danger',
-        	]
-        );   
-
-        
-    }
-
 
     public function showSKPDPegawai(Request $request)
     {
@@ -209,55 +158,36 @@ class SKPDController extends Controller {
         
     }
 
-    public function showPegawai(Request $request)
+
+    public function showSKPDPetaJabatan(Request $request)
     {
             
-        $user                   = \Auth::user();
-        
+        $skpd_id     = $request->skpd_id;
 
-        //CARI id skpd nya
-       $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
-       
 
-       return view('admin.pages.skpd-pegawai', [
-               //'users' 		          => $users,
-               'skpd_id'                 => $skpd_id,
-               'nama_skpd'     	      => $this->nama_skpd($skpd_id),
-               'total_pegawai' 	      => $this->total_pegawai_skpd($skpd_id),
-               'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
-               'total_jabatan'           => 'x',
-               'total_renja'             => 'x',
-               'h_box'                   => 'box-info',
-               
-           ]
-       );  
+        $renja 		= PetaJabatan::select('id','skpd','parent_id')
+                ->where('id_skpd','=',$skpd_id)
+                ->get();
 
-        
-    }
-    
-    public function showUnitKerja(Request $request)
-    {
-            
-        $skpd_id      = \Auth::user()->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+        //ORDER BY WEEK ASC,c.id ASC
+        $no = 0;
 
-        
-         
 
-		return view('admin.pages.administrator-skpd-unit_kerja', [
-                //'users' 		          => $users,
-                'skpd_id'                 => $skpd_id,
-                'nama_skpd'     	      => $this->nama_skpd($skpd_id),
-                'total_pegawai' 	      => $this->total_pegawai_skpd($skpd_id),
-                'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
-                'total_jabatan'           => 'x',
-                'total_renja'             => 'x',
-                'h_box'                   => 'box-danger',
-                
-        	]
-        );   
+        foreach ($renja as $x) {
 
+        $no++;
+
+        $sub_data['id']				= $x->id;
+        $sub_data['text']			= Pustaka::capital_string($x->skpd);
+        $sub_data['parent_id']		= $x->parent_id;
+
+        //array_push($response["list_renja"], $h);
+        $data[] = $sub_data ;	 
+
+        }
         
     }
+
 
     
 }

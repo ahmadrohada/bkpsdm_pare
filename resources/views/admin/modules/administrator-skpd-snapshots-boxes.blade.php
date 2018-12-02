@@ -84,15 +84,15 @@ $(document).ready(function(){
     });
 
 	$(".unit_kerja").click(function(){
-		window.location.assign("unit_kerja");
+		window.location.assign("unit-kerja");
     });
 
 	$(".peta_jabatan").click(function(){
-		window.location.assign("peta_jabatan");
+		window.location.assign("peta-jabatan");
     });
 
 	$(".rencana_kerja").click(function(){
-		window.location.assign("rencana_kerja");
+		window.location.assign("rencana-kerja");
     });
 
 

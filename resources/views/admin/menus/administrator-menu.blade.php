@@ -4,6 +4,7 @@
     {!! HTML::icon_link( "admin/pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_home'), "<span>".Lang::get('sidebar-nav.link_title_home')."</span>", array('title' => Lang::get('sidebar-nav.link_title_home'))) !!}
 </li>
 
+<!--
 <li>
     {!! HTML::icon_link( "admin/rencana-kerja", 'fa '.Lang::get('sidebar-nav.link_icon_renja'), "<span>".Lang::get('sidebar-nav.link_title_renja')."</span>", array('title' => Lang::get('sidebar-nav.link_title_renja'))) !!}
 </li>
@@ -23,3 +24,4 @@
 		</li>
 	</ul>
 </li>
+-->

@@ -45,7 +45,7 @@
 				<div class="small-box bg-green peta_jabatan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							{{$total_jabatan}}
+							*
 						</h3>
 						<p>
 							<strong>Peta Jabatan</strong>
@@ -60,10 +60,10 @@
 				<div class="small-box bg-yellow rencana_kerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							{{$total_renja}}
+							*
 						</h3>
 						<p>
-							<strong>Renja</strong>
+							<strong>RKPD</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -84,15 +84,15 @@ $(document).ready(function(){
     });
 
 	$(".unit_kerja").click(function(){
-		window.location.assign("unit_kerja");
+		window.location.assign("unit-kerja");
     });
 
 	$(".peta_jabatan").click(function(){
-		window.location.assign("peta_jabatan");
+		window.location.assign("peta-jabatan");
     });
 
 	$(".rencana_kerja").click(function(){
-		window.location.assign("rencana_kerja");
+		window.location.assign("rencana-kerja-perangkat-daerah");
     });
 
 
