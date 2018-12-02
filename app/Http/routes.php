@@ -123,6 +123,12 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skpd_peta_jabatan','API\PetaJabatanAPIController@skpd_peta_jabatan');
 
 
+	//========================================================================================================//
+	//================================== STRUKTUR ORGANISASI  ================================================//
+	//========================================================================================================//
+	Route::get('skpd_struktur_organisasi','API\StrukturOrganisasiAPIController@skpd_struktur_organisasi');
+
+
 	
 
 
@@ -398,6 +404,12 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	Route::get('rencana-kerja-perangkat-daerah', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeSKPDController@showRKPD'
+	]);
+
+
+	Route::get('struktur-organisasi', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeSKPDController@showStrukturOrganisasi'
 	]);
 
 
