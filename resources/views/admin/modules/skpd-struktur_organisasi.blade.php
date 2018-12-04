@@ -27,10 +27,10 @@
 <script src="../assets/org_diagram/js/jquery/jquery-ui-1.10.2.custom.min.js"></script>
 -->
 
-<link   href="../assets/org_diagram/css/primitives.latest.css" media="screen" rel="stylesheet" type="text/css" />
+<link   href="{{asset('assets/org_diagram/css/primitives.latest.css')}}" media="screen" rel="stylesheet" type="text/css" />
 
 
-<script src="../assets/org_diagram/js/primitives.latest.js"></script>
+<script src="{{asset('assets/org_diagram/js/primitives.latest.js')}}"></script>
 
 
 
@@ -42,7 +42,7 @@ $(document).ready(function() {
 			url		: "{{ url("api_resource/skpd_struktur_organisasi") }}",
 			method	: "GET",
 			dataType: "json",
-			data    : {},
+			data    : { skpd_id : {{$skpd_id}} },
 			success	: function(data) {
                 
             jQuery("#strukturorganisasi").orgDiagram({

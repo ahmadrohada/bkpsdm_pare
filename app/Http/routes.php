@@ -305,6 +305,14 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'SKPDController@showSKPDUnitKerja'
 	]);
 
+	Route::get('admin/skpd/{skpd_id}/struktur-organisasi', [
+		'uses' 			=> 'SKPDController@showSKPDStrukturOrganisasi'
+	]);
+
+	Route::get('admin/skpd/{skpd_id}/rencana-kerja-perangkat-daerah', [
+		'uses' 			=> 'SKPDController@showSKPDRencanaKerjaPerangkatDaerah'
+	]);
+
 	Route::get('admin/skpd/{skpd_id}/peta-jabatan', [
 		'uses' 			=> 'SKPDController@showSKPDPetaJabatan'
 	]);

@@ -42,13 +42,13 @@
 				</div>
 			</div>
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-green peta_jabatan" style="cursor:pointer;">
+				<div class="small-box bg-green struktur_organisasi" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							*
 						</h3>
 						<p>
-							<strong>Peta Jabatan</strong>
+							<strong>Struktur Organisasi</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -87,8 +87,8 @@ $(document).ready(function(){
 		window.location.assign("unit-kerja");
     });
 
-	$(".peta_jabatan").click(function(){
-		window.location.assign("peta-jabatan");
+	$(".struktur_organisasi").click(function(){
+		window.location.assign("struktur-organisasi");
     });
 
 	$(".rencana_kerja").click(function(){
