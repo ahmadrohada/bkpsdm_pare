@@ -28,11 +28,13 @@ class StrukturOrganisasiAPIController extends Controller {
     {
        
         
-       	$id_skpd_admin      = \Auth::user()->pegawai->history_jabatan
+       	/* 	$id_skpd_admin      = \Auth::user()->pegawai->history_jabatan
                                     ->where('status','active')
                                     ->first()
                                     ->id_skpd;
-
+		 */
+		 
+		$skpd_id     = $request->skpd_id;
         
 		$renja 		= PetaJabatan::join('demo_asn.tb_history_jabatan AS a', function($join){
 										$join   ->on('a.id_jabatan','=','m_skpd.id');
@@ -46,9 +48,9 @@ class StrukturOrganisasiAPIController extends Controller {
 									->leftjoin('demo_asn.m_eselon AS eselon', 'a.id_eselon','=','eselon.id')
 									->leftjoin('demo_asn.m_jenis_jabatan AS c', 'c.id','=','eselon.id_jenis_jabatan')
 
-									->leftjoin('demo_asn.foto AS y ', function($join){
+									/* ->leftjoin('demo_asn.foto AS y ', function($join){
 										$join   ->on('pegawai.nip','=','y.nipbaru');
-									}) 
+									})  */
 
 									->select(
 										'm_skpd.id',
@@ -59,15 +61,16 @@ class StrukturOrganisasiAPIController extends Controller {
 										'pegawai.gelardpn',
 										'pegawai.gelarblk',
 										'eselon.eselon',
-										'c.jenis_jabatan',
-										'y.isi AS foto'
+										'c.jenis_jabatan'
+										//,
+										//'y.isi AS foto'
 									)
 	
 
 								
 
-									->where('m_skpd.id_skpd','=',$id_skpd_admin)
-									->where('m_skpd.id','!=',$id_skpd_admin)
+									->where('m_skpd.id_skpd','=',$skpd_id)
+									->where('m_skpd.id','!=',$skpd_id)
 
 									
 

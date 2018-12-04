@@ -164,30 +164,53 @@ class SKPDController extends Controller {
             
         $skpd_id     = $request->skpd_id;
 
-
-        $renja 		= PetaJabatan::select('id','skpd','parent_id')
-                ->where('id_skpd','=',$skpd_id)
-                ->get();
-
-        //ORDER BY WEEK ASC,c.id ASC
-        $no = 0;
-
-
-        foreach ($renja as $x) {
-
-        $no++;
-
-        $sub_data['id']				= $x->id;
-        $sub_data['text']			= Pustaka::capital_string($x->skpd);
-        $sub_data['parent_id']		= $x->parent_id;
-
-        //array_push($response["list_renja"], $h);
-        $data[] = $sub_data ;	 
-
-        }
         
     }
 
+    public function ShowSKPDStrukturOrganisasi(Request $request)
+    {
+            
 
+        $skpd_id     = $request->skpd_id;
+        
+
+
+        return view('admin.pages.skpd-struktur_organisasi', [
+               //'users' 		         => $users,
+               'skpd_id'                => $skpd_id,
+               'nama_skpd'     	        => $this->nama_skpd($skpd_id),
+               'total_pegawai' 	        => $this->total_pegawai_skpd($skpd_id),
+               'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
+               'total_jabatan'          => 'x',
+               'total_renja'            => 'x',
+               'h_box'                  => 'box-success',
+               
+           ]
+        ); 
+        
+    }
+
+    public function showSKPDRencanaKerjaPerangkatDaerah(Request $request)
+    {
+            
+        
+        $skpd_id     = $request->skpd_id;
+       
+
+        return view('admin.pages.skpd-rkpd', [
+               //'users' 		         => $users,
+               'skpd_id'                => $skpd_id,
+               'nama_skpd'     	        => $this->nama_skpd($skpd_id),
+               'total_pegawai' 	        => $this->total_pegawai_skpd($skpd_id),
+               'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
+               'total_jabatan'          => 'x',
+               'total_renja'            => 'x',
+               'h_box'                  => 'box-warning',
+               
+           ]
+        );   
+
+        
+    }
     
 }
