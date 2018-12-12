@@ -23,7 +23,7 @@ class PerjanjianKinerja extends Model
 	 * relasi One-to-Many (belongsTo) sebagai penerima 'periode_tahunan_id'
 	 */
 	public function periode_tahunan() {
-		return $this->belongsTo('App\Models\PeriodeTahunan','periode_tahunan_id');
+		return $this->belongsTo('App\Models\PeriodeTahunan','periode_id');
 	}
 
 

@@ -46,7 +46,31 @@ Use Alert;
 
 class RKPDController extends Controller {
     
-    
+
+
+    public function editRKPD($rkpd_id)
+	{
+        //$skpd       = Skpd::where('id_skpd', $this->id_skpd_admin())->first();
+
+      /*  return view('admin.pages.skpd-rencana_kerja_perangkat_daerah', [
+               
+	  			]
+        );  */ 
+        
+		$perjanjian_kinerja	= PerjanjianKinerja::where('id', '=', 41)->firstOrFail();
+       
+
+
+        return view('admin.pages.skpd-rkpd_edit', [
+                'skpd'              => 'Badan Kepegawaian dan Pengembangan SDM',
+                'id_skpd'           => '42',
+                'perjanjian_kinerja'=> $perjanjian_kinerja,
+                'form_name'         => 'sasaran',
+        		
+	  			]
+        );   
+
+    }
 
 
     
