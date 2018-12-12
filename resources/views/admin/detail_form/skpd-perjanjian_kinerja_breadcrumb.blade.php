@@ -4,11 +4,11 @@
 		  <div class="box-body">
        
 			  <p class="text-default text-center ">PERJANJIAN KINERJA</p>
-		  	<p class="text-default text-center " style="margin-top:-14px;"><strong>{{ $perjanjian_kinerja->periode_tahunan->label }}</strong></p>
+		  	<p class="text-default text-center " style="margin-top:-14px;"><strong></strong></p>
 			
       
 
-			  <p class="text-info text-center">{{ $skpd->unit_kerja }}</p>
+			  <p class="text-info text-center"></p>
 
         <hr>
 
