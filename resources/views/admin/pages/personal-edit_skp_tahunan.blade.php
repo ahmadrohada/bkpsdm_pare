@@ -19,7 +19,7 @@
 					
 					@include('admin.detail_form.personal-skp_tahunan_detail')
 
-					@include('admin.tables.personal-kegiatan_skp_tahunan')
+					
 					
 				</div>
 			</div>
