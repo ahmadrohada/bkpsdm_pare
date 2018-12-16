@@ -10,7 +10,7 @@ use App\Models\PerjanjianKinerja;
 
 use App\Models\Tujuan;
 use App\Models\Sasaran;
-use App\Models\SKPD;
+use App\Models\Skpd;
 
 
 use App\Models\SasaranPerjanjianKinerja;
