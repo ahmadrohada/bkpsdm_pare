@@ -23,7 +23,7 @@
 			
 				@include('admin.modules.skpd-home-snapshots-boxes')
 
- 				@include('admin.tables.skpd-rkpd')
+ 				@include('admin.tables.skpd-renja')
 		
 	    </section>
 	</div>

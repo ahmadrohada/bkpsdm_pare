@@ -50,7 +50,11 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	
 
-	Route::get('skpd_rencana_kerja_list','API\RencanaKerjaAPIController@skpd_rencana_kerja_list');
+	Route::get('skpd_renja_tree','API\RenjaAPIController@skpd_renja_tree');
+	Route::get('skpd_renja_list','API\RenjaAPIController@skpd_renja_list');
+	Route::get('skpd_renja_distribusi_kegiatan_tree','API\RenjaAPIController@skpd_renja_distribusi_kegiatan_tree');
+
+	
 	
 
 
@@ -409,9 +413,9 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]);
 	
 
-	Route::get('rencana-kerja-perangkat-daerah', [
+	Route::get('renja', [
 		'as' 			=> '',
-		'uses' 			=> 'HomeSKPDController@showRKPD'
+		'uses' 			=> 'HomeSKPDController@showRenja'
 	]);
 
 
@@ -423,12 +427,12 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	//----------------------------------------------------------------------------------------//
 	//======================== RENCANA KERJA PERANGKAT DAERAH ================================//
 	//----------------------------------------------------------------------------------------//
-	Route::get('rencana-kerja-perangkat-daerah/{rkpd_id}/edit',[
+	Route::get('renja/{renja_id}',[
 		'as' 			=> '',
-		'uses' 			=> 'RKPDController@editRKPD'
+		'uses' 			=> 'RenjaController@showRenja'
 	]);
-
-	//sementara ke Renja
+	
+	
 
 
 	//----------------------------------------------------------------------------------------//

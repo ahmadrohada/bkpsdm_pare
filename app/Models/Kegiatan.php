@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kegiatan extends Model
 {
-    protected $table = 'kegiatan';
+    protected $table = 'renja_kegiatan';
 
 
 
@@ -16,11 +16,11 @@ class Kegiatan extends Model
     }
 
 
-    /* public function indikator_program()
+   /*  public function indikator_program()
     {
         return $this->belongTo('App\Models\IndikatorProgram');
-    } */
-
+    } 
+ */
     public function indikator_program()
     {
         return $this->hasOne('App\Models\IndikatorProgram','id','indikator_program_id');
@@ -35,4 +35,5 @@ class Kegiatan extends Model
     {
         return $this->belongsTo('App\Models\KegiatanTahunan','kegiatan_perjanjian_kinerja_id','kegiatan_perjanjian_kinerja_id');
     } 
+    
 }

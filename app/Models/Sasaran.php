@@ -6,12 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sasaran extends Model
 {
-    protected $table = 'sasaran';
-
-
-
-   
-
+    protected $table = 'renja_sasaran';
 
     public function tujuan()
     {
@@ -21,7 +16,7 @@ class Sasaran extends Model
     public function sasaran_perjanjian_kinerja()
     {
         return $this->belongsTo('App\Models\SasaranPerjanjianKinerja','sasaran_id','sasaran_id');
-    }
+    } 
 	
 	
 }

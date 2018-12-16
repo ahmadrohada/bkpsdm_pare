@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class IndikatorSasaran extends Model
 {
-    protected $table = 'indikator_sasaran';
+    protected $table = 'renja_indikator_sasaran';
 
 
 
-    public function program()
+   public function program()
     {
         return $this->hasMany('App\Models\Program');
     }
@@ -19,5 +19,5 @@ class IndikatorSasaran extends Model
     public function sasaran_perjanjian_kinerja()
     {
         return $this->belongsTo('App\Models\SasaranPerjanjianKinerja');
-    }
+    } 
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\PeriodeTahunan;
+use App\Models\Periode;
 use App\Models\PerjanjianKinerja;
 use App\Models\SKPTahunan;
 use App\Models\Pegawai;
@@ -51,7 +51,7 @@ class SKPTahunanAPIController extends Controller {
        
             $datatables = Datatables::of($dt)
            ->addColumn('periode', function ($x) {
-                return $x->perjanjian_kinerja->periode_tahunan->label;
+                //return $x->renja->periode->label;
             }) 
             ->addColumn('masa_penilaian', function ($x) {
                 $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);

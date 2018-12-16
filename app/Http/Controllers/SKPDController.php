@@ -190,14 +190,14 @@ class SKPDController extends Controller {
         
     }
 
-    public function showSKPDRencanaKerjaPerangkatDaerah(Request $request)
+    public function showSKPDRencanaKerja(Request $request)
     {
             
         
         $skpd_id     = $request->skpd_id;
        
 
-        return view('admin.pages.skpd-rkpd', [
+        return view('admin.pages.skpd-renja', [
                //'users' 		         => $users,
                'skpd_id'                => $skpd_id,
                'nama_skpd'     	        => $this->nama_skpd($skpd_id),

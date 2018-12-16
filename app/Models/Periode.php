@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PeriodeTahunan extends Model
+class Periode extends Model
 {
-    protected $table = 'periode_rkpd';
+    protected $table = 'periode';
 
     //protected $fillable = array('label');
 
 
-	public function perjanjian_kinerja() {
+	/* public function perjanjian_kinerja() {
 		return $this->hasOne('App\Models\PerjanjianKinerja','periode_id','id');
-	} 
+	}  */
 
 	
 }

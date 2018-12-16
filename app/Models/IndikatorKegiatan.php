@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class IndikatorKegiatan extends Model
 {
-    protected $table = 'indikator_kegiatan';
-
+    protected $table = 'renja_indikator_kegiatan';
 
 
     public function skp_tahunan()

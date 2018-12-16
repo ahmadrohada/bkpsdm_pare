@@ -90,6 +90,15 @@ Breadcrumbs::register('skpd-unit_kerja', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_unit_kerja'), '/unit-kerja', ['icon' => Lang::get('sidebar-nav.link_icon_unit_kerja')]);
 });
 
+
+// DASHBOARD > SKPD > Renja >
+Breadcrumbs::register('skpd-renja', function($breadcrumbs)
+{
+    $breadcrumbs->parent('skpd');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_renja'), '/renja', ['icon' => Lang::get('sidebar-nav.link_icon_renja')]);
+});
+
+
 // DASHBOARD > USERS > SHOW RENCANA KERJA
 Breadcrumbs::register('rencana_kerja', function($breadcrumbs)
 {

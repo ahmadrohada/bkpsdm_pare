@@ -14,7 +14,7 @@ use App\Models\Skpd;
 use App\Models\Sasaran;
 use App\Models\IndikatorSasaran;
 use App\Models\Program;
-use App\Models\PeriodeTahunan;
+use App\Models\Periode;
 use App\Helpers\Pustaka;
 
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
