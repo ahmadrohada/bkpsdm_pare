@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Skpd;
-use App\Models\PeriodeTahunan;
+use App\Models\Periode;
 
 use App\Models\SKPTahunan;
 use App\Models\Kegiatan;

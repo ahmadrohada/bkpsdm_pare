@@ -125,7 +125,7 @@ class HomeSKPDController extends Controller {
        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
 
-       return view('admin.pages.skpd-pegawai', [
+       return view('admin.pages.skpd-home-pegawai', [
                //'users' 		          => $users,
                'skpd_id'                 => $skpd_id,
                'nama_skpd'     	      => $this->nama_skpd($skpd_id),
@@ -149,7 +149,7 @@ class HomeSKPDController extends Controller {
         
          
 
-		return view('admin.pages.skpd-unit_kerja', [
+		return view('admin.pages.skpd-home-unit_kerja', [
                 //'users' 		          => $users,
                 'skpd_id'                 => $skpd_id,
                 'nama_skpd'     	      => $this->nama_skpd($skpd_id),
@@ -165,7 +165,7 @@ class HomeSKPDController extends Controller {
         
     }
 
-    public function showRKPD(Request $request)
+    public function showRenja(Request $request)
     {
             
         
@@ -176,7 +176,7 @@ class HomeSKPDController extends Controller {
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
 
-        return view('admin.pages.skpd-rkpd', [
+        return view('admin.pages.skpd-home-renja', [
                //'users' 		         => $users,
                'skpd_id'                => $skpd_id,
                'nama_skpd'     	        => $this->nama_skpd($skpd_id),
@@ -203,7 +203,7 @@ class HomeSKPDController extends Controller {
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
 
-        return view('admin.pages.skpd-peta_jabatan', [
+        return view('admin.pages.skpd-home-peta_jabatan', [
                //'users' 		         => $users,
                'skpd_id'                => $skpd_id,
                'nama_skpd'     	        => $this->nama_skpd($skpd_id),
@@ -229,7 +229,7 @@ class HomeSKPDController extends Controller {
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
 
-        return view('admin.pages.skpd-struktur_organisasi', [
+        return view('admin.pages.skpd-home-struktur_organisasi', [
                //'users' 		         => $users,
                'skpd_id'                => $skpd_id,
                'nama_skpd'     	        => $this->nama_skpd($skpd_id),

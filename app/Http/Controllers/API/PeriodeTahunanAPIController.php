@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\APIBaseController as APIBaseController;
 
-use App\Models\PeriodeTahunan;
+use App\Models\Periode;
 use Validator;
 
 

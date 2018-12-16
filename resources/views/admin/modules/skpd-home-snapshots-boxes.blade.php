@@ -63,7 +63,7 @@
 							*
 						</h3>
 						<p>
-							<strong>RKPD</strong>
+							<strong>Renja</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -92,7 +92,7 @@ $(document).ready(function(){
     });
 
 	$(".rencana_kerja").click(function(){
-		window.location.assign("rencana-kerja-perangkat-daerah");
+		window.location.assign("renja");
     });
 
 

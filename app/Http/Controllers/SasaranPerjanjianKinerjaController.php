@@ -12,7 +12,7 @@ use App\Models\UsersRole;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
 use App\Models\Skpd;
-use App\Models\PeriodeTahunan;
+use App\Models\Periode;
 
 use App\Models\PerjanjianKinerja;
 use App\Models\Sasaran;

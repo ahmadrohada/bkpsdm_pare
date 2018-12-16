@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class IndikatorProgram extends Model
 {
-    protected $table = 'indikator_program';
+    protected $table = 'renja_indikator_program';
 
 
 
@@ -15,8 +15,8 @@ class IndikatorProgram extends Model
         return $this->hasMany('App\Models\Kegiatan');
     }
 
-
-    /* public function program()
+/* 
+     public function program()
     {
         return $this->belongTo('App\Models\Program');
     } */
@@ -25,4 +25,5 @@ class IndikatorProgram extends Model
     {
         return $this->hasOne('App\Models\Program','id','program_id');
     }
-}
+    
+} 

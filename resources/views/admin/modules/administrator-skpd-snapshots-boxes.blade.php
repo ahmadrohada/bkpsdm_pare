@@ -92,7 +92,7 @@ $(document).ready(function(){
     });
 
 	$(".rencana_kerja").click(function(){
-		window.location.assign("rencana-kerja");
+		window.location.assign("renja");
     });
 
 

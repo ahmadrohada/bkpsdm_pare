@@ -49,14 +49,14 @@
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skpd_rencana_kerja_list") }}',
+									url	: '{{ url("api_resource/skpd_renja_list") }}',
 									data: { skpd_id : {{$skpd_id}} },
 									delay:3000
 								},
 				
 
 				columns	:[
-								{ data: 'rkpd_id' , orderable: true,searchable:false,
+								{ data: 'renja_id' , orderable: true,searchable:false,
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
@@ -70,7 +70,7 @@
 										if ( row.status == 1){
 											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="{{ url('/admin/pegawai') }}/'+row.pegawai_id+'" class="btn btn-xs btn-success"><i class="fa fa-eye"></i></a></span>';
 										}else{
-											return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" class=""><a href="{{ url('skpd/rencana-kerja-perangkat-daerah') }}/'+row.rkpd_id+'/edit" class="btn btn-xs btn-info"><i class="fa fa-edit"></i></a></span>';
+											return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" class=""><a href="{{ url('skpd/renja') }}/'+row.renja_id+'" class="btn btn-xs btn-info"><i class="fa fa-edit"></i></a></span>';
 											
 										}
 									}
