@@ -24,21 +24,21 @@
 				<div class="form-group form-group-sm" style="margin-top:10px;">
 					<label class="col-md-4">Tanggal dibuat</label>
 					<div class="col-md-8">
-						<span id="date_created" class="form-control"></span>
+						<span id="date_created" class="form-control">{{ Pustaka::tgl_jam($skp_tahunan->created_at) }}</span>
 					</div>
 				</div>
 
 				<div class="form-group form-group-sm" style="margin-top:-10px;">
 					<label class="col-md-4">Periode SKP</label>
 					<div class="col-md-8">
-						<span id="periode" class="form-control"></span>
+						<span id="periode" class="form-control">{{ $skp_tahunan->perjanjian_kinerja->renja->periode->label }}</span>
 					</div>
 				</div>
 
 				<div class="form-group form-group-sm" style="margin-top:-10px;">
 					<label class="col-md-4">Masa Penilaian</label>
 					<div class="col-md-8">
-						<span id="masa_penilaian" class="form-control"></span>
+						<span id="masa_penilaian" class="form-control">{{ Pustaka::balik2($skp_tahunan->tgl_mulai)  }}  s.d  {{ Pustaka::balik2($skp_tahunan->tgl_selesai)  }}</span>
 					</div>
 				</div>
 				
