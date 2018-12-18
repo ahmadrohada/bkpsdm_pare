@@ -31,7 +31,7 @@
 				<div class="form-group form-group-sm" style="margin-top:-10px;">
 					<label class="col-md-4">Periode SKP</label>
 					<div class="col-md-8">
-						<span id="periode" class="form-control">{{ $skp_tahunan->perjanjian_kinerja->renja->periode->label }}</span>
+						<span id="periode" class="form-control"></span>
 					</div>
 				</div>
 
