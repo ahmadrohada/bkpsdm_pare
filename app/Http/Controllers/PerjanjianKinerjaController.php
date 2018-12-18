@@ -11,7 +11,8 @@ use App\Models\Role;
 use App\Models\UsersRole;
 use App\Models\Pegawai;
 use App\Models\Skpd;
-use App\Models\PeriodeTahunan;
+use App\Models\Periode;
+use App\Models\Renja;
 
 use App\Models\PerjanjianKinerja;
 use App\Models\Sasaran;
@@ -54,19 +55,44 @@ class PerjanjianKinerjaController extends Controller {
     protected function user()
 	{
         return  \Auth::user();
-	}
+    }
+    
+    protected function nama_skpd($skpd_id){
+        //nama SKPD 
+        $nama_skpd       = \DB::table('demo_asn.m_skpd AS skpd')
+                        ->WHERE('id',$skpd_id)
+                        ->SELECT(['skpd.skpd AS skpd'])
+                        ->first();
+        return $nama_skpd->skpd;
+    }
 
 
 
-    public function SKPDPerjanjianKinerja()
+    public function showPerjanjianKinerja(request $x)
 	{
-        //$skpd       = Skpd::where('id_skpd', $this->id_skpd_admin())->first();
+         
+        
+        $renja	= Renja::where('id', '=', 2)
+                        ->select('id','periode_id','skpd_id','kepala_skpd_id','admin_skpd_id','status','created_at')
+                        ->first();
+       
 
-       return view('admin.pages.skpd-perjanjian_kinerja', [
-                'skpd'      => $this->skpd(),
-        		'user' 		=> $this->user()
+
+        return view('admin.pages.skpd-perjanjian_kinerja', [
+
+
+
+                'nama_skpd'         => $this->nama_skpd($renja->skpd_id),
+                'periode'           => $renja->Periode->label,
+                'kepala_skpd'       => Pustaka::nama_pegawai($renja->KepalaSKPD->Pegawai->gelardpn , $renja->KepalaSKPD->Pegawai->nama , $renja->KepalaSKPD->Pegawai->gelarblk),
+                'admin_skpd'        => Pustaka::nama_pegawai($renja->AdminSKPD->Pegawai->gelardpn , $renja->AdminSKPD->Pegawai->nama , $renja->AdminSKPD->Pegawai->gelarblk),
+                'created_at'        => $renja->created_at,
+                'h_box'             => 'box-info',
+
+        		
 	  			]
-        );    
+        );   
+
     }
 
 

@@ -72,7 +72,7 @@ $(document).ready(function() {
 								{ className: "text-right", targets: [ 6 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/kegiatan_tugas_jabatan_list") }}',
+								url	: '',
 								data: { skp_tahunan_id:'7' },
 							  },
 			columns			: [

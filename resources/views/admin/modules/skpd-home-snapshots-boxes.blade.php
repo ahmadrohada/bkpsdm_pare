@@ -5,8 +5,7 @@
         </h3>
         <div class="box-tools pull-right">
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
-            {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
-        </div>
+           </div>
     </div>
 	<div class="box-body">
 		<div class="row">
@@ -71,6 +70,25 @@
 					</div>
 				</div>
 			</div>
+
+
+			<div class="col-md-3 col-xs-6">
+				<div class="small-box bg-aqua perjanjian_kinerja" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							<strong>Perjanjian Kinerja</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa fa-tasks"></i>
+					</div>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 </div>
@@ -95,6 +113,9 @@ $(document).ready(function(){
 		window.location.assign("renja");
     });
 
+	$(".perjanjian_kinerja").click(function(){
+		window.location.assign("perjanjian-kinerja");
+    });
 
 });
 </script>

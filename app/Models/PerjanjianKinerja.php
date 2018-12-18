@@ -33,9 +33,9 @@ class PerjanjianKinerja extends Model
         return $this->belongsTo('App\Models\SasaranPerjanjianKinerja','id');
     }
 
-    public function skpd()
+    public function renja()
     {
-       return $this->hasOne('App\Models\Skpd', 'parent_id','skpd_id');
+       return $this->hasOne('App\Models\Renja', 'id','renja_id');
     }
     
 }

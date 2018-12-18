@@ -28,9 +28,6 @@
 </div>
 
 
-@section('template_scripts')
-
-@include('admin.structure.dashboard-scripts')
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -83,5 +80,3 @@
 	
 	});
 </script>
-
-@endsection

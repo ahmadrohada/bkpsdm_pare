@@ -38,11 +38,11 @@ class KegiatanSKPTahunanAPIController extends Controller {
         
         \DB::statement(\DB::raw('set @rownum=0'));
         $dt = Kegiatan:: 
-                whereHas('indikator_program' , function ($q) {
-                   $q->whereHas('program',function($q2){
-                       $q2->whereHas('indikator_sasaran',function($q3){
-                            $q3->whereHas('sasaran_perjanjian_kinerja',function($q4){
-                                $q4->where('perjanjian_kinerja_id', '40')->where('jabatan_id', '900');
+                whereHas('renja_indikator_program' , function ($q) {
+                   $q->whereHas('renja_program',function($q2){
+                       $q2->whereHas('renja_indikator_sasaran',function($q3){
+                            $q3->whereHas('renja_sasaran',function($q4){
+                                $q4->where('perjanjian_kinerja_id', '3')->where('jabatan_id', '900');
                             });
 
                        });
