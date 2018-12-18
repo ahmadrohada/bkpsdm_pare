@@ -62,6 +62,11 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//====================== PERJANJIAN KINERNA SKPD =========================================================//
 	//========================================================================================================//
 
+	Route::get('skpd_perjanjian_kinerja_list','API\PerjanjianKinerjaAPIController@SKPDPerjanjianKinerja_list');
+
+/* 
+
+
 	Route::get('breadcrumb-perjanjian-kinerja','API\PerjanjianKinerjaAPIController@SKPDPerjanjianKinerjaBreadcrumb');
 	
 	Route::get('skpd_periode_perjanjian_kinerja_list','API\PerjanjianKinerjaAPIController@SKPDPeriodePerjanjianKinerja');
@@ -86,7 +91,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::get('skpd_indikator_kegiatan_perjanjian_kinerja_list','API\IndikatorKegiatanAPIController@SKPD_indikator_kegiatan_perjanjian_kinerja_list');
 	Route::post('skpd_simpan_indikator_kegiatan','API\IndikatorKegiatanAPIController@Store');
-
+ */
 	//========================================================================================================//
 	//================================== PERSONAL SKP THAUNAN=================================================//
 	//========================================================================================================//
@@ -424,6 +429,12 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'HomeSKPDController@showStrukturOrganisasi'
 	]);
 
+
+	Route::get('perjanjian-kinerja', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeSKPDController@showPerjanjianKinerja'
+	]);
+
 	//----------------------------------------------------------------------------------------//
 	//======================== RENCANA KERJA PERANGKAT DAERAH ================================//
 	//----------------------------------------------------------------------------------------//
@@ -438,9 +449,12 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	//----------------------------------------------------------------------------------------//
 	//============================== PERJANJIAN KINERJA  =====================================//
 	//----------------------------------------------------------------------------------------//
-	Route::get('perjanjian-kinerja'				,'PerjanjianKinerjaController@SKPDPerjanjianKinerja');
-	//Route::get('skpd-data-perjanjian-kinerja'	,'PerjanjianKinerjaController@SKPDDataPerjanjianKinerja');
+	Route::get('perjanjian_kinerja/{pk_id_id}',[
+		'as' 			=> '',
+		'uses' 			=> 'PerjanjianKinerjaController@showPerjanjianKinerja'
+	]);
 
+	/* 
 	//======= SIMPAN  PERJANJIAN KINERJA DATA AJAX ==========//
 	Route::post('skpd/simpan-perjanjian-kinerja', [
 		'as' 			=> '',
@@ -464,7 +478,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 
 	//=======  EDIT KEGIATAN PERJANJIAN KINERJA   ===============//
 	Route::get('edit-perjanjian-kinerja/{perjanjian_kinerja_id}/kegiatan/{kegiatan_id}', 'PerjanjianKinerjaController@SKPDEditPerjanjianKinerja_indikator_kegiatan');
-
+ */
 /* 
 
 

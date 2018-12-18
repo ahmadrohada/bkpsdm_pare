@@ -25,63 +25,62 @@ class PerjanjianKinerjaAPIController extends Controller {
 
    
 
-    public function SKPDPeriodePerjanjianKinerja(Request $request)
+    public function SKPDPerjanjianKinerja_list(Request $request)
     {
             
-        \DB::statement(\DB::raw('set @rownum='.$request->get('start')));
-       
-       
-        $dt = PeriodeTahunan::leftjoin('perjanjian_kinerja','periode_tahunan.id','=','perjanjian_kinerja.periode_tahunan_id')
-           
-             ->select([   
-                           
-            \DB::raw('@rownum  := @rownum  + 1 AS rownum'), 
-            'periode_tahunan.id AS periode_tahunan_id',
-            'periode_tahunan.label',
-            'periode_tahunan.status',
-            'periode_tahunan.awal',
-            'periode_tahunan.akhir',
-            'perjanjian_kinerja.id AS perjanjian_kinerja_id',
-            'perjanjian_kinerja.publish AS perjanjian_kinerja_status'
-            
-            ])
-            ->orderBy('periode_tahunan.id', 'ASC')
-            ->get();
+        $dt = \DB::table('db_pare_2018.renja AS renja')
+                   
+                    ->rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
+                        $join   ->on('pk.renja_id','=','renja.id');
+                    }) //ID KEPALA SKPD
+                    ->leftjoin('demo_asn.tb_history_jabatan AS id_ka_skpd', function($join){
+                        $join   ->on('id_ka_skpd.id','=','renja.kepala_skpd_id');
+                    })
+                    //NAMA KEPALA SKPD
+                    ->leftjoin('demo_asn.tb_pegawai AS kepala_skpd', function($join){
+                        $join   ->on('kepala_skpd.id','=','id_ka_skpd.id_pegawai');
+                    })//PERIODE
+                    ->join('db_pare_2018.periode AS periode', function($join){
+                        $join   ->on('periode.id','=','renja.periode_id');
+                        
+                    })
+
+                    ->select([  'pk.id AS pk_id',
+                                'periode.label AS periode',
+                                'kepala_skpd.nama',
+                                'kepala_skpd.gelardpn',
+                                'kepala_skpd.gelarblk',
+                                'renja.status'
+                                
+                        ])
+                    ->where('renja.skpd_id','=', $request->skpd_id);
 
        
-            $datatables = Datatables::of($dt)
-           ->addColumn('periode_tahunan', function ($x) {
-                return $x->label;
-            }) 
-            ->addColumn('masa_periode', function ($x) {
-                $masa_periode = Pustaka::balik2($x->awal). ' s.d ' . Pustaka::balik2($x->akhir);
-                return  $masa_periode ;
-            }) 
-            ->editColumn('action', function ($x){
-
-               
-                if ( $x->perjanjian_kinerja_id != null )
-                {
-                    
-                    if ( $x->perjanjian_kinerja_status == '0'){
-                        return 	'<a href="edit-perjanjian-kinerja/'.$x->perjanjian_kinerja_id.'/sasaran-perjanjian-kinerja" class="btn btn-xs btn-info" style="margin:2px;width:90px;"><i class="fa fa-pencil"></i> Edit</a>';
-                    }else{
-                        return 	'<a href="perjanjian-kinerja/'.$x->perjanjian_kinerja_id.'" class="btn btn-xs btn-primary" style="margin:2px;width:90px;"><i class="fa fa-eye"></i> Lihat</a>';
-                    }
-                    
-                }else{
-                    //--- show create button
-                    return 	'<a href="#" data-toggle="modal" data-target=".create-perjanjian_kinerja_confirm" data-url="simpan-perjanjian-kinerja" data-id="'.$x->periode_tahunan_id.'" data-label="'.$x->label.'"  class="btn btn-xs btn-success create" style="margin:2px;width:90px;"><i class="fa fa-plus"></i> Create </a>';
-                }   
-            });
-    
-            if ($keyword = $request->get('search')['value']) {
-                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-            } 
+                    $datatables = Datatables::of($dt)
+                    ->addColumn('status', function ($x) {
             
-    
-        return $datatables->make(true);
-        //return $this->sendResponse($datatables->make(true),'sukses');
+                        return $x->status;
+            
+                    })->addColumn('periode', function ($x) {
+                        
+                        return $x->periode;
+                    
+                    })->addColumn('kepala_skpd', function ($x) {
+                        
+                        return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
+                    
+                    })->addColumn('skpd', function ($x) {
+                        
+                        //return Pustaka::capital_string($x->skpd);
+                    
+                    });
+            
+                    
+                    if ($keyword = $request->get('search')['value']) {
+                        $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+                    } 
+            
+                    return $datatables->make(true);
         
     }
 

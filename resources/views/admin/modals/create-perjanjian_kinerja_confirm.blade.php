@@ -14,7 +14,7 @@
 
             <div class="modal-body">
                 <input type="hidden" name="periode_tahunan_id" class="form-control periode_tahunan_id" required="">
-                <input type="hidden" name="skpd_id" class="form-control" value="{!!  $skpd->id !!}" required="">
+                <input type="hidden" name="skpd_id" class="form-control" value="{!!  $skpd_id !!}" required="">
                 {{ csrf_field() }}
                  Anda Akan Membuat <strong>PERJANJIAN KINERJA</strong> untuk <strong><span class="periode"></span></strong>    
             </div>
@@ -40,7 +40,6 @@ $(document).ready(function() {
 		
         var data = $('#create-perjanjian-kinerja-form').serialize();
 		$.ajax({
-			//url		: '{{ action('PerjanjianKinerjaController@Store') }}',
 			url		: '{{ url("api_resource/skpd_simpan_perjanjian_kinerja") }}',
 			type	: 'POST',
 			data	:  data,

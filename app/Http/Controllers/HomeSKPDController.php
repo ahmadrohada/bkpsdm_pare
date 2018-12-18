@@ -244,5 +244,32 @@ class HomeSKPDController extends Controller {
         
     }
 
+
+    public function showPerjanjianKinerja(Request $request)
+    {
+            
+        
+        $user                   = \Auth::user();
+        
+
+        //CARI id skpd nya
+        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+       
+
+        return view('admin.pages.skpd-home-perjanjian_kinerja', [
+               //'users' 		         => $users,
+               'skpd_id'                => $skpd_id,
+               'nama_skpd'     	        => $this->nama_skpd($skpd_id),
+               'total_pegawai' 	        => $this->total_pegawai_skpd($skpd_id),
+               'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
+               'total_jabatan'          => 'x',
+               'total_renja'            => 'x',
+               'h_box'                  => 'box-warning',
+               
+           ]
+        );   
+
+        
+    }
     
 }

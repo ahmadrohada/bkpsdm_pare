@@ -1,5 +1,5 @@
-
-        <strong><i class="fa fa-university margin-r-5"></i> SKPD</strong>
+<div class="" style="margin:30px 0 0 20px;">
+		<strong><i class="fa fa-university margin-r-5"></i> SKPD</strong>
 		<p class="text-muted" style="margin-left:25px;">
 			{{ Pustaka::capital_string($nama_skpd) }}
         </p>
@@ -30,6 +30,8 @@
 		<p class="text-muted" style="margin-left:25px;">
 			{{ $created_at }}
 		</p>
+</div>
+       
 
 		
 	
