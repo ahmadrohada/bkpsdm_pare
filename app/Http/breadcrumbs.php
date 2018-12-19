@@ -109,11 +109,19 @@ Breadcrumbs::register('rencana_kerja', function($breadcrumbs)
 
 
 // DASHBOARD > USERS > SHOW PETA JABATAN
+Breadcrumbs::register('skp_tahunan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_tahunan'), '/skp tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_tahunan')]);
+});
+
+// DASHBOARD > USERS > SHOW PETA JABATAN
 Breadcrumbs::register('peta_jabatan', function($breadcrumbs)
 {
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_peta_jabatan'), '/peta jabatan', ['icon' => Lang::get('sidebar-nav.link_icon_peta_jabatan')]);
 });
+
 
 
 

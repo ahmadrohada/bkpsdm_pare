@@ -16,11 +16,11 @@ class SKPTahunan extends Model
     
     public function pejabat_yang_dinilai()
     {
-        return $this->hasOne('App\Models\HistoryJabatan','id','jabatan_id');
+        return $this->hasOne('App\Models\HistoryJabatan','id','u_jabatan_id');
     }
 
     public function pejabat_penilai()
     {
-        return $this->hasOne('App\Models\HistoryJabatan','id','jabatan_atasan_id');
+        return $this->hasOne('App\Models\HistoryJabatan','id','p_jabatan_id');
     }
 }

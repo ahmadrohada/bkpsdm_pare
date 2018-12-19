@@ -88,6 +88,22 @@
 				</div>
 			</div>
 
+			<div class="col-md-3 col-xs-6">
+				<div class="small-box bg-red skp_tahunan" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							<strong>SKP Tahunan</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa  fa-tasks"></i>
+					</div>
+				</div>
+			</div>
+
 
 		</div>
 	</div>
@@ -115,6 +131,10 @@ $(document).ready(function(){
 
 	$(".perjanjian_kinerja").click(function(){
 		window.location.assign("perjanjian-kinerja");
+    });
+
+	$(".skp_tahunan").click(function(){
+		window.location.assign("skp-tahunan");
     });
 
 });

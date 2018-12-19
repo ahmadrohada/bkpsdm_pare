@@ -64,6 +64,17 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::get('skpd_perjanjian_kinerja_list','API\PerjanjianKinerjaAPIController@SKPDPerjanjianKinerja_list');
 
+
+
+	//========================================================================================================//
+	//====================== SKP TAHUNAN SKPD =========================================================//
+	//========================================================================================================//
+
+	Route::get('skpd_skp_tahunan_list','API\SKPTahunanAPIController@SKPDSKPTahunan_list');
+
+
+
+
 /* 
 
 
@@ -435,6 +446,12 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'HomeSKPDController@showPerjanjianKinerja'
 	]);
 
+
+	Route::get('skp-tahunan', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeSKPDController@showSKPTahunan'
+	]);
+
 	//----------------------------------------------------------------------------------------//
 	//======================== RENCANA KERJA PERANGKAT DAERAH ================================//
 	//----------------------------------------------------------------------------------------//
@@ -453,6 +470,18 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'as' 			=> '',
 		'uses' 			=> 'PerjanjianKinerjaController@showPerjanjianKinerja'
 	]);
+
+
+
+	//----------------------------------------------------------------------------------------//
+	//================================= SKP TAHUNAN      =====================================//
+	//----------------------------------------------------------------------------------------//
+	Route::get('skp_tahunan/{skp_tahunan_id}',[
+		'as' 			=> '',
+		'uses' 			=> 'SKPTahunanController@SKPTahunanPersonalEdit'
+	]);
+
+
 
 	/* 
 	//======= SIMPAN  PERJANJIAN KINERJA DATA AJAX ==========//

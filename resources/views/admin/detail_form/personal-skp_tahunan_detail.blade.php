@@ -24,21 +24,21 @@
 				<div class="form-group form-group-sm" style="margin-top:10px;">
 					<label class="col-md-4">Tanggal dibuat</label>
 					<div class="col-md-8">
-						<span id="date_created" class="form-control">{{ Pustaka::tgl_jam($skp_tahunan->created_at) }}</span>
+						<span id="date_created" class="form-control"></span>
 					</div>
 				</div>
 
 				<div class="form-group form-group-sm" style="margin-top:-10px;">
 					<label class="col-md-4">Periode SKP</label>
 					<div class="col-md-8">
-						<span id="periode" class="form-control">{{ $skp_tahunan->perjanjian_kinerja->renja->periode->label }}</span>
+						<span id="periode" class="form-control"></span>
 					</div>
 				</div>
 
 				<div class="form-group form-group-sm" style="margin-top:-10px;">
 					<label class="col-md-4">Masa Penilaian</label>
 					<div class="col-md-8">
-						<span id="masa_penilaian" class="form-control">{{ Pustaka::balik2($skp_tahunan->tgl_mulai)  }}  s.d  {{ Pustaka::balik2($skp_tahunan->tgl_selesai)  }}</span>
+						<span id="masa_penilaian" class="form-control"></span>
 					</div>
 				</div>
 				
@@ -77,7 +77,7 @@
 						<div class="form-group form-group-sm form_nip"  style="margin-top:10px !important;">
 							<label class="col-md-4">NIP</label>
 							<div class="col-md-8">
-								<span id="p_nip" class="form-control p_nip">{{ $nip_penilai }}</span>
+								<span id="p_nip" class="form-control p_nip"></span>
 							</div>
 						</div>
 
@@ -91,14 +91,14 @@
 						<div class="form-group form-group-sm" style="margin-top:-10px;">
 							<label class="col-md-4 " >Nama Pegawai</label>
 							<div class="col-md-8">
-								<span id="p_nama"  class="form-control">{{ $nama_pejabat_penilai}}</span>
+								<span id="p_nama"  class="form-control"></span>
 							</div>
 						</div>
 						
 						<div class="form-group form-group-sm" style="margin-top:-10px;">
 							<label class="col-md-4 " >Pangkat / Gol</label>
 							<div class="col-md-8">
-								<span id="p_golongan" class="form-control">{{ $pangkat_golongan_pejabat_penilai }}</span>
+								<span id="p_golongan" class="form-control"></span>
 							</div>
 						</div>
 						
@@ -106,21 +106,21 @@
 						<div class="form-group form-group-sm" style="margin-top:-10px;">
 							<label class="col-md-4 " >Eselon</label>
 							<div class="col-md-8">
-								<span id="p_eselon" class="form-control">{{ $eselon_pejabat_penilai }}</span>
+								<span id="p_eselon" class="form-control"></span>
 							</div>
 						</div>
 						
 						<div class="form-group form-group-sm" style="margin-top:-10px;">
 							<label class="col-md-4 ">Jabatan</label>
 							<div class="col-md-8">
-								<span id="p_jabatan"class="form-control" style="height:48px;">{{ $jabatan_pejabat_penilai }}</span>
+								<span id="p_jabatan"class="form-control" style="height:48px;"></span>
 							</div>
 						</div>
 
 						<div class="form-group form-group-sm" style="margin-top:-10px;">
 							<label class="col-md-4">Unit Kerja</label>
 							<div class="col-md-8">
-								<span class="form-control" id="p_unit_kerja"  style="height:60px;">{{ $unit_kerja_pejabat_penilai }}</span>
+								<span class="form-control" id="p_unit_kerja"  style="height:60px;"></span>
 							</div>
 						</div>
 					</div>	
@@ -136,42 +136,42 @@
 						<div class="form-group form-group-sm"  style="margin-top:10px;">
 							<label class="col-md-4">NIP</label>
 							<div class="col-md-8">
-								<span id="u_nip" class="form-control">{{ $pejabat_yang_dinilai->nip }}</span>
+								<span id="u_nip" class="form-control"></span>
 							</div>
 						</div>
 
 						<div class="form-group form-group-sm" style="margin-top:-10px;">
 							<label class="col-md-4 " >Nama Pegawai</label>
 							<div class="col-md-8">
-								<span id="u_nama" class="form-control">{{ $skp_tahunan->u_nama }}</span>
+								<span id="u_nama" class="form-control"></span>
 							</div>
 						</div>
 						
 						<div class="form-group form-group-sm" style="margin-top:-10px;">
 							<label class="col-md-4 " >Pangkat / Gol</label>
 							<div class="col-md-8">
-								<span id="u_golongan" class="form-control">{{ $pejabat_yang_dinilai->golongan->pangkat }} &nbsp;<b> / </b>&nbsp; {{ $pejabat_yang_dinilai->golongan->golongan }}</span>
+								<span id="u_golongan" class="form-control"> &nbsp;<b> / </b>&nbsp; </span>
 							</div>
 						</div>
 
 						<div class="form-group form-group-sm" style="margin-top:-10px;">
 							<label class="col-md-4 " >Eselon</label>
 							<div class="col-md-8">
-								<span id="u_eselon" class="form-control">{{ $pejabat_yang_dinilai->eselon->eselon }}</span>
+								<span id="u_eselon" class="form-control"></span>
 							</div>
 						</div>
 
 						<div class="form-group form-group-sm" style="margin-top:-10px;">
 							<label class="col-md-4 ">Jabatan</label>
 							<div class="col-md-8">
-								<span id="u_jabatan" class="form-control" style="height:48px;">{{ $pejabat_yang_dinilai->jabatan }}</span>
+								<span id="u_jabatan" class="form-control" style="height:48px;"></span>
 							</div>
 						</div>
 
 						<div class="form-group form-group-sm" style="margin-top:-10px;">
 							<label class="col-md-4">Unit Kerja</label>
 							<div class="col-md-8">
-								<span class="form-control" id="u_unit_kerja"  style="height:60px;">{{ Pustaka::capital_string($pejabat_yang_dinilai->UnitKerja->unit_kerja) }}</span>
+								<span class="form-control" id="u_unit_kerja"  style="height:60px;"></span>
 							</div>
 						</div>
 					</div>	  
