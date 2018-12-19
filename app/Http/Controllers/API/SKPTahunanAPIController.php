@@ -10,6 +10,7 @@ use App\Models\SKPTahunan;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
 use App\Models\Golongan;
+use App\Models\Eselon;
 
 
 use App\Helpers\Pustaka;
@@ -24,6 +25,101 @@ class SKPTahunanAPIController extends Controller {
 
 
    
+
+    public function SKPDSKPTahunan_list(Request $request)
+    {
+            
+        $dt = \DB::table('db_pare_2018.renja AS renja')
+                   
+                    ->join('db_pare_2018.perjanjian_kinerja AS pk', function($join){
+                        $join   ->on('pk.renja_id','=','renja.id');
+                    })
+                    ->rightjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function($join){
+                        $join   ->on('pk.id','=','skp_tahunan.perjanjian_kinerja_id');
+                    }) 
+                    //PERIODE
+                    ->leftjoin('db_pare_2018.periode AS periode', function($join){
+                        $join   ->on('renja.periode_id','=','periode.id');
+                    }) 
+
+                    //PEJABAT YANG DINILAI
+                    ->leftjoin('demo_asn.tb_history_jabatan AS pejabat', function($join){
+                        $join   ->on('skp_tahunan.u_jabatan_id','=','pejabat.id');
+                    }) 
+
+                    //ESELON PEJABAT YANG DINILAI
+                     ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
+                        $join   ->on('eselon.id','=','pejabat.id_eselon');
+                    }) 
+
+                    
+                    //jabatan
+                    ->leftjoin('demo_asn.m_skpd AS jabatan', 'pejabat.id_jabatan','=','jabatan.id')
+
+
+                    ->select([  'skp_tahunan.id AS skp_tahunan_id',
+                                'periode.label AS periode',
+                                'skp_tahunan.pegawai_id AS pegawai_id',
+                                'skp_tahunan.u_nama',
+                                'skp_tahunan.u_jabatan_id',
+                                'skp_tahunan.p_nama',
+                                'skp_tahunan.p_jabatan_id',
+                                'skp_tahunan.status',
+                                'pejabat.nip AS u_nip',
+                                'eselon.eselon AS eselon',
+                                'jabatan.skpd AS jabatan'
+
+                        ])
+                    ->where('renja.skpd_id','=', $request->skpd_id);
+
+       
+                    $datatables = Datatables::of($dt)
+                    ->addColumn('status', function ($x) {
+            
+                        return $x->status;
+            
+                    })->addColumn('periode', function ($x) {
+                        
+                        return $x->periode;
+                    
+                    })->addColumn('nip_pegawai', function ($x) {
+                        
+                        return $x->u_nip;
+                    
+                    })->addColumn('nama_pegawai', function ($x) {
+                        
+                        return $x->u_nama;
+                    
+                    })
+                    ->addColumn('eselon', function ($x) {
+                        
+                        
+                        return  $x->eselon;
+                        
+                    })->addColumn('jabatan', function ($x) {
+                        
+                        return Pustaka::capital_string($x->jabatan);
+                    
+                    })
+                    ->addColumn('nama_atasan', function ($x) {
+                        
+                        return $x->p_nama;
+                    
+                    });
+            
+                    
+                    if ($keyword = $request->get('search')['value']) {
+                        $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+                    } 
+            
+                    return $datatables->make(true);
+        
+    }
+
+
+
+
+
 
     public function Personal_SKP_tahunan_list(Request $request)
     {

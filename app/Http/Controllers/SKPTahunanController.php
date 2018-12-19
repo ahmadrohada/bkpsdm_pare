@@ -79,10 +79,10 @@ class SKPTahunanController extends Controller {
         }else{
             $nip_penilai                        = $pejabat_penilai->nip;
             $nama_pejabat_penilai               = $skp_tahunan->p_nama;
-            $pangkat_golongan_pejabat_penilai   = $pejabat_penilai->golongan->pangkat .'/'. $pejabat_penilai->golongan->golongan;
+            $pangkat_golongan_pejabat_penilai   = "";//$pejabat_penilai->golongan->pangkat .'/'. $pejabat_penilai->golongan->golongan;
             $jabatan_pejabat_penilai            = $pejabat_penilai->jabatan;
-            $eselon_pejabat_penilai             = $pejabat_penilai->eselon->eselon;
-            $unit_kerja_pejabat_penilai         = Pustaka::capital_string($pejabat_penilai->UnitKerja->unit_kerja);
+            $eselon_pejabat_penilai             = "";//$pejabat_penilai->eselon->eselon;
+            $unit_kerja_pejabat_penilai         = "";//Pustaka::capital_string($pejabat_penilai->UnitKerja->unit_kerja);
         }
 
 
