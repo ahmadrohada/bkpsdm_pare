@@ -105,7 +105,7 @@ class StrukturOrganisasiAPIController extends Controller {
 			$sub_data['jabatan']			= Pustaka::capital_string($x->skpd);
 			$sub_data['nip']				= $x->nip;
 			$sub_data['eselon']				= $x->eselon;
-			$sub_data['jenis_jabatan']		= $x->jenis_jabatan;
+			$sub_data['jenis_jabatan']		= $x->jenis_jabatan . $x->id;
 			$sub_data['itemTitleColor']		= "#4b0082";
 			$sub_data['groupTitleColor']	= "primitives.common.Colors.Green";
 			

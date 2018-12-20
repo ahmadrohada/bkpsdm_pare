@@ -543,11 +543,16 @@
 
 
 .jstree-default .jstree-kegiatan {
-  background: url("32px.png") -200px -68px no-repeat;
+  background: url("32px.png") -230px -68px no-repeat;
 }
 
 .jstree-default .jstree-ind_kegiatan {
   background: url("32px.png") -230px -68px no-repeat;
+}
+
+
+.jstree-default .jstree-people {
+  background: url("32px.png") -263px -38px no-repeat;
 }
 
 .jstree-default .jstree-file {

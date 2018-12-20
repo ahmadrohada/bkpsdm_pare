@@ -478,7 +478,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	//----------------------------------------------------------------------------------------//
 	Route::get('skp_tahunan/{skp_tahunan_id}',[
 		'as' 			=> '',
-		'uses' 			=> 'SKPTahunanController@SKPTahunanPersonalEdit'
+		'uses' 			=> 'SKPTahunanController@SKPTahunanDetail'
 	]);
 
 
