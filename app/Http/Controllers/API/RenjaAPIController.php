@@ -9,6 +9,7 @@ use App\Models\PerjanjianKinerja;
 
 
 use App\Models\Tujuan;
+use App\Models\IndikatorTujuan;
 use App\Models\Sasaran;
 use App\Models\Skpd;
 
@@ -101,12 +102,19 @@ class RenjaAPIController extends Controller {
 //TUJUAN
         $tujuan = Tujuan::where('renja_id','=','2')->select('id','label')->get();
 		foreach ($tujuan as $x) {
-            $sub_data['id']	            = "tujuan".$x->id;
-			$sub_data['text']			= Pustaka::capital_string($x->label);
-            $sub_data['icon']           = "jstree-tujuan";
+            $sub_data_tujuan['id']	            = "tujuan".$x->id;
+			$sub_data_tujuan['text']			= Pustaka::capital_string($x->label);
+            $sub_data_tujuan['icon']           = "jstree-tujuan";
+
+//INDIKATOR TUJUAN 
+            $ind_tujuan = IndikatorTujuan::where('tujuan_id','=',$x->id)->select('id','label')->get();
+            foreach ($ind_tujuan as $v) {
+                $sub_data_ind_tujuan['id']		        = "ind_tujuan".$v->id;
+                $sub_data_ind_tujuan['text']			= Pustaka::capital_string($v->label);
+                $sub_data_ind_tujuan['icon']            = "";
             
 //SASARAN 
-            $sasaran = Sasaran::where('tujuan_id','=',$x->id)->select('id','label')->get();
+            $sasaran = Sasaran::where('indikator_tujuan_id','=',$v->id)->select('id','label')->get();
             foreach ($sasaran as $y) {
                 $sub_data_sasaran['id']		        = "sasaran".$y->id;
                 $sub_data_sasaran['text']			= Pustaka::capital_string($y->label);
@@ -211,13 +219,24 @@ class RenjaAPIController extends Controller {
             
 
             if(!empty($sasaran_list)) { 
-                $sub_data['children']       = $sasaran_list;
+                $sub_data_ind_tujuan['children']       = $sasaran_list;
             }
-            $data[] = $sub_data ;	
-            //reset sasaran list
+            $ind_tujuan_list[] = $sub_data_ind_tujuan ;	
             $sasaran_list = "";
-            unset($sub_data['children']);
-		}	
+            unset($sub_data_ind_tujuan['children']);
+        }	
+
+
+        if(!empty($ind_tujuan_list)) { 
+            $sub_data_tujuan['children']       = $ind_tujuan_list;
+        }
+        $data[] = $sub_data_tujuan ;	
+        //reset sasaran list
+        $ind_tujuan_list = "";
+        unset($sub_data_tujuan['children']);
+    }	
+        
+        
         
        
 		return $data;
@@ -230,51 +249,66 @@ class RenjaAPIController extends Controller {
     {
        
 
-        $pejabat = SKPD::where('parent_id','=','42')->select('id','skpd')->get();
-		foreach ($pejabat as $x) {
-            $data_pejabat['id']	            = "pejabat".$x->id;
-			$data_pejabat['text']			= Pustaka::capital_string($x->skpd);
-            $data_pejabat['icon']           = "jstree-tujuan";
+        $ka_skpd = SKPD::where('parent_id','=','42')->select('id','skpd')->get();
+		foreach ($ka_skpd as $x) {
+            $data_ka_skpd['id']	            = "ka_skpd".$x->id;
+			$data_ka_skpd['text']			= Pustaka::capital_string($x->skpd);
+            $data_ka_skpd['icon']           = "jstree-people";
             
 
-            $bawahan = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
+            $kabid = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
+            foreach ($kabid as $y) {
+                $data_kabid['id']	        = "kabid".$y->id;
+                $data_kabid['text']			= Pustaka::capital_string($y->skpd);
+                $data_kabid['icon']         = "jstree-people";
 
-            foreach ($bawahan as $y) {
-                $data_bawahan['id']	            = "bawahan".$y->id;
-                $data_bawahan['text']			= Pustaka::capital_string($y->skpd);
-                $data_bawahan['icon']           = "jstree-file";
-                
 
-                $kegiatan = Kegiatan::WHERE('jabatan_id','=',$y->id)->select('id','label')->get();
-                foreach ($kegiatan as $z) {
-                    $data_kegiatan['id']	        = "kegiatan".$z->id;
-                    $data_kegiatan['text']			= Pustaka::capital_string($z->label);
-                    $data_bawahan['icon']           = "jstree-kegiatan";
+                $kasubid = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
+                foreach ($kasubid as $z) {
+                    $data_kasubid['id']	            = "kasubid".$z->id;
+                    $data_kasubid['text']			= Pustaka::capital_string($z->skpd);
+                    $data_kasubid['icon']           = "jstree-people";
                     
-    
-                    $kegiatan_list[] = $data_kegiatan ;
+
+                    $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label')->get();
+                    foreach ($kegiatan as $a) {
+                        $data_kegiatan['id']	        = "kegiatan".$a->id;
+                        $data_kegiatan['text']			= '<font style="font-family:mainandra;">'.Pustaka::capital_string($a->label).'</font>';
+                        $data_kegiatan['icon']          = "jstree-kegiatan";
+                        
+        
+                        $kegiatan_list[] = $data_kegiatan ;
                    
                     }
-                if(!empty($kegiatan_list)) {
-                    $data_bawahan['children']     = $kegiatan_list;
+
+                    if(!empty($kegiatan_list)) {
+                        $data_kasubid['children']     = $kegiatan_list;
+                    }
+                    $kasubid_list[] = $data_kasubid ;
+                    $kegiatan_list = "";
+                    unset($data_kasubid['children']);
+                
                 }
-                $bawahan_list[] = $data_bawahan ;
-                $kegiatan_list = "";
-                unset($data_bawahan['children']);
-               
+
+                if(!empty($kasubid_list)) {
+                    $data_kabid['children']     = $kasubid_list;
                 }
-               
-               
-
-            }	
-
-
-            if(!empty($bawahan_list)) {
-                $data_pejabat['children']     = $bawahan_list;
+                $kabid_list[] = $data_kabid ;
+                $kasubid_list = "";
+                unset($data_kabid['children']);
+            
             }
-            $data[] = $data_pejabat ;	
-            $bawahan_list = "";
-            unset($data_pejabat['children']);
+               
+               
+
+        }	
+
+            if(!empty($kabid_list)) {
+                $data_ka_skpd['children']     = $kabid_list;
+            }
+            $data[] = $data_ka_skpd ;	
+            $kabid_list = "";
+            unset($data_ka_skpd['children']);
 		
 		return $data;
         

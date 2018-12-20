@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Skpd;
 use App\Models\Periode;
-
+use App\Models\Renja;
 use App\Models\SKPTahunan;
 use App\Models\Kegiatan;
 
@@ -41,7 +41,7 @@ class SKPTahunanController extends Controller {
 
 
    
-    protected function skpd()
+ /*    protected function skpd()
 	{
         $data =  \Auth::user()->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
         return Skpd::where('id_skpd', $data)->first();
@@ -60,8 +60,59 @@ class SKPTahunanController extends Controller {
         		'user' 		=> $this->user()
 	  			]
         );    
-    }
+    } */
 
+    public function SKPTahunanDetail($skp_tahunan_id)
+	{
+        
+    
+        $skp_tahunan	= Renja::where('id', '=', 2)
+                        ->select('id','periode_id','skpd_id','kepala_skpd_id','admin_skpd_id','status','created_at')
+                        ->first();
+
+
+        $pejabat_penilai    = null ;
+        if ( $pejabat_penilai == null ){
+            $nip_penilai                        = "";
+            $nama_pejabat_penilai               = "";
+            $pangkat_golongan_pejabat_penilai   = "";
+            $jabatan_pejabat_penilai            = "";
+            $eselon_pejabat_penilai             = "";
+            $unit_kerja_pejabat_penilai         = "";
+        }else{
+            $nip_penilai                        = "";
+            $nama_pejabat_penilai               = "";//$skp_tahunan->p_nama;
+            $pangkat_golongan_pejabat_penilai   = "";//$pejabat_penilai->golongan->pangkat .'/'. $pejabat_penilai->golongan->golongan;
+            $jabatan_pejabat_penilai            = "";
+            $eselon_pejabat_penilai             = "";//$pejabat_penilai->eselon->eselon;
+            $unit_kerja_pejabat_penilai         = "";//Pustaka::capital_string($pejabat_penilai->UnitKerja->unit_kerja);
+        }
+
+
+      
+
+
+        return view('admin.pages.skpd-skp_tahunan_detail', [
+                    
+                    'skp'                   => $skp_tahunan,
+
+
+                    
+
+                    /* 
+                    'nip_penilai'                       => $nip_penilai,
+                    'nama_pejabat_penilai'              => $nama_pejabat_penilai,
+                    'pangkat_golongan_pejabat_penilai'  => $pangkat_golongan_pejabat_penilai,
+                    'jabatan_pejabat_penilai'           => $jabatan_pejabat_penilai,
+                    'eselon_pejabat_penilai'            => $eselon_pejabat_penilai,
+                    'unit_kerja_pejabat_penilai'        => $unit_kerja_pejabat_penilai,
+
+
+                    'kegiatan_pk'                       => $kegiatan_pk, */
+                    ]
+        );    
+
+    }
 
     public function SKPTahunanPersonalEdit($skp_tahunan_id)
 	{

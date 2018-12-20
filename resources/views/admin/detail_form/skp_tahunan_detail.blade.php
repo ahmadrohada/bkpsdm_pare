@@ -24,7 +24,7 @@
 				<div class="form-group form-group-sm" style="margin-top:10px;">
 					<label class="col-md-4">Tanggal dibuat</label>
 					<div class="col-md-8">
-						<span id="date_created" class="form-control"></span>
+						<span id="date_created" class="form-control">{{ $skp }}</span>
 					</div>
 				</div>
 
@@ -231,7 +231,7 @@ $(document).on('click', '.btn_edit_pejabat', function(){
             data			: function (params) {
                 var queryParameters = {
                     nama: params.term,
-					skp_tahunan_id:{{$skp_tahunan->id}}
+					skp_tahunan_id:{{$skp}}
                 }
                 return queryParameters;
             },
@@ -292,7 +292,7 @@ $(document).on('click', '.btn_edit_pejabat', function(){
 		$.ajax({
 			url     	: '{{ url("api_resource/set_pejabat_penilai_skp_tahunan") }}',
 			type    	: "POST",
-			data    	: { skp_tahunan_id: {{ $skp_tahunan->id }}, pegawai_id  : pegawai_id },
+			data    	: { skp_tahunan_id: {{ $skp }}, pegawai_id  : pegawai_id },
 			success		: function (data) {
 
 				$('.btn_batal_pejabat').addClass('hidden');
