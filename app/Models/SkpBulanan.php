@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SkpBulanan extends Model
+class SKPBulanan extends Model
 {
     protected $table = 'skp_bulanan';
 
-
+    //tes
 
     public function skp_tahunan()
     {
