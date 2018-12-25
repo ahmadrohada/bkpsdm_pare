@@ -12,6 +12,10 @@ use App\Models\HistoryJabatan;
 use App\Models\Golongan;
 use App\Models\Eselon;
 
+use App\Models\SKPBulanan;
+use App\Models\KegiatanSKPTahunan;
+use App\Models\RencanaAksi;
+use App\Models\KegiatanSKPBulanan;
 
 use App\Helpers\Pustaka;
 
@@ -21,16 +25,16 @@ use Gravatar;
 use Input;
 Use Alert;
 
-class SKPTahunanAPIController extends Controller {
+class SKPBulananAPIController extends Controller {
 
-    public function SKPTahunan_timeline_status( Request $request )
+    public function SKPBulanan_timeline_status( Request $request )
     {
         $response = array();
         $body = array();
         $body_2 = array();
 
 
-        $skp_tahunan = SKPTahunan::where('id','=', $request->skp_tahunan_id )
+        $skp_bulanan = SKPBulanan::where('id','=', $request->skp_bulanan_id )
                                 ->select('*')
                                 ->firstOrFail();
 
@@ -40,10 +44,10 @@ class SKPTahunanAPIController extends Controller {
         $x['content']	= 'Dibuat';
         array_push($body, $x);
         $x['tag']	    = 'p';
-        $x['content']	= $skp_tahunan->u_nama;
+        $x['content']	= $skp_bulanan->u_nama;
         array_push($body, $x);
 
-        $h['time']	    = $skp_tahunan->created_at->format('Y-m-d H:i:s');
+        $h['time']	    = $skp_bulanan->created_at->format('Y-m-d H:i:s');
         $h['body']	    = $body;
         array_push($response, $h);
         //=====================================================================//
@@ -53,13 +57,13 @@ class SKPTahunanAPIController extends Controller {
         $y['content']	= 'Dikirim';
         array_push($body_2, $y);
         $y['tag']	    = 'p';
-        $y['content']	= $skp_tahunan->u_nama;
+        $y['content']	= $skp_bulanan->u_nama;
         array_push($body_2, $y);
 
-        $i['time']	    = $skp_tahunan->updated_at->format('Y-m-d H:i:s');
+        $i['time']	    = $skp_bulanan->updated_at->format('Y-m-d H:i:s');
         $i['body']	    = $body_2;
 
-        if ( $skp_tahunan->updated_at->format('Y') > 1 )
+        if ( $skp_bulanan->updated_at->format('Y') > 1 )
         {
             array_push($response, $i);
         }
@@ -72,7 +76,7 @@ class SKPTahunanAPIController extends Controller {
     }
    
 
-    public function SKPDSKPTahunan_list(Request $request)
+    public function SKPDSKPBulanan_list(Request $request)
     {
             
         $dt = \DB::table('db_pare_2018.renja AS renja')
@@ -80,8 +84,11 @@ class SKPTahunanAPIController extends Controller {
                     ->join('db_pare_2018.perjanjian_kinerja AS pk', function($join){
                         $join   ->on('pk.renja_id','=','renja.id');
                     })
-                    ->rightjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function($join){
+                    ->join('db_pare_2018.skp_tahunan AS skp_tahunan', function($join){
                         $join   ->on('pk.id','=','skp_tahunan.perjanjian_kinerja_id');
+                    }) 
+                    ->rightjoin('db_pare_2018.skp_bulanan AS skp_bulanan', function($join){
+                        $join   ->on('skp_bulanan.skp_tahunan_id','=','skp_tahunan.id');
                     }) 
                     //PERIODE
                     ->leftjoin('db_pare_2018.periode AS periode', function($join){
@@ -90,27 +97,23 @@ class SKPTahunanAPIController extends Controller {
 
                     //PEJABAT YANG DINILAI
                     ->leftjoin('demo_asn.tb_history_jabatan AS pejabat', function($join){
-                        $join   ->on('skp_tahunan.u_jabatan_id','=','pejabat.id');
+                        $join   ->on('skp_bulanan.u_jabatan_id','=','pejabat.id');
                     }) 
-
                     //ESELON PEJABAT YANG DINILAI
                      ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
                         $join   ->on('eselon.id','=','pejabat.id_eselon');
                     }) 
-
-                    
                     //jabatan
                     ->leftjoin('demo_asn.m_skpd AS jabatan', 'pejabat.id_jabatan','=','jabatan.id')
-
-
-                    ->select([  'skp_tahunan.id AS skp_tahunan_id',
+                    ->select([  'skp_bulanan.id AS skp_bulanan_id',
                                 'periode.label AS periode',
-                                'skp_tahunan.pegawai_id AS pegawai_id',
-                                'skp_tahunan.u_nama',
-                                'skp_tahunan.u_jabatan_id',
-                                'skp_tahunan.p_nama',
-                                'skp_tahunan.p_jabatan_id',
-                                'skp_tahunan.status',
+                                'skp_bulanan.pegawai_id AS pegawai_id',
+                                'skp_bulanan.u_nama',
+                                'skp_bulanan.bulan',
+                                'skp_bulanan.u_jabatan_id',
+                                'skp_bulanan.p_nama',
+                                'skp_bulanan.p_jabatan_id',
+                                'skp_bulanan.status',
                                 'pejabat.nip AS u_nip',
                                 'eselon.eselon AS eselon',
                                 'jabatan.skpd AS jabatan'
@@ -121,49 +124,83 @@ class SKPTahunanAPIController extends Controller {
        
                     $datatables = Datatables::of($dt)
                     ->addColumn('status', function ($x) {
-            
                         return $x->status;
-            
                     })->addColumn('periode', function ($x) {
-                        
-                        return $x->periode;
-                    
+                        return $x->bulan;
                     })->addColumn('nip_pegawai', function ($x) {
-                        
                         return $x->u_nip;
-                    
                     })->addColumn('nama_pegawai', function ($x) {
-                        
                         return $x->u_nama;
-                    
                     })
                     ->addColumn('eselon', function ($x) {
-                        
-                        
                         return  $x->eselon;
-                        
                     })->addColumn('jabatan', function ($x) {
-                        
                         return Pustaka::capital_string($x->jabatan);
-                    
                     })
                     ->addColumn('nama_atasan', function ($x) {
-                        
                         return $x->p_nama;
-                    
                     });
-            
-                    
                     if ($keyword = $request->get('search')['value']) {
                         $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
                     } 
-            
                     return $datatables->make(true);
-        
     }
 
 
+    public function skp_bulanan_tree(Request $request)
+    {
+       
 
+        $skp_tahunan = SKPTahunan::where('id','=', $request->skp_tahunan_id )->select('id','perjanjian_kinerja_id')->get();
+		foreach ($skp_tahunan as $x) {
+            $data_skp['id']	            = "skp_tahunan_id".$x->id;
+			$data_skp['text']			= "SKP Tahunan ".$x->Perjanjian_kinerja->renja->periode->label;
+            $data_skp['icon']           = "jstree-file";
+            
+
+            $skp_bulanan = SKPBulanan::where('skp_tahunan_id','=',$x->id)->select('id','bulan')->get();
+            foreach ($skp_bulanan as $y) {
+                $data_skp_bulanan['id']	        = "kabid".$y->id;
+                $data_skp_bulanan['text']			= 'SKP Bulanan Periode '. Pustaka::capital_string($y->bulan);
+                $data_skp_bulanan['icon']         = "jstree-kegiatan";
+
+
+                $keg_skp = KegiatanSKPBulanan::where('skp_bulanan_id','=',$y->id)->select('id','label')->get();
+                foreach ($keg_skp as $z) {
+                    $data_keg_skp['id']	           = "kasubid".$z->id;
+                    $data_keg_skp['text']			= Pustaka::capital_string($z->label);
+                    $data_keg_skp['icon']           = "jstree-ind_kegiatan";
+                    
+
+                    
+                    $keg_list[] = $data_keg_skp ;
+                    unset($data_keg_skp['children']);
+                
+                }
+
+                if(!empty($keg_list)) {
+                    $data_skp_bulanan['children']     = $keg_list;
+                }
+                $kabid_list[] = $data_skp_bulanan ;
+                $keg_list = "";
+                unset($data_skp_bulanan['children']);
+            
+            }
+               
+               
+
+        }	
+
+            if(!empty($kabid_list)) {
+                $data_skp['children']     = $kabid_list;
+            }
+            $data[] = $data_skp ;	
+            $kabid_list = "";
+            unset($data_skp['children']);
+		
+		return $data;
+        
+    }
 
 
 

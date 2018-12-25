@@ -116,6 +116,13 @@ Breadcrumbs::register('skp_tahunan', function($breadcrumbs)
 });
 
 // DASHBOARD > USERS > SHOW PETA JABATAN
+Breadcrumbs::register('skp_bulanan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_bulanan'), '/skp bulanan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_bulanan')]);
+});
+
+// DASHBOARD > USERS > SHOW PETA JABATAN
 Breadcrumbs::register('peta_jabatan', function($breadcrumbs)
 {
     $breadcrumbs->parent('dashboard');

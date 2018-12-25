@@ -9,6 +9,7 @@ use App\Models\Sasaran;
 use App\Models\IndikatorSasaran;
 use App\Models\PerjanjianKinerja;
 use App\Models\KegiatanSKPTahunan;
+use App\Models\KegiatanSKPBulanan;
 use App\Models\IndikatorProgram;
 use App\Models\SKPD;
 use App\Models\SKPTahunan;
@@ -21,15 +22,15 @@ use Gravatar;
 use Input;
 Use Alert;
 
-class KegiatanSKPTahunanAPIController extends Controller {
+class KegiatanSKPBulananAPIController extends Controller {
 
 
-   
+
     public function kegiatan_tugas_jabatan_list(Request $request)
     {
             
        
-        $dt = KegiatanSKPTahunan::WHERE('skp_tahunan_id','=', $request->skp_tahunan_id )
+        $dt = KegiatanSKPBulanan::WHERE('skp_bulanan_id','=', $request->skp_bulanan_id )
 
                 ->select([   
                     'id AS kegiatan_tugas_jabatan_id',

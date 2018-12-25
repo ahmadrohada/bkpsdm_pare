@@ -21,6 +21,8 @@ use App\Models\IndikatorProgram;
 use App\Models\Kegiatan;
 use App\Models\IndikatorKegiatan;
 use App\Models\PetaJabatan;
+use App\Models\MasaPemerintahan;
+
 use App\Helpers\Pustaka;
 
 use Datatables;
@@ -98,9 +100,12 @@ class RenjaAPIController extends Controller {
     public function skpd_renja_tree(Request $request)
     {
        
+
+    $mp = MasaPemerintahan::WHERE('status','=','active')->first();
+    
         
 //TUJUAN
-        $tujuan = Tujuan::where('renja_id','=','2')->select('id','label')->get();
+        $tujuan = Tujuan::where('masa_pemerintahan_id','=', $mp->id )->select('id','label')->get();
 		foreach ($tujuan as $x) {
             $sub_data_tujuan['id']	            = "tujuan".$x->id;
 			$sub_data_tujuan['text']			= Pustaka::capital_string($x->label);
@@ -114,7 +119,9 @@ class RenjaAPIController extends Controller {
                 $sub_data_ind_tujuan['icon']            = "";
             
 //SASARAN 
-            $sasaran = Sasaran::where('indikator_tujuan_id','=',$v->id)->select('id','label')->get();
+            $sasaran = Sasaran::where('indikator_tujuan_id','=',$v->id)
+                                ->where('renja_id','=', 2 )
+                                ->select('id','label')->get();
             foreach ($sasaran as $y) {
                 $sub_data_sasaran['id']		        = "sasaran".$y->id;
                 $sub_data_sasaran['text']			= Pustaka::capital_string($y->label);

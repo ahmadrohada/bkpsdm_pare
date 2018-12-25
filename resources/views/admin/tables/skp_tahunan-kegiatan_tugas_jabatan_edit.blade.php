@@ -73,7 +73,7 @@ $(document).ready(function() {
 							  ],
 			ajax			: {
 								url	: '',
-								data: { skp_tahunan_id:'7' },
+								data: { skp_tahunan_id: {!! $skp->id !!} },
 							  },
 			columns			: [
 								{ data: 'rownum', orderable: true, searchable: false ,width:"30px"},

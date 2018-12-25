@@ -105,6 +105,23 @@
 			</div>
 
 
+			<div class="col-md-3 col-xs-6">
+				<div class="small-box bg-green skp_bulanan" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							<strong>SKP Bulanan</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa  fa-tasks"></i>
+					</div>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 </div>
@@ -136,6 +153,11 @@ $(document).ready(function(){
 	$(".skp_tahunan").click(function(){
 		window.location.assign("skp-tahunan");
     });
+
+	$(".skp_bulanan").click(function(){
+		window.location.assign("skp-bulanan");
+    });
+
 
 });
 </script>
