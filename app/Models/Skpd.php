@@ -10,9 +10,9 @@ class Skpd extends Model
     protected $connection = 'mysql2';
     protected $table = 'm_skpd';
 
-    /* protected $fillable = [
+    protected $fillable = [
         'id', 'unit_kerja','id_skpd'
-    ];  */
+    ];  
 
 
    /*  public function history_jabatan()
@@ -35,6 +35,7 @@ class Skpd extends Model
         return $this->hasOne('App\Models\UnitKerja','id','id');
     }
 
+   
 
 
    

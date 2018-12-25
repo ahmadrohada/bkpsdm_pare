@@ -48,4 +48,10 @@ class HistoryJabatan extends Model
     {
         return $this->hasmany('App\Models\Skpd','parent_id','id_jabatan');
     }
+
+
+    public function Jabatan()
+    {
+        return $this->hasOne('App\Models\Skpd','id','id_jabatan');
+    }
 }

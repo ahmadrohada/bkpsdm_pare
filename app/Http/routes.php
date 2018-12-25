@@ -71,7 +71,16 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 
 	Route::get('skpd_skp_tahunan_list','API\SKPTahunanAPIController@SKPDSKPTahunan_list');
+	Route::get('skp_tahunan_timeline_status','API\SKPTahunanAPIController@SKPTahunan_timeline_status');
 
+
+	//========================================================================================================//
+	//====================== SKP BULANAN SKPD =========================================================//
+	//========================================================================================================//
+
+	Route::get('skpd_skp_bulanan_list','API\SKPBulananAPIController@SKPDSKPBulanan_list');
+	Route::get('skp_bulanan_tree','API\SKPBulananAPIController@skp_bulanan_tree');
+	Route::get('skp_bulanan_timeline_status','API\SKPBulananAPIController@SKPbulanan_timeline_status');
 
 
 
@@ -112,6 +121,27 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::post('create_skp_tahunan','API\SKPTahunanAPIController@Store');
 
+
+	//========================================================================================================//
+	//============================== KEGIATAN TUGAS JABATAN SKP THAUNAN ======================================//
+	//========================================================================================================//
+	Route::get('skp_tahunan_kegiatan_tugas_jabatan','API\KegiatanSKPTahunanAPIController@kegiatan_tugas_jabatan_list');
+
+	//========================================================================================================//
+	//============================== KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
+	//========================================================================================================//
+	Route::get('skp_bulanan_kegiatan_tugas_jabatan','API\KegiatanSKPBulananAPIController@kegiatan_tugas_jabatan_list');
+
+
+	//========================================================================================================//
+	//======================================= RENCANA AKSI  SKP THAUNAN ======================================//
+	//========================================================================================================//
+	Route::get('rencana_aksi_tree','API\RencanaAksiAPIController@rencana_aksi_tree');
+
+
+
+	
+
 	//========================================================================================================//
 	//==================================  P E G A W A I =================================================//
 	//========================================================================================================//
@@ -128,7 +158,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	Route::post('set_pejabat_penilai_skp_tahunan','API\SKPTahunanAPIController@set_pejabat_penilai_skp_tahunan');
 	
-	Route::get('kegiatan_tugas_jabatan_list','API\KegiatanSKPTahunanAPIController@kegiatan_tugas_jabatan_list');
+	
 
 	//========================================================================================================//
 	//========================================  J A B A T A N ================================================//
@@ -452,6 +482,11 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'HomeSKPDController@showSKPTahunan'
 	]);
 
+	Route::get('skp-bulanan', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeSKPDController@showSKPBulanan'
+	]);
+
 	//----------------------------------------------------------------------------------------//
 	//======================== RENCANA KERJA PERANGKAT DAERAH ================================//
 	//----------------------------------------------------------------------------------------//
@@ -476,11 +511,20 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	//----------------------------------------------------------------------------------------//
 	//================================= SKP TAHUNAN      =====================================//
 	//----------------------------------------------------------------------------------------//
-	Route::get('skp_tahunan/{skp_tahunan_id}',[
+	Route::get('skp_tahunan/{id}',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPTahunanController@SKPTahunanDetail'
 	]);
 
+
+
+	//----------------------------------------------------------------------------------------//
+	//================================= SKP BULANAN      =====================================//
+	//----------------------------------------------------------------------------------------//
+	Route::get('skp_bulanan/{id}',[
+		'as' 			=> '',
+		'uses' 			=> 'SKPBulananController@SKPBulananDetail'
+	]);
 
 
 	/* 

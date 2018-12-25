@@ -12,6 +12,16 @@ class SkpBulanan extends Model
 
     public function skp_tahunan()
     {
-        return $this->belongTo('App\Models\SkpTahunan');
+        return $this->hasOne('App\Models\SKPTahunan','id','skp_tahunan_id');
+    }
+
+    public function Pejabat_yang_dinilai()
+    {
+        return $this->hasOne('App\Models\HistoryJabatan','id','u_jabatan_id');
+    }
+
+    public function Pejabat_penilai()
+    {
+        return $this->hasOne('App\Models\HistoryJabatan','id','p_jabatan_id');
     }
 }
