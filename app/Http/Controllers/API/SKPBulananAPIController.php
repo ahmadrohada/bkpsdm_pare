@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\Periode;
 use App\Models\PerjanjianKinerja;
 use App\Models\SKPTahunan;
+use App\Models\SKPBulanan;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
 use App\Models\Golongan;
 use App\Models\Eselon;
 
-use App\Models\SKPBulanan;
 use App\Models\KegiatanSKPTahunan;
 use App\Models\RencanaAksi;
 use App\Models\KegiatanSKPBulanan;
