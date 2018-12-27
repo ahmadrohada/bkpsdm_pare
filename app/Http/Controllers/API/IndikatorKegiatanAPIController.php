@@ -108,4 +108,27 @@ class IndikatorKegiatanAPIController extends Controller {
     }
    
 
+
+    public function Rename(Request $request )
+    {
+        
+
+        $ind_kegiatan = IndikatorKegiatan::find($request->id);
+        if (is_null($ind_kegiatan)) {
+            return \Response::make('Indikator Kegiatan  tidak ditemukan', 404);
+        }
+
+        $ind_kegiatan->label = $request->text;
+        
+        
+        if ( $ind_kegiatan->save()){
+            return \Response::make('Sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        }
+
+        
+      
+    }
+
 }

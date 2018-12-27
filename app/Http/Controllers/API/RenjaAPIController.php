@@ -107,23 +107,26 @@ class RenjaAPIController extends Controller {
 //TUJUAN
         $tujuan = Tujuan::where('masa_pemerintahan_id','=', $mp->id )->select('id','label')->get();
 		foreach ($tujuan as $x) {
-            $sub_data_tujuan['id']	            = "tujuan".$x->id;
+            $sub_data_tujuan['id']	            = "tujuan|".$x->id;
 			$sub_data_tujuan['text']			= Pustaka::capital_string($x->label);
-            $sub_data_tujuan['icon']           = "jstree-tujuan";
+            $sub_data_tujuan['icon']            = "jstree-tujuan";
+            $sub_data_tujuan['type']            = "tujuan";
+
 
 //INDIKATOR TUJUAN 
             $ind_tujuan = IndikatorTujuan::where('tujuan_id','=',$x->id)->select('id','label')->get();
             foreach ($ind_tujuan as $v) {
-                $sub_data_ind_tujuan['id']		        = "ind_tujuan".$v->id;
+                $sub_data_ind_tujuan['id']		        = "ind_tujuan|".$v->id."|$request->renja_id";
                 $sub_data_ind_tujuan['text']			= Pustaka::capital_string($v->label);
                 $sub_data_ind_tujuan['icon']            = "";
+               
             
 //SASARAN 
             $sasaran = Sasaran::where('indikator_tujuan_id','=',$v->id)
-                                ->where('renja_id','=', 2 )
+                                ->where('renja_id','=', $request->renja_id )
                                 ->select('id','label')->get();
             foreach ($sasaran as $y) {
-                $sub_data_sasaran['id']		        = "sasaran".$y->id;
+                $sub_data_sasaran['id']		        = "sasaran|".$y->id;
                 $sub_data_sasaran['text']			= Pustaka::capital_string($y->label);
                 $sub_data_sasaran['icon']           = "jstree-sasaran";
 
@@ -131,21 +134,21 @@ class RenjaAPIController extends Controller {
                 $ind_sasaran = IndikatorSasaran::where('sasaran_id','=',$y->id)->select('id','label')->get();
                
                 foreach ($ind_sasaran as $z) {
-                    $sub_data_ind_sasaran['id']		                    = "ind_sasaran".$z->id;
+                    $sub_data_ind_sasaran['id']		                    = "ind_sasaran|".$z->id;
                     $sub_data_ind_sasaran['text']			            = Pustaka::capital_string($z->label);
                     $sub_data_ind_sasaran['icon']                       = "jstree-ind_sasaran";
                                         
 //PROGRAM 
                     $program = Program:: where('indikator_sasaran_id','=',$z->id)->select('id','label')->get();
                         foreach ($program as $d) {
-                            $sub_data_program['id']		        = "program".$d->id;
+                            $sub_data_program['id']		        = "program|".$d->id;
                             $sub_data_program['text']			= Pustaka::capital_string($d->label);
                             $sub_data_program['icon']           = "jstree-program";
 
 //INDIKATOR PROGRAM
                         $ind_program = IndikatorProgram:: where('program_id','=',$d->id)->select('id','label')->get();
                             foreach ($ind_program as $e) {
-                                $sub_data_ind_program['id']	                    = "ind_program".$e->id;
+                                $sub_data_ind_program['id']	                    = "ind_program|".$e->id;
                                 $sub_data_ind_program['text']			        = Pustaka::capital_string($e->label);
                                 $sub_data_ind_program['icon']                   = "jstree-ind_program";
                         
@@ -154,18 +157,20 @@ class RenjaAPIController extends Controller {
 
                             $kegiatan = Kegiatan:: where('indikator_program_id','=',$e->id)->select('id','label')->get();
                                 foreach ($kegiatan as $f) {
-                                    $sub_data_kegiatan['id']	        = "kegiatan".$f->id;
+                                    $sub_data_kegiatan['id']	        = "kegiatan|".$f->id;
                                     $sub_data_kegiatan['text']			= Pustaka::capital_string($f->label);
                                     $sub_data_kegiatan['icon']          = "jstree-kegiatan";
+                                   
 
 
 //INDIKATOR KEGIATAN
 
                                 $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$f->id)->select('id','label')->get();
                                     foreach ($ind_kegiatan as $g) {
-                                        $sub_data_ind_kegiatan['id']	        = "ind_kegiatan".$g->id;
+                                        $sub_data_ind_kegiatan['id']	        = "ind_kegiatan|".$g->id;
                                         $sub_data_ind_kegiatan['text']			= Pustaka::capital_string($g->label);
                                         $sub_data_ind_kegiatan['icon']          = "jstree-ind_kegiatan";
+                                        $sub_data_ind_kegiatan['type']          = "ind_kegiatan";
 
 
                                         $ind_kegiatan_list[] = $sub_data_ind_kegiatan ;
@@ -320,4 +325,19 @@ class RenjaAPIController extends Controller {
 		return $data;
         
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

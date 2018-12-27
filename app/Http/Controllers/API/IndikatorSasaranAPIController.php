@@ -64,11 +64,23 @@ class IndikatorSasaranAPIController extends Controller {
 
 
   
-    public function Store(Request $request)
+    public function Store()
     {
 
+        $pk = new IndikatorSasaran;
+        $pk->label             = Input::get('text');
+        $pk->sasaran_id        = Input::get('parent_id');
+
+    
+        if ( $pk->save()){
+            $tes = array('id' => 'ind_sasaran|'.$pk->id);
+            return \Response::make($tes, 200);
+        }else{
+            return \Response::make('error', 500);
+        }
+
        
-        $messages = [
+       /*  $messages = [
                 //'label.required' => ':attribute Indikator Sasaran Harus diisi. ',
                 'label.required' => 'Label Indikator Sasaran Harus diisi. ',
                 'target.required' => 'Target tidak boleh kosong. ',
@@ -103,10 +115,41 @@ class IndikatorSasaranAPIController extends Controller {
             return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);
-        } 
+        }  */
        
        
     }
    
+    
+    public function Rename(Request $request )
+    {
+        
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'text'          => 'required',
+            'id'            => 'required'
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());       
+        }
+
+        $ind_sasaran = IndikatorSasaran::find($request->id);
+        if (is_null($ind_sasaran)) {
+            return $this->sendError('Sasaran  tidak ditemukan');
+        }
+
+        $ind_sasaran->label = $request->text;
+        
+        
+        if ( $ind_sasaran->save()){
+            return \Response::make('Sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        }
+
+        
+      
+    }
 
 }
