@@ -55,7 +55,6 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skpd_renja_distribusi_kegiatan_tree','API\RenjaAPIController@skpd_renja_distribusi_kegiatan_tree');
 
 	
-	
 
 
 	//========================================================================================================//
@@ -82,7 +81,50 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skp_bulanan_tree','API\SKPBulananAPIController@skp_bulanan_tree');
 	Route::get('skp_bulanan_timeline_status','API\SKPBulananAPIController@SKPbulanan_timeline_status');
 
+	//========================================================================================================//
+	//============================================= S A S A R A N    =========================================//
+	//========================================================================================================//
 
+	Route::post('sasaran_store','API\SasaranAPIController@Store');
+	Route::post('sasaran_rename','API\SasaranAPIController@Rename');
+
+
+	//========================================================================================================//
+	//===============================I N D I K A T O R    S A S A R A N    ===================================//
+	//========================================================================================================//
+
+	Route::post('ind_sasaran_store','API\IndikatorSasaranAPIController@Store');
+	Route::post('ind_sasaran_rename','API\IndikatorSasaranAPIController@Rename');
+
+
+	//========================================================================================================//
+	//======================================       P R O G R A M       =======================================//
+	//========================================================================================================//
+
+	Route::post('program_store','API\ProgramAPIController@Store');
+	Route::post('program_rename','API\ProgramAPIController@Rename');
+
+	//========================================================================================================//
+	//======================================  I N D I K A T O R     P R O G R A M   ==========================//
+	//========================================================================================================//
+
+	Route::post('ind_program_store','API\IndikatorProgramAPIController@Store');
+	Route::post('ind_program_rename','API\IndikatorProgramAPIController@Rename');
+	
+
+	//========================================================================================================//
+	//======================================      K E G I A T A N      =======================================//
+	//========================================================================================================//
+
+	Route::post('kegiatan_store','API\KegiatanAPIController@Store');
+	Route::post('kegiatan_rename','API\KegiatanAPIController@Rename');
+
+	//========================================================================================================//
+	//======================================  I N D I K A T O R    K E G I A T A N    ========================//
+	//========================================================================================================//
+
+	Route::post('ind_kegiatan_store','API\KegiatanAPIController@Store');
+	Route::post('ind_kegiatan_rename','API\KegiatanAPIController@Rename');
 
 /* 
 

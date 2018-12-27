@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\SasaranPerjanjianKinerja;
+
 use App\Models\Sasaran;
 use App\Models\PerjanjianKinerja;
 use App\Helpers\Pustaka;
@@ -64,6 +64,53 @@ class SasaranAPIController extends Controller {
     }
 
 
+    public function Store()
+    {
+
+        $pk = new Sasaran;
+        $pk->label                      = Input::get('text');
+        $pk->renja_id                   = Input::get('renja_id');
+        $pk->indikator_tujuan_id        = Input::get('parent_id');
+
     
+        if ( $pk->save()){
+            $tes = array('id' => 'sasaran|'.$pk->id);
+            return \Response::make($tes, 200);
+        }else{
+            return \Response::make('error', 500);
+        }
+    }
+
+    public function Rename(Request $request )
+    {
+        
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'text'          => 'required',
+            'id'            => 'required'
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());       
+        }
+
+        $sasaran = Sasaran::find($request->id);
+        if (is_null($sasaran)) {
+            return $this->sendError('Sasaran  tidak ditemukan');
+        }
+
+        $sasaran->label = $request->text;
+        
+        
+        if ( $sasaran->save()){
+            return \Response::make('Sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        }
+
+        
+      
+    }
+
 
 }

@@ -67,38 +67,50 @@ class ProgramAPIController extends Controller {
     public function Store(Request $request)
     {
 
-       
-        $messages = [
-                'label.required'        => 'Label Program Harus diisi. ',
-        ];
+        $pk = new Program;
+        $pk->label                  = Input::get('text');
+        $pk->indikator_sasaran_id   = Input::get('parent_id');
 
-        $validator = Validator::make(
-                        Input::all(),
-                        array(
-                            'indikator_sasaran_id' => 'required',
-                            'label'                         => 'required|max:200',
-                        ),
-                        $messages
-        );
-       
-        if ( $validator->fails() ){
-            //$messages = $validator->messages();
-            return response()->json(['errors'=>$validator->messages()],422);
-            
-        }
-
-
-        $program    = new Program;
-        $program->label                  = Input::get('label');
-        $program->indikator_sasaran_id   = Input::get('indikator_sasaran_id');
-
-        if ( $program->save()){
-            return \Response::make('sukses', 200);
+    
+        if ( $pk->save()){
+            $tes = array('id' => 'program|'.$pk->id);
+            return \Response::make($tes, 200);
         }else{
             return \Response::make('error', 500);
-        } 
+        }
        
        
+    }
+
+    public function Rename(Request $request )
+    {
+        
+         /*   $input = $request->all();
+        $validator = Validator::make($input, [
+            'text'          => 'required',
+            'id'            => 'required'
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());       
+        }
+        */
+        $program = Program::find($request->id);
+        if (is_null($program)) {
+            return $this->sendError('Program  tidak ditemukan');
+        }
+
+        $program->label = $request->text;
+        
+        
+        if ( $program->save()){
+            return \Response::make('Sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        }
+
+        
+      
     }
    
 

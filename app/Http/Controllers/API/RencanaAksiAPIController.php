@@ -44,13 +44,15 @@ class RencanaAksiAPIController extends Controller {
             $data_skp['id']	            = "skp_tahunan_id".$x->id;
 			$data_skp['text']			= "SKP Tahunan ".$x->Perjanjian_kinerja->renja->periode->label;
             $data_skp['icon']           = "jstree-file";
+            $data_skp['type']           = "level_1";
             
 
             $keg_tugas_jabatan = KegiatanSKPTahunan::where('skp_tahunan_id','=',$x->id)->select('id','label')->get();
             foreach ($keg_tugas_jabatan as $y) {
                 $data_kegiatan_skp['id']	        = "kabid".$y->id;
                 $data_kegiatan_skp['text']			= Pustaka::capital_string($y->label);
-                $data_kegiatan_skp['icon']         = "jstree-kegiatan";
+                $data_kegiatan_skp['icon']          = "jstree-kegiatan";
+                $data_kegiatan_skp['type']          = "level_2";
 
 
                 $rencana_aksi = RencanaAksi::where('kegiatan_tugas_jabatan_id','=',$y->id)->select('id','label')->get();

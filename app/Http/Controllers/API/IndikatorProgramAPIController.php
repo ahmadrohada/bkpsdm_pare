@@ -70,8 +70,19 @@ class IndikatorProgramAPIController extends Controller {
     public function Store(Request $request)
     {
 
+        $pk = new IndikatorProgram;
+        $pk->label                  = Input::get('text');
+        $pk->program_id             = Input::get('parent_id');
+
+    
+        if ( $pk->save()){
+            $tes = array('id' => 'ind_program|'.$pk->id);
+            return \Response::make($tes, 200);
+        }else{
+            return \Response::make('error', 500);
+        }
        
-        $messages = [
+        /* $messages = [
                 //'label.required' => ':attribute Indikator Sasaran Harus diisi. ',
                 'label.required' => 'Label Indikator Sasaran Harus diisi. ',
                 'target.required' => 'Target tidak boleh kosong. ',
@@ -106,9 +117,31 @@ class IndikatorProgramAPIController extends Controller {
             return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);
-        } 
+        }  */
        
        
+    }
+
+    public function Rename(Request $request )
+    {
+        
+
+        $ind_program = IndikatorProgram::find($request->id);
+        if (is_null($ind_program)) {
+            return \Response::make('Indikator Program  tidak ditemukan', 404);
+        }
+
+        $ind_program->label = $request->text;
+        
+        
+        if ( $ind_program->save()){
+            return \Response::make('Sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        }
+
+        
+      
     }
    
 

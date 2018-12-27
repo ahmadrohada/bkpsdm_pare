@@ -41,10 +41,19 @@ $(document).ready(function() {
 							'responsive' : false
 						}
 			}
-			,"plugins" : [ "search" ,"state","contextmenu","wholerow"  ]
-			
+			//,"plugins" : [ "search" ,"state","contextmenu","wholerow"  ]
+			,'contextmenu' : {
+					'items' : context_menu
+				},
+				'plugins' : ['contextmenu', 'types'],
+				'types' : {
+					'#' : { /* options */ },
+					'level_1' : { /* options */ },
+					'level_2' : { /* options */ }
+					// etc...
+				}
 		
-	    }).on('create_node.jstree', function (e, data) {
+	    })/* .on('create_node.jstree', function (e, data) {
 		          
 			$.get('response.php?operation=create_node', { 'id' : data.node.parent, 'position' : data.position, 'text' : data.node.text })
 				.done(function (d) {
@@ -63,10 +72,65 @@ $(document).ready(function() {
 				.fail(function () {
 					data.instance.refresh();
 				});
-		});
+		}) */;
 	}
 
 
+
+	function context_menu(node){
+	var tree = $('#lazy').jstree(true);
+ 
+	// The default set of all items
+    var items = {
+        "Create": {
+            "separator_before": false,
+            "separator_after": false,
+            "label": "Create",
+            "action": function (obj) { 
+                var $node = tree.create_node(node);
+                tree.edit($node);
+
+				
+            }
+        },
+        "Rename": {
+            "separator_before": false,
+            "separator_after": false,
+            "label": "Rename",
+            "action": function (obj) { 
+                tree.edit(node);
+            }
+        },
+        "Edit": {
+            "separator_before": false,
+            "separator_after": false,
+            "label": "Edit",
+            "action": function (obj) { 
+                //tree.edit(node);
+            }
+        },                         
+        "Remove": {
+            "separator_before": true,
+            "separator_after": false,
+            "label": "Remove",
+            "action": function (obj) { 
+            	if(confirm('Are you sure to remove this category?')){
+            		tree.delete_node(node);
+            	}
+            }
+        }
+    };
+
+
+
+	if (node.type === 'level_1'){
+		delete items.Remove;
+	}else if ( node.type === 'level_2'){
+		delete items.Edit;
+	}
+	
+	return items;
+}
 	
 	var to = false;
 	$('#cari').keyup(function () {
