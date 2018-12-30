@@ -38,6 +38,12 @@ $(document).ready(function() {
 				'plugins' : ['contextmenu', 'types' ,'search'],
 				'types' : {
 					'tujuan' 		: { /* options */ },
+					'ind_tujuan' 	: { /* options */ },
+					'sasaran' 		: { /* options */ },
+					'ind_sasaran' 	: { /* options */ },
+					'program' 		: { /* options */ },
+					'ind_program' 	: { /* options */ },
+					'kegiatan' 		: { /* options */ },
 					'ind_kegiatan' 	: { /* options */ }
 				}
 			
@@ -136,13 +142,36 @@ $(document).ready(function() {
 
 	function context_menu(node){
 		var tree = $('#renja').jstree(true);
+
+		if (node.type === 'ind_tujuan'){
+			var addLabel = 'Tambah Sasaran';
+			var newLabel = 'Sasaran Renja';
+		}else if ( node.type === 'sasaran'){
+			var addLabel = 'Tambah Indikator';
+			var newLabel = 'Indikator Sasaran Renja';
+		}else if ( node.type === 'ind_sasaran'){
+			var addLabel = 'Tambah Program';
+			var newLabel = 'Program Renja';
+		}else if ( node.type === 'program'){
+			var addLabel = 'Tambah Indikator';
+			var newLabel = 'Indikator Program Renja';
+		}else if ( node.type === 'ind_program'){
+			var addLabel = 'Tambah Kegiatan';
+			var newLabel = 'Kegiatan Renja';
+		}else if ( node.type === 'kegiatan'){
+			var addLabel = 'Tambah Indikator';
+			var newLabel = 'Indikator Kegiatan Renja';
+		}else{
+			var addLabel = 'Tambah Data';
+			var newLabel = 'Data Renja';
+		}
 	
 		// The default set of all items
 		var items = {
 			"Add": {
-				"label": "Add Child",
+				"label": addLabel,
 				"action": function (obj) { 
-					var $node = tree.create_node(node,'Renja New Node');
+					var $node = tree.create_node(node,newLabel);
 					tree.edit($node);
 
 					

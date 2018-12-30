@@ -108,7 +108,7 @@ class RenjaAPIController extends Controller {
         $tujuan = Tujuan::where('masa_pemerintahan_id','=', $mp->id )->select('id','label')->get();
 		foreach ($tujuan as $x) {
             $sub_data_tujuan['id']	            = "tujuan|".$x->id;
-			$sub_data_tujuan['text']			= Pustaka::capital_string($x->label);
+			$sub_data_tujuan['text']			= "<span class='text-info'>".Pustaka::capital_string($x->label)."</span>";
             $sub_data_tujuan['icon']            = "jstree-tujuan";
             $sub_data_tujuan['type']            = "tujuan";
 
@@ -117,8 +117,9 @@ class RenjaAPIController extends Controller {
             $ind_tujuan = IndikatorTujuan::where('tujuan_id','=',$x->id)->select('id','label')->get();
             foreach ($ind_tujuan as $v) {
                 $sub_data_ind_tujuan['id']		        = "ind_tujuan|".$v->id."|$request->renja_id";
-                $sub_data_ind_tujuan['text']			= Pustaka::capital_string($v->label);
+                $sub_data_ind_tujuan['text']			= "<span class='text-info'>".Pustaka::capital_string($v->label)."</span>";
                 $sub_data_ind_tujuan['icon']            = "jstree-ind_tujuan";
+                $sub_data_ind_tujuan['type']            = "ind_tujuan";
                
             
 //SASARAN 
@@ -127,30 +128,33 @@ class RenjaAPIController extends Controller {
                                 ->select('id','label')->get();
             foreach ($sasaran as $y) {
                 $sub_data_sasaran['id']		        = "sasaran|".$y->id;
-                $sub_data_sasaran['text']			= Pustaka::capital_string($y->label);
+                $sub_data_sasaran['text']			= "<span class='text-info'>".Pustaka::capital_string($y->label)."</span>";
                 $sub_data_sasaran['icon']           = "jstree-sasaran";
+                $sub_data_sasaran['type']           = "sasaran";
 
 //INDIKATOR SASARAN 
                 $ind_sasaran = IndikatorSasaran::where('sasaran_id','=',$y->id)->select('id','label')->get();
                
                 foreach ($ind_sasaran as $z) {
                     $sub_data_ind_sasaran['id']		                    = "ind_sasaran|".$z->id;
-                    $sub_data_ind_sasaran['text']			            = Pustaka::capital_string($z->label);
+                    $sub_data_ind_sasaran['text']			            = "<span class='text-info'>".Pustaka::capital_string($z->label)."</span>";
                     $sub_data_ind_sasaran['icon']                       = "jstree-ind_sasaran";
+                    $sub_data_ind_sasaran['type']                       = "ind_sasaran";
                                         
 //PROGRAM 
                     $program = Program:: where('indikator_sasaran_id','=',$z->id)->select('id','label')->get();
                         foreach ($program as $d) {
                             $sub_data_program['id']		        = "program|".$d->id;
-                            $sub_data_program['text']			= Pustaka::capital_string($d->label);
+                            $sub_data_program['text']			= "<span class='text-info'>".Pustaka::capital_string($d->label);
                             $sub_data_program['icon']           = "jstree-program";
-
+                            $sub_data_program['type']           = "program";
 //INDIKATOR PROGRAM
                         $ind_program = IndikatorProgram:: where('program_id','=',$d->id)->select('id','label')->get();
                             foreach ($ind_program as $e) {
                                 $sub_data_ind_program['id']	                    = "ind_program|".$e->id;
-                                $sub_data_ind_program['text']			        = Pustaka::capital_string($e->label);
+                                $sub_data_ind_program['text']			        = "<span class='text-info'>".Pustaka::capital_string($e->label)."</span>";
                                 $sub_data_ind_program['icon']                   = "jstree-ind_program";
+                                $sub_data_ind_program['type']                   = "ind_program";
                         
 
 //KEGIATAN
@@ -158,8 +162,9 @@ class RenjaAPIController extends Controller {
                             $kegiatan = Kegiatan:: where('indikator_program_id','=',$e->id)->select('id','label')->get();
                                 foreach ($kegiatan as $f) {
                                     $sub_data_kegiatan['id']	        = "kegiatan|".$f->id;
-                                    $sub_data_kegiatan['text']			= Pustaka::capital_string($f->label);
+                                    $sub_data_kegiatan['text']			= "<span class='text-info'>".Pustaka::capital_string($f->label)."</span>";
                                     $sub_data_kegiatan['icon']          = "jstree-kegiatan";
+                                    $sub_data_kegiatan['type']          = "kegiatan";
                                    
 
 
@@ -168,7 +173,7 @@ class RenjaAPIController extends Controller {
                                 $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$f->id)->select('id','label')->get();
                                     foreach ($ind_kegiatan as $g) {
                                         $sub_data_ind_kegiatan['id']	        = "ind_kegiatan|".$g->id;
-                                        $sub_data_ind_kegiatan['text']			= Pustaka::capital_string($g->label);
+                                        $sub_data_ind_kegiatan['text']			= '<font class="text-info" style="font-family:mainandra;">'.Pustaka::capital_string($g->label).'</font>';
                                         $sub_data_ind_kegiatan['icon']          = "jstree-ind_kegiatan";
                                         $sub_data_ind_kegiatan['type']          = "ind_kegiatan";
 
@@ -264,7 +269,7 @@ class RenjaAPIController extends Controller {
         $ka_skpd = SKPD::where('parent_id','=','42')->select('id','skpd')->get();
 		foreach ($ka_skpd as $x) {
             $data_ka_skpd['id']	            = "ka_skpd|".$x->id;
-			$data_ka_skpd['text']			= Pustaka::capital_string($x->skpd).$x->id;
+			$data_ka_skpd['text']			= "<span class='text-info'>".Pustaka::capital_string($x->skpd)."</span>";
             $data_ka_skpd['icon']           = "jstree-people";
             $data_ka_skpd['type']           = "ka_skpd";
             
@@ -272,7 +277,7 @@ class RenjaAPIController extends Controller {
             $kabid = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
             foreach ($kabid as $y) {
                 $data_kabid['id']	        = "kabid|".$y->id;
-                $data_kabid['text']			= 'Kabid'.Pustaka::capital_string($y->skpd).$y->id;
+                $data_kabid['text']			= "<span class='text-info'>".Pustaka::capital_string($y->skpd)."</span>";
                 $data_kabid['icon']         = "jstree-people";
                 $data_kabid['type']         = "kabid";
 
@@ -280,7 +285,7 @@ class RenjaAPIController extends Controller {
                 $kasubid = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
                 foreach ($kasubid as $z) {
                     $data_kasubid['id']	            = "kasubid|".$z->id;
-                    $data_kasubid['text']			= Pustaka::capital_string($z->skpd).$z->id;
+                    $data_kasubid['text']			= "<span class='text-danger'>".Pustaka::capital_string($z->skpd)."</span>";
                     $data_kasubid['icon']           = "jstree-people";
                     $data_kasubid['type']           = "kasubid";
                     
@@ -288,8 +293,8 @@ class RenjaAPIController extends Controller {
                     $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label')->get();
                     foreach ($kegiatan as $a) {
                         $data_kegiatan['id']	        = "kegiatan|".$a->id;
-                        $data_kegiatan['text']			= '<font style="font-family:mainandra;">'.Pustaka::capital_string($a->label).'</font>';
-                        $data_kegiatan['icon']          = "jstree-kegiatan";
+                        $data_kegiatan['text']			= '<font class="text-info" style="font-family:mainandra;">'.Pustaka::capital_string($a->label).'</font>';
+                        $data_kegiatan['icon']          = "jstree-ind_kegiatan";
                         $data_kegiatan['type']          = "kegiatan";
                         
         

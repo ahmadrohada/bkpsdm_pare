@@ -40,41 +40,45 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+		$('.distribusi_kegiatan_add').on('hidden.bs.modal', function() {
+			table.ajax.reload();
+			//$('#kegiatan_list').DataTable.ajax.reload();
+		});
 	
 
+	
+		var table = $('#kegiatan_list').DataTable({
+					processing      : true,
+					serverSide      : true,
+					searching      	: false,
+					paging          : true,
+					//order 			: [ 3 , 'asc' ],
+					//dom 			: '<"toolbar">frtip',
+					lengthMenu		: [20,50],
+					columnDefs		: [
+										{ 	className: "text-center", targets: [ 0 ] }
+									],
+					ajax			: {
+										url	: '{{ url("api_resource/renja_kegiatan_list") }}',
+										data: { renja_id : 2 },
+										delay:3000
+									},
+					
 
-	$('#kegiatan_list').DataTable({
-				processing      : true,
-				serverSide      : true,
-				searching      	: false,
-				paging          : false,
-				//order 			: [ 3 , 'asc' ],
-				//dom 			: '<"toolbar">frtip',
-				lengthMenu		: [50,100],
-				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0 ] }
-								],
-				ajax			: {
-									url	: '{{ url("api_resource/renja_kegiatan_list") }}',
-									data: { renja_id : 2 },
-									delay:3000
-								},
+					columns	:[
+									{ data: "checkbox" ,  name:"checkbox", orderable: false, searchable: false, width:'40px'},
+									/* { data: 'kegiatan_id' , orderable: true,searchable:false,
+										"render": function ( data, type, row ,meta) {
+											return meta.row + meta.settings._iDisplayStart + 1 ;
+										}
+									}, */
+									
+									{ data: "label" ,  name:"label", orderable: true, searchable: false},
+									
+									
+								]
 				
-
-				columns	:[
-								{ data: "checkbox" ,  name:"checkbox", orderable: false, searchable: false, width:'40px'},
-								/* { data: 'kegiatan_id' , orderable: true,searchable:false,
-									"render": function ( data, type, row ,meta) {
-										return meta.row + meta.settings._iDisplayStart + 1 ;
-									}
-								}, */
-								
-								{ data: "label" ,  name:"label", orderable: true, searchable: false},
-								
-								
-							]
-			
-		});
+			});
 
 
 

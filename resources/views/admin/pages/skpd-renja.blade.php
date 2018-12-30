@@ -20,14 +20,14 @@
 
 				<div class="nav-tabs-custom">
 					<ul class="nav nav-tabs">
-						<li class=" status"><a href="#status" data-toggle="tab">Status</a></li>
+						<li class="active status"><a href="#status" data-toggle="tab">Status</a></li>
 						<li class="detail"><a href="#detail" data-toggle="tab">Main Tab</a></li>
 						<li class=" renja_tree"><a href="#renja_list" data-toggle="tab">Activity List</a></li>
-						<li class="active distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
+						<li class=" distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
 					</ul>
 						
 					<div class="tab-content"  style="margin-left:20px;">
-						<div class=" tab-pane" id="status">
+						<div class="active tab-pane" id="status">
 							@include('admin.modules.skpd-renja_status')
 						</div>
 						<div class="tab-pane" id="detail">
@@ -39,7 +39,7 @@
 						</div>
 						
 
-						<div class="active tab-pane" id="distribusi_kegiatan">
+						<div class=" tab-pane" id="distribusi_kegiatan">
 							@include('admin.modules.skpd-renja_distribusi_kegiatan_edit')
 						</div>
 						
