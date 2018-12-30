@@ -6,6 +6,9 @@
 <link rel="stylesheet" href="{{asset('assets/jstree/themes/default/style.css')}}" />
 <script src="{{asset('assets/jstree/jstree.min.js')}}"></script>
 
+
+
+
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -23,7 +26,7 @@ $(document).ready(function() {
 				'data' : {
 						"url" 	: "{{ url("api_resource/skpd_renja_tree") }}",
 						"data" 	: function (node) {
-							return { "renja_id" : 2 };
+							return { "renja_id" : {!! $renja->id !!} };
 						},
 						"dataType" : "json"
 				}
@@ -83,7 +86,7 @@ $(document).ready(function() {
 			$.post( '{!! url("'+url+'") !!}', 
 				{ 	'parent'	: tx[0],
 					'parent_id' : tx[1], 
-					'renja_id' 	: tx[2],
+					'renja_id' 	: {!! $renja->id !!},
 					'position' 	: data.position, 
 					'text' 		: data.node.text 
 				})

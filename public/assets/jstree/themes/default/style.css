@@ -28,7 +28,8 @@
 .jstree-anchor:hover,
 .jstree-anchor:active {
   text-decoration: none;
-  color: inherit;
+  color: rgb(6, 87, 4);
+  font-family: mainandra;
 }
 .jstree-icon {
   display: inline-block;
