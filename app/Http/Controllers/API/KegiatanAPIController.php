@@ -31,6 +31,7 @@ class KegiatanAPIController extends Controller {
         
         
         $dt = Kegiatan::WHERE('renja_id','=',$request->renja_id)
+                ->WHERE('jabatan_id','0')
                 ->select([   
                     'id AS kegiatan_id',
                     'label'

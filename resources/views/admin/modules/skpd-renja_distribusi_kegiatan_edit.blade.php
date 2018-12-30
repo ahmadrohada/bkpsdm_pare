@@ -13,8 +13,6 @@
 $(document).ready(function() {
 	
 	
-	initTree();
-
 	$(".distribusi_kegiatan").click(function(){
 		initTree();
     });
@@ -40,11 +38,11 @@ $(document).ready(function() {
 						}
 			}
 			,'contextmenu' : {
-					'items' : context_menu_2
+					'items' : context_add_kegiatan
 				},
 			"plugins" : [ 'search','contextmenu','types','state'/*,'dnd' ,"state","wholerow" */ ],
 			'types' : {
-					'ka_skpd' 		: { /* options */ },
+					'ka_skpd' 		: { "disabled" : true },
 					'kabid' 	: {  },
 					'kasubid' 	: { /* options */ },
 					'kegiatan' 	: { /* options */ },
@@ -52,32 +50,40 @@ $(document).ready(function() {
 			
 		
 	    })
-		.on('changed.jstree', function (e, data) {
-			var text = data.node.id;
-			var tx = text.split('|');
-			//alert('id_jabatan = '+tx[1]);
-
-			if ( tx[0] === 'kasubid'){
-			$('.distribusi_kegiatan_add #tes').val(tx[1])
-			$('.distribusi_kegiatan_add').modal('show');
-			}
-			
-
-
-		})
 		.on("loaded.jstree", function(){
 			$('#ditribusi_renja').jstree('open_all');
 		});
 	}
 
-	function context_menu_2(node){
-		var tree = $('#ditribusi_renja').jstree(true);
+	function context_add_kegiatan(node){
+
+		//diferent label
+		if ((node.type === 'ka_skpd')|(node.type === 'kabid')) {
+			var addLabel = 'Tambah Bawahan';
+		}else{
+			var addLabel = 'Tambah Kegiatan';
+		}
+
+		//var tree = $('#ditribusi_renja').jstree(true);
 	
 		// The default set of all items
 		var items = {
-			                       
-			"Remove": {
-				"label": "Remove",
+			"tambah": {
+				"label" : addLabel,
+				"action" :function(obj){
+					
+						var text = node.id;
+						var tx = text.split('|');
+						//alert('id_jabatan = '+tx[1]);
+
+						if ( tx[0] === 'kasubid'){
+							$('.distribusi_kegiatan_add #tes').val(tx[1])
+							$('.distribusi_kegiatan_add').modal('show');
+						} 	
+				}
+			},                  
+			"delete": {
+				"label": "Hapus Kegiatan",
 				"action": function (obj) { 
 					if(confirm('Are you sure to remove this Kegiatan?')){
 						tree.delete_node(node);
@@ -89,10 +95,11 @@ $(document).ready(function() {
 
 
 		if ((node.type === 'ka_skpd')|(node.type === 'kabid')) {
-			delete items.Remove;
+			delete items.tambah;
+			delete items.delete;
 		}else if (node.type === 'kasubid'){
-			delete items.Remove;
-		}
+			delete items.delete;
+		} 
 		return items;
 	}
 
