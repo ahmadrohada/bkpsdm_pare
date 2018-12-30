@@ -105,6 +105,7 @@ class KegiatanAPIController extends Controller {
 
         $pk = new Kegiatan;
         $pk->label                  = Input::get('text');
+        $pk->renja_id               = Input::get('renja_id');
         $pk->indikator_program_id   = Input::get('parent_id');
 
     

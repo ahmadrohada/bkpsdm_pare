@@ -72,6 +72,7 @@ class RenjaController extends Controller {
 
 
                 'nama_skpd'         => $this->nama_skpd($renja->skpd_id),
+                'renja'             => $renja,
                 'periode'           => $renja->Periode->label,
                 'kepala_skpd'       => Pustaka::nama_pegawai($renja->KepalaSKPD->Pegawai->gelardpn , $renja->KepalaSKPD->Pegawai->nama , $renja->KepalaSKPD->Pegawai->gelarblk),
                 'admin_skpd'        => Pustaka::nama_pegawai($renja->AdminSKPD->Pegawai->gelardpn , $renja->AdminSKPD->Pegawai->nama , $renja->AdminSKPD->Pegawai->gelarblk),
