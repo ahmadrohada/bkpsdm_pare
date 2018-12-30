@@ -35,7 +35,7 @@ $(document).ready(function() {
 			,'contextmenu' : {
 					'items' : context_menu
 				},
-				'plugins' : ['contextmenu', 'types','wholerow'],
+				'plugins' : ['contextmenu', 'types' ,'search'],
 				'types' : {
 					'tujuan' 		: { /* options */ },
 					'ind_kegiatan' 	: { /* options */ }

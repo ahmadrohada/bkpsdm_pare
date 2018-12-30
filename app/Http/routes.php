@@ -119,12 +119,16 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('kegiatan_store','API\KegiatanAPIController@Store');
 	Route::post('kegiatan_rename','API\KegiatanAPIController@Rename');
 
+	
+	Route::get('renja_kegiatan_list','API\KegiatanAPIController@RenjaKegiatanList');
+	Route::post('add_kegiatan_to_pejabat','API\KegiatanAPIController@AddKegiatanToPejabat');
+
 	//========================================================================================================//
 	//======================================  I N D I K A T O R    K E G I A T A N    ========================//
 	//========================================================================================================//
 
-	Route::post('ind_kegiatan_store','API\KegiatanAPIController@Store');
-	Route::post('ind_kegiatan_rename','API\KegiatanAPIController@Rename');
+	Route::post('ind_kegiatan_store','API\IndikatorKegiatanAPIController@Store');
+	Route::post('ind_kegiatan_rename','API\IndikatorKegiatanAPIController@Rename');
 
 /* 
 

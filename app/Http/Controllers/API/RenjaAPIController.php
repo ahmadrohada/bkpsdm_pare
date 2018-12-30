@@ -118,7 +118,7 @@ class RenjaAPIController extends Controller {
             foreach ($ind_tujuan as $v) {
                 $sub_data_ind_tujuan['id']		        = "ind_tujuan|".$v->id."|$request->renja_id";
                 $sub_data_ind_tujuan['text']			= Pustaka::capital_string($v->label);
-                $sub_data_ind_tujuan['icon']            = "";
+                $sub_data_ind_tujuan['icon']            = "jstree-ind_tujuan";
                
             
 //SASARAN 
@@ -263,30 +263,34 @@ class RenjaAPIController extends Controller {
 
         $ka_skpd = SKPD::where('parent_id','=','42')->select('id','skpd')->get();
 		foreach ($ka_skpd as $x) {
-            $data_ka_skpd['id']	            = "ka_skpd".$x->id;
-			$data_ka_skpd['text']			= Pustaka::capital_string($x->skpd);
+            $data_ka_skpd['id']	            = "ka_skpd|".$x->id;
+			$data_ka_skpd['text']			= Pustaka::capital_string($x->skpd).$x->id;
             $data_ka_skpd['icon']           = "jstree-people";
+            $data_ka_skpd['type']           = "ka_skpd";
             
 
             $kabid = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
             foreach ($kabid as $y) {
-                $data_kabid['id']	        = "kabid".$y->id;
-                $data_kabid['text']			= Pustaka::capital_string($y->skpd);
+                $data_kabid['id']	        = "kabid|".$y->id;
+                $data_kabid['text']			= 'Kabid'.Pustaka::capital_string($y->skpd).$y->id;
                 $data_kabid['icon']         = "jstree-people";
+                $data_kabid['type']         = "kabid";
 
 
                 $kasubid = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
                 foreach ($kasubid as $z) {
-                    $data_kasubid['id']	            = "kasubid".$z->id;
-                    $data_kasubid['text']			= Pustaka::capital_string($z->skpd);
+                    $data_kasubid['id']	            = "kasubid|".$z->id;
+                    $data_kasubid['text']			= Pustaka::capital_string($z->skpd).$z->id;
                     $data_kasubid['icon']           = "jstree-people";
+                    $data_kasubid['type']           = "kasubid";
                     
 
                     $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label')->get();
                     foreach ($kegiatan as $a) {
-                        $data_kegiatan['id']	        = "kegiatan".$a->id;
+                        $data_kegiatan['id']	        = "kegiatan|".$a->id;
                         $data_kegiatan['text']			= '<font style="font-family:mainandra;">'.Pustaka::capital_string($a->label).'</font>';
                         $data_kegiatan['icon']          = "jstree-kegiatan";
+                        $data_kegiatan['type']          = "kegiatan";
                         
         
                         $kegiatan_list[] = $data_kegiatan ;

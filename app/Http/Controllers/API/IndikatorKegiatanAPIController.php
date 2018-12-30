@@ -66,8 +66,19 @@ class IndikatorKegiatanAPIController extends Controller {
     public function Store(Request $request)
     {
 
+        $pk = new IndikatorKegiatan;
+        $pk->label                  = Input::get('text');
+        $pk->kegiatan_id            = Input::get('parent_id');
+
+    
+        if ( $pk->save()){
+            $tes = array('id' => 'ind_kegiatan|'.$pk->id);
+            return \Response::make($tes, 200);
+        }else{
+            return \Response::make('error', 500);
+        }
        
-        $messages = [
+       /*  $messages = [
                 //'label.required' => ':attribute Indikator Sasaran Harus diisi. ',
                 'label.required' => 'Label Indikator Sasaran Harus diisi. ',
                 'target.required' => 'Target tidak boleh kosong. ',
@@ -102,7 +113,7 @@ class IndikatorKegiatanAPIController extends Controller {
             return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);
-        } 
+        }  */
        
        
     }
