@@ -17,6 +17,11 @@ class Sasaran extends Model
     {
         return $this->belongsTo('App\Models\SasaranPerjanjianKinerja','sasaran_id','sasaran_id');
     } 
-	
+    
+    
+    public function IndikatorSasaran()
+    {
+        return $this->hasMany('App\Models\IndikatorSasaran');
+    }
 	
 }

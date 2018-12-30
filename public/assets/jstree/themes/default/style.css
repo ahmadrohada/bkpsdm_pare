@@ -520,34 +520,53 @@
 }
 /** CUSTOM RENJA ICON **/
 
+
+
+
 .jstree-default .jstree-tujuan {
-  background: url("32px.png") -40px -68px no-repeat;
+  background: url("renja.png") -5px -5px no-repeat;
+  width:65px !important;
+  margin-left:-2px !important;
+}
+
+.jstree-default .jstree-ind_tujuan {
+  background: url("renja.png") -79px -5px no-repeat;
+  width:20px !important;
 }
 
 .jstree-default .jstree-sasaran {
-  background: url("32px.png") -73px -68px no-repeat;
+  background: url("renja.png") -5px -28px no-repeat;
+  width:65px !important;
+  margin-left:-2px !important;
 }
 
 .jstree-default .jstree-ind_sasaran {
-  background: url("32px.png") -103px -68px no-repeat;
+  background: url("renja.png") -79px -5px no-repeat;
+  width:18px !important;
 }
 
 .jstree-default .jstree-program {
-  background: url("32px.png") -135px -68px no-repeat;
+  background: url("renja.png") -5px -53px no-repeat;
+  width:65px !important;
+  margin-left:-2px !important;
 }
 
 
 .jstree-default .jstree-ind_program {
-  background: url("32px.png") -168px -68px no-repeat;
+  background: url("renja.png") -79px -5px no-repeat;
+  width:18px !important;
 }
 
 
 .jstree-default .jstree-kegiatan {
-  background: url("32px.png") -230px -68px no-repeat;
+  background: url("renja.png") -5px -77px no-repeat;
+  width:65px !important;
+  margin-left:-2px !important;
 }
 
 .jstree-default .jstree-ind_kegiatan {
-  background: url("32px.png") -230px -68px no-repeat;
+  background: url("renja.png") -79px -5px no-repeat;
+  width:18px !important;
 }
 
 

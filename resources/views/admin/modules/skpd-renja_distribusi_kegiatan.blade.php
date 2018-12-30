@@ -9,7 +9,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	
+	initTree();
 	$(".distribusi_kegiatan").click(function(){
 		initTree();
     });
@@ -41,29 +41,10 @@ $(document).ready(function() {
 							'responsive' : false
 						}
 			}
-			,"plugins" : [ "search"/* ,"state","contextmenu","wholerow" */ ]
+			,"plugins" : [ 'search','dnd'/* ,"state","contextmenu","wholerow" */ ]
 			
 		
-	    }).on('create_node.jstree', function (e, data) {
-		          
-			$.get('response.php?operation=create_node', { 'id' : data.node.parent, 'position' : data.position, 'text' : data.node.text })
-				.done(function (d) {
-					data.instance.set_id(data.node, d.id);
-				})
-				.fail(function () {
-					data.instance.refresh();
-				});
-		}).on('rename_node.jstree', function (e, data) {
-			$.get('response.php?operation=rename_node', { 'id' : data.node.id, 'text' : data.text })
-				.fail(function () {
-					data.instance.refresh();
-				});
-		}).on('delete_node.jstree', function (e, data) {
-			$.get('{{ url("api_resource/hapus_kegiatan_renja") }}', { 'id' : data.node.id })
-				.fail(function () {
-					data.instance.refresh();
-				});
-		});
+	    });
 	}
 
 

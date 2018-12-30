@@ -23,7 +23,7 @@ class Kegiatan extends Model
  */
     public function indikator_program()
     {
-        return $this->hasOne('App\Models\IndikatorProgram','id','indikator_program_id');
+        return $this->belongsTo('App\Models\IndikatorProgram','id','indikator_program_id');
     } 
 
     public function pengelola()
