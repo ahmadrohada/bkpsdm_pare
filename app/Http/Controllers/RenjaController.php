@@ -57,26 +57,17 @@ class RenjaController extends Controller {
     }
 
 
-    public function showRenja(request $x)
+    public function SKPDRenjaEdit(request $x)
 	{
          
         
-        $renja	= Renja::where('id', '=', $x->renja_id)
-                        ->select('id','periode_id','skpd_id','kepala_skpd_id','admin_skpd_id','status','created_at')
-                        ->first();
+        $renja	= Renja::where('id', '=', $x->renja_id)->first();
        
 
-
-        return view('admin.pages.skpd-renja', [
-
+        return view('admin.pages.skpd-renja_edit', [
 
 
-                'nama_skpd'         => $this->nama_skpd($renja->skpd_id),
                 'renja'             => $renja,
-                'periode'           => $renja->Periode->label,
-                'kepala_skpd'       => Pustaka::nama_pegawai($renja->KepalaSKPD->Pegawai->gelardpn , $renja->KepalaSKPD->Pegawai->nama , $renja->KepalaSKPD->Pegawai->gelarblk),
-                'admin_skpd'        => Pustaka::nama_pegawai($renja->AdminSKPD->Pegawai->gelardpn , $renja->AdminSKPD->Pegawai->nama , $renja->AdminSKPD->Pegawai->gelarblk),
-                'created_at'        => $renja->created_at,
                 'h_box'             => 'box-info',
 
         		

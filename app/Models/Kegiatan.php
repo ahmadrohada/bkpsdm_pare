@@ -15,6 +15,11 @@ class Kegiatan extends Model
         return $this->hasMany('App\Models\IndikatorKegiatan');
     }
 
+    public function IndikatorKegiatan()
+    {
+        return $this->hasMany('App\Models\IndikatorKegiatan');
+    }
+
 
    /*  public function indikator_program()
     {
@@ -26,7 +31,7 @@ class Kegiatan extends Model
         return $this->belongsTo('App\Models\IndikatorProgram','id','indikator_program_id');
     } 
 
-    public function pengelola()
+    public function PenanggungJawab()
     {
         return $this->hasOne('App\Models\Skpd','id','jabatan_id')->select('skpd as jabatan');
     } 

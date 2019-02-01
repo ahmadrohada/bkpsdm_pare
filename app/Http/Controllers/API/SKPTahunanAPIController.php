@@ -6,10 +6,17 @@ use Illuminate\Http\Request;
 
 use App\Models\Periode;
 use App\Models\PerjanjianKinerja;
+use App\Models\KegiatanSKPTahunan;
+use App\Models\MasaPemerintahan;
+use App\Models\RencanaAksi;
 use App\Models\SKPTahunan;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
+use App\Models\Skpd;
 use App\Models\Golongan;
+use App\Models\Jabatan;
+use App\Models\Kegiatan;
+use App\Models\Renja;
 use App\Models\Eselon;
 
 
@@ -22,6 +29,151 @@ use Input;
 Use Alert;
 
 class SKPTahunanAPIController extends Controller {
+
+
+    
+  
+    //KASUBID
+    public function SKPTahunanStatusPengisian3( Request $request )
+    {
+       
+        $button_kirim = 0 ;
+
+
+        $skp_tahunan = SKPTahunan::
+                            leftjoin('demo_asn.tb_history_jabatan AS atasan', function($join){
+                                $join   ->on('atasan.id','=','skp_tahunan.p_jabatan_id');
+                            })
+                            ->SELECT(
+                                'skp_tahunan.id AS skp_tahunan_id',
+                                'atasan.id AS atasan_id',
+                                'skp_tahunan.status_approve'
+                            )
+                            ->where('skp_tahunan.id','=', $request->skp_tahunan_id )->first();;
+
+
+        //KEGITAN RENJA KSUBID
+        $kegiatan_renja = Kegiatan::SELECT('id')
+                            ->WHERE('renja_id', $request->renja_id )
+                            ->WHERE('jabatan_id',$request->jabatan_id )
+                            ->get()->toArray(); ;
+
+
+        //apakah skp tahnan ini meiliki kegiatan tahunan dan setiap kegiatan minimal memiliki 1 rencana aksi
+        $data_kegiatan_tahunan = KegiatanSKPTahunan::SELECT('id')
+                                                ->WHEREIN('kegiatan_id',$kegiatan_renja)
+                                                ->count();
+
+        if ( $data_kegiatan_tahunan == COUNT($kegiatan_renja) ){
+            $kegiatan_tahunan = 'ok';
+
+            $rencana_aksi = 1 ;
+            //cari paakah setiap kegiatan tahunan meiliki minimal 1 rencana aksi
+            $query_x = KegiatanSKPTahunan::SELECT('id')
+                                        ->WHEREIN('kegiatan_id',$kegiatan_renja)
+                                        ->get();
+            foreach ( $query_x AS $x ){
+                $query_y = RencanaAksi::SELECT('id')
+                                        ->WHERE('kegiatan_tahunan_id',$x->id)
+                                        ->count();
+
+                if ($query_y >= 1 ){
+                    $tes_val = 1 ;
+                }else{
+                    $tes_val = 0 ;
+                }
+
+                $rencana_aksi = $rencana_aksi*$tes_val;
+
+            }
+
+            if ( $rencana_aksi == 0 ){
+                $data_rencana_aksi = '-';
+            }else{
+                $data_rencana_aksi = 'ok';
+            }
+
+
+        }else{
+            $data_rencana_aksi = '-';
+            $kegiatan_tahunan = '-';
+        }              
+        
+        //STATUS SKP
+        if ( $skp_tahunan->skp_tahunan_id != null ){
+            $created = 'ok';
+        }else{
+            $created = '-';
+        }
+        
+        //STATUS PEJABAT PENILAI
+        if ( $skp_tahunan->atasan_id != null ){
+            $atasan = 'ok';
+        }else{
+            $atasan = '-';
+        }
+
+
+        //button kirim
+        if ( ( $created == 'ok') && ( $atasan == 'ok') && ( $kegiatan_tahunan == 'ok' ) && (  $data_rencana_aksi == 'ok') ){
+            $button_kirim = 1 ;
+        }else{
+            $button_kirim = 0 ;
+        }
+        
+         //STATUS APPROVE
+         if ( ($skp_tahunan->status_approve) == 1 ){
+            $persetujuan_atasan = 'ok';
+        }else{
+            $persetujuan_atasan = '-';
+        }
+
+
+        $response = array(
+                'created'                 => $created,
+                'data_pejabat_penilai'    => $atasan,
+                'data_kegiatan_tahunan'   => $kegiatan_tahunan,
+                'data_rencana_aksi'       => $data_rencana_aksi,
+                'persetujuan_atasan'      => $persetujuan_atasan,
+                'button_kirim'            => $button_kirim ,
+
+
+        );
+       
+        return $response;
+
+
+    }
+
+
+    public function SKPTahunanCekStatus( Request $request )
+    {
+
+
+        $pegawai  = Pegawai::SELECT('nip','id')->WHERE('id', $request->pegawai_id )->first();
+
+        $mp = MasaPemerintahan::WHERE('status','1')->first();
+        //status true artinya sudah bikin, false  artinya blm bikin pada jabatan ini
+        
+        $skp_tahunan = SKPTahunan::
+                            where('pegawai_id','=', $request->pegawai_id )
+                            ->where('u_jabatan_id','=', $request->jabatan_id )
+                            ->exists();;
+
+       
+
+
+        $response = array(
+                'skp_tahunan_status'     => $skp_tahunan,
+                'nip_pegawai'            => $pegawai->nip ,
+                'jabatan_aktif'          => Pustaka::capital_string($pegawai->JabatanAktif->Jabatan->skpd),
+                'periode_aktif'          => $mp->PeriodeAktif->label,
+        );
+       
+        return $response;
+
+
+    }
 
     public function SKPTahunan_timeline_status( Request $request )
     {
@@ -56,10 +208,10 @@ class SKPTahunanAPIController extends Controller {
         $y['content']	= $skp_tahunan->u_nama;
         array_push($body_2, $y);
 
-        $i['time']	    = $skp_tahunan->updated_at->format('Y-m-d H:i:s');
+        $i['time']	    = $skp_tahunan->date_of_send;
         $i['body']	    = $body_2;
 
-        if ( $skp_tahunan->updated_at->format('Y') > 1 )
+        if ( $skp_tahunan->send_to_atasan == 1 )
         {
             array_push($response, $i);
         }
@@ -72,7 +224,7 @@ class SKPTahunanAPIController extends Controller {
     }
    
 
-    public function SKPDSKPTahunan_list(Request $request)
+    public function SKPDSKPTahunanList(Request $request)
     {
             
         $dt = \DB::table('db_pare_2018.renja AS renja')
@@ -110,7 +262,7 @@ class SKPTahunanAPIController extends Controller {
                                 'skp_tahunan.u_jabatan_id',
                                 'skp_tahunan.p_nama',
                                 'skp_tahunan.p_jabatan_id',
-                                'skp_tahunan.status',
+                                'skp_tahunan.send_to_atasan',
                                 'pejabat.nip AS u_nip',
                                 'eselon.eselon AS eselon',
                                 'jabatan.skpd AS jabatan'
@@ -122,7 +274,7 @@ class SKPTahunanAPIController extends Controller {
                     $datatables = Datatables::of($dt)
                     ->addColumn('status', function ($x) {
             
-                        return $x->status;
+                        return $x->send_to_atasan;
             
                     })->addColumn('periode', function ($x) {
                         
@@ -163,146 +315,450 @@ class SKPTahunanAPIController extends Controller {
     }
 
 
+    
+
+    public function SKPTahunanBawahanMd(Request $request)
+    {
+            
+        $bawahan_aktif = SKPD::WHERE('parent_id', $request->jabatan_id )
+                            ->rightjoin('demo_asn.tb_history_jabatan AS bawahan', function($join){
+                                $join   ->on('bawahan.id_jabatan','=','m_skpd.id');
+                                $join   ->where('bawahan.status','=','active');
+                            }) 
+                            ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
+                                $join   ->on('pegawai.id','=','bawahan.id_pegawai');
+                            })
+                            ->leftjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function($join){
+                                $join   ->on('skp_tahunan.u_jabatan_id','=','bawahan.id');
+                                $join   ->where('skp_tahunan.send_to_atasan','=','1');
+                                $join   ->where('skp_tahunan.status_approve','=','1');
+                            })
+                            ->SELECT(   'bawahan.id AS bawahan_id',
+                                        'skp_tahunan.id AS skp_tahunan_id',
+                                        'pegawai.nip',
+                                        'pegawai.nama',
+                                        'pegawai.gelardpn',
+                                        'pegawai.gelarblk'
+
+                                    )
+                            ->get(); 
+
+       
+        $datatables = Datatables::of($bawahan_aktif)
+            ->addColumn('bawahan_id', function ($x) {
+                return $x->bawahan_id;
+            })->addColumn('skp_tahunan_id', function ($x) {
+                return $x->skp_tahunan_id;
+            })->addColumn('nama_pegawai', function ($x) {
+                return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
+            });
+            
+            if ($keyword = $request->get('search')['value']) {
+                $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            } 
+            
+            return $datatables->make(true);
+        
+    }
 
 
+
+  
+
+    //=======================================================================================//
+
+    protected function status_pk($skpd_id,$periode_id){
+        $pk = Renja::
+                rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
+                    $join   ->on('pk.renja_id','=','renja.id');
+                    $join   ->where('pk.status_approve','=','1');
+                })
+                ->where('renja.skpd_id',$skpd_id)
+                ->where('renja.periode_id',$periode_id)
+                ->exists();
+
+        return $pk;
+    }
+
+
+
+    protected function skp_tahunan_id($skpd_id,$periode_id,$pegawai_id,$jabatan_id){
+        $pk = Renja::
+                rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
+                    $join   ->on('pk.renja_id','=','renja.id');
+                    $join   ->where('pk.status_approve','=','1');
+                })
+                ->rightjoin('db_pare_2018.skp_tahunan AS skp', function($join){
+                    $join   ->on('skp.perjanjian_kinerja_id','=','pk.id');
+                })
+                ->where('skp.pegawai_id',$pegawai_id)
+                ->where('skp.u_jabatan_id',$jabatan_id)
+                ->where('renja.skpd_id',$skpd_id)
+                ->where('renja.periode_id',$periode_id)
+                ->first();
+
+        if ( $pk ){
+            return $pk->id;
+        }else{
+            return null ;
+        }
+        
+    }
 
 
     public function Personal_SKP_tahunan_list(Request $request)
     {
             
-        \DB::statement(\DB::raw('set @rownum='.$request->get('start')));
-       
-       
-        $dt = SKPTahunan::
-                        select([   
-                                    
-                        \DB::raw('@rownum  := @rownum  + 1 AS rownum'), 
-                        'id AS skp_tahunan_id',
-                        'perjanjian_kinerja_id',
-                        'jabatan_id',
-                        'jabatan_atasan_id',
-                        'u_nama',
-                        'p_nama',
-                        'tgl_mulai',
-                        'tgl_selesai',
-                        'status'
-            
-            ])
-            ->get();
+        $id_pegawai = $request->pegawai_id;
 
+        
+        $periode = Periode::ORDERBY('id','ASC')->get();
+
+        $response= array();
+        $last_jabatan       = '-';
+        $last_jabatan_id    = '-';
+        $last_skpd          = '-';
+        $last_skpd_id       = '-';
+        $last_tmt_jabatan   = '-';
+        $no                 = 1;
+
+        foreach ( $periode AS $x ){
+            
+
+            $thn = substr($x->awal,0,4);
+            
+            $dt = HistoryJabatan::
+                        WHERE('id_pegawai','=', $id_pegawai)
+                        ->whereRAW('YEAR(tmt_jabatan) = ' .$thn )
+                        ->SELECT('jabatan AS jabatan','id AS jabatan_id')
+                        ->count(); 
+
+            if ( $dt >= 1 ){
+                $xt = HistoryJabatan::
+                                WHERE('id_pegawai','=', $id_pegawai)
+                                ->whereRAW('YEAR(tmt_jabatan) = ' .$thn )
+                                ->SELECT('id AS jabatan_id','id_jabatan','id_skpd','tmt_jabatan')
+                                ->ORDERBY('tmt_jabatan','ASC')
+                                ->get(); 
+
+                foreach ( $xt AS $y ){
+
+                    $h['id']			        = $no;
+                    $h['pegawai_id']			= $id_pegawai;
+                    $h['periode']			    = $x->label;
+                    $h['periode_id']	        = $x->id;
+                    $h['jabatan']			    = Pustaka::capital_string($y->Jabatan ? $y->Jabatan->skpd : '');
+                    $h['jabatan_id']			= $y->jabatan_id;
+                    $h['skpd']			        = Pustaka::capital_string($y->Skpd ? $y->Skpd->skpd : '');
+                    $h['skpd_id']			    = $y->Skpd ? $y->Skpd->id : '';
+                    $h['tmt_jabatan']			= $y->tmt_jabatan;
+                    $h['pk_status']             = $this->status_pk($y->Skpd ? $y->Skpd->id : '',$x->id);
+                    $h['skp_tahunan_id']        = $this->skp_tahunan_id($y->Skpd ? $y->Skpd->id : '',$x->id , $id_pegawai , $y->jabatan_id);
+
+                    array_push($response, $h);
+
+                    $last_jabatan       = Pustaka::capital_string($y->Jabatan ? $y->Jabatan->skpd : '');
+                    $last_jabatan_id    = $y->jabatan_id;
+                    $last_skpd          = Pustaka::capital_string($y->Skpd ? $y->Skpd->skpd : '');
+                    $last_skpd_id       = $y->Skpd ? $y->Skpd->id : '';
+                    $last_tmt_jabatan   = $y->tmt_jabatan;
+                    $no = $no+1;
+                }
+
+            }else{
+                    $h['id']			    = $no;
+                    $h['pegawai_id']		= $id_pegawai;
+                    $h['periode']			= $x->label;
+                    $h['periode_id']	    = $x->id;
+                    $h['jabatan']			= $last_jabatan;
+                    $h['jabatan_id']		= $last_jabatan_id;
+                    $h['skpd']			    = $last_skpd;
+                    $h['skpd_id']			= $last_skpd_id;
+                    $h['tmt_jabatan']	    = $last_tmt_jabatan;
+                    $h['pk_status']         = $this->status_pk($last_skpd_id,$x->id);
+                    $h['skp_tahunan_id']    = $this->skp_tahunan_id($last_skpd_id ,$x->id , $id_pegawai , $y->jabatan_id);
+                    array_push($response, $h);
+                    $no = $no+1;
+            }
+
+           
+           
+
+        }
+
+        //return $response;                
        
-            $datatables = Datatables::of($dt)
+        $datatables = Datatables::of(collect($response))
+            ->addColumn('id', function ($x) {
+                return $x['id'] ;
+            }) 
            ->addColumn('periode', function ($x) {
-                //return $x->renja->periode->label;
+                return $x['periode'];
             }) 
-            ->addColumn('masa_penilaian', function ($x) {
-                $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
-                return   $masa_penilaian;
-            }) 
-            ->addColumn('pejabat_penilai', function ($x) {
+           
+            ->addColumn('jabatan', function ($x) {
             
-                if ( !empty($x->p_nama)){
-                    return $x->p_nama;
-                }else{
-                    return "<font style='color:red'>Belum Ada</font>";
-                }
+                return  $x['jabatan'];
                 
             }) 
-            ->addColumn('status', function ($x) {
+            ->addColumn('tmt_jabatan', function ($x) {
+            
+                return  Pustaka::tgl_form($x['tmt_jabatan']).'  ['.$x['jabatan_id'].']';
                 
-                return   $x->status;
+            }) 
+            ->addColumn('skpd', function ($x) {
+                return  $x['skpd'];
             })
-            ->addColumn('status_btn_edit', function ($x) {
+            ->addColumn('perjanjian_kinerja', function ($x) {
+                //true = skpd sudah memilik renja false = skpd blm memiliki renja
+               
+
+
+                return  $x['pk_status'];
                 
-                if ( $x->status == 1 ){
-                    $btn_status = 'btn-default disabled';
-                }else{
-                    $btn_status = 'btn-info';
+            })
+            ->addColumn('skp_tahunan', function ($x) {
+            
+                if ( ( $x['pk_status'] === true ) && ( $x['skp_tahunan_id'] === null ) ) {
+                    return 0; //0 = skpd sudah memiiki renja, skp belum dibuat , button create enable and show
+                }else if ( ( $x['pk_status'] === true ) && ( $x['skp_tahunan_id'] != null ) ) {
+                    return 1 ;  //1 = skpd sudah memiiki renja, skp sudah dibuat , button edit enable show
+                }else if ($x['pk_status'] === false){
+                    return 2 ;  //2 = skpd belum memiiki renja,  button create disabled
                 }
-                    return   $btn_status;
-            })
-            ->addColumn('status_btn_lihat', function ($x) {
                 
-                if ( $x->status == 0 ){
-                    $btn_status = 'btn-default disabled';
-                }else{
-                    $btn_status = 'btn-success';
-                }
-                    return   $btn_status;
             })
-            ->addColumn('status_btn_hapus', function ($x) {
+            ->addColumn('skp_tahunan_status', function ($x) {
+                if ( $x['skp_tahunan_id'] >= 1 ){
+                    $skp_status = SKPTahunan::WHERE('id', $x['skp_tahunan_id'] )
+                                    ->SELECT('send_to_atasan')
+                                    ->first();
+                    return $skp_status->send_to_atasan;
+                }else{
+                    return 0 ;
+                }
+
+            })
+            ->addColumn('skp_tahunan_id', function ($x) {
+                    return $x['skp_tahunan_id'];
                 
-                if ( $x->status == 1 ){
-                    $btn_status = 'btn-default disabled';
-                }else{
-                    $btn_status = 'btn-danger';
-                }
-                    return   $btn_status;
-            })
-            ->addColumn('step', function($x){
-
-
-               /*  if ( ($dt["type_id"] == null) && ($dt['status'] == 1 ) ){
-                    $step = '1';   //terkirim tapi belum disetujui
-                }else if( ($dt["type_id"] != null) && ($dt['pj'] == 1 ) && ($dt['status'] == 1 ) ) {
-                    $step = '2';   //terkirim dan disetujui
-                }else if( ($dt["type_id"] != null) && ($dt['pj'] == 0 ) ) {
-                    $step = '3'; //terkirim dan ditolak
-                }else if( ($dt["type_id"] != null) && ($dt['pj'] == 1 ) && ($dt['status'] == 2) ) {
-                    $step = '4'; //sedang proses pengajuan update
-                }else{
-                    $step = '5'; //default
-                } */
-
-                $step = '5';
-
-                return $step;
-
-            })
-            ->addColumn('ralat', function($x){
-                //boleh ralat jika jika capaian_id == null dan status_periode = 1
-                            
-                /* if ( ($dt["capaian_id"] == null ) && ($dt["status_periode"] == 1 ) && ( ( $state == 2) | ( $state == 4) ) ){
-                    $ralat = '1' ;
-                }else{
-                    $ralat = '0' ;
-                } */
-                    $ralat = '0';
-
-
-                    return $ralat;
-
-             });
+                 
+            });
     
             if ($keyword = $request->get('search')['value']) {
                 $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
             } 
             
     
-        return $datatables->make(true);
+        return $datatables->make(true); 
+        //return $response; 
+        
         
     }
 
 
-    public function create_skp_tahunan_confirm(Request $request)
+    protected function new_skp_componen($jabatan_id,$pk_id,$periode_id){
+        //return $jabatan_id.'|'.$pk_id.'|'.$periode_id;
+
+
+        //peridoe masa penilaian 
+        $periode    = Periode::WHERE('id',$periode_id)->first();
+
+        //return Pustaka::tgl_form($periode->awal);
+        
+
+        //DETAIL data pribadi dan atasan
+        $u_detail = HistoryJabatan::WHERE('id',$jabatan_id)->first();
+
+
+        //detail atasan
+        $id_jab_atasan = SKPD::WHERE('id',$u_detail->id_jabatan)->first()->parent_id;
+        $p_detail = HistoryJabatan::WHERE('id_jabatan', $id_jab_atasan)
+                                    ->WHERE('status','active')
+                                    ->first();
+
+        $data = array(
+                    'status'			    => 'pass',
+                    'pegawai_id'			=> $u_detail->id_pegawai,
+                    'periode_label'	        => $periode->label,
+                    'perjanjian_kinerja_id'	=> $pk_id,
+                    'u_jabatan_id'	        => $u_detail->id,
+                    'u_nip'	                => $u_detail->nip,
+                    'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
+                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
+                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
+                    'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
+                    'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
+                    'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
+                    'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
+
+                    'p_jabatan_id'	        => $p_detail->id,
+                    'p_nip'	                => $p_detail->nip,
+                    'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
+                    'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
+                    'p_golongan'	        => $p_detail->Golongan ? $p_detail->Golongan->golongan : '',
+                    'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
+                    'p_jabatan'	            => Pustaka::capital_string($p_detail->Jabatan ? $p_detail->Jabatan->skpd : ''),
+                    'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
+                    'p_skpd'	            => Pustaka::capital_string($p_detail->Skpd ? $p_detail->Skpd->skpd : ''),
+
+        );
+
+        return $data;
+
+
+
+
+
+        //nama lengkap pribdai dan atasan
+
+
+
+
+    }
+
+
+    public function CreateConfirm(Request $request)
 	{
 
-        $pegawai                    = Pegawai::where('id',$request->get('pegawai_id'))->first();
-        $jabatan                    = $pegawai->history_jabatan->where('status','active')->first();
+        //data yang harus diterima yaitu periode ID, jabatan ID, 
+        //karena kita butuh periode dan jenis jabatan nya untuk confirm dan mengetahui atasan nya
+        //======= tidak boleh ada yang membuat SKP tahunan dengan 
+        //======== PERSONAL JABATAN ID dan PERJANJIAN KINERTJA ID 
+        // ======= yang sama untuk satu pegawai id
 
+        //cari SKPD ID from jabatan_id
+        $skpd_id = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))->SELECT('id','id_skpd')->first()->id_skpd;
+       
+        //cari perjanjian kinerja dari periode ID
+        $pk_id   = Renja::WHERE('renja.periode_id',$request->get('periode_id'))
+                        ->WHERE('renja.skpd_id',$skpd_id)
+                        ->leftjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
+                            $join   ->on('renja.id','=','pk.renja_id');
+                        })
+                        ->SELECT('pk.id AS pk_id')
+                        ->first()
+                        ->pk_id;
+
+        
+
+        // COUNT SKP TAHUNAN DENWGAN DATA DIATAS
+        $skp_count      = SKPTahunan::WHERE('pegawai_id', $request->get('pegawai_id'))
+                                ->WHERE('perjanjian_kinerja_id',$pk_id)
+                                ->WHERE('u_jabatan_id', $request->get('jabatan_id'))
+                                ->count();
+
+        //ready to create SKP, but check the jabatan type id , if he is 
+        //if 1 nunggu 2 , if 2 nunggu 3 . jadi kalo 3 mah bisa langsung bikin SKP tahunan , 
+        //if 4, nunggu 3
+
+        $jenis_jabatan = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))
+                            ->SELECT('id','id_eselon')->first()->Eselon->id_jenis_jabatan;
+
+        if ($skp_count === 0 ){
+            if (  $jenis_jabatan == 1 ){
+                //cek SKP bawahan jabatn 2 nya
+//Jabatan Pimpinan Tinggi Pratama KA SKPD=====================================================================================//
+
+            }else if ( $jenis_jabatan == 2 ){
+//Jabatan Administrator KABID =====================================================================================//
+               //cek SKP TAHUNAN bawahan  jabatan 3 nya
+                $data = HistoryJabatan::WHERE('id', $request->jabatan_id )->first();
+                $jabatan_id = $data->id_jabatan;
+                $skpd_id    = $data->id_skpd;
+
+                $renja = Renja::WHERE('skpd_id',$skpd_id)
+                                ->WHERE('periode_id',$request->periode_id)
+                                ->rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
+                                    $join   ->on('pk.renja_id','=','renja.id');
+                                    $join   ->where('pk.status_approve','=','1');
+                                }) 
+                                ->SELECT(
+                                            'pk.id AS pk_id'
+                                        )
+                                ->first();
+                $pk_id = $renja->pk_id;
+
+               
+                $bawahan_aktif = SKPD::WHERE('parent_id', $jabatan_id )
+                                        ->rightjoin('demo_asn.tb_history_jabatan AS bawahan', function($join){
+                                            $join   ->on('bawahan.id_jabatan','=','m_skpd.id');
+                                            $join   ->where('bawahan.status','=','active');
+                                        }) 
+                                        ->SELECT('bawahan.id AS bawahan_id')
+                                        ->get(); 
+
+                //$bawahan_aktif = ['35342','35245'];
+
+
+                $skp_bawahan = SKPTahunan::WHERE('perjanjian_kinerja_id',$pk_id)
+                                            ->WHERE('send_to_atasan','1')
+                                            ->WHERE('status_approve','1')
+                                            ->WHEREIN('u_jabatan_id',$bawahan_aktif)
+                                            ->count();
+
+               if ( COUNT($bawahan_aktif) == $skp_bawahan ){
+                    $data = $this->new_skp_componen($request->get('jabatan_id'),$pk_id,$request->get('periode_id'));
+
+                    return $data;
+               }else{
+                    $data = array(
+                                    'status'			    => 'fail',
+                                    'jenis_jabatan'			=> $jenis_jabatan,
+                                    'perjanjian_kinerja_id' => $pk_id,
+                                    'jabatan_id'            => $jabatan_id
+                                );
+
+                    return $data;
+                   
+               } 
+
+
+
+
+            }else if ( $jenis_jabatan == 4 ){
+//Jabatan PELAKSANA JFU =======================================================================================//
+                //cek SKP atasan  jabatan 3 nya
+            }else if ( $jenis_jabatan == 3 ){
+//Jabatan PENGAWAS KASUBID =======================================================================================//
+ 
+                //ready to SKP
+                $data = $this->new_skp_componen($request->get('jabatan_id'),$pk_id,$request->get('periode_id'));
+
+                return $data;
+            }else{
+                return \Response::make( 'error', 400);
+
+            }
+        }
+        
+                    
+
+
+
+        
+
+       
+
+
+
+        //$my_skp   = SKPTahunan::where('id',$request->get('pegawai_id'))->exist();
+
+
+
+
+       //$jabatan                    = $pegawai->JabatanAktif->first();
+/* 
         // cek apakah user sudah memiliki SKP tahunan atau belum
-        $periode_aktif              = PeriodeTahunan::where('status','1')->first();
+        $periode_aktif              = Periode::where('status','1')->first();
         $perjanjian_kinerja_publish = $periode_aktif->perjanjian_kinerja
                                             ->where('active','1')
-                                            ->where('publish','1')
                                             ->where('skpd_id', $pegawai->history_jabatan->where('status','active')->first()->id_skpd )
                                             ->first();
 
         $jm_perjanjian_kinerja      = PerjanjianKinerja::where('periode_tahunan_id',$periode_aktif->id)->get();
 
-        //======= tidak boleh ada yang membuat SKP tahunan dengan 
-        //======== PERSONAL JABATAN ID dan PERJANJIAN KINERTJA ID 
-        // ======= yang sama untuk satu pegawai id
+       
         $cek_data = SKPTahunan::where('pegawai_id',$pegawai->id)
                                 ->where('perjanjian_kinerja_id',$perjanjian_kinerja_publish->id)
                                 ->where('jabatan_id',$jabatan->id)
@@ -346,7 +802,7 @@ class SKPTahunanAPIController extends Controller {
     
                             'msg'                   => $response
     
-                          /*   //DETAIL ATASAN
+                           //DETAIL ATASAN
                             'p_nama'                => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                             'p_nip'                 => $pegawai->nip,
                             //'jabatn'              => $jabatan,
@@ -354,7 +810,7 @@ class SKPTahunanAPIController extends Controller {
                             'p_eselon'              => $jabatan->eselon->eselon,
                             'p_jenis_jabatan'       => $jabatan->eselon->jenis_jabatan->jenis_jabatan,
                             'p_unit_kerja'          => Pustaka::capital_string($jabatan->UnitKerja->unit_kerja),
-                            'p_skpd'                => Pustaka::capital_string($jabatan->skpd->unit_kerja), */
+                            'p_skpd'                => Pustaka::capital_string($jabatan->skpd->unit_kerja), 
                             
     
     
@@ -370,7 +826,7 @@ class SKPTahunanAPIController extends Controller {
             return \Response::make('JFU dan JFT nanti saja bikin SKP nya', 400);
         }
         
-
+        */
        
        
          
@@ -378,10 +834,10 @@ class SKPTahunanAPIController extends Controller {
 
 
 
-    public function set_pejabat_penilai_skp_tahunan(Request $request)
+    public function PejabatPenilaiUpdate(Request $request)
 	{
         $messages = [
-            'pegawai_id.required'                   => 'Harus set Pegawai ID',
+            'pejabat_penilai_id.required'           => 'Harus set Pegawai ID',
             'skp_tahunan_id.required'               => 'Harus diisi',
 
         ];
@@ -389,7 +845,7 @@ class SKPTahunanAPIController extends Controller {
         $validator = Validator::make(
             Input::all(),
             array(
-                'pegawai_id'            => 'required',
+                'pejabat_penilai_id'    => 'required',
                 'skp_tahunan_id'        => 'required',
             ),
             $messages
@@ -401,39 +857,45 @@ class SKPTahunanAPIController extends Controller {
 
 
         //Cari nama dan id pejabatan penilai
-        $pegawai     = Pegawai::where('id',$request->get('pegawai_id'))->first();
-        $jabatan     = $pegawai->history_jabatan->where('status','active')->first();
+        $pegawai     = Pegawai::SELECT('*')->where('id',$request->pejabat_penilai_id )->first();
 
-        if ( $jabatan ){
-            $jabatan_atasan_id = $jabatan->id;
+        //$jabatan_x     = $pegawai->JabatanAktif;
+
+        if ( $pegawai->JabatanAktif ){
+
+            $p_jabatan_id  =  $pegawai->JabatanAktif->id;
         }else{
-            return \Response::make('error', 500);
+            return \Response::make('Jabatan tidak ditemukan', 500);
         }
 
 
         
-        $data       = [
-                'jabatan_atasan_id' => $jabatan->id,
-                'p_nama'            => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
-        ];
+       
 
-        $skp_tahunan     = SKPTahunan::where('id', $request->get('skp_tahunan_id') );
+        $skp_tahunan    = SKPTahunan::find($request->get('skp_tahunan_id'));
+        if (is_null($skp_tahunan)) {
+            return $this->sendError('SKP Tahunan tidak ditemukan tidak ditemukan.');
+        }
 
-
+        
+        $skp_tahunan->p_jabatan_id    = $p_jabatan_id;
+        $skp_tahunan->p_nama          = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+   
         
         $item = array(
            
             "p_nip"			=> $pegawai->nip,
             "p_nama"		=> Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
-            "p_golongan"	=> $jabatan->golongan->pangkat. '/' . $jabatan->golongan->golongan,
-            "p_jabatan"		=> $jabatan->jabatan,
-            "p_eselon"		=> $jabatan->jabatan,
-            "p_unit_kerja"	=> Pustaka::capital_string($jabatan->UnitKerja->unit_kerja),
+            "p_pangkat"	    => $pegawai->JabatanAktif->golongan?$pegawai->JabatanAktif->golongan->pangkat:'',
+            "p_golongan"	=> $pegawai->JabatanAktif->golongan?$pegawai->JabatanAktif->golongan->golongan:'',
+            "p_eselon"		=> $pegawai->JabatanAktif->Eselon?$pegawai->JabatanAktif->Eselon->eselon:'',
+            "p_jabatan"		=> Pustaka::capital_string($pegawai->JabatanAktif->Jabatan?$pegawai->JabatanAktif->Jabatan->skpd:''),
+            "p_unit_kerja"	=> Pustaka::capital_string($pegawai->JabatanAktif->Skpd?$pegawai->JabatanAktif->Skpd->skpd:''),
             );
 
 
         
-        if (  $skp_tahunan->update($data) ){
+        if (  $skp_tahunan->save() ){
             return \Response::make(  $item , 200);
 
 
@@ -448,10 +910,12 @@ class SKPTahunanAPIController extends Controller {
         $messages = [
                 'pegawai_id.required'                   => 'Harus diisi',
                 'perjanjian_kinerja_id.required'        => 'Harus diisi',
-                'jabatan_id.required'                   => 'Harus diisi',
                 'tgl_mulai.required'                    => 'Harus diisi',
                 'tgl_selesai.required'                  => 'Harus diisi',
                 'u_nama.required'                       => 'Harus diisi',
+                'u_jabatan_id.required'                 => 'Harus diisi',
+                'p_nama.required'                       => 'Harus diisi',
+                'p_jabatan_id.required'                 => 'Harus diisi',
 
         ];
 
@@ -460,10 +924,12 @@ class SKPTahunanAPIController extends Controller {
                         array(
                             'pegawai_id'            => 'required',
                             'perjanjian_kinerja_id' => 'required',
-                            'jabatan_id'            => 'required',
                             'tgl_mulai'             => 'required',
                             'tgl_selesai'           => 'required',
                             'u_nama'                => 'required',
+                            'u_jabatan_id'          => 'required',
+                            'p_nama'                => 'required',
+                            'p_jabatan_id'          => 'required',
                         ),
                         $messages
         );
@@ -474,14 +940,23 @@ class SKPTahunanAPIController extends Controller {
             
         }
 
+        if ( (Pustaka::tgl_sql(Input::get('tgl_mulai'))) >= (Pustaka::tgl_sql(Input::get('tgl_selesai'))) ){
+            $pesan =  ['masa_penilaian'  => 'Error'] ;
+            return response()->json(['errors'=> $pesan ],422);
+            
+        }
+
 
         $skp_tahunan    = new SKPTahunan;
         $skp_tahunan->pegawai_id                  = Input::get('pegawai_id');
         $skp_tahunan->perjanjian_kinerja_id       = Input::get('perjanjian_kinerja_id');
-        $skp_tahunan->jabatan_id                  = Input::get('jabatan_id');
+        $skp_tahunan->u_nama                      = Input::get('u_nama');
+        $skp_tahunan->u_jabatan_id                = Input::get('u_jabatan_id');
+        $skp_tahunan->p_nama                      = Input::get('p_nama');
+        $skp_tahunan->p_jabatan_id                = Input::get('p_jabatan_id');
         $skp_tahunan->tgl_mulai                   = Pustaka::tgl_sql(Input::get('tgl_mulai'));
         $skp_tahunan->tgl_selesai                 = Pustaka::tgl_sql(Input::get('tgl_selesai'));
-        $skp_tahunan->u_nama                      = Input::get('u_nama');
+        
 
         if ( $skp_tahunan->save()){
             return \Response::make('sukses', 200);
@@ -490,6 +965,136 @@ class SKPTahunanAPIController extends Controller {
         } 
             
             
-        }   
+    }   
+
+    
+    public function SendToAtasan(Request $request)
+    {
+        $messages = [
+                'skp_tahunan_id.required'   => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'skp_tahunan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $skp_tahunan    = SKPTahunan::find(Input::get('skp_tahunan_id'));
+        if (is_null($skp_tahunan)) {
+            return $this->sendError('SKP Tahunan tidak ditemukan.');
+        }
+
+
+        $skp_tahunan->send_to_atasan    = '1';
+        $skp_tahunan->date_of_send      = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+        $skp_tahunan->status_approve    = '0';
+
+        if ( $skp_tahunan->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+
+
+
+    }
+
+    public function PullFromAtasan(Request $request)
+    {
+        $messages = [
+                'skp_tahunan_id.required'   => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'skp_tahunan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $skp_tahunan    = SKPTahunan::find(Input::get('skp_tahunan_id'));
+        if (is_null($skp_tahunan)) {
+            return $this->sendError('SKP Tahunan tidak ditemukan.');
+        }
+
+
+        $skp_tahunan->send_to_atasan    = '0';
+        $skp_tahunan->date_of_send      = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+        $skp_tahunan->status_approve    = '';
+
+        if ( $skp_tahunan->save()){
+            
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+
+
+
+    }
+
+
+
+    public function Destroy(Request $request)
+    {
+
+        $messages = [
+                'skp_tahunan_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'skp_tahunan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $st_skp    = SKPtahunan::find(Input::get('skp_tahunan_id'));
+        if (is_null($st_skp)) {
+            return $this->sendError('SKP Tahunan tidak ditemukan.');
+        }
+
+
+        if ( $st_skp->delete()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
 
 }

@@ -24,7 +24,7 @@
 						<img style="border: 1px solid white; padding: 2px; width: 80px; height: 80px;" class="img-circle" src="data:image/png;base64,{{ chunk_split(base64_encode(\Auth::user()->pegawai->foto->isi)) }}" alt="User Avatar">
 						<p >
 						  <font style="font-size:15px; color:#e0c200;">{{ Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)  }}</font>
-						  <small style="color:#d7dff9;">{{ \Auth::user()->pegawai->history_jabatan->where('status','active')->first()->jabatan }}</small>
+						  <small style="color:#d7dff9;">{{ Pustaka::capital_string(\Auth::user()->pegawai->JabatanAktif->Jabatan->skpd ) }}</small>
 						</p>
 					  </li>
 					  <!-- Menu Body -->

@@ -26,7 +26,7 @@ $(document).ready(function() {
 				'data' : {
 						"url" 	: "{{ url("api_resource/skpd_renja_tree") }}",
 						"data" 	: function (node) {
-							return { "renja_id" : {!! $renja->id !!} };
+							return { "renja_id" : {!! $pk->renja->id !!} };
 						},
 						"dataType" : "json"
 				}
@@ -86,7 +86,7 @@ $(document).ready(function() {
 			$.post( '{!! url("'+url+'") !!}', 
 				{ 	'parent'	: tx[0],
 					'parent_id' : tx[1], 
-					'renja_id' 	: {!! $renja->id !!},
+					'renja_id' 	: {!! $pk->renja->id !!},
 					'position' 	: data.position, 
 					'text' 		: data.node.text 
 				})

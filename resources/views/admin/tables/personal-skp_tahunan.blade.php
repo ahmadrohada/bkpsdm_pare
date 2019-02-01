@@ -1,238 +1,201 @@
-<div class="box box-primary">
+<div class="box {{ $h_box }}">
     <div class="box-header with-border">
-        <h3 class="box-title">
-			<small>
-				
-				<span class="text-primary"> {!!  Pustaka::nama_pegawai($user->pegawai->gelardpn , $user->pegawai->nama , $user->pegawai->gelarblk) !!}</span>
-			</small>
-        </h3>
+        <h1 class="box-title">
+            Data SKP Tahunan
+        </h1>
 
         <div class="box-tools pull-right">
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
+            {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
     </div>
-
-
-	
 	<div class="box-body table-responsive">
-	<a  class="btn btn-sm btn-success create_skp_tahunan" href="#" title="" style=""><span class="fa fa-plus"></span> Create SKP Tahunan</a>
 
-		<table id="skp_tahunan"  class="table table-striped table-hovers" >
+		<table id="skp_tahunan_table" class="table table-striped table-hover table-condensed">
 			<thead>
 				<tr class="success">
 					<th>NO</th>
-					<th >PERIODE</th>
-                    <th>MASA PENILAIAN</th>
-					<th>PEJABAT PENIALAI</th>
-					<th>STATUS</th>
-					<th><i class="fa fa-cog"></i></th>
+					<th>PERIODE</th>
+					<th>TMT</th>
+					<th>JABATAN</th>
+					<th>SKPD</th>
+					<th>PERJANJIN KINERJA</th>
+
+					<th>SKP TAHUNAN</th>
 				</tr>
 			</thead>
+			
 			
 		</table>
 
 	</div>
 </div>
 
-@include('admin.modals.create-skp_tahunan_confirm')
+@include('admin.modals.create_skp_tahunan_confirm')
 
-
-   
-
+@include('admin.modals.skp_tahunan_bawahan')
 
 <script type="text/javascript">
 $(document).ready(function() {
+
+
+
 	//alert();
-	/* $('.create-skp_tahunan_confirm_modal').on('hidden.bs.modal', function(){
-		$('#skp_tahunan').DataTable().ajax.reload(null,false);
 		
-	}); */
-	
-
-
-	$(document).on('click','.create_skp_tahunan',function(e){
-	 
-		$('.periode_perjanjian_kinerja').html('2018');
-
-
-		$.ajax({
-      		method    : "GET",
-     		url       : '{{ url("api_resource/create_skp_tahunan_confirm") }}',
-			data      : { pegawai_id: {{ $user->pegawai->id }} },
-			dataType  : "json",
-			success   : function (data) {
-
-				$('.periode_tahunan').html(data['periode_tahunan']);
-				$('.mulai').val(data['tgl_mulai']);
-				$('.selesai').val(data['tgl_selesai']);
-
+	$('#skp_tahunan_table').DataTable({
+				processing      : true,
+				serverSide      : true,
+				searching      	: false,
+				paging          : false,
+				order 			: [ 0 , 'desc' ],
+				//dom 			: '<"toolbar">frtip',
+				lengthMenu		: [50,100],
+				columnDefs		: [
+									{ 	className: "text-center", targets: [ 0,1,2,5,6 ] }/* ,
+									//{ 	className: "hidden-xs", targets: [ 5 ] } */
+								],
+				ajax			: {
+									url	: '{{ url("api_resource/personal_skp_tahunan_list") }}',
+									data: { pegawai_id : {!! $pegawai->id !!} },
+									delay:3000
+								},
 				
-				$('.u_nama').html(data['u_nama']);
-				$('.u_nip').html(data['u_nip']);
-				$('.u_pangkat_golongan').html(data['u_pangkat']+ '/' +data['u_golongan']);
 
-				$('.u_jabatan').html(data['u_jabatan']);
-				$('.u_unit_kerja').html(data['u_unit_kerja']);
-				$('.u_skpd').html(data['u_skpd']);
-
-
-				$('.pegawai_id').val(data['pegawai_id']);
-				$('.perjanjian_kinerja_id').val(data['perjanjian_kinerja_id']);
-				$('.tgl_mulai').val(data['tgl_mulai']);
-				$('.tgl_selesai').val(data['tgl_selesai']);
-				$('.jabatan_id').val(data['jabatan_id']);
-				$('.u_nama').val(data['u_nama']);
-
-				
-				
-				$('.create-skp_tahunan_confirm_modal').modal('show');
-			},
-			error: function(data) {
-				swal({
-						title: "Error",
-						text: "SKP Tahunan Sudah dibuat untuk Periode saat ini",
-						type: "warning"
-					}).then (function(){
-						default_a();	
-						
-						
-					}); 
-					
-			} 
-		});
-
-
-		//pegawai
-		
-
-		//atasan
-		/* $('.p_nip').html('nip atasan');
-		$('.p_nama').html('nama atasan');
-		$('.p_jabatan').html('jabatan atasan');
-		$('.p_eselon').html('eselon atasan');
-		$('.p_unit_kerja').html('unit_kerja atasan');
-		$('.p_skpd').html('skpd atasan'); */
-
-
-
-
-
-		
-		
-	});
-
-   
-	
-	var table = $('#skp_tahunan').DataTable({
-		serverSide		: true,
-		select			: true,
-		searching      	: false,
-		paging          : false,
-		columnDefs		: [
-							{ className: "text-center", targets: [ 0,1,2,4,5 ] }
-						  ],
-		ajax			: {
-							url: '{{ url("api_resource/personal_skp_tahunan_list") }}',
-							data: { skpd_id:{{ $skpd->id }} },
-							type: 'GET'
-						  },
-		columns			: [
-							{ data: null , orderable: false,searchable:false, width:"80px",
-									render : function ( data, type, row ) {
-										return data.rownum;
+				columns	:[
+								{ data: 'id' , orderable: true,searchable:false,
+									"render": function ( data, type, row ,meta) {
+										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
-							},
-							{ data: "periode", name:"periode", orderable: true, searchable: true,width:"200px"},
-							{ data: "masa_penilaian" ,  name:"masa_penilaian", orderable: false, searchable: false},
-							{ data: "pejabat_penilai" ,  name:"pejabat_penilai", orderable: false, searchable: false},
-							{ data: 'step' , orderable: false,searchable:false, width:"80px",
-									"render": function ( data, type, row ) {
-										if (row.step == '1'){
-										return 	[  	'<i class="fa fa-send" data-toggle="tooltip" data-placement="right" title="SKP menunggu approve dari atasan"></i>'
-												];
-										}else if(row.step == '2'){
-										return 	[  	'<i class="fa fa-check" data-toggle="tooltip" data-placement="right" title="SKP disetujui oleh atasan"></i>'
-												];
-										}else if(row.step == '3'){
-										return 	[  	'<i class="fa fa-remove" data-toggle="tooltip" data-placement="right" title="SKP ditolak oleh atasan"></i>'
-												];
-										}else if(row.step == '4'){
-										return 	[  	'<i class="fa fa-exchange" data-toggle="tooltip" data-placement="right" title="SKP dalam pengajuan ralat"></i>'
-												];
-										}else if(row.step == '5'){
-										return 	[  	'<i class="fa fa-pencil" data-toggle="tooltip" data-placement="right" title="SKP belum selesai"></i>'
-												];
+								},
+								
+								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
+								{ data: "tmt_jabatan" ,  name:"tmt_jabatan", orderable: true, searchable: true},
+								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true},
+								{ data: "skpd" ,  name:"skpd", orderable: true, searchable: true},
+								{ data: "perjanjian_kinerja" , orderable: false,searchable:false,width:"40px",
+										"render": function ( data, type, row ) {
+										if (row.perjanjian_kinerja == true ){
+											return  '<span class="label label-success"><i class="fa fa-check"></i></span>';
+										}else{
+											return  '<span class="label label-default"><i class="fa fa-close"></i></span>';
+											
+										}
+										
+									}
+								},
+								{ data: "skp_tahunan" , orderable: false,searchable:false,width:"120px",
+										"render": function ( data, type, row ) {
+										if (row.skp_tahunan == 0 ){
+											return  '<span  data-toggle="tooltip" title="Create SKP Tahunan" style="margin:1px;" ><a class="btn btn-warning btn-xs create_skp_tahunan"  data-jabatan_id="'+row.jabatan_id+'" data-periode_id="'+row.periode_id+'" data-pegawai_id="'+row.pegawai_id+'">Create SKP</a></span>';
+										}else if (row.skp_tahunan == 1 ){
+
+
+											if (row.skp_tahunan_status == 0 ){
+												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs" disabled><i class="fa fa-eye" ></i></a></span>'
+														+'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'
+														+'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_skp_tahunan"  data-id="'+row.skp_tahunan_id+'" data-periode="'+row.periode+'" ><i class="fa fa-close " ></i></a></span>';
+											
+											}else{
+												return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-eye" ></i></a></span>'
+														+'<span style="margin:1px;" ><a class="btn btn-default btn-xs "  disabled><i class="fa fa-pencil" ></i></a></span>'
+														+'<span style="margin:1px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-close " ></i></a></span>';
+											
+											}
+										
+										
+										
+										}else if (row.skp_tahunan == 2 ){
+											return  '<span class="btn btn-default btn-xs" disabled>Create SKP</i></span>';
 										}
 									}
-							},
-							{ data: 'step' , orderable: false,searchable:false, width:"80px",
-									"render": function ( data, type, row ) {
-										return 	[  	 '<a href="#" class="btn btn-xs '+row.status_btn_hapus+' " data-toggle="tooltip" data-placement="top" title="Hapus" style="margin:1px;" ><i class="glyphicon glyphicon-trash"></i></a>'
-													+'<a href="./skp-tahunan/'+row.skp_tahunan_id+'" class="btn btn-xs '+row.status_btn_lihat+'" data-toggle="tooltip" data-placement="top" title="Lihat" style="margin:1px;" ><i class="glyphicon glyphicon-eye-open"></i></a></span>' 
-													+'<a href="./skp-tahunan/'+row.skp_tahunan_id+'/edit" class="btn btn-xs '+row.status_btn_edit+'" data-toggle="tooltip" data-placement="top" title="Edit" style="margin:1px;" ><i class="glyphicon glyphicon-pencil"></i></a></span>'
-												];
-									}
-							}
-						  ]
+								},
 								
-    
-	} );
-
-
-	
-/*  ----------------------------------------------------------- **/
-/** ##################   HAPUS SKP   ########################## **/
-/*  ----------------------------------------------------------- **/
-	$(document).on('click','.hapus',function(e){
-        e.preventDefault();
-		skp_id = $(this).val();
-		
-		swal({
-			title: "Apakah anda yakin?",
-			text: "SKP dan kegiatannya akan dihapus!",
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonClass: "btn-danger",
-			confirmButtonText: "Ya, hapus SKP!",
-			closeOnConfirm: false
-		}).then(function () {
+							]
 			
-			alert ("function on progress");
-			
-			/* $.ajax({
-				type: 'POST',
-				url:"./kelas/proses.php",
-				data:{req:'delete_skp_tahunan',skp_id:skp_id},
-				cache:false,
-				success: function(e) {
-						swal({
-							title: "",
-							text: "Sukses",
-							type: "success",
-							width: "200px",
-							showConfirmButton: false,
-							allowOutsideClick : false,
-							timer: 1200
-						}).then (function(){
-							load_data_skp();	
-									
-								
-							},// handling the promise rejection
-							function (dismiss) {
-								if (dismiss === 'timer') {
-									load_data_skp();
-								}
-							}
-						)
-				}
-			}) */
-		
-		});
-		
-		
 	});
 
 
+	
 
+	$(document).on('click','.edit_skp_tahunan',function(e){
+		var skp_tahunan_id = $(this).data('id') ;
+		//alert(skp_tahunan_id);
+
+
+
+		window.location.assign("skp-tahunan/"+skp_tahunan_id+"/edit");
+	});
+
+	$(document).on('click','.lihat_skp_tahunan',function(e){
+		var skp_tahunan_id = $(this).data('id') ;
+		//alert(skp_tahunan_id);
+
+
+
+		window.location.assign("skp-tahunan/"+skp_tahunan_id);
+	});
+
+	$(document).on('click','.hapus_skp_tahunan',function(e){
+		var skp_tahunan_id = $(this).data('id') ;
+		//alert(kegiatan_tahunan_id);
+
+		swal({
+			title: "Hapus  SKP Tahunan",
+			text:$(this).data('periode'),
+			type: "warning",
+			//type: "question",
+			showCancelButton: true,
+			cancelButtonText: "Batal",
+			confirmButtonText: "Hapus",
+			confirmButtonClass: "btn btn-success",
+			cancelButtonColor: "btn btn-danger",
+			cancelButtonColor: "#d33",
+			closeOnConfirm: false,
+			closeOnCancel:false
+		}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/hapus_skp_tahunan") }}',
+					type	: 'POST',
+					data    : {skp_tahunan_id:skp_tahunan_id},
+					cache   : false,
+					success:function(data){
+							swal({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										$('#skp_tahunan_table').DataTable().ajax.reload(null,false);
+										
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$('#skp_tahunan_table').DataTable().ajax.reload(null,false);
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							swal({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+					});	
+			}
+		});
+	});
+	
+	
 });
 </script>

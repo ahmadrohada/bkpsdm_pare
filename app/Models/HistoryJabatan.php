@@ -12,8 +12,8 @@ class HistoryJabatan extends Model
 
 
     protected $fillable = [
-        'id_pegawai', 'jabatan','id_skpd'
-    ]; 
+        'id_pegawai', 'jabatan','status'
+    ];  
  
     /**
      * Untuk mendapatkan data pegawai yang berelasi dengan history jabatan.
@@ -24,7 +24,7 @@ class HistoryJabatan extends Model
     }
 
 
-    public function skpd()
+    public function Skpd()
     {
         return $this->hasOne('App\Models\Skpd','id','id_skpd');
     }
@@ -34,7 +34,7 @@ class HistoryJabatan extends Model
         return $this->hasOne('App\Models\UnitKerja','id','id_unit_kerja');
     }
 
-    public function eselon()
+    public function Eselon()
     {
         return $this->hasOne('App\Models\Eselon','id','id_eselon');
     }
@@ -50,6 +50,7 @@ class HistoryJabatan extends Model
     }
 
 
+    //field SKPD untu dapetin jabatannya ye
     public function Jabatan()
     {
         return $this->hasOne('App\Models\Skpd','id','id_jabatan');

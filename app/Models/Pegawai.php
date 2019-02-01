@@ -22,6 +22,12 @@ class Pegawai extends Model
     return $this->hasMany('App\Models\HistoryJabatan', 'id_pegawai');
     }
 
+    public function JabatanAktif()
+    {
+    return $this->hasOne('App\Models\HistoryJabatan', 'id_pegawai')->where('status','active');
+    }
+
+
     public function foto()
     {
        return $this->hasOne('App\Models\Foto', 'nipbaru','nip');

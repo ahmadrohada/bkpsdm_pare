@@ -91,6 +91,179 @@ class RencanaAksiAPIController extends Controller {
 		return $data;
         
     }
+
+
+
+    public function RencanaAksioverKegiatanTahunan(Request $request)
+    {
+            
+       
+        $dt = Rencanaaksi::WHERE('kegiatan_tahunan_id','=', $request->kegiatan_tahunan_id )
+
+                ->select([   
+                    'id AS rencana_aksi_id',
+                    'label'
+                    
+                    ])
+                ->get();
+
+                
+                
+        $datatables = Datatables::of($dt)
+        ->addColumn('label', function ($x) {
+            return $x->label;
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true); 
+        
+    }
+
+    public function RencanaAksiDetail(Request $request)
+    {
+       
+        
+        $x = RencanaAksi::
+                            SELECT(     'id AS rencana_aksi_id',
+                                        'label'
+                                    ) 
+                            ->WHERE('id', $request->rencana_aksi_id)
+                            ->first();
+
+		
+		//return  $rencana_aksi;
+        $rencana_aksi = array(
+            'id'            => $x->rencana_aksi_id,
+            'label'         => $x->label
+
+        );
+        return $rencana_aksi;
+    }
+
+    public function Store(Request $request)
+    {
+
+        $messages = [
+                'kegiatan_tahunan_id.required'   => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'kegiatan_tahunan_id'   => 'required',
+                            'label'                 => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+
+        $st_ra   = new RencanaAksi;
+
+        $st_ra->kegiatan_tahunan_id       = Input::get('kegiatan_tahunan_id');
+        $st_ra->label                     = Input::get('label');
+
+        if ( $st_ra->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
+
+
+    public function Update(Request $request)
+    {
+
+        $messages = [
+                'rencana_aksi_id.required'   => 'Harus diisi',
+                'label.required'             => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'rencana_aksi_id'   => 'required',
+                            'label'             => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $st_ra    = RencanaAksi::find(Input::get('rencana_aksi_id'));
+        if (is_null($st_ra)) {
+            return $this->sendError('Rencana Aksi tidak ditemukan.');
+        }
+
+
+        $st_ra->label             = Input::get('label');
+
+        if ( $st_ra->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
+
+
+    public function Hapus(Request $request)
+    {
+
+        $messages = [
+                'rencana_aksi_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'rencana_aksi_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $st_ra    = RencanaAksi::find(Input::get('rencana_aksi_id'));
+        if (is_null($st_ra)) {
+            return $this->sendError('Kegiatan Tahunan tidak ditemukan.');
+        }
+
+
+        if ( $st_ra->delete()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
   
 
 }

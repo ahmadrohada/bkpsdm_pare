@@ -39,64 +39,52 @@ Use Alert;
 
 class SKPTahunanController extends Controller {
 
-    public function SKPTahunanDetail(Request $skp_tahunan_id)
+    public function PersonalSKPTahunanDetail(Request $request)
 	{
-        $skp_tahunan	= SKPTahunan::where('id', '=', $skp_tahunan_id->id )->firstOrFail();
+        $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
 
-        return view('admin.pages.skpd-skp_tahunan', [
-                    'skp'                   => $skp_tahunan,
-                    ]
-        );    
+        
 
+        if(  ( ($skp_tahunan->send_to_atasan) == 1 ) &  ( ($skp_tahunan->status_approve) == 2 ) ){
+            return redirect('/personal/skp-tahunan/'.$request->skp_tahunan_id.'/ralat')->with('status', 'SKP belum dikirm ke atasan');
+        }else if( ($skp_tahunan->send_to_atasan) == 0 ) {
+            return redirect('/personal/skp-tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
+        }else{
+            return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan]);  
+        }
     }
 
-    public function SKPTahunanPersonalEdit($skp_tahunan_id)
+
+
+    public function PersonalSKPTahunanEdit(Request $request)
 	{
         
-        $skp_tahunan    = SKPTahunan::WHERE('id', $skp_tahunan_id)->first();
+        $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
 
-        $pejabat_penilai    = $skp_tahunan->pejabat_penilai ;
-        if ( $pejabat_penilai == null ){
-            $nip_penilai                        = "";
-            $nama_pejabat_penilai               = "";
-            $pangkat_golongan_pejabat_penilai   = "";
-            $jabatan_pejabat_penilai            = "";
-            $eselon_pejabat_penilai             = "";
-            $unit_kerja_pejabat_penilai         = "";
+        if(  ( ($skp_tahunan->send_to_atasan) == 1 ) &  ( ($skp_tahunan->status_approve) != 2 ) ){
+            return redirect('/personal/skp-tahunan/'.$request->skp_tahunan_id)->with('status', 'SKP Sudah dikirm ke atasan');
         }else{
-            $nip_penilai                        = $pejabat_penilai->nip;
-            $nama_pejabat_penilai               = $skp_tahunan->p_nama;
-            $pangkat_golongan_pejabat_penilai   = "";//$pejabat_penilai->golongan->pangkat .'/'. $pejabat_penilai->golongan->golongan;
-            $jabatan_pejabat_penilai            = $pejabat_penilai->jabatan;
-            $eselon_pejabat_penilai             = "";//$pejabat_penilai->eselon->eselon;
-            $unit_kerja_pejabat_penilai         = "";//Pustaka::capital_string($pejabat_penilai->UnitKerja->unit_kerja);
+            return view('admin.pages.personal-skp_tahunan_edit', ['skp'=> $skp_tahunan]);  
         }
 
-
-        //===== list kegiatan Perjanjina kinerja =========/
-        $kegiatan_pk       = Kegiatan::where('jabatan_id','908')->get();
-
-
-
-        return view('admin.pages.personal-edit_skp_tahunan', [
-                    'skpd'                  => $this->skpd(),
-                    'user' 		            => $this->user(),
-                    'skp_tahunan'           => $skp_tahunan,
-                    'pejabat_yang_dinilai'  => $skp_tahunan->pejabat_yang_dinilai,
-
-                    
-                    'nip_penilai'                       => $nip_penilai,
-                    'nama_pejabat_penilai'              => $nama_pejabat_penilai,
-                    'pangkat_golongan_pejabat_penilai'  => $pangkat_golongan_pejabat_penilai,
-                    'jabatan_pejabat_penilai'           => $jabatan_pejabat_penilai,
-                    'eselon_pejabat_penilai'            => $eselon_pejabat_penilai,
-                    'unit_kerja_pejabat_penilai'        => $unit_kerja_pejabat_penilai,
-
-
-                    'kegiatan_pk'                       => $kegiatan_pk,
-                    ]
-        );    
+          
 
     }
+
+    public function PersonalSKPTahunanRalat(Request $request)
+	{
+        $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
+
+        
+
+        if(  ( ($skp_tahunan->send_to_atasan) == 1 ) &  ( ($skp_tahunan->status_approve) != 2 ) ){
+            return redirect('/personal/skp-tahunan/'.$request->skp_tahunan_id)->with('status', 'SKP belum dikirm ke atasan');
+        }else if( ($skp_tahunan->send_to_atasan) == 0 ) {
+            return redirect('/personal/skp-tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
+        }else{
+            return view('admin.pages.personal-skp_tahunan_ralat', ['skp'=> $skp_tahunan]);  
+        }
+    }
+
 
 }

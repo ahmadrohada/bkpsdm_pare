@@ -23,6 +23,33 @@ Use Alert;
 class IndikatorKegiatanAPIController extends Controller {
 
 
+    public function IndikatorKegiatanList(Request $request)
+    {
+            
+      
+        $dt = IndikatorKegiatan::where('kegiatan_id', '=' ,$request->get('kegiatan_renja_id'))
+            ->select([   
+                'id AS indikator_kegiatan_id',
+                'kegiatan_id',
+                'label',
+                'target',
+                'satuan'
+                ])
+                ->get();
+        $datatables = Datatables::of($dt)
+        ->addColumn('label', function ($x) {
+            return $x->label."  ";
+        })->addColumn('target', function ($x) {
+            return $x->target."  ".$x->satuan;
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+        return $datatables->make(true);
+    }
+
+
     public function SKPD_indikator_kegiatan_perjanjian_kinerja_list(Request $request)
     {
             

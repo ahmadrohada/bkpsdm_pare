@@ -34,10 +34,8 @@
 
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		//alert();
-		
-		$('#rkpd_table').DataTable({
+
+	$('#rkpd_table').DataTable({
 				processing      : true,
 				serverSide      : true,
 				searching      	: false,
@@ -57,7 +55,7 @@
 				
 
 				columns	:[
-								{ data: 'renja_id' , orderable: true,searchable:false,
+								{ data: 'skp_tahunan_id' , orderable: true,searchable:false,
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
@@ -72,19 +70,22 @@
 								{ data: "status" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
 
-										if ( row.status == 20 ){
-											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="{{ url('/admin/pegawai') }}/'+row.pegawai_id+'" class="btn btn-xs btn-success"><i class="fa fa-eye"></i></a></span>';
-										}else{
-											return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" class=""><a href="{{ url('skpd/skp_tahunan') }}/'+row.skp_tahunan_id+'" class="btn btn-xs btn-info"><i class="fa fa-edit"></i></a></span>';
-											
-										}
+											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-eye" ></i></a></span>';
+										
 									}
 								},
 								
 							]
 			
-		});
+	});
 	
 	
+	$(document).on('click','.lihat_skp_tahunan',function(e){
+		var skp_tahunan_id = $(this).data('id') ;
+		//alert(skp_tahunan_id);
+
+
+
+		window.location.assign("skp-tahunan/"+skp_tahunan_id);
 	});
 </script>

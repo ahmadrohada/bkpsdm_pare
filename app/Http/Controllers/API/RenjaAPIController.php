@@ -12,6 +12,7 @@ use App\Models\Tujuan;
 use App\Models\IndikatorTujuan;
 use App\Models\Sasaran;
 use App\Models\Skpd;
+use App\Models\Renja;
 
 
 use App\Models\SasaranPerjanjianKinerja;
@@ -32,6 +33,63 @@ use Input;
 Use Alert;
 
 class RenjaAPIController extends Controller {
+
+
+    public function Renja_timeline_status( Request $request )
+    {
+        $response = array();
+        $body = array();
+        $body_2 = array();
+
+
+        $renja = Renja::where('id','=', $request->renja_id )
+                                ->select('*')
+                                ->firstOrFail();
+
+        
+        //CREATED AT - Dibuat
+        $x['tag']	    = 'p';
+        $x['content']	= 'Dibuat';
+        array_push($body, $x);
+        $x['tag']	    = 'p';
+        $x['content']	= $renja->nama_admin_skpd;
+        array_push($body, $x);
+
+        //CREATED AT - Dibuat
+        $x['tag']	    = 'p';
+        $x['content']	= 'Kepala SKPD';
+        array_push($body, $x);
+        $x['tag']	    = 'p';
+        $x['content']	= $renja->nama_kepala_skpd;
+        array_push($body, $x);
+
+        $h['time']	    = $renja->created_at->format('Y-m-d H:i:s');
+        $h['body']	    = $body;
+        array_push($response, $h);
+        //=====================================================================//
+
+        //UPDATED AT - Dikirim
+        $y['tag']	    = 'p';
+        $y['content']	= 'Dikirim';
+        array_push($body_2, $y);
+        $y['tag']	    = 'p';
+        $y['content']	= $renja->nama_admin_skpd;
+        array_push($body_2, $y);
+
+        $i['time']	    = $renja->updated_at->format('Y-m-d H:i:s');
+        $i['body']	    = $body_2;
+
+        if ( $renja->updated_at->format('Y') > 1 )
+        {
+            array_push($response, $i);
+        }
+        
+
+
+        return $response;
+
+
+    }
 
 
     public function skpd_renja_list(Request $request)
@@ -97,15 +155,14 @@ class RenjaAPIController extends Controller {
     }
 
 
-    public function skpd_renja_tree(Request $request)
+    public function SKPDRenjaactivity(Request $request)
     {
        
 
-    $mp = MasaPemerintahan::WHERE('status','=','active')->first();
-    
+     
         
 //TUJUAN
-        $tujuan = Tujuan::where('masa_pemerintahan_id','=', $mp->id )->select('id','label')->get();
+        $tujuan = Tujuan::where('renja_id','=', $request->renja_id )->select('id','label')->get();
 		foreach ($tujuan as $x) {
             $sub_data_tujuan['id']	            = "tujuan|".$x->id;
 			$sub_data_tujuan['text']			= Pustaka::capital_string($x->label);
@@ -124,7 +181,6 @@ class RenjaAPIController extends Controller {
             
 //SASARAN 
             $sasaran = Sasaran::where('indikator_tujuan_id','=',$v->id)
-                                ->where('renja_id','=', $request->renja_id )
                                 ->select('id','label')->get();
             foreach ($sasaran as $y) {
                 $sub_data_sasaran['id']		        = "sasaran|".$y->id;

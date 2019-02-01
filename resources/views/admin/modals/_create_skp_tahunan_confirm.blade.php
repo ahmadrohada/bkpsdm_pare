@@ -1,4 +1,4 @@
-<div class="modal fade create-skp_tahunan_confirm_modal" id="createSKPTahunanConfirm" role="dialog"  aria-hidden="true">
+<div class="modal fade modal-create_skp_tahunan_confirm" id="CreateSKPTahunanConfirm" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -24,10 +24,10 @@
 							<div class="form-group form-group-sm">
 								<label>Masa Penilaian</label>
 								<div class="input-group input-group-sm">
-								<input type="text" class="form-control tgl mulai" name="tgl_mulai" placeholder="Tanggal Mulai"/>
-								<span class="input-group-addon">s.d.</span>
-								<input type="text" class="form-control tgl selesai" name="tgl_selesai" placeholder="Tanggal Selesai"/>
-							</div>     
+									<input type="text" class="form-control tgl mulai" name="tgl_mulai" placeholder="Tanggal Mulai"/>
+									<span class="input-group-addon">s.d.</span>
+									<input type="text" class="form-control tgl selesai" name="tgl_selesai" placeholder="Tanggal Selesai"/>
+								</div>     
 							</div>
 						</div>
 						

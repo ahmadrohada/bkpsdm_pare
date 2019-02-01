@@ -35,13 +35,8 @@
 
 				{{-- LEFT/TOP COLUMN --}}
 				<div class="col-lg-7 col-md-7 col-sm-12">
-
+			 		 @include('admin.modules.personal-callout-info')
 					@include('admin.modules.welcome-info')
-
-
-				
-
-
 				</div>
 			</div>
 

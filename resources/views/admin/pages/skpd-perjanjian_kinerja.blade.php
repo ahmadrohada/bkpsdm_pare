@@ -31,11 +31,11 @@
 							@include('admin.modules.skpd-perjanjian_kinerja_status')
 						</div>
 						<div class="tab-pane" id="detail">
-							@include('admin.modules.skpd-renja_detail')
+							@include('admin.modules.skpd-perjanjian_kinerja_detail')
 						</div>
 						
 						<div class="tab-pane" id="renja_list">
-							@include('admin.modules.skpd-renja_tree')
+							@include('admin.modules.skpd-perjanjian_kinerja_tree')
 						</div>
 						
 
