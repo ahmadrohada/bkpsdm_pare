@@ -9,6 +9,7 @@
 			@include('admin.tables.renja-kegiatan_ka_skpd_edit')
 			@include('admin.tables.renja-kegiatan_kabid_edit')
 			@include('admin.tables.renja-kegiatan_kasubid_edit')
+			@include('admin.tables.renja-ind_kegiatan_edit')
 
 
 
@@ -133,13 +134,14 @@
 
 		var tx = id.split('|');
 
-		//alert(tx[0]);
+		//alert(tx[1]);
 
 		switch ( tx[0] ){
 			case 'ka_skpd':
 						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+						$(".div_kegiatan_detail").hide();
 						load_kegiatan_ka_skpd(tx[1]);
 				
 			break;
@@ -147,6 +149,7 @@
 						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").show();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+						$(".div_kegiatan_detail").hide();
 						load_kegiatan_kabid(tx[1]);
 				
 			break;
@@ -154,14 +157,20 @@
 						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").show();
+						$(".div_kegiatan_detail").hide();
 						load_kegiatan_kasubid(tx[1]);
 				
 			break;
-			default: 
-						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
+			case 'kegiatan':
+						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
-						load_kegiatan_ka_skpd(tx[1]);
+						$(".div_kegiatan_detail").show();
+						load_ind_kegiatan( tx[1]);;
+				
+			break;
+			default: 
+						
 		
 		}
 	}
@@ -170,6 +179,7 @@
 		$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
 		$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 		$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+		$(".div_kegiatan_detail").hide();
 	}); 
 	
 	
