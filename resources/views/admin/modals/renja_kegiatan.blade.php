@@ -22,6 +22,32 @@
 							<textarea name="label_kegiatan" rows="3" required class="form-control label_kegiatan" id="label_kegiatan" style="resize:none;"></textarea>
 						</div>
 					</div>
+
+					<div class="row">
+						<div class="col-md-12 form-group label_ind_kegiatan ">
+							<label class="control-label">Indikator :</label>
+							<textarea name="label_ind_kegiatan" rows="2" required class="form-control label_ind_kegiatan" id="label_kegiatan" style="resize:none;"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						
+						<div class="col-md-3 form-group quantity_kegiatan">
+						<label class="control-label">Output :</label>
+						<input type="text" name="quantity_kegiatan" id="quantity_kegiatan" required class="form-control input-sm" placeholder="qty" onkeypress="return angka('event')">        
+						</div>
+
+						<div class="col-md-4 form-group satuan_kegiatan">
+						<label class="control-label">Satuan :</label>
+						<input type="text" name="satuan_kegiatan" autocomplete="off" id="satuan_kegiatan" required class="form-control input-sm" placeholder="satuan">
+						</div>
+
+						<div class="col-md-5 form-group satuan_ind_kegiatan">
+						<label class="control-label">Anggaran :</label>
+						<input type="text" name="cost_kegiatan" autocomplete="off" id="cost_kegiatan" required class="form-control input-sm" placeholder="cost">
+						</div>
+					</div>
+
 					<br>
 					
 			</div>
@@ -46,12 +72,24 @@
 
 	$('.modal-kegiatan').on('hidden.bs.modal', function(){
 		$('.label_kegiatan').removeClass('has-error');
-		$('.modal-kegiatan').find('[name=label_kegiatan]').val('');
+		$('.modal-kegiatan').find('[name=label_kegiatan],[name=label_ind_kegiatan],[name=quantity_kegiatan],[name=satuan_kegiatan],[name=cost_kegiatan]').val('');
 	});
 
 	$('.label_kegiatan').on('click', function(){
 		$('.label_kegiatan').removeClass('has-error');
 	});
+	$('.label_ind_kegiatan').on('click', function(){
+		$('.label_ind_kegiatan').removeClass('has-error');
+	});
+
+	$('.quantity_kegiatan').on('click', function(){
+		$('.quantity_kegiatan').removeClass('has-error');
+	});
+
+	$('.satuan_kegiatan').on('click', function(){
+		$('.satuan_kegiatan').removeClass('has-error');
+	});
+
 
 
 	
@@ -101,6 +139,9 @@
 					//alert (index+":"+value);
 					//error message
 					((index == 'label_kegiatan')?$('.label_kegiatan').addClass('has-error'):'');
+					((index == 'label_ind_kegiatan')?$('.label_ind_kegiatan').addClass('has-error'):'');
+					((index == 'quantity_kegiatan')?$('.quantity_kegiatan').addClass('has-error'):'');
+					((index == 'satuan_kegiatan')?$('.satuan_kegiatan').addClass('has-error'):'');
 				});
 
 			

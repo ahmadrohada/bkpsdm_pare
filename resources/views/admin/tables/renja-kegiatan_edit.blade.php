@@ -128,7 +128,11 @@ $(document).on('click','.create_kegiatan',function(e){
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
-					$('.modal-kegiatan').find('[name=label_kegiatan]').val(data['kegiatan_label']);
+					$('.modal-kegiatan').find('[name=label_kegiatan]').val(data['label']);
+					$('.modal-kegiatan').find('[name=label_ind_kegiatan]').val(data['indikator']);
+					$('.modal-kegiatan').find('[name=quantity_kegiatan]').val(data['quantity']);
+					$('.modal-kegiatan').find('[name=satuan_kegiatan]').val(data['satuan']);
+					$('.modal-kegiatan').find('[name=cost_kegiatan]').val(data['cost']);
 					
 					$('.modal-kegiatan').find('[name=kegiatan_id]').val(data['kegiatan_id']);
 					$('.modal-kegiatan').find('h4').html('Edit Kegiatan');

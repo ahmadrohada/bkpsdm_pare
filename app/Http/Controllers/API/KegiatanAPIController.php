@@ -143,23 +143,30 @@ class KegiatanAPIController extends Controller {
     {
        
         
-        $kegiatan = Kegiatan::SELECT('id','label')
+        $x = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.id', $request->get('kegiatan_id') )
-                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator', function($join){
-                                $join   ->on('indikator.kegiatan_id','=','renja_kegiatan.id');
-                            })
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
-                                        'renja_kegiatan.label AS kegiatan_label',
-                                        'indikator.id AS indikator_id',
-                                        'indikator.label AS indikator_label',
-                                        'indikator.target AS target',
-                                        'indikator.satuan AS satuan'
+                                        'renja_kegiatan.label AS label',
+                                        'renja_kegiatan.indikator AS indikator',
+                                        'renja_kegiatan.quantity AS quantity',
+                                        'renja_kegiatan.satuan AS satuan',
+                                        'renja_kegiatan.cost AS cost'
 
                                     ) 
                             ->first();
 
+
 		
-		return  $kegiatan;
+        $kegiatan = array(
+                'kegiatan_id'   => $x->kegiatan_id,
+                'label'         => $x->label,
+                'indikator'     => $x->indikator,
+                'quantity'      => $x->quantity,
+                'satuan'        => $x->satuan,
+                'cost'	        => number_format($x->cost,'0',',','.')
+                    
+            );
+        return $kegiatan;
         
     }
 
@@ -272,15 +279,22 @@ class KegiatanAPIController extends Controller {
                 'ind_program_id.required'     => 'Harus diisi',
                 'renja_id.required'           => 'Harus diisi',
                 'label_kegiatan.required'     => 'Harus diisi',
+                'label_ind_kegiatan.required' => 'Harus diisi',
+                'quantity_kegiatan.required'  => 'Harus diisi',
+                'satuan_kegiatan.required'    => 'Harus diisi',
 
         ];
 
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'ind_program_id' => 'required',
-                            'renja_id'       => 'required',
-                            'label_kegiatan' => 'required',
+                            'ind_program_id'        => 'required',
+                            'renja_id'              => 'required',
+                            'label_kegiatan'        => 'required',
+                            'label_ind_kegiatan'    => 'required',
+                            'quantity_kegiatan'     => 'required',
+                            'satuan_kegiatan'       => 'required',
+
                         ),
                         $messages
         );
@@ -297,6 +311,10 @@ class KegiatanAPIController extends Controller {
         $sr->indikator_program_id       = Input::get('ind_program_id');
         $sr->renja_id                   = Input::get('renja_id');
         $sr->label                      = Input::get('label_kegiatan');
+        $sr->indikator                  = Input::get('label_ind_kegiatan');
+        $sr->quantity                   = Input::get('quantity_kegiatan');
+        $sr->satuan                     = Input::get('satuan_kegiatan');
+        $sr->cost                       = preg_replace('/[^0-9]/', '', Input::get('cost_kegiatan'));
 
         if ( $sr->save()){
             $tes = array('id' => 'kegiatan|'.$sr->id);
@@ -311,8 +329,11 @@ class KegiatanAPIController extends Controller {
     {
 
         $messages = [
-                'kegiatan_id.required'   => 'Harus diisi',
+                'kegiatan_id.required'          => 'Harus diisi',
                 'label_kegiatan.required'       => 'Harus diisi',
+                'label_ind_kegiatan.required'   => 'Harus diisi',
+                'quantity_kegiatan.required'    => 'Harus diisi',
+                'satuan_kegiatan.required'      => 'Harus diisi',
                 
 
         ];
@@ -320,8 +341,11 @@ class KegiatanAPIController extends Controller {
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'kegiatan_id'   => 'required',
-                            'label_kegiatan'     => 'required',
+                            'kegiatan_id'           => 'required',
+                            'label_kegiatan'        => 'required',
+                            'label_ind_kegiatan'    => 'required',
+                            'quantity_kegiatan'     => 'required',
+                            'satuan_kegiatan'       => 'required',
                             
                         ),
                         $messages
@@ -336,11 +360,15 @@ class KegiatanAPIController extends Controller {
         
         $sr    = Kegiatan::find(Input::get('kegiatan_id'));
         if (is_null($sr)) {
-            return $this->sendError('Kegiatan idak ditemukan.');
+            return $this->sendError('Kegiatan Tidak ditemukan.');
         }
 
 
-        $sr->label             = Input::get('label_kegiatan');
+        $sr->label                      = Input::get('label_kegiatan');
+        $sr->indikator                  = Input::get('label_ind_kegiatan');
+        $sr->quantity                   = Input::get('quantity_kegiatan');
+        $sr->satuan                     = Input::get('satuan_kegiatan');
+        $sr->cost                       = preg_replace('/[^0-9]/', '', Input::get('cost_kegiatan'));
 
         if ( $sr->save()){
             return \Response::make('sukses', 200);
