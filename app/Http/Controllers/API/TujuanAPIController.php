@@ -120,7 +120,7 @@ class TujuanAPIController extends Controller {
 
         $messages = [
                 'tujuan_id.required'   => 'Harus diisi',
-                'misi_id.required'     => 'Harus diisi',
+                //'misi_id.required'     => 'Harus diisi',
                 'label.required'       => 'Harus diisi',
                 
 
@@ -130,7 +130,7 @@ class TujuanAPIController extends Controller {
                         Input::all(),
                         array(
                             'tujuan_id'   => 'required',
-                            'misi_id'     => 'required',
+                            //'misi_id'     => 'required',
                             'label'       => 'required',
                             
                         ),
@@ -151,7 +151,7 @@ class TujuanAPIController extends Controller {
 
 
         $tj->label             = Input::get('label');
-        $tj->misi_id           = Input::get('misi_id');
+        //$tj->misi_id           = Input::get('misi_id');
 
         if ( $tj->save()){
             return \Response::make('sukses', 200);
