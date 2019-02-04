@@ -153,7 +153,7 @@
 				});
 		})
 		.on("loaded.jstree", function(){
-			//$('#renja').jstree('open_all');
+			$('#renja').jstree('open_all');
 		})
 		.on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
