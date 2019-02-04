@@ -71,7 +71,7 @@
 	});
 
 	$('.modal-kegiatan').on('hidden.bs.modal', function(){
-		$('.label_kegiatan').removeClass('has-error');
+		$('.label_kegiatan,.label_ind_kegiatan,.quantity_kegiatan,.satuan_kegiatan').removeClass('has-error');
 		$('.modal-kegiatan').find('[name=label_kegiatan],[name=label_ind_kegiatan],[name=quantity_kegiatan],[name=satuan_kegiatan],[name=cost_kegiatan]').val('');
 	});
 

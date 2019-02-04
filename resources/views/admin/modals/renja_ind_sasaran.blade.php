@@ -16,7 +16,7 @@
 					<br>
 
 					<div class="row">
-						<div class="col-md-12 form-group label_sasaran ">
+						<div class="col-md-12 form-group label_ind_sasaran ">
 							<label class="control-label">Label :</label>
 							<textarea name="label_ind_sasaran" rows="3" required class="form-control label_ind_sasaran" id="label_ind_sasaran" style="resize:none;"></textarea>
 						</div>
@@ -56,7 +56,7 @@
 	});
 
 	$('.modal-ind_sasaran').on('hidden.bs.modal', function(){
-		$('.label_ind_sasaran').removeClass('has-error');
+		$('.label_ind_sasaran,.quantity_ind_sasaran,.satuan_ind_sasaran').removeClass('has-error');
 		$('.modal-ind_sasaran').find('[name=label_ind_sasaran],[name=quantity_ind_sasaran],[name=satuan_ind_sasaran]').val('');
 	});
 

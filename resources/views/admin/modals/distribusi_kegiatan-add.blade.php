@@ -1,5 +1,5 @@
 <div class="modal fade distribusi_kegiatan_add" id="createKegiatan" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -10,11 +10,13 @@
 
 			<div class="modal-body">
 
-				<table id="kegiatan_list" class="table table-striped table-hover table-condensed">
+				<table id="kegiatan_list_add" class="table table-striped table-hover table-condensed">
 					<thead>
 						<tr class="success">
-							<th>Pilih</th>
+							<th>ADD</th>
 							<th>KEGIATAN</th>
+							<th>TARGET</th>
+							<th>ANGGARAN</th>
 						</tr>
 					</thead>
 					
@@ -41,22 +43,25 @@
 $(document).ready(function() {
 
 		$('.distribusi_kegiatan_add').on('hidden.bs.modal', function() {
-			table.ajax.reload();
-			//$('#kegiatan_list').DataTable.ajax.reload();
+			$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
+			
 		});
 	
+		$('.distribusi_kegiatan_add').on('shown.bs.modal', function(){
+			
+		});
 
 	
-		var table = $('#kegiatan_list').DataTable({
-					processing      : true,
+		$('#kegiatan_list_add').DataTable({
+					destroy			: true,
+					processing      : false,
 					serverSide      : true,
-					searching      	: false,
+					searching      	: true,
 					paging          : true,
-					//order 			: [ 3 , 'asc' ],
-					//dom 			: '<"toolbar">frtip',
-					lengthMenu		: [20,50],
+					lengthMenu		: [10,20,50],
 					columnDefs		: [
-										{ 	className: "text-center", targets: [ 0 ] }
+										{ 	className: "text-center", targets: [ 0,2 ] },
+										{ className: "text-right", targets: [ 3 ] }
 									],
 					ajax			: {
 										url	: '{{ url("api_resource/renja_kegiatan_list") }}',
@@ -67,13 +72,10 @@ $(document).ready(function() {
 
 					columns	:[
 									{ data: "checkbox" ,  name:"checkbox", orderable: false, searchable: false, width:'40px'},
-									/* { data: 'kegiatan_id' , orderable: true,searchable:false,
-										"render": function ( data, type, row ,meta) {
-											return meta.row + meta.settings._iDisplayStart + 1 ;
-										}
-									}, */
-									
-									{ data: "label" ,  name:"label", orderable: true, searchable: false},
+								
+									{ data: "label" ,  name:"label", orderable: true, searchable: true},
+									{ data: "kegiatan_target" ,  name:"kegiatan_target", orderable: true, searchable: false,width:'140px'},
+									{ data: "kegiatan_anggaran" ,  name:"kegiatan_anggaran", orderable: true, searchable: false,width:'140px'},
 									
 									
 								]

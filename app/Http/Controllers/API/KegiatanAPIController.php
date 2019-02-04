@@ -269,6 +269,12 @@ class KegiatanAPIController extends Controller {
         })
         ->addColumn('label', function ($x) {
             return $x->label;
+        })
+        ->addColumn('kegiatan_target', function ($x) {
+            return $x->quantity.' '.$x->satuan;
+        })
+        ->addColumn('kegiatan_anggaran', function ($x) {
+            return "Rp.  " .number_format($x->cost,'0',',','.') ;
         });
 
         if ($keyword = $request->get('search')['value']) {

@@ -102,14 +102,14 @@ function load_kegiatan_kasubid(jabatan_id){
 										},
 								}, 
 				columns			:[
-								{ data: 'kegiatan_id' , orderable: true,searchable:false,width:"30px",
+								{ data: 'kegiatan_id' , orderable: true,searchable:false,width:"20px",
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 										}
 									},
 								{ data: "label_kegiatan", name:"label_kegiatan", orderable: true, searchable: true},
-								{ data: "target_kegiatan", name:"target_kegiatan", orderable: true, searchable: true},
-								{ data: "cost_kegiatan", name:"cost_kegiatan", orderable: true, searchable: true},
+								{ data: "target_kegiatan", name:"target_kegiatan", orderable: true, searchable: true,width:'80px'},
+								{ data: "cost_kegiatan", name:"cost_kegiatan", orderable: true, searchable: true,width:'80px'},
 								
 								
 								{  data: 'action',width:"60px",
@@ -154,6 +154,68 @@ function load_kegiatan_kasubid(jabatan_id){
 				}						
 		});	
 	});
+
+	function unlink_kegiatan_kasubid(kegiatan_id){
+		swal({
+			title: "Hapus  Kegiatan",
+			text:/* $(this).data('label')+ */ "Hanya menghapus kegiatan pada jabatan saja",
+			type: "warning",
+			//type: "question",
+			showCancelButton: true,
+			cancelButtonText: "Batal",
+			confirmButtonText: "Hapus",
+			confirmButtonClass: "btn btn-success",
+			cancelButtonColor: "btn btn-danger",
+			cancelButtonColor: "#d33",
+			closeOnConfirm: false,
+			closeOnCancel:false
+		}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/hapus_kegiatan_kasubid") }}',
+					type	: 'POST',
+					data    : {kegiatan_id:kegiatan_id},
+					cache   : false,
+					success:function(data){
+							swal({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
+										jQuery('#ditribusi_renja').jstree(true).refresh(true);
+										$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
+											jQuery('#ditribusi_renja').jstree(true).refresh(true);
+											$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							swal({
+									title: "Tes Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+					});	
+			}
+		});
+	}
+
 
 	$(document).on('click','.unlink_kegiatan_kasubid',function(e){
 		var kegiatan_id = $(this).data('id') ;

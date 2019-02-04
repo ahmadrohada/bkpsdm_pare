@@ -1,11 +1,11 @@
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-5">
 		<div class="table-responsive">
 			<input type='text' id = 'cari_keg' class="form-control" placeholder="cari">
 			<div id="ditribusi_renja" class="demo"></div>
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-7">
 			@include('admin.tables.renja-kegiatan_ka_skpd_edit')
 			@include('admin.tables.renja-kegiatan_kabid_edit')
 			@include('admin.tables.renja-kegiatan_kasubid_edit')
@@ -93,17 +93,25 @@
 						//alert('id_jabatan = '+tx[1]);
 
 						if ( tx[0] === 'kasubid'){
-							$('.distribusi_kegiatan_add #tes').val(tx[1])
+							$('.distribusi_kegiatan_add, #tes').val(tx[1]);
+							//SHOW MODAL UNTUK ADD KEGIATAN
 							$('.distribusi_kegiatan_add').modal('show');
 						} 	
 				}
 			},                  
 			"delete": {
 				"label": "Hapus Kegiatan",
-				"action": function (obj) { 
-					if(confirm('Are you sure to remove this Kegiatan?')){
-						tree.delete_node(node);
-					}
+				"action": function (obj) {
+					var text = node.id;
+					var tx = text.split('|');
+					unlink_kegiatan_kasubid(tx[1]);
+					
+					/* if(confirm('Anda Akan menghapus kegiatan jabatan ?')){
+						var text = node.id;
+						var tx = text.split('|');
+						alert(tx[1]);
+						//tree.delete_node(node);
+					} */
 				}
 			}
 		};
@@ -115,6 +123,8 @@
 			delete items.delete;
 		}else if (node.type === 'kasubid'){
 			delete items.delete;
+		} else if (node.type === 'kegiatan'){
+			delete items.tambah;
 		} 
 		return items;
 	}
@@ -175,12 +185,12 @@
 		}
 	}
 
-	$(".tutup_detail_jabatan").click(function(){
+	/* $(".tutup_detail_jabatan").click(function(){
 		$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
 		$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 		$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 		$(".div_kegiatan_detail").hide();
-	}); 
+	});  */
 	
 	
 </script>
