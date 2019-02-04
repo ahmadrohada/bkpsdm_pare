@@ -11,7 +11,7 @@ use App\Models\IndikatorSasaran;
 use App\Models\Program;
 use App\Models\Kegiatan;
 use App\Models\KegiatanSKPTahunan;
-use App\Models\SKPD;
+use App\Models\Skpd;
 use App\Models\Jabatan;
 use App\Models\RencanaAksi;
 use App\Models\SKPBulanan;
@@ -31,7 +31,7 @@ class KegiatanAPIController extends Controller {
     {
        
         //Distibusi kegiatan 
-        $ka_skpd = SKPD::where('parent_id','=', $request->skpd_id)->select('id','skpd')->get();
+        $ka_skpd = Skpd::where('parent_id','=', $request->Skpd_id)->select('id','skpd')->get();
 		foreach ($ka_skpd as $x) {
             $data_ka_skpd['id']	            = "ka_skpd|".$x->id;
 			$data_ka_skpd['text']			= Pustaka::capital_string($x->skpd);
@@ -39,7 +39,7 @@ class KegiatanAPIController extends Controller {
             $data_ka_skpd['type']           = "ka_skpd";
             
 
-            $kabid = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
+            $kabid = Skpd::where('parent_id','=',$x->id)->select('id','skpd')->get();
             foreach ($kabid as $y) {
                 $data_kabid['id']	        = "kabid|".$y->id;
                 $data_kabid['text']			= Pustaka::capital_string($y->skpd);
