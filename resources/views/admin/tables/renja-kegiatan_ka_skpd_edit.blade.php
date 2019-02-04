@@ -82,6 +82,7 @@ function load_kegiatan_ka_skpd(jabatan_id){
 
 
 
+
     $('#kegiatan_ka_skpd_table').DataTable({
 				destroy			: true,
 				processing      : false,
