@@ -1,4 +1,4 @@
-<div class="modal fade modal-kegiatan" id="createkegiatan" role="dialog"  aria-hidden="true">
+<div class="modal fade modal-kegiatan_kasubid" id="createkegiatan" role="dialog"  aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,8 +8,7 @@
                 </h4>
             </div>
 
-            <form  id="kegiatan_form" method="POST" action="">
-			<input type="hidden"  name="ind_program_id" class="ind_program_id">
+            <form  id="kegiatan_kasubid_form" method="POST" action="">
 			<input type="hidden"  name="kegiatan_id" class="kegiatan_id">
 			<input type="hidden"  name="renja_id" class="renja_id" value="{!! $renja->id !!}">
 			<div class="modal-body">
@@ -66,99 +65,34 @@
 
 <script type="text/javascript">
 
-	$('.modal-kegiatan').on('shown.bs.modal', function(){
+	$('.modal-kegiatan_kasubid').on('shown.bs.modal', function(){
 		
 	});
 
-	$('.modal-kegiatan').on('hidden.bs.modal', function(){
-		$('.label_kegiatan').removeClass('has-error');
-		$('.modal-kegiatan').find('[name=label_kegiatan],[name=label_ind_kegiatan],[name=quantity_kegiatan],[name=satuan_kegiatan],[name=cost_kegiatan]').val('');
+	$('.modal-kegiatan_kasubid').on('hidden.bs.modal', function(){
+		$('.label_kegiatan_kasubid').removeClass('has-error');
+		$('.modal-kegiatan_kasubid').find('[name=label_kegiatan],[name=label_ind_kegiatan],[name=quantity_kegiatan],[name=satuan_kegiatan],[name=cost_kegiatan]').val('');
 	});
 
-	$('.label_kegiatan').on('click', function(){
+	$('.label_kegiatan_kasubid').on('click', function(){
 		$('.label_kegiatan').removeClass('has-error');
 	});
-	$('.label_ind_kegiatan').on('click', function(){
+	$('.label_ind_kegiatan_kasubid').on('click', function(){
 		$('.label_ind_kegiatan').removeClass('has-error');
 	});
 
-	$('.quantity_kegiatan').on('click', function(){
+	$('.quantity_kegiatan_kasubid').on('click', function(){
 		$('.quantity_kegiatan').removeClass('has-error');
 	});
 
-	$('.satuan_kegiatan').on('click', function(){
+	$('.satuan_kegiatan_kasubid').on('click', function(){
 		$('.satuan_kegiatan').removeClass('has-error');
 	});
 
 
+	$(document).on('click','#submit-update-kegiatan_kasubid',function(e){
 
-	
-	$(document).on('click','#submit-save-kegiatan',function(e){
-
-		var data = $('#kegiatan_form').serialize();
-
-		//alert(data);
-		$.ajax({
-			url		: '{{ url("api_resource/simpan_kegiatan") }}',
-			type	: 'POST',
-			data	:  data,
-			success	: function(data , textStatus, jqXHR) {
-				
-				//$('#program_table').DataTable().ajax.reload(null,false);
-               
-
-				swal({
-					title: "",
-					text: "Sukses",
-					type: "success",
-					width: "200px", 
-					showConfirmButton: false,
-					allowOutsideClick : false,
-					timer:1500
-				}).then(function () {
-					$('.modal-kegiatan').modal('hide');
-					$('#kegiatan_table').DataTable().ajax.reload(null,false);
-					jQuery('#renja').jstree(true).refresh(true);
-					
-				},
-					
-					function (dismiss) {
-						if (dismiss === 'timer') {
-							
-						}
-					}
-			)	
-			},
-			error: function(jqXHR , textStatus, errorThrown) {
-
-				var test = $.parseJSON(jqXHR.responseText);
-				
-				var data= test.errors;
-
-				$.each(data, function(index,value){
-					//alert (index+":"+value);
-					//error message
-					((index == 'label_kegiatan')?$('.label_kegiatan').addClass('has-error'):'');
-					((index == 'label_ind_kegiatan')?$('.label_ind_kegiatan').addClass('has-error'):'');
-					((index == 'quantity_kegiatan')?$('.quantity_kegiatan').addClass('has-error'):'');
-					((index == 'satuan_kegiatan')?$('.satuan_kegiatan').addClass('has-error'):'');
-				});
-
-			
-			}
-			
-		});
-
-
-
-
-
-	});
-
-
-	$(document).on('click','#submit-update-kegiatan',function(e){
-
-		var data = $('#kegiatan_form').serialize();
+		var data = $('#kegiatan_kasubid_form').serialize();
 
 		//alert(data);
 		$.ajax({
@@ -179,9 +113,9 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-kegiatan').modal('hide');
-					$('#kegiatan_table').DataTable().ajax.reload(null,false);
-					jQuery('#renja').jstree(true).refresh(true);
+					$('.modal-kegiatan_kasubid').modal('hide');
+					$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
+					jQuery('#ditribusi_renja').jstree(true).refresh(true);
 					
 				},
 					

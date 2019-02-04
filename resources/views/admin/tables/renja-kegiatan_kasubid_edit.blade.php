@@ -49,6 +49,7 @@
 					<th >LABEL</th>
 					<th >TARGET</th>
 					<th >ANGGARAN</th>
+					<th><i class="fa fa-cog"></i></th>
 				</tr>
 			</thead>
 			
@@ -56,6 +57,8 @@
 
 	</div>
 </div>
+
+@include('admin.modals.renja_kegiatan_kasubid')
 
 
 <script type="text/javascript">
@@ -89,7 +92,7 @@ function load_kegiatan_kasubid(jabatan_id){
 				searching      	: false,
 				paging          : false,
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2 ] },
+									{ className: "text-center", targets: [ 0,2,4 ] },
 									{ className: "text-right", targets: [ 3 ] }
 								],
 				ajax			: {
@@ -109,13 +112,13 @@ function load_kegiatan_kasubid(jabatan_id){
 								{ data: "cost_kegiatan", name:"cost_kegiatan", orderable: true, searchable: true},
 								
 								
-								/* {  data: 'action',width:"60px",
-										"render": function ( data, type, row ) {
-											return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" ><a class="btn btn-success btn-xs edit_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-													'<span  data-toggle="tooltip" title="Hapus" style="margin:1px;" ><a class="btn btn-danger btn-xs hapus_kegiatan"  data-id="'+row.kegiatan_id+'" data-label="'+row.label_kegiatan+'" ><i class="fa fa-close " ></i></a></span>';
-												
-										}
-								}, */
+								{  data: 'action',width:"60px",
+									"render": function ( data, type, row ) {
+										return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" ><a class="btn btn-success btn-xs edit_kegiatan_kasubid"  data-id="'+row.kegiatan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+												'<span  data-toggle="tooltip" title="Hapus Kegiatan Pada Jabatan" style="margin:1px;" ><a class="btn btn-warning btn-xs unlink_kegiatan_kasubid"  data-id="'+row.kegiatan_id+'" data-label="'+row.label_kegiatan+'" ><i class="fa fa-chain-broken " ></i></a></span>';
+											
+									}
+								},
 							],
 							initComplete: function(settings, json) {
 								
@@ -124,6 +127,95 @@ function load_kegiatan_kasubid(jabatan_id){
 	});	
 
 }
+
+
+	$(document).on('click','.edit_kegiatan_kasubid',function(e){
+		var kegiatan_id = $(this).data('id') ;
+		$.ajax({
+				url			: '{{ url("api_resource/kegiatan_detail") }}',
+				data 		: {kegiatan_id : kegiatan_id},
+				method		: "GET",
+				dataType	: "json",
+				success	: function(data) {
+					$('.modal-kegiatan_kasubid').find('[name=label_kegiatan]').val(data['label']);
+					$('.modal-kegiatan_kasubid').find('[name=label_ind_kegiatan]').val(data['indikator']);
+					$('.modal-kegiatan_kasubid').find('[name=quantity_kegiatan]').val(data['quantity']);
+					$('.modal-kegiatan_kasubid').find('[name=satuan_kegiatan]').val(data['satuan']);
+					$('.modal-kegiatan_kasubid').find('[name=cost_kegiatan]').val(data['cost']);
+					
+					$('.modal-kegiatan_kasubid').find('[name=kegiatan_id]').val(data['kegiatan_id']);
+					$('.modal-kegiatan_kasubid').find('h4').html('Edit Kegiatan');
+					$('.modal-kegiatan_kasubid').find('.btn-submit').attr('id', 'submit-update-kegiatan_kasubid');
+					$('.modal-kegiatan_kasubid').find('[name=text_button_submit]').html('Update Data');
+					$('.modal-kegiatan_kasubid').modal('show');
+				},
+				error: function(data){
+					
+				}						
+		});	
+	});
+
+	$(document).on('click','.unlink_kegiatan_kasubid',function(e){
+		var kegiatan_id = $(this).data('id') ;
+		//alert(tujuan_id);
+
+		swal({
+			title: "Hapus  Kegiatan",
+			text:/* $(this).data('label')+ */ "Hanya menghapus kegiatan pada jabatan saja",
+			type: "warning",
+			//type: "question",
+			showCancelButton: true,
+			cancelButtonText: "Batal",
+			confirmButtonText: "Hapus",
+			confirmButtonClass: "btn btn-success",
+			cancelButtonColor: "btn btn-danger",
+			cancelButtonColor: "#d33",
+			closeOnConfirm: false,
+			closeOnCancel:false
+		}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/hapus_kegiatan_kasubid") }}',
+					type	: 'POST',
+					data    : {kegiatan_id:kegiatan_id},
+					cache   : false,
+					success:function(data){
+							swal({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
+										jQuery('#ditribusi_renja').jstree(true).refresh(true);
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
+											jQuery('#ditribusi_renja').jstree(true).refresh(true);
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							swal({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+					});	
+			}
+		});
+	});
 	
 
 </script>

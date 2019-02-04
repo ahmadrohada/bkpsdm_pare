@@ -120,7 +120,7 @@ function load_kegiatan(ind_program_id){
 }
 
 
-$(document).on('click','.create_kegiatan',function(e){
+	$(document).on('click','.create_kegiatan',function(e){
 		$('.modal-kegiatan').find('h4').html('Create Kegiatan');
 		$('.modal-kegiatan').find('.btn-submit').attr('id', 'submit-save-kegiatan');
 		$('.modal-kegiatan').find('[name=text_button_submit]').html('Simpan Data');

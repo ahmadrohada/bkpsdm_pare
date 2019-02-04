@@ -479,8 +479,50 @@ class KegiatanAPIController extends Controller {
     }
 
     
+    
+    public function RemoveKegiatanFromPejabat(Request $request)
+    {
+
+        $messages = [
+                'kegiatan_id.required'          => 'Harus diisi',
+                
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'kegiatan_id'           => 'required',
+                            
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $sr    = Kegiatan::find(Input::get('kegiatan_id'));
+        if (is_null($sr)) {
+            return $this->sendError('Kegiatan Tidak ditemukan.');
+        }
 
 
+        $sr->jabatan_id     = 0;
+
+        if ( $sr->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+
+    
+    }
 
 
 

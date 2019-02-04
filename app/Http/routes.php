@@ -228,6 +228,11 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skpd-renja_kegiatan_list_kasubid','API\KegiatanAPIController@RenjaKegiatanKasubid');
 	Route::get('skp_tahunan_kegiatan_3','API\KegiatanAPIController@SKPTahunanKegiatanTree3');
 
+
+	//UNLINK KEGFIATAN
+	
+	Route::post('hapus_kegiatan_kasubid','API\KegiatanAPIController@RemoveKegiatanFromPejabat');
+
 	//========================================================================================================//
 	//======================================  I N D I K A T O R    K E G I A T A N    ========================//
 	//========================================================================================================//
