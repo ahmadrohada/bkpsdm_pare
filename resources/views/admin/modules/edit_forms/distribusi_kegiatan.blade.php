@@ -6,7 +6,10 @@
 		</div>
 	</div>
 	<div class="col-md-6">
-			@include('admin.tables.renja-kegiatan_ka_skpd')
+			@include('admin.tables.renja-kegiatan_ka_skpd_edit')
+			@include('admin.tables.renja-kegiatan_kabid_edit')
+			@include('admin.tables.renja-kegiatan_kasubid_edit')
+
 
 
 	</div>
@@ -31,7 +34,9 @@
 				'data' : {
 						"url" 	: "{{ url("api_resource/skpd_renja_distribusi_kegiatan_tree") }}",
 						"data" 	: function (node) {
-							return { "renja_id" : 2 };
+							return { "renja_id" : {!! $renja->id !!},
+									 "skpd_id"  : {!! $renja->SKPD->id !!}
+									 };
 						},
 						"dataType" : "json"
 				}
@@ -128,43 +133,43 @@
 
 		var tx = id.split('|');
 
-		alert(tx[0]);
+		//alert(tx[0]);
 
 		switch ( tx[0] ){
 			case 'ka_skpd':
 						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
-						load_kegiatan_ka_skpd( tx[1]);
+						load_kegiatan_ka_skpd(tx[1]);
 				
 			break;
 			case 'kabid':
-						$(".div_ka_skpd_detail, .div_kegiatan_skpd_list").hide();
+						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").show();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
-						load_kegiatan_kabid( tx[1]);
+						load_kegiatan_kabid(tx[1]);
 				
 			break;
 			case 'kasubid':
-						$(".div_ka_skpd_detail, .div_kegiatan_skpd_list").hide();
+						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").show();
-						load_kegiatan_kasubid( tx[1]);
+						load_kegiatan_kasubid(tx[1]);
 				
 			break;
 			default: 
+						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
+						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
+						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+						load_kegiatan_ka_skpd(tx[1]);
 		
 		}
 	}
 
 	$(".tutup_detail_jabatan").click(function(){
-			$(".div_misi_detail, .div_tujuan_list").show();
-			$(".div_tujuan_detail, .div_ind_tujuan_list").hide();
-			$(".div_ind_tujuan_detail, .div_sasaran_list").hide();
-			$(".div_sasaran_detail, .div_ind_sasaran_list").hide();
-			$(".div_ind_sasaran_detail, .div_program_list").hide();
-			$(".div_program_detail, .div_ind_program_list").hide();
-			$(".div_ind_program_detail, .div_kegiatan_list").hide();
+		$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
+		$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
+		$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 	}); 
 	
 	

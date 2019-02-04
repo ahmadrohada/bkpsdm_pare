@@ -27,7 +27,78 @@ Use Alert;
 
 class KegiatanAPIController extends Controller {
 
-    
+    public function RenjaDistribusiKegiatanTree(Request $request)
+    {
+       
+        //Distibusi kegiatan 
+        $ka_skpd = SKPD::where('parent_id','=', $request->skpd_id)->select('id','skpd')->get();
+		foreach ($ka_skpd as $x) {
+            $data_ka_skpd['id']	            = "ka_skpd|".$x->id;
+			$data_ka_skpd['text']			= Pustaka::capital_string($x->skpd);
+            $data_ka_skpd['icon']           = "jstree-people";
+            $data_ka_skpd['type']           = "ka_skpd";
+            
+
+            $kabid = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
+            foreach ($kabid as $y) {
+                $data_kabid['id']	        = "kabid|".$y->id;
+                $data_kabid['text']			= Pustaka::capital_string($y->skpd);
+                $data_kabid['icon']         = "jstree-people";
+                $data_kabid['type']         = "kabid";
+
+
+                $kasubid = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
+                foreach ($kasubid as $z) {
+                    $data_kasubid['id']	            = "kasubid|".$z->id;
+                    $data_kasubid['text']			= Pustaka::capital_string($z->skpd);
+                    $data_kasubid['icon']           = "jstree-people";
+                    $data_kasubid['type']           = "kasubid";
+                    
+
+                    $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label')->get();
+                    foreach ($kegiatan as $a) {
+                        $data_kegiatan['id']	        = "kegiatan|".$a->id;
+                        $data_kegiatan['text']			= Pustaka::capital_string($a->label);
+                        $data_kegiatan['icon']          = "jstree-ind_kegiatan";
+                        $data_kegiatan['type']          = "kegiatan";
+                        
+        
+                        $kegiatan_list[] = $data_kegiatan ;
+                   
+                    }
+
+                    if(!empty($kegiatan_list)) {
+                        $data_kasubid['children']     = $kegiatan_list;
+                    }
+                    $kasubid_list[] = $data_kasubid ;
+                    $kegiatan_list = "";
+                    unset($data_kasubid['children']);
+                
+                }
+
+                if(!empty($kasubid_list)) {
+                    $data_kabid['children']     = $kasubid_list;
+                }
+                $kabid_list[] = $data_kabid ;
+                $kasubid_list = "";
+                unset($data_kabid['children']);
+            
+            }
+               
+               
+
+        }	
+
+            if(!empty($kabid_list)) {
+                $data_ka_skpd['children']     = $kabid_list;
+            }
+            $data[] = $data_ka_skpd ;	
+            $kabid_list = "";
+            unset($data_ka_skpd['children']);
+		
+		return $data;
+        
+    }
     
     public function SKPTahunanKegiatanTree2(Request $request)
     {
@@ -170,6 +241,8 @@ class KegiatanAPIController extends Controller {
         
     }
 
+    
+
     public function RenjaKegiatanList(Request $request)
     {
 
@@ -206,11 +279,136 @@ class KegiatanAPIController extends Controller {
         
     }
 
+
     public function KegiatanList(Request $request)
     {
 
         $dt = Kegiatan::where('indikator_program_id', '=' ,$request->get('ind_program_id'))
                         ->WHERE('renja_id',$request->get('renja_id'))
+                        ->select([   
+                            'id AS kegiatan_id',
+                            'label AS label_kegiatan',
+                            'indikator',
+                            'quantity',
+                            'satuan',
+                            'cost'
+                            ])
+                            ->get();
+
+        $datatables = Datatables::of($dt)
+            ->addColumn('label_kegiatan', function ($x) {
+            return $x->label_kegiatan;
+         })
+         ->addColumn('indikator_kegiatan', function ($x) {
+            return $x->indikator;
+        })
+        ->addColumn('target_kegiatan', function ($x) {
+            return $x->quantity.' '.$x->satuan ;
+        })
+        ->addColumn('cost_kegiatan', function ($x) {
+            return "Rp.  " .number_format($x->cost,'0',',','.') ;
+        })
+        ->addColumn('action', function ($x) {
+            return $x->kegiatan_id;
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
+
+    public function RenjaKegiatanKaSKPD(Request $request)
+    {
+
+        $dt = Kegiatan::WHERE('renja_id', '=' ,$request->get('renja_id'))
+                        //->WHERE('renja_id',$request->get('renja_id'))
+                        ->select([   
+                            'id AS kegiatan_id',
+                            'label AS label_kegiatan',
+                            'indikator',
+                            'quantity',
+                            'satuan',
+                            'cost'
+                            ])
+                            ->get();
+
+        $datatables = Datatables::of($dt)
+            ->addColumn('label_kegiatan', function ($x) {
+            return $x->label_kegiatan;
+         })
+         ->addColumn('indikator_kegiatan', function ($x) {
+            return $x->indikator;
+        })
+        ->addColumn('target_kegiatan', function ($x) {
+            return $x->quantity.' '.$x->satuan ;
+        })
+        ->addColumn('cost_kegiatan', function ($x) {
+            return "Rp.  " .number_format($x->cost,'0',',','.') ;
+        })
+        ->addColumn('action', function ($x) {
+            return $x->kegiatan_id;
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
+
+
+    public function RenjaKegiatanKabid(Request $request)
+    {
+
+        //Kegiatan nya KABID , cari KASUBID yang parent KABID ini
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
+
+        $dt = Kegiatan::WHERE('renja_id', '=' ,$request->get('renja_id'))
+                        ->WHEREIN('jabatan_id',$child)
+                        ->select([   
+                            'id AS kegiatan_id',
+                            'label AS label_kegiatan',
+                            'indikator',
+                            'quantity',
+                            'satuan',
+                            'cost'
+                            ])
+                            ->get();
+
+        $datatables = Datatables::of($dt)
+            ->addColumn('label_kegiatan', function ($x) {
+            return $x->label_kegiatan;
+         })
+         ->addColumn('indikator_kegiatan', function ($x) {
+            return $x->indikator;
+        })
+        ->addColumn('target_kegiatan', function ($x) {
+            return $x->quantity.' '.$x->satuan ;
+        })
+        ->addColumn('cost_kegiatan', function ($x) {
+            return "Rp.  " .number_format($x->cost,'0',',','.') ;
+        })
+        ->addColumn('action', function ($x) {
+            return $x->kegiatan_id;
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
+
+    public function RenjaKegiatanKasubid(Request $request)
+    {
+
+       $dt = Kegiatan::WHERE('renja_id', '=' ,$request->get('renja_id'))
+                        ->WHERE('jabatan_id',$request->get('jabatan_id'))
                         ->select([   
                             'id AS kegiatan_id',
                             'label AS label_kegiatan',

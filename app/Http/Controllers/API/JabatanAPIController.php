@@ -91,4 +91,41 @@ class JabatanAPIController extends Controller {
 
     }
 
+
+
+    public function PejabatAktifDetail(Request $request)
+    {
+       
+        
+        $x = Jabatan::
+                            leftjoin('demo_asn.tb_history_jabatan AS pejabat', function($join){
+                                $join   ->on('pejabat.id_jabatan','=','m_skpd.id');
+                                $join   ->WHERE('pejabat.status','=', 'active' );
+                            })
+                            ->leftjoin('demo_asn.tb_pegawai AS asn', function($join){
+                                $join   ->on('asn.id','=','pejabat.id_pegawai');
+                            })
+                            ->WHERE('m_skpd.id', $request->jabatan_id)
+                            ->SELECT('m_skpd.skpd AS jabatan',
+                                     'pejabat.id_pegawai',
+                                     'asn.nip',
+                                     'asn.nama',
+                                     'asn.gelardpn',
+                                     'asn.gelarblk'
+
+                                    )
+                            ->first();
+
+		
+		//return  $kegiatan_tahunan;
+        $pejabat = array(
+            'nip'           => $x->nip,
+            'nama'          => Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk),
+            'jabatan'       => Pustaka::capital_string($x->jabatan)
+
+        ); 
+        return $pejabat;
+    }
+
+
 }

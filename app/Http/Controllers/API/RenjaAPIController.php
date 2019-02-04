@@ -318,78 +318,7 @@ class RenjaAPIController extends Controller {
     
 
 
-    public function skpd_renja_distribusi_kegiatan_tree(Request $request)
-    {
-       
-
-        $ka_skpd = SKPD::where('parent_id','=','42')->select('id','skpd')->get();
-		foreach ($ka_skpd as $x) {
-            $data_ka_skpd['id']	            = "ka_skpd|".$x->id;
-			$data_ka_skpd['text']			= Pustaka::capital_string($x->skpd);
-            $data_ka_skpd['icon']           = "jstree-people";
-            $data_ka_skpd['type']           = "ka_skpd";
-            
-
-            $kabid = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
-            foreach ($kabid as $y) {
-                $data_kabid['id']	        = "kabid|".$y->id;
-                $data_kabid['text']			= Pustaka::capital_string($y->skpd);
-                $data_kabid['icon']         = "jstree-people";
-                $data_kabid['type']         = "kabid";
-
-
-                $kasubid = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
-                foreach ($kasubid as $z) {
-                    $data_kasubid['id']	            = "kasubid|".$z->id;
-                    $data_kasubid['text']			= Pustaka::capital_string($z->skpd);
-                    $data_kasubid['icon']           = "jstree-people";
-                    $data_kasubid['type']           = "kasubid";
-                    
-
-                    $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label')->get();
-                    foreach ($kegiatan as $a) {
-                        $data_kegiatan['id']	        = "kegiatan|".$a->id;
-                        $data_kegiatan['text']			= Pustaka::capital_string($a->label);
-                        $data_kegiatan['icon']          = "jstree-ind_kegiatan";
-                        $data_kegiatan['type']          = "kegiatan";
-                        
-        
-                        $kegiatan_list[] = $data_kegiatan ;
-                   
-                    }
-
-                    if(!empty($kegiatan_list)) {
-                        $data_kasubid['children']     = $kegiatan_list;
-                    }
-                    $kasubid_list[] = $data_kasubid ;
-                    $kegiatan_list = "";
-                    unset($data_kasubid['children']);
-                
-                }
-
-                if(!empty($kasubid_list)) {
-                    $data_kabid['children']     = $kasubid_list;
-                }
-                $kabid_list[] = $data_kabid ;
-                $kasubid_list = "";
-                unset($data_kabid['children']);
-            
-            }
-               
-               
-
-        }	
-
-            if(!empty($kabid_list)) {
-                $data_ka_skpd['children']     = $kabid_list;
-            }
-            $data[] = $data_ka_skpd ;	
-            $kabid_list = "";
-            unset($data_ka_skpd['children']);
-		
-		return $data;
-        
-    }
+    
 
 
 
