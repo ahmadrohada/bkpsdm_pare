@@ -205,7 +205,7 @@ function load_kegiatan_kasubid(jabatan_id){
 					},
 					error: function(e) {
 							swal({
-									title: "Gagal",
+									title: "Tes Gagal",
 									text: "",
 									type: "warning"
 								}).then (function(){
