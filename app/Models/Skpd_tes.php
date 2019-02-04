@@ -26,6 +26,5 @@ class SKPD extends Model
 
    
 
-
    
 }
