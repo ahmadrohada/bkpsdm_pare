@@ -76,7 +76,7 @@ class TujuanAPIController extends Controller {
     {
 
         $messages = [
-                'misi_id.required'           => 'Harus diisi',
+                //'misi_id.required'           => 'Harus diisi',
                 'renja_id.required'          => 'Harus diisi',
                 'label.required'             => 'Harus diisi',
 
@@ -85,7 +85,7 @@ class TujuanAPIController extends Controller {
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'misi_id'       => 'required',
+                            //'misi_id'       => 'required',
                             'renja_id'      => 'required',
                             'label'         => 'required',
                         ),
@@ -101,7 +101,7 @@ class TujuanAPIController extends Controller {
 
         $tj    = new Tujuan;
 
-        $tj->misi_id        = Input::get('misi_id');
+        $tj->misi_id        = '1';
         $tj->renja_id       = Input::get('renja_id');
         $tj->label          = Input::get('label');
 

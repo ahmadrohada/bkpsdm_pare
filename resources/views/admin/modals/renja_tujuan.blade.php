@@ -13,7 +13,7 @@
 			<input type="hidden"  name="renja_id" class="renja_id" value="{{ $renja->id }}">
 			<div class="modal-body">
 
-				<div class="row">	
+				<div class="row" hidden>	
 					<div class="col-md-12 form-group label_misi">
                         <label class="control-label ">Misi</label>
                         <select  class="form-control misi_id" name="misi_id" id="misi_id" style="width:100%;"></select>
