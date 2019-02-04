@@ -40,7 +40,7 @@
 						
 
 						<div class=" tab-pane" id="distribusi_kegiatan">
-							@include('admin.modules.skpd-renja_distribusi_kegiatan_edit')
+							@include('admin.modules.edit_forms.distribusi_kegiatan') 
 						</div>
 						
 					</div>
@@ -60,7 +60,7 @@ $(document).ready(function() {
 		
 		e.preventDefault();
 		$(this).tab('show');
-		//$('html, body').animate({scrollTop:0}, 0);
+		
 		
 	}); 
 
@@ -74,12 +74,14 @@ $(document).ready(function() {
 			
 		}else if ( id == 'status'){
 			status_show();
+		}else if ( id == 'distribusi_kegiatan'){
+			initTreeDistribusiKegiatan();
+			
 		}
+
 		$('html, body').animate({scrollTop:0}, 0);
 	});
 
-
-	
 
 	// on load of the page: switch to the currently selected tab
 	var hash = window.location.hash;

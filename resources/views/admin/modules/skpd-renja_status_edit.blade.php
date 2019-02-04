@@ -8,8 +8,6 @@
 	 <script src="{{asset('assets/timeline/jquery-albe-timeline.js')}}"></script>
 	 
 	 <script type="text/javascript">
-	 $(document).ready(function() {
-		 //Json Object
 	 
 			 $.ajax({
 					 url			: '{{ url("api_resource/renja_timeline_status") }}',
@@ -41,9 +39,5 @@
 		 }
 	 
 		 
-	 
-		 
-	 
-	 });
 	 </script>
 	 

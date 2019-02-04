@@ -12,6 +12,9 @@
 		@include('admin.tables.renja-ind_tujuan_edit')
 		@include('admin.tables.renja-sasaran_edit')
 		@include('admin.tables.renja-ind_sasaran_edit')
+		@include('admin.tables.renja-program_edit')
+		@include('admin.tables.renja-ind_program_edit')
+		@include('admin.tables.renja-kegiatan_edit')
 
 	</div>
 </div>
@@ -285,6 +288,7 @@
 					
 				break;
 				case 'ind_sasaran':
+							//alert(tx[0]);
 							$(".div_misi_detail, .div_tujuan_list").hide();
 							$(".div_tujuan_detail, .div_ind_tujuan_list").hide();
 							$(".div_ind_tujuan_detail, .div_sasaran_list").hide();
@@ -292,7 +296,7 @@
 							$(".div_ind_sasaran_detail, .div_program_list").show();
 							$(".div_program_detail, .div_ind_program_list").hide();
 							$(".div_ind_program_detail, .div_kegiatan_list").hide();
-							//load_sasaran( tx[1]);
+							load_program( tx[1]);
 					
 				break;
 				case 'program':
@@ -303,7 +307,7 @@
 							$(".div_ind_sasaran_detail, .div_program_list").hide();
 							$(".div_program_detail, .div_ind_program_list").show();
 							$(".div_ind_program_detail, .div_kegiatan_list").hide();
-							load_sasaran( tx[1]);
+							load_ind_program( tx[1]);
 					
 				break;
 				case 'ind_program':
@@ -314,9 +318,10 @@
 							$(".div_ind_sasaran_detail, .div_program_list").hide();
 							$(".div_program_detail, .div_ind_program_list").hide();
 							$(".div_ind_program_detail, .div_kegiatan_list").show();
-							load_sasaran( tx[1]);
+							load_kegiatan( tx[1]);
 					
 				break;
+				
 				
 				default:
 						/* $("#kegiatan_tahunan").show();

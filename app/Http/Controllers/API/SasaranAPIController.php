@@ -33,7 +33,7 @@ class SasaranAPIController extends Controller {
                         return $x->label_sasaran;
                     })
                     ->addColumn('action', function ($x) {
-                        return $x->ind_tujuan_id;
+                        return $x->sasaran_id;
                     });
 
                     if ($keyword = $request->get('search')['value']) {

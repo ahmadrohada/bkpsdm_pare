@@ -139,12 +139,12 @@ class KegiatanAPIController extends Controller {
     }
 
 
-    public function KegiatanDetailoverId(Request $request)
+    public function KegiatanDetail(Request $request)
     {
        
         
         $kegiatan = Kegiatan::SELECT('id','label')
-                            ->WHERE('renja_kegiatan.id', $request->kegiatan_renja_id )
+                            ->WHERE('renja_kegiatan.id', $request->get('kegiatan_id') )
                             ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator', function($join){
                                 $join   ->on('indikator.kegiatan_id','=','renja_kegiatan.id');
                             })
@@ -195,6 +195,33 @@ class KegiatanAPIController extends Controller {
         
     }
 
+    public function KegiatanList(Request $request)
+    {
+
+        $dt = Kegiatan::where('indikator_program_id', '=' ,$request->get('ind_program_id'))
+                        ->WHERE('renja_id',$request->get('renja_id'))
+                        ->select([   
+                            'id AS kegiatan_id',
+                            'label AS label_kegiatan',
+                            ])
+                            ->get();
+
+        $datatables = Datatables::of($dt)
+            ->addColumn('label_kegiatan', function ($x) {
+            return $x->label_kegiatan;
+         })
+        ->addColumn('action', function ($x) {
+            return $x->kegiatan_id;
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
+
 
 
 
@@ -241,18 +268,127 @@ class KegiatanAPIController extends Controller {
     public function Store(Request $request)
     {
 
-        $pk = new Kegiatan;
-        $pk->label                  = Input::get('text');
-        $pk->renja_id               = Input::get('renja_id');
-        $pk->indikator_program_id   = Input::get('parent_id');
+        $messages = [
+                'ind_program_id.required'     => 'Harus diisi',
+                'renja_id.required'           => 'Harus diisi',
+                'label_kegiatan.required'     => 'Harus diisi',
 
-    
-        if ( $pk->save()){
-            $tes = array('id' => 'kegiatan|'.$pk->id);
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'ind_program_id' => 'required',
+                            'renja_id'       => 'required',
+                            'label_kegiatan' => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+
+        $sr    = new Kegiatan;
+
+        $sr->indikator_program_id       = Input::get('ind_program_id');
+        $sr->renja_id                   = Input::get('renja_id');
+        $sr->label                      = Input::get('label_kegiatan');
+
+        if ( $sr->save()){
+            $tes = array('id' => 'kegiatan|'.$sr->id);
             return \Response::make($tes, 200);
         }else{
             return \Response::make('error', 500);
+        } 
+
+    }
+
+    public function Update(Request $request)
+    {
+
+        $messages = [
+                'kegiatan_id.required'   => 'Harus diisi',
+                'label_kegiatan.required'       => 'Harus diisi',
+                
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'kegiatan_id'   => 'required',
+                            'label_kegiatan'     => 'required',
+                            
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
         }
+
+        
+        $sr    = Kegiatan::find(Input::get('kegiatan_id'));
+        if (is_null($sr)) {
+            return $this->sendError('Kegiatan idak ditemukan.');
+        }
+
+
+        $sr->label             = Input::get('label_kegiatan');
+
+        if ( $sr->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+
+    
+    }
+
+    public function Hapus(Request $request)
+    {
+
+        $messages = [
+                'kegiatan_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'kegiatan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $sr    = Kegiatan::find(Input::get('kegiatan_id'));
+        if (is_null($sr)) {
+            return $this->sendError('Kegiatan tidak ditemukan.');
+        }
+
+
+        if ( $sr->delete()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
     }
 
     public function Rename(Request $request )

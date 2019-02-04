@@ -1,6 +1,19 @@
+<div class="row">
+	<div class="col-md-6">
+		<div class="table-responsive">
+			<input type='text' id = 'cari_keg' class="form-control" placeholder="cari">
+			<div id="ditribusi_renja" class="demo"></div>
+		</div>
+	</div>
+	<div class="col-md-6">
+			@include('admin.tables.renja-kegiatan_ka_skpd')
 
-<input type='text' id = 'cari_keg' class="form-control" placeholder="cari">
-<div id="ditribusi_renja" class="demo"></div>
+
+	</div>
+</div>
+
+
+
      
 
 <link rel="stylesheet" href="{{asset('assets/jstree/themes/default/style.css')}}" />
@@ -10,18 +23,8 @@
 @include('admin.modals.distribusi_kegiatan-add')
 
 <script type="text/javascript">
-$(document).ready(function() {
-	
-	
-	$(".distribusi_kegiatan").click(function(){
-		initTree();
-    });
 
-	
-
-	
-	
-	function initTree() {
+	function initTreeDistribusiKegiatan() {
 		$('#ditribusi_renja')
 		.jstree({
             'core' : {
@@ -52,6 +55,13 @@ $(document).ready(function() {
 	    })
 		.on("loaded.jstree", function(){
 			$('#ditribusi_renja').jstree('open_all');
+		})
+		.on("changed.jstree", function (e, data) {
+			if(data.selected.length) {
+				//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
+				//alert(data.instance.get_node(data.selected[0]).id)
+				detail_table_jabatan(data.instance.get_node(data.selected[0]).id);
+			}
 		});
 	}
 
@@ -112,8 +122,50 @@ $(document).ready(function() {
 		$('#ditribusi_renja').jstree(true).search(v);
 		}, 250);
 	});
-	
-	
 
-});
+
+	function detail_table_jabatan(id){
+
+		var tx = id.split('|');
+
+		alert(tx[0]);
+
+		switch ( tx[0] ){
+			case 'ka_skpd':
+						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
+						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
+						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+						load_kegiatan_ka_skpd( tx[1]);
+				
+			break;
+			case 'kabid':
+						$(".div_ka_skpd_detail, .div_kegiatan_skpd_list").hide();
+						$(".div_kabid_detail, .div_kegiatan_kabid_list").show();
+						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+						load_kegiatan_kabid( tx[1]);
+				
+			break;
+			case 'kasubid':
+						$(".div_ka_skpd_detail, .div_kegiatan_skpd_list").hide();
+						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
+						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").show();
+						load_kegiatan_kasubid( tx[1]);
+				
+			break;
+			default: 
+		
+		}
+	}
+
+	$(".tutup_detail_jabatan").click(function(){
+			$(".div_misi_detail, .div_tujuan_list").show();
+			$(".div_tujuan_detail, .div_ind_tujuan_list").hide();
+			$(".div_ind_tujuan_detail, .div_sasaran_list").hide();
+			$(".div_sasaran_detail, .div_ind_sasaran_list").hide();
+			$(".div_ind_sasaran_detail, .div_program_list").hide();
+			$(".div_program_detail, .div_ind_program_list").hide();
+			$(".div_ind_program_detail, .div_kegiatan_list").hide();
+	}); 
+	
+	
 </script>

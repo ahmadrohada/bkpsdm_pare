@@ -143,32 +143,66 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//===============================I N D I K A T O R    S A S A R A N    ===================================//
 	//========================================================================================================//
 
-	Route::post('ind_sasaran_store','API\IndikatorSasaranAPIController@Store');
-	Route::post('ind_sasaran_rename','API\IndikatorSasaranAPIController@Rename');
+	Route::get('skpd-renja_ind_sasaran_list','API\IndikatorSasaranAPIController@IndSasaranList');
+
+	Route::get('ind_sasaran_detail','API\IndikatorSasaranAPIController@IndSasaranDetail');
+	
+	Route::post('simpan_ind_sasaran','API\IndikatorSasaranAPIController@Store');
+	Route::post('update_ind_sasaran','API\IndikatorSasaranAPIController@Update');
+	Route::post('hapus_ind_sasaran','API\IndikatorSasaranAPIController@Hapus');
+
 
 
 	//========================================================================================================//
 	//======================================       P R O G R A M       =======================================//
 	//========================================================================================================//
 
-	Route::post('program_store','API\ProgramAPIController@Store');
-	Route::post('program_rename','API\ProgramAPIController@Rename');
+	Route::get('skpd-renja_program_list','API\ProgramAPIController@ProgramList');
+
+	Route::get('program_detail','API\ProgramAPIController@ProgramDetail');
+	
+	Route::post('simpan_program','API\ProgramAPIController@Store');
+	Route::post('update_program','API\ProgramAPIController@Update');
+	Route::post('hapus_program','API\ProgramAPIController@Hapus');
 
 	//========================================================================================================//
 	//======================================  I N D I K A T O R     P R O G R A M   ==========================//
 	//========================================================================================================//
 
-	Route::post('ind_program_store','API\IndikatorProgramAPIController@Store');
-	Route::post('ind_program_rename','API\IndikatorProgramAPIController@Rename');
+	Route::get('skpd-renja_ind_program_list','API\IndikatorProgramAPIController@IndProgramList');
+
+	Route::get('ind_program_detail','API\IndikatorProgramAPIController@IndProgramDetail');
+	
+	Route::post('simpan_ind_program','API\IndikatorProgramAPIController@Store');
+	Route::post('update_ind_program','API\IndikatorProgramAPIController@Update');
+	Route::post('hapus_ind_program','API\IndikatorProgramAPIController@Hapus');
 	
 
 	//========================================================================================================//
 	//======================================      K E G I A T A N      =======================================//
 	//========================================================================================================//
 
+	Route::get('skpd-renja_kegiatan_list','API\KegiatanAPIController@KegiatanList');
+
+	Route::get('kegiatan_detail','API\KegiatanAPIController@KegiatanDetail');
+	Route::get('kegiatan_renja_detail','API\KegiatanAPIController@KegiatanDetail');
+
+	Route::post('simpan_kegiatan','API\KegiatanAPIController@Store');
+	Route::post('update_kegiatan','API\KegiatanAPIController@Update');
+	Route::post('hapus_kegiatan','API\KegiatanAPIController@Hapus');
+	
+
+
+
+
+
 	Route::post('kegiatan_store','API\KegiatanAPIController@Store');
 	Route::post('kegiatan_rename','API\KegiatanAPIController@Rename');
-	Route::get('kegiatan_renja_detail','API\KegiatanAPIController@KegiatanDetailoverId');
+	Route::get('kegiatan_renja_detail','API\KegiatanAPIController@KegiatanDetail');
+
+
+
+
 	
 	
 	Route::get('renja_kegiatan_list','API\KegiatanAPIController@RenjaKegiatanList');
