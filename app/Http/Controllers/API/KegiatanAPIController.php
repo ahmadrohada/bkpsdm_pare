@@ -179,7 +179,11 @@ class KegiatanAPIController extends Controller {
                 ->WHERE('jabatan_id','0')
                 ->select([   
                     'id AS kegiatan_id',
-                    'label'
+                    'label',
+                    'indikator',
+                    'quantity',
+                    'satuan',
+                    'cost'
                     
                     ])
                 ->get();
@@ -210,6 +214,10 @@ class KegiatanAPIController extends Controller {
                         ->select([   
                             'id AS kegiatan_id',
                             'label AS label_kegiatan',
+                            'indikator',
+                            'quantity',
+                            'satuan',
+                            'cost'
                             ])
                             ->get();
 
@@ -217,6 +225,15 @@ class KegiatanAPIController extends Controller {
             ->addColumn('label_kegiatan', function ($x) {
             return $x->label_kegiatan;
          })
+         ->addColumn('indikator_kegiatan', function ($x) {
+            return $x->indikator;
+        })
+        ->addColumn('target_kegiatan', function ($x) {
+            return $x->quantity.' '.$x->satuan ;
+        })
+        ->addColumn('cost_kegiatan', function ($x) {
+            return "Rp.  " .number_format($x->cost,'0',',','.') ;
+        })
         ->addColumn('action', function ($x) {
             return $x->kegiatan_id;
         });

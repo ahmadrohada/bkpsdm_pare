@@ -38,6 +38,8 @@
 				<tr class="success">
 					<th>NO</th>
 					<th >LABEL</th>
+					<th >TARGET</th>
+					<th >ANGGARAN</th>
 					<th><i class="fa fa-cog"></i></th>
 				</tr>
 			</thead>
@@ -79,7 +81,8 @@ function load_kegiatan(ind_program_id){
 				searching      	: false,
 				paging          : false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,2 ] }
+								{ className: "text-center", targets: [ 0,2,4 ] },
+								{ className: "text-right", targets: [ 3 ] }
 							  ],
 			ajax			: {
 								url	: '{{ url("api_resource/skpd-renja_kegiatan_list") }}',
@@ -94,6 +97,10 @@ function load_kegiatan(ind_program_id){
 									}
 								},
 							{ data: "label_kegiatan", name:"label_kegiatan", orderable: true, searchable: true},
+							{ data: "target_kegiatan", name:"target_kegiatan", orderable: true, searchable: true},
+							{ data: "cost_kegiatan", name:"cost_kegiatan", orderable: true, searchable: true},
+							
+							
 							{  data: 'action',width:"60px",
 									"render": function ( data, type, row ) {
 										return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" ><a class="btn btn-success btn-xs edit_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
