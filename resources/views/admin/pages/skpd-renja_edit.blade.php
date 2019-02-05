@@ -28,7 +28,7 @@
 						
 					<div class="tab-content"  style="margin-left:20px;">
 						<div class="active tab-pane" id="status">
-							@include('admin.modules.skpd-renja_status_edit')
+							@include('admin.modules.timeline.renja_status_edit')	
 						</div>
 						<div class="tab-pane" id="detail">
 							@include('admin.modules.skpd-renja_detail')
@@ -38,7 +38,7 @@
 							@include('admin.modules.edit_forms.rencana_kerja')
 						</div>
 						
-
+  
 						<div class=" tab-pane" id="distribusi_kegiatan">
 							@include('admin.modules.edit_forms.distribusi_kegiatan') 
 						</div>
@@ -68,11 +68,13 @@ $(document).ready(function() {
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
+		//alert(id);
 
 		if ( id == 'renja_list'){
 			initRenjaTree();
 			
 		}else if ( id == 'status'){
+			
 			status_show();
 		}else if ( id == 'distribusi_kegiatan'){
 			initTreeDistribusiKegiatan();

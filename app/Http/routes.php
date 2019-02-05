@@ -63,8 +63,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skpd_renja_list','API\RenjaAPIController@skpd_renja_list');
 
 	
-	Route::get('renja_timeline_status','API\RenjaAPIController@Renja_timeline_status');
+	Route::get('renja_timeline_status','API\RenjaAPIController@RenjaTimelineStatus');
+	Route::get('renja_status_pengisian','API\RenjaAPIController@RenjaStatusPengisian');
 
+	
 	
 
 

@@ -35,7 +35,7 @@ Use Alert;
 class RenjaAPIController extends Controller {
 
 
-    public function Renja_timeline_status( Request $request )
+    public function RenjaTimelineStatus( Request $request )
     {
         $response = array();
         $body = array();
@@ -79,13 +79,78 @@ class RenjaAPIController extends Controller {
         $i['time']	    = $renja->updated_at->format('Y-m-d H:i:s');
         $i['body']	    = $body_2;
 
-        if ( $renja->updated_at->format('Y') > 1 )
+        if ( $renja->send_to_kaban == 1 )
         {
             array_push($response, $i);
         }
         
+        
 
 
+        return $response;
+
+
+    }
+
+
+    public function RenjaStatusPengisian( Request $request )
+    {
+       
+        $button_kirim = 0 ;
+
+
+        $renja = Renja::
+                            leftjoin('demo_asn.tb_history_jabatan AS kaban', function($join){
+                                $join   ->on('kaban.id','=','renja.kepala_skpd_id');
+                            })
+                            /* ->SELECT(
+                                'skp_tahunan.id AS skp_tahunan_id',
+                                'atasan.id AS atasan_id',
+                                'skp_tahunan.status_approve'
+                            ) */
+                            ->where('renja.id','=', $request->renja_id )->first();;
+
+        //STATUS SKP
+        if ( $skp_tahunan->skp_tahunan_id != null ){
+            $created = 'ok';
+        }else{
+            $created = '-';
+        }
+        
+        //STATUS PEJABAT PENILAI
+        if ( $skp_tahunan->atasan_id != null ){
+            $atasan = 'ok';
+        }else{
+            $atasan = '-';
+        }
+
+
+        //button kirim
+        if ( ( $created == 'ok') && ( $atasan == 'ok') && ( $kegiatan_tahunan == 'ok' ) && (  $data_rencana_aksi == 'ok') ){
+            $button_kirim = 1 ;
+        }else{
+            $button_kirim = 0 ;
+        }
+        
+         //STATUS APPROVE
+         if ( ($skp_tahunan->status_approve) == 1 ){
+            $persetujuan_atasan = 'ok';
+        }else{
+            $persetujuan_atasan = '-';
+        }
+
+
+        $response = array(
+                'created'                 => $created,
+                'data_pejabat_penilai'    => $atasan,
+                'data_kegiatan_tahunan'   => $kegiatan_tahunan,
+                'data_rencana_aksi'       => $data_rencana_aksi,
+                'persetujuan_atasan'      => $persetujuan_atasan,
+                'button_kirim'            => $button_kirim ,
+
+
+        );
+       
         return $response;
 
 

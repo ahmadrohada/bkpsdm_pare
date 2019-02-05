@@ -61,17 +61,15 @@ class PegawaiAPIController extends Controller {
 
             
 
-
+ 
             if ( $user->save() ){
 
-                $data_user = User::WHERE('id_pegawai', Input::get('pegawai_id') )
+                /* $data_user = User::WHERE('id_pegawai', Input::get('pegawai_id') )
                                 ->SELECT('users.id AS user_id')
-                                ->first();
-
-
+                                ->first(); */
 
                 $role               = new RoleUser;
-                $role->user_id      = $data_user->user_id;
+                $role->user_id      = $user->id;
                 $role->role_id      = '1';
                 $role->save();
 
