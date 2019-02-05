@@ -92,14 +92,14 @@
 			</div>
 			<div class="modal-footer">
 				
-					<input type="text" class="form-control periode_id" name="periode_id"  />
-					<input type="text" class="form-control skpd_id" name="skpd_id"  />
+					<input type="hidden" class="form-control periode_id" name="periode_id"  />
+					<input type="hidden" class="form-control skpd_id" name="skpd_id"  />
 				
-					<input type="text" class="form-control kaban_nama	" name="kaban_nama"  />
-					<input type="text" class="form-control kaban_jabatan_id " name="kaban_jabatan_id"  />
+					<input type="hidden" class="form-control kaban_nama	" name="kaban_nama"  />
+					<input type="hidden" class="form-control kaban_jabatan_id " name="kaban_jabatan_id"  />
 
-					<input type="text" class="form-control admin_nama	" name="admin_nama"  />
-					<input type="text" class="form-control admin_jabatan_id	" name="admin_jabatan_id"  />
+					<input type="hidden" class="form-control admin_nama	" name="admin_nama"  />
+					<input type="hidden" class="form-control admin_jabatan_id	" name="admin_jabatan_id"  />
 
 
                	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
