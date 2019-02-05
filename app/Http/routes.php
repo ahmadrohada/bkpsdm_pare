@@ -60,13 +60,14 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 
 	Route::get('skpd_renja_aktivity','API\RenjaAPIController@SKPDRenjaActivity');
-	Route::get('skpd_renja_list','API\RenjaAPIController@skpd_renja_list');
-
+	Route::get('skpd_renja_list','API\RenjaAPIController@SKPDRenjaList');
+	Route::get('create_renja_confirm','API\RenjaAPIController@ConfirmRenja');
+	
 	
 	Route::get('renja_timeline_status','API\RenjaAPIController@RenjaTimelineStatus');
 	Route::get('renja_status_pengisian','API\RenjaAPIController@RenjaStatusPengisian');
 
-	
+	Route::post('create_renja','API\RenjaAPIController@Store');
 	
 
 
