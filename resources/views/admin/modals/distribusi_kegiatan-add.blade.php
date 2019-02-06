@@ -65,7 +65,7 @@ $(document).ready(function() {
 									],
 					ajax			: {
 										url	: '{{ url("api_resource/renja_kegiatan_list") }}',
-										data: { renja_id : 2 },
+										data: { renja_id : {!! $renja->id !!} },
 										delay:3000
 									},
 					
