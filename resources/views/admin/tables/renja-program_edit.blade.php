@@ -69,7 +69,7 @@ $.ajax({
 		dataType	: "json",
 		success	: function(data) {
 				$('.txt_ind_sasaran_label').html(data['label']);
-				$('.txt_ind_sasaran_target').html(data['quantity']+' '+data['satuan']);
+				$('.txt_ind_sasaran_target').html(data['target']+' '+data['satuan']);
 				$('.ind_sasaran_id').val(data['id']);
 				
 		},

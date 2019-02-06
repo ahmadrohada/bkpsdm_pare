@@ -49,7 +49,7 @@ function load_ind_kegiatan(kegiatan_id){
 			success	: function(data) {
 					$('.txt_kegiatan_label').html(data['label']);
 					$('.txt_kegiatan_indikator').html(data['indikator']);
-					$('.txt_kegiatan_target').html(data['quantity']+' '+data['satuan']);
+					$('.txt_kegiatan_target').html(data['target']+' '+data['satuan']);
 					$('.txt_kegiatan_cost').html("Rp. "+data['cost']);
 					
 					

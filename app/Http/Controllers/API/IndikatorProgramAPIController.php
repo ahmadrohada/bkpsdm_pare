@@ -31,7 +31,7 @@ class IndikatorProgramAPIController extends Controller {
                                 ->select([   
                                     'id AS ind_program_id',
                                     'label AS label_ind_program',
-                                    'quantity',
+                                    'target',
                                     'satuan'
                                     ])
                                     ->get();
@@ -41,7 +41,7 @@ class IndikatorProgramAPIController extends Controller {
             return $x->label_ind_program;
         })
         ->addColumn('target_ind_program', function ($x) {
-             return $x->quantity.' '.$x->satuan;
+             return $x->target.' '.$x->satuan;
         })
         ->addColumn('action', function ($x) {
             return $x->ind_program_id;
@@ -60,7 +60,7 @@ class IndikatorProgramAPIController extends Controller {
         $x = IndikatorProgram::
                 SELECT(     'renja_indikator_program.id AS ind_program_id',
                             'renja_indikator_program.label',
-                            'renja_indikator_program.quantity',
+                            'renja_indikator_program.target',
                             'renja_indikator_program.satuan'
 
 
@@ -73,7 +73,7 @@ class IndikatorProgramAPIController extends Controller {
         $ind_program = array(
             'id'            => $x->ind_program_id,
             'label'         => $x->label,
-            'quantity'      => $x->quantity,
+            'target'      => $x->target,
             'satuan'        => $x->satuan
 
         );
@@ -86,8 +86,8 @@ class IndikatorProgramAPIController extends Controller {
         $messages = [
                 'program_id.required'           => 'Harus diisi',
                 'label_ind_program.required'    => 'Harus diisi',
-                'quantity_ind_program.required' => 'Harus diisi',
-                'satuan_ind_program.required'   => 'Harus diisi',
+                'target_ind_program.required' => 'Harus diisi',
+                //'satuan_ind_program.required'   => 'Harus diisi',
 
         ];
 
@@ -96,8 +96,8 @@ class IndikatorProgramAPIController extends Controller {
                         array(
                             'program_id'            => 'required',
                             'label_ind_program'     => 'required',
-                            'quantity_ind_program'  => 'required',
-                            'satuan_ind_program'    => 'required',
+                            'target_ind_program'  => 'required',
+                            //'satuan_ind_program'    => 'required',
                         ),
                         $messages
         );
@@ -113,7 +113,7 @@ class IndikatorProgramAPIController extends Controller {
 
         $is->program_id     = Input::get('program_id');
         $is->label          = Input::get('label_ind_program');
-        $is->quantity       = Input::get('quantity_ind_program');
+        $is->target       = Input::get('target_ind_program');
         $is->satuan         = Input::get('satuan_ind_program');
 
         if ( $is->save()){
@@ -132,8 +132,8 @@ class IndikatorProgramAPIController extends Controller {
         $messages = [
             'ind_program_id.required'       => 'Harus diisi',
             'label_ind_program.required'    => 'Harus diisi',
-            'quantity_ind_program.required' => 'Harus diisi',
-            'satuan_ind_program.required'   => 'Harus diisi',
+            'target_ind_program.required' => 'Harus diisi',
+            //'satuan_ind_program.required'   => 'Harus diisi',
                 
 
         ];
@@ -143,8 +143,8 @@ class IndikatorProgramAPIController extends Controller {
                         array(
                             'ind_program_id'        => 'required',
                             'label_ind_program'     => 'required',
-                            'quantity_ind_program'  => 'required',
-                            'satuan_ind_program'    => 'required',
+                            'target_ind_program'  => 'required',
+                            //'satuan_ind_program'    => 'required',
                             
                         ),
                         $messages
@@ -164,7 +164,7 @@ class IndikatorProgramAPIController extends Controller {
 
 
         $is->label             = Input::get('label_ind_program');
-        $is->quantity          = Input::get('quantity_ind_program');
+        $is->target          = Input::get('target_ind_program');
         $is->satuan            = Input::get('satuan_ind_program');
 
         if ( $is->save()){

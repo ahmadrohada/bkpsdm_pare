@@ -139,7 +139,7 @@ $('#ind_sasaran_table').DataTable({
 				dataType	: "json",
 				success	: function(data) {
 					$('.modal-ind_sasaran').find('[name=label_ind_sasaran]').val(data['label']);
-					$('.modal-ind_sasaran').find('[name=quantity_ind_sasaran]').val(data['quantity']);
+					$('.modal-ind_sasaran').find('[name=target_ind_sasaran]').val(data['target']);
 					$('.modal-ind_sasaran').find('[name=satuan_ind_sasaran]').val(data['satuan']);
 
 					$('.modal-ind_sasaran').find('[name=ind_sasaran_id]').val(data['id']);
@@ -153,7 +153,7 @@ $('#ind_sasaran_table').DataTable({
 				}						
 		});	
 	});
-
+ 
 	$(document).on('click','.hapus_ind_sasaran',function(e){
 		var ind_sasaran_id = $(this).data('id') ;
 		//alert(sasaran_id);

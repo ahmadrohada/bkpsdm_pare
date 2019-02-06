@@ -24,12 +24,12 @@
 					<br>
 					<div class="row">
 						
-						<div class="col-md-4 form-group quantity_ind_tujuan">
-						<label class="control-label">Output :</label>
-						<input type="text" name="quantity_ind_tujuan" id="quantity_ind_tujuan" required class="form-control input-sm" placeholder="qty" onkeypress="return angka('event')">        
+						<div class="col-md-8 form-group target_ind_tujuan">
+						<label class="control-label">Target :</label>
+						<input type="text" name="target_ind_tujuan" id="target_ind_tujuan" required class="form-control input-sm" placeholder="target">        
 						</div>
 
-						<div class="col-md-8 form-group satuan_ind_tujuan">
+						<div class="col-md-4 form-group satuan_ind_tujuan">
 						<label class="control-label">Satuan :</label>
 						<input type="text" name="satuan_ind_tujuan" autocomplete="off" id="_ind_tujuan" required class="form-control input-sm" placeholder="satuan">
 						</div>
@@ -55,16 +55,16 @@
 	});
 
 	$('.modal-ind_tujuan').on('hidden.bs.modal', function(){
-		$('.label_ind_tujuan, .quantity_ind_tujuan, .satuan_ind_tujuan').removeClass('has-error');
-		$('.modal-ind_tujuan').find('[name=label_ind_tujuan],[name=quantity_ind_tujuan],[name=satuan_ind_tujuan]').val('');
+		$('.label_ind_tujuan, .target_ind_tujuan, .satuan_ind_tujuan').removeClass('has-error');
+		$('.modal-ind_tujuan').find('[name=label_ind_tujuan],[name=target_ind_tujuan],[name=satuan_ind_tujuan]').val('');
 	});
 
 	$('.label_ind_tujuan').on('click', function(){
 		$('.label_ind_tujuan').removeClass('has-error');
 	});
 
-	$('.quantity_ind_tujuan').on('click', function(){
-		$('.quantity_ind_tujuan').removeClass('has-error');
+	$('.target_ind_tujuan').on('click', function(){
+		$('.target_ind_tujuan').removeClass('has-error');
 	});
 
 	$('.satuan_ind_tujuan').on('click', function(){
@@ -119,7 +119,7 @@
 					//alert (index+":"+value);
 					//error message
 					((index == 'label_ind_tujuan')?$('.label_ind_tujuan').addClass('has-error'):'');
-					((index == 'quantity_ind_tujuan')?$('.quantity_ind_tujuan').addClass('has-error'):'');
+					((index == 'target_ind_tujuan')?$('.target_ind_tujuan').addClass('has-error'):'');
 					((index == 'satuan_ind_tujuan')?$('.satuan_ind_tujuan').addClass('has-error'):'');
 				});
 
@@ -182,7 +182,7 @@
 					
 					//error message
 					((index == 'label_ind_tujuan')?$('.label_ind_tujuan').addClass('has-error'):'');
-					((index == 'quantity_ind_tujuan')?$('.quantity_ind_tujuan').addClass('has-error'):'');
+					((index == 'target_ind_tujuan')?$('.target_ind_tujuan').addClass('has-error'):'');
 					((index == 'satuan_ind_tujuan')?$('.satuan_ind_tujuan').addClass('has-error'):'');
 				
 				});

@@ -117,7 +117,7 @@ function load_ind_tujuan(tujuan_id){
 				dataType	: "json",
 				success	: function(data) {
 					$('.modal-ind_tujuan').find('[name=label_ind_tujuan]').val(data['label']);
-					$('.modal-ind_tujuan').find('[name=quantity_ind_tujuan]').val(data['quantity']);
+					$('.modal-ind_tujuan').find('[name=target_ind_tujuan]').val(data['target']);
 					$('.modal-ind_tujuan').find('[name=satuan_ind_tujuan]').val(data['satuan']);
 					
 					$('.modal-ind_tujuan').find('[name=ind_tujuan_id]').val(data['id']);

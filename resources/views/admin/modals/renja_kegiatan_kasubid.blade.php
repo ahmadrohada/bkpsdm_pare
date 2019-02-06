@@ -31,9 +31,9 @@
 
 					<div class="row">
 						
-						<div class="col-md-3 form-group quantity_kegiatan">
-						<label class="control-label">Output :</label>
-						<input type="text" name="quantity_kegiatan" id="quantity_kegiatan" required class="form-control input-sm" placeholder="qty" onkeypress="return angka('event')">        
+						<div class="col-md-3 form-group target_kegiatan">
+						<label class="control-label">Target :</label>
+						<input type="text" name="target_kegiatan" id="target_kegiatan" required class="form-control input-sm" placeholder="target">        
 						</div>
 
 						<div class="col-md-4 form-group satuan_kegiatan">
@@ -71,7 +71,7 @@
 
 	$('.modal-kegiatan_kasubid').on('hidden.bs.modal', function(){
 		$('.label_kegiatan_kasubid').removeClass('has-error');
-		$('.modal-kegiatan_kasubid').find('[name=label_kegiatan],[name=label_ind_kegiatan],[name=quantity_kegiatan],[name=satuan_kegiatan],[name=cost_kegiatan]').val('');
+		$('.modal-kegiatan_kasubid').find('[name=label_kegiatan],[name=label_ind_kegiatan],[name=target_kegiatan],[name=satuan_kegiatan],[name=cost_kegiatan]').val('');
 	});
 
 	$('.label_kegiatan_kasubid').on('click', function(){
@@ -81,8 +81,8 @@
 		$('.label_ind_kegiatan').removeClass('has-error');
 	});
 
-	$('.quantity_kegiatan_kasubid').on('click', function(){
-		$('.quantity_kegiatan').removeClass('has-error');
+	$('.target_kegiatan_kasubid').on('click', function(){
+		$('.target_kegiatan').removeClass('has-error');
 	});
 
 	$('.satuan_kegiatan_kasubid').on('click', function(){
@@ -138,7 +138,7 @@
 					//error message
 					((index == 'label_kegiatan')?$('.label_kegiatan').addClass('has-error'):'');
 					((index == 'label_ind_kegiatan')?$('.label_ind_kegiatan').addClass('has-error'):'');
-					((index == 'quantity_kegiatan')?$('.quantity_kegiatan').addClass('has-error'):'');
+					((index == 'target_kegiatan')?$('.target_kegiatan').addClass('has-error'):'');
 					((index == 'satuan_kegiatan')?$('.satuan_kegiatan').addClass('has-error'):'');
 				
 				});

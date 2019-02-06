@@ -305,7 +305,7 @@
 				success	: function(data) {
 					$('.modal-kegiatan_tahunan').find('[name=label]').val(data['label']);
 					$('.modal-kegiatan_tahunan').find('[name=angka_kredit]').val(data['ak']);
-					$('.modal-kegiatan_tahunan').find('[name=quantity]').val(data['quantity']);
+					$('.modal-kegiatan_tahunan').find('[name=target]').val(data['target']);
 					$('.modal-kegiatan_tahunan').find('[name=quality]').val(data['quality']);
 					$('.modal-kegiatan_tahunan').find('[name=satuan]').val(data['satuan']);
 					$('.modal-kegiatan_tahunan').find('[name=target_waktu]').val(data['target_waktu']);

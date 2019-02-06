@@ -139,7 +139,7 @@ $('#ind_program_table').DataTable({
 				dataType	: "json",
 				success	: function(data) {
 					$('.modal-ind_program').find('[name=label_ind_program]').val(data['label']);
-					$('.modal-ind_program').find('[name=quantity_ind_program]').val(data['quantity']);
+					$('.modal-ind_program').find('[name=target_ind_program]').val(data['target']);
 					$('.modal-ind_program').find('[name=satuan_ind_program]').val(data['satuan']);
 
 					$('.modal-ind_program').find('[name=ind_program_id]').val(data['id']);

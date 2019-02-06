@@ -28,7 +28,7 @@ class IndikatorSasaranAPIController extends Controller {
                                 ->select([   
                                     'id AS ind_sasaran_id',
                                     'label AS label_ind_sasaran',
-                                    'quantity',
+                                    'target',
                                     'satuan'
                                     ])
                                     ->get();
@@ -38,7 +38,7 @@ class IndikatorSasaranAPIController extends Controller {
             return $x->label_ind_sasaran;
         })
         ->addColumn('target_ind_sasaran', function ($x) {
-             return $x->quantity.' '.$x->satuan;
+             return $x->target.' '.$x->satuan;
         })
         ->addColumn('action', function ($x) {
             return $x->ind_sasaran_id;
@@ -57,7 +57,7 @@ class IndikatorSasaranAPIController extends Controller {
         $x = IndikatorSasaran::
                 SELECT(     'renja_indikator_sasaran.id AS ind_sasaran_id',
                             'renja_indikator_sasaran.label',
-                            'renja_indikator_sasaran.quantity',
+                            'renja_indikator_sasaran.target',
                             'renja_indikator_sasaran.satuan'
 
 
@@ -70,7 +70,7 @@ class IndikatorSasaranAPIController extends Controller {
         $ind_sasaran = array(
             'id'            => $x->ind_sasaran_id,
             'label'         => $x->label,
-            'quantity'      => $x->quantity,
+            'target'      => $x->target,
             'satuan'        => $x->satuan
 
         );
@@ -83,8 +83,8 @@ class IndikatorSasaranAPIController extends Controller {
         $messages = [
                 'sasaran_id.required'           => 'Harus diisi',
                 'label_ind_sasaran.required'    => 'Harus diisi',
-                'quantity_ind_sasaran.required' => 'Harus diisi',
-                'satuan_ind_sasaran.required'   => 'Harus diisi',
+                'target_ind_sasaran.required' => 'Harus diisi',
+                //'satuan_ind_sasaran.required'   => 'Harus diisi',
 
         ];
 
@@ -93,8 +93,8 @@ class IndikatorSasaranAPIController extends Controller {
                         array(
                             'sasaran_id'            => 'required',
                             'label_ind_sasaran'     => 'required',
-                            'quantity_ind_sasaran'  => 'required',
-                            'satuan_ind_sasaran'    => 'required',
+                            'target_ind_sasaran'  => 'required',
+                            //'satuan_ind_sasaran'    => 'required',
                         ),
                         $messages
         );
@@ -110,7 +110,7 @@ class IndikatorSasaranAPIController extends Controller {
 
         $is->sasaran_id     = Input::get('sasaran_id');
         $is->label          = Input::get('label_ind_sasaran');
-        $is->quantity       = Input::get('quantity_ind_sasaran');
+        $is->target       = Input::get('target_ind_sasaran');
         $is->satuan         = Input::get('satuan_ind_sasaran');
 
         if ( $is->save()){
@@ -129,8 +129,8 @@ class IndikatorSasaranAPIController extends Controller {
         $messages = [
             'ind_sasaran_id.required'       => 'Harus diisi',
             'label_ind_sasaran.required'    => 'Harus diisi',
-            'quantity_ind_sasaran.required' => 'Harus diisi',
-            'satuan_ind_sasaran.required'   => 'Harus diisi',
+            'target_ind_sasaran.required' => 'Harus diisi',
+            //'satuan_ind_sasaran.required'   => 'Harus diisi',
                 
 
         ];
@@ -140,8 +140,8 @@ class IndikatorSasaranAPIController extends Controller {
                         array(
                             'ind_sasaran_id'        => 'required',
                             'label_ind_sasaran'     => 'required',
-                            'quantity_ind_sasaran'  => 'required',
-                            'satuan_ind_sasaran'    => 'required',
+                            'target_ind_sasaran'  => 'required',
+                            //'satuan_ind_sasaran'    => 'required',
                             
                         ),
                         $messages
@@ -161,7 +161,7 @@ class IndikatorSasaranAPIController extends Controller {
 
 
         $is->label             = Input::get('label_ind_sasaran');
-        $is->quantity          = Input::get('quantity_ind_sasaran');
+        $is->target          = Input::get('target_ind_sasaran');
         $is->satuan            = Input::get('satuan_ind_sasaran');
 
         if ( $is->save()){

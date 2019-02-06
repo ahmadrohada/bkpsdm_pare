@@ -31,7 +31,7 @@ class IndikatorTujuanAPIController extends Controller {
             ->select([   
                 'id AS ind_tujuan_id',
                 'label AS label_ind_tujuan',
-                'quantity',
+                'target',
                 'satuan'
                 ])
                 ->get();
@@ -41,7 +41,7 @@ class IndikatorTujuanAPIController extends Controller {
             return $x->label_ind_tujuan;
         })
         ->addColumn('target_ind_tujuan', function ($x) {
-            return $x->quantity.' '.$x->satuan;
+            return $x->target.' '.$x->satuan;
         })
         ->addColumn('action', function ($x) {
             return $x->ind_tujuan_id;
@@ -60,7 +60,7 @@ class IndikatorTujuanAPIController extends Controller {
         $x = IndikatorTujuan::
                 SELECT(     'renja_indikator_tujuan.id AS ind_tujuan_id',
                             'renja_indikator_tujuan.label',
-                            'renja_indikator_tujuan.quantity',
+                            'renja_indikator_tujuan.target',
                             'renja_indikator_tujuan.satuan'
 
 
@@ -73,7 +73,7 @@ class IndikatorTujuanAPIController extends Controller {
         $ind_tujuan = array(
             'id'            => $x->ind_tujuan_id,
             'label'         => $x->label,
-            'quantity'      => $x->quantity,
+            'target'      => $x->target,
             'satuan'        => $x->satuan
 
         );
@@ -86,8 +86,8 @@ class IndikatorTujuanAPIController extends Controller {
         $messages = [
                 'tujuan_id.required'            => 'Harus diisi',
                 'label_ind_tujuan.required'     => 'Harus diisi',
-                'quantity_ind_tujuan.required'  => 'Harus diisi',
-                'satuan_ind_tujuan.required'    => 'Harus diisi',
+                'target_ind_tujuan.required'  => 'Harus diisi',
+                //'satuan_ind_tujuan.required'    => 'Harus diisi',
 
         ];
 
@@ -96,8 +96,8 @@ class IndikatorTujuanAPIController extends Controller {
                         array(
                             'tujuan_id'             => 'required',
                             'label_ind_tujuan'      => 'required',
-                            'quantity_ind_tujuan'   => 'required',
-                            'satuan_ind_tujuan'     => 'required',
+                            'target_ind_tujuan'   => 'required',
+                            //'satuan_ind_tujuan'     => 'required',
                         ),
                         $messages
         );
@@ -113,7 +113,7 @@ class IndikatorTujuanAPIController extends Controller {
 
         $ind_tj->tujuan_id      = Input::get('tujuan_id');
         $ind_tj->label          = Input::get('label_ind_tujuan');
-        $ind_tj->quantity       = Input::get('quantity_ind_tujuan');
+        $ind_tj->target       = Input::get('target_ind_tujuan');
         $ind_tj->satuan         = Input::get('satuan_ind_tujuan');
 
         if ( $ind_tj->save()){
@@ -132,8 +132,8 @@ class IndikatorTujuanAPIController extends Controller {
         $messages = [
                 'ind_tujuan_id.required'             => 'Harus diisi',
                 'label_ind_tujuan.required'          => 'Harus diisi',
-                'quantity_ind_tujuan.required'       => 'Harus diisi',
-                'satuan_ind_tujuan.required'         => 'Harus diisi'
+                'target_ind_tujuan.required'       => 'Harus diisi',
+                //'satuan_ind_tujuan.required'         => 'Harus diisi'
                 
 
         ];
@@ -143,8 +143,8 @@ class IndikatorTujuanAPIController extends Controller {
                         array(
                             'ind_tujuan_id'          => 'required',
                             'label_ind_tujuan'       => 'required',
-                            'quantity_ind_tujuan'    => 'required',
-                            'satuan_ind_tujuan'      => 'required',
+                           'target_ind_tujuan'    => 'required',
+                            //'satuan_ind_tujuan'      => 'required',
                             
                         ),
                         $messages
@@ -164,7 +164,7 @@ class IndikatorTujuanAPIController extends Controller {
 
 
         $it->label             = Input::get('label_ind_tujuan');
-        $it->quantity          = Input::get('quantity_ind_tujuan');
+        $it->target          = Input::get('target_ind_tujuan');
         $it->satuan            = Input::get('satuan_ind_tujuan');
 
         if ( $it->save()){

@@ -23,9 +23,9 @@
 					</div>
 					<div class="row">
 						
-						<div class="col-md-4 form-group quantity_ind_program">
-						<label class="control-label">Output :</label>
-						<input type="text" name="quantity_ind_program" id="quantity_ind_program" required class="form-control input-sm" placeholder="qty" onkeypress="return angka('event')">        
+						<div class="col-md-4 form-group target_ind_program">
+						<label class="control-label">Target :</label>
+						<input type="text" name="target_ind_program" id="target_ind_program" required class="form-control input-sm" placeholder="target">        
 						</div>
 
 						<div class="col-md-8 form-group satuan_ind_program">
@@ -56,16 +56,16 @@
 	});
 
 	$('.modal-ind_program').on('hidden.bs.modal', function(){
-		$('.label_ind_program,.quantity_ind_program,.satuan_ind_program').removeClass('has-error');
-		$('.modal-ind_program').find('[name=label_ind_program],[name=quantity_ind_program],[name=satuan_ind_program]').val('');
+		$('.label_ind_program,.target_ind_program,.satuan_ind_program').removeClass('has-error');
+		$('.modal-ind_program').find('[name=label_ind_program],[name=target_ind_program],[name=satuan_ind_program]').val('');
 	});
 
 	$('.label_ind_program').on('click', function(){
 		$('.label_ind_program').removeClass('has-error');
 	});
 
-	$('.quantity_ind_program').on('click', function(){
-		$('.quantity_ind_program').removeClass('has-error');
+	$('.target_ind_program').on('click', function(){
+		$('.target_ind_program').removeClass('has-error');
 	});
 
 	$('.satuan_ind_program').on('click', function(){
@@ -120,7 +120,7 @@
 					//alert (index+":"+value);
 					//error message
 					((index == 'label_ind_program')?$('.label_ind_program').addClass('has-error'):'');
-					((index == 'quantity_ind_program')?$('.quantity_ind_program').addClass('has-error'):'');
+					((index == 'target_ind_program')?$('.target_ind_program').addClass('has-error'):'');
 					((index == 'satuan_ind_program')?$('.satuan_ind_program').addClass('has-error'):'');
 				});
 
@@ -183,7 +183,7 @@
 					
 					//error message
 					((index == 'label_ind_program')?$('.label_ind_program').addClass('has-error'):'');
-					((index == 'quantity_ind_program')?$('.quantity_ind_program').addClass('has-error'):'');
+					((index == 'target_ind_program')?$('.target_ind_program').addClass('has-error'):'');
 					((index == 'satuan_ind_program')?$('.satuan_ind_program').addClass('has-error'):'');
 				
 				});

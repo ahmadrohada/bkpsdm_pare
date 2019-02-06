@@ -64,7 +64,7 @@ function load_kegiatan(ind_program_id){
 			dataType	: "json",
 			success	: function(data) {
 					$('.txt_ind_program_label').html(data['label']);
-					$('.txt_ind_program_target').html(data['quantity']+' '+data['satuan']);
+					$('.txt_ind_program_target').html(data['target']+' '+data['satuan']);
 					$('.ind_program_id').val(data['id']);
 					
 			},
@@ -137,7 +137,7 @@ function load_kegiatan(ind_program_id){
 				success	: function(data) {
 					$('.modal-kegiatan').find('[name=label_kegiatan]').val(data['label']);
 					$('.modal-kegiatan').find('[name=label_ind_kegiatan]').val(data['indikator']);
-					$('.modal-kegiatan').find('[name=quantity_kegiatan]').val(data['quantity']);
+					$('.modal-kegiatan').find('[name=target_kegiatan]').val(data['target']);
 					$('.modal-kegiatan').find('[name=satuan_kegiatan]').val(data['satuan']);
 					$('.modal-kegiatan').find('[name=cost_kegiatan]').val(data['cost']);
 					

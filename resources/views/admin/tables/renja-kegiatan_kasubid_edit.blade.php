@@ -139,7 +139,7 @@ function load_kegiatan_kasubid(jabatan_id){
 				success	: function(data) {
 					$('.modal-kegiatan_kasubid').find('[name=label_kegiatan]').val(data['label']);
 					$('.modal-kegiatan_kasubid').find('[name=label_ind_kegiatan]').val(data['indikator']);
-					$('.modal-kegiatan_kasubid').find('[name=quantity_kegiatan]').val(data['quantity']);
+					$('.modal-kegiatan_kasubid').find('[name=target_kegiatan]').val(data['target']);
 					$('.modal-kegiatan_kasubid').find('[name=satuan_kegiatan]').val(data['satuan']);
 					$('.modal-kegiatan_kasubid').find('[name=cost_kegiatan]').val(data['cost']);
 					

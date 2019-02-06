@@ -40,7 +40,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                 ->select([   
                     'id AS kegiatan_tugas_jabatan_id',
                     'label',
-                    'quantity',
+                    'target',
                     'satuan',
                     'angka_kredit',
                     'quality',
@@ -58,7 +58,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
         })->addColumn('ak', function ($x) {
             return $x->angka_kredit;
         })->addColumn('output', function ($x) {
-            return $x->quantity.' '.$x->satuan;
+            return $x->target.' '.$x->satuan;
         })->addColumn('mutu', function ($x) {
             return $x->quality .' %';
         })->addColumn('waktu', function ($x) {
@@ -95,7 +95,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                                         'renja_kegiatan.label AS kegiatan_label',
                                         'kegiatan_tahunan.label AS kegiatan_tahunan_label',
                                         'kegiatan_tahunan.id AS kegiatan_tahunan_id',
-                                        'kegiatan_tahunan.quantity',
+                                        'kegiatan_tahunan.target',
                                         'kegiatan_tahunan.satuan',
                                         'kegiatan_tahunan.angka_kredit',
                                         'kegiatan_tahunan.quality',
@@ -112,7 +112,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
         })->addColumn('ak', function ($x) {
             return $x->ak;
         })->addColumn('output', function ($x) {
-            return $x->quantity.' '.$x->satuan;
+            return $x->target.' '.$x->satuan;
         })->addColumn('mutu', function ($x) {
             return $x->quality;
         })->addColumn('waktu', function ($x) {
@@ -146,7 +146,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                                         'renja_kegiatan.label AS kegiatan_label',
                                         'kegiatan_tahunan.label AS kegiatan_tahunan_label',
                                         'kegiatan_tahunan.id AS kegiatan_tahunan_id',
-                                        'kegiatan_tahunan.quantity',
+                                        'kegiatan_tahunan.target',
                                         'kegiatan_tahunan.satuan',
                                         'kegiatan_tahunan.angka_kredit',
                                         'kegiatan_tahunan.quality',
@@ -163,7 +163,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
         })->addColumn('ak', function ($x) {
             return $x->ak;
         })->addColumn('output', function ($x) {
-            return $x->quantity.' '.$x->satuan;
+            return $x->target.' '.$x->satuan;
         })->addColumn('mutu', function ($x) {
             return $x->quality;
         })->addColumn('waktu', function ($x) {
@@ -188,7 +188,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
         $x = KegiatanSKPtahunan::
                             SELECT(     'skp_tahunan_kegiatan.id AS kegiatan_tahunan_id',
                                         'skp_tahunan_kegiatan.label',
-                                        'skp_tahunan_kegiatan.quantity',
+                                        'skp_tahunan_kegiatan.target',
                                         'skp_tahunan_kegiatan.satuan',
                                         'skp_tahunan_kegiatan.angka_kredit',
                                         'skp_tahunan_kegiatan.quality',
@@ -206,9 +206,9 @@ class KegiatanSKPTahunanAPIController extends Controller {
             'id'            => $x->kegiatan_tahunan_id,
             'label'         => $x->label,
             'ak'            => $x->angka_kredit,
-            'output'        => $x->quantity.' '.$x->satuan,
+            'output'        => $x->target.' '.$x->satuan,
             'satuan'        => $x->satuan,
-            'quantity'      => $x->quantity,
+            'target'      => $x->target,
             'quality'       => $x->quality,
             'target_waktu'  => $x->target_waktu,
             'cost'	        => number_format($x->cost,'0',',','.'),
@@ -227,7 +227,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
         $messages = [
                 'kegiatan_id.required'           => 'Harus diisi',
                 'label.required'                 => 'Harus diisi',
-                'quantity.required'              => 'Harus diisi',
+                'target.required'              => 'Harus diisi',
                 'satuan.required'                => 'Harus diisi',
                 'quality.required'               => 'Harus diisi',
                 'target_waktu.required'          => 'Harus diisi',
@@ -239,7 +239,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                         array(
                             'kegiatan_id'   => 'required',
                             'label'         => 'required',
-                            'quantity'      => 'required|numeric',
+                            'target'      => 'required|numeric',
                             'satuan'        => 'required',
                             'quality'       => 'required|numeric|min:1|max:100',
                             'target_waktu'  => 'required|numeric|min:1|max:12',
@@ -258,7 +258,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
         $st_kt->kegiatan_id       = Input::get('kegiatan_id');
         $st_kt->label             = Input::get('label');
-        $st_kt->quantity          = Input::get('quantity');
+        $st_kt->target          = Input::get('target');
         $st_kt->satuan            = Input::get('satuan');
         $st_kt->angka_kredit      = Input::get('angka_kredit');
         $st_kt->quality           = Input::get('quality');
@@ -282,7 +282,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
         $messages = [
                 'kegiatan_tahunan_id.required'   => 'Harus diisi',
                 'label.required'                 => 'Harus diisi',
-                'quantity.required'              => 'Harus diisi',
+                'target.required'              => 'Harus diisi',
                 'satuan.required'                => 'Harus diisi',
                 'quality.required'               => 'Harus diisi',
                 'target_waktu.required'          => 'Harus diisi',
@@ -294,7 +294,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                         array(
                             'kegiatan_id'   => 'required',
                             'label'         => 'required',
-                            'quantity'      => 'required|numeric',
+                            'target'      => 'required|numeric',
                             'satuan'        => 'required',
                             'quality'       => 'required|numeric|min:1|max:100',
                             'target_waktu'  => 'required|numeric|min:1|max:12',
@@ -316,7 +316,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
 
         $st_kt->label             = Input::get('label');
-        $st_kt->quantity          = preg_replace('/[^0-9]/', '', Input::get('quantity'));
+        $st_kt->target          = preg_replace('/[^0-9]/', '', Input::get('target'));
         $st_kt->satuan            = Input::get('satuan');
         $st_kt->angka_kredit      = Input::get('angka_kredit');
         $st_kt->quality           = preg_replace('/[^0-9]/', '', Input::get('quality'));

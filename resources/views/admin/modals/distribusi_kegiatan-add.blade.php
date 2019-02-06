@@ -40,7 +40,6 @@
 
 
 <script type="text/javascript">
-$(document).ready(function() {
 
 		$('.distribusi_kegiatan_add').on('hidden.bs.modal', function() {
 			$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
@@ -143,5 +142,4 @@ $(document).ready(function() {
 
 		})
 
-});
 </script>

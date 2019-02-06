@@ -219,7 +219,7 @@ class KegiatanAPIController extends Controller {
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
                                         'renja_kegiatan.label AS label',
                                         'renja_kegiatan.indikator AS indikator',
-                                        'renja_kegiatan.quantity AS quantity',
+                                        'renja_kegiatan.target AS target',
                                         'renja_kegiatan.satuan AS satuan',
                                         'renja_kegiatan.cost AS cost'
 
@@ -232,7 +232,7 @@ class KegiatanAPIController extends Controller {
                 'kegiatan_id'   => $x->kegiatan_id,
                 'label'         => $x->label,
                 'indikator'     => $x->indikator,
-                'quantity'      => $x->quantity,
+                'target'      => $x->target,
                 'satuan'        => $x->satuan,
                 'cost'	        => number_format($x->cost,'0',',','.')
                     
@@ -254,7 +254,7 @@ class KegiatanAPIController extends Controller {
                     'id AS kegiatan_id',
                     'label',
                     'indikator',
-                    'quantity',
+                    'target',
                     'satuan',
                     'cost'
                     
@@ -271,7 +271,7 @@ class KegiatanAPIController extends Controller {
             return $x->label;
         })
         ->addColumn('kegiatan_target', function ($x) {
-            return $x->quantity.' '.$x->satuan;
+            return $x->target.' '.$x->satuan;
         })
         ->addColumn('kegiatan_anggaran', function ($x) {
             return "Rp.  " .number_format($x->cost,'0',',','.') ;
@@ -295,7 +295,7 @@ class KegiatanAPIController extends Controller {
                             'id AS kegiatan_id',
                             'label AS label_kegiatan',
                             'indikator',
-                            'quantity',
+                            'target',
                             'satuan',
                             'cost'
                             ])
@@ -309,7 +309,7 @@ class KegiatanAPIController extends Controller {
             return $x->indikator;
         })
         ->addColumn('target_kegiatan', function ($x) {
-            return $x->quantity.' '.$x->satuan ;
+            return $x->target.' '.$x->satuan ;
         })
         ->addColumn('cost_kegiatan', function ($x) {
             return "Rp.  " .number_format($x->cost,'0',',','.') ;
@@ -331,11 +331,12 @@ class KegiatanAPIController extends Controller {
 
         $dt = Kegiatan::WHERE('renja_id', '=' ,$request->get('renja_id'))
                         //->WHERE('renja_id',$request->get('renja_id'))
+                        ->WHERE('jabatan_id','>',0)
                         ->select([   
                             'id AS kegiatan_id',
                             'label AS label_kegiatan',
                             'indikator',
-                            'quantity',
+                            'target',
                             'satuan',
                             'cost'
                             ])
@@ -349,7 +350,7 @@ class KegiatanAPIController extends Controller {
             return $x->indikator;
         })
         ->addColumn('target_kegiatan', function ($x) {
-            return $x->quantity.' '.$x->satuan ;
+            return $x->target.' '.$x->satuan ;
         })
         ->addColumn('cost_kegiatan', function ($x) {
             return "Rp.  " .number_format($x->cost,'0',',','.') ;
@@ -379,7 +380,7 @@ class KegiatanAPIController extends Controller {
                             'id AS kegiatan_id',
                             'label AS label_kegiatan',
                             'indikator',
-                            'quantity',
+                            'target',
                             'satuan',
                             'cost'
                             ])
@@ -393,7 +394,7 @@ class KegiatanAPIController extends Controller {
             return $x->indikator;
         })
         ->addColumn('target_kegiatan', function ($x) {
-            return $x->quantity.' '.$x->satuan ;
+            return $x->target.' '.$x->satuan ;
         })
         ->addColumn('cost_kegiatan', function ($x) {
             return "Rp.  " .number_format($x->cost,'0',',','.') ;
@@ -419,7 +420,7 @@ class KegiatanAPIController extends Controller {
                             'id AS kegiatan_id',
                             'label AS label_kegiatan',
                             'indikator',
-                            'quantity',
+                            'target',
                             'satuan',
                             'cost'
                             ])
@@ -433,7 +434,7 @@ class KegiatanAPIController extends Controller {
             return $x->indikator;
         })
         ->addColumn('target_kegiatan', function ($x) {
-            return $x->quantity.' '.$x->satuan ;
+            return $x->target.' '.$x->satuan ;
         })
         ->addColumn('cost_kegiatan', function ($x) {
             return "Rp.  " .number_format($x->cost,'0',',','.') ;
@@ -543,8 +544,8 @@ class KegiatanAPIController extends Controller {
                 'renja_id.required'           => 'Harus diisi',
                 'label_kegiatan.required'     => 'Harus diisi',
                 'label_ind_kegiatan.required' => 'Harus diisi',
-                'quantity_kegiatan.required'  => 'Harus diisi',
-                'satuan_kegiatan.required'    => 'Harus diisi',
+                'target_kegiatan.required'  => 'Harus diisi',
+                //'satuan_kegiatan.required'    => 'Harus diisi',
 
         ];
 
@@ -555,8 +556,8 @@ class KegiatanAPIController extends Controller {
                             'renja_id'              => 'required',
                             'label_kegiatan'        => 'required',
                             'label_ind_kegiatan'    => 'required',
-                            'quantity_kegiatan'     => 'required',
-                            'satuan_kegiatan'       => 'required',
+                            'target_kegiatan'     => 'required',
+                            //'satuan_kegiatan'       => 'required',
 
                         ),
                         $messages
@@ -575,7 +576,7 @@ class KegiatanAPIController extends Controller {
         $sr->renja_id                   = Input::get('renja_id');
         $sr->label                      = Input::get('label_kegiatan');
         $sr->indikator                  = Input::get('label_ind_kegiatan');
-        $sr->quantity                   = Input::get('quantity_kegiatan');
+        $sr->target                   = Input::get('target_kegiatan');
         $sr->satuan                     = Input::get('satuan_kegiatan');
         $sr->cost                       = preg_replace('/[^0-9]/', '', Input::get('cost_kegiatan'));
 
@@ -595,8 +596,8 @@ class KegiatanAPIController extends Controller {
                 'kegiatan_id.required'          => 'Harus diisi',
                 'label_kegiatan.required'       => 'Harus diisi',
                 'label_ind_kegiatan.required'   => 'Harus diisi',
-                'quantity_kegiatan.required'    => 'Harus diisi',
-                'satuan_kegiatan.required'      => 'Harus diisi',
+                'target_kegiatan.required'    => 'Harus diisi',
+                //'satuan_kegiatan.required'      => 'Harus diisi',
                 
 
         ];
@@ -607,8 +608,8 @@ class KegiatanAPIController extends Controller {
                             'kegiatan_id'           => 'required',
                             'label_kegiatan'        => 'required',
                             'label_ind_kegiatan'    => 'required',
-                            'quantity_kegiatan'     => 'required',
-                            'satuan_kegiatan'       => 'required',
+                            'target_kegiatan'     => 'required',
+                            //'satuan_kegiatan'       => 'required',
                             
                         ),
                         $messages
@@ -629,7 +630,7 @@ class KegiatanAPIController extends Controller {
 
         $sr->label                      = Input::get('label_kegiatan');
         $sr->indikator                  = Input::get('label_ind_kegiatan');
-        $sr->quantity                   = Input::get('quantity_kegiatan');
+        $sr->target                   = Input::get('target_kegiatan');
         $sr->satuan                     = Input::get('satuan_kegiatan');
         $sr->cost                       = preg_replace('/[^0-9]/', '', Input::get('cost_kegiatan'));
 
