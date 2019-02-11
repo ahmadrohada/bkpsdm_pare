@@ -23,94 +23,177 @@ Use Alert;
 class ProgramAPIController extends Controller {
 
 
-    public function SKPD_program_perjanjian_kinerja_list(Request $request)
+   
+    public function ProgramList(Request $request)
     {
             
-       
-        \DB::statement(\DB::raw('set @rownum='.$request->get('start')));
-        //\DB::statement(\DB::raw('set @rownum=0'));
-        
-        $dt = Program::where('indikator_sasaran_id', '=' ,$request->get('indikator_sasaran_id'))
-            ->select([   
-                    
-                \DB::raw('@rownum  := @rownum  + 1 AS rownum'), 
-                'id AS program_id',
-                'indikator_sasaran_id',
-                'label',
-                
-                ])
-                ->get();
-        
-
-
+        $dt = Program::where('indikator_sasaran_id', '=' ,$request->get('ind_sasaran_id'))
+                                ->select([   
+                                    'id AS program_id',
+                                    'label AS label_program',
+                                    ])
+                                    ->get();
 
         $datatables = Datatables::of($dt)
-        ->addColumn('jm_child', function ($x) {
-            $jm_indikator_program = IndikatorProgram::where('program_id',$x->program_id)->count();
-			return 	 $jm_indikator_program;
-		})->addColumn('label', function ($x) {
-            return $x->label;
-        });
+                    ->addColumn('label_program', function ($x) {
+                        return $x->label_program;
+                    })
+                    ->addColumn('action', function ($x) {
+                        return $x->program_id;
+                    });
 
-        if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-        } 
-
+                    if ($keyword = $request->get('search')['value']) {
+                        $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+                    } 
         return $datatables->make(true);
     }
 
+    public function ProgramDetail(Request $request)
+    {
+       
+        
+        $x = Program::
+                SELECT(     'renja_program.id AS program_id',
+                            'renja_program.label'
 
+                                    ) 
+                            ->WHERE('renja_program.id', $request->program_id)
+                            ->first();
 
+		
+		//return  $kegiatan_tahunan;
+        $program = array(
+            'id'            => $x->program_id,
+            'label'         => $x->label
 
-
+        );
+        return $program;
+    }
 
     public function Store(Request $request)
     {
 
-        $pk = new Program;
-        $pk->label                  = Input::get('text');
-        $pk->indikator_sasaran_id   = Input::get('parent_id');
+        $messages = [
+                'ind_sasaran_id.required'     => 'Harus diisi',
+                'label_program.required'             => 'Harus diisi',
 
-    
-        if ( $pk->save()){
-            $tes = array('id' => 'program|'.$pk->id);
-            return \Response::make($tes, 200);
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'ind_sasaran_id' => 'required',
+                            'label_program' => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+
+        $sr    = new Program;
+
+        $sr->indikator_sasaran_id        = Input::get('ind_sasaran_id');
+        $sr->label                      = Input::get('label_program');
+
+        if ( $sr->save()){
+            return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);
-        }
-       
-       
+        } 
+            
+            
+    
     }
 
-    public function Rename(Request $request )
+    public function Update(Request $request)
     {
-        
-         /*   $input = $request->all();
-        $validator = Validator::make($input, [
-            'text'          => 'required',
-            'id'            => 'required'
-        ]);
 
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
-        }
-        */
-        $program = Program::find($request->id);
-        if (is_null($program)) {
-            return $this->sendError('Program  tidak ditemukan');
+        $messages = [
+                'program_id.required'   => 'Harus diisi',
+                'label_program.required'       => 'Harus diisi',
+                
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'program_id'   => 'required',
+                            'label_program'     => 'required',
+                            
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
         }
 
-        $program->label = $request->text;
         
-        
-        if ( $program->save()){
-            return \Response::make('Sukses', 200);
+        $sr    = Program::find(Input::get('program_id'));
+        if (is_null($sr)) {
+            return $this->sendError('Program idak ditemukan.');
+        }
+
+
+        $sr->label             = Input::get('label_program');
+
+        if ( $sr->save()){
+            return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);
+        } 
+            
+            
+
+    
+    }
+
+
+
+    public function Hapus(Request $request)
+    {
+
+        $messages = [
+                'program_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'program_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
         }
 
         
-      
+        $sr    = Program::find(Input::get('program_id'));
+        if (is_null($sr)) {
+            return $this->sendError('Program tidak ditemukan.');
+        }
+
+
+        if ( $sr->delete()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
     }
    
 

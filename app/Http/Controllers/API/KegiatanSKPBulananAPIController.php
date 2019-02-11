@@ -35,7 +35,7 @@ class KegiatanSKPBulananAPIController extends Controller {
                 ->select([   
                     'id AS kegiatan_tugas_jabatan_id',
                     'label',
-                    'quantity',
+                    'target',
                     'satuan',
                     'angka_kredit',
                     'quality',
@@ -53,7 +53,7 @@ class KegiatanSKPBulananAPIController extends Controller {
         })->addColumn('ak', function ($x) {
             return $x->angka_kredit;
         })->addColumn('output', function ($x) {
-            return $x->quantity.' '.$x->satuan;
+            return $x->target.' '.$x->satuan;
         })->addColumn('mutu', function ($x) {
             return $x->quality .' %';
         })->addColumn('waktu', function ($x) {

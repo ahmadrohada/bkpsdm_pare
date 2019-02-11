@@ -84,20 +84,16 @@ class StrukturOrganisasiAPIController extends Controller {
 		
 		
 		foreach ($renja as $x) {
-			
-            
             if ( $no == 0 ){
 				$parent = null;
 			}else{
 				$parent = $x->parent_id;
 			}
-		   
 			if ( $x->foto != null  ){
 				$sub_data['image']   = 'data:image/jpeg;base64,'.base64_encode( $x->foto );
 			}else{
 				$sub_data['image']   = asset('assets/images/form/sample.jpg');
 			}
-				
 			$sub_data['id']					= $x->id;
 			$sub_data['parent']				= $parent;
 			$sub_data['title']				= Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
@@ -108,9 +104,6 @@ class StrukturOrganisasiAPIController extends Controller {
 			$sub_data['jenis_jabatan']		= $x->jenis_jabatan . $x->id;
 			$sub_data['itemTitleColor']		= "#4b0082";
 			$sub_data['groupTitleColor']	= "primitives.common.Colors.Green";
-			
-			
-			
 			
 			$data[] = $sub_data ;	
 

@@ -16,7 +16,7 @@ class Pustaka {
 
     public static function capital_string($nama_skpd) {
        
-        $kata_sb = array("dan", "pada");
+        $kata_sb = array("dan", "pada" , "yang");
 		$singkatan = array("asn", "SKPD" , "ASN");
 
         $pecah = explode(" ", $nama_skpd);

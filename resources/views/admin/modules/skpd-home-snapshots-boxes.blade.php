@@ -72,7 +72,7 @@
 			</div>
 
 
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-3 col-xs-6" hidden>
 				<div class="small-box bg-aqua perjanjian_kinerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -105,7 +105,7 @@
 			</div>
 
 
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-3 col-xs-6" hidden>
 				<div class="small-box bg-green skp_bulanan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>

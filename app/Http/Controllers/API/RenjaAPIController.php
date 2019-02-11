@@ -12,6 +12,9 @@ use App\Models\Tujuan;
 use App\Models\IndikatorTujuan;
 use App\Models\Sasaran;
 use App\Models\Skpd;
+use App\Models\Renja;
+use App\Models\Periode;
+use App\Models\Pegawai;
 
 
 use App\Models\SasaranPerjanjianKinerja;
@@ -34,52 +37,223 @@ Use Alert;
 class RenjaAPIController extends Controller {
 
 
-    public function skpd_renja_list(Request $request)
+    
+    public function ConfirmRenja( Request $request )
+    {
+
+        $renja_count    = Renja::WHERE('skpd_id', $request->get('skpd_id'))
+                                ->WHERE('periode_id',$request->get('periode_id'))
+                                ->count();
+
+        if ($renja_count == 0 ){
+
+            //PEIRODE
+            $periode = Periode::WHERE('id',$request->get('periode_id'))->first();
+
+            //KABAN
+            $kaban = SKPD::WHERE('parent_id', '=',$request->skpd_id )->first();
+            $pegawai =  $kaban->pejabat->pegawai;
+
+            //ADMIN
+            $admin = Pegawai::WHERE('id',$request->admin_id)->first();
+
+            $data = array(
+                'status'			    => 'pass',
+                
+                'periode_label'	        => $periode->label,
+                'skpd_id'	            => $request->get('skpd_id'),
+
+                'kaban_jabatan_id'	    => $pegawai->JabatanAktif->id,
+                'kaban_nip'	            => $pegawai->nip,
+                'kaban_nama'	        => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+                'kaban_pangkat'	        => $pegawai->JabatanAktif->golongan->golongan,
+                'kaban_golongan'	    => $pegawai->JabatanAktif->golongan->pangkat,
+                'kaban_eselon'	        => $pegawai->JabatanAktif->eselon->eselon,
+                'kaban_jabatan'	        => Pustaka::capital_string($pegawai->JabatanAktif->Jabatan->skpd),
+
+                'admin_nama'            => Pustaka::nama_pegawai($admin->gelardpn , $admin->nama , $admin->gelarblk),
+                'admin_jabatan_id'	    => $admin->JabatanAktif->id,
+                
+            );
+
+            return $data;
+        }else{
+            return \Response::make('error', 500);
+        }
+
+    }
+
+
+
+    public function RenjaTimelineStatus( Request $request )
+    {
+        $response = array();
+        $body = array();
+        $body_2 = array();
+
+
+        $renja = Renja::where('id','=', $request->renja_id )
+                                ->select('*')
+                                ->firstOrFail();
+
+        
+        //CREATED AT - Dibuat
+        $x['tag']	    = 'p';
+        $x['content']	= 'Dibuat';
+        array_push($body, $x);
+        $x['tag']	    = 'p';
+        $x['content']	= $renja->nama_admin_skpd;
+        array_push($body, $x);
+
+        //CREATED AT - Dibuat
+        $x['tag']	    = 'p';
+        $x['content']	= 'Kepala SKPD';
+        array_push($body, $x);
+        $x['tag']	    = 'p';
+        $x['content']	= $renja->nama_kepala_skpd;
+        array_push($body, $x);
+
+        $h['time']	    = $renja->created_at->format('Y-m-d H:i:s');
+        $h['body']	    = $body;
+        array_push($response, $h);
+        //=====================================================================//
+
+        //UPDATED AT - Dikirim
+        $y['tag']	    = 'p';
+        $y['content']	= 'Dikirim';
+        array_push($body_2, $y);
+        $y['tag']	    = 'p';
+        $y['content']	= $renja->nama_admin_skpd;
+        array_push($body_2, $y);
+
+        $i['time']	    = $renja->updated_at->format('Y-m-d H:i:s');
+        $i['body']	    = $body_2;
+
+        if ( $renja->send_to_kaban == 1 )
+        {
+            array_push($response, $i);
+        }
+        
+        
+
+
+        return $response;
+
+
+    }
+
+
+    public function RenjaStatusPengisian( Request $request )
     {
        
+        $button_kirim = 0 ;
+
+
+        $renja = Renja::
+                            leftjoin('demo_asn.tb_history_jabatan AS kaban', function($join){
+                                $join   ->on('kaban.id','=','renja.kepala_skpd_id');
+                            })
+                            ->SELECT('kaban.id AS kaban_id',
+                                    'renja.created_at AS created',
+                                    'renja.id AS renja_id')
+                            ->where('renja.id','=', $request->renja_id )->first();
+
+      
+        //STATUS KEPALA SKPD
+        if ( $renja->kaban_id != null ){
+            $data_kepala_skpd = 'ok';
+        }else{
+            $data_kepala_skpd = '-';
+        }
+
+        //created
+        if ( $renja->renja_id != null ){
+            $created = 'ok';
+        }else{
+            $created = '-';
+        }
+
+        //button kirim
+        if ( ( $created == 'ok') && ( $data_kepala_skpd == 'ok') ){
+            $button_kirim = 1 ;
+        }else{
+            $button_kirim = 0 ;
+        }
         
-        $dt = \DB::table('db_pare_2018.renja AS renja')
-                //PERIODE
-                ->join('db_pare_2018.periode AS periode', function($join){
-                    $join   ->on('periode.id','=','renja.periode_id');
-                    
-                })
+         //STATUS APPROVE
+         if ( ($renja->status_approve) == 1 ){
+            $data_persetujuan_kaban = 'ok';
+        }else{
+            $data_persetujuan_kaban = '-';
+        }
 
-                //ID KEPALA SKPD
-                ->leftjoin('demo_asn.tb_history_jabatan AS id_ka_skpd', function($join){
-                    $join   ->on('id_ka_skpd.id','=','renja.kepala_skpd_id');
-                })
-                //NAMA KEPALA SKPD
-                ->leftjoin('demo_asn.tb_pegawai AS kepala_skpd', function($join){
-                    $join   ->on('kepala_skpd.id','=','id_ka_skpd.id_pegawai');
-                })
+
+        $response = array(
+                'created'                 => $created,
+                'data_kepala_skpd'        => $data_kepala_skpd,
+                'data_persetujuan_kaban'  => $data_persetujuan_kaban,
+                'button_kirim'            => $button_kirim
+
+
+        );
+       
+        return $response;
+
+
+    }
+
+
+    public function SKPDRenjaList(Request $request)
+    {
+       
+        $skpd_id = $request->skpd_id;
+        $dt = Periode::
                 
-                ->select([  'renja.id AS renja_id',
-                            'periode.label AS periode',
-                            'kepala_skpd.nama',
-                            'kepala_skpd.gelardpn',
-                            'kepala_skpd.gelarblk',
-                            'renja.status'
-                                
-                        ])
-                ->where('renja.skpd_id','=', $request->skpd_id);
-                
-        
+                        leftjoin('db_pare_2018.renja AS renja', function($join) use($skpd_id) { 
+                            $join   ->on('renja.periode_id','=','periode.id');
+                            $join   ->WHERE('renja.skpd_id','=',$skpd_id);
+                            
+                        })
+                        ->WHERE('periode.awal','>','2018-01-01')
+                        ->SELECT('periode.id AS periode_id',
+                                 'periode.label AS periode_label',
+                                 'periode.status AS periode_status',
+                                 'renja.id AS renja_id',
+                                 'renja.send_to_kaban AS send_to_kaban',
+                                 'renja.kepala_skpd_id AS kaban_id',
+                                 'renja.nama_kepala_skpd AS kaban_nama'
 
 
+                                );
 
+
+    
         $datatables = Datatables::of($dt)
-        ->addColumn('status', function ($x) {
+        ->addColumn('periode_id', function ($x) {
 
-            return $x->status;
+            return $x->periode_id;
 
-        })->addColumn('periode', function ($x) {
+        })->addColumn('periode_label', function ($x) {
             
-            return $x->periode;
+            return $x->periode_label;
         
-        })->addColumn('kepala_skpd', function ($x) {
+        })->addColumn('renja_id', function ($x) {
+
+
+            return $x->renja_id;
+        })->addColumn('skpd_id', function ($x) use($skpd_id) {
+           return $skpd_id;
+        
+        })->addColumn('kepala_skpd', function ($x) use($skpd_id) {
+            if ( $x->renja_id == null ){
+                //Tampilkan nama kaban yang aktif
+                $kaban = SKPD::WHERE('parent_id', $skpd_id)->first();
+                $pegawai =  $kaban->pejabat->pegawai;
+                return Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+            }else{
+                return $x->kaban_nama;
+            }
             
-            return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
         
         })->addColumn('skpd', function ($x) {
             
@@ -97,15 +271,14 @@ class RenjaAPIController extends Controller {
     }
 
 
-    public function skpd_renja_tree(Request $request)
+    public function SKPDRenjaactivity(Request $request)
     {
        
 
-    $mp = MasaPemerintahan::WHERE('status','=','active')->first();
-    
+     
         
 //TUJUAN
-        $tujuan = Tujuan::where('masa_pemerintahan_id','=', $mp->id )->select('id','label')->get();
+        $tujuan = Tujuan::where('renja_id','=', $request->renja_id )->select('id','label')->get();
 		foreach ($tujuan as $x) {
             $sub_data_tujuan['id']	            = "tujuan|".$x->id;
 			$sub_data_tujuan['text']			= Pustaka::capital_string($x->label);
@@ -124,7 +297,6 @@ class RenjaAPIController extends Controller {
             
 //SASARAN 
             $sasaran = Sasaran::where('indikator_tujuan_id','=',$v->id)
-                                ->where('renja_id','=', $request->renja_id )
                                 ->select('id','label')->get();
             foreach ($sasaran as $y) {
                 $sub_data_sasaran['id']		        = "sasaran|".$y->id;
@@ -262,91 +434,107 @@ class RenjaAPIController extends Controller {
     
 
 
-    public function skpd_renja_distribusi_kegiatan_tree(Request $request)
+    
+    public function Store(Request $request)
+	{
+        $messages = [
+                'skpd_id.required'           => 'Harus diisi',
+                'periode_id.required'        => 'Harus diisi',
+                'kaban_nama.required'        => 'Harus diisi',
+                'kaban_jabatan_id.required'  => 'Harus diisi',
+                'admin_nama.required'        => 'Harus diisi',
+                'admin_jabatan_id.required'  => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'skpd_id'            => 'required',
+                            'periode_id'        => 'required',
+                            'kaban_nama'                => 'required',
+                            'kaban_jabatan_id'          => 'required',
+                            'admin_nama'                => 'required',
+                            'admin_jabatan_id'          => 'required',
+                        ),
+                        $messages
+        );
+    
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+                    return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+       /*  if ( (Pustaka::tgl_sql(Input::get('tgl_mulai'))) >= (Pustaka::tgl_sql(Input::get('tgl_selesai'))) ){
+            $pesan =  ['masa_penilaian'  => 'Error'] ;
+            return response()->json(['errors'=> $pesan ],422);
+            
+        }
+ */
+
+        $renja    = new Renja;
+        $renja->skpd_id                  = Input::get('skpd_id');
+        $renja->periode_id              = Input::get('periode_id');
+        $renja->kepala_skpd_id           = Input::get('kaban_jabatan_id');
+        $renja->nama_kepala_skpd                = Input::get('kaban_nama');
+        $renja->admin_skpd_id                      = Input::get('admin_jabatan_id');
+        $renja->nama_admin_skpd               = Input::get('admin_nama');
+        
+
+        if ( $renja->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    }   
+
+    public function SendToKaban(Request $request)
     {
-       
+        $messages = [
+                'renja_id.required'   => 'Harus diisi',
 
-        $ka_skpd = SKPD::where('parent_id','=','42')->select('id','skpd')->get();
-		foreach ($ka_skpd as $x) {
-            $data_ka_skpd['id']	            = "ka_skpd|".$x->id;
-			$data_ka_skpd['text']			= Pustaka::capital_string($x->skpd);
-            $data_ka_skpd['icon']           = "jstree-people";
-            $data_ka_skpd['type']           = "ka_skpd";
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'renja_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $renja    = Renja::find(Input::get('renja_id'));
+        if (is_null($renja)) {
+            return $this->sendError('Renja tidak ditemukan.');
+        }
+
+
+        $renja->send_to_kaban     = '1';
+        $renja->date_of_send      = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+        $renja->status_approve    = '0';
+
+        if ( $renja->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
             
 
-            $kabid = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
-            foreach ($kabid as $y) {
-                $data_kabid['id']	        = "kabid|".$y->id;
-                $data_kabid['text']			= Pustaka::capital_string($y->skpd);
-                $data_kabid['icon']         = "jstree-people";
-                $data_kabid['type']         = "kabid";
 
 
-                $kasubid = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
-                foreach ($kasubid as $z) {
-                    $data_kasubid['id']	            = "kasubid|".$z->id;
-                    $data_kasubid['text']			= Pustaka::capital_string($z->skpd);
-                    $data_kasubid['icon']           = "jstree-people";
-                    $data_kasubid['type']           = "kasubid";
-                    
-
-                    $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label')->get();
-                    foreach ($kegiatan as $a) {
-                        $data_kegiatan['id']	        = "kegiatan|".$a->id;
-                        $data_kegiatan['text']			= Pustaka::capital_string($a->label);
-                        $data_kegiatan['icon']          = "jstree-ind_kegiatan";
-                        $data_kegiatan['type']          = "kegiatan";
-                        
-        
-                        $kegiatan_list[] = $data_kegiatan ;
-                   
-                    }
-
-                    if(!empty($kegiatan_list)) {
-                        $data_kasubid['children']     = $kegiatan_list;
-                    }
-                    $kasubid_list[] = $data_kasubid ;
-                    $kegiatan_list = "";
-                    unset($data_kasubid['children']);
-                
-                }
-
-                if(!empty($kasubid_list)) {
-                    $data_kabid['children']     = $kasubid_list;
-                }
-                $kabid_list[] = $data_kabid ;
-                $kasubid_list = "";
-                unset($data_kabid['children']);
-            
-            }
-               
-               
-
-        }	
-
-            if(!empty($kabid_list)) {
-                $data_ka_skpd['children']     = $kabid_list;
-            }
-            $data[] = $data_ka_skpd ;	
-            $kabid_list = "";
-            unset($data_ka_skpd['children']);
-		
-		return $data;
-        
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

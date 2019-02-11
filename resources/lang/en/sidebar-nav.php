@@ -100,10 +100,15 @@ return [
 	'link_title_skpd'    => 'SKPD',
 	'link_icon_skpd'     => 'fa-university',
 
-	// SKPD
+	// UNIT KERJA
 	
 	'link_title_unit_kerja'    => 'Unit Kerja',
 	'link_icon_unit_kerja'     => 'fa-university',
+
+	// MASA PEMERINTAHAN
+	
+	'link_title_masa_pemerintahan'    => 'Masa Pemerintahan',
+	'link_icon_masa_pemerintahan'     => 'fa-hourglass-start',
 	
 	// SKP LINKS
 	

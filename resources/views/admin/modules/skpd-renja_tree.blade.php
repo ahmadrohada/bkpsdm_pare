@@ -13,7 +13,7 @@ $(document).ready(function() {
 	$(".renja_tree").click(function(){
 		initTree();
     });
-	
+	 
 	
 	function initTree() {
 		$('#lazy')

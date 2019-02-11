@@ -23,7 +23,61 @@ Use Alert;
 class PerjanjianKinerjaAPIController extends Controller {
 
 
-   
+    public function PerjanjianKinerjaTimelineStatus( Request $request )
+    {
+        $response = array();
+        $body = array();
+        $body_2 = array();
+
+
+        $renja = PerjanjianKinerja::where('id','=', $request->perjanjian_kinerja_id )
+                                ->select('*')
+                                ->firstOrFail();
+
+        
+        //CREATED AT - Dibuat
+        $x['tag']	    = 'p';
+        $x['content']	= 'Dibuat';
+        array_push($body, $x);
+        $x['tag']	    = 'p';
+        $x['content']	= $renja->nama_admin_skpd;
+        array_push($body, $x);
+
+        //CREATED AT - Dibuat
+        $x['tag']	    = 'p';
+        $x['content']	= 'Kepala SKPD';
+        array_push($body, $x);
+        $x['tag']	    = 'p';
+        $x['content']	= $renja->nama_kepala_skpd;
+        array_push($body, $x);
+
+        $h['time']	    = $renja->created_at->format('Y-m-d H:i:s');
+        $h['body']	    = $body;
+        array_push($response, $h);
+        //=====================================================================//
+
+        //UPDATED AT - Dikirim
+        $y['tag']	    = 'p';
+        $y['content']	= 'Dikirim';
+        array_push($body_2, $y);
+        $y['tag']	    = 'p';
+        $y['content']	= $renja->nama_admin_skpd;
+        array_push($body_2, $y);
+
+        $i['time']	    = $renja->updated_at->format('Y-m-d H:i:s');
+        $i['body']	    = $body_2;
+
+        if ( $renja->updated_at->format('Y') > 1 )
+        {
+            array_push($response, $i);
+        }
+        
+
+
+        return $response;
+
+
+    }
 
     public function SKPDPerjanjianKinerja_list(Request $request)
     {

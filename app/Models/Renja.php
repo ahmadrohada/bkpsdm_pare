@@ -14,6 +14,11 @@ class Renja extends Model
             return $this->hasOne('App\Models\Periode','id','periode_id');
         } 
 
+        public function SKPD()
+        {
+            return $this->hasOne('App\Models\SKPD','id','skpd_id');
+        } 
+
         public function KepalaSKPD()
         {
             return $this->hasOne('App\Models\HistoryJabatan','id','kepala_skpd_id');

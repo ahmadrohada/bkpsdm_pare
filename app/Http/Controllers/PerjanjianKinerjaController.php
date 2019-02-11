@@ -67,14 +67,13 @@ class PerjanjianKinerjaController extends Controller {
     }
 
 
+   
 
     public function showPerjanjianKinerja(request $x)
 	{
          
         
-        $renja	= Renja::where('id', '=', 2)
-                        ->select('id','periode_id','skpd_id','kepala_skpd_id','admin_skpd_id','status','created_at')
-                        ->first();
+        $pk	= PerjanjianKinerja::where('id', '=', $x->perjanjian_kinerja_id)->first();
        
 
 
@@ -82,11 +81,7 @@ class PerjanjianKinerjaController extends Controller {
 
 
 
-                'nama_skpd'         => $this->nama_skpd($renja->skpd_id),
-                'periode'           => $renja->Periode->label,
-                'kepala_skpd'       => Pustaka::nama_pegawai($renja->KepalaSKPD->Pegawai->gelardpn , $renja->KepalaSKPD->Pegawai->nama , $renja->KepalaSKPD->Pegawai->gelarblk),
-                'admin_skpd'        => Pustaka::nama_pegawai($renja->AdminSKPD->Pegawai->gelardpn , $renja->AdminSKPD->Pegawai->nama , $renja->AdminSKPD->Pegawai->gelarblk),
-                'created_at'        => $renja->created_at,
+                'pk'                =>  $pk,
                 'h_box'             => 'box-info',
 
         		

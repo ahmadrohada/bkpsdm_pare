@@ -33,7 +33,7 @@ class PerjanjianKinerja extends Model
         return $this->belongsTo('App\Models\SasaranPerjanjianKinerja','id');
     }
 
-    public function renja()
+    public function Renja()
     {
        return $this->hasOne('App\Models\Renja', 'id','renja_id');
     }

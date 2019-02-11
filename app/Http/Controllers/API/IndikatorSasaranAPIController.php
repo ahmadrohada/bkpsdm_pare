@@ -21,83 +21,84 @@ Use Alert;
 class IndikatorSasaranAPIController extends Controller {
 
 
-    public function SKPD_indikator_sasaran_perjanjian_kinerja_list(Request $request)
+    public function IndSasaranList(Request $request)
     {
             
-       
-        \DB::statement(\DB::raw('set @rownum='.$request->get('start')));
-        //\DB::statement(\DB::raw('set @rownum=0'));
-        
-        $dt = IndikatorSasaran::where('sasaran_perjanjian_kinerja_id', '=' ,$request->get('sasaran_perjanjian_kinerja_id'))
-            ->select([   
-                    
-                \DB::raw('@rownum  := @rownum  + 1 AS rownum'), 
-                'id AS indikator_sasaran_id',
-                'sasaran_perjanjian_kinerja_id',
-                'label',
-                'target',
-                'satuan'
-                
-                ])
-                ->get();
-        
-
-
+        $dt = IndikatorSasaran::where('sasaran_id', '=' ,$request->get('sasaran_id'))
+                                ->select([   
+                                    'id AS ind_sasaran_id',
+                                    'label AS label_ind_sasaran',
+                                    'target',
+                                    'satuan'
+                                    ])
+                                    ->get();
 
         $datatables = Datatables::of($dt)
-        ->addColumn('jm_child', function ($x) {
-            $jm_program = Program::where('indikator_sasaran_id',$x->indikator_sasaran_id)->count();
-			return 		$jm_program;
-		})->addColumn('label', function ($x) {
-            return $x->label."  ";
-        })->addColumn('target', function ($x) {
-            return $x->target."  ".$x->satuan;
+        ->addColumn('label_ind_sasaran', function ($x) {
+            return $x->label_ind_sasaran;
+        })
+        ->addColumn('target_ind_sasaran', function ($x) {
+             return $x->target.' '.$x->satuan;
+        })
+        ->addColumn('action', function ($x) {
+            return $x->ind_sasaran_id;
         });
 
-        
-        if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            if ($keyword = $request->get('search')['value']) {
+                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
-
         return $datatables->make(true);
     }
 
+    public function IndSasaranDetail(Request $request)
+    {
+       
+        
+        $x = IndikatorSasaran::
+                SELECT(     'renja_indikator_sasaran.id AS ind_sasaran_id',
+                            'renja_indikator_sasaran.label',
+                            'renja_indikator_sasaran.target',
+                            'renja_indikator_sasaran.satuan'
 
-  
-    public function Store()
+
+                                    ) 
+                            ->WHERE('renja_indikator_sasaran.id', $request->ind_sasaran_id)
+                            ->first();
+
+		
+		//return  $kegiatan_tahunan;
+        $ind_sasaran = array(
+            'id'            => $x->ind_sasaran_id,
+            'label'         => $x->label,
+            'target'      => $x->target,
+            'satuan'        => $x->satuan
+
+        );
+        return $ind_sasaran;
+    }
+
+    public function Store(Request $request)
     {
 
-        $pk = new IndikatorSasaran;
-        $pk->label             = Input::get('text');
-        $pk->sasaran_id        = Input::get('parent_id');
+        $messages = [
+                'sasaran_id.required'           => 'Harus diisi',
+                'label_ind_sasaran.required'    => 'Harus diisi',
+                'target_ind_sasaran.required' => 'Harus diisi',
+                //'satuan_ind_sasaran.required'   => 'Harus diisi',
 
-    
-        if ( $pk->save()){
-            $tes = array('id' => 'ind_sasaran|'.$pk->id);
-            return \Response::make($tes, 200);
-        }else{
-            return \Response::make('error', 500);
-        }
-
-       
-       /*  $messages = [
-                //'label.required' => ':attribute Indikator Sasaran Harus diisi. ',
-                'label.required' => 'Label Indikator Sasaran Harus diisi. ',
-                'target.required' => 'Target tidak boleh kosong. ',
-                'satuan.required' => 'Satuan tidak boleh kosong. ',
         ];
 
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'sasaran_perjanjian_kinerja_id' => 'required',
-                            'label'                         => 'required|max:200',
-                            'target'                        => 'required',
-                            'satuan'                        => 'required'
+                            'sasaran_id'            => 'required',
+                            'label_ind_sasaran'     => 'required',
+                            'target_ind_sasaran'  => 'required',
+                            //'satuan_ind_sasaran'    => 'required',
                         ),
                         $messages
         );
-       
+
         if ( $validator->fails() ){
             //$messages = $validator->messages();
             return response()->json(['errors'=>$validator->messages()],422);
@@ -105,51 +106,113 @@ class IndikatorSasaranAPIController extends Controller {
         }
 
 
-        $indikator_sasaran = new IndikatorSasaran;
-        $indikator_sasaran->label                           = Input::get('label');
-        $indikator_sasaran->sasaran_perjanjian_kinerja_id   = Input::get('sasaran_perjanjian_kinerja_id');
-        $indikator_sasaran->target                          = Input::get('target');
-        $indikator_sasaran->satuan                          = Input::get('satuan');;
+        $is    = new IndikatorSasaran;
 
-        if ( $indikator_sasaran->save()){
+        $is->sasaran_id     = Input::get('sasaran_id');
+        $is->label          = Input::get('label_ind_sasaran');
+        $is->target       = Input::get('target_ind_sasaran');
+        $is->satuan         = Input::get('satuan_ind_sasaran');
+
+        if ( $is->save()){
             return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);
-        }  */
-       
-       
-    }
-   
+        } 
+            
+            
     
-    public function Rename(Request $request )
+    }
+
+    public function Update(Request $request)
     {
-        
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'text'          => 'required',
-            'id'            => 'required'
-        ]);
 
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+        $messages = [
+            'ind_sasaran_id.required'       => 'Harus diisi',
+            'label_ind_sasaran.required'    => 'Harus diisi',
+            'target_ind_sasaran.required' => 'Harus diisi',
+            //'satuan_ind_sasaran.required'   => 'Harus diisi',
+                
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'ind_sasaran_id'        => 'required',
+                            'label_ind_sasaran'     => 'required',
+                            'target_ind_sasaran'  => 'required',
+                            //'satuan_ind_sasaran'    => 'required',
+                            
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
         }
 
-        $ind_sasaran = IndikatorSasaran::find($request->id);
-        if (is_null($ind_sasaran)) {
-            return $this->sendError('Sasaran  tidak ditemukan');
+        
+        $is    = IndikatorSasaran::find(Input::get('ind_sasaran_id'));
+        if (is_null($is)) {
+            return $this->sendError('Indikator Sasaran idak ditemukan.');
         }
 
-        $ind_sasaran->label = $request->text;
-        
-        
-        if ( $ind_sasaran->save()){
-            return \Response::make('Sukses', 200);
+
+        $is->label             = Input::get('label_ind_sasaran');
+        $is->target          = Input::get('target_ind_sasaran');
+        $is->satuan            = Input::get('satuan_ind_sasaran');
+
+        if ( $is->save()){
+            return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);
+        } 
+            
+            
+
+    
+    }
+
+
+
+    public function Hapus(Request $request)
+    {
+
+        $messages = [
+                'ind_sasaran_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'ind_sasaran_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
         }
 
         
-      
+        $is    = IndikatorSasaran::find(Input::get('ind_sasaran_id'));
+        if (is_null($is)) {
+            return $this->sendError('Indikator Sasaran tidak ditemukan.');
+        }
+
+
+        if ( $is->delete()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
     }
 
 }

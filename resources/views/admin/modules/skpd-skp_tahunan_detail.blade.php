@@ -44,7 +44,7 @@
 			<div class="form-group form-group-sm"  style="margin-top:10px !important;">
 				<label class="col-md-4">NIP</label>
 				<div class="col-md-8">
-					<span class="form-control">{{ $skp->pejabat_penilai->nip }}</span>
+					<span class="form-control">{{ $skp->PejabatPenilai->nip }}</span>
 				</div>
 			</div>
 
@@ -58,7 +58,7 @@
 			<div class="form-group form-group-sm" style="margin-top:-10px;">
 				<label class="col-md-4 " >Pangkat / Gol</label>
 				<div class="col-md-8">
-					<span class="form-control">{{ ( $skp->pejabat_penilai->golongan ? $skp->pejabat_penilai->golongan->pangkat : '' ) }} /  {{ ( $skp->pejabat_penilai->golongan ? $skp->pejabat_penilai->golongan->golongan : '' ) }}</span>
+					<span class="form-control">{{ ( $skp->PejabatPenilai->golongan ? $skp->PejabatPenilai->golongan->pangkat : '' ) }} /  {{ ( $skp->PejabatPenilai->golongan ? $skp->PejabatPenilai->golongan->golongan : '' ) }}</span>
 				</div>
 			</div>
 					
@@ -66,21 +66,21 @@
 			<div class="form-group form-group-sm" style="margin-top:-10px;">
 				<label class="col-md-4 " >Eselon</label>
 				<div class="col-md-8">
-					<span class="form-control">{{ ( $skp->pejabat_penilai->eselon ? $skp->pejabat_penilai->eselon->eselon : '' ) }}</span>
+					<span class="form-control">{{ ( $skp->PejabatPenilai->eselon ? $skp->PejabatPenilai->eselon->eselon : '' ) }}</span>
 				</div>
 			</div>
 					
 			<div class="form-group form-group-sm" style="margin-top:-10px;">
 				<label class="col-md-4 ">Jabatan</label>
 				<div class="col-md-8">
-					<span class="form-control" style="height:48px;">{{  pustaka::capital_string( ( $skp->pejabat_penilai->Jabatan ? $skp->pejabat_penilai->Jabatan->skpd : '' )) }}</span>
+					<span class="form-control" style="height:48px;">{{  pustaka::capital_string( ( $skp->PejabatPenilai->Jabatan ? $skp->PejabatPenilai->Jabatan->skpd : '' )) }}</span>
 				</div>
 			</div>
 
 			<div class="form-group form-group-sm" style="margin-top:-10px;">
 				<label class="col-md-4">Unit Kerja</label>
 				<div class="col-md-8">
-					<span class="form-control" style="height:60px;">{{ pustaka::capital_string( ( $skp->pejabat_penilai->skpd ? $skp->pejabat_penilai->skpd->skpd : '' )) }}</span>
+					<span class="form-control" style="height:60px;">{{ pustaka::capital_string( ( $skp->PejabatPenilai->skpd ? $skp->PejabatPenilai->skpd->skpd : '' )) }}</span>
 				</div>
 			</div>
 		</div>	
@@ -99,7 +99,7 @@
 			<div class="form-group form-group-sm"  style="margin-top:10px !important;">
 				<label class="col-md-4">NIP</label>
 				<div class="col-md-8">
-					<span class="form-control">{{ $skp->pejabat_yang_dinilai->nip }}</span>
+					<span class="form-control">{{ $skp->PejabatYangDinilai->nip }}</span>
 				</div>
 			</div>
 
@@ -113,7 +113,7 @@
 			<div class="form-group form-group-sm" style="margin-top:-10px;">
 				<label class="col-md-4 " >Pangkat / Gol</label>
 				<div class="col-md-8">
-					<span class="form-control">{{ ( $skp->pejabat_yang_dinilai->golongan ? $skp->pejabat_yang_dinilai->golongan->pangkat : '' ) }} /  {{ ( $skp->pejabat_penilai->golongan ? $skp->pejabat_penilai->golongan->golongan : '' ) }}</span>
+					<span class="form-control">{{ ( $skp->PejabatYangDinilai->golongan ? $skp->PejabatYangDinilai->golongan->pangkat : '' ) }} /  {{ ( $skp->PejabatPenilai->golongan ? $skp->PejabatPenilai->golongan->golongan : '' ) }}</span>
 				</div>
 			</div>
 					
@@ -121,21 +121,21 @@
 			<div class="form-group form-group-sm" style="margin-top:-10px;">
 				<label class="col-md-4 " >Eselon</label>
 				<div class="col-md-8">
-					<span class="form-control">{{ ( $skp->pejabat_yang_dinilai->eselon ? $skp->pejabat_yang_dinilai->eselon->eselon : '' ) }}</span>
+					<span class="form-control">{{ ( $skp->PejabatYangDinilai->eselon ? $skp->PejabatYangDinilai->eselon->eselon : '' ) }}</span>
 				</div>
 			</div>
 					
 			<div class="form-group form-group-sm" style="margin-top:-10px;">
 				<label class="col-md-4 ">Jabatan</label>
 				<div class="col-md-8">
-					<span class="form-control" style="height:48px;">{{  pustaka::capital_string( ( $skp->pejabat_yang_dinilai->Jabatan ? $skp->pejabat_yang_dinilai->Jabatan->skpd : '' )) }}</span>
+					<span class="form-control" style="height:48px;">{{  pustaka::capital_string( ( $skp->PejabatYangDinilai->Jabatan ? $skp->PejabatYangDinilai->Jabatan->skpd : '' )) }}</span>
 				</div>
 			</div>
 
 			<div class="form-group form-group-sm" style="margin-top:-10px;">
 				<label class="col-md-4">Unit Kerja</label>
 				<div class="col-md-8">
-					<span class="form-control" style="height:60px;">{{ pustaka::capital_string( ( $skp->pejabat_yang_dinilai->skpd ? $skp->pejabat_yang_dinilai->skpd->skpd : '' )) }}</span>
+					<span class="form-control" style="height:60px;">{{ pustaka::capital_string( ( $skp->PejabatYangDinilai->skpd ? $skp->PejabatYangDinilai->skpd->skpd : '' )) }}</span>
 				</div>
 			</div>
 		</div>	  

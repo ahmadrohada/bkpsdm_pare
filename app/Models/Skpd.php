@@ -10,20 +10,6 @@ class Skpd extends Model
     protected $connection = 'mysql2';
     protected $table = 'm_skpd';
 
-    protected $fillable = [
-        'id', 'unit_kerja','id_skpd'
-    ];  
-
-
-   /*  public function history_jabatan()
-    {
-        return $this->belongsTo('App\Models\HistoryJabatan','id_skpd');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo('App\Models\Users');
-    } */
 
     public function UnitKerja()
     {
@@ -35,8 +21,12 @@ class Skpd extends Model
         return $this->hasOne('App\Models\UnitKerja','id','id');
     }
 
-   
+    public function pejabat()
+    {
+        return $this->hasOne('App\Models\HistoryJabatan','id_jabatan')->where('status','active');;
+    }
 
+   
 
    
 }

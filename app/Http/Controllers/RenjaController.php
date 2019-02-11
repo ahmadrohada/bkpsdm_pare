@@ -57,31 +57,33 @@ class RenjaController extends Controller {
     }
 
 
-    public function showRenja(request $x)
+    public function SKPDRenjaDetail(Request $request)
+	{
+        $renja	= Renja::where('id', '=', $request->renja_id)->first();
+
+        
+
+        if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) == 2 ) ){
+            return redirect('/skpd/renja/'.$request->renja_id.'/ralat')->with('status', 'Renja belum dikirm ke kaban');
+        }else if( ($renja->send_to_kaban) == 0 ) {
+            return redirect('/skpd/renja/'.$request->renja_id.'/edit')->with('status', 'Renja belum dikirm ke kaban');
+        }else{
+            return view('admin.pages.skpd-renja_detail', ['renja'=> $renja]);  
+        }
+    }
+
+    public function SKPDRenjaEdit(request $x)
 	{
          
         
-        $renja	= Renja::where('id', '=', $x->renja_id)
-                        ->select('id','periode_id','skpd_id','kepala_skpd_id','admin_skpd_id','status','created_at')
-                        ->first();
+        $renja	= Renja::where('id', '=', $x->renja_id)->first();
        
 
-
-        return view('admin.pages.skpd-renja', [
-
-
-
-                'nama_skpd'         => $this->nama_skpd($renja->skpd_id),
-                'renja'             => $renja,
-                'periode'           => $renja->Periode->label,
-                'kepala_skpd'       => Pustaka::nama_pegawai($renja->KepalaSKPD->Pegawai->gelardpn , $renja->KepalaSKPD->Pegawai->nama , $renja->KepalaSKPD->Pegawai->gelarblk),
-                'admin_skpd'        => Pustaka::nama_pegawai($renja->AdminSKPD->Pegawai->gelardpn , $renja->AdminSKPD->Pegawai->nama , $renja->AdminSKPD->Pegawai->gelarblk),
-                'created_at'        => $renja->created_at,
-                'h_box'             => 'box-info',
-
-        		
-	  			]
-        );   
+        if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) != 2 ) ){
+            return redirect('/skpd/renja/'.$x->renja_id)->with('status', 'Rencana Kerja dikirm ke atasan');
+        }else{
+            return view('admin.pages.skpd-renja_edit', ['renja'=> $renja,'h_box'=> 'box-info',]);    
+        }
 
     }
 

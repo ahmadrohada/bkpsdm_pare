@@ -57,17 +57,17 @@
 				</div>
 			</div>
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-yellow" style="cursor:pointer;">
+				<div class="small-box bg-yellow masa_pemerintahan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							{{$total_users_new}}
+							*
 						</h3>
 						<p>
-							<strong>New</strong>
+							<strong>Masa Pemerintahan</strong>
 						</p>
 					</div>
 					<div class="icon">
-						<i class="fa fa-user-plus"></i>
+						<i class="fa fa-hourglass-start"></i>
 					</div>
 				</div>
 			</div>
@@ -89,6 +89,10 @@ $(document).ready(function(){
 
 	$(".total_skpd").click(function(){
 		window.location.assign("skpd");
+    });
+
+	$(".masa_pemerintahan").click(function(){
+		window.location.assign("masa_pemerintahan");
     });
 
 

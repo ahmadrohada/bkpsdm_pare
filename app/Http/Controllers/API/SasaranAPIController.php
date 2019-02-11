@@ -18,99 +18,175 @@ Use Alert;
 class SasaranAPIController extends Controller {
 
 
-    public function SKPD_sasaran_list(Request $request)
+    public function SasaranList(Request $request)
     {
             
-       
-        //\DB::statement(\DB::raw('set @rownum='.$request->get('start')));
-        \DB::statement(\DB::raw('set @rownum=0'));
-      
-        $dt = Sasaran::leftjoin('sasaran_perjanjian_kinerja', function($join){
-                                                                    $join   ->on('sasaran_perjanjian_kinerja.sasaran_id','=','sasaran.id');
-                                                                    $join   ->where('sasaran_perjanjian_kinerja.perjanjian_kinerja_id','=', Request('perjanjian_kinerja_id'));
-                                                                })
-                      
-                        ->select([   
-                                                        
-                        \DB::raw('@rownum  := @rownum  + 1 AS rownum'), 
-                        'sasaran.id AS sasaran_id',
-                        'sasaran.label',
-                        'sasaran_perjanjian_kinerja.sasaran_id AS sasaran_id_2'
-                        ])
-                        ->get();
+        $dt = Sasaran::where('indikator_tujuan_id', '=' ,$request->get('ind_tujuan_id'))
+                                ->select([   
+                                    'id AS sasaran_id',
+                                    'label AS label_sasaran',
+                                    ])
+                                    ->get();
 
-        
         $datatables = Datatables::of($dt)
-        ->addColumn('action', function ($x) {
+                    ->addColumn('label_sasaran', function ($x) {
+                        return $x->label_sasaran;
+                    })
+                    ->addColumn('action', function ($x) {
+                        return $x->sasaran_id;
+                    });
 
-            if ($x->sasaran_id == $x->sasaran_id_2)
-            {
-                return 		'<a href="#" class="btn btn-xs btn-default" style="margin:2px;" disabled><i class="fa fa-plus"></i> Add</a>';
-            }else{
-                return 		'<a href="#" class="btn btn-xs btn-info add_sasaran_id" style="margin:2px;"  data-id="'.$x->sasaran_id.'" data-pk="'.Request('perjanjian_kinerja_id').'"><i class="fa fa-plus"></i> Add </a>';
-            }
-
-		})->addColumn('label', function ($x) {
-            return $x->label;
-        });
-
-
-        if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-        } 
-
-        return $datatables->make(true); 
-        //return $dt;
+                    if ($keyword = $request->get('search')['value']) {
+                        $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+                    } 
+        return $datatables->make(true);
     }
 
+    public function SasaranDetail(Request $request)
+    {
+       
+        
+        $x = Sasaran::
+                SELECT(     'renja_sasaran.id AS sasaran_id',
+                            'renja_sasaran.label'
 
-    public function Store()
+                                    ) 
+                            ->WHERE('renja_sasaran.id', $request->sasaran_id)
+                            ->first();
+
+		
+		//return  $kegiatan_tahunan;
+        $sasaran = array(
+            'id'            => $x->sasaran_id,
+            'label'         => $x->label
+
+        );
+        return $sasaran;
+    }
+
+    public function Store(Request $request)
     {
 
-        $pk = new Sasaran;
-        $pk->label                      = Input::get('text');
-        $pk->renja_id                   = Input::get('renja_id');
-        $pk->indikator_tujuan_id        = Input::get('parent_id');
+        $messages = [
+                'ind_tujuan_id.required'     => 'Harus diisi',
+                'label_sasaran.required'             => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'ind_tujuan_id' => 'required',
+                            'label_sasaran' => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+
+        $sr    = new Sasaran;
+
+        $sr->indikator_tujuan_id        = Input::get('ind_tujuan_id');
+        $sr->label                      = Input::get('label_sasaran');
+
+        if ( $sr->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
+
+    public function Update(Request $request)
+    {
+
+        $messages = [
+                'sasaran_id.required'   => 'Harus diisi',
+                'label_sasaran.required'       => 'Harus diisi',
+                
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'sasaran_id'   => 'required',
+                            'label_sasaran'     => 'required',
+                            
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $sr    = Sasaran::find(Input::get('sasaran_id'));
+        if (is_null($sr)) {
+            return $this->sendError('Sasaran idak ditemukan.');
+        }
+
+
+        $sr->label             = Input::get('label_sasaran');
+
+        if ( $sr->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
 
     
-        if ( $pk->save()){
-            $tes = array('id' => 'sasaran|'.$pk->id);
-            return \Response::make($tes, 200);
-        }else{
-            return \Response::make('error', 500);
-        }
     }
 
-    public function Rename(Request $request )
+
+
+    public function Hapus(Request $request)
     {
-        
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'text'          => 'required',
-            'id'            => 'required'
-        ]);
 
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+        $messages = [
+                'sasaran_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'sasaran_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
         }
 
-        $sasaran = Sasaran::find($request->id);
-        if (is_null($sasaran)) {
-            return $this->sendError('Sasaran  tidak ditemukan');
+        
+        $sr    = Sasaran::find(Input::get('sasaran_id'));
+        if (is_null($sr)) {
+            return $this->sendError('Sasaran tidak ditemukan.');
         }
 
-        $sasaran->label = $request->text;
-        
-        
-        if ( $sasaran->save()){
-            return \Response::make('Sukses', 200);
+
+        if ( $sr->delete()){
+            return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);
-        }
-
-        
-      
+        } 
+            
+            
+    
     }
-
-
 }

@@ -16,7 +16,7 @@
 // DASHBOARD
 Breadcrumbs::register('dashboard', function($breadcrumbs)
 {
-	$breadcrumbs->push(Lang::get('sidebar-nav.link_title_dashboard'), '/pare_2018/dashboard', ['icon' => Lang::get('sidebar-nav.link_icon_dashboard')]);
+	$breadcrumbs->push(Lang::get('sidebar-nav.link_title_dashboard'), '/bkpsdm_pare/public/dashboard', ['icon' => Lang::get('sidebar-nav.link_icon_dashboard')]);
 });
 
 // DASHBOARD > PROFILE
@@ -97,6 +97,17 @@ Breadcrumbs::register('skpd-renja', function($breadcrumbs)
     $breadcrumbs->parent('skpd');
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_renja'), '/renja', ['icon' => Lang::get('sidebar-nav.link_icon_renja')]);
 });
+
+
+
+// DASHBOARD > MASA PEMRITYAHAN >
+Breadcrumbs::register('masa_pemerintahan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_masa_pemerintahan'), '/masa_pemerintahan', ['icon' => Lang::get('sidebar-nav.link_icon_masa_pemerintahan')]);
+});
+
+
 
 
 // DASHBOARD > USERS > SHOW RENCANA KERJA
