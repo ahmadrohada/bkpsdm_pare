@@ -18,8 +18,8 @@
 						<b>Persetujuan Kepala SKPD</b> <a class="pull-right st_persetujuan_kaban">-</a>
 					</li>
 				</ul>
-				<div class="kirim_renja">
-					<button class="btn btn-primary btn-block kirim_renja " disabled>Kirim kepada Kepala SKPD</button>
+				<div class="batalkan_renja">
+					<button class="btn btn-warning btn-block batalkan_renja " disabled>Batalkan Permintaan Persetujuan</button>
 				</div>
 			</div>
 		</div>

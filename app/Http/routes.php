@@ -68,6 +68,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('renja_status_pengisian','API\RenjaAPIController@RenjaStatusPengisian');
 
 	Route::post('create_renja','API\RenjaAPIController@Store');
+	Route::post('renja_send_to_kaban','API\RenjaAPIController@SendToKaban');
+	
 	
 
 

@@ -153,50 +153,46 @@ class RenjaAPIController extends Controller {
                             leftjoin('demo_asn.tb_history_jabatan AS kaban', function($join){
                                 $join   ->on('kaban.id','=','renja.kepala_skpd_id');
                             })
-                            /* ->SELECT(
-                                'skp_tahunan.id AS skp_tahunan_id',
-                                'atasan.id AS atasan_id',
-                                'skp_tahunan.status_approve'
-                            ) */
-                            ->where('renja.id','=', $request->renja_id )->first();;
+                            ->SELECT('kaban.id AS kaban_id',
+                                    'renja.created_at AS created',
+                                    'renja.id AS renja_id')
+                            ->where('renja.id','=', $request->renja_id )->first();
 
-        //STATUS SKP
-        if ( $skp_tahunan->skp_tahunan_id != null ){
+      
+        //STATUS KEPALA SKPD
+        if ( $renja->kaban_id != null ){
+            $data_kepala_skpd = 'ok';
+        }else{
+            $data_kepala_skpd = '-';
+        }
+
+        //created
+        if ( $renja->renja_id != null ){
             $created = 'ok';
         }else{
             $created = '-';
         }
-        
-        //STATUS PEJABAT PENILAI
-        if ( $skp_tahunan->atasan_id != null ){
-            $atasan = 'ok';
-        }else{
-            $atasan = '-';
-        }
-
 
         //button kirim
-        if ( ( $created == 'ok') && ( $atasan == 'ok') && ( $kegiatan_tahunan == 'ok' ) && (  $data_rencana_aksi == 'ok') ){
+        if ( ( $created == 'ok') && ( $data_kepala_skpd == 'ok') ){
             $button_kirim = 1 ;
         }else{
             $button_kirim = 0 ;
         }
         
          //STATUS APPROVE
-         if ( ($skp_tahunan->status_approve) == 1 ){
-            $persetujuan_atasan = 'ok';
+         if ( ($renja->status_approve) == 1 ){
+            $data_persetujuan_kaban = 'ok';
         }else{
-            $persetujuan_atasan = '-';
+            $data_persetujuan_kaban = '-';
         }
 
 
         $response = array(
                 'created'                 => $created,
-                'data_pejabat_penilai'    => $atasan,
-                'data_kegiatan_tahunan'   => $kegiatan_tahunan,
-                'data_rencana_aksi'       => $data_rencana_aksi,
-                'persetujuan_atasan'      => $persetujuan_atasan,
-                'button_kirim'            => $button_kirim ,
+                'data_kepala_skpd'        => $data_kepala_skpd,
+                'data_persetujuan_kaban'  => $data_persetujuan_kaban,
+                'button_kirim'            => $button_kirim
 
 
         );
@@ -494,6 +490,51 @@ class RenjaAPIController extends Controller {
             
             
     }   
+
+    public function SendToKaban(Request $request)
+    {
+        $messages = [
+                'renja_id.required'   => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'renja_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $renja    = Renja::find(Input::get('renja_id'));
+        if (is_null($renja)) {
+            return $this->sendError('Renja tidak ditemukan.');
+        }
+
+
+        $renja->send_to_kaban     = '1';
+        $renja->date_of_send      = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+        $renja->status_approve    = '0';
+
+        if ( $renja->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+
+
+
+    }
 
 
 }
