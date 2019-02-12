@@ -35,8 +35,8 @@
 						</div>
 						
 						<div class=" tab-pane" id="renja_list">
-							@include('admin.modules.edit_forms.rencana_kerja')
-						</div>
+							@include('admin.modules.detail_forms.rencana_kerja')
+						</div> 
 						
   
 						<div class=" tab-pane" id="distribusi_kegiatan">

@@ -19,7 +19,7 @@
 					</li>
 				</ul>
 				<div class="batalkan_renja">
-					<button class="btn btn-warning btn-block batalkan_renja " disabled>Batalkan Permintaan Persetujuan</button>
+					<button class="btn btn-warning btn-block batalkan_renja ">Batalkan Permintaan Persetujuan</button>
 				</div>
 			</div>
 		</div>
@@ -109,14 +109,14 @@
 
 
 
-	$(document).on('click','.kirim_renja',function(e){
+	$(document).on('click','.batalkan_renja',function(e){
 		swal({
-				title: "Kirim Renja",
-				text: "Renja akan dikirim kepada Kepala SKPD untuk mendapatkan persetujuan",
+				title: "Tarik Renja",
+				text: "Renja akan dibatalkan permintaan persetujuannya",
 				type: "question",
 				showCancelButton: true,
 				cancelButtonText: "Batal",
-				confirmButtonText: "Kirim",
+				confirmButtonText: "Tarik",
 				confirmButtonClass: "btn btn-success",
 				cancelButtonClass: "btn btn-danger",
 				cancelButtonColor: "#d33",
@@ -124,7 +124,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/renja_send_to_kaban") }}',
+					url		: '{{ url("api_resource/renja_pull_from_atasan") }}',
 					type	: 'POST',
 					data    : {renja_id: {!! $renja->id !!} },
 					cache   : false,

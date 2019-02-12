@@ -69,6 +69,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::post('create_renja','API\RenjaAPIController@Store');
 	Route::post('renja_send_to_kaban','API\RenjaAPIController@SendToKaban');
+	Route::post('renja_pull_from_atasan','API\RenjaAPIController@PullFromKaban');
 	
 	
 
