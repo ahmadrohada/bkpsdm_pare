@@ -100,4 +100,10 @@
 		window.location.assign("renja/"+renja_id+"/edit");
 	});
 
+	$(document).on('click','.lihat_renja',function(e){
+		var renja_id = $(this).data('id') ;
+		
+		window.location.assign("renja/"+renja_id);
+	});
+
 </script>

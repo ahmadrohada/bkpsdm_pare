@@ -536,5 +536,49 @@ class RenjaAPIController extends Controller {
 
     }
 
+    public function PullFromKaban(Request $request)
+    {
+        $messages = [
+                'renja_id.required'   => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'renja_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $renja    = Renja::find(Input::get('renja_id'));
+        if (is_null($renja)) {
+            return $this->sendError('Renja tidak ditemukan.');
+        }
+
+
+        $renja->send_to_kaban    = '0';
+        $renja->date_of_send      = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+        $renja->status_approve    = '';
+
+        if ( $renja->save()){
+            
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+
+
+
+    }
+
 
 }
