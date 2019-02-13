@@ -72,6 +72,15 @@ class RenjaController extends Controller {
         }
     }
 
+    public function SKPDRenjaApproval(Request $request)
+	{
+        $renja	= Renja::where('id', '=', $request->renja_id)->first();
+
+        
+        return view('admin.pages.skpd-renja_approval', ['renja'=> $renja]);  
+        
+    }
+
     public function SKPDRenjaEdit(request $x)
 	{
          
