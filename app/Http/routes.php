@@ -67,6 +67,11 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('renja_timeline_status','API\RenjaAPIController@RenjaTimelineStatus');
 	Route::get('renja_status_pengisian','API\RenjaAPIController@RenjaStatusPengisian');
 
+	
+
+	Route::get('approval_request_renja_list','API\RenjaAPIController@RenjaApprovalRequestList');
+
+
 	Route::post('create_renja','API\RenjaAPIController@Store');
 	Route::post('renja_send_to_kaban','API\RenjaAPIController@SendToKaban');
 	Route::post('renja_pull_from_atasan','API\RenjaAPIController@PullFromKaban');
@@ -722,12 +727,25 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 // PEGAWAI ACCESS LEVEL PAGE ROUTES - RUNNING THROUGH PEGAWAI MIDDLEWARE
 Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
-//======================= H O M E   P E R S O N A L ========================================//
+	//======================= H O M E   P E R S O N A L ========================================//
 	Route::get('skp-tahunan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showSKPTahunan'
 	]);
 
+
+
+	//======================= A P P R O V A L    R E Q U E S T ==================================//
+	Route::get('renja_approval-request', [
+		'as' 			=> '',
+		'uses' 			=> 'ApprovalRequestController@showRenja'
+	]);
+
+	Route::get('renja_approval-request/{renja_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'RenjaController@SKPDRenjaApproval'
+	]);
+	
 
 
 	//=========================================================================================//

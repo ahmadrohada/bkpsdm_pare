@@ -36,12 +36,6 @@
 @include('admin.modals.skp_tahunan_bawahan')
 
 <script type="text/javascript">
-$(document).ready(function() {
-
-
-
-	//alert();
-		
 	$('#skp_tahunan_table').DataTable({
 				processing      : true,
 				serverSide      : true,
@@ -196,6 +190,4 @@ $(document).ready(function() {
 		});
 	});
 	
-	
-});
 </script>

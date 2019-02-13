@@ -271,6 +271,62 @@ class RenjaAPIController extends Controller {
     }
 
 
+    public function RenjaApprovalRequestList(Request $request)
+    {
+        $pegawai_id = $request->pegawai_id;
+       
+        $dt = Renja::
+                    leftjoin('db_pare_2018.periode AS periode', function($join){ 
+                        $join   ->on('renja.periode_id','=','periode.id');
+                        
+                    })
+                    ->rightjoin('demo_asn.tb_history_jabatan AS kaban', function($join) use($pegawai_id){ 
+                        $join   ->on('renja.kepala_skpd_id','=','kaban.id');
+                        $join   ->where('kaban.id_pegawai','=',$pegawai_id);
+                    })
+                    ->WHERE('renja.send_to_kaban','=','1')
+                    //->WHERE('')
+                    ->SELECT( 'periode.label AS periode_label',
+                             'renja.id AS renja_id',
+                             'renja.nama_admin_skpd',
+                             'renja.status_approve',
+                             'renja.created_at'
+                            );
+
+
+    
+        $datatables = Datatables::of($dt)
+        ->addColumn('periode', function ($x) {
+
+            return $x->periode_label;
+
+        })->addColumn('nama_admin', function ($x) {
+            
+            return $x->nama_admin_skpd;
+        
+        })->addColumn('tgl_dibuat', function ($x) {
+
+            return $x->created_at;
+
+        })->addColumn('tgl_dikirim', function ($x) {
+
+            return $x->created_at;
+
+        })->addColumn('renja_id', function ($x) {
+
+
+            return $x->renja_id;
+        });
+
+        
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
+
     public function SKPDRenjaactivity(Request $request)
     {
        

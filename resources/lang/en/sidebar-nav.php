@@ -56,6 +56,11 @@ return [
 	'link_title_pegawai'    		=> 'pegawai',
 	'link_icon_pegawai'     		=> 'fa-users',
 
+	'link_title_approval-request'   => 'Approval Request',
+	'link_icon_approval-request'    => 'fa-check-square-o',
+
+	
+
 	// PERJANJIAN KINERJA LINKS
 	'link_title_perjanjian_kinerja'     => 'Perjanjian Kinerja',
 	'link_icon_perjanjian_kinerja'     	=> 'fa-calendar-check-o',

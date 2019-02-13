@@ -197,3 +197,22 @@ Breadcrumbs::register('personal_edit_skp_tahunan', function($breadcrumbs)
     $breadcrumbs->parent('personal_skp_tahunan');
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_edit_skp_tahunan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_edit_skp_tahunan')]);
 });
+
+// DASHBOARD > APPROVAL REQUEST
+Breadcrumbs::register('approval_request', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_approval-request'), '', ['icon' => Lang::get('sidebar-nav.link_icon_approval-request')]);
+});
+
+Breadcrumbs::register('approval_request-renja', function($breadcrumbs)
+{
+    $breadcrumbs->parent('approval_request');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_renja'), '', ['icon' => Lang::get('sidebar-nav.link_icon_renja')]);
+});
+
+Breadcrumbs::register('approval_request-skp_tahunan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('approval_request');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_tahunan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_skp_tahunan')]);
+});
