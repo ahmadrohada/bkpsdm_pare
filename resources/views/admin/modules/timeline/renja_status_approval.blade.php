@@ -130,7 +130,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/renja_tolak_by_kaban") }}',
+					url		: '{{ url("api_resource/renja_setuju_by_kaban") }}',
 					type	: 'POST',
 					data    : { renja_id: {!! $renja->id !!} ,
 								kaban_id: {!! $pegawai->JabatanAktif->id !!}
