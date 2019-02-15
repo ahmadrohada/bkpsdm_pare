@@ -17,7 +17,7 @@
         
 	    </section>
 	    <section class="content">
-
+ 
 				<div class="nav-tabs-custom">
 					<ul class="nav nav-tabs" id="myTab">
 						<li class="status"><a href="#status" data-toggle="tab">Status</a></li>

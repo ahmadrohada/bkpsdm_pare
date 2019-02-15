@@ -59,7 +59,7 @@ class KegiatanAPIController extends Controller {
                     foreach ($kegiatan as $a) {
                         $data_kegiatan['id']	        = "kegiatan|".$a->id;
                         $data_kegiatan['text']			= Pustaka::capital_string($a->label);
-                        $data_kegiatan['icon']          = "jstree-ind_kegiatan";
+                        $data_kegiatan['icon']          = "jstree-kegiatan";
                         $data_kegiatan['type']          = "kegiatan";
                         
         

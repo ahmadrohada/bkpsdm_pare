@@ -622,7 +622,7 @@ class RenjaAPIController extends Controller {
 
         $renja->send_to_kaban    = '0';
         $renja->date_of_send      = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
-        $renja->status_approve    = '';
+        $renja->status_approve    = '0';
 
         if ( $renja->save()){
             
@@ -631,6 +631,113 @@ class RenjaAPIController extends Controller {
             return \Response::make('error', 500);
         } 
             
+
+
+
+    }
+
+    public function SetujuByKaban(Request $request)
+    {
+        $messages = [
+                'renja_id.required'   => 'Harus diisi',
+                'kaban_id.required'   => 'Harus diisi'
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'renja_id'   => 'required',
+                            'kaban_id'   => 'required'
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $renja    = Renja::find(Input::get('renja_id'));
+        if (is_null($renja)) {
+            return $this->sendError('Renja tidak ditemukan.');
+        }
+
+
+        $renja->status_approve    = '1';
+        $renja->date_of_approve   = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+
+       
+        if ( $renja->kepala_skpd_id == Input::get('kaban_id')){
+            if ( $renja->save()){
+            
+                return \Response::make('sukses', 200);
+            }else{
+                return \Response::make('error', 500);
+            }  
+        }else{
+            return \Response::make('ID Kaban tidak sama', 500);
+        }
+
+        
+        
+
+
+
+    }
+
+    public function TolakByKaban(Request $request)
+    {
+        $messages = [
+                'renja_id.required'   => 'Harus diisi',
+                'kaban_id.required'   => 'Harus diisi',
+                'alasan.required'     => 'Harus diisi'
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'renja_id'   => 'required',
+                            'kaban_id'   => 'required',
+                            'alasan'     => 'required'
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $renja    = Renja::find(Input::get('renja_id'));
+        if (is_null($renja)) {
+            return $this->sendError('Renja tidak ditemukan.');
+        }
+
+
+        $renja->status_approve    = '2';
+        $renja->alasan_penolakan  = Input::get('alasan');
+        $renja->date_of_approve   = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+
+       
+        if ( $renja->kepala_skpd_id == Input::get('kaban_id')){
+            if ( $renja->save()){
+            
+                return \Response::make('sukses', 200);
+            }else{
+                return \Response::make('error', 500);
+            }  
+        }else{
+            return \Response::make('ID Kaban tidak sama', 500);
+        }
+
+        
+        
 
 
 

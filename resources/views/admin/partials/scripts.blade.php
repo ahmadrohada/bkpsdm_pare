@@ -16,7 +16,7 @@
 
 {!! HTML::script('/assets/js/admin/admin.js', array('type' => 'text/javascript')) !!}
 
-{!! HTML::script('/assets/bower_components/sweetalert/SweetAlert.js', array('type' => 'text/javascript')) !!}
+{!! HTML::script('/assets/bower_components/sweetalert/sweetalert2.all.js', array('type' => 'text/javascript')) !!}
 
 
 

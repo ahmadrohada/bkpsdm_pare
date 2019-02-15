@@ -18,12 +18,19 @@
 						<b>Persetujuan Kepala SKPD</b> <a class="pull-right st_persetujuan_kaban">-</a>
 					</li>
 				</ul>
-				<div class="batalkan_renja">
-				
+				<div class="approval_renja"> 
+					<div class="col-md-6" style="padding:2px 2px 2px 0;">
+						<button class="btn btn-primary btn-block setuju_renja ">Setuju</button>
+					</div>
+					<div class="col-md-6" style="padding:2px 0px 2px 2px;">
+						<button class="btn btn-danger btn-block tolak_renja ">Tolak</button>
+					</div>
 				</div>
 			</div>
+				
+			</div>
 		</div>
-	</div>
+		
 	<div class="col-md-8">
 		<div class="table-responsive">
 			<div id="myTimeline"></div>
@@ -109,27 +116,28 @@
 
 
 
-	$(document).on('click','.batalkan_renja',function(e){
-		swal({
-				title: "Tarik Renja",
-				text: "Renja akan dibatalkan permintaan persetujuannya",
+	$(document).on('click','.setuju_renja',function(e){
+		Swal.fire({
+				title: "Setuju",
+				text: "Pengajuan  Renja",
 				type: "question",
 				showCancelButton: true,
 				cancelButtonText: "Batal",
-				confirmButtonText: "Tarik",
-				confirmButtonClass: "btn btn-success",
-				cancelButtonClass: "btn btn-danger",
-				cancelButtonColor: "#d33",
-				closeOnConfirm: false
+				confirmButtonText: "Setuju",
+				cancelButtonColor: "#7a7a7a",
+				closeOnConfirm: false,
+				showLoaderOnConfirm	: true,
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/renja_pull_from_atasan") }}',
+					url		: '{{ url("api_resource/renja_tolak_by_kaban") }}',
 					type	: 'POST',
-					data    : {renja_id: {!! $renja->id !!} },
+					data    : { renja_id: {!! $renja->id !!} ,
+								kaban_id: {!! $pegawai->JabatanAktif->id !!}
+							   },
 					cache   : false,
 					success:function(data){
-							swal({
+						Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -138,7 +146,7 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										location.reload();
+										//location.reload();
 
 									},
 									function (dismiss) {
@@ -152,7 +160,87 @@
 							
 					},
 					error: function(e) {
-							swal({
+						Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+
+								/* const Toast = Swal.mixin({
+								toast: true,
+								position: 'top-end',
+								showConfirmButton: false,
+								timer: 3000
+								});
+
+								Toast.fire({
+								type: 'success',
+								title: 'Signed in successfully'
+								}) */
+							}
+					});	
+				
+
+					
+			}
+		});
+	});
+
+
+	$(document).on('click','.tolak_renja',function(e){
+		Swal.fire({
+			title				: 'Tolak Renja',
+			text				:'Berikan alasan penolakan',
+			input				: 'text',
+			type				: "question",
+			showCancelButton	: true,
+			confirmButtonText	: 'Tolak',
+			showLoaderOnConfirm	: true,
+			inputAttributes: {
+				autocapitalize: 'off'
+			},
+
+			inputValidator: (value) => {
+				return !value && 'You need to write something!'
+			},
+			allowOutsideClick: false
+			}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/renja_tolak_by_kaban") }}',
+					type	: 'POST',
+					data    : { renja_id: {!! $renja->id !!} ,
+								kaban_id: {!! $pegawai->JabatanAktif->id !!},
+								alasan:result.value
+							   },
+					cache   : false,
+					success:function(data){
+						Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										//location.reload();
+
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+						Swal.fire({
 									title: "Gagal",
 									text: "",
 									type: "warning"

@@ -525,50 +525,161 @@
 
 
 .jstree-default .jstree-tujuan {
-  background: url("renja.png") -5px -5px no-repeat;
+  
+
+  height:18px !important;
   width:65px !important;
-  margin-left:-2px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(167, 4, 153);
+  font-size:13px; 
+  
+  
+}
+.jstree-tujuan:after{
+  content:'Tujuan';
+  position:absolute;
+  display:block;
+  margin:-5px 0 0 5px;
 }
 
 .jstree-default .jstree-ind_tujuan {
-  background: url("renja.png") -79px -5px no-repeat;
-  width:20px !important;
+  height:18px !important;
+  width:110px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(230, 158, 224);
+  font-size:13px;
+}
+
+.jstree-ind_tujuan:after{
+  content:'Indikator Tujuan';
+  position:absolute;
+  display:block;
+  margin:-5px 0 0 5px;
 }
 
 .jstree-default .jstree-sasaran {
-  background: url("renja.png") -5px -28px no-repeat;
+  
+  height:18px !important;
   width:65px !important;
-  margin-left:-2px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(250, 97, 8);
+  font-size:13px;
+  
+  
+  
+}
+.jstree-sasaran:after{
+  content:'Sasaran';
+  position:absolute;
+  display:block;
+  margin:-5px 0 0 5px;
 }
 
 .jstree-default .jstree-ind_sasaran {
-  background: url("renja.png") -79px -5px no-repeat;
-  width:18px !important;
+  height:18px !important;
+  width:110px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(245, 171, 128);
+  font-size:13px;
+}
+.jstree-ind_sasaran:after{
+  content:'Indikator Sasaran';
+  position:absolute;
+  display:block;
+  margin:-5px 0 0 5px;
 }
 
 .jstree-default .jstree-program {
-  background: url("renja.png") -5px -53px no-repeat;
+  
+  height:18px !important;
   width:65px !important;
-  margin-left:-2px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(0, 145, 194);
+  font-size:13px;
+  
+  
+  
+}
+.jstree-program:after{
+  content:'Program';
+  position:absolute;
+  display:block;
+  margin:-5px 0 0 5px;
 }
 
 
 .jstree-default .jstree-ind_program {
-  background: url("renja.png") -79px -5px no-repeat;
-  width:18px !important;
+  height:18px !important;
+  width:116px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(163, 200, 212);
+  font-size:13px;
 }
-
+.jstree-ind_program:after{
+  content:'Indikator Program';
+  position:absolute;
+  display:block;
+  margin:-5px 0 0 5px;
+}
 
 .jstree-default .jstree-kegiatan {
-  background: url("renja.png") -5px -77px no-repeat;
+  
+  height:18px !important;
   width:65px !important;
-  margin-left:-2px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(5, 201, 31);
+  font-size:13px;
+  
+  
+}
+.jstree-kegiatan:after{
+  content:'Kegiatan';
+  position:absolute;
+  display:block;
+  margin:-5px 0 0 5px;
 }
 
+
+
 .jstree-default .jstree-ind_kegiatan {
-  background: url("renja.png") -79px -5px no-repeat;
-  width:18px !important;
+  height:18px !important;
+  width:110px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(184, 255, 193);
+  font-size:13px;
 }
+
+.jstree-ind_kegiatan:after{
+  content:'Indikator Kegiatan';
+  position:absolute;
+  display:block;
+  margin:-5px 0 0 5px;
+}
+
 
 
 .jstree-default .jstree-people {
