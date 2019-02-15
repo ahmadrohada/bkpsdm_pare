@@ -11,8 +11,6 @@
 
 {!! HTML::style(asset('/assets/bower_components/select2/dist/css/select2.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
 
-
-
 {!! HTML::style(asset('/assets/bower_components/data-table/DataTables-1.10.18/css/dataTables.bootstrap.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
 <!--
 {!! HTML::style(asset('/assets/bower_components/data-table/DataTables-1.10.18/css/jquery.dataTables.min.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
@@ -24,6 +22,7 @@
 {!! HTML::style(asset('/assets/bower_components/jquery-datetimepicker/jquery.datetimepicker.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
 
 {!! HTML::style(asset('/assets/css/styles.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
+
 
 
 {!! HTML::style(asset('/assets/css/AdminLTE.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}

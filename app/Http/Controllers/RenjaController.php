@@ -77,7 +77,7 @@ class RenjaController extends Controller {
         $renja	= Renja::where('id', '=', $request->renja_id)->first();
 
         
-        return view('admin.pages.skpd-renja_approval', ['renja'=> $renja]);  
+        return view('admin.pages.skpd-renja_approval', ['renja'=> $renja,'pegawai'=>\Auth::user()->pegawai]);  
         
     }
 

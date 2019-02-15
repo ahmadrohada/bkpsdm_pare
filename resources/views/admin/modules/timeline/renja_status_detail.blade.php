@@ -124,7 +124,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/renja_pull_from_atasan") }}',
+					url		: '{{ url("api_resource/renja_pull_from_kaban") }}',
 					type	: 'POST',
 					data    : {renja_id: {!! $renja->id !!} },
 					cache   : false,
