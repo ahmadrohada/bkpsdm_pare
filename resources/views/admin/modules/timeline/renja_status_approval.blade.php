@@ -146,7 +146,7 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										//location.reload();
+										location.reload();
 
 									},
 									function (dismiss) {
@@ -226,7 +226,7 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										//location.reload();
+										location.reload();
 
 									},
 									function (dismiss) {

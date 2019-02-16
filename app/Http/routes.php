@@ -748,6 +748,11 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'as' 			=> '',
 		'uses' 			=> 'RenjaController@SKPDRenjaApproval'
 	]);
+
+	Route::get('renja/{renja_id}',[
+		'as' 			=> '',
+		'uses' 			=> 'RenjaController@PersonalRenjaDetail'
+	]);
 	
 
 

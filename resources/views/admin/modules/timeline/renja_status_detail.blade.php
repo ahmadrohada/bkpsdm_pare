@@ -18,7 +18,7 @@
 						<b>Persetujuan Kepala SKPD</b> <a class="pull-right st_persetujuan_kaban">-</a>
 					</li>
 				</ul>
-				<div class="batalkan_renja">
+				<div class="batalkan_renja" hidden>
 					<button class="btn btn-warning btn-block batalkan_renja ">Batalkan Permintaan Persetujuan</button>
 				</div>
 			</div>
@@ -90,10 +90,10 @@
 				dataType	: "json",
 				success	: function(data) {
 					//alert(data);
-					if (data['button_kirim'] == 1 ){
-						$('.kirim_renja').removeAttr('disabled');
+					if (data['data_persetujuan_kaban'] == 'ok' ){
+						$('.batalkan_renja').hide();
 					}else{
-						$('.kirim_renja').attr('disabled','disabled');
+						$('.batalkan_renja').show();
 					}
 
 					$('.st_created_at').html(data['created']);

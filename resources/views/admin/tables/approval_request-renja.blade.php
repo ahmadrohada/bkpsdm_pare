@@ -67,9 +67,8 @@
 										"render": function ( data, type, row ) {
 										if (row.status_approve == 0 ){
 											return  '<span  data-toggle="tooltip" title="Berikan Persetujuan renja" style="margin:1px;" ><a class="btn btn-warning btn-xs approval_renja"  data-renja_id="'+row.renja_id+'">Approval</a></span>';
-										}else if (row.status_approve == 1 ){
-
-											return  '<span  data-toggle="tooltip" title="" style="margin:1px;" disabled><a class="btn btn-default btn-xs " >Approval</a></span>';
+										}else {
+											return  '<span  data-toggle="tooltip" title="Detail Rencana Kerja" style="margin:1px;" ><a class="btn btn-success btn-xs lihat_renja"  data-renja_id="'+row.renja_id+'"> Lihat </a></span>';
 										}
 									}
 								},
@@ -88,6 +87,15 @@
 
 
 		window.location.assign("renja_approval-request/"+renja_id);
+	});
+
+	$(document).on('click','.lihat_renja',function(e){
+		var renja_id = $(this).data('renja_id') ;
+		//alert(skp_tahunan_id);
+
+
+
+		window.location.assign("renja/"+renja_id);
 	});
 
 	
