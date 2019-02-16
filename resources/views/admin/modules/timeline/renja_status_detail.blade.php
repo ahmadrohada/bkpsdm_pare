@@ -111,7 +111,7 @@
 
 	$(document).on('click','.batalkan_renja',function(e){
 		Swal.fire({
-				title: "Tarik Renja",
+				title: "Tarik - Renja",
 				text: "Renja akan dibatalkan permintaan persetujuannya",
 				type: "question",
 				showCancelButton: true,
