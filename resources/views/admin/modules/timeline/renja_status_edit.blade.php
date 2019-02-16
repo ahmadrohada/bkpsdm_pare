@@ -110,7 +110,7 @@
 
 
 	$(document).on('click','.kirim_renja',function(e){
-		swal({
+		Swal.fire({
 				title: "Kirim Renja",
 				text: "Renja akan dikirim kepada Kepala SKPD untuk mendapatkan persetujuan",
 				type: "question",
@@ -129,7 +129,7 @@
 					data    : {renja_id: {!! $renja->id !!} },
 					cache   : false,
 					success:function(data){
-							swal({
+							Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -152,7 +152,7 @@
 							
 					},
 					error: function(e) {
-							swal({
+							Swal.fire({
 									title: "Gagal",
 									text: "",
 									type: "warning"
