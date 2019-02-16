@@ -72,13 +72,32 @@ class RenjaController extends Controller {
         }
     }
 
-    public function SKPDRenjaApproval(Request $request)
+    public function PersonalRenjaDetail(Request $request)
 	{
         $renja	= Renja::where('id', '=', $request->renja_id)->first();
 
         
-        return view('admin.pages.skpd-renja_approval', ['renja'=> $renja,'pegawai'=>\Auth::user()->pegawai]);  
+
+        if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) == 2 ) ){
+            return view('admin.pages.skpd-renja_detail', ['renja'=> $renja]);
+        }else if( ($renja->send_to_kaban) == 0 ) {
+            return redirect('/personal/renja/'.$request->renja_id.'/edit')->with('status', 'Renja belum dikirm ke kaban');
+        }else{
+            return view('admin.pages.skpd-renja_detail', ['renja'=> $renja]);  
+        }
+    }
+
+    public function SKPDRenjaApproval(Request $request)
+	{
+        $renja	= Renja::where('id', '=', $request->renja_id)->first();
+
+
+        if(  $renja->status_approve == '0'   ){
         
+            return view('admin.pages.skpd-renja_approval', ['renja'=> $renja,'pegawai'=>\Auth::user()->pegawai]);  
+        }else{
+            return redirect('/personal/renja/'.$renja->id)->with('status', 'Renja Sudah disetujui/ditolak');
+        }
     }
 
     public function SKPDRenjaEdit(request $x)

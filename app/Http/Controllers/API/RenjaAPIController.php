@@ -90,6 +90,8 @@ class RenjaAPIController extends Controller {
         $response = array();
         $body = array();
         $body_2 = array();
+        $body_3 = array();
+        $body_4 = array();
 
 
         $renja = Renja::where('id','=', $request->renja_id )
@@ -99,7 +101,7 @@ class RenjaAPIController extends Controller {
         
         //CREATED AT - Dibuat
         $x['tag']	    = 'p';
-        $x['content']	= 'Dibuat';
+        $x['content']	= '<b class="text-success">Dibuat</b>';
         array_push($body, $x);
         $x['tag']	    = 'p';
         $x['content']	= $renja->nama_admin_skpd;
@@ -120,18 +122,56 @@ class RenjaAPIController extends Controller {
 
         //UPDATED AT - Dikirim
         $y['tag']	    = 'p';
-        $y['content']	= 'Dikirim';
+        $y['content']	= '<b class="text-info">Dikirim</b>';
         array_push($body_2, $y);
         $y['tag']	    = 'p';
         $y['content']	= $renja->nama_admin_skpd;
         array_push($body_2, $y);
 
-        $i['time']	    = $renja->updated_at->format('Y-m-d H:i:s');
+        $i['time']	    = $renja->date_of_send;
         $i['body']	    = $body_2;
 
         if ( $renja->send_to_kaban == 1 )
         {
             array_push($response, $i);
+        }
+
+        //APPROVE  AT - Diterima
+        $z['tag']	    = 'p';
+        $z['content']	= '<b class="text-info">Disetujui</b>';
+        array_push($body_3, $z);
+        $z['tag']	    = 'p';
+        $z['content']	= $renja->nama_kepala_skpd;
+        array_push($body_3, $z);
+
+        $j['time']	    = $renja->date_of_approve;
+        $j['body']	    = $body_3;
+
+        if ( $renja->status_approve == 1 )
+        {
+            array_push($response, $j);
+        }
+
+        //APPROVE  AT - Ditolak
+        $a['tag']	    = 'p';
+        $a['content']	= '<b class="text-danger">Ditolak</b>';
+        array_push($body_4, $a);
+        $a['tag']	    = 'p';
+        $a['content']	= 'Alasan : ';
+        array_push($body_4, $a);
+        $a['tag']	    = 'p';
+        $a['content']	= $renja->alasan_penolakan;
+        array_push($body_4, $a);
+        $a['tag']	    = 'p';
+        $a['content']	= $renja->nama_kepala_skpd;
+        array_push($body_4, $a);
+
+        $k['time']	    = $renja->date_of_approve;
+        $k['body']	    = $body_4;
+
+        if ( $renja->status_approve == 2 )
+        {
+            array_push($response, $k);
         }
         
         
@@ -155,7 +195,8 @@ class RenjaAPIController extends Controller {
                             })
                             ->SELECT('kaban.id AS kaban_id',
                                     'renja.created_at AS created',
-                                    'renja.id AS renja_id')
+                                    'renja.id AS renja_id',
+                                    'renja.status_approve')
                             ->where('renja.id','=', $request->renja_id )->first();
 
       
@@ -180,12 +221,14 @@ class RenjaAPIController extends Controller {
             $button_kirim = 0 ;
         }
         
-         //STATUS APPROVE
-         if ( ($renja->status_approve) == 1 ){
+        //STATUS APPROVE
+        if ( ($renja->status_approve) != 0 ){
             $data_persetujuan_kaban = 'ok';
         }else{
             $data_persetujuan_kaban = '-';
         }
+
+      
 
 
         $response = array(
