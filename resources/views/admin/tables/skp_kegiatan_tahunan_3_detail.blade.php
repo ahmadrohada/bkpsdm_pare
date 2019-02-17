@@ -91,6 +91,7 @@
 							<tr>
 								<th>No</th>
 								<th>RENCANA AKSI</th>
+								<th>TARGET PELAKSANAAN</th>
 							</tr>
 						</thead>
 					</table>
@@ -127,7 +128,7 @@
 				'data' : {
 						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_3") }}", //Eselon 2
 						"data" 	: function (node) {
-							return  {   "renja_id" : {!! $skp->PerjanjianKinerja->Renja->id !!} , 
+							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
                                         "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
 										"skp_tahunan_id" : {!! $skp->id !!}
                                     };
@@ -213,7 +214,7 @@
 									url	: '{{ url("api_resource/kegiatan_tahunan_3") }}',
 									data: { 
 										
-											"renja_id" : {!! $skp->PerjanjianKinerja->Renja->id !!} , 
+											"renja_id" : {!! $skp->Renja->id !!} , 
 											"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
 											"skp_tahunan_id" : {!! $skp->id !!}
 									 },
@@ -277,7 +278,7 @@ $.ajax({
 			searching      	: false,
 			paging          : false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0] },
+								{ className: "text-center", targets: [ 0,2] },
 								{ 'orderable': false , targets: [ 0,1]  }
 							],
 			ajax			: {
@@ -291,6 +292,7 @@ $.ajax({
 									}
 								},
 								{ data: "label", name:"label"},
+								{ data: "target_pelaksanaan", name:"target_pelaksanaan"},
 							
 							],
 							initComplete: function(settings, json) {

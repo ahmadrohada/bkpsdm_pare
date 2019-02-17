@@ -31,7 +31,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
 
 
-    public function kegiatan_tugas_jabatan_list(Request $request)
+    public function KegiatanTugasJabatanList(Request $request)
     {
             
        
@@ -140,7 +140,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                             ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
-                                //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
+                                $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                             })
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
                                         'renja_kegiatan.label AS kegiatan_label',
@@ -226,8 +226,9 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
         $messages = [
                 'kegiatan_id.required'           => 'Harus diisi',
+                'skp_tahunan_id.required'        => 'Harus diisi',
                 'label.required'                 => 'Harus diisi',
-                'target.required'              => 'Harus diisi',
+                'target.required'                => 'Harus diisi',
                 'satuan.required'                => 'Harus diisi',
                 'quality.required'               => 'Harus diisi',
                 'target_waktu.required'          => 'Harus diisi',
@@ -238,8 +239,9 @@ class KegiatanSKPTahunanAPIController extends Controller {
                         Input::all(),
                         array(
                             'kegiatan_id'   => 'required',
+                            'skp_tahunan_id'=> 'required',
                             'label'         => 'required',
-                            'target'      => 'required|numeric',
+                            'target'        => 'required|numeric',
                             'satuan'        => 'required',
                             'quality'       => 'required|numeric|min:1|max:100',
                             'target_waktu'  => 'required|numeric|min:1|max:12',
@@ -257,8 +259,9 @@ class KegiatanSKPTahunanAPIController extends Controller {
         $st_kt    = new KegiatanSKPtahunan;
 
         $st_kt->kegiatan_id       = Input::get('kegiatan_id');
+        $st_kt->skp_tahunan_id    = Input::get('skp_tahunan_id');
         $st_kt->label             = Input::get('label');
-        $st_kt->target          = Input::get('target');
+        $st_kt->target            = Input::get('target');
         $st_kt->satuan            = Input::get('satuan');
         $st_kt->angka_kredit      = Input::get('angka_kredit');
         $st_kt->quality           = Input::get('quality');

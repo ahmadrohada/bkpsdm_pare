@@ -222,7 +222,7 @@ class RenjaAPIController extends Controller {
         }
         
         //STATUS APPROVE
-        if ( ($renja->status_approve) != 0 ){
+        if ( ($renja->status_approve) === '1' ){
             $data_persetujuan_kaban = 'ok';
         }else{
             $data_persetujuan_kaban = '-';
@@ -264,7 +264,8 @@ class RenjaAPIController extends Controller {
                                  'renja.id AS renja_id',
                                  'renja.send_to_kaban AS send_to_kaban',
                                  'renja.kepala_skpd_id AS kaban_id',
-                                 'renja.nama_kepala_skpd AS kaban_nama'
+                                 'renja.nama_kepala_skpd AS kaban_nama',
+                                 'renja.status_approve'
 
 
                                 );
@@ -273,20 +274,13 @@ class RenjaAPIController extends Controller {
     
         $datatables = Datatables::of($dt)
         ->addColumn('periode_id', function ($x) {
-
             return $x->periode_id;
-
         })->addColumn('periode_label', function ($x) {
-            
             return $x->periode_label;
-        
         })->addColumn('renja_id', function ($x) {
-
-
             return $x->renja_id;
         })->addColumn('skpd_id', function ($x) use($skpd_id) {
            return $skpd_id;
-        
         })->addColumn('kepala_skpd', function ($x) use($skpd_id) {
             if ( $x->renja_id == null ){
                 //Tampilkan nama kaban yang aktif
@@ -299,9 +293,14 @@ class RenjaAPIController extends Controller {
             
         
         })->addColumn('skpd', function ($x) {
-            
             //return Pustaka::capital_string($x->skpd);
-        
+        })->addColumn('status_approve', function ($x) {
+            if ( $x->renja_id == null ){
+                return 0 ;
+            }else{
+                return $x->status_approve;
+            }
+
         });
 
         

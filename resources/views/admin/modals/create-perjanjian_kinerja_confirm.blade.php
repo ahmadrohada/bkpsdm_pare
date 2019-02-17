@@ -34,7 +34,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	//swal({title: "",text: "Sukses",type: "success",width: "200px",showConfirmButton: false,allowOutsideClick : false,timer:3000});
+	//Swal.fire({title: "",text: "Sukses",type: "success",width: "200px",showConfirmButton: false,allowOutsideClick : false,timer:3000});
 
     $(document).on('click', '#simpan_perjanjian_kinerja', function(){
 		
@@ -48,7 +48,7 @@ $(document).ready(function() {
 				$('#perjanjian_kinerja').DataTable().ajax.reload(null,false);
 
                 
-				swal({
+				Swal.fire({
 					title: "",
 					text: "Sukses",
 					type: "success",
@@ -69,7 +69,7 @@ $(document).ready(function() {
 			)	
 			},
 			error: function(e) {
-				swal({
+				Swal.fire({
 					title: "Gagal",
 					text: "tidak berhasil disimpan",
 					type: "warning"

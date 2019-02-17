@@ -144,7 +144,7 @@ $(document).on('click','.create_sasaran',function(e){
 		var sasaran_id = $(this).data('id') ;
 		//alert(tujuan_id);
 
-		swal({
+		Swal.fire({
 			title: "Hapus  Sasaran",
 			text:$(this).data('label'),
 			type: "warning",
@@ -165,7 +165,7 @@ $(document).on('click','.create_sasaran',function(e){
 					data    : {sasaran_id:sasaran_id},
 					cache   : false,
 					success:function(data){
-							swal({
+							Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -189,7 +189,7 @@ $(document).on('click','.create_sasaran',function(e){
 							
 					},
 					error: function(e) {
-							swal({
+							Swal.fire({
 									title: "Gagal",
 									text: "",
 									type: "warning"

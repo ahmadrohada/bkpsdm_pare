@@ -229,11 +229,11 @@ class SKPTahunanAPIController extends Controller {
             
         $dt = \DB::table('db_pare_2018.renja AS renja')
                    
-                    ->join('db_pare_2018.perjanjian_kinerja AS pk', function($join){
+                    /* ->join('db_pare_2018.perjanjian_kinerja AS pk', function($join){
                         $join   ->on('pk.renja_id','=','renja.id');
-                    })
+                    }) */
                     ->rightjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function($join){
-                        $join   ->on('pk.id','=','skp_tahunan.perjanjian_kinerja_id');
+                        $join   ->on('renja.id','=','skp_tahunan.renja_id');
                     }) 
                     //PERIODE
                     ->leftjoin('db_pare_2018.periode AS periode', function($join){
@@ -367,29 +367,28 @@ class SKPTahunanAPIController extends Controller {
 
     //=======================================================================================//
 
-    protected function status_pk($skpd_id,$periode_id){
-        $pk = Renja::
-                rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
-                    $join   ->on('pk.renja_id','=','renja.id');
-                    $join   ->where('pk.status_approve','=','1');
-                })
-                ->where('renja.skpd_id',$skpd_id)
+    protected function status_renja($skpd_id,$periode_id){
+        $renja = Renja::
+            
+                where('renja.skpd_id',$skpd_id)
+                ->where('renja.send_to_kaban','1')
+                ->where('renja.status_approve','1')
                 ->where('renja.periode_id',$periode_id)
                 ->exists();
 
-        return $pk;
+        return $renja;
     }
 
 
 
     protected function skp_tahunan_id($skpd_id,$periode_id,$pegawai_id,$jabatan_id){
         $pk = Renja::
-                rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
+              /*   rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
                     $join   ->on('pk.renja_id','=','renja.id');
                     $join   ->where('pk.status_approve','=','1');
-                })
-                ->rightjoin('db_pare_2018.skp_tahunan AS skp', function($join){
-                    $join   ->on('skp.perjanjian_kinerja_id','=','pk.id');
+                }) */
+                rightjoin('db_pare_2018.skp_tahunan AS skp', function($join){
+                    $join   ->on('skp.renja_id','=','renja.id');
                 })
                 ->where('skp.pegawai_id',$pegawai_id)
                 ->where('skp.u_jabatan_id',$jabatan_id)
@@ -406,7 +405,7 @@ class SKPTahunanAPIController extends Controller {
     }
 
 
-    public function Personal_SKP_tahunan_list(Request $request)
+    public function PersonalSKPTahunanList(Request $request)
     {
             
         $id_pegawai = $request->pegawai_id;
@@ -452,7 +451,7 @@ class SKPTahunanAPIController extends Controller {
                     $h['skpd']			        = Pustaka::capital_string($y->Skpd ? $y->Skpd->skpd : '');
                     $h['skpd_id']			    = $y->Skpd ? $y->Skpd->id : '';
                     $h['tmt_jabatan']			= $y->tmt_jabatan;
-                    $h['pk_status']             = $this->status_pk($y->Skpd ? $y->Skpd->id : '',$x->id);
+                    $h['renja_status']          = $this->status_renja($y->Skpd ? $y->Skpd->id : '',$x->id);
                     $h['skp_tahunan_id']        = $this->skp_tahunan_id($y->Skpd ? $y->Skpd->id : '',$x->id , $id_pegawai , $y->jabatan_id);
 
                     array_push($response, $h);
@@ -475,7 +474,7 @@ class SKPTahunanAPIController extends Controller {
                     $h['skpd']			    = $last_skpd;
                     $h['skpd_id']			= $last_skpd_id;
                     $h['tmt_jabatan']	    = $last_tmt_jabatan;
-                    $h['pk_status']         = $this->status_pk($last_skpd_id,$x->id);
+                    $h['renja_status']      = $this->status_renja($last_skpd_id,$x->id);
                     $h['skp_tahunan_id']    = $this->skp_tahunan_id($last_skpd_id ,$x->id , $id_pegawai , $y->jabatan_id);
                     array_push($response, $h);
                     $no = $no+1;
@@ -486,8 +485,6 @@ class SKPTahunanAPIController extends Controller {
 
         }
 
-        //return $response;                
-       
         $datatables = Datatables::of(collect($response))
             ->addColumn('id', function ($x) {
                 return $x['id'] ;
@@ -509,21 +506,18 @@ class SKPTahunanAPIController extends Controller {
             ->addColumn('skpd', function ($x) {
                 return  $x['skpd'];
             })
-            ->addColumn('perjanjian_kinerja', function ($x) {
+            ->addColumn('renja', function ($x) {
                 //true = skpd sudah memilik renja false = skpd blm memiliki renja
-               
-
-
-                return  $x['pk_status'];
+                return  $x['renja_status'];
                 
             })
             ->addColumn('skp_tahunan', function ($x) {
             
-                if ( ( $x['pk_status'] === true ) && ( $x['skp_tahunan_id'] === null ) ) {
+                if ( ( $x['renja_status'] === true ) && ( $x['skp_tahunan_id'] === null ) ) {
                     return 0; //0 = skpd sudah memiiki renja, skp belum dibuat , button create enable and show
-                }else if ( ( $x['pk_status'] === true ) && ( $x['skp_tahunan_id'] != null ) ) {
+                }else if ( ( $x['renja_status'] === true ) && ( $x['skp_tahunan_id'] != null ) ) {
                     return 1 ;  //1 = skpd sudah memiiki renja, skp sudah dibuat , button edit enable show
-                }else if ($x['pk_status'] === false){
+                }else if ($x['renja_status'] === false){
                     return 2 ;  //2 = skpd belum memiiki renja,  button create disabled
                 }
                 
@@ -557,8 +551,8 @@ class SKPTahunanAPIController extends Controller {
     }
 
 
-    protected function new_skp_componen($jabatan_id,$pk_id,$periode_id){
-        //return $jabatan_id.'|'.$pk_id.'|'.$periode_id;
+    protected function new_skp_componen($jabatan_id,$renja_id,$periode_id){
+        //return $jabatan_id.'|'.$renja_id.'|'.$periode_id;
 
 
         //peridoe masa penilaian 
@@ -581,7 +575,7 @@ class SKPTahunanAPIController extends Controller {
                     'status'			    => 'pass',
                     'pegawai_id'			=> $u_detail->id_pegawai,
                     'periode_label'	        => $periode->label,
-                    'perjanjian_kinerja_id'	=> $pk_id,
+                    'renja_id'	            => $renja_id,
                     'u_jabatan_id'	        => $u_detail->id,
                     'u_nip'	                => $u_detail->nip,
                     'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
@@ -631,20 +625,22 @@ class SKPTahunanAPIController extends Controller {
         $skpd_id = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))->SELECT('id','id_skpd')->first()->id_skpd;
        
         //cari perjanjian kinerja dari periode ID
-        $pk_id   = Renja::WHERE('renja.periode_id',$request->get('periode_id'))
+        $renja_id   = Renja::WHERE('renja.periode_id',$request->get('periode_id'))
                         ->WHERE('renja.skpd_id',$skpd_id)
-                        ->leftjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
+                        ->WHERE('renja.send_to_kaban','1')
+                        ->WHERE('renja.status_approve','1')
+                        /* ->leftjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
                             $join   ->on('renja.id','=','pk.renja_id');
-                        })
-                        ->SELECT('pk.id AS pk_id')
+                        }) */
+                        ->SELECT('renja.id AS renja_id')
                         ->first()
-                        ->pk_id;
+                        ->renja_id;
 
         
 
         // COUNT SKP TAHUNAN DENWGAN DATA DIATAS
         $skp_count      = SKPTahunan::WHERE('pegawai_id', $request->get('pegawai_id'))
-                                ->WHERE('perjanjian_kinerja_id',$pk_id)
+                                ->WHERE('renja_id',$renja_id)
                                 ->WHERE('u_jabatan_id', $request->get('jabatan_id'))
                                 ->count();
 
@@ -669,15 +665,17 @@ class SKPTahunanAPIController extends Controller {
 
                 $renja = Renja::WHERE('skpd_id',$skpd_id)
                                 ->WHERE('periode_id',$request->periode_id)
-                                ->rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
+                                ->WHERE('send_to_kaban','1')
+                                ->WHERE('status_approve','1')
+                                /* ->rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
                                     $join   ->on('pk.renja_id','=','renja.id');
                                     $join   ->where('pk.status_approve','=','1');
-                                }) 
+                                })  */
                                 ->SELECT(
-                                            'pk.id AS pk_id'
+                                            'renja.id AS renja_id'
                                         )
                                 ->first();
-                $pk_id = $renja->pk_id;
+                $renja_id = $renja->renja_id;
 
                
                 $bawahan_aktif = SKPD::WHERE('parent_id', $jabatan_id )
@@ -691,21 +689,21 @@ class SKPTahunanAPIController extends Controller {
                 //$bawahan_aktif = ['35342','35245'];
 
 
-                $skp_bawahan = SKPTahunan::WHERE('perjanjian_kinerja_id',$pk_id)
+                $skp_bawahan = SKPTahunan::WHERE('renja_id',$renja_id)
                                             ->WHERE('send_to_atasan','1')
                                             ->WHERE('status_approve','1')
                                             ->WHEREIN('u_jabatan_id',$bawahan_aktif)
                                             ->count();
 
                if ( COUNT($bawahan_aktif) == $skp_bawahan ){
-                    $data = $this->new_skp_componen($request->get('jabatan_id'),$pk_id,$request->get('periode_id'));
+                    $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
 
                     return $data;
                }else{
                     $data = array(
                                     'status'			    => 'fail',
                                     'jenis_jabatan'			=> $jenis_jabatan,
-                                    'perjanjian_kinerja_id' => $pk_id,
+                                    'renja_id'              => $renja_id,
                                     'jabatan_id'            => $jabatan_id
                                 );
 
@@ -723,7 +721,7 @@ class SKPTahunanAPIController extends Controller {
 //Jabatan PENGAWAS KASUBID =======================================================================================//
  
                 //ready to SKP
-                $data = $this->new_skp_componen($request->get('jabatan_id'),$pk_id,$request->get('periode_id'));
+                $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
 
                 return $data;
             }else{
@@ -760,7 +758,7 @@ class SKPTahunanAPIController extends Controller {
 
        
         $cek_data = SKPTahunan::where('pegawai_id',$pegawai->id)
-                                ->where('perjanjian_kinerja_id',$perjanjian_kinerja_publish->id)
+                                ->where('renja_id',$perjanjian_kinerja_publish->id)
                                 ->where('jabatan_id',$jabatan->id)
                                 ->count();
 
@@ -787,7 +785,7 @@ class SKPTahunanAPIController extends Controller {
                             'tgl_selesai'           => Pustaka::tgl_form($periode_aktif->akhir),
     
     
-                            'perjanjian_kinerja_id' => $perjanjian_kinerja_publish->id,
+                            'renja_id' => $perjanjian_kinerja_publish->id,
                             'pegawai_id'            => $pegawai->id,
                             'jabatan_id'            => $jabatan->id,
     
@@ -909,7 +907,7 @@ class SKPTahunanAPIController extends Controller {
 	{
         $messages = [
                 'pegawai_id.required'                   => 'Harus diisi',
-                'perjanjian_kinerja_id.required'        => 'Harus diisi',
+                'renja_id.required'        => 'Harus diisi',
                 'tgl_mulai.required'                    => 'Harus diisi',
                 'tgl_selesai.required'                  => 'Harus diisi',
                 'u_nama.required'                       => 'Harus diisi',
@@ -923,7 +921,7 @@ class SKPTahunanAPIController extends Controller {
                         Input::all(),
                         array(
                             'pegawai_id'            => 'required',
-                            'perjanjian_kinerja_id' => 'required',
+                            'renja_id' => 'required',
                             'tgl_mulai'             => 'required',
                             'tgl_selesai'           => 'required',
                             'u_nama'                => 'required',
@@ -949,7 +947,7 @@ class SKPTahunanAPIController extends Controller {
 
         $skp_tahunan    = new SKPTahunan;
         $skp_tahunan->pegawai_id                  = Input::get('pegawai_id');
-        $skp_tahunan->perjanjian_kinerja_id       = Input::get('perjanjian_kinerja_id');
+        $skp_tahunan->renja_id       = Input::get('renja_id');
         $skp_tahunan->u_nama                      = Input::get('u_nama');
         $skp_tahunan->u_jabatan_id                = Input::get('u_jabatan_id');
         $skp_tahunan->p_nama                      = Input::get('p_nama');
@@ -959,7 +957,7 @@ class SKPTahunanAPIController extends Controller {
         
 
         if ( $skp_tahunan->save()){
-            return \Response::make('sukses', 200);
+            return \Response::make($skp_tahunan->id, 200);
         }else{
             return \Response::make('error', 500);
         } 

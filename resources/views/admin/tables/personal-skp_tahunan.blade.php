@@ -19,7 +19,7 @@
 					<th>TMT</th>
 					<th>JABATAN</th>
 					<th>SKPD</th>
-					<th>PERJANJIN KINERJA</th>
+					<th>RENJA</th>
 
 					<th>SKP TAHUNAN</th>
 				</tr>
@@ -52,6 +52,7 @@
 									url	: '{{ url("api_resource/personal_skp_tahunan_list") }}',
 									data: { pegawai_id : {!! $pegawai->id !!} },
 									delay:3000
+
 								},
 				
 
@@ -66,9 +67,9 @@
 								{ data: "tmt_jabatan" ,  name:"tmt_jabatan", orderable: true, searchable: true},
 								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true},
 								{ data: "skpd" ,  name:"skpd", orderable: true, searchable: true},
-								{ data: "perjanjian_kinerja" , orderable: false,searchable:false,width:"40px",
+								{ data: "renja" , orderable: false,searchable:false,width:"40px",
 										"render": function ( data, type, row ) {
-										if (row.perjanjian_kinerja == true ){
+										if (row.renja == true ){
 											return  '<span class="label label-success"><i class="fa fa-check"></i></span>';
 										}else{
 											return  '<span class="label label-default"><i class="fa fa-close"></i></span>';
@@ -133,7 +134,7 @@
 		var skp_tahunan_id = $(this).data('id') ;
 		//alert(kegiatan_tahunan_id);
 
-		swal({
+		Swal.fire({
 			title: "Hapus  SKP Tahunan",
 			text:$(this).data('periode'),
 			type: "warning",
@@ -154,7 +155,7 @@
 					data    : {skp_tahunan_id:skp_tahunan_id},
 					cache   : false,
 					success:function(data){
-							swal({
+							Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -177,7 +178,7 @@
 							
 					},
 					error: function(e) {
-							swal({
+							Swal.fire({
 									title: "Gagal",
 									text: "",
 									type: "warning"

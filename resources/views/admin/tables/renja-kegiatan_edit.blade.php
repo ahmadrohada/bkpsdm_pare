@@ -157,7 +157,7 @@ function load_kegiatan(ind_program_id){
 		var kegiatan_id = $(this).data('id') ;
 		//alert(tujuan_id);
 
-		swal({
+		Swal.fire({
 			title: "Hapus  Kegiatan",
 			text:$(this).data('label'),
 			type: "warning",
@@ -178,7 +178,7 @@ function load_kegiatan(ind_program_id){
 					data    : {kegiatan_id:kegiatan_id},
 					cache   : false,
 					success:function(data){
-							swal({
+							Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -202,7 +202,7 @@ function load_kegiatan(ind_program_id){
 							
 					},
 					error: function(e) {
-							swal({
+							Swal.fire({
 									title: "Gagal",
 									text: "",
 									type: "warning"

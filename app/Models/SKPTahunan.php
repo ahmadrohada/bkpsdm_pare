@@ -9,9 +9,9 @@ class SKPTahunan extends Model
     protected $table = 'skp_tahunan';
 
 
-    public function PerjanjianKinerja()
+    public function Renja()
     {
-        return $this->hasOne('App\Models\PerjanjianKinerja','id','perjanjian_kinerja_id');
+        return $this->hasOne('App\Models\Renja','id','renja_id');
     }
     
     public function PejabatYangDinilai()

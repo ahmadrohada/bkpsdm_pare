@@ -34,7 +34,7 @@
 <script type="text/javascript">
 
 		
-	function initRenjaTree() {
+	function RencanaKerjaList() {
 		$('#renja')
 		.jstree({
             'core' : {

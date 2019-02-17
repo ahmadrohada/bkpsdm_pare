@@ -150,7 +150,7 @@ $(document).on('click','.edit_program',function(e){
 $(document).on('click','.hapus_program',function(e){
 	var program_id = $(this).data('id') ;
 	
-	swal({
+	Swal.fire({
 		title: "Hapus  Program",
 		text:$(this).data('label'),
 		type: "warning",
@@ -171,7 +171,7 @@ $(document).on('click','.hapus_program',function(e){
 				data    : {program_id:program_id},
 				cache   : false,
 				success:function(data){
-						swal({
+						Swal.fire({
 								title: "",
 								text: "Sukses",
 								type: "success",
@@ -195,7 +195,7 @@ $(document).on('click','.hapus_program',function(e){
 						
 				},
 				error: function(e) {
-						swal({
+						Swal.fire({
 								title: "Gagal",
 								text: "",
 								type: "warning"

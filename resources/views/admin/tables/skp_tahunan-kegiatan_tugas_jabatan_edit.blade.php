@@ -78,7 +78,7 @@ $(document).ready(function() {
 			columns			: [
 								{ data: 'rownum', orderable: true, searchable: false ,width:"30px"},
 								{ data: "label", name:"label", orderable: true, searchable: true},
-								{ data: "ak", name:"ak", orderable: true, searchable: true},
+								{ data: "angka_kredit", name:"angka_kredit", orderable: true, searchable: true},
 								{ data: "output", name:"output", orderable: true, searchable: true},
 								{ data: "mutu", name:"mutu", orderable: true, searchable: true},
 								{ data: "waktu", name:"waktu", orderable: true, searchable: true},

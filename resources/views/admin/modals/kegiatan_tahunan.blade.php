@@ -29,9 +29,9 @@
 						<input type="text" name="angka_kredit" id="angka_kredit" required class="form-control input-sm" placeholder="AK" maxlength="5" onkeypress='return angka(event)'>
 						</div>
 					
-						<div class="col-md-4 form-group quantity">
+						<div class="col-md-4 form-group target">
 						<label class="control-label">Output :</label>
-						<input type="text" name="quantity" id="quantity" required class="form-control input-sm" placeholder="qty" onkeypress='return angka(event)'>        
+						<input type="text" name="target" id="target" required class="form-control input-sm" placeholder="target" onkeypress='return angka(event)'>        
 						</div>
 
 						<div class="col-md-4 form-group satuan">
@@ -87,16 +87,16 @@
 	});
 
 	$('.modal-kegiatan_tahunan').on('hidden.bs.modal', function(){
-		$('.label_kegiatan, .quantity, .satuan, .waktu, .quality').removeClass('has-error');
-		$('.modal-kegiatan_tahunan').find('[name=kegiatan_tahunan_id],[name=label],[name=angka_kredit],[name=quantity],[name=quality],[name=satuan],[name=target_waktu],[name=cost]').val('');
+		$('.label_kegiatan, .target, .satuan, .waktu, .quality').removeClass('has-error');
+		$('.modal-kegiatan_tahunan').find('[name=kegiatan_tahunan_id],[name=label],[name=angka_kredit],[name=target],[name=quality],[name=satuan],[name=target_waktu],[name=cost]').val('');
 	});
 
 	$('.label_kegiatan').on('click', function(){
 		$('.label_kegiatan').removeClass('has-error');
 	});
 
-	$('.quantity').on('click', function(){
-		$('.quantity').removeClass('has-error');
+	$('.target').on('click', function(){
+		$('.target').removeClass('has-error');
 	});
 
 	$('.satuan').on('click', function(){
@@ -127,7 +127,7 @@
 				//$('#program_table').DataTable().ajax.reload(null,false);
                
 
-				swal({
+				Swal.fire({
 					title: "",
 					text: "Sukses",
 					type: "success",
@@ -160,7 +160,7 @@
 					
 					//error message
 					((index == 'label')?$('.label_kegiatan').addClass('has-error'):'');
-					((index == 'quantity')?$('.quantity').addClass('has-error'):'');
+					((index == 'target')?$('.target').addClass('has-error'):'');
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					((index == 'quality')?$('.quality').addClass('has-error'):'');
 					((index == 'target_waktu')?$('.waktu').addClass('has-error'):'');
@@ -196,7 +196,7 @@
 				//$('#program_table').DataTable().ajax.reload(null,false);
 			
 
-				swal({
+				Swal.fire({
 					title: "",
 					text: "Sukses",
 					type: "success",
@@ -229,7 +229,7 @@
 					
 					//error message
 					((index == 'label')?$('.label_kegiatan').addClass('has-error'):'');
-					((index == 'quantity')?$('.quantity').addClass('has-error'):'');
+					((index == 'target')?$('.target').addClass('has-error'):'');
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					((index == 'quality')?$('.quality').addClass('has-error'):'');
 					((index == 'target_waktu')?$('.waktu').addClass('has-error'):'');

@@ -43,7 +43,7 @@ $(document).ready(function() {
 			data	:  { pegawai_id:pegawai_id,nip:nip },
 			success	: function(data , textStatus, jqXHR) {
 				
-				swal({
+				Swal.fire({
                         title: "",
                         text: "Sukses",
                         type: "success",

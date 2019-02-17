@@ -136,7 +136,7 @@ function load_ind_tujuan(tujuan_id){
 		var ind_tujuan_id = $(this).data('id') ;
 		//alert(tujuan_id);
 
-		swal({
+		Swal.fire({
 			title: "Hapus  Indikator Tujuan",
 			text:$(this).data('label'),
 			type: "warning",
@@ -157,7 +157,7 @@ function load_ind_tujuan(tujuan_id){
 					data    : {ind_tujuan_id:ind_tujuan_id},
 					cache   : false,
 					success:function(data){
-							swal({
+							Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -181,7 +181,7 @@ function load_ind_tujuan(tujuan_id){
 							
 					},
 					error: function(e) {
-							swal({
+							Swal.fire({
 									title: "Gagal",
 									text: "",
 									type: "warning"

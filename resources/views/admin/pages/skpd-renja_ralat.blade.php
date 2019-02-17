@@ -10,7 +10,7 @@
 	    <section class="content-header">
 
 			<h1>
-				Rencana Kerja
+				Ralat Rencana Kerja
 			</h1>
 
 				{!! Breadcrumbs::render('skpd-renja') !!}
@@ -18,8 +18,8 @@
 	    </section>
 	    <section class="content">
 
-				<div class="nav-tabs-custom">
-					<ul class="nav nav-tabs" id="myTab">
+				<div class="nav-tabs-custom ">
+					<ul class="nav nav-tabs " id="myTab">
 						<li class="status"><a href="#status" data-toggle="tab">Status</a></li>
 						<li class="detail"><a href="#detail" data-toggle="tab">Detail</a></li>
 						<li class="renja_tree"><a href="#renja_list" data-toggle="tab">Rencana Kerja</a></li>
@@ -28,21 +28,21 @@
 						
 					<div class="tab-content"  style="margin-left:20px;">
 						<div class="active tab-pane" id="status">
-							@include('admin.modules.timeline.renja_status_detail')	
+							@include('admin.modules.timeline.renja_status_edit')	
 						</div>
 						<div class="tab-pane" id="detail">
 							@include('admin.modules.skpd-renja_detail')
 						</div>
 						
 						<div class=" tab-pane" id="renja_list">
-							@include('admin.modules.detail_forms.rencana_kerja')
-						</div> 
+							@include('admin.modules.edit_forms.rencana_kerja')
+						</div>
 						
   
 						<div class=" tab-pane" id="distribusi_kegiatan">
-							@include('admin.modules.detail_forms.distribusi_kegiatan') 
+							@include('admin.modules.edit_forms.distribusi_kegiatan') 
 						</div>
-						 
+						
 					</div>
 						
 				</div>
@@ -71,8 +71,7 @@ $(document).ready(function() {
 		//alert(id);
 
 		if ( id == 'renja_list'){
-			//alert(id);
-			RencanaKerjaList();
+			initRenjaTree();
 			
 		}else if ( id == 'status'){
 			

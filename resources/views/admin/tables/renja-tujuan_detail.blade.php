@@ -61,6 +61,7 @@
 
 <script type="text/javascript">
 
+
     $('#tujuan_table').DataTable({
 				destroy			: true,
 				processing      : false,

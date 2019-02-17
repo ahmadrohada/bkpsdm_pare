@@ -64,7 +64,7 @@ class RenjaController extends Controller {
         
 
         if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) == 2 ) ){
-            return redirect('/skpd/renja/'.$request->renja_id.'/ralat')->with('status', 'Renja belum dikirm ke kaban');
+            return redirect('/skpd/renja/'.$request->renja_id.'/ralat')->with('status', 'Renja ditolak kaban');
         }else if( ($renja->send_to_kaban) == 0 ) {
             return redirect('/skpd/renja/'.$request->renja_id.'/edit')->with('status', 'Renja belum dikirm ke kaban');
         }else{
@@ -110,9 +110,24 @@ class RenjaController extends Controller {
         if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) != 2 ) ){
             return redirect('/skpd/renja/'.$x->renja_id)->with('status', 'Rencana Kerja dikirm ke atasan');
         }else{
-            return view('admin.pages.skpd-renja_edit', ['renja'=> $renja,'h_box'=> 'box-info',]);    
+            return view('admin.pages.skpd-renja_edit', ['renja'=> $renja,'h_box'=> 'box-info']);    
         }
 
+    }
+
+    public function SKPDRenjaRalat(Request $request)
+	{
+        $renja	= Renja::where('id', '=', $request->renja_id)->first();
+
+        
+        if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) == 2 ) ){
+            return view('admin.pages.skpd-renja_ralat', ['renja'=> $renja,'h_box'=> 'box-warning']);
+        }else if( ($renja->send_to_kaban) == 0 ) {
+            return redirect('/skpd/renja/'.$renja->id.'/edit')->with('status', 'Renja belum dikirm ke kaban');
+        }else{
+            return redirect('/skpd/renja/'.$renja->id)->with('status', 'Rencana Kerja dikirm ke atasan');
+        }
+        
     }
 
 

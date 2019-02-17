@@ -95,6 +95,7 @@
 							<tr>
 								<th>No</th>
 								<th>RENCANA AKSI</th>
+								<th>TARGET PELAKSANAAN</th>
 								<th><i class="fa fa-cog"></i></th>
 							</tr>
 						</thead>
@@ -141,7 +142,7 @@
 				'data' : {
 						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_3") }}", //Eselon 2
 						"data" 	: function (node) {
-							return  {   "renja_id" : {!! $skp->PerjanjianKinerja->Renja->id !!} , 
+							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
                                         "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
 										"skp_tahunan_id" : {!! $skp->id !!}
                                     };
@@ -238,7 +239,7 @@
 									url	: '{{ url("api_resource/kegiatan_tahunan_3") }}',
 									data: { 
 										
-											"renja_id" : {!! $skp->PerjanjianKinerja->Renja->id !!} , 
+											"renja_id" : {!! $skp->Renja->id !!} , 
 											"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
 											"skp_tahunan_id" : {!! $skp->id !!}
 									 },
@@ -258,7 +259,7 @@
 											}
 										}
 									},
-									{ data: "ak", name:"ak" },
+									{ data: "angka_kredit", name:"angka_kredit" },
 									{ data: "output", name:"output"},
 									{ data: "mutu", name:"mutu"},
 									{ data: "waktu", name:"waktu"},
@@ -330,7 +331,7 @@
 		var kegiatan_tahunan_id = $(this).data('id') ;
 		//alert(kegiatan_tahunan_id);
 
-		swal({
+		Swal.fire({
 			title: "Hapus  Kegiatan Tahunan",
 			text:$(this).data('label'),
 			type: "warning",
@@ -351,7 +352,7 @@
 					data    : {kegiatan_tahunan_id:kegiatan_tahunan_id},
 					cache   : false,
 					success:function(data){
-							swal({
+							Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -375,7 +376,7 @@
 							
 					},
 					error: function(e) {
-							swal({
+							Swal.fire({
 									title: "Gagal",
 									text: "",
 									type: "warning"
@@ -406,6 +407,7 @@
 				dataType	: "json",
 				success	: function(data) {
 					$('.modal-rencana_aksi').find('[name=label]').val(data['label']);
+					$('.modal-rencana_aksi').find('[name=target_pelaksanaan]').val(data['target_pelaksanaan']);
 
 
 					$('.modal-rencana_aksi').find('[name=rencana_aksi_id]').val(data['id']);
@@ -424,7 +426,7 @@
 		var rencana_aksi_id = $(this).data('id') ;
 		//alert(rencana_aksi_id);
 
-		swal({
+		Swal.fire({
 			title: "Hapus  rencana Aksi",
 			text:$(this).data('label'),
 			type: "warning",
@@ -445,7 +447,7 @@
 					data    : {rencana_aksi_id:rencana_aksi_id},
 					cache   : false,
 					success:function(data){
-							swal({
+							Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -469,7 +471,7 @@
 							
 					},
 					error: function(e) {
-							swal({
+							Swal.fire({
 									title: "Gagal",
 									text: "",
 									type: "warning"
@@ -526,7 +528,7 @@
 				searching      	: false,
 				paging          : false,
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2 ] },
+									{ className: "text-center", targets: [ 0,2,3 ] },
 									{ 'orderable': false , targets: [ 0,1,2 ]  }
 								],
 				ajax			: {
@@ -540,6 +542,7 @@
 										}
 									},
 									{ data: "label", name:"label"},
+									{ data: "target_pelaksanaan", name:"target_pelaksanaan",width:"20px"},
 									{  data: 'action',width:"15%",
 											"render": function ( data, type, row ) {
 

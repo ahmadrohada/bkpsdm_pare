@@ -5,7 +5,7 @@
 			<div class="box-body box-profile">
 			
 				<h3 class="profile-username text-center">SKP TAHUNAN</h3>
-				<p class="text-muted text-center">{{ $skp->PerjanjianKinerja->Renja->Periode->label}}</p>
+				<p class="text-muted text-center">{{ $skp->Renja->Periode->label}}</p>
 
 				<ul class="list-group list-group-unbordered">
 					<li class="list-group-item">
@@ -60,7 +60,7 @@
 				url			: '{{ url("api_resource/skp_tahunan_timeline_status") }}',
 				data 		: { skp_tahunan_id : {!! $skp->id!!},
 								jabatan_id : {!! $skp->PejabatYangDinilai->id_jabatan !!},
-								renja_id : {!! $skp->PerjanjianKinerja->Renja->id !!}
+								renja_id : {!! $skp->Renja->id !!}
 								},
 				method		: "GET",
 				dataType	: "json",
@@ -92,7 +92,7 @@
 				url			: '{{ url("api_resource/skp_tahunan_status_pengisian3") }}',
 				data 		: { skp_tahunan_id : {!! $skp->id!!},
 								jabatan_id : {!! $skp->PejabatYangDinilai->id_jabatan !!},
-								renja_id : {!! $skp->PerjanjianKinerja->Renja->id !!} 
+								renja_id : {!! $skp->Renja->id !!} 
 								},
 				method		: "GET",
 				dataType	: "json",
@@ -121,7 +121,7 @@
 
 
 	$(document).on('click','.kirim_skp_tahunan',function(e){
-		swal({
+		Swal.fire({
 				title: "Kirim SKP Tahunan",
 				text: "SKP Tahunan akan dikirim kepada Pejabat Penilai untuk mendapatkan persetujuan",
 				type: "question",
@@ -140,7 +140,7 @@
 					data    : {skp_tahunan_id: {!! $skp->id !!} },
 					cache   : false,
 					success:function(data){
-							swal({
+							Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -163,7 +163,7 @@
 							
 					},
 					error: function(e) {
-							swal({
+							Swal.fire({
 									title: "Gagal",
 									text: "",
 									type: "warning"
