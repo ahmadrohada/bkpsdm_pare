@@ -146,7 +146,7 @@
 				'data' : {
 						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_2") }}", //Eselon 2
 						"data" 	: function (node) {
-							return  {   "renja_id" : {!! $skp->PerjanjianKinerja->Renja->id !!} , 
+							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
                                         "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
 										"skp_tahunan_id" : {!! $skp->id !!}
                                     };
@@ -245,7 +245,7 @@
 									url	: '{{ url("api_resource/kegiatan_tahunan_2") }}',
 									data: { 
 										
-											"renja_id" : {!! $skp->PerjanjianKinerja->Renja->id !!} , 
+											"renja_id" : {!! $skp->Renja->id !!} , 
 											"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
 											"skp_tahunan_id" : {!! $skp->id !!}
 									 },

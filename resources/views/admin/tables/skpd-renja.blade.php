@@ -17,6 +17,7 @@
 					<th>NO</th>
 					<th>PERIODE</th>
 					<th>KEPALA SKPD</th>
+
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
 			</thead>
@@ -68,10 +69,18 @@
 										if ( row.renja_id >= 1 ){ // sudah bikin 
 
 											if ( row.send_to_kaban == 1 ){ //sudah dikirim ke kaban
-												return  '<span  data-toggle="tooltip" title="Lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_renja"  data-id="'+row.renja_id+'" ><i class="fa fa-eye" ></i></a></span>'
-														+'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-default btn-xs edit_renja"  data-id="'+row.renja_id+'" disabled><i class="fa fa-pencil" ></i></a></span>'
-														+'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs hapus_renja"  data-id="'+row.renja_id+'" data-periode="'+row.periode_label+'" disabled><i class="fa fa-close " ></i></a></span>';
+												if (row.status_approve == 2 ){//ditolak
+													return  '<span  data-toggle="tooltip" title="Lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "  disabled><i class="fa fa-eye" ></i></a></span>'
+															+'<span  data-toggle="tooltip" title="Ralat" style="margin:2px;" ><a class="btn btn-warning btn-xs ralat_renja"  data-id="'+row.renja_id+'" ><i class="fa fa-pencil" ></i></a></span>'
+															+'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs hapus_renja"  data-id="'+row.renja_id+'" data-periode="'+row.periode_label+'" disabled><i class="fa fa-close " ></i></a></span>';
 											
+												} else{
+													return  '<span  data-toggle="tooltip" title="Lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_renja"  data-id="'+row.renja_id+'" ><i class="fa fa-eye" ></i></a></span>'
+															+'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-default btn-xs edit_renja"  data-id="'+row.renja_id+'" disabled><i class="fa fa-pencil" ></i></a></span>'
+															+'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs hapus_renja"  data-id="'+row.renja_id+'" data-periode="'+row.periode_label+'" disabled><i class="fa fa-close " ></i></a></span>';
+											
+												}
+												
 											}else{ //belum dikirim ke kaban
 												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs" disabled><i class="fa fa-eye" ></i></a></span>'
 														+'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_renja"  data-id="'+row.renja_id+'"><i class="fa fa-pencil" ></i></a></span>'
@@ -104,6 +113,12 @@
 		var renja_id = $(this).data('id') ;
 		
 		window.location.assign("renja/"+renja_id);
+	});
+
+	$(document).on('click','.ralat_renja',function(e){
+		var renja_id = $(this).data('id') ;
+		
+		window.location.assign("renja/"+renja_id+"/ralat");
 	});
 
 </script>

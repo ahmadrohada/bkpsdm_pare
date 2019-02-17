@@ -61,7 +61,7 @@
 <script type="text/javascript">
 
 
-load_kegiatan_kabid({!!$renja->KepalaSKPD->id_jabatan!!});
+//load_kegiatan_kabid({!!$renja->KepalaSKPD->id_jabatan!!});
 
 function load_kegiatan_kabid(jabatan_id){
 

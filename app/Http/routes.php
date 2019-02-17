@@ -287,7 +287,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	//==================================  SKP THAUNAN=================================================//
 	//========================================================================================================//
-	Route::get('personal_skp_tahunan_list','API\SKPTahunanAPIController@Personal_SKP_tahunan_list');
+	Route::get('personal_skp_tahunan_list','API\SKPTahunanAPIController@PersonalSKPTahunanList');
 
 	//KASUBID
 	Route::get('skp_tahunan_status_pengisian3','API\SKPTahunanAPIController@SKPTahunanStatusPengisian3');
@@ -333,7 +333,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	
 
-	Route::get('skp_tahunan_kegiatan_tugas_jabatan','API\KegiatanSKPTahunanAPIController@kegiatan_tugas_jabatan_list');
+	Route::get('skp_tahunan_kegiatan_tugas_jabatan','API\KegiatanSKPTahunanAPIController@KegiatanTugasJabatanList');
 
 	//========================================================================================================//
 	//============================== KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
@@ -345,7 +345,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//======================================= RENCANA AKSI  SKP THAUNAN ======================================//
 	//========================================================================================================//
 	Route::get('rencana_aksi_tree','API\RencanaAksiAPIController@rencana_aksi_tree');
-	Route::get('skp_tahunan_rencana_aksi','API\RencanaAksiAPIController@RencanaAksioverKegiatanTahunan');
+	Route::get('skp_tahunan_rencana_aksi','API\RencanaAksiAPIController@RencanaAksiList');
 	Route::get('rencana_aksi_detail','API\RencanaAksiAPIController@RencanaAksiDetail');
 
 	Route::post('simpan_rencana_aksi','API\RencanaAksiAPIController@Store');
@@ -691,6 +691,11 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	Route::get('renja/{renja_id}/edit',[
 		'as' 			=> '',
 		'uses' 			=> 'RenjaController@SKPDRenjaEdit'
+	]);
+
+	Route::get('renja/{renja_id}/ralat',[
+		'as' 			=> '',
+		'uses' 			=> 'RenjaController@SKPDRenjaRalat'
 	]);
 	
 	

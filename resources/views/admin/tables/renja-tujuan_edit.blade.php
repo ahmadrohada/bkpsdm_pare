@@ -138,7 +138,7 @@
 		var tujuan_id = $(this).data('id') ;
 		//alert(tujuan_id);
 
-		swal({
+		Swal.fire({
 			title: "Hapus  Tujuan",
 			text:$(this).data('label'),
 			type: "warning",
@@ -159,7 +159,7 @@
 					data    : {tujuan_id:tujuan_id},
 					cache   : false,
 					success:function(data){
-							swal({
+							Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -183,7 +183,7 @@
 							
 					},
 					error: function(e) {
-							swal({
+							Swal.fire({
 									title: "Gagal",
 									text: "",
 									type: "warning"

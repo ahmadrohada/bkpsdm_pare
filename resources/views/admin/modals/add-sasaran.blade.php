@@ -87,7 +87,7 @@ $(document).ready(function() {
 				$('#sasaran_list').DataTable().ajax.reload(null,false);
 				$('#sasaran_table').DataTable().ajax.reload(null,false);
 				
-			    swal({
+			    Swal.fire({
 							title: "",
 							text: "Berhasil ditambahkan",
 							type: "success",
@@ -108,7 +108,7 @@ $(document).ready(function() {
 						)
 			        },
 			        error: function(data) {  
-			        	swal({
+			        	Swal.fire({
 			        		title: "Error",
 			        		text: "Error menambahkan sasaran",
 			        		type: "error"

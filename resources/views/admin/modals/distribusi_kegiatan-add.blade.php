@@ -98,7 +98,7 @@
 							$('#perjanjian_kinerja').DataTable().ajax.reload(null,false);
 
 								
-							swal({
+							Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -122,7 +122,7 @@
 						)	
 						},
 						error: function(e) {
-							swal({
+							Swal.fire({
 								title: "Gagal",
 								text: "tidak berhasil disimpan",
 								type: "warning"

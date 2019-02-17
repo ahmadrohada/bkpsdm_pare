@@ -49,7 +49,6 @@
 					<th >LABEL</th>
 					<th >TARGET</th>
 					<th >ANGGARAN</th>
-					<th><i class="fa fa-cog"></i></th>
 				</tr>
 			</thead>
 			
@@ -92,7 +91,7 @@ function load_kegiatan_kasubid(jabatan_id){
 				searching      	: false,
 				paging          : false,
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,4 ] },
+									{ className: "text-center", targets: [ 0,2 ] },
 									{ className: "text-right", targets: [ 3 ] }
 								],
 				ajax			: {
@@ -112,13 +111,7 @@ function load_kegiatan_kasubid(jabatan_id){
 								{ data: "cost_kegiatan", name:"cost_kegiatan", orderable: true, searchable: true,width:'80px'},
 								
 								
-								{  data: 'action',width:"60px",
-									"render": function ( data, type, row ) {
-										return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" ><a class="btn btn-success btn-xs edit_kegiatan_kasubid"  data-id="'+row.kegiatan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-												'<span  data-toggle="tooltip" title="Hapus Kegiatan Pada Jabatan" style="margin:1px;" ><a class="btn btn-warning btn-xs unlink_kegiatan_kasubid"  data-id="'+row.kegiatan_id+'" data-label="'+row.label_kegiatan+'" ><i class="fa fa-chain-broken " ></i></a></span>';
-											
-									}
-								},
+								
 							],
 							initComplete: function(settings, json) {
 								

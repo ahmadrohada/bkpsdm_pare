@@ -528,7 +528,7 @@
   
 
   height:18px !important;
-  width:65px !important;
+  width:60px !important;
   margin-top:3px;
   border-radius:8px 8px 8px 8px;
   background-color:white;
@@ -540,14 +540,13 @@
 }
 .jstree-tujuan:after{
   content:'Tujuan';
-  position:absolute;
   display:block;
-  margin:-5px 0 0 5px;
+  margin:-5px 0 0 -5px !important;
 }
 
 .jstree-default .jstree-ind_tujuan {
   height:18px !important;
-  width:110px !important;
+  width:120px !important;
   margin-top:3px;
   border-radius:8px 8px 8px 8px;
   background-color:white;
@@ -558,9 +557,9 @@
 
 .jstree-ind_tujuan:after{
   content:'Indikator Tujuan';
-  position:absolute;
+  
   display:block;
-  margin:-5px 0 0 5px;
+  margin:-5px 0 0 -5px;
 }
 
 .jstree-default .jstree-sasaran {
@@ -579,14 +578,14 @@
 }
 .jstree-sasaran:after{
   content:'Sasaran';
-  position:absolute;
+  
   display:block;
-  margin:-5px 0 0 5px;
+  margin:-5px 0 0 -5px;
 }
 
 .jstree-default .jstree-ind_sasaran {
   height:18px !important;
-  width:110px !important;
+  width:115px !important;
   margin-top:3px;
   border-radius:8px 8px 8px 8px;
   background-color:white;
@@ -596,9 +595,9 @@
 }
 .jstree-ind_sasaran:after{
   content:'Indikator Sasaran';
-  position:absolute;
+  
   display:block;
-  margin:-5px 0 0 5px;
+  margin:-5px 0 0 -5px;
 }
 
 .jstree-default .jstree-program {
@@ -617,15 +616,15 @@
 }
 .jstree-program:after{
   content:'Program';
-  position:absolute;
+  
   display:block;
-  margin:-5px 0 0 5px;
+  margin:-5px 0 0 -5px;
 }
 
 
 .jstree-default .jstree-ind_program {
   height:18px !important;
-  width:116px !important;
+  width:120px !important;
   margin-top:3px;
   border-radius:8px 8px 8px 8px;
   background-color:white;
@@ -635,9 +634,9 @@
 }
 .jstree-ind_program:after{
   content:'Indikator Program';
-  position:absolute;
+  
   display:block;
-  margin:-5px 0 0 5px;
+  margin:-5px 0 0 -2px;
 }
 
 .jstree-default .jstree-kegiatan {
@@ -655,9 +654,9 @@
 }
 .jstree-kegiatan:after{
   content:'Kegiatan';
-  position:absolute;
+  
   display:block;
-  margin:-5px 0 0 5px;
+  margin:-5px 0 0 -5px;
 }
 
 
@@ -675,9 +674,29 @@
 
 .jstree-ind_kegiatan:after{
   content:'Indikator Kegiatan';
-  position:absolute;
+  
   display:block;
   margin:-5px 0 0 5px;
+}
+
+.jstree-default .jstree-rencana_aksi {
+  
+
+  height:18px !important;
+  width:100px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(167, 4, 153);
+  font-size:13px; 
+  
+  
+}
+.jstree-rencana_aksi:after{
+  content:'Rencana Aksi';
+  display:block;
+  margin:-5px 0 0 -5px !important;
 }
 
 

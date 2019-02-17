@@ -82,10 +82,7 @@
 	function status_pengisian(){
 		$.ajax({
 				url			: '{{ url("api_resource/renja_status_pengisian") }}',
-				data 		: { skp_tahunan_id : 2,
-								jabatan_id : 2,
-								renja_id : 2 
-								},
+				data 		: {renja_id: {!! $renja->id !!} },
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {

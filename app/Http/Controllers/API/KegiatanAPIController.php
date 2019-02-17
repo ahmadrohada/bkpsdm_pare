@@ -182,7 +182,8 @@ class KegiatanAPIController extends Controller {
             }
 
             $data_kegiatan['id']	        = $kegiatan_id;
-			$data_kegiatan['text']			= Pustaka::capital_string($x->kegiatan_label);
+            $data_kegiatan['text']			= Pustaka::capital_string($x->kegiatan_label);
+            $data_kegiatan['icon']	        = 'jstree-kegiatan';
           
 
             //RENCANA AKSI
@@ -190,7 +191,8 @@ class KegiatanAPIController extends Controller {
 
             foreach ($ra as $y) {
                 $data_rencana_aksi['id']	        = "RencanaAksi|".$y->id;
-                $data_rencana_aksi['text']			= Pustaka::capital_string($y->label);
+                $data_rencana_aksi['text']			= Pustaka::capital_string($y->label).' ['.$y->target_pelaksanaan.']';
+                $data_rencana_aksi['icon']	        = 'jstree-rencana_aksi';
               
                 $rencana_aksi_list[] = $data_rencana_aksi ;
             }	

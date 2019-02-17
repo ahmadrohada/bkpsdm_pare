@@ -172,7 +172,7 @@
 
 					$('.modal-create_renja_confirm').modal('show'); 
 				}else{
-					swal({
+					Swal.fire({
 						title: 'Error!',
 						text: 'Rencana Kerja belum bisa dibuat',
 						type: 'error',
@@ -183,7 +183,7 @@
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
 
-					swal({
+					Swal.fire({
 						title: 'Error!',
 						text: 'Rencana Kerja belum bisa dibuat',
 						type: 'error',
@@ -204,7 +204,7 @@
 				$('#renja').DataTable().ajax.reload(null,false);
 				
 
-				swal({
+				Swal.fire({
 					title: "",
 					text: "Sukses",
 					type: "success",

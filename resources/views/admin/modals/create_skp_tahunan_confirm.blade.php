@@ -39,7 +39,7 @@
 							</div>
 						</div>
 
-						
+						 
 						<div class="form-horizontal col-md-12" style="margin-top:20px;">
 							<div class="form-group form-group-sm">
 								<label>Jabatan</label>
@@ -159,7 +159,7 @@
 				</div>			
 			</div>
 		
-			<span class="error_pk_id" style="margin-left:20px; color:red;" hidden>ID Perjanjian Kinerja Tidak ditemukan !!</span>
+			<span class="error_renja_id" style="margin-left:20px; color:red;" hidden>ID Perjanjian Kinerja Tidak ditemukan !!</span>
 
 
 <!-- ============================================================================================================= -->
@@ -167,7 +167,7 @@
 			<div class="modal-footer">
 				
 					<input type="hidden" class="form-control pegawai_id" name="pegawai_id"  />
-					<input type="hidden" class="form-control perjanjian_kinerja_id" name="perjanjian_kinerja_id"  />
+					<input type="hidden" class="form-control renja_id" name="renja_id"  />
 				
 					<input type="hidden" class="form-control u_nama	" name="u_nama"  />
 					<input type="hidden" class="form-control u_jabatan_id " name="u_jabatan_id"  />
@@ -210,7 +210,7 @@
 
 	$('.modal-create_skp_tahunan_confirm').on('hidden.bs.modal', function(){
 		$('.u_jabatan, .p_jabatan, .masa_penilaian').removeClass('has-error');
-		$('.error_pk_id').hide();
+		$('.error_renja_id').hide();
 		$('.modal-create_skp_tahunan_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
 	});
 
@@ -254,7 +254,7 @@
 					$('#p_unit_kerja').html(data['p_unit_kerja']); 
 
 					$('.pegawai_id').val(pegawai_id); 
-					$('.perjanjian_kinerja_id').val(data['perjanjian_kinerja_id']); 
+					$('.renja_id').val(data['renja_id']); 
 					$('.u_nama').val(data['u_nama']); 
 					$('.u_jabatan_id').val(data['u_jabatan_id']); 
 					$('.p_nama').val(data['p_nama']); 
@@ -268,7 +268,7 @@
 						case 1 :   ; //KA SKPD
 							break;
 
-						case 2 : skp_list_bawahan(data['perjanjian_kinerja_id'],data['jabatan_id']) ; //KABID
+						case 2 : skp_list_bawahan(data['renja_id'],data['jabatan_id']) ; //KABID
 							break;
 
 						case 4 : ; //PELAKSANA
@@ -281,7 +281,7 @@
 
 
 				}else{
-					swal({
+					Swal.fire({
 						title: 'Error!',
 						text: 'SKP Tahunan belum bisa dibuat',
 						type: 'error',
@@ -292,7 +292,7 @@
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
 
-					swal({
+					Swal.fire({
 						title: 'Error!',
 						text: 'SKP Tahunan belum bisa dibuat',
 						type: 'error',
@@ -313,7 +313,7 @@
 				$('#skp_tahunan').DataTable().ajax.reload(null,false);
 				
 
-				swal({
+				Swal.fire({
 					title: "",
 					text: "Sukses",
 					type: "success",
@@ -324,6 +324,7 @@
 				}).then(function () {
 						$('.modal-create_skp_tahunan_confirm').modal('hide');
 						$('#skp_tahunan_table').DataTable().ajax.reload(null,false);
+						window.location.assign("skp-tahunan/"+data);
 
 				},
 					function (dismiss) {
@@ -360,10 +361,10 @@
 						$('.p_jabatan').addClass('has-error')
 					}
 
-					if (index == 'perjanjian_kinerja_id'){
+					if (index == 'renja_id'){
 
 						$('#myTab a[href="#tab_a"]').tab('show');
-						$('.error_pk_id').show();
+						$('.error_renja_id').show();
 					}
 
 					

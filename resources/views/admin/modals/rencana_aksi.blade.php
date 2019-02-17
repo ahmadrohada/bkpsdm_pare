@@ -21,7 +21,12 @@
 							<textarea name="label" rows="3" required class="form-control txt-label" id="label" placeholder="" style="resize:none;"></textarea>
 						</div>
 					</div>
-					
+					<div class="row">
+						<div class="col-md-12 form-group form-group-sm label_target_pelaksanaan">
+							<label>Target Pelaksanaan</label>
+							<input type="text" class="form-control tgl_tp" name="target_pelaksanaan" placeholder="Palaksanaan"/>
+						</div>
+					</div>
 
 
 
@@ -47,13 +52,20 @@
 
 	$('.modal-rencana_aksi').on('hidden.bs.modal', function(){
 		$('.label_rencana_aksi').removeClass('has-error');
-		$('.modal-rencana_aksi').find('[name=rencana_aksi_id],[name=label]').val('');
+		$('.label_target_pelaksanaan').removeClass('has-error');
+		$('.modal-rencana_aksi').find('[name=rencana_aksi_id],[name=label],[name=target_pelaksanaan]').val('');
 	});
 
 	$('.label_rencana_aksi').on('click', function(){
 		$('.label_rencana_aksi').removeClass('has-error');
 	});
 
+	$('.label_target_pelaksanaan').on('click', function(){
+		$('.label_target_pelaksanaan').removeClass('has-error');
+	});
+
+	
+	
 	
 	$(document).on('click','#submit-save_rencana_aksi',function(e){
 
@@ -69,72 +81,7 @@
 				//$('#program_table').DataTable().ajax.reload(null,false);
                
 
-				swal({
-					title: "",
-					text: "Sukses",
-					type: "success",
-					width: "200px", 
-					showConfirmButton: false,
-					allowOutsideClick : false,
-					timer:1500
-				}).then(function () {
-					$('.modal-rencana_aksi').modal('hide');
-					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-					jQuery('#ktj').jstree(true).refresh(true);
-					
-				},
-					
-					function (dismiss) {
-						if (dismiss === 'timer') {
-							
-						}
-					}
-			)	
-			},
-			error: function(jqXHR , textStatus, errorThrown) {
-
-				var test = $.parseJSON(jqXHR.responseText);
-				
-				var data= test.errors;
-
-				$.each(data, function(index,value){
-					//alert (index+":"+value);
-					
-					//error message
-					((index == 'label')?$('.label_kegiatan').addClass('has-error'):'');
-					
-
-					
-				
-				});
-
-			
-			}
-			
-		});
-
-
-
-
-
-	});
-
-
-	$(document).on('click','#submit-update_rencana_aksi',function(e){
-
-		var data = $('#rencana_aksi_form').serialize();
-
-		//alert(data);
-		$.ajax({
-			url		: '{{ url("api_resource/update_rencana_aksi") }}',
-			type	: 'POST',
-			data	:  data,
-			success	: function(data , textStatus, jqXHR) {
-				
-				//$('#program_table').DataTable().ajax.reload(null,false);
-			
-
-				swal({
+				Swal.fire({
 					title: "",
 					text: "Sukses",
 					type: "success",
@@ -167,6 +114,73 @@
 					
 					//error message
 					((index == 'label')?$('.label_rencana_aksi').addClass('has-error'):'');
+					((index == 'target_pelaksanaan')?$('.label_target_pelaksanaan').addClass('has-error'):'');
+					
+
+					
+				
+				});
+
+			
+			}
+			
+		});
+
+
+
+
+
+	});
+
+
+	$(document).on('click','#submit-update_rencana_aksi',function(e){
+
+		var data = $('#rencana_aksi_form').serialize();
+
+		//alert(data);
+		$.ajax({
+			url		: '{{ url("api_resource/update_rencana_aksi") }}',
+			type	: 'POST',
+			data	:  data,
+			success	: function(data , textStatus, jqXHR) {
+				
+				//$('#program_table').DataTable().ajax.reload(null,false);
+			
+
+				Swal.fire({
+					title: "",
+					text: "Sukses",
+					type: "success",
+					width: "200px", 
+					showConfirmButton: false,
+					allowOutsideClick : false,
+					timer:1500
+				}).then(function () {
+					$('.modal-rencana_aksi').modal('hide');
+					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+					jQuery('#ktj').jstree(true).refresh(true);
+					
+				},
+					
+					function (dismiss) {
+						if (dismiss === 'timer') {
+							
+						}
+					}
+			)	
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
+
+				var test = $.parseJSON(jqXHR.responseText);
+				
+				var data= test.errors;
+
+				$.each(data, function(index,value){
+					//alert (index+":"+value);
+					
+					//error message
+					((index == 'label')?$('.label_rencana_aksi').addClass('has-error'):'');
+					((index == 'target_pelaksanaan')?$('.label_target_pelaksanaan').addClass('has-error'):'');
 					
 
 					

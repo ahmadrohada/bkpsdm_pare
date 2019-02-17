@@ -98,7 +98,7 @@ $(document).ready(function() {
 				
 				$('#indikator_sasaran_table').DataTable().ajax.reload(null,false);
 
-				swal({
+				Swal.fire({
 					title: "",
 					text: "Sukses",
 					type: "success",

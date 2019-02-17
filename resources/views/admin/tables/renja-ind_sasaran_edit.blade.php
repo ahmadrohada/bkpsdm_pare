@@ -158,7 +158,7 @@ $('#ind_sasaran_table').DataTable({
 		var ind_sasaran_id = $(this).data('id') ;
 		//alert(sasaran_id);
 
-		swal({
+		Swal.fire({
 			title: "Hapus  Indikator Sasaran",
 			text:$(this).data('label'),
 			type: "warning",
@@ -179,7 +179,7 @@ $('#ind_sasaran_table').DataTable({
 					data    : {ind_sasaran_id:ind_sasaran_id},
 					cache   : false,
 					success:function(data){
-							swal({
+							Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -203,7 +203,7 @@ $('#ind_sasaran_table').DataTable({
 							
 					},
 					error: function(e) {
-							swal({
+							Swal.fire({
 									title: "Gagal",
 									text: "",
 									type: "warning"

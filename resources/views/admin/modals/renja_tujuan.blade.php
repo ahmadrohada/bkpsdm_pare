@@ -109,7 +109,7 @@
 				//$('#program_table').DataTable().ajax.reload(null,false);
                
 
-				swal({
+				Swal.fire({
 					title: "",
 					text: "Sukses",
 					type: "success",
@@ -162,7 +162,7 @@
 				//$('#program_table').DataTable().ajax.reload(null,false);
 			
 
-				swal({
+				Swal.fire({
 					title: "",
 					text: "Sukses",
 					type: "success",

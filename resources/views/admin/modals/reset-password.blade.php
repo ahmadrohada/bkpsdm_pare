@@ -39,7 +39,7 @@ $(document).ready(function() {
 			data	:  { user_id:user_id },
 			success	: function(data , textStatus, jqXHR) {
 				
-				swal({
+				Swal.fire({
                         title: "",
                         text: "Sukses",
                         type: "success",

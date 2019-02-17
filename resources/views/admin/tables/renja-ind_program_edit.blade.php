@@ -158,7 +158,7 @@ $('#ind_program_table').DataTable({
 		var ind_program_id = $(this).data('id') ;
 		//alert(program_id);
 
-		swal({
+		Swal.fire({
 			title: "Hapus  Indikator Program",
 			text:$(this).data('label'),
 			type: "warning",
@@ -179,7 +179,7 @@ $('#ind_program_table').DataTable({
 					data    : {ind_program_id:ind_program_id},
 					cache   : false,
 					success:function(data){
-							swal({
+							Swal.fire({
 									title: "",
 									text: "Sukses",
 									type: "success",
@@ -203,7 +203,7 @@ $('#ind_program_table').DataTable({
 							
 					},
 					error: function(e) {
-							swal({
+							Swal.fire({
 									title: "Gagal",
 									text: "",
 									type: "warning"

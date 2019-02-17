@@ -16,7 +16,7 @@
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4">Periode SKP</label>
 			<div class="col-md-8">
-				<span id="periode" class="form-control">{!! $skp->PerjanjianKinerja->Renja->Periode->label !!}</span>
+				<span id="periode" class="form-control">{!! $skp->Renja->Periode->label !!}</span>
 			</div>
 		</div>
 
