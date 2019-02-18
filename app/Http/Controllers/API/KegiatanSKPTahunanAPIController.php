@@ -151,23 +151,31 @@ class KegiatanSKPTahunanAPIController extends Controller {
                                         'kegiatan_tahunan.angka_kredit',
                                         'kegiatan_tahunan.quality',
                                         'kegiatan_tahunan.cost',
-                                        'kegiatan_tahunan.target_waktu'
+                                        'kegiatan_tahunan.target_waktu',
+
+                                        'renja_kegiatan.target AS renja_target',
+                                        'renja_kegiatan.satuan AS renja_satuan',
+                                        'renja_kegiatan.cost AS renja_biaya'
                                     ) 
                             ->get();
 
-                
+                 
                 
         $datatables = Datatables::of($kegiatan)
         ->addColumn('label', function ($x) {
             return $x->kegiatan_tahunan_label;
         })->addColumn('ak', function ($x) {
             return $x->ak;
+        })->addColumn('renja_output', function ($x) {
+            return $x->renja_target.' '.$x->renja_satuan;
         })->addColumn('output', function ($x) {
             return $x->target.' '.$x->satuan;
         })->addColumn('mutu', function ($x) {
             return $x->quality;
         })->addColumn('waktu', function ($x) {
             return $x->target_waktu;
+        })->addColumn('renja_biaya', function ($x) {
+            return number_format($x->renja_biaya,'0',',','.');
         })->addColumn('biaya', function ($x) {
             return number_format($x->cost,'0',',','.');
         });

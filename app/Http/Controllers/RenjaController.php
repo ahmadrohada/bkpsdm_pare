@@ -78,9 +78,11 @@ class RenjaController extends Controller {
 
         
 
-        if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) == 2 ) ){
-            return view('admin.pages.skpd-renja_detail', ['renja'=> $renja]);
-        }else if( ($renja->send_to_kaban) == 0 ) {
+        if(  ( ($renja->send_to_kaban) == '0' ) ){
+            return redirect('personal/renja_approval-request')->with('status', 'akses ditolak');
+        }else if(  ( ($renja->send_to_kaban) == '1' ) &  ( ($renja->status_approve) != '1' ) ){
+            return redirect('personal/renja_approval-request')->with('status', 'akses ditolak');
+        }else if( ($renja->send_to_kaban) == '0' ) {
             return redirect('/personal/renja/'.$request->renja_id.'/edit')->with('status', 'Renja belum dikirm ke kaban');
         }else{
             return view('admin.pages.skpd-renja_detail', ['renja'=> $renja]);  

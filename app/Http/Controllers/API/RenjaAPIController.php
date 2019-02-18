@@ -327,7 +327,7 @@ class RenjaAPIController extends Controller {
                         $join   ->where('kaban.id_pegawai','=',$pegawai_id);
                     })
                     ->WHERE('renja.send_to_kaban','=','1')
-                    //->WHERE('')
+                    //->WHERE('renja.status_approve','!=','2')
                     ->SELECT( 'periode.label AS periode_label',
                              'renja.id AS renja_id',
                              'renja.nama_admin_skpd',
