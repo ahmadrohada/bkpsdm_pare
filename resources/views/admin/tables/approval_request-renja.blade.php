@@ -67,8 +67,10 @@
 										"render": function ( data, type, row ) {
 										if (row.status_approve == 0 ){
 											return  '<span  data-toggle="tooltip" title="Berikan Persetujuan renja" style="margin:1px;" ><a class="btn btn-warning btn-xs approval_renja"  data-renja_id="'+row.renja_id+'">Approval</a></span>';
-										}else {
+										}else if ( row.status_approve == 1 ){
 											return  '<span  data-toggle="tooltip" title="Detail Rencana Kerja" style="margin:1px;" ><a class="btn btn-success btn-xs lihat_renja"  data-renja_id="'+row.renja_id+'"> Lihat </a></span>';
+										}else if ( row.status_approve == 2 ){
+											return  '<span  data-toggle="tooltip" title="Rencana Kerja telah ditolak" style="margin:1px;" ><a class="btn btn-danger btn-xs "  > Ditolak </a></span>';
 										}
 									}
 								},

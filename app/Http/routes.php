@@ -731,8 +731,10 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 
 });
 
+//===============================================================================================================//
+//=============== PEGAWAI ACCESS LEVEL PAGE ROUTES - RUNNING THROUGH PEGAWAI MIDDLEWARE ====================//
+//===============================================================================================================//
 
-// PEGAWAI ACCESS LEVEL PAGE ROUTES - RUNNING THROUGH PEGAWAI MIDDLEWARE
 Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
 	//======================= H O M E   P E R S O N A L ========================================//
