@@ -24,7 +24,7 @@
 					<div class="row">
 						<div class="col-md-12 form-group form-group-sm label_target_pelaksanaan">
 							<label>Target Pelaksanaan</label>
-							<input type="text" class="form-control tgl_tp" name="target_pelaksanaan" placeholder="Palaksanaan"/>
+							<input type="text" class="form-control tgl_tp" name="target_pelaksanaan" placeholder="01-2019 ( format bln-thn )"/>
 						</div>
 					</div>
 

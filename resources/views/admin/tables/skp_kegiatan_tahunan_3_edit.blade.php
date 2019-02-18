@@ -337,10 +337,13 @@
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
+					$('.modal-kegiatan_tahunan').find('[name=kegiatan_id]').val(data['kegiatan_id']);
 					$('.modal-kegiatan_tahunan').find('[name=label]').val(data['label']);
 					$('.modal-kegiatan_tahunan').find('[name=target]').val(data['target']);
 					$('.modal-kegiatan_tahunan').find('[name=satuan]').val(data['satuan']);
 					$('.modal-kegiatan_tahunan').find('[name=cost]').val(data['cost']);
+
+					$('.modal-kegiatan_tahunan').find('[name=quality]').val(100);
 
 
 					$('.modal-kegiatan_tahunan').find('h4').html('Create Kegiatan Tahunan');
