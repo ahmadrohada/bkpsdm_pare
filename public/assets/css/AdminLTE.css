@@ -4233,7 +4233,8 @@ a:focus {
 }
 .select2-container--default .select2-selection--single,
 .select2-selection .select2-selection--single {
-  border: 1px solid #a94442;
+  /* border: 1px solid #a94442; */
+  border: 1px solid #d2d6de;
   border-radius: 1;
   padding: 4px 12px;
   height: 30px;

@@ -96,7 +96,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 
 	Route::get('skpd_skp_tahunan_list','API\SKPTahunanAPIController@SKPDSKPTahunanList');
-	Route::get('skp_tahunan_timeline_status','API\SKPTahunanAPIController@SKPTahunan_timeline_status');
+	Route::get('skp_tahunan_timeline_status','API\SKPTahunanAPIController@SKPTahunanTimelineStatus');
 
 
 	//========================================================================================================//
@@ -306,6 +306,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('skp_tahunan_pull_from_atasan','API\SKPTahunanAPIController@PullFromAtasan');
 	Route::post('hapus_skp_tahunan','API\SKPTahunanAPIController@Destroy');
 
+	Route::get('approval_request_skp_tahunan_list','API\SKPTahunanAPIController@SKPTahunanApprovalRequestList');
+
+	Route::post('skp_tahunan_setuju_by_atasan','API\SKPTahunanAPIController@SetujuByAtasan');
+	Route::post('skp_tahunan_tolak_by_atasan','API\SKPTahunanAPIController@TolakByAtasan');
 
 	//========================================================================================================//
 	//====================================== KEGIATAN THAUNAN ================================================//
@@ -761,8 +765,16 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'RenjaController@PersonalRenjaDetail'
 	]);
 	
+	
+	Route::get('skp_tahunan_approval-request', [
+		'as' 			=> '',
+		'uses' 			=> 'ApprovalRequestController@showSKPTahunan'
+	]);
 
-
+	Route::get('skp_tahunan_approval-request/{skp_tahunan_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'SKPTahunanController@SKPTahunanApproval'
+	]);
 	//=========================================================================================//
 	//================================= SKP TAHUNAN      =====================================//
 	//=========================================================================================//

@@ -76,4 +76,21 @@ class ApprovalRequestController extends Controller {
         
     }
 
+    public function showSKpTahunan(Request $request)
+    {
+        $user      = \Auth::user();
+        $pegawai   = $user->pegawai;       
+        
+
+        return view('admin.pages.approval_request-skp_tahunan', [
+               'pegawai' 		        => $pegawai,
+               'nama_skpd'     	        => 'x',
+               'h_box'                  => 'box-danger',
+               
+           ]
+        );   
+
+        
+    }
+
 }

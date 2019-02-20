@@ -115,7 +115,7 @@ class RencanaAksiAPIController extends Controller {
             return $x->label;
         })
         ->addColumn('target_pelaksanaan', function ($x) {
-            return $x->target_pelaksanaan;
+            return Pustaka::bulan($x->target_pelaksanaan);
         });
 
         if ($keyword = $request->get('search')['value']) {

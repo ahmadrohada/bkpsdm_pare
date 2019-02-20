@@ -470,7 +470,7 @@
 				dataType	: "json",
 				success	: function(data) {
 					$('.modal-rencana_aksi').find('[name=label]').val(data['label']);
-					$('.modal-rencana_aksi').find('[name=target_pelaksanaan]').val(data['target_pelaksanaan']);
+					$('.modal-rencana_aksi').find('[name=target_pelaksanaan]').val(data['target_pelaksanaan']).trigger('change.select2');
 
 
 					$('.modal-rencana_aksi').find('[name=rencana_aksi_id]').val(data['id']);
@@ -548,15 +548,7 @@
 	});
 
 
-	$('#rencana_aksi_table').DataTable({
-		searching      	: false,
-		paging          : false,
-		orderable		: false,
-		columnDefs		: [
-									{ className: "text-center", targets: [ 0,2 ] },
-									{ 'orderable': false, targets: [ 0,1,2 ]  }
-		]
-	});
+
 	
 	
 	
@@ -605,7 +597,7 @@
 										}
 									},
 									{ data: "label", name:"label"},
-									{ data: "target_pelaksanaan", name:"target_pelaksanaan",width:"20px"},
+									{ data: "target_pelaksanaan", name:"target_pelaksanaan",width:"170px"},
 									{  data: 'action',width:"15%",
 											"render": function ( data, type, row ) {
 

@@ -6,8 +6,8 @@
 		</div>
 	</div>
 	<div class="col-md-7">
-			@include('admin.tables.renja-kegiatan_ka_skpd_edit')
-			@include('admin.tables.renja-kegiatan_kabid_edit')
+			@include('admin.tables.renja-kegiatan_ka_skpd')
+			@include('admin.tables.renja-kegiatan_kabid')
 			@include('admin.tables.renja-kegiatan_kasubid_edit')
 			@include('admin.tables.renja-ind_kegiatan_edit')
 

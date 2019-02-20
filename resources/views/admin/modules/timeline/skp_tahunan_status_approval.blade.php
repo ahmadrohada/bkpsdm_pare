@@ -1,36 +1,41 @@
 
-<div class="row"> 
+<div class="row">
 	<div class="col-md-4">
 		<div class="box box-default">
 			<div class="box-body box-profile">
 			
-				<h3 class="profile-username text-center">RENCANA KERJA</h3>
-				<p class="text-muted text-center"></p>
+				<h3 class="profile-username text-center">SKP TAHUNAN</h3>
+				<p class="text-muted text-center">{{ $skp->Renja->Periode->label}}</p>
 
 				<ul class="list-group list-group-unbordered">
 					<li class="list-group-item">
 						<b>Create</b> <a class="pull-right st_created_at">-</a>
 					</li>
 					<li class="list-group-item">
-						<b>Data Kepala SKPD</b> <a class="pull-right st_kepala_skpd">-</a>
+						<b>Data Pejabat Penilai</b> <a class="pull-right st_pejabat_penilai">-</a>
+					</li>
+					<li class="list-group-item">
+						<b>Data Kegiatan Tahunan</b> <a class="pull-right st_kegiatan_tahunan" >-</a>
+					</li>
+					<li class="list-group-item">
+						<b>Data Rencana Aksi</b> <a class="pull-right st_rencana_aksi">-</a>
 					</li>
 					<li class="list-group-item" >
-						<b>Persetujuan Kepala SKPD</b> <a class="pull-right st_persetujuan_kaban">-</a>
+						<b>Persetujuan Atasan</b> <a class="pull-right st_persetujuan_atasan">-</a>
 					</li>
 				</ul>
-				<div class="approval_renja"> 
+				<div class="approval_skp_tahunan"> 
 					<div class="col-md-6" style="padding:2px 2px 2px 0;">
-						<button class="btn btn-primary btn-block setuju_renja ">Setuju</button>
+						<button class="btn btn-primary btn-block setuju_skp_tahunan ">Setuju</button>
 					</div>
 					<div class="col-md-6" style="padding:2px 0px 2px 2px;">
-						<button class="btn btn-danger btn-block tolak_renja ">Tolak</button>
+						<button class="btn btn-danger btn-block tolak_skp_tahunan ">Tolak</button>
 					</div>
 				</div>
-			</div>
 				
 			</div>
 		</div>
-		
+	</div>
 	<div class="col-md-8">
 		<div class="table-responsive">
 			<div id="myTimeline"></div>
@@ -51,6 +56,7 @@
 	 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/animatecss/3.5.2/animate.min.css" />
 <link rel="stylesheet" href="{{asset('assets/timeline/style-albe-timeline.css')}}" />
+
 <script src="{{asset('assets/timeline/jquery-albe-timeline.js')}}"></script>
 
 <script type="text/javascript">
@@ -58,17 +64,19 @@
 
 	function status_show(){
 		$.ajax({
-				url			: '{{ url("api_resource/renja_timeline_status") }}',
-				data 		: {renja_id : {!! $renja->id!!} },
+				url			: '{{ url("api_resource/skp_tahunan_timeline_status") }}',
+				data 		: { skp_tahunan_id : {!! $skp->id!!},
+								jabatan_id : {!! $skp->PejabatYangDinilai->id_jabatan !!},
+								renja_id : {!! $skp->Renja->id !!}
+								},
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
-					status(data);
+					status(data);	
 					status_pengisian();	
-						 	
 				},
-					error: function(data){
-						 
+				error: function(data){
+					
 				}						
 		});
 	}
@@ -77,7 +85,7 @@
 		$('#myTimeline').albeTimeline(
 				data, 
 				{
-				effect: '',
+				effect: 'fadeIn',
 				showGroup: false,
 				language : 'en-us',
 				sortDesc : true,
@@ -88,24 +96,27 @@
 
 	function status_pengisian(){
 		$.ajax({
-				url			: '{{ url("api_resource/renja_status_pengisian") }}',
-				data 		: { skp_tahunan_id : 2,
-								jabatan_id : 2,
-								renja_id : 2 
+				url			: '{{ url("api_resource/skp_tahunan_status_pengisian3") }}',
+				data 		: { skp_tahunan_id : {!! $skp->id!!},
+								jabatan_id : {!! $skp->PejabatYangDinilai->id_jabatan !!},
+								renja_id : {!! $skp->Renja->id !!} 
 								},
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
 					//alert(data);
-					if (data['button_kirim'] == 1 ){
-						$('.kirim_renja').removeAttr('disabled');
+					if ( data['persetujuan_atasan'] != 'ok' ){
+						$('.tarik_skp_tahunan_div').show();
 					}else{
-						$('.kirim_renja').attr('disabled','disabled');
-					}
+						$('.tarik_skp_tahunan_div').hide();
+					} 
 
 					$('.st_created_at').html(data['created']);
-					$('.st_kepala_skpd').html(data['data_kepala_skpd']);
-					$('.st_persetujuan_kaban').html(data['data_persetujuan_kaban']);
+					$('.st_pejabat_penilai').html(data['data_pejabat_penilai']);
+					$('.st_kegiatan_tahunan').html(data['data_kegiatan_tahunan']);
+					$('.st_rencana_aksi').html(data['data_rencana_aksi']);
+					$('.st_persetujuan_atasan').html(data['persetujuan_atasan']);
+
 
 				},
 				error: function(data){
@@ -116,10 +127,10 @@
 
 
 
-	$(document).on('click','.setuju_renja',function(e){
+	$(document).on('click','.setuju_skp_tahunan',function(e){
 		Swal.fire({
 				title: "Setuju",
-				text: "Pengajuan  Renja",
+				text: "Pengajuan  SKP Tahunan",
 				type: "question",
 				showCancelButton: true,
 				cancelButtonText: "Batal",
@@ -130,10 +141,10 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/renja_setuju_by_kaban") }}',
+					url		: '{{ url("api_resource/skp_tahunan_setuju_by_atasan") }}',
 					type	: 'POST',
-					data    : { renja_id: {!! $renja->id !!} ,
-								kaban_id: {!! $pegawai->JabatanAktif->id !!}
+					data    : { skp_tahunan_id: {!! $skp->id !!} ,
+								atasan_id: {!! $pegawai->JabatanAktif->id !!}
 							   },
 					cache   : false,
 					success:function(data){
@@ -189,9 +200,9 @@
 	});
 
 
-	$(document).on('click','.tolak_renja',function(e){
+	$(document).on('click','.tolak_skp_tahunan',function(e){
 		Swal.fire({
-			title				: 'Tolak Renja',
+			title				: 'Tolak SKP Tahunan',
 			text				:'Berikan alasan penolakan',
 			input				: 'text',
 			type				: "question",
@@ -209,10 +220,10 @@
 			}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/renja_tolak_by_kaban") }}',
+					url		: '{{ url("api_resource/skp_tahunan_tolak_by_atasan") }}',
 					type	: 'POST',
-					data    : { renja_id: {!! $renja->id !!} ,
-								kaban_id: {!! $pegawai->JabatanAktif->id !!},
+					data    : { skp_tahunan_id: {!! $skp->id !!} ,
+								atasan_id: {!! $pegawai->JabatanAktif->id !!},
 								alasan:result.value
 							   },
 					cache   : false,
@@ -256,7 +267,4 @@
 		});
 	});
 
-
 </script>
-
-

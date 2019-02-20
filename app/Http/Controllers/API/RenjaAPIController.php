@@ -97,7 +97,7 @@ class RenjaAPIController extends Controller {
         $renja = Renja::where('id','=', $request->renja_id )
                                 ->select('*')
                                 ->firstOrFail();
-
+ 
         
         //CREATED AT - Dibuat
         $x['tag']	    = 'p';

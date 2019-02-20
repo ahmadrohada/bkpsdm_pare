@@ -81,13 +81,13 @@
   border-bottom: none;
   border-bottom-left-radius: 1;
   border-bottom-right-radius: 1; 
-  border: 1px solid #a94442;}
+  border: 1px solid #d2d6de;}
 
 .select2-container--open .select2-dropdown--below {
   border-top: none !important;
   border-bottom-left-radius: 1;
   border-bottom-right-radius: 1; 
-  border: 1px solid #a94442; }
+  border: 1px solid #d2d6de; }
 
 .select2-search--dropdown {
   display: block;

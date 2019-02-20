@@ -175,11 +175,13 @@ class SKPTahunanAPIController extends Controller {
 
     }
 
-    public function SKPTahunan_timeline_status( Request $request )
+    public function SKPTahunanTimelineStatus( Request $request )
     {
         $response = array();
         $body = array();
         $body_2 = array();
+        $body_3 = array();
+        $body_4 = array();
 
 
         $skp_tahunan = SKPTahunan::where('id','=', $request->skp_tahunan_id )
@@ -189,7 +191,7 @@ class SKPTahunanAPIController extends Controller {
         
         //CREATED AT - Dibuat
         $x['tag']	    = 'p';
-        $x['content']	= 'Dibuat';
+        $x['content']	= '<b class="text-success">Dibuat</b>';
         array_push($body, $x);
         $x['tag']	    = 'p';
         $x['content']	= $skp_tahunan->u_nama;
@@ -202,7 +204,7 @@ class SKPTahunanAPIController extends Controller {
 
         //UPDATED AT - Dikirim
         $y['tag']	    = 'p';
-        $y['content']	= 'Dikirim';
+        $y['content']	= '<b class="text-info">Dikirim</b>';
         array_push($body_2, $y);
         $y['tag']	    = 'p';
         $y['content']	= $skp_tahunan->u_nama;
@@ -217,6 +219,44 @@ class SKPTahunanAPIController extends Controller {
         }
         
 
+         //APPROVE  AT - Diterima
+         $z['tag']	    = 'p';
+         $z['content']	= '<b class="text-info">Disetujui</b>';
+         array_push($body_3, $z);
+         $z['tag']	    = 'p';
+         $z['content']	= $skp_tahunan->p_nama;
+         array_push($body_3, $z);
+ 
+         $j['time']	    = $skp_tahunan->date_of_approve;
+         $j['body']	    = $body_3;
+ 
+         if ( $skp_tahunan->status_approve == 1 )
+         {
+             array_push($response, $j);
+         }
+ 
+         //APPROVE  AT - Ditolak
+         $a['tag']	    = 'p';
+         $a['content']	= '<b class="text-danger">Ditolak</b>';
+         array_push($body_4, $a);
+         $a['tag']	    = 'p';
+         $a['content']	= 'Alasan : ';
+         array_push($body_4, $a);
+         $a['tag']	    = 'p';
+         $a['content']	= $skp_tahunan->alasan_penolakan;
+         array_push($body_4, $a);
+         $a['tag']	    = 'p';
+         $a['content']	= $skp_tahunan->p_nama;
+         array_push($body_4, $a);
+ 
+         $k['time']	    = $skp_tahunan->date_of_approve;
+         $k['body']	    = $body_4;
+ 
+         if ( $skp_tahunan->status_approve == 2 )
+         {
+             array_push($response, $k);
+         }
+         
 
         return $response;
 
@@ -900,6 +940,162 @@ class SKPTahunanAPIController extends Controller {
         }else{
             return \Response::make('error', 500);
         } 
+
+    }
+
+
+    public function SKPTahunanApprovalRequestList(Request $request)
+    {
+        $pegawai_id = $request->pegawai_id;
+
+        $jabatan_id = HistoryJabatan::SELECT('id')->WHERE('id_pegawai','=',$pegawai_id)->get();
+       
+        $dt = SKPTahunan::
+                   /*  leftjoin('db_pare_2018.periode AS periode', function($join){ 
+                        $join   ->on('renja.periode_id','=','periode.id');
+                        
+                    })
+                    ->rightjoin('demo_asn.tb_history_jabatan AS kaban', function($join) use($pegawai_id){ 
+                        $join   ->on('renja.kepala_skpd_id','=','kaban.id');
+                        $join   ->where('kaban.id_pegawai','=',$pegawai_id);
+                    }) */
+                    WHERE('skp_tahunan.p_jabatan_id','=', '39799')
+                    ->WHERE('skp_tahunan.send_to_atasan','=','1')
+                    ->SELECT( 
+                             'skp_tahunan.id AS skp_tahunan_id',
+                             'skp_tahunan.u_nama',
+                             'skp_tahunan.renja_id',
+                             'skp_tahunan.u_jabatan_id',
+                             'skp_tahunan.status_approve'
+                            );
+
+
+    
+        $datatables = Datatables::of($dt)
+        ->addColumn('periode', function ($x) {
+            return $x->Renja->Periode->label;
+        })->addColumn('nama', function ($x) {
+            return $x->u_nama;
+        })->addColumn('jabatan', function ($x) {
+            return Pustaka::capital_string($x->PejabatYangDinilai->Jabatan->skpd);
+        })->addColumn('skp_tahunan_id', function ($x) {
+            return $x->skp_tahunan_id;
+        });
+
+        
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
+
+    
+    public function SetujuByAtasan(Request $request)
+    {
+        $messages = [
+                'skp_tahunan_id.required'   => 'Harus diisi',
+                'atasan_id.required'        => 'Harus diisi'
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'skp_tahunan_id'   => 'required',
+                            'atasan_id'        => 'required'
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $skp    = SKPTahunan::find(Input::get('skp_tahunan_id'));
+        if (is_null($skp)) {
+            return $this->sendError('SKp Tahunan tidak ditemukan.');
+        }
+
+
+        $skp->status_approve    = '1';
+        $skp->date_of_approve   = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+
+       
+        if ( $skp->p_jabatan_id == Input::get('atasan_id')){
+            if ( $skp->save()){
+            
+                return \Response::make('sukses', 200);
+            }else{
+                return \Response::make('error', 500);
+            }  
+        }else{
+            return \Response::make('ID Atasan tidak sama', 500);
+        }
+
+        
+        
+
+
+
+    }
+
+    public function TolakByAtasan(Request $request)
+    {
+        $messages = [
+                'skp_tahunan_id.required'   => 'Harus diisi',
+                'atasan_id.required'        => 'Harus diisi',
+                'alasan.required'           => 'Harus diisi'
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'skp_tahunan_id'   => 'required',
+                            'atasan_id'        => 'required',
+                            'alasan'           => 'required'
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $skp    = SKPTahunan::find(Input::get('skp_tahunan_id'));
+        if (is_null($skp)) {
+            return $this->sendError('SKP Tahunan tidak ditemukan.');
+        }
+
+
+        $skp->status_approve    = '2';
+        $skp->alasan_penolakan  = Input::get('alasan');
+        $skp->date_of_approve   = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+
+       
+        if ( $skp->p_jabatan_id == Input::get('atasan_id')){
+            if ( $skp->save()){
+            
+                return \Response::make('sukses', 200);
+            }else{
+                return \Response::make('error', 500);
+            }  
+        }else{
+            return \Response::make('ID atasan tidak sama', 500);
+        }
+
+        
+        
+
+
 
     }
 

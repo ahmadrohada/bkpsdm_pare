@@ -102,6 +102,10 @@
 		window.location.assign("renja_approval-request");
     });
 
+	$(".skp_tahunan").click(function(){
+		window.location.assign("skp_tahunan_approval-request");
+    });
+
 	
 
 </script>
