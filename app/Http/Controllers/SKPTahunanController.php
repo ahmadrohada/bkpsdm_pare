@@ -86,5 +86,19 @@ class SKPTahunanController extends Controller {
         }
     }
 
+    public function SKPTahunanApproval(Request $request)
+	{
+        $skp_tahunan	= SKPTahunan::where('id', '=', $request->skp_tahunan_id)->first();
+
+
+        if(  $skp_tahunan->status_approve == '0'   ){
+        
+            return view('admin.pages.personal-skp_tahunan_approval', ['skp'=> $skp_tahunan,'pegawai'=>\Auth::user()->pegawai]);  
+        }else if(  $skp_tahunan->status_approve == '1'   ){
+            return redirect('/personal/skp-tahunan/'.$skp_tahunan->id)->with('status', 'SKP Tahunan Sudah disetujui/ditolak');
+        }else if(  $skp_tahunan->status_approve == '2'   ){
+            return redirect('/personal/skp_tahunan_approval-request')->with('status', 'SKP Tahunan Sudah disetujui/ditolak');
+        }
+    }
 
 }

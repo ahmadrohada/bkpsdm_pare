@@ -3,13 +3,13 @@
 @section('template_title')
 {{ Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)  }}
 @stop
-
+ 
 
 @section('content')
 	 <div class="content-wrapper" >
 	    <section class="content-header">
 			<h1>
-				Ralat SKP Tahunan
+			Persetujuan SKP Tahunan
 			</h1>
 				{!! Breadcrumbs::render('personal_edit_skp_tahunan') !!}
       </section>
@@ -25,31 +25,31 @@
 
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
 				<div class="active tab-pane" id="status">
-					@include('admin.modules.timeline.skp_tahunan_status_ralat')	
+					@include('admin.modules.timeline.skp_tahunan_status_approval')	
 				</div>
 				<div class="tab-pane" id="detail">
-					@include('admin.modules.edit_forms.skp_tahunan_detail')			
+					@include('admin.modules.detail_forms.skp_tahunan_detail')			
 				</div>
 								
 				<div class=" tab-pane" id="kegiatan_tahunan_tab">
 					<!-- 1. ka SKPD -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
-						@include('admin.tables.kegiatan_tahunan_1')
-					@endif 
+						@include('admin.tables.skp_kegiatan_tahunan_1_detail')
+					@endif
 
 					<!-- 2. KABID -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('admin.tables.kegiatan_tahunan_2')
+						@include('admin.tables.skp_kegiatan_tahunan_2_detail')
 					@endif
 
 					<!-- 2. KASUBID -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.tables.skp_kegiatan_tahunan_3_edit')
+						@include('admin.tables.skp_kegiatan_tahunan_3_detail')
 					@endif
 
 					<!-- 2. PELAKSANA -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
-						@include('admin.tables.kegiatan_tahunan_4')
+						@include('admin.tables.skp_kegiatan_tahunan_4_detail')
 					@endif
 				
 				

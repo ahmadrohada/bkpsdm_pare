@@ -16,7 +16,7 @@
 	    <section class="content">
 				@include('admin.modules.approval_request-snapshots-boxes')
 
-				@include('admin.tables.personal-skp_tahunan')
+				@include('admin.tables.approval_request-skp_tahunan')
 	    </section>
 	</div>
 @stop

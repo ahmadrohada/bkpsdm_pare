@@ -24,7 +24,21 @@
 					<div class="row">
 						<div class="col-md-12 form-group form-group-sm label_target_pelaksanaan">
 							<label>Target Pelaksanaan</label>
-							<input type="text" class="form-control tgl_tp" name="target_pelaksanaan" placeholder="01-2019 ( format bln-thn )"/>
+							<select class="form-control select2 target_pelaksanaan" name="target_pelaksanaan" style="width: 100%;">
+								<option value="01">Januari</option>
+								<option value="02">Februari</option>
+								<option value="03">Maret</option>
+								<option value="04">April</option>
+								<option value="05">Mei</option>
+								<option value="06">Juni</option>
+								<option value="07">Juli</option>
+								<option value="08">Agustus</option>
+								<option value="09">September</option>
+								<option value="10">Oktober</option>
+								<option value="11">November</option>
+								<option value="12">Deseber</option>
+
+							</select>
 						</div>
 					</div>
 
@@ -33,7 +47,8 @@
 			</div>
 			<div class="modal-footer">
                 {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> Batal', array('class' => 'btn btn-sm btn-default pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> <span name="text_button_submit"></span>', array('class' => 'btn btn-primary btn-sm pull-right btn-flat btn-submit', 'type' => 'button', 'id' => 'simpan' )) !!}
+				{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> <span name="text_button_submit"></span>', array('class' => 'btn btn-primary btn-sm pull-right btn-flat btn-submit', 'type' => 'button', 'id' => 'simpan' )) !!}
+				
             </div>
 
             </form>
@@ -43,8 +58,10 @@
 
 
 
-
 <script type="text/javascript">
+
+
+	$('.select2').select2()
 
 	$('.modal-rencana_aksi').on('shown.bs.modal', function(){
 		
@@ -68,7 +85,9 @@
 	
 	
 	$(document).on('click','#submit-save_rencana_aksi',function(e){
-
+		
+		$("#submit-save_rencana_aksi").hide();
+		
 		var data = $('#rencana_aksi_form').serialize();
 
 		//alert(data);
@@ -101,7 +120,8 @@
 							
 						}
 					}
-			)	
+				)	
+				$("#submit-save_rencana_aksi").show();
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
 
@@ -120,12 +140,11 @@
 					
 				
 				});
-
+				$("#submit-save_rencana_aksi").show();
 			
 			}
 			
 		});
-
 
 
 

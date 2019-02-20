@@ -17,9 +17,18 @@
 			<span class="jabatan_kabid"></span>
 		</p>
 
-		<strong>Nama Pegawai</strong>
+		<strong>Jenis Jabatan / Eselon</strong>
+		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
+			<span class="jj_kabid"></span>
+		</p>
+
+		<strong>Nama</strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 			<span class="nama_kabid"></span>
+		</p>
+		<strong>NIP</strong>
+		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
+			<span class="nip_kabid"></span>
 		</p>
 					
 	</div>
@@ -72,7 +81,9 @@ function load_kegiatan_kabid(jabatan_id){
 		dataType	: "json",
 		success	: function(data) {
 				$('.jabatan_kabid').html(data['jabatan']);
+				$('.jj_kabid').html(data['jenis_jabatan']+' ( eselon '+data['eselon']+' )');
 				$('.nama_kabid').html(data['nama']);
+				$('.nip_kabid').html(data['nip']);
 				
 		},
 		error: function(data){
@@ -86,8 +97,9 @@ function load_kegiatan_kabid(jabatan_id){
 				destroy			: true,
 				processing      : false,
 				serverSide      : true,
-				searching      	: false,
-				paging          : false,
+				searching      	: true,
+				paging          : true,
+				lengthMenu		: [20,50,100],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2 ] },
 									{ className: "text-right", targets: [ 3 ] }

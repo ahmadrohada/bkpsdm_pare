@@ -105,13 +105,24 @@ class JabatanAPIController extends Controller {
                             ->leftjoin('demo_asn.tb_pegawai AS asn', function($join){
                                 $join   ->on('asn.id','=','pejabat.id_pegawai');
                             })
+                            ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
+                              $join   ->on('pejabat.id_eselon','=','eselon.id');
+                            })
+                            ->leftjoin('demo_asn.m_jenis_jabatan AS jenis_jabatan', function($join){
+                              $join   ->on('eselon.id_jenis_jabatan','=','jenis_jabatan.id');
+                            })
+                            
                             ->WHERE('m_skpd.id', $request->jabatan_id)
                             ->SELECT('m_skpd.skpd AS jabatan',
+                                     'pejabat.id_pegawai',
+                                     'pejabat.id AS jabatan_id',
                                      'pejabat.id_pegawai',
                                      'asn.nip',
                                      'asn.nama',
                                      'asn.gelardpn',
-                                     'asn.gelarblk'
+                                     'asn.gelarblk',
+                                     'eselon.eselon',
+                                     'jenis_jabatan.jenis_jabatan'
 
                                     )
                             ->first();
@@ -121,6 +132,8 @@ class JabatanAPIController extends Controller {
         $pejabat = array(
             'nip'           => $x->nip,
             'nama'          => Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk),
+            'jenis_jabatan' => $x->jenis_jabatan,
+            'eselon'        => $x->eselon,
             'jabatan'       => Pustaka::capital_string($x->jabatan)
 
         ); 
