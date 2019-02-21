@@ -39,7 +39,7 @@
 
 					<!-- 2. KABID -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('admin.tables.skp_kegiatan_tahunan_2_edit')
+						@include('admin.tables.skp_kegiatan_tahunan_2_detail')
 					@endif
 
 					<!-- 2. KASUBID -->

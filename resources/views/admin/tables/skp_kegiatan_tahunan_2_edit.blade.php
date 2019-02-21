@@ -34,6 +34,7 @@
 							<th rowspan="2">KEGIATAN TAHUNAN</th>
 							<th rowspan="2">AK</th>
 							<th colspan="4">TARGET</th>
+							<th rowspan="2"><i class="fa fa-cog"></i></th>
 						</tr>
 						<tr>
 							<th>OUTPUT</th>
@@ -67,11 +68,6 @@
 						<input type="hidden" class="kegiatan_tahunan_id">
 					</p>
 
-					<strong>Pelaksana</strong>
-					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-						<span class="jabatan_pelaksana"></span>
-					</p>
-
 					<i class="fa  fa-gg"></i> <span class="txt_ak" style="margin-right:10px;"></span>
 					<i class="fa fa-industry"></i> <span class="txt_output" style="margin-right:10px;"></span>
 					<i class="fa fa-hourglass-start"></i> <span class="txt_waktu" style="margin-right:10px;"></span>
@@ -91,6 +87,7 @@
 				</div>
 				<div class="box-body table-responsive">
 					<div class="toolbar">
+						<span  data-toggle="tooltip" title="Create Rencana Aksi"><a class="btn btn-info btn-xs create_rencana_aksi "><i class="fa fa-plus" ></i></a></span>
 					</div>
 
 					<table id="rencana_aksi_table" class="table table-striped table-hover" >
@@ -99,6 +96,7 @@
 								<th>No</th>
 								<th>RENCANA AKSI</th>
 								<th>TARGET PELAKSANAAN</th>
+								<th><i class="fa fa-cog"></i></th>
 							</tr>
 						</thead>
 					</table>
@@ -108,6 +106,11 @@
 		</div>
 	</div>
 </div>
+
+@include('admin.modals.kegiatan_tahunan')
+@include('admin.modals.rencana_aksi')
+     
+
 
 <link rel="stylesheet" href="{{asset('assets/jstree/themes/default/style.css')}}" />
 <script src="{{asset('assets/jstree/jstree.min.js')}}"></script>
@@ -220,9 +223,9 @@
 				searching      	: false,
 				paging          : false,
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3,4,5 ] },
+									{ className: "text-center", targets: [ 0,2,3,4,5,7 ] },
 									{ className: "text-right", targets: [ 6 ] },
-									{ "orderable": false, targets: [ 0,1,2,3,4,5,6 ]  }
+									{ "orderable": false, targets: [ 0,1,2,3,4,5,6,7 ]  }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/kegiatan_tahunan_2") }}',
@@ -290,6 +293,21 @@
 											}
 										}
 									},
+									{  data: 'action',width:"60px",
+											"render": function ( data, type, row ) {
+
+											if ( (row.kegiatan_tahunan_id) >= 1 ){
+												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
+											}else{
+												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_kegiatan_tahunan"  data-id="'+row.kegiatan_id+'" data-label="'+row.kegiatan_label+'"><i class="fa fa-plus" ></i></a></span>'+
+														'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
+											
+											}
+													
+										
+										}
+									},
 								
 								],
 								initComplete: function(settings, json) {
@@ -298,6 +316,231 @@
 	});	
 
 
+	$(document).on('click','.create_kegiatan_tahunan',function(e){
+	
+    var kegiatan_id = $(this).data('id');
+		show_modal_create(kegiatan_id);
+
+	});
+
+	function show_modal_create(kegiatan_id){
+		$.ajax({
+				url			: '{{ url("api_resource/kegiatan_detail") }}',
+				data 		: {kegiatan_id : kegiatan_id},
+				method		: "GET",
+				dataType	: "json",
+				success	: function(data) {
+					$('.modal-kegiatan_tahunan').find('[name=kegiatan_id]').val(data['kegiatan_id']);
+					$('.modal-kegiatan_tahunan').find('[name=label]').val(data['label']);
+					$('.modal-kegiatan_tahunan').find('[name=target]').val(data['target']);
+					$('.modal-kegiatan_tahunan').find('[name=satuan]').val(data['satuan']);
+					$('.modal-kegiatan_tahunan').find('[name=cost]').val(data['cost']);
+
+					$('.modal-kegiatan_tahunan').find('[name=quality]').val(100);
+
+
+					$('.modal-kegiatan_tahunan').find('h4').html('Create Kegiatan Tahunan');
+					$('.modal-kegiatan_tahunan').find('.btn-submit').attr('id', 'submit-save');
+					$('.modal-kegiatan_tahunan').find('[name=text_button_submit]').html('Simpan Data');
+					$('.modal-kegiatan_tahunan').modal('show');
+				},
+				error: function(data){
+					
+				}						
+		});	
+	}
+
+	$(document).on('click','.edit_kegiatan_tahunan',function(e){
+		var kegiatan_tahunan_id = $(this).data('id') ;
+		$.ajax({
+				url			: '{{ url("api_resource/kegiatan_tahunan_detail") }}',
+				data 		: {kegiatan_tahunan_id : kegiatan_tahunan_id},
+				method		: "GET",
+				dataType	: "json",
+				success	: function(data) {
+					$('.modal-kegiatan_tahunan').find('[name=label]').val(data['label']);
+					$('.modal-kegiatan_tahunan').find('[name=angka_kredit]').val(data['ak']);
+					$('.modal-kegiatan_tahunan').find('[name=target]').val(data['target']);
+					$('.modal-kegiatan_tahunan').find('[name=quality]').val(data['quality']);
+					$('.modal-kegiatan_tahunan').find('[name=satuan]').val(data['satuan']);
+					$('.modal-kegiatan_tahunan').find('[name=target_waktu]').val(data['target_waktu']);
+					$('.modal-kegiatan_tahunan').find('[name=cost]').val(data['cost']);
+
+
+					$('.modal-kegiatan_tahunan').find('[name=kegiatan_tahunan_id]').val(data['id']);
+					$('.modal-kegiatan_tahunan').find('h4').html('Edit Kegiatan Tahunan');
+					$('.modal-kegiatan_tahunan').find('.btn-submit').attr('id', 'submit-update');
+					$('.modal-kegiatan_tahunan').find('[name=text_button_submit]').html('Update Data');
+					$('.modal-kegiatan_tahunan').modal('show');
+				},
+				error: function(data){
+					
+				}						
+		});	
+	});
+
+
+
+	$(document).on('click','.hapus_kegiatan_tahunan',function(e){
+		var kegiatan_tahunan_id = $(this).data('id') ;
+		//alert(kegiatan_tahunan_id);
+
+		Swal.fire({
+			title: "Hapus  Kegiatan Tahunan",
+			text:$(this).data('label'),
+			type: "warning",
+			//type: "question",
+			showCancelButton: true,
+			cancelButtonText: "Batal",
+			confirmButtonText: "Hapus",
+			confirmButtonClass: "btn btn-success",
+			cancelButtonColor: "btn btn-danger",
+			cancelButtonColor: "#d33",
+			closeOnConfirm: false,
+			closeOnCancel:false
+		}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/hapus_kegiatan_tahunan") }}',
+					type	: 'POST',
+					data    : {kegiatan_tahunan_id:kegiatan_tahunan_id},
+					cache   : false,
+					success:function(data){
+							Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										$('#kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
+										jQuery('#ktj').jstree(true).refresh(true);
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$('#kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
+											jQuery('#ktj').jstree(true).refresh(true);
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+					});	
+			}
+		});
+	});
+
+
+	
+	$(document).on('click','.create_rencana_aksi',function(e){
+		$('.modal-rencana_aksi').find('h4').html('Create Rencana Aksi');
+		$('.modal-rencana_aksi').find('.btn-submit').attr('id', 'submit-save_rencana_aksi');
+		$('.modal-rencana_aksi').find('[name=text_button_submit]').html('Simpan Data');
+		$('.modal-rencana_aksi').modal('show');
+	});
+
+	$(document).on('click','.edit_rencana_aksi',function(e){
+		var rencana_aksi_id = $(this).data('id') ;
+		$.ajax({
+				url			: '{{ url("api_resource/rencana_aksi_detail") }}',
+				data 		: {rencana_aksi_id : rencana_aksi_id},
+				method		: "GET",
+				dataType	: "json",
+				success	: function(data) {
+					$('.modal-rencana_aksi').find('[name=label]').val(data['label']);
+					$('.modal-rencana_aksi').find('[name=target_pelaksanaan]').val(data['target_pelaksanaan']).trigger('change.select2');
+
+
+					$('.modal-rencana_aksi').find('[name=rencana_aksi_id]').val(data['id']);
+					$('.modal-rencana_aksi').find('h4').html('Edit Rencana Aksi');
+					$('.modal-rencana_aksi').find('.btn-submit').attr('id', 'submit-update_rencana_aksi');
+					$('.modal-rencana_aksi').find('[name=text_button_submit]').html('Update Data');
+					$('.modal-rencana_aksi').modal('show');
+				},
+				error: function(data){
+					
+				}						
+		});	
+	});
+
+	$(document).on('click','.hapus_rencana_aksi',function(e){
+		var rencana_aksi_id = $(this).data('id') ;
+		//alert(rencana_aksi_id);
+
+		Swal.fire({
+			title: "Hapus  rencana Aksi",
+			text:$(this).data('label'),
+			type: "warning",
+			//type: "question",
+			showCancelButton: true,
+			cancelButtonText: "Batal",
+			confirmButtonText: "Hapus",
+			confirmButtonClass: "btn btn-success",
+			cancelButtonColor: "btn btn-danger",
+			cancelButtonColor: "#d33",
+			closeOnConfirm: false,
+			closeOnCancel:false
+		}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/hapus_rencana_aksi") }}',
+					type	: 'POST',
+					data    : {rencana_aksi_id:rencana_aksi_id},
+					cache   : false,
+					success:function(data){
+							Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+										jQuery('#ktj').jstree(true).refresh(true);
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+											jQuery('#ktj').jstree(true).refresh(true);
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+					});	
+			}
+		});
+	});
+
+
+
+	
 	
 	
 	function load_rencana_aksi(kegiatan_tahunan_id){
@@ -311,7 +554,6 @@
 				dataType	: "json",
 				success	: function(data) {
 						$('.kegiatan_tahunan_id').val(data['id']);
-						$('.jabatan_pelaksana').html(data['pejabat']);
 						$('.kegiatan_tahunan_label').html(data['label']);
 						$('.txt_ak').html(data['ak']);
 						$('.txt_output').html(data['output']);
@@ -332,7 +574,7 @@
 				searching      	: false,
 				paging          : false,
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2] },
+									{ className: "text-center", targets: [ 0,2,3 ] },
 									{ 'orderable': false , targets: [ 0,1,2 ]  }
 								],
 				ajax			: {
@@ -347,7 +589,16 @@
 									},
 									{ data: "label", name:"label"},
 									{ data: "target_pelaksanaan", name:"target_pelaksanaan",width:"170px"},
-								
+									{  data: 'action',width:"15%",
+											"render": function ( data, type, row ) {
+
+											return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" ><a class="btn btn-success btn-xs edit_rencana_aksi"  data-id="'+row.rencana_aksi_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+													'<span  data-toggle="tooltip" title="Hapus" style="margin:1px;" ><a class="btn btn-danger btn-xs hapus_rencana_aksi"  data-id="'+row.rencana_aksi_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
+											
+													
+										
+										}
+									},
 								
 								],
 								initComplete: function(settings, json) {

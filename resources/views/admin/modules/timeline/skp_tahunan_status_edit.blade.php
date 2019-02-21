@@ -25,7 +25,7 @@
 					</li>
 				</ul>
 
-				<button class="btn btn-primary btn-block kirim_skp_tahunan " disabled>Kirim ke Atasan</button>
+				<button class="btn btn-primary btn-block kirim_skp_tahunan " disabled><i class="send_icon fa fa-send"></i> Kirim ke Atasan</button>
 			</div>
 		</div>
 	</div>
@@ -37,12 +37,6 @@
 
 
 </div>
-
-
-
-
-
-
 
 
 
@@ -118,7 +112,15 @@
 		});
 	}
 
-
+	function on_kirim(){
+		$('.send_icon').addClass('fa fa-spinner faa-spin animated');
+		$('.kirim_skp_tahunan').prop('disabled',true);
+	}
+	function reset_kirim(){
+		$('.send_icon').removeClass('fa fa-spinner faa-spin animated');
+		$('.send_icon').addClass('fa fa-send');
+		$('.kirim_skp_tahunan').prop('disabled',false);
+	}
 
 	$(document).on('click','.kirim_skp_tahunan',function(e){
 		Swal.fire({
@@ -134,12 +136,14 @@
 				closeOnConfirm: false
 		}).then ((result) => {
 			if (result.value){
+				on_kirim();
 				$.ajax({
 					url		: '{{ url("api_resource/skp_tahunan_send_to_atasan") }}',
 					type	: 'POST',
 					data    : {skp_tahunan_id: {!! $skp->id !!} },
 					cache   : false,
 					success:function(data){
+							
 							Swal.fire({
 									title: "",
 									text: "Sukses",
@@ -149,6 +153,7 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
+										reset_kirim();
 										location.reload();
 
 									},
@@ -163,6 +168,7 @@
 							
 					},
 					error: function(e) {
+							reset_kirim();
 							Swal.fire({
 									title: "Gagal",
 									text: "",

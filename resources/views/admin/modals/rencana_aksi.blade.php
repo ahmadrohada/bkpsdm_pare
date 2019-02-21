@@ -36,7 +36,7 @@
 								<option value="09">September</option>
 								<option value="10">Oktober</option>
 								<option value="11">November</option>
-								<option value="12">Deseber</option>
+								<option value="12">Desember</option>
 
 							</select>
 						</div>
@@ -47,7 +47,7 @@
 			</div>
 			<div class="modal-footer">
                 {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> Batal', array('class' => 'btn btn-sm btn-default pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-				{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> <span name="text_button_submit"></span>', array('class' => 'btn btn-primary btn-sm pull-right btn-flat btn-submit', 'type' => 'button', 'id' => 'simpan' )) !!}
+				{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').' button_simpan" aria-hidden="true"></i> <span name="text_button_submit"></span>', array('class' => 'btn btn-primary btn-sm pull-right btn-flat btn-submit', 'type' => 'button', 'id' => 'simpan_ra' )) !!}
 				
             </div>
 
@@ -64,13 +64,13 @@
 	$('.select2').select2()
 
 	$('.modal-rencana_aksi').on('shown.bs.modal', function(){
-		
+		reset_submit();
 	});
 
 	$('.modal-rencana_aksi').on('hidden.bs.modal', function(){
 		$('.label_rencana_aksi').removeClass('has-error');
 		$('.label_target_pelaksanaan').removeClass('has-error');
-		$('.modal-rencana_aksi').find('[name=rencana_aksi_id],[name=label],[name=target_pelaksanaan]').val('');
+		$('.modal-rencana_aksi').find('[name=rencana_aksi_id],[name=label]').val('');
 	});
 
 	$('.label_rencana_aksi').on('click', function(){
@@ -82,14 +82,21 @@
 	});
 
 	
-	
+	function on_submit(){
+		$('.modal-rencana_aksi').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('#submit-save_rencana_aksi').prop('disabled',true);
+	}
+	function reset_submit(){
+		$('.modal-rencana_aksi').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-rencana_aksi').find('.button_simpan').addClass('fa-floppy-o');
+		$('#submit-save_rencana_aksi').prop('disabled',false);
+	}
 	
 	$(document).on('click','#submit-save_rencana_aksi',function(e){
 		
-		$("#submit-save_rencana_aksi").hide();
-		
+		on_submit();
 		var data = $('#rencana_aksi_form').serialize();
-
+ 
 		//alert(data);
 		$.ajax({
 			url		: '{{ url("api_resource/simpan_rencana_aksi") }}',
@@ -99,7 +106,7 @@
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
                
-
+				reset_submit();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -112,6 +119,7 @@
 					$('.modal-rencana_aksi').modal('hide');
 					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
 					jQuery('#ktj').jstree(true).refresh(true);
+					
 					
 				},
 					
@@ -135,18 +143,16 @@
 					//error message
 					((index == 'label')?$('.label_rencana_aksi').addClass('has-error'):'');
 					((index == 'target_pelaksanaan')?$('.label_target_pelaksanaan').addClass('has-error'):'');
-					
-
+					reset_submit();
+				
 					
 				
 				});
-				$("#submit-save_rencana_aksi").show();
+				
 			
 			}
 			
 		});
-
-
 
 
 	});
@@ -154,6 +160,7 @@
 
 	$(document).on('click','#submit-update_rencana_aksi',function(e){
 
+		on_submit();
 		var data = $('#rencana_aksi_form').serialize();
 
 		//alert(data);
@@ -165,7 +172,7 @@
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
 			
-
+				reset_submit();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -200,7 +207,7 @@
 					//error message
 					((index == 'label')?$('.label_rencana_aksi').addClass('has-error'):'');
 					((index == 'target_pelaksanaan')?$('.label_target_pelaksanaan').addClass('has-error'):'');
-					
+					reset_submit();
 
 					
 				

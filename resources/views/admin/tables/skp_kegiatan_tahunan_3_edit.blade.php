@@ -57,7 +57,7 @@
 					</h1>
 
 					<div class="box-tools pull-right">
-						{!! Form::button('<i class="fa fa-remove "></i>', array('class' => 'btn btn-box-tool tutup_detail','title' => 'Tutup', 'data-toggle' => 'tooltip')) !!}
+						{!! Form::button('<i class="fa fa-remove "></i>', array('class' => 'btn btn-box-tool tutup_detail_detail_kegiatan_tahunan','title' => 'Tutup', 'data-toggle' => 'tooltip')) !!}
 					</div>
 				</div>
 				<div class="box-body table-responsive">
@@ -188,20 +188,10 @@
 						    $("#rencana_aksi").show();
                             load_rencana_aksi( tx[1]);
                        
-                break;
+                break; 
                 case 'KegiatanRenja':
-                             
-                            $("#kegiatan_tahunan").show();
-                            $("#rencana_aksi").hide();
-
-                            //SHOW MODAL ADD KEGIATAN TAHUNAN
-                            $('.modal-kegiatan_tahunan').find('h4').html('Create Kegiatan Tahunan');
-                            $('.modal-kegiatan_tahunan').find('.btn-submit').attr('id', 'submit-save');
-                            $('.modal-kegiatan_tahunan').find('[name=kegiatan_id]').val(tx[1]);
-                            $('.modal-kegiatan_tahunan').find('[name=label]').val(tx[2]);
-                            $('.modal-kegiatan_tahunan').find('[name=text_button_submit]').html('Simpan Data');
-                            $('.modal-kegiatan_tahunan').modal('show');
-                           
+									show_modal_create(tx[1]);
+                  
 
 				break;
 				case 'RencanaAksi':
@@ -219,10 +209,12 @@
     }
     
 
-    $(".tutup_detail").click(function(){
-		$("#kegiatan_tahunan").show();
-		$("#rencana_aksi").hide();
-	}); 
+    $(".tutup_detail_detail_kegiatan_tahunan").click(function(){
+			$("#kegiatan_tahunan").show();
+			$("#rencana_aksi").hide();
+			jQuery('#ktj').jstree().deselect_all(true);
+
+		}); 
 	
 	var table_kegiatan_tahunan = $('#kegiatan_tahunan_table').DataTable({
 				destroy			: true,
@@ -326,11 +318,12 @@
 
 	$(document).on('click','.create_kegiatan_tahunan',function(e){
 	
+    var kegiatan_id = $(this).data('id');
+		show_modal_create(kegiatan_id);
 
+	});
 
-		/* $('.modal-kegiatan_tahunan').find('[name=kegiatan_id]').val($(this).data('id'));
-		$('.modal-kegiatan_tahunan').find('[name=label]').val($(this).data('label')); */
-   var kegiatan_id = $(this).data('id');
+	function show_modal_create(kegiatan_id){
 		$.ajax({
 				url			: '{{ url("api_resource/kegiatan_detail") }}',
 				data 		: {kegiatan_id : kegiatan_id},
@@ -355,9 +348,7 @@
 					
 				}						
 		});	
-		
-		
-	});
+	}
 
 	$(document).on('click','.edit_kegiatan_tahunan',function(e){
 		var kegiatan_tahunan_id = $(this).data('id') ;
