@@ -951,15 +951,7 @@ class SKPTahunanAPIController extends Controller {
         $jabatan_id = HistoryJabatan::SELECT('id')->WHERE('id_pegawai','=',$pegawai_id)->get();
        
         $dt = SKPTahunan::
-                   /*  leftjoin('db_pare_2018.periode AS periode', function($join){ 
-                        $join   ->on('renja.periode_id','=','periode.id');
-                        
-                    })
-                    ->rightjoin('demo_asn.tb_history_jabatan AS kaban', function($join) use($pegawai_id){ 
-                        $join   ->on('renja.kepala_skpd_id','=','kaban.id');
-                        $join   ->where('kaban.id_pegawai','=',$pegawai_id);
-                    }) */
-                    WHERE('skp_tahunan.p_jabatan_id','=', '39799')
+                    WHEREIN('skp_tahunan.p_jabatan_id',$jabatan_id)
                     ->WHERE('skp_tahunan.send_to_atasan','=','1')
                     ->SELECT( 
                              'skp_tahunan.id AS skp_tahunan_id',

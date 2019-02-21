@@ -69,7 +69,7 @@
 			</div>
 			<div class="modal-footer">
                 {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> Batal', array('class' => 'btn btn-sm btn-default pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> <span name="text_button_submit"></span>', array('class' => 'btn btn-primary btn-sm pull-right btn-flat btn-submit', 'type' => 'button', 'id' => 'simpan' )) !!}
+                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').' button_simpan" aria-hidden="true"></i> <span name="text_button_submit"></span>', array('class' => 'btn btn-primary btn-sm pull-right btn-flat btn-submit', 'type' => 'button', 'id' => 'simpan' )) !!}
             </div>
 
             </form>
@@ -83,7 +83,7 @@
 <script type="text/javascript">
 
 	$('.modal-kegiatan_tahunan').on('shown.bs.modal', function(){
-		
+		reset_submitx();
 	});
 
 	$('.modal-kegiatan_tahunan').on('hidden.bs.modal', function(){
@@ -111,10 +111,20 @@
 		$('.quality').removeClass('has-error');
 	});
 
+ 
+	function on_submitx(){
+		$('.modal-kegiatan_tahunan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('#submit-save').prop('disabled',true);
+	}
+	function reset_submitx(){
+		$('.modal-kegiatan_tahunan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-kegiatan_tahunan').find('.button_simpan').addClass('fa-floppy-o');
+		$('#submit-save').prop('disabled',false);
+	}
 
-	
 	$(document).on('click','#submit-save',function(e){
 
+		on_submitx();
 		var data = $('#kegiatan_tahunan_form').serialize();
 
 		//alert(data);
@@ -126,7 +136,7 @@
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
                
-
+				reset_submitx();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -139,6 +149,7 @@
 					$('.modal-kegiatan_tahunan').modal('hide');
 					$('#kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
 					jQuery('#ktj').jstree(true).refresh(true);
+					
 					
 				},
 					
@@ -165,7 +176,7 @@
 					((index == 'quality')?$('.quality').addClass('has-error'):'');
 					((index == 'target_waktu')?$('.waktu').addClass('has-error'):'');
 					
-
+					reset_submitx();
 					
 				
 				});
@@ -184,6 +195,7 @@
 
 	$(document).on('click','#submit-update',function(e){
 
+		on_submitx();
 		var data = $('#kegiatan_tahunan_form').serialize();
 
 		//alert(data);
@@ -195,7 +207,7 @@
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
 			
-
+				reset_submitx();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -233,7 +245,7 @@
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					((index == 'quality')?$('.quality').addClass('has-error'):'');
 					((index == 'target_waktu')?$('.waktu').addClass('has-error'):'');
-					
+					reset_submitx();
 
 					
 				

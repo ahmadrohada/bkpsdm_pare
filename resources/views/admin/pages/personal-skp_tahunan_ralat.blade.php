@@ -34,12 +34,12 @@
 				<div class=" tab-pane" id="kegiatan_tahunan_tab">
 					<!-- 1. ka SKPD -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
-						@include('admin.tables.kegiatan_tahunan_1')
+						@include('admin.tables.tables_skp_kegiatan_tahunan_1_edit')
 					@endif 
 
 					<!-- 2. KABID -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('admin.tables.kegiatan_tahunan_2')
+						@include('admin.tables.skp_kegiatan_tahunan_2_edit')
 					@endif
 
 					<!-- 2. KASUBID -->

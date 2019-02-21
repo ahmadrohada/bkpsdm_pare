@@ -195,8 +195,9 @@
     
 
     $(".tutup_detail").click(function(){
-		$("#kegiatan_tahunan").show();
-		$("#rencana_aksi").hide();
+			$("#kegiatan_tahunan").show();
+			$("#rencana_aksi").hide();
+			jQuery('#ktj').jstree().deselect_all(true);
     }); 
 
 	var table_kegiatan_tahunan = $('#kegiatan_tahunan_table').DataTable({
