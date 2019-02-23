@@ -224,6 +224,7 @@ class RencanaAksiAPIController extends Controller {
         $messages = [
                 'rencana_aksi_id.required'   => 'Harus diisi',
                 'label.required'             => 'Harus diisi',
+                'pelaksana.required'             => 'Harus diisi',
                 'waktu_pelaksanaan_edit.required'=> 'Harus diisi'
 
         ];
@@ -233,6 +234,7 @@ class RencanaAksiAPIController extends Controller {
                         array(
                             'rencana_aksi_id'        => 'required',
                             'label'                  => 'required',
+                            'pelaksana'                  => 'required',
                             'waktu_pelaksanaan_edit'=> 'required'
                         ),
                         $messages
@@ -252,6 +254,7 @@ class RencanaAksiAPIController extends Controller {
 
 
         $st_ra->label               = Input::get('label');
+        $st_ra->jabatan_id               = Input::get('pelaksana');
         $st_ra->waktu_pelaksanaan	= Input::get('waktu_pelaksanaan_edit');
 
         if ( $st_ra->save()){
