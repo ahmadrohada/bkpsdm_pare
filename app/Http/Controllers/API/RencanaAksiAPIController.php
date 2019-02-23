@@ -116,7 +116,12 @@ class RencanaAksiAPIController extends Controller {
             return $x->label;
         })
         ->addColumn('pelaksana', function ($x) {
-            return Pustaka::capital_string($x->Pelaksana->skpd);
+            if ($x->jabatan_id > 0 ){
+                return Pustaka::capital_string($x->Pelaksana->skpd);
+            }else{
+                return '-';
+            }
+             
         })
         ->addColumn('waktu_pelaksanaan', function ($x) {
             return Pustaka::bulan($x->waktu_pelaksanaan);
