@@ -148,6 +148,11 @@ class RencanaAksiAPIController extends Controller {
                             ->WHERE('id', $request->rencana_aksi_id)
                             ->first();
 
+        if ( $jabatan->id > 0 ){
+            $pelaksana = Pustaka::capital_string($x->Pelaksana->skpd);
+        }else{
+            $pelaksana = '-';
+        }
 		
 		//return  $rencana_aksi;
         $rencana_aksi = array(
@@ -155,7 +160,7 @@ class RencanaAksiAPIController extends Controller {
             'label'              => $x->label,
             'waktu_pelaksanaan'  => $x->waktu_pelaksanaan,
             'jabatan_id'         => $x->jabatan_id,
-            'nama_jabatan'       => Pustaka::capital_string($x->Pelaksana->skpd)
+            'nama_jabatan'       => $pelaksana
  
         );
         return $rencana_aksi;
