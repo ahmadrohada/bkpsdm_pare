@@ -21,10 +21,41 @@
 							<textarea name="label" rows="3" required class="form-control txt-label" id="label" placeholder="" style="resize:none;"></textarea>
 						</div>
 					</div>
+
 					<div class="row">
-						<div class="col-md-12 form-group form-group-sm label_target_pelaksanaan">
-							<label>Target Pelaksanaan</label>
-							<select class="form-control select2 target_pelaksanaan" name="target_pelaksanaan" style="width: 100%;">
+						<div class="col-md-12 form-group form-group-sm label_pelaksana">
+							<label>Pelaksana</label>
+							<select id= "pelaksana" class="form-control" name="pelaksana" style="width: 100%;">
+								<option value = '0' > pilih pejabat pelaksana </option>
+							</select>
+						</div>
+					</div>
+
+					<div class="row tp">
+						<div class="col-md-12 form-group form-group-sm label_waktu_pelaksanaan">
+							<label>Waktu</label>
+							<select class="form-control select2 waktu_pelaksanaan" multiple="multiple" name="waktu_pelaksanaan[]" style="width: 100%;">
+								<option value="01">Januari</option>
+								<option value="02">Februari</option>
+								<option value="03">Maret</option>
+								<option value="04">April</option>
+								<option value="05">Mei</option>
+								<option value="06">Juni</option>
+								<option value="07">Juli</option>
+								<option value="08">Agustus</option>
+								<option value="09">September</option>
+								<option value="10">Oktober</option>
+								<option value="11">November</option>
+								<option value="12">Desember</option>
+
+							</select>
+						</div>
+					</div>
+
+					<div class="row tp_edit">
+						<div class="col-md-12 form-group form-group-sm label_waktu_pelaksanaan">
+							<label>Waktu</label>
+							<select class="form-control select2 waktu_pelaksanaan_edit" name="waktu_pelaksanaan_edit" style="width: 100%;">
 								<option value="01">Januari</option>
 								<option value="02">Februari</option>
 								<option value="03">Maret</option>
@@ -61,24 +92,60 @@
 <script type="text/javascript">
 
 
-	$('.select2').select2()
+	$('.select2').select2();
+
+
+	
+	$('#pelaksana').select2({
+		ajax: {
+			url				: '{{ url("api_resource/select2_bawahan_list") }}',
+			dataType		: 'json',
+			quietMillis		: 500,
+			data			: function (params) {
+				var queryParameters = {
+					jabatan				: params.term,
+					jabatan_id		    : {{$skp->u_jabatan_id}}
+				}
+				return queryParameters;
+			},
+			processResults: function (data) {
+				return {
+					results: $.map(data, function (item) {
+								
+						return {
+							text	: item.jabatan,
+							id		: item.id,
+						}
+								
+					})
+				};
+						
+			}
+		},
+		
+		
+	});
 
 	$('.modal-rencana_aksi').on('shown.bs.modal', function(){
 		reset_submit();
+
+		
+
 	});
 
 	$('.modal-rencana_aksi').on('hidden.bs.modal', function(){
 		$('.label_rencana_aksi').removeClass('has-error');
-		$('.label_target_pelaksanaan').removeClass('has-error');
+		$('.label_waktu_pelaksanaan').removeClass('has-error');
 		$('.modal-rencana_aksi').find('[name=rencana_aksi_id],[name=label]').val('');
+		$('.waktu_pelaksanaan').select2('val','');
 	});
 
 	$('.label_rencana_aksi').on('click', function(){
 		$('.label_rencana_aksi').removeClass('has-error');
 	});
 
-	$('.label_target_pelaksanaan').on('click', function(){
-		$('.label_target_pelaksanaan').removeClass('has-error');
+	$('.label_waktu_pelaksanaan').on('click', function(){
+		$('.label_waktu_pelaksanaan').removeClass('has-error');
 	});
 
 	
@@ -142,7 +209,7 @@
 					
 					//error message
 					((index == 'label')?$('.label_rencana_aksi').addClass('has-error'):'');
-					((index == 'target_pelaksanaan')?$('.label_target_pelaksanaan').addClass('has-error'):'');
+					((index == 'waktu_pelaksanaan')?$('.label_waktu_pelaksanaan').addClass('has-error'):'');
 					reset_submit();
 				
 					
@@ -206,7 +273,7 @@
 					
 					//error message
 					((index == 'label')?$('.label_rencana_aksi').addClass('has-error'):'');
-					((index == 'target_pelaksanaan')?$('.label_target_pelaksanaan').addClass('has-error'):'');
+					((index == 'waktu_pelaksanaan')?$('.label_waktu_pelaksanaan').addClass('has-error'):'');
 					reset_submit();
 
 					

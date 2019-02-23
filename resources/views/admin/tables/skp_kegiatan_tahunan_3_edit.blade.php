@@ -95,7 +95,8 @@
 							<tr>
 								<th>No</th>
 								<th>RENCANA AKSI</th>
-								<th>TARGET PELAKSANAAN</th>
+								<th>WAKTU</th>
+								<th>PELAKSANA</th>
 								<th><i class="fa fa-cog"></i></th>
 							</tr>
 						</thead>
@@ -449,6 +450,10 @@
 		$('.modal-rencana_aksi').find('h4').html('Create Rencana Aksi');
 		$('.modal-rencana_aksi').find('.btn-submit').attr('id', 'submit-save_rencana_aksi');
 		$('.modal-rencana_aksi').find('[name=text_button_submit]').html('Simpan Data');
+		$('.tp_edit').hide();
+		$('.tp').show();
+	
+
 		$('.modal-rencana_aksi').modal('show');
 	});
 
@@ -461,9 +466,20 @@
 				dataType	: "json",
 				success	: function(data) {
 					$('.modal-rencana_aksi').find('[name=label]').val(data['label']);
-					$('.modal-rencana_aksi').find('[name=target_pelaksanaan]').val(data['target_pelaksanaan']).trigger('change.select2');
 
 
+					$('.tp_edit').show();
+					$('.tp').hide();
+
+					
+
+				 //	$('.modal-rencana_aksi').find('[name=pelaksana]').val(1358).trigger('change.select2');
+
+				 $('.modal-rencana_aksi').find('[name=pelaksana]').empty().append('<option value="'+data['jabatan_id']+'">'+data['nama_jabatan']+'</option>').val(data['jabatan_id']).trigger('change');
+
+
+					$('.modal-rencana_aksi').find('[name=waktu_pelaksanaan_edit]').val(data['waktu_pelaksanaan']).trigger('change.select2');
+				
 					$('.modal-rencana_aksi').find('[name=rencana_aksi_id]').val(data['id']);
 					$('.modal-rencana_aksi').find('h4').html('Edit Rencana Aksi');
 					$('.modal-rencana_aksi').find('.btn-submit').attr('id', 'submit-update_rencana_aksi');
@@ -574,7 +590,7 @@
 				searching      	: false,
 				paging          : false,
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3 ] },
+									{ className: "text-center", targets: [ 0,2,4 ] },
 									{ 'orderable': false , targets: [ 0,1,2 ]  }
 								],
 				ajax			: {
@@ -588,7 +604,9 @@
 										}
 									},
 									{ data: "label", name:"label"},
-									{ data: "target_pelaksanaan", name:"target_pelaksanaan",width:"170px"},
+									{ data: "waktu_pelaksanaan", name:"waktu_pelaksanaan"},
+									{ data: "pelaksana", name:"pelaksana"},
+									
 									{  data: 'action',width:"15%",
 											"render": function ( data, type, row ) {
 

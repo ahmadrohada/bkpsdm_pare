@@ -103,7 +103,8 @@ class RencanaAksiAPIController extends Controller {
                 ->select([   
                     'id AS rencana_aksi_id',
                     'label',
-                    'target_pelaksanaan'
+                    'waktu_pelaksanaan',
+                    'jabatan_id'
                     
                     ])
                 ->get();
@@ -114,8 +115,11 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('label', function ($x) {
             return $x->label;
         })
-        ->addColumn('target_pelaksanaan', function ($x) {
-            return Pustaka::bulan($x->target_pelaksanaan);
+        ->addColumn('pelaksana', function ($x) {
+            return Pustaka::capital_string($x->Pelaksana->skpd);
+        })
+        ->addColumn('waktu_pelaksanaan', function ($x) {
+            return Pustaka::bulan($x->waktu_pelaksanaan);
         });
 
         if ($keyword = $request->get('search')['value']) {
@@ -133,7 +137,8 @@ class RencanaAksiAPIController extends Controller {
         $x = RencanaAksi::
                             SELECT(     'id AS rencana_aksi_id',
                                         'label',
-                                        'target_pelaksanaan'
+                                        'waktu_pelaksanaan',
+                                        'jabatan_id'
                                     ) 
                             ->WHERE('id', $request->rencana_aksi_id)
                             ->first();
@@ -143,8 +148,10 @@ class RencanaAksiAPIController extends Controller {
         $rencana_aksi = array(
             'id'                 => $x->rencana_aksi_id,
             'label'              => $x->label,
-            'target_pelaksanaan' => $x->target_pelaksanaan
-
+            'waktu_pelaksanaan'  => $x->waktu_pelaksanaan,
+            'jabatan_id'         => $x->jabatan_id,
+            'nama_jabatan'       => Pustaka::capital_string($x->Pelaksana->skpd)
+ 
         );
         return $rencana_aksi;
     }
@@ -153,8 +160,9 @@ class RencanaAksiAPIController extends Controller {
     {
 
         $messages = [
-                'kegiatan_tahunan_id.required'   => 'Harus diisi',
-                'target_pelaksanaan.required'   => 'Harus diisi',
+                'kegiatan_tahunan_id.required'  => 'Harus diisi',
+                'waktu_pelaksanaan.required'    => 'Harus diisi',
+                'pelaksana.required'            => 'Harus diisi',
 
         ];
 
@@ -162,7 +170,8 @@ class RencanaAksiAPIController extends Controller {
                         Input::all(),
                         array(
                             'kegiatan_tahunan_id'   => 'required',
-                            'target_pelaksanaan'    => 'required',
+                            'pelaksana'             => 'required',
+                            'waktu_pelaksanaan'     => 'required',
                             'label'                 => 'required',
                         ),
                         $messages
@@ -174,19 +183,26 @@ class RencanaAksiAPIController extends Controller {
             
         }
 
+        $target = Input::get('waktu_pelaksanaan');
+
+        for ($i = 0; $i < count($target); $i++){
+            $data[] = array(
+
+            'kegiatan_tahunan_id'   => Input::get('kegiatan_tahunan_id'),
+            'jabatan_id'            => Input::get('pelaksana'),
+            'label'                 => Input::get('label'),
+            'waktu_pelaksanaan'     => $target[$i],
+            'created_at'            => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
+            );
+
+
+
+        }
 
         $st_ra   = new RencanaAksi;
+        $st_ra -> insert($data);
 
-        $st_ra->kegiatan_tahunan_id       = Input::get('kegiatan_tahunan_id');
-        $st_ra->label                     = Input::get('label');
-        $st_ra->target_pelaksanaan        = Input::get('target_pelaksanaan');
-
-        if ( $st_ra->save()){
-            return \Response::make('sukses', 200);
-        }else{
-            return \Response::make('error', 500);
-        } 
-            
+      
             
     
     }
@@ -198,16 +214,16 @@ class RencanaAksiAPIController extends Controller {
         $messages = [
                 'rencana_aksi_id.required'   => 'Harus diisi',
                 'label.required'             => 'Harus diisi',
-                'target_pelaksanaan.required'=> 'Harus diisi'
+                'waktu_pelaksanaan_edit.required'=> 'Harus diisi'
 
         ];
 
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'rencana_aksi_id'   => 'required',
-                            'label'             => 'required',
-                            'target_pelaksanaan'=> 'required'
+                            'rencana_aksi_id'        => 'required',
+                            'label'                  => 'required',
+                            'waktu_pelaksanaan_edit'=> 'required'
                         ),
                         $messages
         );
@@ -226,7 +242,7 @@ class RencanaAksiAPIController extends Controller {
 
 
         $st_ra->label               = Input::get('label');
-        $st_ra->target_pelaksanaan	= Input::get('target_pelaksanaan');
+        $st_ra->waktu_pelaksanaan	= Input::get('waktu_pelaksanaan_edit');
 
         if ( $st_ra->save()){
             return \Response::make('sukses', 200);

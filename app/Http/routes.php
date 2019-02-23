@@ -383,6 +383,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('detail_pejabat_aktif','API\JabatanAPIController@PejabatAktifDetail');
 
 
+	Route::get('select2_bawahan_list','API\JabatanAPIController@Select2BawahanList');
+
+
 	
 	//========================================================================================================//
 	//==================================  PETA  J A B A T A N ================================================//
