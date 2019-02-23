@@ -148,7 +148,7 @@ class RencanaAksiAPIController extends Controller {
                             ->WHERE('id', $request->rencana_aksi_id)
                             ->first();
 
-        if ( $jabatan->id > 0 ){
+        if ( $x->jabatan_id > 0 ){
             $pelaksana = Pustaka::capital_string($x->Pelaksana->skpd);
         }else{
             $pelaksana = '-';
