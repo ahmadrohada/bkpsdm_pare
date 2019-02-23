@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Models\Jabatan;
+use App\Models\SKPTahunan;
+use App\Models\HistoryJabatan;
+use App\Models\Pegawai;
 use App\Models\Skpd;
 
 use App\Helpers\Pustaka;
@@ -141,4 +144,33 @@ class JabatanAPIController extends Controller {
     }
 
 
+    public function Select2BawahanList(Request $request)
+    {
+
+      $jabatan = $request->jabatan;
+
+      $jabatan       = HistoryJabatan:: 
+                                leftjoin('demo_asn.m_skpd AS skpd', function($join) use($jabatan){
+                                  $join   ->on('tb_history_jabatan.id_jabatan','=','skpd.parent_id');
+                                  $join  ->where('skpd.skpd','LIKE','%'.$jabatan.'%');
+                                })
+                                ->WHERE('tb_history_jabatan.id',$request->jabatan_id)
+                                ->SELECT('skpd.id AS jabatan_id','skpd.skpd')
+                                ->get();
+                        
+      
+      
+         $no = 0;
+         $pegawai_list = [];
+         foreach  ( $jabatan as $x){
+             $no++;
+             $pegawai_list[] = array(
+                             'id'		    => $x->jabatan_id,
+                             'jabatan'	=> Pustaka::capital_string($x->skpd),
+                             );
+             } 
+         
+         return $pegawai_list;
+
+    }
 }
