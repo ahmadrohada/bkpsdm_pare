@@ -97,6 +97,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::get('skpd_skp_tahunan_list','API\SKPTahunanAPIController@SKPDSKPTahunanList');
 	Route::get('skp_tahunan_timeline_status','API\SKPTahunanAPIController@SKPTahunanTimelineStatus');
+	Route::get('skp_tahunan_general_timeline','API\SKPTahunanAPIController@SKPTahunanGeneralTimeline');
 
 
 	//========================================================================================================//
@@ -231,7 +232,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	//Kegiatan KA SKPD
 	Route::get('skpd-renja_kegiatan_list_kaskpd','API\KegiatanAPIController@RenjaKegiatanKaSKPD');
-
+	Route::get('skp_tahunan_kegiatan_1','API\KegiatanAPIController@SKPTahunanKegiatanTree1');
 
 	//kegiatan KABID
 	Route::get('skpd-renja_kegiatan_list_kabid','API\KegiatanAPIController@RenjaKegiatanKabid');
@@ -241,6 +242,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//KEgiatan KASUBID
 	Route::get('skpd-renja_kegiatan_list_kasubid','API\KegiatanAPIController@RenjaKegiatanKasubid');
 	Route::get('skp_tahunan_kegiatan_3','API\KegiatanAPIController@SKPTahunanKegiatanTree3');
+
+	//KEgiatan PELAKSANA
+	//Route::get('skpd-renja_kegiatan_list_kasubid','API\KegiatanAPIController@RenjaKegiatanKasubid');
+	Route::get('skp_tahunan_kegiatan_4','API\KegiatanAPIController@SKPTahunanKegiatanTree4');
 
 
 	//UNLINK KEGFIATAN
@@ -298,10 +303,15 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skp_bawahan_list_md','API\SKPTahunanAPIController@SKPTahunanBawahanMd');
 	
 	Route::get('create_skp_tahunan_confirm','API\SKPTahunanAPIController@CreateConfirm');
+	Route::get('skp_tahunan_detail','API\SKPTahunanAPIController@SKPTahunandDetail');
 
 	
 
 	Route::post('create_skp_tahunan','API\SKPTahunanAPIController@Store');
+
+	Route::post('skp_tahunan_open','API\SKPTahunanAPIController@SKPOPen');
+	Route::post('skp_tahunan_close','API\SKPTahunanAPIController@SKPClose');
+
 	Route::post('skp_tahunan_send_to_atasan','API\SKPTahunanAPIController@SendToAtasan');
 	Route::post('skp_tahunan_pull_from_atasan','API\SKPTahunanAPIController@PullFromAtasan');
 	Route::post('hapus_skp_tahunan','API\SKPTahunanAPIController@Destroy');
@@ -321,12 +331,18 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	/* Route::get('skp_tahunan_ktj','API\KegiatanSKPTahunanAPIController@KTJoverKegiatanIdlist'); */
 
+	//KABAN
+	Route::get('kegiatan_tahunan_1','API\KegiatanSKPTahunanAPIController@KegiatanTahunan1');
+
 	//kegiatan_KABID
 	Route::get('kegiatan_tahunan_2','API\KegiatanSKPTahunanAPIController@KegiatanTahunan2');
 
 	//kegiatan KASUBID
 	Route::get('kegiatan_tahunan_3','API\KegiatanSKPTahunanAPIController@KegiatanTahunan3');
 
+
+	//kegiatan PELAKSANA
+	Route::get('kegiatan_tahunan_4','API\KegiatanSKPTahunanAPIController@KegiatanTahunan4');
 
 	
 
@@ -350,6 +366,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	Route::get('rencana_aksi_tree','API\RencanaAksiAPIController@rencana_aksi_tree');
 	Route::get('skp_tahunan_rencana_aksi','API\RencanaAksiAPIController@RencanaAksiList');
+	Route::get('skp_tahunan_rencana_aksi_4','API\RencanaAksiAPIController@RencanaAksiList4');
 	Route::get('rencana_aksi_detail','API\RencanaAksiAPIController@RencanaAksiDetail');
 
 	Route::post('simpan_rencana_aksi','API\RencanaAksiAPIController@Store');
