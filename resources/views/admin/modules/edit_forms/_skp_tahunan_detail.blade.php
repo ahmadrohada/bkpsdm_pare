@@ -9,21 +9,21 @@
 		<div class="form-group form-group-sm" style="margin-top:10px;">
 			<label class="col-md-4">Tanggal dibuat</label>
 			<div class="col-md-8">
-				<span id="date_created" class="form-control"></span>
+				<span id="date_created" class="form-control">{!! $skp->created_at !!}</span>
 			</div>
 		</div>
 
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4">Periode SKP</label>
 			<div class="col-md-8">
-				<span id="periode" class="form-control"></span>
+				<span id="periode" class="form-control">{!! $skp->Renja->Periode->label !!}</span>
 			</div>
 		</div>
 
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4">Masa Penilaian</label>
 			<div class="col-md-8">
-				<span id="masa_penilaian" class="form-control"></span>
+				<span id="masa_penilaian" class="form-control">{!! $skp->tgl_mulai !!} s.d {!! $skp->tgl_selesai !!}</span>
 			</div>
 		</div>
 					
@@ -52,7 +52,7 @@
 		<div class="form-group form-group-sm form_nip"  style="margin-top:10px !important;">
 			<label class="col-md-4">NIP</label>
 			<div class="col-md-8">
-				<span id="p_nip" class="form-control p_nip"></span>
+				<span id="p_nip" class="form-control p_nip">{!!  $skp->PejabatPenilai->nip !!}</span>
 			</div>
 		</div>
 
@@ -66,14 +66,14 @@
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4 " >Nama Pegawai</label>
 			<div class="col-md-8">
-				<span id="p_nama"  class="form-control"></span>
+				<span id="p_nama"  class="form-control">{!! $skp->p_nama !!}</span>
 			</div>
 		</div>
 							
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4 " >Pangkat / Gol</label>
 			<div class="col-md-8">
-				<span id="p_golongan" class="form-control"></span>
+				<span id="p_golongan" class="form-control">{{ ( $skp->PejabatPenilai->golongan ? $skp->PejabatPenilai->golongan->pangkat : '' ) }} /  {{ ( $skp->PejabatPenilai->golongan ? $skp->PejabatPenilai->golongan->golongan : '' ) }}</span>
 			</div>
 		</div>
 							
@@ -81,21 +81,21 @@
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4 " >Eselon</label>
 			<div class="col-md-8">
-				<span id="p_eselon" class="form-control"></span>
+				<span id="p_eselon" class="form-control">{{ ( $skp->PejabatPenilai->eselon ? $skp->PejabatPenilai->eselon->eselon : '' ) }}</span>
 			</div>
 		</div>
 							
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4 ">Jabatan</label>
 			<div class="col-md-8">
-				<span id="p_jabatan"class="form-control" style="height:48px;"></span>
+				<span id="p_jabatan"class="form-control" style="height:48px;">{{  pustaka::capital_string( ( $skp->PejabatPenilai->Jabatan ? $skp->PejabatPenilai->Jabatan->skpd : '' )) }}</span>
 			</div>
 		</div>
 
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4">Unit Kerja</label>
 			<div class="col-md-8">
-				<span class="form-control" id="p_unit_kerja"  style="height:60px;"></span>
+				<span class="form-control" id="p_unit_kerja"  style="height:60px;">{{ pustaka::capital_string( ( $skp->PejabatPenilai->skpd ? $skp->PejabatPenilai->skpd->skpd : '' )) }}</span>
 			</div>
 		</div>
 	</div>	
@@ -110,42 +110,42 @@
 		<div class="form-group form-group-sm"  style="margin-top:10px;">
 			<label class="col-md-4">NIP</label>
 			<div class="col-md-8">
-				<span id="u_nip" class="form-control"></span>
+				<span id="u_nip" class="form-control">{{ $skp->PejabatYangDinilai->nip }}</span>
 			</div>
 		</div>
 
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4 " >Nama Pegawai</label>
 			<div class="col-md-8">
-				<span id="u_nama" class="form-control"></span>
+				<span id="u_nama" class="form-control">{{ $skp->u_nama }}</span>
 			</div>
 		</div>
 							
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4 " >Pangkat / Gol</label>
 			<div class="col-md-8">
-				<span id="u_golongan" class="form-control"></span>
+				<span id="u_golongan" class="form-control">{{ ( $skp->PejabatYangDinilai->golongan ? $skp->PejabatYangDinilai->golongan->pangkat : '' ) }} /  {{ ( $skp->PejabatPenilai->golongan ? $skp->PejabatPenilai->golongan->golongan : '' ) }}</span>
 			</div>
 		</div>
 
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4 " >Eselon</label>
 			<div class="col-md-8">
-				<span id="u_eselon" class="form-control"></span>
+				<span id="u_eselon" class="form-control">{{ ( $skp->PejabatYangDinilai->eselon ? $skp->PejabatYangDinilai->eselon->eselon : '' ) }}</span>
 			</div>
 		</div>
 
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4 ">Jabatan</label>
 			<div class="col-md-8">
-				<span id="u_jabatan" class="form-control" style="height:48px;"></span>
+				<span id="u_jabatan" class="form-control" style="height:48px;">{{  pustaka::capital_string( ( $skp->PejabatYangDinilai->Jabatan ? $skp->PejabatYangDinilai->Jabatan->skpd : '' )) }}</span>
 			</div>
 		</div>
 
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4">Unit Kerja</label>
 			<div class="col-md-8">
-				<span class="form-control" id="u_unit_kerja"  style="height:60px;"></span>
+				<span class="form-control" id="u_unit_kerja"  style="height:60px;">{{ pustaka::capital_string( ( $skp->PejabatYangDinilai->skpd ? $skp->PejabatYangDinilai->skpd->skpd : '' )) }}</span>
 			</div>
 		</div>
 	</div>	 
@@ -158,25 +158,24 @@
 <script type="text/javascript">
 
 
-	
+	$(".p_nip_edit").change(function(){
 
-	$.ajax({
-		url     	: '{{ url("api_resource/skp_tahunan_detail") }}',
-		type    	: "GET",
-		data    	: { skp_tahunan_id: {{ $skp->id }} },
-		success		: function (data) {
+		var id = $(".p_nip_edit option:selected").val();
 
-				$("#date_created").html(data['date_created']);
-				$("#periode").html(data['periode']);
-				$("#masa_penilaian").html(data['masa_penilaian']);
+		$.ajax({
+			url     	: '{{ url("api_resource/set_pejabat_penilai_skp_tahunan") }}',
+			type    	: "POST",
+			data    	: { skp_tahunan_id: {{ $skp->id }}, 
+							pejabat_penilai_id  : id
+							
+						},
+			success		: function (data) {
 
+				$('.btn_batal_pejabat').addClass('hidden');
+				$('.btn_edit_pejabat').removeClass('hidden');
 
-				$("#u_nama").html(data['u_nama']);
-				$("#u_nip").html(data['u_nip']);
-				$("#u_golongan").html(data['u_pangkat']+' / '+data['u_golongan']);
-				$("#u_jabatan").html(data['u_jabatan']);
-				$("#u_eselon").html(data['u_eselon']);
-				$("#u_unit_kerja").html(data['u_unit_kerja']);
+				$('.form_edit_nip').hide();
+				$('.form_nip').show();
 
 				$("#p_nama").html(data['p_nama']);
 				$("#p_nip").html(data['p_nip']);
@@ -187,10 +186,22 @@
 
 			},
 			error: function (data) {
-				
+				Swal.fire({
+						title: "Gagal",
+						text: "Set Atasan tidak berhasil",
+						type: "warning"
+					}).then (function(){	
+				});
+				$('.btn_batal_pejabat').addClass('hidden');
+				$('.btn_edit_pejabat').removeClass('hidden');
+
+				$('.form_edit_nip').hide();
+				$('.form_nip').show();
 			}
 
-	}); 
+		}); 
+
+	});
 
 	/** ============== ----------------------- ================= **/	
 	/** ============== FUNGSI EDIT Atasan ================= **/

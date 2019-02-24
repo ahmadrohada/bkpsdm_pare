@@ -95,7 +95,8 @@
 							<tr>
 								<th>No</th>
 								<th>RENCANA AKSI</th>
-								<th>TARGET PELAKSANAAN</th>
+								<th>WAKTU</th>
+								<th>PELAKSANA</th>
 								<th><i class="fa fa-cog"></i></th>
 							</tr>
 						</thead>
@@ -252,7 +253,7 @@
 											if ( (row.kegiatan_tahunan_id) <= 0 ){
 												return "<p class='text-danger'>"+row.kegiatan_label+"</p>";
 											}else{
-												return row.kegiatan_label;
+												return row.kegiatan_tahunan_label;
 											}
 										}
 									},
@@ -574,7 +575,7 @@
 				searching      	: false,
 				paging          : false,
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3 ] },
+									{ className: "text-center", targets: [ 0,2,4 ] },
 									{ 'orderable': false , targets: [ 0,1,2 ]  }
 								],
 				ajax			: {
@@ -588,7 +589,8 @@
 										}
 									},
 									{ data: "label", name:"label"},
-									{ data: "target_pelaksanaan", name:"target_pelaksanaan",width:"170px"},
+									{ data: "waktu_pelaksanaan", name:"waktu_pelaksanaan",width:"170px"},
+									{ data: "pelaksana", name:"pelaksana"},
 									{  data: 'action',width:"15%",
 											"render": function ( data, type, row ) {
 

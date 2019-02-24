@@ -34,7 +34,7 @@
 					<div class="row tp">
 						<div class="col-md-12 form-group form-group-sm label_waktu_pelaksanaan">
 							<label>Waktu</label>
-							<select class="form-control select2 waktu_pelaksanaan" multiple="multiple" name="waktu_pelaksanaan[]" style="width: 100%;">
+							<select class="form-control  waktu_pelaksanaan" multiple="multiple" name="waktu_pelaksanaan[]" style="width: 100%;">
 								<option value="01">Januari</option>
 								<option value="02">Februari</option>
 								<option value="03">Maret</option>
@@ -55,7 +55,7 @@
 					<div class="row tp_edit">
 						<div class="col-md-12 form-group form-group-sm label_waktu_pelaksanaan">
 							<label>Waktu</label>
-							<select class="form-control select2 waktu_pelaksanaan_edit" name="waktu_pelaksanaan_edit" style="width: 100%;">
+							<select class="form-control  waktu_pelaksanaan_edit" name="waktu_pelaksanaan_edit" style="width: 100%;">
 								<option value="01">Januari</option>
 								<option value="02">Februari</option>
 								<option value="03">Maret</option>
@@ -92,7 +92,7 @@
 <script type="text/javascript">
 
 
-	$('.select2').select2();
+	$('.waktu_pelaksanaan,.waktu_pelaksanaan_edit').select2();
 
 
 	

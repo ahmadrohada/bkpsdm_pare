@@ -91,7 +91,7 @@
 							<tr>
 								<th>No</th>
 								<th>RENCANA AKSI</th>
-								<th>TARGET PELAKSANAAN</th>
+								<th>WAKTU</th>
 							</tr>
 						</thead>
 					</table>
@@ -126,7 +126,7 @@
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_3") }}", //Eselon 2
+						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_4") }}", 
 						"data" 	: function (node) {
 							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
                                         "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
@@ -212,7 +212,7 @@
 									{ "orderable": false, targets: [ 0,1,2,3,4,5,6 ]  }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_tahunan_3") }}',
+									url	: '{{ url("api_resource/kegiatan_tahunan_4") }}',
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 
@@ -283,8 +283,10 @@ $.ajax({
 								{ 'orderable': false , targets: [ 0,1]  }
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/skp_tahunan_rencana_aksi") }}',
-								data: { kegiatan_tahunan_id: kegiatan_tahunan_id },
+								url	: '{{ url("api_resource/skp_tahunan_rencana_aksi_4") }}',
+                                data: { kegiatan_tahunan_id: kegiatan_tahunan_id,
+                                        "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!}
+                                      },
 							},
 							columns			: [
 								{ data: 'rencana_aksi_id' , width:"10%",
@@ -293,7 +295,7 @@ $.ajax({
 									}
 								},
 								{ data: "label", name:"label"},
-								{ data: "target_pelaksanaan", name:"target_pelaksanaan"},
+								{ data: "waktu_pelaksanaan", name:"waktu_pelaksanaan"},
 							
 							],
 							initComplete: function(settings, json) {

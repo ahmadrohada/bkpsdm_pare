@@ -253,7 +253,7 @@
 											if ( (row.kegiatan_tahunan_id) <= 0 ){
 												return "<p class='text-danger'>"+row.kegiatan_label+"</p>";
 											}else{
-												return row.kegiatan_label;
+												return row.kegiatan_tahunan_label;
 											}
 										}
 									},

@@ -67,7 +67,7 @@
 						<input type="hidden" class="kegiatan_tahunan_id">
 					</p>
 
-					<strong>Pelaksana</strong>
+					<strong>Penanggung Jawab</strong>
 					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 						<span class="jabatan_pelaksana"></span>
 					</p>
@@ -98,7 +98,8 @@
 							<tr>
 								<th>No</th>
 								<th>RENCANA AKSI</th>
-								<th>TARGET PELAKSANAAN</th>
+								<th>WAKTU</th>
+								<th>PELAKSANA</th>
 							</tr>
 						</thead>
 					</table>
@@ -249,7 +250,7 @@
 											if ( (row.kegiatan_tahunan_id) <= 0 ){
 												return "<p class='text-danger'>"+row.kegiatan_label+"</p>";
 											}else{
-												return row.kegiatan_label;
+												return row.kegiatan_tahunan_label;
 											}
 										}
 									},
@@ -346,7 +347,8 @@
 										}
 									},
 									{ data: "label", name:"label"},
-									{ data: "target_pelaksanaan", name:"target_pelaksanaan",width:"170px"},
+									{ data: "waktu_pelaksanaan", name:"waktu_pelaksanaan",width:"170px"},
+									{ data: "pelaksana", name:"pelaksana"},
 								
 								
 								],

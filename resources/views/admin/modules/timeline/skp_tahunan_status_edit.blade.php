@@ -20,12 +20,16 @@
 					<li class="list-group-item">
 						<b>Data Rencana Aksi</b> <a class="pull-right st_rencana_aksi">-</a>
 					</li>
-					<li class="list-group-item hidden" >
+					<!-- <li class="list-group-item hidden" >
 						<b>Persetujuan Atasan</b> <a class="pull-right st_persetujuan_atasan">-</a>
-					</li>
+					</li> -->
+					<!-- <li class="list-group-item " >
+						<b>Status</b> <a class="pull-right">Open</a>
+					</li> -->
 				</ul>
 
-				<button class="btn btn-primary btn-block kirim_skp_tahunan " disabled><i class="send_icon fa fa-send"></i> Kirim ke Atasan</button>
+				<!-- <button class="btn btn-primary btn-block close_skp_tahunan " disabled><i class="send_icon fa fa-lock"></i> Close SKP Tahunan</button>
+			 -->
 			</div>
 		</div>
 	</div>
@@ -51,9 +55,8 @@
 
 	function status_show(){
 		$.ajax({
-				url			: '{{ url("api_resource/skp_tahunan_timeline_status") }}',
-				data 		: { skp_tahunan_id : {!! $skp->id!!},
-								jabatan_id : {!! $skp->PejabatYangDinilai->id_jabatan !!},
+				url			: '{{ url("api_resource/skp_tahunan_general_timeline") }}',
+				data 		: { 
 								renja_id : {!! $skp->Renja->id !!}
 								},
 				method		: "GET",
@@ -93,9 +96,9 @@
 				success	: function(data) {
 					//alert(data);
 					if (data['button_kirim'] == 1 ){
-						$('.kirim_skp_tahunan').removeAttr('disabled');
+						$('.close_skp_tahunan').removeAttr('disabled');
 					}else{
-						$('.kirim_skp_tahunan').attr('disabled','disabled');
+						$('.close_skp_tahunan').attr('disabled','disabled');
 					}
 
 					$('.st_created_at').html(data['created']);
@@ -114,22 +117,22 @@
 
 	function on_kirim(){
 		$('.send_icon').addClass('fa fa-spinner faa-spin animated');
-		$('.kirim_skp_tahunan').prop('disabled',true);
+		$('.close_skp_tahunan').prop('disabled',true);
 	}
 	function reset_kirim(){
 		$('.send_icon').removeClass('fa fa-spinner faa-spin animated');
 		$('.send_icon').addClass('fa fa-send');
-		$('.kirim_skp_tahunan').prop('disabled',false);
+		$('.close_skp_tahunan').prop('disabled',false);
 	}
 
-	$(document).on('click','.kirim_skp_tahunan',function(e){
+	$(document).on('click','.close_skp_tahunan',function(e){
 		Swal.fire({
-				title: "Kirim SKP Tahunan",
-				text: "SKP Tahunan akan dikirim kepada Pejabat Penilai untuk mendapatkan persetujuan",
+				title: "Tutup SKP Tahunan",
+				text: "SKP Tahunan akan ditutup, edit pada skp tidak bisa dilakukan",
 				type: "question",
 				showCancelButton: true,
 				cancelButtonText: "Batal",
-				confirmButtonText: "Kirim",
+				confirmButtonText: "Close SKP",
 				confirmButtonClass: "btn btn-success",
 				cancelButtonClass: "btn btn-danger",
 				cancelButtonColor: "#d33",
@@ -138,7 +141,7 @@
 			if (result.value){
 				on_kirim();
 				$.ajax({
-					url		: '{{ url("api_resource/skp_tahunan_send_to_atasan") }}',
+					url		: '{{ url("api_resource/skp_tahunan_close") }}',
 					type	: 'POST',
 					data    : {skp_tahunan_id: {!! $skp->id !!} },
 					cache   : false,

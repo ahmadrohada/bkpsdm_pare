@@ -25,7 +25,25 @@
 
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
 				<div class="active tab-pane" id="status">
-					@include('admin.modules.timeline.skp_tahunan_status_detail')	
+					<!-- 1. ka SKPD -->
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
+						@include('admin.modules.timeline.skp_tahunan_status_edit')	
+					@endif
+
+					<!-- 2. KABID -->
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
+						@include('admin.modules.timeline.skp_tahunan_status_general')	
+					@endif
+
+					<!-- 2. KASUBID -->
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+						@include('admin.modules.timeline.skp_tahunan_status_edit')	
+					@endif
+
+					<!-- 2. PELAKSANA -->
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
+						@include('admin.modules.timeline.skp_tahunan_status_edit')	
+					@endif	
 				</div>
 				<div class="tab-pane" id="detail">
 					@include('admin.modules.detail_forms.skp_tahunan_detail')			
