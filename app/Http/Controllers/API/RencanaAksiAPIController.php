@@ -135,6 +135,48 @@ class RencanaAksiAPIController extends Controller {
         
     }
 
+    public function RencanaAksiList4(Request $request)
+    {
+            
+       
+        $dt = Rencanaaksi::WHERE('kegiatan_tahunan_id','=', $request->kegiatan_tahunan_id )
+                ->WHERE('jabatan_id',$request->jabatan_id)
+
+                ->select([   
+                    'id AS rencana_aksi_id',
+                    'label',
+                    'waktu_pelaksanaan',
+                    'jabatan_id'
+                    
+                    ])
+                ->get();
+
+                
+                
+        $datatables = Datatables::of($dt)
+        ->addColumn('label', function ($x) {
+            return $x->label;
+        })
+        ->addColumn('pelaksana', function ($x) {
+            if ($x->jabatan_id > 0 ){
+                return Pustaka::capital_string($x->Pelaksana->skpd);
+            }else{
+                return '-';
+            }
+             
+        })
+        ->addColumn('waktu_pelaksanaan', function ($x) {
+            return Pustaka::bulan($x->waktu_pelaksanaan);
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true); 
+        
+    }
+
     public function RencanaAksiDetail(Request $request)
     {
        

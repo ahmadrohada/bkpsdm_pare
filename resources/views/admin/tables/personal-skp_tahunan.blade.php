@@ -80,12 +80,12 @@
 								},
 								{ data: "skp_tahunan" , orderable: false,searchable:false,width:"120px",
 										"render": function ( data, type, row ) {
-										if (row.skp_tahunan == 0 ){
+										if (row.skp_tahunan == 0 ){ 
 											return  '<span  data-toggle="tooltip" title="Create SKP Tahunan" style="margin:1px;" ><a class="btn btn-warning btn-xs create_skp_tahunan"  data-jabatan_id="'+row.jabatan_id+'" data-periode_id="'+row.periode_id+'" data-pegawai_id="'+row.pegawai_id+'">Create SKP</a></span>';
 										}else if (row.skp_tahunan == 1 ){
 
 
-											if (row.skp_tahunan_status == 0 ){
+											if ( row.status == 0 ){
 												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs" disabled><i class="fa fa-eye" ></i></a></span>'
 														+'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'
 														+'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_skp_tahunan"  data-id="'+row.skp_tahunan_id+'" data-periode="'+row.periode+'" ><i class="fa fa-close " ></i></a></span>';

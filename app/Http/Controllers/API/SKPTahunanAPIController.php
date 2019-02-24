@@ -9,6 +9,7 @@ use App\Models\PerjanjianKinerja;
 use App\Models\KegiatanSKPTahunan;
 use App\Models\MasaPemerintahan;
 use App\Models\RencanaAksi;
+use App\Models\SKPTahunanTimeline;
 use App\Models\SKPTahunan;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
@@ -31,7 +32,89 @@ Use Alert;
 class SKPTahunanAPIController extends Controller {
 
 
-    
+    protected function SKPTahunandDetail(Request $request){
+     
+
+        $skp = SKPTahunan::WHERE('skp_tahunan.id',$request->skp_tahunan_id)
+                            
+                            ->first();
+
+
+
+        $renja      = $skp->Renja;
+        $p_detail   = $skp->PejabatPenilai;
+        $u_detail   = $skp->PejabatYangDinilai;
+       
+
+        if ( $p_detail >= 1 ){
+            $data = array(
+                    'periode'	        => $renja->Periode->label,
+                    'date_created'	    => Pustaka::tgl_jam($skp->created_at),
+                    'masa_penilaian'    => Pustaka::tgl_form($skp->tgl_mulai).' s.d  '.Pustaka::tgl_form($skp->tgl_selesai),
+
+                    'u_jabatan_id'	        => $u_detail->id,
+                    'u_nip'	                => $u_detail->nip,
+                    'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
+                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
+                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
+                    'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
+                    'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
+                    'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
+                    'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
+                
+                    'p_jabatan_id'	        => $p_detail->id,
+                    'p_nip'	                => $p_detail->nip,
+                    'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
+                    'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
+                    'p_golongan'	        => $p_detail->Golongan ? $p_detail->Golongan->golongan : '',
+                    'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
+                    'p_jabatan'	            => Pustaka::capital_string($p_detail->Jabatan ? $p_detail->Jabatan->skpd : ''),
+                    'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
+                    'p_skpd'	            => Pustaka::capital_string($p_detail->Skpd ? $p_detail->Skpd->skpd : ''), 
+                
+                   
+
+            );
+        }else{
+            $data = array(
+                    'periode'	        => $renja->Periode->label,
+                    'date_created'	    => Pustaka::tgl_jam($skp->created_at),
+                    'masa_penilaian'    => Pustaka::tgl_form($skp->tgl_mulai).' s.d  '.Pustaka::tgl_form($skp->tgl_selesai),
+
+                    'u_jabatan_id'	        => $u_detail->id,
+                    'u_nip'	                => $u_detail->nip,
+                    'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
+                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
+                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
+                    'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
+                    'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
+                    'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
+                    'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
+                
+                    'p_jabatan_id'	        => '',
+                    'p_nip'	                => '',
+                    'p_nama'                => '',
+                    'p_pangkat'	            => '',
+                    'p_golongan'	        => '',
+                    'p_eselon'	            => '',
+                    'p_jabatan'	            => '',
+                    'p_unit_kerja'	        => '',
+                    'p_skpd'	            => '', 
+                
+                
+
+            );
+
+        }
+
+
+        return $data; 
+
+
+
+
+
+    }
   
     //KASUBID
     public function SKPTahunanStatusPengisian3( Request $request )
@@ -262,6 +345,42 @@ class SKPTahunanAPIController extends Controller {
 
 
     }
+
+
+    public function SKPTahunanGeneralTimeline( Request $request )
+    {
+       
+        $response = array();
+        $body = array();
+
+        //cari SKP tahunan dengan renja ID sesuai request
+        $skp_tahunan = SKPTahunan::WHERE('renja_id',$request->renja_id)->SELECT('id')->get();
+
+        $timeline = SKPTahunanTimeline::
+                                WHEREIN('skp_tahunan_id',$skp_tahunan)
+                                ->get();
+
+        
+        
+        foreach($timeline as $tm) {
+
+
+            $h['time']	    = $tm->created_at->format('Y-m-d H:i:s');
+            $h['body']	    = [ ['tag'=>'p','content'=>'<b class="text-success">'.$tm->SKPTahunan->u_nama.'</b>'] , 
+                                ['tag'=>'p','content'=>'<p class="text-success">'.Pustaka::capital_string($tm->SKPTahunan->PejabatYangDinilai->Jabatan->skpd).'</p>'],
+                                
+                              
+                              ];
+
+            array_push($response, $h);
+
+            
+
+        }            
+       
+        return $response;
+
+    }
    
 
     public function SKPDSKPTahunanList(Request $request)
@@ -370,8 +489,8 @@ class SKPTahunanAPIController extends Controller {
                             })
                             ->leftjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function($join){
                                 $join   ->on('skp_tahunan.u_jabatan_id','=','bawahan.id');
-                                $join   ->where('skp_tahunan.send_to_atasan','=','1');
-                                $join   ->where('skp_tahunan.status_approve','=','1');
+                                //$join   ->where('skp_tahunan.send_to_atasan','=','1');
+                                //$join   ->where('skp_tahunan.status_approve','=','1');
                             })
                             ->SELECT(   'bawahan.id AS bawahan_id',
                                         'skp_tahunan.id AS skp_tahunan_id',
@@ -450,7 +569,8 @@ class SKPTahunanAPIController extends Controller {
             
         $id_pegawai = $request->pegawai_id;
 
-        
+        $pegawai = Pegawai::SELECT('id')->WHERE('id',$id_pegawai)->first();
+
         $periode = Periode::ORDERBY('id','ASC')->get();
 
         $response= array();
@@ -472,7 +592,7 @@ class SKPTahunanAPIController extends Controller {
                         ->SELECT('jabatan AS jabatan','id AS jabatan_id')
                         ->count(); 
 
-            if ( $dt >= 1 ){
+            if ( $dt >= 1 ){    //adakah jabatan id yang tmt nya sesuai tah
                 $xt = HistoryJabatan::
                                 WHERE('id_pegawai','=', $id_pegawai)
                                 ->whereRAW('YEAR(tmt_jabatan) = ' .$thn )
@@ -502,7 +622,7 @@ class SKPTahunanAPIController extends Controller {
                     $last_skpd_id       = $y->Skpd ? $y->Skpd->id : '';
                     $last_tmt_jabatan   = $y->tmt_jabatan;
                     $no = $no+1;
-                }
+                } 
 
             }else{
                     $h['id']			    = $no;
@@ -515,7 +635,7 @@ class SKPTahunanAPIController extends Controller {
                     $h['skpd_id']			= $last_skpd_id;
                     $h['tmt_jabatan']	    = $last_tmt_jabatan;
                     $h['renja_status']      = $this->status_renja($last_skpd_id,$x->id);
-                    $h['skp_tahunan_id']    = $this->skp_tahunan_id($last_skpd_id ,$x->id , $id_pegawai , $y->jabatan_id);
+                    $h['skp_tahunan_id']    = $this->skp_tahunan_id( $pegawai->JabatanAktif->id_skpd ,$x->id , $id_pegawai , $pegawai->JabatanAktif->id );
                     array_push($response, $h);
                     $no = $no+1;
             }
@@ -539,8 +659,14 @@ class SKPTahunanAPIController extends Controller {
                 
             }) 
             ->addColumn('tmt_jabatan', function ($x) {
-            
-                return  Pustaka::tgl_form($x['tmt_jabatan']).'  ['.$x['jabatan_id'].']';
+                
+                if ($x['jabatan_id'] >= 1){
+                    return  Pustaka::tgl_form($x['tmt_jabatan']).'  ['.$x['jabatan_id'].']';
+                }else{
+                    return '';
+                }
+
+                
                 
             }) 
             ->addColumn('skpd', function ($x) {
@@ -568,6 +694,17 @@ class SKPTahunanAPIController extends Controller {
                                     ->SELECT('send_to_atasan')
                                     ->first();
                     return $skp_status->send_to_atasan;
+                }else{
+                    return 0 ;
+                }
+
+            })
+            ->addColumn('status', function ($x) {
+                if ( $x['skp_tahunan_id'] >= 1 ){
+                    $skp_status = SKPTahunan::WHERE('id', $x['skp_tahunan_id'] )
+                                    ->SELECT('status')
+                                    ->first();
+                    return $skp_status->status;
                 }else{
                     return 0 ;
                 }
@@ -651,6 +788,66 @@ class SKPTahunanAPIController extends Controller {
 
     }
 
+    protected function new_skp_componen_kaban($jabatan_id,$renja_id,$periode_id){
+        //return $jabatan_id.'|'.$renja_id.'|'.$periode_id;
+
+
+        //peridoe masa penilaian 
+        $periode    = Periode::WHERE('id',$periode_id)->first();
+
+        //return Pustaka::tgl_form($periode->awal);
+        
+
+        //DETAIL data pribadi dan atasan
+        $u_detail = HistoryJabatan::WHERE('id',$jabatan_id)->first();
+
+
+        //detail atasan
+       /*  $id_jab_atasan = SKPD::WHERE('id',$u_detail->id_jabatan)->first()->parent_id;
+        $p_detail = HistoryJabatan::WHERE('id_jabatan', $id_jab_atasan)
+                                    ->WHERE('status','active')
+                                    ->first(); */
+
+        $data = array(
+                    'status'			    => 'pass',
+                    'pegawai_id'			=> $u_detail->id_pegawai,
+                    'periode_label'	        => $periode->label,
+                    'renja_id'	            => $renja_id,
+                    'u_jabatan_id'	        => $u_detail->id,
+                    'u_nip'	                => $u_detail->nip,
+                    'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
+                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
+                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
+                    'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
+                    'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
+                    'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
+                    'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
+
+                    'p_jabatan_id'	        => '',
+                    'p_nip'	                => '',
+                    'p_nama'                => '',
+                    'p_pangkat'	            => '',
+                    'p_golongan'	        => '',
+                    'p_eselon'	            => '',
+                    'p_jabatan'	            => '',
+                    'p_unit_kerja'	        => '',
+                    'p_skpd'	            => '',
+
+        );
+
+        return $data;
+
+
+
+
+
+        //nama lengkap pribdai dan atasan
+
+
+
+
+    }
+
 
     public function CreateConfirm(Request $request)
 	{
@@ -695,6 +892,10 @@ class SKPTahunanAPIController extends Controller {
             if (  $jenis_jabatan == 1 ){
                 //cek SKP bawahan jabatn 2 nya
 //Jabatan Pimpinan Tinggi Pratama KA SKPD=====================================================================================//
+                $data = $this->new_skp_componen_kaban($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
+
+                return $data;
+
 
             }else if ( $jenis_jabatan == 2 ){
 //Jabatan Administrator KABID =====================================================================================//
@@ -730,8 +931,8 @@ class SKPTahunanAPIController extends Controller {
 
 
                 $skp_bawahan = SKPTahunan::WHERE('renja_id',$renja_id)
-                                            ->WHERE('send_to_atasan','1')
-                                            ->WHERE('status_approve','1')
+                                            //->WHERE('send_to_atasan','1')
+                                            //->WHERE('status_approve','1')
                                             ->WHEREIN('u_jabatan_id',$bawahan_aktif)
                                             ->count();
 
@@ -757,6 +958,15 @@ class SKPTahunanAPIController extends Controller {
             }else if ( $jenis_jabatan == 4 ){
 //Jabatan PELAKSANA JFU =======================================================================================//
                 //cek SKP atasan  jabatan 3 nya
+                $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
+
+                return $data;
+
+
+
+
+
+
             }else if ( $jenis_jabatan == 3 ){
 //Jabatan PENGAWAS KASUBID =======================================================================================//
  
@@ -770,101 +980,6 @@ class SKPTahunanAPIController extends Controller {
             }
         }
         
-                    
-
-
-
-        
-
-       
-
-
-
-        //$my_skp   = SKPTahunan::where('id',$request->get('pegawai_id'))->exist();
-
-
-
-
-       //$jabatan                    = $pegawai->JabatanAktif->first();
-/* 
-        // cek apakah user sudah memiliki SKP tahunan atau belum
-        $periode_aktif              = Periode::where('status','1')->first();
-        $perjanjian_kinerja_publish = $periode_aktif->perjanjian_kinerja
-                                            ->where('active','1')
-                                            ->where('skpd_id', $pegawai->history_jabatan->where('status','active')->first()->id_skpd )
-                                            ->first();
-
-        $jm_perjanjian_kinerja      = PerjanjianKinerja::where('periode_tahunan_id',$periode_aktif->id)->get();
-
-       
-        $cek_data = SKPTahunan::where('pegawai_id',$pegawai->id)
-                                ->where('renja_id',$perjanjian_kinerja_publish->id)
-                                ->where('jabatan_id',$jabatan->id)
-                                ->count();
-
-
-        $response = array();
-
-        //== jika bukan eselon 1,2,3 atau 4 , maka tunggu atasasn nya bikin SKP =================//
-        if ( $jabatan->id_eselon == 9 ){
-            $h['jabatan']			= 'Harus Atasan nya terlebih dahulu';
-						
-			array_push($response, $h);
-        }
-
-        
-
-        if ( $response == null ){
-            if (  $cek_data  == 0 ){
-                //Kirim parameter yang dibutuhkan untuk membuat SKP baru
-                return ([
-                            'status'                => 'ok',
-                            'periode_tahunan_id'    => $periode_aktif->id,
-                            'periode_tahunan'       => $periode_aktif->label,
-                            'tgl_mulai'             => Pustaka::tgl_form($periode_aktif->awal),
-                            'tgl_selesai'           => Pustaka::tgl_form($periode_aktif->akhir),
-    
-    
-                            'renja_id' => $perjanjian_kinerja_publish->id,
-                            'pegawai_id'            => $pegawai->id,
-                            'jabatan_id'            => $jabatan->id,
-    
-                            //DETAIL PEGAWAI
-                            'u_nama'                => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
-                            'u_nip'                 => $pegawai->nip,
-                            'u_pangkat'             => $jabatan->golongan->pangkat,
-                            'u_golongan'            => $jabatan->golongan->golongan,
-                            'u_jabatan'             => $jabatan->jabatan,
-                            'u_unit_kerja'          => Pustaka::capital_string($jabatan->UnitKerja->unit_kerja),
-                            'u_skpd'                => Pustaka::capital_string($jabatan->skpd->unit_kerja),
-    
-                            'msg'                   => $response
-    
-                           //DETAIL ATASAN
-                            'p_nama'                => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
-                            'p_nip'                 => $pegawai->nip,
-                            //'jabatn'              => $jabatan,
-                            'p_jabatan'             => $jabatan->jabatan,
-                            'p_eselon'              => $jabatan->eselon->eselon,
-                            'p_jenis_jabatan'       => $jabatan->eselon->jenis_jabatan->jenis_jabatan,
-                            'p_unit_kerja'          => Pustaka::capital_string($jabatan->UnitKerja->unit_kerja),
-                            'p_skpd'                => Pustaka::capital_string($jabatan->skpd->unit_kerja), 
-                            
-    
-    
-                        ]);
-    
-    
-    
-    
-            }else{
-                return \Response::make('SKP Tahunan Sudah Dibuat', 400);
-            }
-        }else{
-            return \Response::make('JFU dan JFT nanti saja bikin SKP nya', 400);
-        }
-        
-        */
        
        
          
@@ -1095,13 +1210,13 @@ class SKPTahunanAPIController extends Controller {
 	{
         $messages = [
                 'pegawai_id.required'                   => 'Harus diisi',
-                'renja_id.required'        => 'Harus diisi',
+                'renja_id.required'                     => 'Harus diisi',
                 'tgl_mulai.required'                    => 'Harus diisi',
                 'tgl_selesai.required'                  => 'Harus diisi',
                 'u_nama.required'                       => 'Harus diisi',
                 'u_jabatan_id.required'                 => 'Harus diisi',
-                'p_nama.required'                       => 'Harus diisi',
-                'p_jabatan_id.required'                 => 'Harus diisi',
+               // 'p_nama.required'                       => 'Harus diisi',
+                //'p_jabatan_id.required'                 => 'Harus diisi',
 
         ];
 
@@ -1114,8 +1229,8 @@ class SKPTahunanAPIController extends Controller {
                             'tgl_selesai'           => 'required',
                             'u_nama'                => 'required',
                             'u_jabatan_id'          => 'required',
-                            'p_nama'                => 'required',
-                            'p_jabatan_id'          => 'required',
+                            //'p_nama'                => 'required',
+                            //'p_jabatan_id'          => 'required',
                         ),
                         $messages
         );
@@ -1145,6 +1260,8 @@ class SKPTahunanAPIController extends Controller {
         
 
         if ( $skp_tahunan->save()){
+
+            SKPTahunanTimeline::INSERT(['skp_tahunan_id'=>$skp_tahunan->id]);
             return \Response::make($skp_tahunan->id, 200);
         }else{
             return \Response::make('error', 500);
@@ -1153,6 +1270,85 @@ class SKPTahunanAPIController extends Controller {
             
     }   
 
+    public function SKPClose(Request $request)
+    {
+        $messages = [
+                'skp_tahunan_id.required'   => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'skp_tahunan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $skp_tahunan    = SKPTahunan::find(Input::get('skp_tahunan_id'));
+        if (is_null($skp_tahunan)) {
+            return $this->sendError('SKP Tahunan tidak ditemukan.');
+        }
+
+
+        $skp_tahunan->status    = '1';
+
+        if ( $skp_tahunan->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+    }
+
+    public function SKPOpen(Request $request)
+    {
+        $messages = [
+                'skp_tahunan_id.required'   => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'skp_tahunan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $skp_tahunan    = SKPTahunan::find(Input::get('skp_tahunan_id'));
+        if (is_null($skp_tahunan)) {
+            return $this->sendError('SKP Tahunan tidak ditemukan.');
+        }
+
+
+        $skp_tahunan->status    = '0';
+
+        if ( $skp_tahunan->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+    }
     
     public function SendToAtasan(Request $request)
     {
@@ -1274,6 +1470,11 @@ class SKPTahunanAPIController extends Controller {
 
 
         if ( $st_skp->delete()){
+
+            $tm    = SKPtahunanTimeline::
+                        where('skp_tahunan_id',Input::get('skp_tahunan_id'))
+                        ->delete();
+
             return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);

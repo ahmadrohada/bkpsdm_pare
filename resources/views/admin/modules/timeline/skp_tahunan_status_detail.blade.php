@@ -20,13 +20,16 @@
 					<li class="list-group-item">
 						<b>Data Rencana Aksi</b> <a class="pull-right st_rencana_aksi">-</a>
 					</li>
-					<li class="list-group-item" >
+					<!-- <li class="list-group-item" >
 						<b>Persetujuan Atasan</b> <a class="pull-right st_persetujuan_atasan">-</a>
-					</li>
+					</li> -->
+					<!-- <li class="list-group-item " >
+						<b>Status</b> <a class="pull-right">Close</a>
+					</li> -->
 				</ul>
-				<div class="tarik_skp_tahunan_div" hidden>
-					<a href="#" class="btn btn-warning btn-block tarik_skp_tahunan"><b>Batalkan Permintaan Persetujuan</b></a>
-				</div>
+				<!-- <div class="open_skp_tahunan_div" hidden>
+					<a href="#" class="btn btn-warning btn-block open_skp_tahunan"><b> Open SKP Tahunan</b></a>
+				</div> -->
 				
 			</div>
 		</div>
@@ -101,9 +104,9 @@
 				success	: function(data) {
 					//alert(data);
 					if ( data['persetujuan_atasan'] != 'ok' ){
-						$('.tarik_skp_tahunan_div').show();
+						$('.open_skp_tahunan_div').show();
 					}else{
-						$('.tarik_skp_tahunan_div').hide();
+						$('.open_skp_tahunan_div').hide();
 					} 
 
 					$('.st_created_at').html(data['created']);
@@ -122,21 +125,21 @@
 
 
 
-	$(document).on('click','.tarik_skp_tahunan',function(e){
+	$(document).on('click','.open_skp_tahunan',function(e){
 		Swal.fire({
-				title: "Batalkan Permintaan Persetujuan SKP Tahunan",
-				text: "SKP Tahunan akan ditarik kembali dan dapat diedit lagi oleh pegawai",
+				title: "Open SKP Tahunan",
+				text: "SKP Tahunan akan dibuka dan dapat diedit lagi oleh pegawai",
 				type: "question",
 				showCancelButton: true,
 				cancelButtonText: "Tutup",
-				confirmButtonText: "Ya, Tarik SKP",
+				confirmButtonText: "Open SKP",
 				confirmButtonClass: "btn btn-success",
 				cancelButtonClass: "btn btn-danger",
 				closeOnConfirm: false
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/skp_tahunan_pull_from_atasan") }}',
+					url		: '{{ url("api_resource/skp_tahunan_open") }}',
 					type	: 'POST',
 					data    : {skp_tahunan_id: {!! $skp->id !!} },
 					cache   : false,
