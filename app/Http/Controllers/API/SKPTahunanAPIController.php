@@ -46,7 +46,7 @@ class SKPTahunanAPIController extends Controller {
         $u_detail   = $skp->PejabatYangDinilai;
        
 
-        if ( $p_detail >= 1 ){
+        if ( $p_detail != null ){
             $data = array(
                     'periode'	        => $renja->Periode->label,
                     'date_created'	    => Pustaka::tgl_jam($skp->created_at),
