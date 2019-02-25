@@ -259,7 +259,6 @@ class KegiatanSKPTahunanAPIController extends Controller {
         
     }
 
-
     public function KegiatanTahunan4(Request $request)
     {
              
@@ -269,7 +268,8 @@ class KegiatanSKPTahunanAPIController extends Controller {
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                             })
-                           
+                            
+                            ->orderBY('skp_tahunan_rencana_aksi.label')
                             ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
                                         'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
                                         'kegiatan_tahunan.label AS kegiatan_tahunan_label',
@@ -282,9 +282,11 @@ class KegiatanSKPTahunanAPIController extends Controller {
                                         'kegiatan_tahunan.target_waktu'
 
                                     ) 
-                            ->get();
-
-                 
+                            ->groupBy('kegiatan_tahunan.id')
+                            
+                            ->distinct()
+                            ->get(); 
+             
                 
         $datatables = Datatables::of($rencana_aksi)
         ->addColumn('label', function ($x) {
@@ -313,6 +315,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
         
     }
 
+   
 
     public function KegiatanTahunanDetail(Request $request)
     {

@@ -700,6 +700,87 @@
 }
 
 
+.jstree-default .jstree-kegiatan_tahunan {
+  
+  height:18px !important;
+  width:95px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:rgb(253, 250, 237);
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(255, 209, 4);
+  font-size:13px;
+  
+  
+}
+.jstree-kegiatan_tahunan:after{
+  content:'Keg. Tahunan';
+  
+  display:block;
+  margin:-5px 0 0 -5px;
+}
+
+.jstree-default .jstree-kegiatan_bulanan {
+  
+  height:18px !important;
+  width:95px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:rgb(248, 255, 247);
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(32, 248, 4);
+  font-size:13px;
+  
+  
+}
+.jstree-kegiatan_bulanan:after{
+  content:'Keg. Bulanan';
+  
+  display:block;
+  margin:-5px 0 0 -5px;
+}
+
+
+.jstree-default .jstree-skp_tahunan {
+  
+  height:18px !important;
+  width:90px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:rgb(248, 238, 252);
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(195, 0, 255);
+  font-size:13px;
+  
+  
+}
+.jstree-skp_tahunan:after{
+  content:'SKP Tahunan';
+  
+  display:block;
+  margin:-5px 0 0 -5px;
+}
+
+.jstree-default .jstree-skp_bulanan {
+  
+  height:18px !important;
+  width:90px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:rgb(234, 255, 255);
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(0, 255, 255);
+  font-size:13px;
+  
+  
+}
+.jstree-skp_bulanan:after{
+  content:'SKP Bulanan';
+  
+  display:block;
+  margin:-5px 0 0 -5px;
+}
+
 
 .jstree-default .jstree-people {
   background: url("32px.png") -263px -38px no-repeat;

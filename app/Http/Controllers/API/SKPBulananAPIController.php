@@ -151,25 +151,33 @@ class SKPBulananAPIController extends Controller {
     {
        
 
-        $skp_tahunan = SKPTahunan::where('id','=', $request->skp_tahunan_id )->select('id','perjanjian_kinerja_id')->get();
+        $skp_tahunan = SKPTahunan::where('id','=', $request->skp_tahunan_id )
+                                    ->select('id','renja_id')
+                                    ->get();
+
+
 		foreach ($skp_tahunan as $x) {
-            $data_skp['id']	            = "skp_tahunan_id".$x->id;
-			$data_skp['text']			= "SKP Tahunan ".$x->Perjanjian_kinerja->renja->periode->label;
-            $data_skp['icon']           = "jstree-file";
+            $data_skp['id']	            = "SKPTahunan|".$x->id;
+			$data_skp['text']			= $x->Renja->Periode->label;
+            $data_skp['icon']           = "jstree-skp_tahunan";
             
 
             $skp_bulanan = SKPBulanan::where('skp_tahunan_id','=',$x->id)->select('id','bulan')->get();
             foreach ($skp_bulanan as $y) {
-                $data_skp_bulanan['id']	        = "kabid".$y->id;
-                $data_skp_bulanan['text']			= 'SKP Bulanan Periode '. Pustaka::capital_string($y->bulan);
-                $data_skp_bulanan['icon']         = "jstree-kegiatan";
+                $data_skp_bulanan['id']	        = "SKPBulanan|".$y->id;
+                $data_skp_bulanan['text']		= Pustaka::bulan($y->bulan);
+                $data_skp_bulanan['icon']       = "jstree-skp_bulanan";
 
 
-                $keg_skp = KegiatanSKPBulanan::where('skp_bulanan_id','=',$y->id)->select('id','label')->get();
+                $keg_skp = RencanaAksi::where('jabatan_id','=',$request->jabatan_id)
+                                        ->WHERE('waktu_pelaksanaan','=',$y->bulan)
+                                        ->select('id','label')
+                                        ->get();
+
                 foreach ($keg_skp as $z) {
-                    $data_keg_skp['id']	           = "kasubid".$z->id;
+                    $data_keg_skp['id']	           = "kegiatan_bulanan|".$z->id;
                     $data_keg_skp['text']			= Pustaka::capital_string($z->label);
-                    $data_keg_skp['icon']           = "jstree-ind_kegiatan";
+                    $data_keg_skp['icon']           = "jstree-kegiatan";
                     
 
                     

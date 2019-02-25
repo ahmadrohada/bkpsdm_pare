@@ -1,9 +1,9 @@
 <!-- ========================== edit form URAIAN TUGAS JABATAN ESELON 2 , PADA SKP TAHUNAN  ======================================= -->
 
 <div class="row">
-	<div class="col-md-5">
+	<div class="col-md-5" >
 
-		<div class="table-responsive">
+		<div class="table-responsive" >
 			<input type='text' id = 'cari' class="form-control" placeholder="cari">
 			<div id="ktj" class="demo"></div>
 			

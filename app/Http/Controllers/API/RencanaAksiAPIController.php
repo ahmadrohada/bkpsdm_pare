@@ -139,7 +139,7 @@ class RencanaAksiAPIController extends Controller {
     {
             
        
-        $dt = Rencanaaksi::WHERE('kegiatan_tahunan_id','=', $request->kegiatan_tahunan_id )
+        $dt = RencanaAksi::WHERE('kegiatan_tahunan_id','=', $request->kegiatan_tahunan_id )
                 ->WHERE('jabatan_id',$request->jabatan_id)
 
                 ->select([   
@@ -149,6 +149,7 @@ class RencanaAksiAPIController extends Controller {
                     'jabatan_id'
                     
                     ])
+                
                 ->get();
 
                 
