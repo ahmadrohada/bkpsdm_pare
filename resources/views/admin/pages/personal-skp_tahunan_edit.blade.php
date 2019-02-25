@@ -75,7 +75,10 @@
 					
 				</div>
 				<div class="tab-pane" id="kegiatan_bulanan_tab">
-					@include('admin.tables.skp_kegiatan_bulanan_4_edit')		
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
+						@include('admin.tables.skp_kegiatan_bulanan_4_edit')		
+					@endif
+					
 				</div>
 
 			</div>			
