@@ -130,7 +130,7 @@
 							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
                           "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
 													"skp_tahunan_id" : {!! $skp->id !!}
-                                    };
+                      };
 						},
 						"dataType" : "json"
 				}
@@ -170,7 +170,7 @@
                 case 'KegiatanTahunan':
                           //SHOW DETAIL KEGIATAN TAHUNAN DAN RENCANA KERJA LIST
                             $("#kegiatan_tahunan").hide();
-						    $("#rencana_aksi").show();
+						    						$("#rencana_aksi").show();
                             load_rencana_aksi( tx[1]);
                        
                 break;
@@ -184,8 +184,7 @@
 				break;
 				
 				default:
-						$("#kegiatan_tahunan").show();
-						$("#rencana_aksi").hide();
+						
 				
 			}
 		

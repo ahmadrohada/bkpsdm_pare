@@ -212,33 +212,25 @@ class SKPBulananAPIController extends Controller {
 
 
 
-    public function Personal_SKP_tahunan_list(Request $request)
+    public function SKPBulananList(Request $request)
     {
+        $skp = SKPBulanan::
+                        WHERE('skp_tahunan_id',$request->skp_tahunan_id)
+                        ->select(
+                                'id AS skp_bulanan_id',
+                                'skp_tahunan_id',
+                                'bulan',
+                                'tgl_mulai',
+                                'tgl_selesai',
+                                'p_nama'
             
-        \DB::statement(\DB::raw('set @rownum='.$request->get('start')));
-       
-       
-        $dt = SKPTahunan::
-                        select([   
-                                    
-                        \DB::raw('@rownum  := @rownum  + 1 AS rownum'), 
-                        'id AS skp_tahunan_id',
-                        'perjanjian_kinerja_id',
-                        'jabatan_id',
-                        'jabatan_atasan_id',
-                        'u_nama',
-                        'p_nama',
-                        'tgl_mulai',
-                        'tgl_selesai',
-                        'status'
-            
-            ])
+                         )
             ->get();
 
        
-            $datatables = Datatables::of($dt)
+           $datatables = Datatables::of($skp)
            ->addColumn('periode', function ($x) {
-                //return $x->renja->periode->label;
+                return Pustaka::bulan($x->bulan);
             }) 
             ->addColumn('masa_penilaian', function ($x) {
                 $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
@@ -252,72 +244,7 @@ class SKPBulananAPIController extends Controller {
                     return "<font style='color:red'>Belum Ada</font>";
                 }
                 
-            }) 
-            ->addColumn('status', function ($x) {
-                
-                return   $x->status;
-            })
-            ->addColumn('status_btn_edit', function ($x) {
-                
-                if ( $x->status == 1 ){
-                    $btn_status = 'btn-default disabled';
-                }else{
-                    $btn_status = 'btn-info';
-                }
-                    return   $btn_status;
-            })
-            ->addColumn('status_btn_lihat', function ($x) {
-                
-                if ( $x->status == 0 ){
-                    $btn_status = 'btn-default disabled';
-                }else{
-                    $btn_status = 'btn-success';
-                }
-                    return   $btn_status;
-            })
-            ->addColumn('status_btn_hapus', function ($x) {
-                
-                if ( $x->status == 1 ){
-                    $btn_status = 'btn-default disabled';
-                }else{
-                    $btn_status = 'btn-danger';
-                }
-                    return   $btn_status;
-            })
-            ->addColumn('step', function($x){
-
-
-               /*  if ( ($dt["type_id"] == null) && ($dt['status'] == 1 ) ){
-                    $step = '1';   //terkirim tapi belum disetujui
-                }else if( ($dt["type_id"] != null) && ($dt['pj'] == 1 ) && ($dt['status'] == 1 ) ) {
-                    $step = '2';   //terkirim dan disetujui
-                }else if( ($dt["type_id"] != null) && ($dt['pj'] == 0 ) ) {
-                    $step = '3'; //terkirim dan ditolak
-                }else if( ($dt["type_id"] != null) && ($dt['pj'] == 1 ) && ($dt['status'] == 2) ) {
-                    $step = '4'; //sedang proses pengajuan update
-                }else{
-                    $step = '5'; //default
-                } */
-
-                $step = '5';
-
-                return $step;
-
-            })
-            ->addColumn('ralat', function($x){
-                //boleh ralat jika jika capaian_id == null dan status_periode = 1
-                            
-                /* if ( ($dt["capaian_id"] == null ) && ($dt["status_periode"] == 1 ) && ( ( $state == 2) | ( $state == 4) ) ){
-                    $ralat = '1' ;
-                }else{
-                    $ralat = '0' ;
-                } */
-                    $ralat = '0';
-
-
-                    return $ralat;
-
-             });
+            });
     
             if ($keyword = $request->get('search')['value']) {
                 $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);

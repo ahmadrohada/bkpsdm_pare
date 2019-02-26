@@ -14,14 +14,33 @@
                   
                 
 				<span class="hidden-xs">
-				<img style="width: 20px; height: 18px;" class="img-circle" src="data:image/png;base64,{{ chunk_split(base64_encode(\Auth::user()->pegawai->foto->isi)) }}" alt="User Avatar">
+				@if (  \Auth::user()->pegawai->foto != null )
+					<img style="width: 20px; height: 18px;" class="img-circle" src="data:image/png;base64,{{ chunk_split(base64_encode(\Auth::user()->pegawai->foto->isi)) }}" alt="User Avatar">
+				@else
+					@if ( \Auth::user()->pegawai->jenis_kelamin == 'Perempuan')
+				 		<img style="width: 20px; height: 18px;" class="img-circle" src="{{asset('assets/images/form/female_icon.png')}}" alt="User Avatar">
+					@else
+						<img style="width: 20px; height: 18px;" class="img-circle" src="{{asset('assets/images/form/male_icon.png')}}" alt="User Avatar">
+					@endif
+				@endif
+
+				
 					{{ Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)  }}
 				</span>
                 </a>
 					<ul class="dropdown-menu">
 					  <!-- User image -->
 					  <li class="user-header">
-						<img style="border: 1px solid white; padding: 2px; width: 80px; height: 80px;" class="img-circle" src="data:image/png;base64,{{ chunk_split(base64_encode(\Auth::user()->pegawai->foto->isi)) }}" alt="User Avatar">
+						@if (  \Auth::user()->pegawai->foto != null )
+							<img style="border: 1px solid white; padding: 2px; width: 80px; height: 80px;" class="img-circle" src="data:image/png;base64,{{ chunk_split(base64_encode(\Auth::user()->pegawai->foto->isi)) }}" alt="User Avatar">
+						@else
+							@if ( \Auth::user()->pegawai->jenis_kelamin == 'Perempuan')
+								<img style="border: 1px solid white; padding: 2px; width: 80px; height: 80px;" class="img-circle" src="{{asset('assets/images/form/female_icon.png')}}" alt="User Avatar">
+							@else
+								<img style="border: 1px solid white; padding: 2px; width: 80px; height: 80px;" class="img-circle" src="{{asset('assets/images/form/male_icon.png')}}" alt="User Avatar">
+							@endif
+						@endif	
+						
 						<p >
 						  <font style="font-size:15px; color:#e0c200;">{{ Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)  }}</font>
 						  <small style="color:#d7dff9;">{{ Pustaka::capital_string(\Auth::user()->pegawai->JabatanAktif->Jabatan->skpd ) }}</small>

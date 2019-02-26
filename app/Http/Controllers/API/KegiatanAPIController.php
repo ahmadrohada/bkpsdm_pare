@@ -254,7 +254,7 @@ class KegiatanAPIController extends Controller {
           
 
             //RENCANA AKSI
-            $ra = RencanaAksi::WHERE('kegiatan_tahunan_id',$x->kegiatan_tahunan_id)->get();
+            $ra = RencanaAksi::WHERE('kegiatan_tahunan_id',$x->kegiatan_tahunan_id)->orderBY('waktu_pelaksanaan')->orderBY('id','DESC')->get();
 
             foreach ($ra as $y) {
                 $data_rencana_aksi['id']	        = "RencanaAksi|".$y->id;
