@@ -8,6 +8,39 @@
 
 	</div>
 	<div class="col-md-7">
+
+
+		<div class="box box-primary" id='skp_bulanan'>
+			<div class="box-header with-border">
+				<h1 class="box-title">
+					List SKP Bulanan
+				</h1>
+
+				<div class="box-tools pull-right">
+				
+				</div>
+			</div>
+			<div class="box-body table-responsive">
+
+				<div class="toolbar">
+
+				</div>
+
+				<table id="skp_bulanan_table" class="table table-striped table-hover" >
+					<thead>
+						<tr>
+							<th >No</th>
+							<th >PERIODE</th>
+							<th >NAMA ATASAN</th>
+							<th><i class="fa fa-cog"></i></th>
+						</tr>
+					</thead>
+							
+				</table>
+
+			</div>
+		</div>
+<!--====================== KEGIATAN BULANAN LIST =========================================== -->
 		<div class="box box-primary" id='kegiatan_bulanan' hidden>
 			<div class="box-header with-border">
 				<h1 class="box-title">
@@ -64,6 +97,7 @@
 		$('#skp_bulanan_tree')
 		.on("loaded.jstree", function(){
 			$('#skp_bulanan_tree').jstree('open_all');
+			//$('#skp_bulanan_tree').jstree(true).select_node('SKPBulanan|1');
 		})
 		.on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
@@ -102,9 +136,16 @@
 
 
 	switch ( tx[0] ){
-							case 'SKPBulanan':
-												//SHOW KEGIATAN BULANAN
+							case 'SKPTahunan':
+													$("#kegiatan_bulanan").hide();
+													$("#skp_bulanan").show();
+													load_skp_bulanan( tx[1]);
 													
+										
+							break;
+							case 'SKPBulanan':
+												  //SHOW KEGIATAN BULANAN
+												  $("#skp_bulanan").hide();
 													$("#kegiatan_bulanan").show();
 													load_kegiatan_bulanan( tx[1]);
 													
@@ -113,14 +154,14 @@
 							case 'KegiatanRenja':
 												
 
-			break;
-			case 'RencanaAksi':
+							break;
+							case 'RencanaAksi':
 											
 
-			break;
+							break;
 			
-			default:
-					$("#kegiatan_bulanan").hide();
+							default:
+					
 			
 		}
 
@@ -128,7 +169,7 @@
 	}
 
 
-  function load_kegiatan_bulanan(){
+  function load_kegiatan_bulanan(skp_bulanan_id){
 		var table_kegiatan_tahunan = $('#kegiatan_bulanan_table').DataTable({
 				destroy			: true,
 				processing      : false,
@@ -146,24 +187,16 @@
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 
 											"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
-											"skp_bulanan_id" : {!! $skp->id !!}
+											"skp_bulanan_id" : skp_bulanan_id
 									 },
 								},
 				columns			: [
-									{ data: 'kegiatan_tahunan_id' ,
+									{ data: 'kegiatan_bulanan_id' ,
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 									},
-									{ data: "label", name:"label", width:"220px",
-										"render": function ( data, type, row ) {
-											if ( (row.kegiatan_tahunan_id) <= 0 ){
-												return "<p class='text-muted'>"+row.kegiatan_label+"</p>";
-											}else{
-												return row.kegiatan_tahunan_label;
-											}
-										}
-									},
+									{ data: "label", name:"label", width:"220px"},
 									{ data: "ak", name:"ak" },
 									{ data: "output", name:"output"},
 									{ data: "mutu", name:"mutu"},
@@ -177,6 +210,41 @@
 							}
 		});	
 	}
+
+	
+		$('#skp_bulanan_table').DataTable({
+				destroy			: true,
+				processing      : false,
+				serverSide      : true,
+				searching      	: false,
+				paging          : false,
+				columnDefs		: [
+									{ className: "text-center", targets: [ 0,1,3 ] }
+								],
+				ajax			: {
+									url	: '{{ url("api_resource/skp_bulanan_list_4") }}',
+									data: { 
+										
+											"skp_tahunan_id" : {!! $skp->id !!} 
+									 },
+								},
+				columns			: [
+									{ data: 'skp_bulanan_id' ,
+										"render": function ( data, type, row ,meta) {
+											return meta.row + meta.settings._iDisplayStart + 1 ;
+										}
+									},
+									{ data: "periode", name:"periode" },
+									{ data: "p_nama", name:"p_nama"},
+									{ data: "", name:""}
+									
+								
+								],
+								initComplete: function(settings, json) {
+								
+							}
+		});	
+	
 	
 
 

@@ -118,7 +118,13 @@ class DashboardController extends Controller
             $foto   = 'data:image/jpeg;base64,'.base64_encode( $profil->foto );
 
         }else{
-            $foto   = asset('assets/images/form/sample.jpg');
+            if ( $profil->jenis_kelamin == 'Perempuan'){
+                $foto   = asset('assets/images/form/female_icon.png');
+            }else{
+                $foto   = asset('assets/images/form/male_icon.png');
+            }
+            
+
         }
 
 

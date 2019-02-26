@@ -13,6 +13,8 @@ use App\Models\KegiatanSKPBulanan;
 use App\Models\IndikatorProgram;
 use App\Models\SKPD;
 use App\Models\SKPTahunan;
+use App\Models\SKPBulanan;
+use App\Models\RencanaAksi;
 
 use App\Helpers\Pustaka;
 
@@ -70,5 +72,48 @@ class KegiatanSKPBulananAPIController extends Controller {
         
     }
 
+
+    public function KegiatanBulanan4(Request $request)
+    {
+            
+        $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan')->first();
+       
+        
+        $dt = RencanaAksi::
+                
+
+                WHERE('jabatan_id','=', $request->jabatan_id )
+                ->WHERE('waktu_pelaksanaan',$skp_bln->bulan)
+                ->select([   
+                    'id AS kegiatan_bulanan_id',
+                    'label',
+                    
+                    ])
+                ->get();
+
+                
+                
+        $datatables = Datatables::of($dt)
+        ->addColumn('label', function ($x) {
+            return $x->label;
+        })->addColumn('ak', function ($x) {
+            return '';
+        })->addColumn('output', function ($x) {
+            return '';
+        })->addColumn('mutu', function ($x) {
+            return '';
+        })->addColumn('waktu', function ($x) {
+            return '';
+        })->addColumn('biaya', function ($x) {
+            return '';
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true); 
+        
+    } 
 
 }

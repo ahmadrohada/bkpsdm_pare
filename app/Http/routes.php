@@ -355,12 +355,22 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::get('skp_tahunan_kegiatan_tugas_jabatan','API\KegiatanSKPTahunanAPIController@KegiatanTugasJabatanList');
 
+
+	//========================================================================================================//
+	//============================== =======       SKP BULANAN ================================================//
+	//========================================================================================================//
+	Route::get('skp_bulanan_list_4','API\SKPBulananAPIController@SKPBulananList');
+
+
+
 	//========================================================================================================//
 	//============================== KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
 	//========================================================================================================//
 	Route::get('skp_bulanan_kegiatan_tugas_jabatan','API\KegiatanSKPBulananAPIController@kegiatan_tugas_jabatan_list');
+	Route::get('kegiatan_bulanan_4','API\KegiatanSKPBulananAPIController@KegiatanBulanan4');
 
-
+	
+	
 	//========================================================================================================//
 	//======================================= RENCANA AKSI  SKP THAUNAN ======================================//
 	//========================================================================================================//

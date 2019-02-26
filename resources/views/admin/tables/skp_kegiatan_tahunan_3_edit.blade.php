@@ -5,7 +5,7 @@
 
 		<div class="table-responsive">
 			<input type='text' id = 'cari' class="form-control" placeholder="cari">
-			<div id="ktj" class="demo"></div>
+			<div id="ktj"></div>
 			
 		</div>
 		
@@ -120,10 +120,10 @@
 	
 	
 	
-	function initTree() {
+	function initTreeKegTahunan() {
 		$('#ktj')
 		.on("loaded.jstree", function(){
-			$('#ktj').jstree('open_all');
+			//$('#ktj').jstree('open_all');
 			//$('#ktj').jstree(true).select_node('KegiatanSKP|1');
 			//$('#ktj').jstree(true).select_node('KegiatanSKP|2');
 			//$("#ktj").jstree("disable_node", 'KegiatanSKP|1');
@@ -589,9 +589,10 @@
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				order 			    : [ 2 , 'asc' ],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2,4 ] },
-									{ 'orderable': false , targets: [ 0,1,2 ]  }
+									{ 'orderable': false , targets: [  ]  }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/skp_tahunan_rencana_aksi") }}',
