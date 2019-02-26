@@ -278,26 +278,11 @@ class KegiatanAPIController extends Controller {
         
     }
 
-
+   
     public function SKPTahunanKegiatanTree4(Request $request)
     {
        
-        //Kegiatan nya PELAKSANA
-
-        /* $kegiatan = Kegiatan::SELECT('id','label')
-                            ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
-                            ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
-                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
-                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
-                                //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
-                            })
-                            ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
-                                        'renja_kegiatan.label AS kegiatan_label',
-                                        'kegiatan_tahunan.id AS kegiatan_tahunan_id',
-                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label'
-
-                                    ) 
-                            ->get(); */
+       
         $rencana_aksi = RencanaAksi::WHERE('jabatan_id',$request->jabatan_id)
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
@@ -315,6 +300,8 @@ class KegiatanAPIController extends Controller {
                                         'kegiatan_tahunan.target_waktu'
 
                                     ) 
+                            ->groupBy('kegiatan_tahunan.id')
+                            ->distinct()
                             ->get();
 
 		foreach ($rencana_aksi as $x) {
@@ -328,16 +315,16 @@ class KegiatanAPIController extends Controller {
 
             $data_kegiatan['id']	        = $kegiatan_id;
             $data_kegiatan['text']			= Pustaka::capital_string($kegiatan_label);
-            $data_kegiatan['icon']	        = 'jstree-kegiatan';
+            $data_kegiatan['icon']	        = 'jstree-kegiatan_tahunan';
           
 
             //RENCANA AKSI
-            $ra = RencanaAksi::WHERE('kegiatan_tahunan_id',$x->kegiatan_tahunan_id)->WHERE('jabatan_id',$request->jabatan_id)->get();
+            $ra = RencanaAksi::WHERE('kegiatan_tahunan_id',$x->kegiatan_tahunan_id)->WHERE('jabatan_id',$request->jabatan_id)->orderBY('waktu_pelaksanaan')->orderBY('id','DESC')->get();
 
             foreach ($ra as $y) {
-                $data_rencana_aksi['id']	        = "RencanaAksi|".$y->id;
+                $data_rencana_aksi['id']	        = "KegiatanBulanan|".$y->id;
                 $data_rencana_aksi['text']			= Pustaka::capital_string($y->label).' ['. Pustaka::bulan($y->waktu_pelaksanaan).']';
-                $data_rencana_aksi['icon']	        = 'jstree-rencana_aksi';
+                $data_rencana_aksi['icon']	        = 'jstree-kegiatan_bulanan';
               
                 $rencana_aksi_list[] = $data_rencana_aksi ;
             }	
@@ -354,7 +341,7 @@ class KegiatanAPIController extends Controller {
 
 		return  $kegiatan_list;
         
-    }
+    } 
 
 
     public function KegiatanDetail(Request $request)

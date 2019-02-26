@@ -19,7 +19,8 @@
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="status"><a href="#status" data-toggle="tab">Status </a></li>
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
-				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan SKP Tahunan Eselon {!! $skp->PejabatYangDinilai->Eselon->eselon !!} / {!! $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $skp->PejabatYangDinilai->Eselon->eselon !!} / {!! $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan Bulanan</a></li>
 			</ul>
 
  
@@ -71,9 +72,13 @@
 						@include('admin.tables.skp_kegiatan_tahunan_4_detail')
 					@endif
 				
-				
-				
-				
+					
+				</div>
+				<div class="tab-pane" id="kegiatan_bulanan_tab">
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
+						@include('admin.tables.skp_kegiatan_bulanan_4_edit')		
+					@endif
+					
 				</div>
 
 			</div>			
@@ -103,7 +108,9 @@ $(document).ready(function() {
 		window.location.hash = id;
 
 		if ( id == 'kegiatan_tahunan_tab'){
-			initTree();
+			initTreeKegTahunan();
+		}else if ( id == 'kegiatan_bulanan_tab'){
+			initTreeKegBulanan();
 		}else if ( id == 'status'){
 			status_show();
 		}

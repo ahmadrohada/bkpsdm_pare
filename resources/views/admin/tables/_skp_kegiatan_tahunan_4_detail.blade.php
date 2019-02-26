@@ -3,7 +3,7 @@
 
 		<div class="table-responsive">
 			<input type='text' id = 'cari' class="form-control" placeholder="cari">
-			<div id="kegiatan_tahunan_pelaksana"></div>
+			<div id="ktj_pelaksana" class="demo"></div>
 			
 		</div>
 		
@@ -12,7 +12,7 @@
 		<div class="box box-primary" id='kegiatan_tahunan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					List Kegiatan Tahunan
+					List Kegiatan SKP Tahunan
 				</h1>
 
 				<div class="box-tools pull-right">
@@ -58,7 +58,7 @@
 				</div>
 				<div class="box-body table-responsive">
 
-					<strong>Kegiatan Tahunan</strong>
+					<strong>Nama Kegiatan Tahunan</strong>
 					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 						<span class="kegiatan_tahunan_label"></span>
 						<input type="hidden" class="kegiatan_tahunan_id">
@@ -77,7 +77,7 @@
 			<div class="box box-primary">
 				<div class="box-header with-border">
 					<h1 class="box-title">
-						List Kegiatan Bulanan
+						List Rencana Aksi
 					</h1>
 
 				</div>
@@ -89,7 +89,7 @@
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>KEGIATAN BULANAN</th>
+								<th>RENCANA AKSI</th>
 								<th>WAKTU</th>
 							</tr>
 						</thead>
@@ -111,9 +111,9 @@
 <script type="text/javascript">
 
 	function initTreeKegTahunan() {
-		$('#kegiatan_tahunan_pelaksana')
+		$('#ktj_pelaksana')
 		.on("loaded.jstree", function(){
-			//$('#kegiatan_tahunan_pelaksana').jstree('open_all');
+			//$('#ktj_pelaksana').jstree('open_all');
 			
 		})
 		.on("changed.jstree", function (e, data) {
@@ -128,8 +128,8 @@
 						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_4") }}", 
 						"data" 	: function (node) {
 							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
-                          "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
-													"skp_tahunan_id" : {!! $skp->id !!}
+                                        "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+										"skp_tahunan_id" : {!! $skp->id !!}
                                     };
 						},
 						"dataType" : "json"
@@ -152,7 +152,7 @@
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 		var v = $('#cari').val();
-		$('#kegiatan_tahunan_pelaksana').jstree(true).search(v);
+		$('#ktj_pelaksana').jstree(true).search(v);
 		}, 250);
 	});
 	
@@ -163,7 +163,7 @@
 	function detail_table(id){
 
 		var tx = id.split('|');
-	
+		
 
 
 		switch ( tx[0] ){
@@ -196,9 +196,8 @@
     $(".tutup_detail").click(function(){
 			$("#kegiatan_tahunan").show();
 			$("#rencana_aksi").hide();
-			jQuery('#kegiatan_tahunan_pelaksana').jstree().deselect_all(true);
+			jQuery('#ktj_pelaksana').jstree().deselect_all(true);
     }); 
-
 
 	var table_kegiatan_tahunan = $('#kegiatan_tahunan_table').DataTable({
 				destroy			: true,
@@ -278,11 +277,10 @@ $.ajax({
 			serverSide      : true,
 			searching      	: false,
 			paging          : false,
-			
 			order 			    : [ 2 , 'asc' ],
 			columnDefs		  : [
 								{ className: "text-center", targets: [ 0,2] },
-								{ 'orderable': false , targets: [ ]  }
+								{ 'orderable': false , targets: [ 0,1]  }
 							],
 			ajax			: {
 								url	: '{{ url("api_resource/skp_tahunan_rencana_aksi_4") }}',
