@@ -11,6 +11,7 @@ use App\Models\MasaPemerintahan;
 use App\Models\RencanaAksi;
 use App\Models\SKPTahunanTimeline;
 use App\Models\SKPTahunan;
+use App\Models\SKPBulanan;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
 use App\Models\Skpd;
@@ -39,6 +40,7 @@ class SKPTahunanAPIController extends Controller {
                             
                             ->first();
 
+        $skp_bulanan_list = SKPBulanan::SELECT('bulan')->WHERE('skp_tahunan_id',$request->skp_tahunan_id)->get()->toArray();
 
 
         $renja      = $skp->Renja;
@@ -52,9 +54,12 @@ class SKPTahunanAPIController extends Controller {
                     'date_created'	    => Pustaka::tgl_jam($skp->created_at),
                     'masa_penilaian'    => Pustaka::tgl_form($skp->tgl_mulai).' s.d  '.Pustaka::tgl_form($skp->tgl_selesai),
 
+                    'tgl_mulai'         => $skp->tgl_mulai,
+                    'pegawai_id'	        => $skp->pegawai_id,
+
                     'u_jabatan_id'	        => $u_detail->id,
                     'u_nip'	                => $u_detail->nip,
-                    'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
+                    'u_nama'                => $skp->u_nama,
                     'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
                     'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
                     'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
@@ -64,7 +69,7 @@ class SKPTahunanAPIController extends Controller {
                 
                     'p_jabatan_id'	        => $p_detail->id,
                     'p_nip'	                => $p_detail->nip,
-                    'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
+                    'p_nama'                => $skp->p_nama,
                     'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
                     'p_golongan'	        => $p_detail->Golongan ? $p_detail->Golongan->golongan : '',
                     'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
@@ -72,7 +77,7 @@ class SKPTahunanAPIController extends Controller {
                     'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
                     'p_skpd'	            => Pustaka::capital_string($p_detail->Skpd ? $p_detail->Skpd->skpd : ''), 
                 
-                   
+                    'skp_bulanan_list'      => $skp_bulanan_list,
 
             );
         }else{
