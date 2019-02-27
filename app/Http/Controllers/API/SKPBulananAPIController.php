@@ -162,7 +162,7 @@ class SKPBulananAPIController extends Controller {
             $data_skp['icon']           = "jstree-skp_tahunan";
             
 
-            $skp_bulanan = SKPBulanan::where('skp_tahunan_id','=',$x->id)->select('id','bulan')->get();
+            $skp_bulanan = SKPBulanan::where('skp_tahunan_id','=',$x->id)->select('id','bulan')->orderBy('bulan')->get();
             foreach ($skp_bulanan as $y) {
                 $data_skp_bulanan['id']	        = "SKPBulanan|".$y->id;
                 $data_skp_bulanan['text']		= Pustaka::bulan($y->bulan);
@@ -225,7 +225,8 @@ class SKPBulananAPIController extends Controller {
                                 'p_nama'
             
                          )
-            ->get();
+                        ->orderBy('bulan')
+                        ->get();
 
        
            $datatables = Datatables::of($skp)
@@ -418,12 +419,13 @@ class SKPBulananAPIController extends Controller {
     public function Store(Request $request)
 	{
         $messages = [
-                'pegawai_id.required'                   => 'Harus diisi',
-                'perjanjian_kinerja_id.required'        => 'Harus diisi',
-                'jabatan_id.required'                   => 'Harus diisi',
-                'tgl_mulai.required'                    => 'Harus diisi',
-                'tgl_selesai.required'                  => 'Harus diisi',
-                'u_nama.required'                       => 'Harus diisi',
+                'pegawai_id.required'             => 'Harus diisi',
+                'skp_tahunan_id.required'         => 'Harus diisi',
+                'u_nama.required'                 => 'Harus diisi',
+                'p_nama.required'                 => 'Harus diisi',
+                'u_jabatan_id.required'           => 'Harus diisi',
+                'p_jabatan_id.required'           => 'Harus diisi',
+                'periode_skp_bulanan.required'    => 'Harus diisi',
 
         ];
 
@@ -431,11 +433,12 @@ class SKPBulananAPIController extends Controller {
                         Input::all(),
                         array(
                             'pegawai_id'            => 'required',
-                            'perjanjian_kinerja_id' => 'required',
-                            'jabatan_id'            => 'required',
-                            'tgl_mulai'             => 'required',
-                            'tgl_selesai'           => 'required',
+                            'skp_tahunan_id'        => 'required',
                             'u_nama'                => 'required',
+                            'p_nama'                => 'required',
+                            'p_jabatan_id'          => 'required',
+                            'u_jabatan_id'          => 'required',
+                            'periode_skp_bulanan'   => 'required'
                         ),
                         $messages
         );
@@ -446,8 +449,44 @@ class SKPBulananAPIController extends Controller {
             
         }
 
+        $tgl_xmulai = Input::get('tgl_mulai');
+        $pecah     = explode('-',$tgl_xmulai); 
+        $thn       = $pecah[0];
 
-        $skp_tahunan    = new SKPTahunan;
+        $periode = Input::get('periode_skp_bulanan');
+        for ($i = 0; $i < count($periode); $i++){
+
+
+
+            //cari tgl mulai dan selesai
+            $inisial     = date($thn."-".$periode[$i]."-d");
+            $tgl_mulai   = date('Y-m-01',strtotime($inisial));
+            $tgl_selesai = date('Y-m-t',strtotime($inisial));
+
+
+            $data[] = array(
+
+                'pegawai_id'        => Input::get('pegawai_id'),
+                'skp_tahunan_id'    => Input::get('skp_tahunan_id'),
+                'bulan'             => $periode[$i],
+
+                'u_nama'            => Input::get('u_nama'),
+                'u_jabatan_id'      => Input::get('u_jabatan_id'),
+                'p_nama'            => Input::get('p_nama'),
+                'p_jabatan_id'      => Input::get('p_jabatan_id'),
+
+                'tgl_mulai'         => $tgl_mulai,
+                'tgl_selesai'       => $tgl_selesai,
+
+
+
+            );
+        }
+
+        $skp_bulanan   = new SKPBulanan;
+        $skp_bulanan   -> insert($data);
+
+      /*   $skp_tahunan    = new SKPTahunan;
         $skp_tahunan->pegawai_id                  = Input::get('pegawai_id');
         $skp_tahunan->perjanjian_kinerja_id       = Input::get('perjanjian_kinerja_id');
         $skp_tahunan->jabatan_id                  = Input::get('jabatan_id');
@@ -459,9 +498,9 @@ class SKPBulananAPIController extends Controller {
             return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);
-        } 
+        }  */
             
             
-        }   
+    }   
 
 }

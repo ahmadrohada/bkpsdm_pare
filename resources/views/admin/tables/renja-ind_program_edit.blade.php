@@ -42,6 +42,7 @@
 		<div class="toolbar">
 			
 			<span  data-toggle="tooltip" title="Create Indikator Program"><a class="btn btn-info btn-sm create_ind_program" ><i class="fa fa-plus" ></i> Indikator Program</a></span>
+			
 		
 		</div>
 		<table id="ind_program_table" class="table table-striped table-hover table-condensed" >

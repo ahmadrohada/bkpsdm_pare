@@ -17,13 +17,13 @@
 				</h1>
 
 				<div class="box-tools pull-right">
-				
+					
 				</div>
 			</div>
 			<div class="box-body table-responsive">
 
 				<div class="toolbar">
-
+					<span  data-toggle="tooltip" title="Create SKP Bulanan"><a class="btn btn-info btn-xs create_skp_bulanan" ><i class="fa fa-plus" ></i> SKP Bulanan</a></span>
 				</div>
 
 				<table id="skp_bulanan_table" class="table table-striped table-hover" >
@@ -85,7 +85,7 @@
 	
 </div>
 
-
+@include('admin.modals.create_skp_bulanan')
      
 
 <link rel="stylesheet" href="{{asset('assets/jstree/themes/default/style.css')}}" />
@@ -213,11 +213,12 @@
 
 	
 		$('#skp_bulanan_table').DataTable({
-				destroy			: true,
+				destroy			    : true,
 				processing      : false,
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				order 			    : [ 3 , 'asc' ],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,1,3 ] }
 								],
@@ -236,7 +237,7 @@
 									},
 									{ data: "periode", name:"periode" },
 									{ data: "p_nama", name:"p_nama"},
-									{ data: "", name:""}
+									{ data: "bulan", name:"bulan"}
 									
 								
 								],
@@ -258,5 +259,56 @@
 		}, 250);
 	});
 	
+
+
+//======================== SKP BULANAN ==============================//
+	$(document).on('click','.create_skp_bulanan',function(e){
+
+		$.ajax({
+				url			: '{{ url("api_resource/skp_tahunan_detail") }}',
+				data 		: {skp_tahunan_id : {{ $skp->id}}},
+				method		: "GET",
+				dataType	: "json",
+				success	: function(data) {
+					$('.modal-skp_bulanan').find('[name=periode_skp]').html(data['periode']);
+					$('.modal-skp_bulanan').find('[name=u_nama]').html(data['u_nama']);
+					$('.modal-skp_bulanan').find('[name=u_jabatan]').html(data['u_jabatan']);
+					$('.modal-skp_bulanan').find('[name=p_nama]').html(data['p_nama']);
+					$('.modal-skp_bulanan').find('[name=p_jabatan]').html(data['p_jabatan']);
+
+					$('.modal-skp_bulanan').find('[name=skp_tahunan_id]').val({{ $skp->id}});
+					$('.modal-skp_bulanan').find('[name=tgl_mulai]').val(data['tgl_mulai']);
+					$('.modal-skp_bulanan').find('[name=pegawai_id]').val(data['pegawai_id']);
+					$('.modal-skp_bulanan').find('[name=u_jabatan_id]').val(data['u_jabatan_id']);
+					$('.modal-skp_bulanan').find('[name=p_jabatan_id]').val(data['p_jabatan_id']);
+					$('.modal-skp_bulanan').find('[name=u_nama]').val(data['u_nama']);
+					$('.modal-skp_bulanan').find('[name=p_nama]').val(data['p_nama']);
+
+					//DISABLED BULAN YANG UDAH ADA
+					//data['skp_bulanan_list'][0]['bulan']
+					bln = data['skp_bulanan_list'];
+					$('.periode_skp_bulanan').children().each(function(index,element){
+					
+        		for (i = 0; i < bln.length ; i++){
+							if ( $(element).val() == data['skp_bulanan_list'][i]['bulan']){
+								$(this).prop('disabled',true);
+							}
+						}
+					})
+
+					$('.modal-skp_bulanan').find('h4').html('Create SKP Bulanan');
+					$('.modal-skp_bulanan').find('.btn-submit').attr('id', 'submit-save_skp_bulanan');
+					$('.modal-skp_bulanan').find('[name=text_button_submit]').html('Simpan Data');
+					$('.modal-skp_bulanan').modal('show');
+				},
+				error: function(data){
+					
+				}						
+		});	
+
+
+
+		
+	});
 	
 </script>
