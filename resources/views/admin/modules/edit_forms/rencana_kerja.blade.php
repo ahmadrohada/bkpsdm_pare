@@ -49,8 +49,7 @@
 						'themes' : {
 							'responsive' : false
 						}
-			}
-			,'contextmenu' : {
+			},'contextmenu' : { 
 					'items' : context_menu
 				},
 				'plugins' : [/* 'contextmenu', */ 'types' ,'search'],

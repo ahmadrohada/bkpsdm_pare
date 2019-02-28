@@ -186,7 +186,8 @@ class RencanaAksiAPIController extends Controller {
                             SELECT(     'id AS rencana_aksi_id',
                                         'label',
                                         'waktu_pelaksanaan',
-                                        'jabatan_id'
+                                        'jabatan_id',
+                                        'kegiatan_tahunan_id'
                                     ) 
                             ->WHERE('id', $request->rencana_aksi_id)
                             ->first();
@@ -199,11 +200,17 @@ class RencanaAksiAPIController extends Controller {
 		
 		//return  $rencana_aksi;
         $rencana_aksi = array(
-            'id'                 => $x->rencana_aksi_id,
-            'label'              => $x->label,
-            'waktu_pelaksanaan'  => $x->waktu_pelaksanaan,
-            'jabatan_id'         => $x->jabatan_id,
-            'nama_jabatan'       => $pelaksana
+            'id'                            => $x->rencana_aksi_id,
+            'label'                         => $x->label,
+            'waktu_pelaksanaan'             => $x->waktu_pelaksanaan,
+            'jabatan_id'                    => $x->jabatan_id,
+            'nama_jabatan'                  => $pelaksana,
+            'kegiatan_tahunan_label'        => $x->KegiatanTahunan->label,
+            'kegiatan_tahunan_target'       => $x->KegiatanTahunan->target,
+            'kegiatan_tahunan_satuan'       => $x->KegiatanTahunan->satuan,
+            'kegiatan_tahunan_waktu'        => $x->KegiatanTahunan->target_waktu,
+            'kegiatan_tahunan_cost'         => number_format($x->KegiatanTahunan->cost,'0',',','.'),
+            'kegiatan_tahunan_output'       => $x->KegiatanTahunan->target.' '.$x->KegiatanTahunan->satuan,
  
         );
         return $rencana_aksi;

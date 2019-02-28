@@ -60,16 +60,10 @@
 				<table id="kegiatan_bulanan_table" class="table table-striped table-hover" >
 					<thead>
 						<tr>
-							<th rowspan="2">No</th>
-							<th rowspan="2">KEGIATAN BULANAN</th>
-							<th rowspan="2">AK</th>
-							<th colspan="4">TARGET</th>
-						</tr>
-						<tr>
+							<th>No</th>
+							<th>KEGIATAN BULANAN</th>
 							<th>OUTPUT</th>
-							<th>MUTU</th>
-							<th>WAKTU</th>
-							<th>BIAYA</th>
+							<th><i class="fa fa-cog"></i></th>
 						</tr>
 					</thead>
 							
@@ -86,6 +80,7 @@
 </div>
 
 @include('admin.modals.create_skp_bulanan')
+@include('admin.modals.kegiatan_bulanan')
      
 
 <link rel="stylesheet" href="{{asset('assets/jstree/themes/default/style.css')}}" />
@@ -95,16 +90,6 @@
 
 	function initTreeKegBulanan() {
 		$('#skp_bulanan_tree')
-		.on("loaded.jstree", function(){
-			$('#skp_bulanan_tree').jstree('open_all');
-			//$('#skp_bulanan_tree').jstree(true).select_node('SKPBulanan|1');
-		})
-		.on("changed.jstree", function (e, data) {
-			if(data.selected.length) {
-				detail_table_2(data.instance.get_node(data.selected[0]).id);
-			
-			}
-		})
 		.jstree({
             'core' : {
 				'data' : {
@@ -115,17 +100,79 @@
 													"skp_tahunan_id" : {!! $skp->id !!} };
 						},
 						"dataType" : "json"
-				}
-				,'check_callback' : true,
+				},'check_callback' : true,
 						'themes' : {
 							'responsive' : false
 						}
-			}
-			,"plugins" : [ "search"/* ,"state","contextmenu","wholerow" */ ]
+			},'contextmenu' : { 
+					'items' : context_menus
+				},
+				'plugins' : [ /* 'contextmenu', */  'types' ,'search'],
+				'types' : {
+					'skp_tahunan' 			: { /* options */ },
+					'skp_bulanan' 	  	: { /* options */ },
+			  	'rencana_aksi' 	  	: { /* options */ }
+				}
+			}).on('create_node.jstree', function (e, data) {
 			
-		
-	    });
+
+				modal_create_skp_bulanan();
+				
+		}).on("loaded.jstree", function(){
+			$('#skp_bulanan_tree').jstree('open_all');
+		}).on("changed.jstree", function (e, data) {
+			if(data.selected.length) {
+				//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
+				//alert(data.instance.get_node(data.selected[0]).id)
+				detail_table_2(data.instance.get_node(data.selected[0]).id);
+			}
+		});
 	}
+
+
+
+	function context_menus(node){
+			var tree = $('#skp_bulanan_tree').jstree(true);
+
+			if (node.type === 'skp_tahunan'){
+				var addLabel = 'Create SKP Bulanan';
+				var newLabel = 'SKP Bulanan';
+			}
+		
+			
+			var items = {
+				"Add": {
+					"label": addLabel,
+					"action": function (obj) { 
+						var $node = tree.create_node(node,newLabel);
+						tree.edit($node);
+
+					}
+				},                         
+				"Remove": {
+					"label": "Remove",
+					"action": function (obj) { 
+						if(confirm('Hapus SKP Bulanan ?')){
+							tree.delete_node(node);
+						}
+					}
+				}
+		};
+
+
+
+		if (node.type === 'rencana_aksi'){
+			delete items.Add;
+			delete items.Remove;
+		}else if ( node.type === 'skp_tahunan'){
+			delete items.Remove;
+		}else if ( node.type === 'skp_bulanan'){
+			delete items.Add;
+		}
+	
+		return items;
+	}
+
 
 
 	//========================== TABLE DETAIL KEGIATAN ==================================//
@@ -170,16 +217,15 @@
 
 
   function load_kegiatan_bulanan(skp_bulanan_id){
-		var table_kegiatan_tahunan = $('#kegiatan_bulanan_table').DataTable({
+		var table_skp_bulanan = $('#kegiatan_bulanan_table').DataTable({
 				destroy			: true,
 				processing      : false,
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				order 			    : [ 0 , 'asc' ],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3,4,5 ] },
-									{ className: "text-right", targets: [ 6 ] },
-									{ "orderable": false, targets: [ 0,1,2,3,4,5,6 ]  }
+									{ className: "text-center", targets: [ 0,2,3 ] }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/kegiatan_bulanan_4") }}',
@@ -191,17 +237,44 @@
 									 },
 								},
 				columns			: [
-									{ data: 'kegiatan_bulanan_id' ,
+									{ data: 'rencana_aksi_id' ,width:"30px",
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 									},
-									{ data: "label", name:"label", width:"220px"},
-									{ data: "ak", name:"ak" },
-									{ data: "output", name:"output"},
-									{ data: "mutu", name:"mutu"},
-									{ data: "waktu", name:"waktu"},
-									{ data: "biaya", name:"biaya"},
+									{ data: "label", name:"label",
+										"render": function ( data, type, row ) {
+											if ( (row.kegiatan_bulanan_id) <= 0 ){
+												return "<p class='text-danger'>"+row.rencana_aksi_label+"</p>";
+											}else{
+												return row.kegiatan_bulanan_label;
+											}
+										}
+									},
+									{ data: "output", name:"output", width:"140px",
+										"render": function ( data, type, row ) {
+											if ( (row.kegiatan_bulanan_id) <= 0 ){
+												return "<p class='text-danger'>-</p>";
+											}else{
+												return row.target + ' '+ row.satuan;
+											}
+										}
+									},
+									{  data: 'action',width:"40px",
+											"render": function ( data, type, row ) {
+
+											if ( (row.kegiatan_bulanan_id) >= 1 ){
+												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
+											}else{
+												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_kegiatan_bulanan"  data-id="'+row.rencana_aksi_id+'" data-skp_bulanan_id="'+row.skp_bulanan_id+'"><i class="fa fa-plus" ></i></a></span>'+
+														'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
+											
+											}
+													
+										
+										}
+									},
 									
 								
 								],
@@ -218,7 +291,7 @@
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
-				order 			    : [ 3 , 'asc' ],
+				//order 			    : [ 0 , 'asc' ],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,1,3 ] }
 								],
@@ -230,14 +303,25 @@
 									 },
 								},
 				columns			: [
-									{ data: 'skp_bulanan_id' ,
+									{ data: 'bulan' ,
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 										}
 									},
 									{ data: "periode", name:"periode" },
 									{ data: "p_nama", name:"p_nama"},
-									{ data: "bulan", name:"bulan"}
+									{  data: 'action',width:"20px",
+											"render": function ( data, type, row ) {
+											if (row.status == 0 ){
+												return '<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_skp_bulanan"  data-id="'+row.skp_bulanan_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
+											}else{
+												return '<span  data-toggle="tooltip" title="" style="margin:2px;" ><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
+											}
+											
+											
+										
+										}
+									},
 									
 								
 								],
@@ -263,7 +347,10 @@
 
 //======================== SKP BULANAN ==============================//
 	$(document).on('click','.create_skp_bulanan',function(e){
+		modal_create_skp_bulanan();
+	});
 
+	function modal_create_skp_bulanan(){
 		$.ajax({
 				url			: '{{ url("api_resource/skp_tahunan_detail") }}',
 				data 		: {skp_tahunan_id : {{ $skp->id}}},
@@ -305,10 +392,108 @@
 					
 				}						
 		});	
+	}
 
 
+	$(document).on('click','.hapus_skp_bulanan',function(e){
+		var skp_bulanan_id = $(this).data('id') ;
+		//alert(skp_bulanan_id);
 
-		
+		Swal.fire({
+			title: "Hapus  SKP Bulanan",
+			text:$(this).data('label'),
+			type: "warning",
+			//type: "question",
+			showCancelButton: true,
+			cancelButtonText: "Batal",
+			confirmButtonText: "Hapus",
+			confirmButtonClass: "btn btn-success",
+			cancelButtonColor: "btn btn-danger",
+			cancelButtonColor: "#d33",
+			closeOnConfirm: false,
+			closeOnCancel:false
+		}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/hapus_skp_bulanan") }}',
+					type	: 'POST',
+					data    : {skp_bulanan_id:skp_bulanan_id},
+					cache   : false,
+					success:function(data){
+							Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+										jQuery('#ktj').jstree(true).refresh(true);
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+											jQuery('#ktj').jstree(true).refresh(true);
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+					});	
+			}
+		});
+	});
+
+	$(document).on('click','.create_kegiatan_bulanan',function(e){
+	
+	var id = $(this).data('id');
+	var skp_bulanan_id = $(this).data('skp_bulanan_id');
+	show_modal_create(id,skp_bulanan_id);
+
 	});
 	
+
+	function show_modal_create(rencana_aksi_id,skp_bulanan_id){
+		$.ajax({
+				url			  : '{{ url("api_resource/rencana_aksi_detail") }}',
+				data 		  : {rencana_aksi_id : rencana_aksi_id},
+				method		: "GET",
+				dataType	: "json",
+				success	: function(data) {
+					$('.modal-kegiatan_bulanan').find('[name=rencana_aksi_id]').val(data['id']);
+					$('.modal-kegiatan_bulanan').find('[name=skp_bulanan_id]').val(skp_bulanan_id);
+					$('.modal-kegiatan_bulanan').find('[name=rencana_aksi_label]').val(data['label']);
+					$('.modal-kegiatan_bulanan').find('.rencana_aksi_label').html(data['label']);
+
+					$('.modal-kegiatan_bulanan').find('.kegiatan_tahunan_label').html(data['kegiatan_tahunan_label']);
+					$('.modal-kegiatan_bulanan').find('.kegiatan_tahunan_output').html(data['kegiatan_tahunan_output']);
+					$('.modal-kegiatan_bulanan').find('.kegiatan_tahunan_waktu').html(data['kegiatan_tahunan_waktu']+' bulan');
+					$('.modal-kegiatan_bulanan').find('.kegiatan_tahunan_cost').html('Rp. '+data['kegiatan_tahunan_cost']);
+
+
+					$('.modal-kegiatan_bulanan').find('h4').html('Create Kegiatan Bulanan');
+					$('.modal-kegiatan_bulanan').find('.btn-submit').attr('id', 'submit-save');
+					$('.modal-kegiatan_bulanan').find('[name=text_button_submit]').html('Simpan Data');
+					$('.modal-kegiatan_bulanan').modal('show'); 
+				},
+				error: function(data){
+					
+				}						
+		});	
+	}
+
+
 </script>

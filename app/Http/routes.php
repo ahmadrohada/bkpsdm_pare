@@ -362,6 +362,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skp_bulanan_list_4','API\SKPBulananAPIController@SKPBulananList');
 
 	Route::post('create_skp_bulanan','API\SKPBulananAPIController@Store');
+	Route::post('hapus_skp_bulanan','API\SKPBulananAPIController@Destroy');
 
 
 	//========================================================================================================//
@@ -369,6 +370,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	Route::get('skp_bulanan_kegiatan_tugas_jabatan','API\KegiatanSKPBulananAPIController@kegiatan_tugas_jabatan_list');
 	Route::get('kegiatan_bulanan_4','API\KegiatanSKPBulananAPIController@KegiatanBulanan4');
+
+	Route::post('simpan_kegiatan_bulanan','API\KegiatanSKPBulananAPIController@Store');
 
 	
 	

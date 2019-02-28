@@ -160,13 +160,15 @@ class SKPBulananAPIController extends Controller {
             $data_skp['id']	            = "SKPTahunan|".$x->id;
 			$data_skp['text']			= $x->Renja->Periode->label;
             $data_skp['icon']           = "jstree-skp_tahunan";
+            $data_skp['type']           = "skp_tahunan";
             
 
             $skp_bulanan = SKPBulanan::where('skp_tahunan_id','=',$x->id)->select('id','bulan')->orderBy('bulan')->get();
             foreach ($skp_bulanan as $y) {
-                $data_skp_bulanan['id']	        = "SKPBulanan|".$y->id;
-                $data_skp_bulanan['text']		= Pustaka::bulan($y->bulan);
-                $data_skp_bulanan['icon']       = "jstree-skp_bulanan";
+                $data_skp_bulanan['id']	            = "SKPBulanan|".$y->id;
+                $data_skp_bulanan['text']		    = Pustaka::bulan($y->bulan);
+                $data_skp_bulanan['icon']           = "jstree-skp_bulanan";
+                $data_skp_bulanan['type']           = "skp_bulanan";
 
 
                 $keg_skp = RencanaAksi::where('jabatan_id','=',$request->jabatan_id)
@@ -178,6 +180,7 @@ class SKPBulananAPIController extends Controller {
                     $data_keg_skp['id']	           = "kegiatan_bulanan|".$z->id;
                     $data_keg_skp['text']			= Pustaka::capital_string($z->label);
                     $data_keg_skp['icon']           = "jstree-kegiatan";
+                    $data_keg_skp['type']           = "rencana_aksi";
                     
 
                     
@@ -222,7 +225,8 @@ class SKPBulananAPIController extends Controller {
                                 'bulan',
                                 'tgl_mulai',
                                 'tgl_selesai',
-                                'p_nama'
+                                'p_nama',
+                                'status'
             
                          )
                         ->orderBy('bulan')
@@ -237,6 +241,10 @@ class SKPBulananAPIController extends Controller {
                 $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
                 return   $masa_penilaian;
             }) 
+            ->addColumn('label', function ($x) {
+                
+                return   "SKP Periode " .Pustaka::bulan($x->bulan);
+            })
             ->addColumn('pejabat_penilai', function ($x) {
             
                 if ( !empty($x->p_nama)){
@@ -502,5 +510,44 @@ class SKPBulananAPIController extends Controller {
             
             
     }   
+
+
+    public function Destroy(Request $request)
+    {
+
+        $messages = [
+                'skp_tahunan_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'skp_bulanan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $st_skp    = SKPBulanan::find(Input::get('skp_bulanan_id'));
+        if (is_null($st_skp)) {
+            return $this->sendError('SKP Bulanan tidak ditemukan.');
+        }
+
+
+        if ( $st_skp->delete()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
 
 }

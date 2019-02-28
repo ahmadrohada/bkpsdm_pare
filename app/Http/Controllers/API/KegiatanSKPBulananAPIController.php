@@ -77,25 +77,29 @@ class KegiatanSKPBulananAPIController extends Controller {
     {
             
         $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan')->first();
-       
-        
+
         $dt = RencanaAksi::
-                
+                    WHERE('jabatan_id','=', $request->jabatan_id )
+                    ->WHERE('waktu_pelaksanaan',$skp_bln->bulan)
+                    ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
+                        $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
+                    })
+                    ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                                'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                'kegiatan_bulanan.label AS kegiatan_bulanan_label',
+                                'kegiatan_bulanan.id AS kegiatan_bulanan_id',
+                                'kegiatan_bulanan.target',
+                                'kegiatan_bulanan.satuan'
+                            ) 
+                    ->get();
+        
+        $skp_id = $request->skp_bulanan_id;
 
-                WHERE('jabatan_id','=', $request->jabatan_id )
-                ->WHERE('waktu_pelaksanaan',$skp_bln->bulan)
-                ->select([   
-                    'id AS kegiatan_bulanan_id',
-                    'label',
-                    
-                    ])
-                ->get();
 
-                
-                
         $datatables = Datatables::of($dt)
-        ->addColumn('label', function ($x) {
-            return $x->label;
+        ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
+            return $skp_id;
         })->addColumn('ak', function ($x) {
             return '';
         })->addColumn('output', function ($x) {
@@ -116,4 +120,53 @@ class KegiatanSKPBulananAPIController extends Controller {
         
     } 
 
+
+    public function Store(Request $request)
+    {
+
+        $messages = [
+                'rencana_aksi_id.required'       => 'Harus diisi',
+                'skp_bulanan_id.required'        => 'Harus diisi',
+                'rencana_aksi_label.required'    => 'Harus diisi',
+                'target.required'                => 'Harus diisi',
+                'satuan.required'                => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'rencana_aksi_id'   => 'required',
+                            'skp_bulanan_id'    => 'required',
+                            'rencana_aksi_label'=> 'required',
+                            'target'            => 'required',
+                            'satuan'            => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+
+        $st_kt    = new KegiatanSKPBulanan;
+
+        $st_kt->rencana_aksi_id   = Input::get('rencana_aksi_id');
+        $st_kt->skp_bulanan_id    = Input::get('skp_bulanan_id');
+        $st_kt->label             = Input::get('rencana_aksi_label');
+        $st_kt->target            = Input::get('target');
+        $st_kt->satuan            = Input::get('satuan');
+       
+
+        if ( $st_kt->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
 }
