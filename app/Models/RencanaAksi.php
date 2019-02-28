@@ -14,4 +14,8 @@ class RencanaAksi extends Model
     }
     
 
+    public function KegiatanTahunan() {
+		return $this->belongsTo('App\Models\KegiatanSKPTahunan','kegiatan_tahunan_id');
+	}
+
 }
