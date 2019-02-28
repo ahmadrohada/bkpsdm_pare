@@ -265,7 +265,7 @@
 
 											if ( (row.kegiatan_bulanan_id) >= 1 ){
 												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
+														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'" data-label="'+row.kegiatan_bulanan_label+'" ><i class="fa fa-close " ></i></a></span>';
 											}else{
 												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_kegiatan_bulanan"  data-id="'+row.rencana_aksi_id+'" data-skp_bulanan_id="'+row.skp_bulanan_id+'"><i class="fa fa-plus" ></i></a></span>'+
 														'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
@@ -430,12 +430,12 @@
 									timer: 900
 									}).then(function () {
 										$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
-										jQuery('#ktj').jstree(true).refresh(true);
+										jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
-											jQuery('#ktj').jstree(true).refresh(true);
+											jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 											
 										}
 									}
@@ -494,6 +494,69 @@
 				}						
 		});	
 	}
+
+	
+	$(document).on('click','.hapus_kegiatan_bulanan',function(e){
+		var kegiatan_bulanan_id = $(this).data('id') ;
+		//alert(kegiatan_bulanan_id);
+
+		Swal.fire({
+			title: "Hapus  Kegiatan Bulanan",
+			text:$(this).data('label'),
+			type: "warning",
+			//type: "question",
+			showCancelButton: true,
+			cancelButtonText: "Batal",
+			confirmButtonText: "Hapus",
+			confirmButtonClass: "btn btn-success",
+			cancelButtonColor: "btn btn-danger",
+			cancelButtonColor: "#d33",
+			closeOnConfirm: false,
+			closeOnCancel:false
+		}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/hapus_kegiatan_bulanan") }}',
+					type	: 'POST',
+					data    : {kegiatan_bulanan_id:kegiatan_bulanan_id},
+					cache   : false,
+					success:function(data){
+							Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+										jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+											jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+					});	
+			}
+		});
+	});
 
 
 </script>
