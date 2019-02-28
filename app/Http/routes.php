@@ -372,6 +372,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('kegiatan_bulanan_4','API\KegiatanSKPBulananAPIController@KegiatanBulanan4');
 
 	Route::post('simpan_kegiatan_bulanan','API\KegiatanSKPBulananAPIController@Store');
+	Route::post('hapus_kegiatan_bulanan','API\KegiatanSKPBulananAPIController@Destroy');
 
 	
 	

@@ -169,4 +169,42 @@ class KegiatanSKPBulananAPIController extends Controller {
             
     
     }
+
+    public function Destroy(Request $request)
+    {
+
+        $messages = [
+                'kegiatan_bulanan_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'kegiatan_bulanan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $st_kt    = KegiatanSKPBulanan::find(Input::get('kegiatan_bulanan_id'));
+        if (is_null($st_kt)) {
+            return $this->sendError('Kegiatan Bulanan tidak ditemukan.');
+        }
+
+
+        if ( $st_kt->delete()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
 }
