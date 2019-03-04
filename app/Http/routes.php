@@ -375,6 +375,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('hapus_kegiatan_bulanan','API\KegiatanSKPBulananAPIController@Destroy');
 
 	
+	//========================================================================================================//
+	//============================== =======    CAPAIAN BULANAN ================================================//
+	//========================================================================================================//
+	Route::get('personal_capaian_bulanan_list','API\CapaianBulananAPIController@PersonalCapaianBulananList');
 	
 	//========================================================================================================//
 	//======================================= RENCANA AKSI  SKP THAUNAN ======================================//
@@ -767,6 +771,8 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'SKPBulananController@SKPBulananDetail'
 	]);
 
+	
+
 
 });
 
@@ -781,6 +787,14 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showSKPTahunan'
 	]);
+
+
+	Route::get('capaian-bulanan', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePersonalController@showCapaianBulanan'
+	]);
+
+
 
 
 

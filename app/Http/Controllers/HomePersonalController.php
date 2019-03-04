@@ -80,4 +80,25 @@ class HomePersonalController extends Controller {
         
     }
 
+    public function showCapaianBulanan(Request $request)
+    {
+        $user      = \Auth::user();
+        $pegawai   = $user->pegawai;       
+        
+
+        return view('admin.pages.personal-home-capaian_bulanan', [
+               'pegawai' 		        => $pegawai,
+               'nama_skpd'     	        => 'x',
+               'total_pegawai' 	        => 'x',
+               'total_unit_kerja' 	    => 'x',
+               'total_jabatan'          => 'x',
+               'total_renja'            => 'x',
+               'h_box'                  => 'box-warning',
+               
+           ]
+        );   
+
+        
+    }
+
 }

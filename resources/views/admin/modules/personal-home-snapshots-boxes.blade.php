@@ -26,6 +26,22 @@
 				</div>
 			</div>
 
+			<div class="col-md-3 col-xs-6">
+				<div class="small-box bg-yellow capaian_bulanan" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							<strong>Capaian Bulanan</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="ion ion-stats-bars"></i>
+					</div>
+				</div>
+			</div>
+
 
 
 		</div>
@@ -39,6 +55,10 @@ $(document).ready(function(){
    
 	$(".skp_tahunan").click(function(){
 		window.location.assign("skp-tahunan");
+    });
+
+	$(".capaian_bulanan").click(function(){
+		window.location.assign("capaian-bulanan");
     });
 
 	
