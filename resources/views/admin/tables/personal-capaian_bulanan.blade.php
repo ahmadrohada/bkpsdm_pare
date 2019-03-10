@@ -29,6 +29,7 @@
 	</div>
 </div>
 
+@include('admin.modals.create_capaian_bulanan_confirm')
 
 <script type="text/javascript">
 	$('#skp_bulanan_table').DataTable({
@@ -65,24 +66,22 @@
 								
 								{ data: "capaian" , orderable: false,searchable:false,width:"120px",
 										"render": function ( data, type, row ) {
-										if (row.capaian == 1 ){ 
-											return  '<span  data-toggle="tooltip" title="Create Capaian Bulanan" style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_bulanan"  data-jabatan_id="'+row.jabatan_id+'" data-periode_id="'+row.periode_id+'" data-pegawai_id="'+row.pegawai_id+'">Create Capaian</a></span>';
-										}else if (row.capaian == 0 ){
+										if (row.remaining_time >= 0 ){ 
+											if (row.capaian >= 1 ){
+												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_bulanan"  data-id="'+row.capaian+'"><i class="fa fa-pencil" ></i></a></span>'+
+														'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs lihat_capaian_bulanan"  data-id="'+row.capaian+'"><i class="fa fa-eye" ></i></a></span>'+
+														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_bulanan"  data-id="'+row.capaian+'" data-label="'+row.periode+'"><i class="fa fa-close " ></i></a></span>';
+
+											}else{
+												return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_bulanan"  data-skp_bulanan_id="'+row.skp_bulanan_id+'" style="width:75px;">Capaian</a></span>';
+											}
+
+
+											
+										}else{
 
 											return row.remaining_time;
-											/* if ( row.status == 0 ){
-												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs" disabled><i class="fa fa-eye" ></i></a></span>'
-														+'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'
-														+'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_skp_tahunan"  data-id="'+row.skp_tahunan_id+'" data-periode="'+row.periode+'" ><i class="fa fa-close " ></i></a></span>';
 											
-											}else{
-												return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-eye" ></i></a></span>'
-														+'<span style="margin:1px;" ><a class="btn btn-default btn-xs "  disabled><i class="fa fa-pencil" ></i></a></span>'
-														+'<span style="margin:1px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-close " ></i></a></span>';
-											
-											} */
-										
-										
 										
 										}
 									}
@@ -93,7 +92,76 @@
 	});
 
 
+	$(document).on('click','.edit_capaian_bulanan',function(e){
+		var capaian_id = $(this).data('id') ;
+		//alert(skp_tahunan_id);
+
+
+
+		window.location.assign("capaian-bulanan/"+capaian_id+"/edit");
+	});
 	
+
+	$(document).on('click','.hapus_capaian_bulanan',function(e){
+		var capaian_bulanan_id = $(this).data('id') ;
+
+		Swal.fire({
+			title: "Hapus  Capaian Bulanan",
+			text:$(this).data('label'),
+			type: "warning",
+			//type: "question",
+			showCancelButton: true,
+			cancelButtonText: "Batal",
+			confirmButtonText: "Hapus",
+			confirmButtonClass: "btn btn-success",
+			cancelButtonColor: "btn btn-danger",
+			cancelButtonColor: "#d33",
+			closeOnConfirm: false,
+			closeOnCancel:false
+		}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/hapus_capaian_bulanan") }}',
+					type	: 'POST',
+					data    : { capaian_bulanan_id:capaian_bulanan_id },
+					cache   : false,
+					success:function(data){
+							Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+										
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+											
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+					});	
+			}
+		});
+	});
 
 	
 	

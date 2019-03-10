@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\Pegawai;
 use App\Models\SKPTahunan;
+use App\Models\CapaianBulanan;
 use App\Models\Jabatan;
 use App\Models\HistoryJabatan;
 use App\Models\User;
@@ -131,6 +132,38 @@ class PegawaiAPIController extends Controller {
 
         $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
                         ->where('id','!=',$skp_tahunan->pegawai_id )
+                        ->where('id','!=',$atasan_id )
+                        ->get();
+
+
+        $no = 0;
+        $pegawai_list = [];
+        foreach  ( $pegawai as $x){
+            $no++;
+            $pegawai_list[] = array(
+                            'id'		=> $x->id,
+                            'nama'		=> Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk),
+                            );
+            } 
+        
+        return $pegawai_list;
+        
+        
+    }
+
+    public function selectAtasanCapaianBulanan(Request $request)
+    {
+
+        //cari pejabat dan penilai Capaian
+        $capaian    = CapaianBulanan::where('id', $request->get('capaian_bulanan_id'))->first();
+        if ( $capaian->p_jabatan_id != 0 ){
+            $atasan_id = $capaian->PejabatPenilai->id;
+        }else{
+            $atasan_id = "0";
+        }
+
+        $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
+                        ->where('id','!=',$capaian->PejabatYangDinilai->id )
                         ->where('id','!=',$atasan_id )
                         ->get();
 

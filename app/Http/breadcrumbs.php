@@ -205,6 +205,11 @@ Breadcrumbs::register('capaian_bulanan', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_bulanan'), '/pare_2018/personal/capaian-bulanan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_bulanan')]);
 });
 
+Breadcrumbs::register('personal_edit_capaian_bulanan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('capaian_bulanan');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_edit_capaian_bulanan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_edit_capaian_bulanan')]);
+});
 
 
 // DASHBOARD > APPROVAL REQUEST

@@ -10,7 +10,7 @@ class RencanaAksi extends Model
 
     public function Pelaksana()
     {
-        return $this->hasOne('App\Models\Skpd','id','jabatan_id');
+        return $this->hasOne('App\Models\Skpd','id','jabatan_id')->select('skpd as jabatan');
     }
     
 

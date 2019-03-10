@@ -374,12 +374,36 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('simpan_kegiatan_bulanan','API\KegiatanSKPBulananAPIController@Store');
 	Route::post('hapus_kegiatan_bulanan','API\KegiatanSKPBulananAPIController@Destroy');
 
+	Route::get('kegiatan_bulanan_detail','API\KegiatanSKPBulananAPIController@KegiatanBulananDetail');
+
 	
 	//========================================================================================================//
 	//============================== =======    CAPAIAN BULANAN ================================================//
 	//========================================================================================================//
 	Route::get('personal_capaian_bulanan_list','API\CapaianBulananAPIController@PersonalCapaianBulananList');
 	
+	//PELAKSANA
+	Route::get('capaian_bulanan_status_pengisian4','API\CapaianBulananAPIController@CapaianBulananStatusPengisian4');
+
+
+	
+	Route::get('capaian_bulanan_detail','API\CapaianBulananAPIController@CapaianBulananDetail');
+	Route::post('set_pejabat_penilai_capaian_bulanan','API\CapaianBulananAPIController@PejabatPenilaiUpdate');
+
+
+	Route::get('create_capaian_bulanan_confirm','API\CapaianBulananAPIController@CreateConfirm');
+	Route::post('simpan_capaian_bulanan','API\CapaianBulananAPIController@Store');
+	Route::post('hapus_capaian_bulanan','API\CapaianBulananAPIController@Destroy');
+
+	//===================== CAPAIAN  KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
+	//========================================================================================================//
+	Route::get('capaian_kegiatan_bulanan_4','API\KegiatanCapaianBulananAPIController@CapaianKegiatanBulanan4');
+
+	Route::get('capaian_kegiatan_bulanan_detail','API\KegiatanCapaianBulananAPIController@CapaianKegiatanBulananDetail');
+
+	Route::post('hapus_capaian_kegiatan_bulanan','API\KegiatanCapaianBulananAPIController@Destroy');
+	Route::post('simpan_capaian_kegiatan_bulanan','API\KegiatanCapaianBulananAPIController@Store');
+	Route::post('update_capaian_kegiatan_bulanan','API\KegiatanCapaianBulananAPIController@Update');
 	//========================================================================================================//
 	//======================================= RENCANA AKSI  SKP THAUNAN ======================================//
 	//========================================================================================================//
@@ -402,6 +426,13 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	
 	Route::get('select_pegawai_list','API\PegawaiAPIController@select_pejabat_penilai_list');
+
+	Route::get('pegawai_list','API\PegawaiAPIController@select_pegawai_list');
+
+	Route::get('ganti_atasan_capaian_bulanan','API\PegawaiAPIController@selectAtasanCapaianBulanan');
+
+
+	
 
 	Route::get('administrator_pegawai_skpd_list','API\PegawaiAPIController@skpd_pegawai_list');
 
@@ -824,6 +855,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'as' 			=> '',
 		'uses' 			=> 'SKPTahunanController@SKPTahunanApproval'
 	]);
+
 	//=========================================================================================//
 	//================================= SKP TAHUNAN      =====================================//
 	//=========================================================================================//
@@ -841,6 +873,17 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'as' 			=> '',
 		'uses' 			=> 'SKPTahunanController@PersonalSKPTahunanRalat'
 	]);
+
+
+	//=========================================================================================//
+	//=============================   CAPAIAN BULANAN     =====================================//
+	//=========================================================================================//
+	Route::get('capaian-bulanan/{capaian_bulanan_id}/edit',[
+		'as' 			=> '',
+		'uses' 			=> 'CapaianBulananController@PersonalCapaianBulananEdit'
+	]);
+
+
 	
 
 

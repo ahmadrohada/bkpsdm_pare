@@ -9,9 +9,9 @@ class KegiatanSKPBulanan extends Model
     protected $table = 'skp_bulanan_kegiatan';
 
 
-    /* public function kegiatan()
+    public function RencanaAksi()
     {
-        return $this->belongsTo('App\Models\Kegiatan','kegiatan_id');
-    }  */
+        return $this->belongsTo('App\Models\RencanaAksi','rencana_aksi_id');
+    }  
 
 }

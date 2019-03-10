@@ -32,6 +32,7 @@
 							<th >No</th>
 							<th >PERIODE</th>
 							<th >NAMA ATASAN</th>
+							<th >JM KEGIATAN</th>
 							<th><i class="fa fa-cog"></i></th>
 						</tr>
 					</thead>
@@ -62,7 +63,7 @@
 						<tr>
 							<th>No</th>
 							<th>KEGIATAN BULANAN</th>
-							<th>OUTPUT</th>
+							<th>TARGET OUTPUT</th>
 							<th><i class="fa fa-cog"></i></th>
 						</tr>
 					</thead>
@@ -263,15 +264,20 @@
 									{  data: 'action',width:"40px",
 											"render": function ( data, type, row ) {
 
-											if ( (row.kegiatan_bulanan_id) >= 1 ){
-												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'" data-label="'+row.kegiatan_bulanan_label+'" ><i class="fa fa-close " ></i></a></span>';
-											}else{
-												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_kegiatan_bulanan"  data-id="'+row.rencana_aksi_id+'" data-skp_bulanan_id="'+row.skp_bulanan_id+'"><i class="fa fa-plus" ></i></a></span>'+
-														'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
-											
-											}
-													
+											if ( row.status_skp != 1 ){
+												if ( (row.kegiatan_bulanan_id) >= 1 ){
+													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'" data-label="'+row.kegiatan_bulanan_label+'" ><i class="fa fa-close " ></i></a></span>';
+												}else{
+													return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_kegiatan_bulanan"  data-id="'+row.rencana_aksi_id+'" data-skp_bulanan_id="'+row.skp_bulanan_id+'"><i class="fa fa-plus" ></i></a></span>'+
+															'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
+												
+												}
+											}else{ //SUDAH ADA CAPAIAN NYA
+												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-plus" ></i></a></span>'+
+														'<span style="margin:2px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-close " ></i></a></span>';
+												
+											}		
 										
 										}
 									},
@@ -293,7 +299,7 @@
 				paging          : false,
 				//order 			    : [ 0 , 'asc' ],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,1,3 ] }
+									{ className: "text-center", targets: [ 0,1,3,4 ] }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/skp_bulanan_list_4") }}',
@@ -310,6 +316,7 @@
 									},
 									{ data: "periode", name:"periode" },
 									{ data: "p_nama", name:"p_nama"},
+									{ data: "jm_kegiatan", name:"jm_kegiatan"},
 									{  data: 'action',width:"20px",
 											"render": function ( data, type, row ) {
 											if (row.status == 0 ){
