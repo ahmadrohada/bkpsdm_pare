@@ -128,7 +128,15 @@ return [
 	
 	'link_title_edit_skp_tahunan'    => 'Edit',
 	'link_icon_edit_skp_tahunan'     => 'fa-pencil',
+
+
+	// CAPAIAN BULANAN
 	
+	'link_title_capaian_bulanan'    		=> 'Capaian Bulanan',
+	'link_icon_capaian_bulanan'     		=> 'fa-bar-chart',
+	
+	'link_title_edit_capaian_bulanan'    		=> 'Edit',
+	'link_icon_edit_capaian_bulanan'     		=> 'fa-pencil',
 	
 	// PETA JABATAN LINKS
 	

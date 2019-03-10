@@ -235,7 +235,7 @@ class SKPBulananAPIController extends Controller {
        
            $datatables = Datatables::of($skp)
            ->addColumn('periode', function ($x) {
-                return Pustaka::bulan($x->bulan);
+                return Pustaka::bulan($x->bulan) . ' '.Pustaka::tahun($x->tgl_mulai);
             }) 
             ->addColumn('masa_penilaian', function ($x) {
                 $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
@@ -253,6 +253,10 @@ class SKPBulananAPIController extends Controller {
                     return "<font style='color:red'>Belum Ada</font>";
                 }
                 
+            })->addColumn('jm_kegiatan', function ($x) {
+                
+                return KegiatanSKPBulanan::WHERE('skp_bulanan_id',$x->skp_bulanan_id)->SELECT('id')->count();
+               
             });
     
             if ($keyword = $request->get('search')['value']) {

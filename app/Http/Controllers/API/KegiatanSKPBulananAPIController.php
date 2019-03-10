@@ -27,6 +27,48 @@ Use Alert;
 class KegiatanSKPBulananAPIController extends Controller {
 
 
+    public function KegiatanBulananDetail(Request $request)
+    {
+       
+        
+        $x = KegiatanSKPBulanan::
+                            SELECT(     'id AS kegiatan_bulanan_id',
+                                        'rencana_aksi_id',
+                                        'skp_bulanan_id',
+                                        'label',
+                                        'target',
+                                        'satuan'
+                                    ) 
+                            ->WHERE('id', $request->kegiatan_bulanan_id)
+                            ->first();
+
+        if ( $x->jabatan_id > 0 ){
+            $pelaksana = Pustaka::capital_string($x->Pelaksana->skpd);
+        }else{
+            $pelaksana = '-';
+        }
+		
+		//return  $rencana_aksi;
+        $rencana_aksi = array(
+            'id'                            => $x->kegiatan_bulanan_id,
+            'skp_bulanan_id'                => $x->skp_bulanan_id,
+            'kegiatan_bulanan_label'        => $x->label,
+            'kegiatan_bulanan_target'       => $x->target,
+            'kegiatan_bulanan_satuan'       => $x->satuan,
+            'kegiatan_bulanan_output'       => $x->target.' '.$x->satuan,
+            'pelaksana'                     => Pustaka::capital_string($x->RencanaAksi->Pelaksana->jabatan),
+            'penanggung_jawab'              => Pustaka::capital_string($x->RencanaAksi->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan),
+            'kegiatan_tahunan_label'        => $x->RencanaAksi->KegiatanTahunan->label,
+            'kegiatan_tahunan_target'       => $x->RencanaAksi->KegiatanTahunan->target,
+            'kegiatan_tahunan_satuan'       => $x->RencanaAksi->KegiatanTahunan->satuan,
+            'kegiatan_tahunan_waktu'        => $x->RencanaAksi->KegiatanTahunan->target_waktu,
+            'kegiatan_tahunan_cost'         => number_format($x->RencanaAksi->KegiatanTahunan->cost,'0',',','.'),
+            'kegiatan_tahunan_output'       => $x->RencanaAksi->KegiatanTahunan->target.' '.$x->RencanaAksi->KegiatanTahunan->satuan,
+ 
+        );
+        return $rencana_aksi;
+    }
+
 
     public function kegiatan_tugas_jabatan_list(Request $request)
     {
@@ -76,7 +118,7 @@ class KegiatanSKPBulananAPIController extends Controller {
     public function KegiatanBulanan4(Request $request)
     {
             
-        $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan')->first();
+        $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan','status')->first();
 
         $dt = RencanaAksi::
                     WHERE('jabatan_id','=', $request->jabatan_id )
@@ -110,6 +152,8 @@ class KegiatanSKPBulananAPIController extends Controller {
             return '';
         })->addColumn('biaya', function ($x) {
             return '';
+        })->addColumn('status_skp', function ($x) use($skp_bln){
+            return $skp_bln->status;
         });
 
         if ($keyword = $request->get('search')['value']) {

@@ -29,6 +29,11 @@ textarea[disabled]{
 }
 
 
+.nav-tabs-custom{
+	font-family: mainandra;
+}
+
+
 .login-header{
 	font-family: mainandra;
 }
