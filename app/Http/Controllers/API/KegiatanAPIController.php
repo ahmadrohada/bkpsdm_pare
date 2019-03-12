@@ -14,6 +14,7 @@ use App\Models\KegiatanSKPTahunan;
 use App\Models\Skpd;
 use App\Models\Jabatan;
 use App\Models\RencanaAksi;
+use App\Models\KegiatanSKPBulanan;
 use App\Models\SKPBulanan;
 use App\Models\IndikatorKegiatan;
 use App\Models\PerjanjianKinerja;
@@ -261,7 +262,27 @@ class KegiatanAPIController extends Controller {
                 $data_rencana_aksi['text']			= Pustaka::capital_string($y->label).' ['. Pustaka::bulan($y->waktu_pelaksanaan).']';
                 $data_rencana_aksi['icon']	        = 'jstree-rencana_aksi';
               
+
+                    $kb = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$y->id)->get();
+                    foreach ($kb as $z) {
+                        $data_keg_bulanana['id']	        = "KegiatanBulanan|".$z->id;
+                        $data_keg_bulanana['text']			=  'Target : '. $z->target.' '.$z->satuan.' ['.Pustaka::capital_string($z->RencanaAksi->pelaksana->jabatan).']';
+                        $data_keg_bulanana['icon']	        = 'jstree-kegiatan_bulanan';
+                      
+        
+                        $keg_bulanan_list[] = $data_keg_bulanana ;
+                    }	
+
+                    
+                if(!empty($keg_bulanan_list)) {
+                    $data_rencana_aksi['children']     = $keg_bulanan_list;
+                }
                 $rencana_aksi_list[] = $data_rencana_aksi ;
+                $keg_bulanan_list = "";
+                unset($data_rencana_aksi['children']);
+
+
+               
             }	
 
 

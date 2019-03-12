@@ -49,6 +49,34 @@
 			</div>
 		</div>
 
+		<div id='rencana_aksi_detail' hidden>
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h1 class="box-title">
+						Detail Rencana Aksi
+					</h1>
+
+					<div class="box-tools pull-right">
+						{!! Form::button('<i class="fa fa-remove "></i>', array('class' => 'btn btn-box-tool tutup_detail_detail_kegiatan_tahunan','title' => 'Tutup', 'data-toggle' => 'tooltip')) !!}
+					</div>
+				</div>
+				<div class="box-body table-responsive">
+
+					<strong>Nama Kegiatan Tahunan</strong>
+					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
+						<span class="kegiatan_tahunan_label"></span>
+						<input type="hidden" class="kegiatan_tahunan_id">
+					</p>
+
+					<i class="fa  fa-gg"></i> <span class="txt_ak" style="margin-right:10px;"></span>
+					<i class="fa fa-industry"></i> <span class="txt_output" style="margin-right:10px;"></span>
+					<i class="fa fa-hourglass-start"></i> <span class="txt_waktu" style="margin-right:10px;"></span>
+					<i class="fa fa-money"></i> <span class="txt_cost" style="margin-right:10px;"></span>
+					
+				</div>
+			</div>
+		</div>
+
 		<div id='rencana_aksi' hidden>
 			<div class="box box-primary">
 				<div class="box-header with-border">
@@ -95,8 +123,9 @@
 							<tr>
 								<th>No</th>
 								<th>RENCANA AKSI</th>
-								<th>WAKTU</th>
 								<th>PELAKSANA</th>
+								<th>WAKTU</th>
+								<th>TARGET</th>
 								<th><i class="fa fa-cog"></i></th>
 							</tr>
 						</thead>
@@ -184,25 +213,36 @@
 
 		switch ( tx[0] ){
                 case 'KegiatanTahunan':
-                          //SHOW DETAIL KEGIATAN TAHUNAN DAN RENCANA KERJA LIST
-                            $("#kegiatan_tahunan").hide();
-						    $("#rencana_aksi").show();
-                            load_rencana_aksi( tx[1]);
+                  //SHOW DETAIL KEGIATAN TAHUNAN DAN RENCANA KERJA LIST
+                  $("#kegiatan_tahunan").hide();
+						      $("#rencana_aksi").show();
+									$("#rencana_aksi_detail").hide();
+                  load_rencana_aksi( tx[1]);
                        
                 break; 
                 case 'KegiatanRenja':
 									show_modal_create(tx[1]);
                   
 
-				break;
-				case 'RencanaAksi':
-                        
+								break;
+								case 'RencanaAksi':
+									//SHOW DETAIL RENCANA AKSI SERTA KEGIATAN BUALAN YANG DILAKSANAKAN OLEH PELAKSANA
+									/* load_rencana_aksi_detail( tx[1]);
+									$("#kegiatan_tahunan").hide();
+						      $("#rencana_aksi").hide();
+									$("#rencana_aksi_detail").show(); */
 
-				break;
-				
-				default:
-						$("#kegiatan_tahunan").show();
-						$("#rencana_aksi").hide();
+
+								break;
+								case 'KegiatanBulanan':
+
+
+								break;
+								
+								default:
+										$("#kegiatan_tahunan").show();
+										$("#rencana_aksi").hide();
+										$("#rencana_aksi_detail").hide();
 				
 			}
 		
@@ -554,7 +594,31 @@
 		});
 	});
 
+	
+	
+	function load_rencana_aksi_detail(rencana_aksi_id){
 
+
+
+		$.ajax({
+				url			: '{{ url("api_resource/rencana_aksi_detail") }}',
+				data 		: {rencana_aksi_id : rencana_aksi_id},
+				method		: "GET",
+				dataType	: "json",
+				success	: function(data) {
+						$('.kegiatan_tahunan_id').val(data['id']);
+						$('.kegiatan_tahunan_label').html(data['label']);
+						$('.txt_ak').html(data['ak']);
+						$('.txt_output').html(data['output']);
+						$('.txt_waktu').html(data['target_waktu'] +' bln');
+						$('.txt_cost').html('Rp. ' +data['cost']);
+						
+				},
+				error: function(data){
+					
+				}						
+		});
+	}
 
 	
 	
@@ -605,15 +669,30 @@
 										}
 									},
 									{ data: "label", name:"label"},
+									{ data: "pelaksana", name:"pelaksana",
+										"render": function ( data, type, row ) {
+											if (row.kegiatan_bulanan >= 1){
+												return "<p class='text-info'>"+row.pelaksana+"</p>";
+											}else{
+												return "<p class='text-warning'>"+row.pelaksana+"</p>";
+											}
+										}
+									},
 									{ data: "waktu_pelaksanaan", name:"waktu_pelaksanaan"},
-									{ data: "pelaksana", name:"pelaksana"},
+									{ data: "target", name:"target"},
 									
 									{  data: 'action',width:"15%",
 											"render": function ( data, type, row ) {
-
-											return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" ><a class="btn btn-success btn-xs edit_rencana_aksi"  data-id="'+row.rencana_aksi_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-													'<span  data-toggle="tooltip" title="Hapus" style="margin:1px;" ><a class="btn btn-danger btn-xs hapus_rencana_aksi"  data-id="'+row.rencana_aksi_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
+												if (row.kegiatan_bulanan >= 1){
+													return  '<span  data-toggle="tooltip" title="" style="margin:1px;" ><a class="btn btn-default btn-xs "  ><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="" style="margin:1px;" ><a class="btn btn-default btn-xs " ><i class="fa fa-close " ></i></a></span>';
 											
+												}else{
+													return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" ><a class="btn btn-success btn-xs edit_rencana_aksi"  data-id="'+row.rencana_aksi_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:1px;" ><a class="btn btn-danger btn-xs hapus_rencana_aksi"  data-id="'+row.rencana_aksi_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
+											
+												}
+												
 													
 										
 										}

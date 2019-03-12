@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PeriodeTahunan;
 use App\Models\PerjanjianKinerja;
 use App\Models\KegiatanSKPTahunan;
+use App\Models\KegiatanSKPBulanan;
 
 
 use App\Models\Tujuan;
@@ -98,7 +99,7 @@ class RencanaAksiAPIController extends Controller {
     {
             
        
-        $dt = Rencanaaksi::WHERE('kegiatan_tahunan_id','=', $request->kegiatan_tahunan_id )
+        $dt = RencanaAksi::WHERE('kegiatan_tahunan_id','=', $request->kegiatan_tahunan_id )
 
                 ->select([   
                     'id AS rencana_aksi_id',
@@ -115,14 +116,28 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('label', function ($x) {
             return $x->label;
         })
+        ->addColumn('kegiatan_bulanan', function ($x) {
+            $kb =  KegiatanSKPBulanan::WHERE('rencana_aksi_id',$x->rencana_aksi_id)->SELECT('id')->count();
+            return $kb;
+        })
+        ->addColumn('target', function ($x) {
+            $kb =  KegiatanSKPBulanan::WHERE('rencana_aksi_id',$x->rencana_aksi_id)->SELECT('id','target','satuan')->first();
+            
+            if ($kb){
+                return $kb->target.' '.$kb->satuan;
+            }else{
+                return '';
+            }
+        })
         ->addColumn('pelaksana', function ($x) {
+            
+
             if ($x->jabatan_id > 0 ){
-                return Pustaka::capital_string($x->Pelaksana->skpd);
+                return Pustaka::capital_string($x->Pelaksana->jabatan);
             }else{
                 return '-';
             }
-             
-        })
+        })     
         ->addColumn('waktu_pelaksanaan', function ($x) {
             return Pustaka::bulan($x->waktu_pelaksanaan);
         });
@@ -160,7 +175,7 @@ class RencanaAksiAPIController extends Controller {
         })
         ->addColumn('pelaksana', function ($x) {
             if ($x->jabatan_id > 0 ){
-                return Pustaka::capital_string($x->Pelaksana->skpd);
+                return Pustaka::capital_string($x->Pelaksana->jabatan);
             }else{
                 return '-';
             }
@@ -193,7 +208,7 @@ class RencanaAksiAPIController extends Controller {
                             ->first();
 
         if ( $x->jabatan_id > 0 ){
-            $pelaksana = Pustaka::capital_string($x->Pelaksana->skpd);
+            $pelaksana = Pustaka::capital_string($x->Pelaksana->jabatan);
         }else{
             $pelaksana = '-';
         }
