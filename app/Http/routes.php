@@ -105,7 +105,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 
 	Route::get('skpd_skp_bulanan_list','API\SKPBulananAPIController@SKPDSKPBulanan_list');
-	Route::get('skp_bulanan_tree','API\SKPBulananAPIController@skp_bulanan_tree');
+	Route::get('skp_bulanan_tree3','API\SKPBulananAPIController@skp_bulanan_tree3');
+	Route::get('skp_bulanan_tree4','API\SKPBulananAPIController@skp_bulanan_tree4');
 	Route::get('skp_bulanan_timeline_status','API\SKPBulananAPIController@SKPbulanan_timeline_status');
 
 	//========================================================================================================//
@@ -359,7 +360,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	//============================== =======       SKP BULANAN ================================================//
 	//========================================================================================================//
-	Route::get('skp_bulanan_list_4','API\SKPBulananAPIController@SKPBulananList');
+	Route::get('skp_bulanan_list_3','API\SKPBulananAPIController@SKPBulananList3');
+	Route::get('skp_bulanan_list_4','API\SKPBulananAPIController@SKPBulananList3');
 
 	Route::post('create_skp_bulanan','API\SKPBulananAPIController@Store');
 	Route::post('hapus_skp_bulanan','API\SKPBulananAPIController@Destroy');
@@ -369,6 +371,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//============================== KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
 	//========================================================================================================//
 	Route::get('skp_bulanan_kegiatan_tugas_jabatan','API\KegiatanSKPBulananAPIController@kegiatan_tugas_jabatan_list');
+	Route::get('kegiatan_bulanan_3','API\KegiatanSKPBulananAPIController@KegiatanBulanan3');
 	Route::get('kegiatan_bulanan_4','API\KegiatanSKPBulananAPIController@KegiatanBulanan4');
 
 	Route::post('simpan_kegiatan_bulanan','API\KegiatanSKPBulananAPIController@Store');

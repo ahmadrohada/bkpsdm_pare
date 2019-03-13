@@ -11,6 +11,7 @@ use App\Models\SKPBulanan;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
 use App\Models\Golongan;
+use App\Models\Jabatan;
 use App\Models\Eselon;
 
 use App\Models\KegiatanSKPTahunan;
@@ -147,7 +148,75 @@ class SKPBulananAPIController extends Controller {
     }
 
 
-    public function skp_bulanan_tree(Request $request)
+    public function skp_bulanan_tree3(Request $request)
+    {
+        //bawahan
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
+
+        $skp_tahunan = SKPTahunan::where('id','=', $request->skp_tahunan_id )
+                                    ->select('id','renja_id')
+                                    ->get();
+
+
+		foreach ($skp_tahunan as $x) {
+            $data_skp['id']	            = "SKPTahunan|".$x->id;
+			$data_skp['text']			= $x->Renja->Periode->label;
+            $data_skp['icon']           = "jstree-skp_tahunan";
+            $data_skp['type']           = "skp_tahunan";
+            
+
+            $skp_bulanan = SKPBulanan::where('skp_tahunan_id','=',$x->id)->select('id','bulan')->orderBy('bulan')->get();
+            foreach ($skp_bulanan as $y) {
+                $data_skp_bulanan['id']	            = "SKPBulanan|".$y->id;
+                $data_skp_bulanan['text']		    = Pustaka::bulan($y->bulan);
+                $data_skp_bulanan['icon']           = "jstree-skp_bulanan";
+                $data_skp_bulanan['type']           = "skp_bulanan";
+
+
+                $keg_skp = RencanaAksi::WHEREIN('jabatan_id',$child)
+                                        ->WHERE('waktu_pelaksanaan','=',$y->bulan)
+                                        ->select('id','label')
+                                        ->get();
+
+                foreach ($keg_skp as $z) {
+                    $data_keg_skp['id']	           = "kegiatan_bulanan|".$z->id;
+                    $data_keg_skp['text']			= Pustaka::capital_string($z->label);
+                    $data_keg_skp['icon']           = "jstree-kegiatan";
+                    $data_keg_skp['type']           = "rencana_aksi";
+                    
+
+                    
+                    $keg_list[] = $data_keg_skp ;
+                    unset($data_keg_skp['children']);
+                
+                }
+
+                if(!empty($keg_list)) {
+                    $data_skp_bulanan['children']     = $keg_list;
+                }
+                $kabid_list[] = $data_skp_bulanan ;
+                $keg_list = "";
+                unset($data_skp_bulanan['children']);
+            
+            }
+               
+               
+
+        }	
+
+            if(!empty($kabid_list)) {
+                $data_skp['children']     = $kabid_list;
+            }
+            $data[] = $data_skp ;	
+            $kabid_list = "";
+            unset($data_skp['children']);
+		
+		return $data;
+        
+    }
+
+
+    public function skp_bulanan_tree4(Request $request)
     {
        
 
@@ -213,9 +282,7 @@ class SKPBulananAPIController extends Controller {
         
     }
 
-
-
-    public function SKPBulananList(Request $request)
+    public function SKPBulananList4(Request $request)
     {
         $skp = SKPBulanan::
                         WHERE('skp_tahunan_id',$request->skp_tahunan_id)
@@ -268,6 +335,69 @@ class SKPBulananAPIController extends Controller {
         
     }
 
+     public function SKPBulananList3(Request $request)
+    {
+
+
+        //BAWAHA
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
+
+        $skp = SKPBulanan::
+                        WHERE('skp_tahunan_id',$request->skp_tahunan_id)
+                        ->select(
+                                'id AS skp_bulanan_id',
+                                'skp_tahunan_id',
+                                'bulan',
+                                'tgl_mulai',
+                                'tgl_selesai',
+                                'p_nama',
+                                'status'
+            
+                         )
+                        ->orderBy('bulan')
+                        ->get();
+
+       
+           $datatables = Datatables::of($skp)
+           ->addColumn('periode', function ($x) {
+                return Pustaka::bulan($x->bulan) . ' '.Pustaka::tahun($x->tgl_mulai);
+            }) 
+            ->addColumn('masa_penilaian', function ($x) {
+                $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
+                return   $masa_penilaian;
+            }) 
+            ->addColumn('label', function ($x) {
+                
+                return   "SKP Periode " .Pustaka::bulan($x->bulan);
+            })
+            ->addColumn('pejabat_penilai', function ($x) {
+            
+                if ( !empty($x->p_nama)){
+                    return $x->p_nama;
+                }else{
+                    return "<font style='color:red'>Belum Ada</font>";
+                }
+                
+            })->addColumn('jm_kegiatan', function ($x) use($child) {
+                
+              
+                return  RencanaAksi::WHEREIN('jabatan_id',$child )
+                                    ->WHERE('waktu_pelaksanaan','=',$x->bulan)
+                                    ->select('id')
+                                    ->count();
+
+
+               
+            });
+    
+            if ($keyword = $request->get('search')['value']) {
+                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            } 
+            
+    
+        return $datatables->make(true);
+        
+    }
 
     public function create_skp_tahunan_confirm(Request $request)
 	{

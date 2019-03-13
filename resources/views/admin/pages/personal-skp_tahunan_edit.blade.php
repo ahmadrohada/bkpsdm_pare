@@ -62,12 +62,12 @@
 						@include('admin.tables.skp_kegiatan_tahunan_2_detail')
 					@endif
 
-					<!-- 2. KASUBID -->
+					<!-- 3. KASUBID -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
 						@include('admin.tables.skp_kegiatan_tahunan_3_edit')
 					@endif
 
-					<!-- 2. PELAKSANA -->
+					<!-- 4. PELAKSANA -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
 						@include('admin.tables.skp_kegiatan_tahunan_4_detail')
 					@endif
@@ -75,6 +75,14 @@
 					
 				</div>
 				<div class="tab-pane" id="kegiatan_bulanan_tab">
+
+
+					<!-- 3. KASUBID -->
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+						@include('admin.tables.skp_kegiatan_bulanan_3_edit')
+					@endif
+
+					<!-- 4. PELAKSANA -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
 						@include('admin.tables.skp_kegiatan_bulanan_4_edit')		
 					@endif
