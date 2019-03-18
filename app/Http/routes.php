@@ -386,7 +386,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('personal_capaian_bulanan_list','API\CapaianBulananAPIController@PersonalCapaianBulananList');
 	
 	//PELAKSANA
-	Route::get('capaian_bulanan_status_pengisian4','API\CapaianBulananAPIController@CapaianBulananStatusPengisian4');
+	Route::get('capaian_bulanan_status_pengisian','API\CapaianBulananAPIController@CapaianBulananStatusPengisian');
 
 
 	
@@ -400,6 +400,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	//===================== CAPAIAN  KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
 	//========================================================================================================//
+	Route::get('capaian_kegiatan_bulanan_3','API\KegiatanCapaianBulananAPIController@CapaianKegiatanBulanan3');
 	Route::get('capaian_kegiatan_bulanan_4','API\KegiatanCapaianBulananAPIController@CapaianKegiatanBulanan4');
 
 	Route::get('capaian_kegiatan_bulanan_detail','API\KegiatanCapaianBulananAPIController@CapaianKegiatanBulananDetail');

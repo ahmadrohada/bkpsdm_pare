@@ -5,7 +5,7 @@
 
 		<div class="table-responsive">
 			<input type='text' id = 'cari' class="form-control" placeholder="cari">
-			<div id="ktj"></div>
+			<div id="keg_tahunan_3"></div>
 			
 		</div>
 		
@@ -27,7 +27,7 @@
 
 				</div>
 
-				<table id="kegiatan_tahunan_table" class="table table-striped table-hover" >
+				<table id="kegiatan_tahunan_3_table" class="table table-striped table-hover" >
 					<thead>
 						<tr>
 							<th rowspan="2">No</th>
@@ -150,12 +150,12 @@
 	
 	
 	function initTreeKegTahunan() {
-		$('#ktj')
+		$('#keg_tahunan_3')
 		.on("loaded.jstree", function(){
-			//$('#ktj').jstree('open_all');
-			//$('#ktj').jstree(true).select_node('KegiatanSKP|1');
-			//$('#ktj').jstree(true).select_node('KegiatanSKP|2');
-			//$("#ktj").jstree("disable_node", 'KegiatanSKP|1');
+			//$('#keg_tahunan_3').jstree('open_all');
+			//$('#keg_tahunan_3').jstree(true).select_node('KegiatanSKP|1');
+			//$('#keg_tahunan_3').jstree(true).select_node('KegiatanSKP|2');
+			//$("#keg_tahunan_3").jstree("disable_node", 'KegiatanSKP|1');
 		})
 		.on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
@@ -197,7 +197,7 @@
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 		var v = $('#cari').val();
-		$('#ktj').jstree(true).search(v);
+		$('#keg_tahunan_3').jstree(true).search(v);
 		}, 250);
 	});
 	
@@ -253,11 +253,11 @@
     $(".tutup_detail_detail_kegiatan_tahunan").click(function(){
 			$("#kegiatan_tahunan").show();
 			$("#rencana_aksi").hide();
-			jQuery('#ktj').jstree().deselect_all(true);
+			jQuery('#keg_tahunan_3').jstree().deselect_all(true);
 
 		}); 
 	
-	var table_kegiatan_tahunan = $('#kegiatan_tahunan_table').DataTable({
+	var table_kegiatan_tahunan = $('#kegiatan_tahunan_3_table').DataTable({
 				destroy			: true,
 				processing      : false,
 				serverSide      : true,
@@ -456,13 +456,13 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										$('#kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
-										jQuery('#ktj').jstree(true).refresh(true);
+										$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
+										jQuery('#keg_tahunan_3').jstree(true).refresh(true);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
-											$('#kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
-											jQuery('#ktj').jstree(true).refresh(true);
+											$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
+											jQuery('#keg_tahunan_3').jstree(true).refresh(true);
 											
 										}
 									}
@@ -567,12 +567,12 @@
 									timer: 900
 									}).then(function () {
 										$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-										jQuery('#ktj').jstree(true).refresh(true);
+										jQuery('#keg_tahunan_3').jstree(true).refresh(true);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-											jQuery('#ktj').jstree(true).refresh(true);
+											jQuery('#keg_tahunan_3').jstree(true).refresh(true);
 											
 										}
 									}

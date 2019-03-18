@@ -2,7 +2,7 @@
 	<div class="col-md-5">
 		<div class="table-responsive">
 			<input type='text' id = 'cari_skp_bulanan' class="form-control" placeholder="cari">
-			<div id="skp_bulanan_tree" class="demo"></div>
+			<div id="skp_bulanan_3_tree" class="demo"></div>
 			
 		</div>
 
@@ -26,7 +26,7 @@
 					<span  data-toggle="tooltip" title="Create SKP Bulanan"><a class="btn btn-info btn-xs create_skp_bulanan" ><i class="fa fa-plus" ></i> SKP Bulanan</a></span>
 				</div>
 
-				<table id="skp_bulanan_table" class="table table-striped table-hover" >
+				<table id="skp_bulanan_3_table" class="table table-striped table-hover" >
 					<thead>
 						<tr>
 							<th >No</th>
@@ -63,7 +63,9 @@
 						<tr>
 							<th>No</th>
 							<th>KEGIATAN BULANAN</th>
-							<th>TARGET OUTPUT</th>
+							<th>TARGET</th>
+							<th>PELAKSANA</th>
+							
 							<th><i class="fa fa-cog"></i></th>
 						</tr>
 					</thead>
@@ -81,7 +83,6 @@
 </div>
 
 @include('admin.modals.create_skp_bulanan')
-@include('admin.modals.kegiatan_bulanan')
      
 
 <link rel="stylesheet" href="{{asset('assets/jstree/themes/default/style.css')}}" />
@@ -90,15 +91,15 @@
 <script type="text/javascript">
 
 	function initTreeKegBulanan() {
-		$('#skp_bulanan_tree')
+		$('#skp_bulanan_3_tree')
 		.jstree({
             'core' : {
 				'data' : {
 						"url" 	: "{{ url("api_resource/skp_bulanan_tree3") }}",
 						"data" 	: function (node) {
 							return { "renja_id" : {!! $skp->Renja->id !!} , 
-                          "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
-													"skp_tahunan_id" : {!! $skp->id !!} };
+                          			"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+									"skp_tahunan_id" : {!! $skp->id !!} };
 						},
 						"dataType" : "json"
 				},'check_callback' : true,
@@ -120,7 +121,7 @@
 				modal_create_skp_bulanan();
 				
 		}).on("loaded.jstree", function(){
-			$('#skp_bulanan_tree').jstree('open_all');
+			$('#skp_bulanan_3_tree').jstree('open_all');
 		}).on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
 				//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
@@ -133,7 +134,7 @@
 
 
 	function context_menus(node){
-			var tree = $('#skp_bulanan_tree').jstree(true);
+			var tree = $('#skp_bulanan_3_tree').jstree(true);
 
 			if (node.type === 'skp_tahunan'){
 				var addLabel = 'Create SKP Bulanan';
@@ -192,8 +193,8 @@
 										
 							break;
 							case 'SKPBulanan':
-												  //SHOW KEGIATAN BULANAN
-												  $("#skp_bulanan").hide();
+												  	//SHOW KEGIATAN BULANAN
+												  	$("#skp_bulanan").hide();
 													$("#kegiatan_bulanan").show();
 													load_kegiatan_bulanan( tx[1]);
 													
@@ -224,7 +225,7 @@
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
-				order 			    : [ 0 , 'asc' ],
+				order 			: [ 0 , 'asc' ],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2,3 ] }
 								],
@@ -252,12 +253,22 @@
 											}
 										}
 									},
+									
 									{ data: "output", name:"output", width:"140px",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>-</p>";
+												return "<p class='text-danger'>"+row.target + ' '+ row.satuan+"</p>";
 											}else{
 												return row.target + ' '+ row.satuan;
+											}
+										}
+									},
+									{ data: "pelaksana", name:"pelaksana",
+										"render": function ( data, type, row ) {
+											if ( (row.kegiatan_bulanan_id) <= 0 ){
+												return "<p class='text-danger'>"+row.pelaksana+"</p>";
+											}else{
+												return row.pelaksana;
 											}
 										}
 									},
@@ -266,12 +277,14 @@
 
 											if ( row.status_skp != 1 ){
 												if ( (row.kegiatan_bulanan_id) >= 1 ){
+													//disabled jika sudah dilaksanakan/dia add pelaksana
+													return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-plus" ></i></a></span>'+
+														'<span style="margin:2px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-close " ></i></a></span>';
+												
+												}else{
 													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'" data-label="'+row.kegiatan_bulanan_label+'" ><i class="fa fa-close " ></i></a></span>';
-												}else{
-													return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_kegiatan_bulanan"  data-id="'+row.rencana_aksi_id+'" data-skp_bulanan_id="'+row.skp_bulanan_id+'"><i class="fa fa-plus" ></i></a></span>'+
-															'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
-												
+											
 												}
 											}else{ //SUDAH ADA CAPAIAN NYA
 												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-plus" ></i></a></span>'+
@@ -291,7 +304,7 @@
 	}
 
 	
-		$('#skp_bulanan_table').DataTable({
+		$('#skp_bulanan_3_table').DataTable({
 				destroy			    : true,
 				processing      : false,
 				serverSide      : true,
@@ -347,7 +360,7 @@
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 		var v = $('#cari_skp_bulanan').val();
-		$('#skp_bulanan_tree').jstree(true).search(v);
+		$('#skp_bulanan_3_tree').jstree(true).search(v);
 		}, 250);
 	});
 	
@@ -437,13 +450,13 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
-										jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+										$('#skp_bulanan_3_table').DataTable().ajax.reload(null,false);
+										jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
-											$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
-											jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+											$('#skp_bulanan_3_table').DataTable().ajax.reload(null,false);
+											jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
 											
 										}
 									}
@@ -465,44 +478,7 @@
 		});
 	});
 
-	$(document).on('click','.create_kegiatan_bulanan',function(e){
-	
-	var id = $(this).data('id');
-	var skp_bulanan_id = $(this).data('skp_bulanan_id');
-	show_modal_create(id,skp_bulanan_id);
-
-	});
-	
-
-	function show_modal_create(rencana_aksi_id,skp_bulanan_id){
-		$.ajax({
-				url			  : '{{ url("api_resource/rencana_aksi_detail") }}',
-				data 		  : {rencana_aksi_id : rencana_aksi_id},
-				method		: "GET",
-				dataType	: "json",
-				success	: function(data) {
-					$('.modal-kegiatan_bulanan').find('[name=rencana_aksi_id]').val(data['id']);
-					$('.modal-kegiatan_bulanan').find('[name=skp_bulanan_id]').val(skp_bulanan_id);
-					$('.modal-kegiatan_bulanan').find('[name=rencana_aksi_label]').val(data['label']);
-					$('.modal-kegiatan_bulanan').find('.rencana_aksi_label').html(data['label']);
-
-					$('.modal-kegiatan_bulanan').find('.kegiatan_tahunan_label').html(data['kegiatan_tahunan_label']);
-					$('.modal-kegiatan_bulanan').find('.kegiatan_tahunan_output').html(data['kegiatan_tahunan_output']);
-					$('.modal-kegiatan_bulanan').find('.kegiatan_tahunan_waktu').html(data['kegiatan_tahunan_waktu']+' bulan');
-					$('.modal-kegiatan_bulanan').find('.kegiatan_tahunan_cost').html('Rp. '+data['kegiatan_tahunan_cost']);
-
-
-					$('.modal-kegiatan_bulanan').find('h4').html('Create Kegiatan Bulanan');
-					$('.modal-kegiatan_bulanan').find('.btn-submit').attr('id', 'submit-save');
-					$('.modal-kegiatan_bulanan').find('[name=text_button_submit]').html('Simpan Data');
-					$('.modal-kegiatan_bulanan').modal('show'); 
-				},
-				error: function(data){
-					
-				}						
-		});	
-	}
-
+/* 	
 	
 	$(document).on('click','.hapus_kegiatan_bulanan',function(e){
 		var kegiatan_bulanan_id = $(this).data('id') ;
@@ -539,12 +515,12 @@
 									timer: 900
 									}).then(function () {
 										$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
-										jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+										jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
-											jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+											jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
 											
 										}
 									}
@@ -564,7 +540,7 @@
 					});	
 			}
 		});
-	});
+	}); */
 
 
 </script>
