@@ -313,7 +313,7 @@
 					timer: 1500
 				}).then(function () {
 						$('.modal-create_capaian_bulanan_confirm').modal('hide');
-						$('#capaian_bulanan_table').DataTable().ajax.reload(null,false);
+						$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
 						window.location.assign("capaian-bulanan/"+data+"/edit");
 
 				},

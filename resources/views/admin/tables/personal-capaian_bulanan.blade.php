@@ -70,7 +70,7 @@
 											if (row.capaian >= 1 ){
 												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_bulanan"  data-id="'+row.capaian+'"><i class="fa fa-pencil" ></i></a></span>'+
 														'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs lihat_capaian_bulanan"  data-id="'+row.capaian+'"><i class="fa fa-eye" ></i></a></span>'+
-														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_bulanan"  data-id="'+row.capaian+'" data-label="'+row.periode+'"><i class="fa fa-close " ></i></a></span>';
+														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_bulanan"  data-id="'+row.capaian+'" data-label="'+row.periode+' [ '+row.bulan+' ]"><i class="fa fa-close " ></i></a></span>';
 
 											}else{
 												return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_bulanan"  data-skp_bulanan_id="'+row.skp_bulanan_id+'" style="width:75px;">Capaian</a></span>';

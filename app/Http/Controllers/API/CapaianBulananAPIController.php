@@ -11,6 +11,7 @@ use App\Models\SKPBulanan;
 use App\Models\CapaianBulanan;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
+use App\Models\Jabatan;
 use App\Models\Golongan;
 use App\Models\Eselon;
 
@@ -181,6 +182,7 @@ class CapaianBulananAPIController extends Controller {
         //apakah tgl sudah lewat dari tgl akhir
         //lihat kegiatan nya serta pelihatkan capaian kegia9tan nya juga ( capaian kegiatan dapat dibuat dibulan berjalaan)
         
+        //lihat jenis jabatan, 1,2,3,4
 
       
         $skp_bulanan   = SKPBulanan::WHERE('skp_bulanan.id',$request->get('skp_bulanan_id'))
@@ -198,9 +200,22 @@ class CapaianBulananAPIController extends Controller {
                                 )
                         ->first();
 
-        //jm kegiatan
-        $jm_kegiatan = KegiatanSKPBulanan::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
+        $jenis_jabatan = $skp_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
 
+        //jm kegiatan pelaksana
+        if ( $jenis_jabatan == 4 ){
+            $jm_kegiatan = KegiatanSKPBulanan::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
+        }else if ( $jenis_jabatan == 3){
+            //cari bawahan
+            $child = Jabatan::SELECT('id')->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get()->toArray(); 
+
+        //jm kegiatan kasubid   
+            $jm_kegiatan = RencanaAksi::WHEREIN('jabatan_id',$child)->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)->count();
+        }else{
+            $jm_kegiatan = 0 ;
+        }
+        //
+        
         
         //DETAIL data pribadi dan atasan
         $u_detail = HistoryJabatan::WHERE('id',$skp_bulanan->u_jabatan_id)->first();
@@ -247,7 +262,7 @@ class CapaianBulananAPIController extends Controller {
     }
 
 
-    public function CapaianBulananStatusPengisian4( Request $request )
+    public function CapaianBulananStatusPengisian( Request $request )
     {
        
         
@@ -260,16 +275,30 @@ class CapaianBulananAPIController extends Controller {
                                 'capaian_bulanan.skp_bulanan_id',
                                 'capaian_bulanan.created_at',
                                 'capaian_bulanan.status_approve',
-                                'capaian_bulanan.p_jabatan_id'
+                                'capaian_bulanan.p_jabatan_id',
+                                'capaian_bulanan.u_jabatan_id'
                             )
                             ->where('capaian_bulanan.id','=', $request->capaian_bulanan_id )->first();;
+    
+        $jenis_jabatan = $capaian_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
 
+        //jm kegiatan pelaksana
+        if ( $jenis_jabatan == 4 ){
+           /*  $jm_kegiatan_bulanan = KegiatanSKPBulanan::SELECT('id')
+            ->WHERE('skp_bulanan_id', $capaian_bulanan->skp_bulanan_id )
+            ->count(); */
 
-        //KEGITAN PELAKSANA
-        $jm_kegiatan_bulanan = KegiatanSKPBulanan::SELECT('id')
-                                ->WHERE('skp_bulanan_id', $capaian_bulanan->skp_bulanan_id )
-                                ->count(); 
-
+            $jm_kegiatan_bulanan = KegiatanSKPBulanan::WHERE('skp_bulanan_id','=',$capaian_bulanan->skp_bulanan_id)->count();
+        }else if ( $jenis_jabatan == 3){
+            //cari bawahan
+            $child = Jabatan::SELECT('id')->WHERE('parent_id',$capaian_bulanan->PejabatYangDinilai->id_jabatan )->get()->toArray(); 
+                    
+            //jm kegiatan kasubid   
+            $jm_kegiatan_bulanan = RencanaAksi::WHEREIN('jabatan_id',$child)->WHERE('waktu_pelaksanaan', '01')->count();
+        }else{
+            $jm_kegiatan_bulanan = 0 ;
+        }
+                        
 
         //ATASAN
         $p_detail = HistoryJabatan::WHERE('id',$capaian_bulanan->p_jabatan_id)->first();

@@ -48,7 +48,7 @@
 	function status_show(){
 		status_pengisian();	
 
-		$.ajax({
+		/* $.ajax({
 				url			: '{{ url("api_resource/capaian_bulanan_general_timeline") }}',
 				data 		: { 
 								
@@ -62,7 +62,7 @@
 				error: function(data){
 					
 				}						
-		});
+		}); */
 	}
 
 	function status(data){
@@ -82,7 +82,7 @@
 	
 	function status_pengisian(){
 		$.ajax({
-				url			: '{{ url("api_resource/capaian_bulanan_status_pengisian4") }}',
+				url			: '{{ url("api_resource/capaian_bulanan_status_pengisian") }}',
 				data 		: { capaian_bulanan_id : {!! $capaian->id !!} },
 				method		: "GET",
 				dataType	: "json",
