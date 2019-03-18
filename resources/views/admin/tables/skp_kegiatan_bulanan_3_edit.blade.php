@@ -452,12 +452,13 @@
 									}).then(function () {
 										$('#skp_bulanan_3_table').DataTable().ajax.reload(null,false);
 										jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
+										$('.periode_skp_bulanan').select2('destroy');
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#skp_bulanan_3_table').DataTable().ajax.reload(null,false);
 											jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
-											
+											$('.periode_skp_bulanan').select2('destroy');
 										}
 									}
 								)
