@@ -361,7 +361,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//============================== =======       SKP BULANAN ================================================//
 	//========================================================================================================//
 	Route::get('skp_bulanan_list_3','API\SKPBulananAPIController@SKPBulananList3');
-	Route::get('skp_bulanan_list_4','API\SKPBulananAPIController@SKPBulananList3');
+	Route::get('skp_bulanan_list_4','API\SKPBulananAPIController@SKPBulananList4');
 
 	Route::post('create_skp_bulanan','API\SKPBulananAPIController@Store');
 	Route::post('hapus_skp_bulanan','API\SKPBulananAPIController@Destroy');
