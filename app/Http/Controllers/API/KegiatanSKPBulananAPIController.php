@@ -27,7 +27,7 @@ Use Alert;
 
 class KegiatanSKPBulananAPIController extends Controller {
 
-
+ 
     public function KegiatanBulananDetail(Request $request)
     {
        
@@ -133,7 +133,8 @@ class KegiatanSKPBulananAPIController extends Controller {
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
                                 'kegiatan_bulanan.target',
-                                'kegiatan_bulanan.satuan'
+                                'kegiatan_bulanan.satuan',
+                                'skp_tahunan_rencana_aksi.kegiatan_tahunan_id'
                             ) 
                     ->get();
         
@@ -155,8 +156,11 @@ class KegiatanSKPBulananAPIController extends Controller {
             return '';
         })->addColumn('status_skp', function ($x) use($skp_bln){
             return $skp_bln->status;
+        })->addColumn('kegiatan_tahunan_label', function ($x) use($skp_bln){
+            return $x->KegiatanTahunan->label;
         });
 
+        
         if ($keyword = $request->get('search')['value']) {
             $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 

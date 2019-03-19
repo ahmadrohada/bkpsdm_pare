@@ -246,9 +246,9 @@
 									{ data: "label", name:"label",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.rencana_aksi_label+"</p>";
+												return "<p class='text-danger'>"+row.rencana_aksi_label+' / '+row.kegiatan_tahunan_label+"</p>";
 											}else{
-												return row.kegiatan_bulanan_label;
+												return row.kegiatan_bulanan_label+' / '+row.kegiatan_tahunan_label;
 											}
 										}
 									},
