@@ -408,6 +408,15 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('hapus_capaian_kegiatan_bulanan','API\KegiatanCapaianBulananAPIController@Destroy');
 	Route::post('simpan_capaian_kegiatan_bulanan','API\KegiatanCapaianBulananAPIController@Store');
 	Route::post('update_capaian_kegiatan_bulanan','API\KegiatanCapaianBulananAPIController@Update');
+
+	//===================== CAPAIAN  RENCANA AKSI======================================//
+	//========================================================================================================//
+	
+	Route::post('hapus_capaian_rencana_aksi','API\RencanaAksiAPIController@CapaianDestroy');
+	Route::post('simpan_capaian_rencana_aksi','API\RencanaAksiAPIController@CapaianStore');
+	Route::post('update_capaian_rencana_aksi','API\RencanaAksiAPIController@CapaianUpdate');
+
+
 	//========================================================================================================//
 	//======================================= RENCANA AKSI  SKP THAUNAN ======================================//
 	//========================================================================================================//
