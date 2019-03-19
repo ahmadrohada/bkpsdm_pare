@@ -12,7 +12,7 @@ use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\KegiatanCapaianBulanan;
 use App\Models\IndikatorProgram;
-use App\Models\SKPD;
+use App\Models\Skpd;
 use App\Models\Jabatan;
 use App\Models\SKPTahunan;
 use App\Models\SKPBulanan;
@@ -144,7 +144,7 @@ class KegiatanCapaianBulananAPIController extends Controller {
         })->addColumn('pelaksana', function ($x) {
 
             if ( $x->pelaksana_id != null ){
-                $dt = SKPD::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
+                $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
                 $pelaksana = Pustaka::capital_string($dt->skpd);
             }else{
                 $pelaksana = "-";
