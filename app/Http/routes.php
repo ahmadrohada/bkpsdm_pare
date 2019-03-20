@@ -412,6 +412,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//===================== CAPAIAN  RENCANA AKSI======================================//
 	//========================================================================================================//
 	
+	Route::get('capaian_rencana_aksi_detail','API\RencanaAksiAPIController@CapaianRencanaAksiDetail');
+
+
 	Route::post('hapus_capaian_rencana_aksi','API\RencanaAksiAPIController@CapaianDestroy');
 	Route::post('simpan_capaian_rencana_aksi','API\RencanaAksiAPIController@CapaianStore');
 	Route::post('update_capaian_rencana_aksi','API\RencanaAksiAPIController@CapaianUpdate');

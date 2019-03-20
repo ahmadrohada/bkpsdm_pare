@@ -13,7 +13,7 @@
 			<input type="hidden"  name="skp_bulanan_id" class="skp_bulanan_id">
 			<input type="hidden"  name="capaian_id" class="capaian_id">
 			<input type="hidden"  name="capaian_rencana_aksi_id" class="capaian_rencana_aksi_id">
-			<input type="hidden"  name="satuan" class="satuan">
+			
 			<div class="modal-body">
 					
 					<br>
@@ -55,16 +55,15 @@
 					<hr>
 					<div class="row">
 						
-						<div class="col-md-6 form-group capaian_target" style="margin-top:8px;">	
+						<div class="col-md-3 form-group capaian_target" style="margin-top:8px;">	
 							<label class="control-label">Capaian </label>
-							<div class="input-group">
-								<input type="text" name="capaian_target" id="capaian_target" required class="form-control input-sm" placeholder="capaian target">
-								<div class="input-group-addon">
-									<span class="kegiatan_bulanan_satuan"></span>
-								</div>
-							</div>
-
+							<input type="text" name="capaian_target" id="capaian_target" required class="form-control input-sm" placeholder="capaian target">
+							
 							<input type="hidden"  name="alasan_tidak_tercapai" class="alasan_tidak_tercapai">
+						</div>
+						<div class="col-md-3 form-group satuan" style="margin-top:8px;">	
+							<label class="control-label">Satuan </label>
+							<input type="text" name="satuan" id="satuan" required class="form-control input-sm" placeholder="satuan">
 						</div>
 
 						<div class="col-md-6 form-group bukti" style="margin-top:8px;">
@@ -111,6 +110,10 @@
 
 	$('.capaian_target').on('click', function(){
 		$('.capaian_target').removeClass('has-error');
+	});
+
+	$('.satuan').on('click', function(){
+		$('.satuan').removeClass('has-error');
 	});
 
 	$('.bukti').on('click', function(){
@@ -176,6 +179,7 @@
 					
 					//error message
 					((index == 'capaian_target')?$('.capaian_target').addClass('has-error'):'');
+					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					((index == 'bukti')?$('.bukti').addClass('has-error'):'');
 					
 					reset_submitx();
