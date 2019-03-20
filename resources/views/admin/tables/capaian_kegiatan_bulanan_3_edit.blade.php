@@ -191,6 +191,7 @@
 				dataType	: "json",
 				success	: function(data) {
 					$('.modal-capaian_rencana_aksi').find('[name=rencana_aksi_id]').val(data['id']);
+					$('.modal-capaian_rencana_aksi').find('[name=capaian_rencana_aksi_id]').val("");
 					$('.modal-capaian_rencana_aksi').find('[name=skp_bulanan_id]').val(data['skp_bulanan_id']);
 					$('.modal-capaian_rencana_aksi').find('[name=capaian_id]').val({!! $capaian->id !!});
 					$('.modal-capaian_rencana_aksi').find('[name=satuan]').val(data['kegiatan_bulanan_satuan']);
