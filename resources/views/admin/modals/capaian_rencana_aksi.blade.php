@@ -102,7 +102,7 @@
 	});
 
 	$('.modal-capaian_rencana_aksi').on('hidden.bs.modal', function(){
-		$('.capaian_target, .bukti ').removeClass('has-error');
+		$('.capaian_target,.satuan, .bukti ').removeClass('has-error');
 		$('.modal-capaian_rencana_aksi').find('[name=capaian_target],[name=file_bukti]').val('');
 	});
 
@@ -224,7 +224,7 @@
 					timer:1500
 				}).then(function () {
 					$('.modal-capaian_rencana_aksi').modal('hide');
-					$('#capaian_rencana_aksi_table').DataTable().ajax.reload(null,false);
+					$('#capaian_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
 					
 				},
 					
@@ -246,6 +246,7 @@
 					
 					//error message
 					((index == 'capaian_target')?$('.capaian_target').addClass('has-error'):'');
+					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					((index == 'bukti')?$('.bukti').addClass('has-error'):'');
 					reset_submitx();
 

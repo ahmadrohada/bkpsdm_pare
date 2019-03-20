@@ -578,5 +578,87 @@ class RencanaAksiAPIController extends Controller {
     
     }
   
+    public function CapaianUpdate(Request $request)
+    {
+
+        $messages = [
+                'capaian_rencana_aksi_id.required'  => 'Harus diisi',
+                'capaian_target.required'           => 'Harus diisi',
+                'satuan.required'                   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'rencana_aksi_id'        => 'required',
+                            'capaian_target'         => 'required',
+                            'satuan'                 => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $st_ra    = CapaianRencanaAksi::find(Input::get('capaian_rencana_aksi_id'));
+        if (is_null($st_ra)) {
+            return $this->sendError('Capaian Rencana Aksi tidak ditemukan.');
+        }
+
+
+        $st_ra->capaian_target          = Input::get('capaian_target');
+        $st_ra->satuan                  = Input::get('satuan');
+
+        if ( $st_ra->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
+
+    public function CapaianDestroy(Request $request)
+    {
+
+        $messages = [
+                'capaian_rencana_aksi_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'capaian_rencana_aksi_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $st_ra    = CapaianRencanaAksi::find(Input::get('capaian_rencana_aksi_id'));
+        if (is_null($st_ra)) {
+            return $this->sendError('Capaian Rencana Aksi tidak ditemukan.');
+        }
+
+
+        if ( $st_ra->delete()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
 
 }
