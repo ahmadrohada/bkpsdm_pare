@@ -158,7 +158,7 @@
 <script type="text/javascript">
 
 
-	
+function detail_show(){
 
 	$.ajax({
 		url     	: '{{ url("api_resource/skp_tahunan_detail") }}',
@@ -191,6 +191,7 @@
 			}
 
 	}); 
+}
 
 	/** ============== ----------------------- ================= **/	
 	/** ============== FUNGSI EDIT Atasan ================= **/

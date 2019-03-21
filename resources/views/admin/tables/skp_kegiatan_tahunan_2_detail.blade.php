@@ -4,8 +4,8 @@
 	<div class="col-md-5" >
 
 		<div class="table-responsive" >
-			<input type='text' id = 'cari' class="form-control" placeholder="cari">
-			<div id="ktj" class="demo"></div>
+			<input type='text' id = 'cari_ktj' class="form-control" placeholder="cari">
+			<div id="kegiatan_tahunan_kabid" class="demo"></div>
 			
 		</div>
 		
@@ -115,35 +115,27 @@
 
 <script type="text/javascript">
 	
-	
-	
-	function initTree() {
-		$('#ktj')
+	function initTreeKegTahunan() {
+		$('#kegiatan_tahunan_kabid')
 		.on("loaded.jstree", function(){
-			$('#ktj').jstree('open_all');
-			//$('#ktj').jstree(true).select_node('KegiatanSKP|1');
-			//$('#ktj').jstree(true).select_node('KegiatanSKP|2');
-			//$("#ktj").jstree("disable_node", 'KegiatanSKP|1');
+			//$('#kegiatan_tahunan_kabid').jstree('open_all');
+			
 		})
 		.on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
-				//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
-				//alert(data.instance.get_node(data.selected[0]).id)
 				detail_table(data.instance.get_node(data.selected[0]).id);
-				
-				
-				
+			
 			}
 		})
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_2") }}", //Eselon 2
+						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_2") }}", 
 						"data" 	: function (node) {
 							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
-                                        "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
-										"skp_tahunan_id" : {!! $skp->id !!}
-                                    };
+                          "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+													"skp_tahunan_id" : {!! $skp->id !!}
+                      };
 						},
 						"dataType" : "json"
 				}
@@ -157,15 +149,14 @@
 		
 	    });
 	}
-
 	
 	
 	var to = false;
-	$('#cari').keyup(function () {
+	$('#cari_ktj').keyup(function () {
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
-		var v = $('#cari').val();
-		$('#ktj').jstree(true).search(v);
+		var v = $('#cari_ktj').val();
+		$('#kegiatan_tahunan_kabid').jstree(true).search(v);
 		}, 250);
 	});
 	
