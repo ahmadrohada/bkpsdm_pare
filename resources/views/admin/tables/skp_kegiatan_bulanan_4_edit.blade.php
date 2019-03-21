@@ -2,9 +2,11 @@
 	<div class="col-md-5">
 		<div class="table-responsive">
 			<input type='text' id = 'cari_skp_bulanan' class="form-control" placeholder="cari">
-			<div id="skp_bulanan_tree" class="demo"></div>
+			<div id="skp_bulanan_pelaksana" class="demo"></div>
 			
 		</div>
+
+	
 
 	</div>
 	<div class="col-md-7">
@@ -90,7 +92,7 @@
 <script type="text/javascript">
 
 	function initTreeKegBulanan() {
-		$('#skp_bulanan_tree')
+		$('#skp_bulanan_pelaksana')
 		.jstree({
             'core' : {
 				'data' : {
@@ -120,7 +122,7 @@
 				modal_create_skp_bulanan();
 				
 		}).on("loaded.jstree", function(){
-			$('#skp_bulanan_tree').jstree('open_all');
+			$('#skp_bulanan_pelaksana').jstree('open_all');
 		}).on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
 				//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
@@ -133,7 +135,7 @@
 
 
 	function context_menus(node){
-			var tree = $('#skp_bulanan_tree').jstree(true);
+			var tree = $('#skp_bulanan_pelaksana').jstree(true);
 
 			if (node.type === 'skp_tahunan'){
 				var addLabel = 'Create SKP Bulanan';

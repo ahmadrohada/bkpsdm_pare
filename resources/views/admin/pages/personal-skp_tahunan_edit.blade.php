@@ -26,25 +26,10 @@
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
 				<div class="active tab-pane" id="status">
-					<!-- 1. ka SKPD -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
-						@include('admin.modules.timeline.skp_tahunan_status_edit')	
-					@endif
 
-					<!-- 2. KABID -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('admin.modules.timeline.skp_tahunan_status_general')	
-					@endif
-
-					<!-- 2. KASUBID -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.modules.timeline.skp_tahunan_status_edit')	
-					@endif
-
-					<!-- 2. PELAKSANA -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
-						@include('admin.modules.timeline.skp_tahunan_status_edit')	
-					@endif
+					<!-- ALL jabatan is one status edit -->
+					@include('admin.modules.timeline.skp_tahunan_status_general')	
+					
 					
 				</div>
 				<div class="tab-pane" id="detail">
@@ -75,6 +60,11 @@
 					
 				</div>
 				<div class="tab-pane" id="kegiatan_bulanan_tab">
+
+					<!-- 3. KASUBID -->
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
+						@include('admin.tables.skp_kegiatan_bulanan_2_edit')
+					@endif
 
 
 					<!-- 3. KASUBID -->
@@ -116,11 +106,15 @@ $(document).ready(function() {
 		window.location.hash = id;
 
 		if ( id == 'kegiatan_tahunan_tab'){
+			$('html, body').animate({scrollTop:0}, 0);
 			initTreeKegTahunan();
 		}else if ( id == 'kegiatan_bulanan_tab'){
+			$('html, body').animate({scrollTop:0}, 0);
 			initTreeKegBulanan();
 		}else if ( id == 'status'){
 			status_show();
+		}else if ( id == 'detail'){
+			detail_show();
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});

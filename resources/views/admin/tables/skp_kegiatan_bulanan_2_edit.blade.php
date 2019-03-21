@@ -2,7 +2,7 @@
 	<div class="col-md-5">
 		<div class="table-responsive">
 			<input type='text' id = 'cari_skp_bulanan' class="form-control" placeholder="cari">
-			<div id="skp_bulanan_3_tree" class="demo"></div>
+			<div id="skp_bulanan_2_tree" class="demo"></div>
 			
 		</div>
 
@@ -26,7 +26,7 @@
 					<span  data-toggle="tooltip" title="Create SKP Bulanan"><a class="btn btn-info btn-xs create_skp_bulanan" ><i class="fa fa-plus" ></i> SKP Bulanan</a></span>
 				</div>
 
-				<table id="skp_bulanan_3_table" class="table table-striped table-hover" >
+				<table id="skp_bulanan_2_table" class="table table-striped table-hover" >
 					<thead>
 						<tr>
 							<th >No</th>
@@ -64,6 +64,7 @@
 							<th>No</th>
 							<th>KEGIATAN BULANAN</th>
 							<th>TARGET</th>
+							<th>PENANGGUNG JAWAB</th>
 							<th>PELAKSANA</th>
 							
 							<!-- <th><i class="fa fa-cog"></i></th> -->
@@ -82,7 +83,7 @@
 	
 </div>
 
-@include('admin.modals.create_skp_bulanan')
+@include('admin.modals.create_skp_bulanan_2')
      
 
 <link rel="stylesheet" href="{{asset('assets/jstree/themes/default/style.css')}}" />
@@ -91,11 +92,11 @@
 <script type="text/javascript">
 
 	function initTreeKegBulanan() {
-		$('#skp_bulanan_3_tree')
+		$('#skp_bulanan_2_tree')
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/skp_bulanan_tree3") }}",
+						"url" 	: "{{ url("api_resource/skp_bulanan_tree2") }}",
 						"data" 	: function (node) {
 							return { "renja_id" : {!! $skp->Renja->id !!} , 
                           			"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
@@ -121,7 +122,7 @@
 				modal_create_skp_bulanan();
 				
 		}).on("loaded.jstree", function(){
-			$('#skp_bulanan_3_tree').jstree('open_all');
+			$('#skp_bulanan_2_tree').jstree('open_all');
 		}).on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
 				//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
@@ -134,7 +135,7 @@
 
 
 	function context_menus(node){
-			var tree = $('#skp_bulanan_3_tree').jstree(true);
+			var tree = $('#skp_bulanan_2_tree').jstree(true);
 
 			if (node.type === 'skp_tahunan'){
 				var addLabel = 'Create SKP Bulanan';
@@ -227,10 +228,10 @@
 				paging          : false,
 				order 			: [ 0 , 'asc' ],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2] }
+									{ className: "text-center", targets: [ 0,2 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_bulanan_3") }}',
+									url	: '{{ url("api_resource/kegiatan_bulanan_2") }}',
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 
@@ -254,13 +255,24 @@
 										}
 									},
 									
-									{ data: "output", name:"output", width:"140px",
+									{ data: "output", name:"output", width:"90px",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
 												return "<p class='text-danger'>"+row.target + ' '+ row.satuan+"</p>";
 											}else{
 												return row.target + ' '+ row.satuan;
 											}
+										}
+									},
+									{ data: "penanggung_jawab", name:"penanggung_jawab",
+										"render": function ( data, type, row ) {
+											
+											if ( (row.kegiatan_bulanan_id) <= 0 ){
+												return "<p class='text-danger'>"+row.penanggung_jawab+"</p>";
+											}else{
+												return row.penanggung_jawab;
+											}
+											
 										}
 									},
 									{ data: "pelaksana", name:"pelaksana",
@@ -304,7 +316,7 @@
 	}
 
 	
-		$('#skp_bulanan_3_table').DataTable({
+		$('#skp_bulanan_2_table').DataTable({
 				destroy			    : true,
 				processing      : false,
 				serverSide      : true,
@@ -315,7 +327,7 @@
 									{ className: "text-center", targets: [ 0,1,3,4 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skp_bulanan_list_3") }}',
+									url	: '{{ url("api_resource/skp_bulanan_list_2") }}',
 									data: { 
 										
 											"skp_tahunan_id" : {!! $skp->id !!},
@@ -360,7 +372,7 @@
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 		var v = $('#cari_skp_bulanan').val();
-		$('#skp_bulanan_3_tree').jstree(true).search(v);
+		$('#skp_bulanan_2_tree').jstree(true).search(v);
 		}, 250);
 	});
 	
@@ -450,14 +462,14 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										$('#skp_bulanan_3_table').DataTable().ajax.reload(null,false);
-										jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
+										$('#skp_bulanan_2_table').DataTable().ajax.reload(null,false);
+										jQuery('#skp_bulanan_2_tree').jstree(true).refresh(true);
 
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
-											$('#skp_bulanan_3_table').DataTable().ajax.reload(null,false);
-											jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
+											$('#skp_bulanan_2_table').DataTable().ajax.reload(null,false);
+											jQuery('#skp_bulanan_2_tree').jstree(true).refresh(true);
 											
 										}
 									}
@@ -516,12 +528,12 @@
 									timer: 900
 									}).then(function () {
 										$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
-										jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
+										jQuery('#skp_bulanan_2_tree').jstree(true).refresh(true);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
-											jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
+											jQuery('#skp_bulanan_2_tree').jstree(true).refresh(true);
 											
 										}
 									}
