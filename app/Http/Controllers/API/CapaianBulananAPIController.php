@@ -211,6 +211,18 @@ class CapaianBulananAPIController extends Controller {
 
         //jm kegiatan kasubid   
             $jm_kegiatan = RencanaAksi::WHEREIN('jabatan_id',$child)->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)->count();
+        }else if ( $jenis_jabatan == 2){
+            //cari bawahan  , jabatanpelaksanan
+            $pelaksana_id = Jabatan::
+                    leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
+                        $join   ->on('pelaksana.parent_id','=','m_skpd.id');
+                    })
+                    ->SELECT('pelaksana.id')
+                    ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                    ->get()
+                    ->toArray(); 
+            //jm kegiatan kasubid   
+            $jm_kegiatan = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id)->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)->count();
         }else{
             $jm_kegiatan = 0 ;
         }
