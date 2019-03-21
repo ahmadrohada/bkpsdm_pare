@@ -218,7 +218,7 @@ class CapaianBulananAPIController extends Controller {
                         $join   ->on('pelaksana.parent_id','=','m_skpd.id');
                     })
                     ->SELECT('pelaksana.id')
-                    ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                    ->WHERE('m_skpd.parent_id', $skp_bulanan->PejabatYangDinilai->id_jabatan )
                     ->get()
                     ->toArray(); 
             //jm kegiatan kasubid   
