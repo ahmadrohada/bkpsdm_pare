@@ -293,6 +293,7 @@ class CapaianBulananAPIController extends Controller {
                             ->where('capaian_bulanan.id','=', $request->capaian_bulanan_id )->first();;
     
         $jenis_jabatan = $capaian_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
+        $bulan = $capaian_bulanan->SKPBulanan->bulan;
 
         //jm kegiatan pelaksana
         if ( $jenis_jabatan == 4 ){
@@ -306,9 +307,22 @@ class CapaianBulananAPIController extends Controller {
             $child = Jabatan::SELECT('id')->WHERE('parent_id',$capaian_bulanan->PejabatYangDinilai->id_jabatan )->get()->toArray(); 
                     
             //jm kegiatan kasubid   
-            $jm_kegiatan_bulanan = RencanaAksi::WHEREIN('jabatan_id',$child)->WHERE('waktu_pelaksanaan', '01')->count();
+            $jm_kegiatan_bulanan = RencanaAksi::WHEREIN('jabatan_id',$child)->WHERE('waktu_pelaksanaan', $bulan)->count();
+        }else if ( $jenis_jabatan == 2){
+            //cari bawahan bawahan nya
+
+            $pelaksana_id = Jabatan::
+                        leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
+                            $join   ->on('pelaksana.parent_id','=','m_skpd.id');
+                        })
+                        ->SELECT('pelaksana.id')
+                        ->WHERE('m_skpd.parent_id', $capaian_bulanan->PejabatYangDinilai->id_jabatan )
+                        ->get()
+                        ->toArray();  
+            //jm kegiatan kabid   
+            $jm_kegiatan_bulanan = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id)->WHERE('waktu_pelaksanaan', $bulan)->count();
         }else{
-            $jm_kegiatan_bulanan = 0 ;
+            $jm_kegiatan_bulanan = 000 ;
         }
                         
 
@@ -390,6 +404,7 @@ class CapaianBulananAPIController extends Controller {
                 
                 'jm_kegiatan_bulanan'   => $jm_kegiatan_bulanan,
                 'skp_bulanan_id'        => $capaian_bulanan->skp_bulanan_id,
+                'bulan'                 => $bulan,
                 'tgl_dibuat'            => Pustaka::balik2($capaian_bulanan->created_at),
                 'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
 

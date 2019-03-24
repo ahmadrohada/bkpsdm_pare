@@ -403,6 +403,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	//===================== CAPAIAN  KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
 	//========================================================================================================//
+	Route::get('capaian_kegiatan_bulanan_2','API\KegiatanCapaianBulananAPIController@CapaianKegiatanBulanan2');
 	Route::get('capaian_kegiatan_bulanan_3','API\KegiatanCapaianBulananAPIController@CapaianKegiatanBulanan3');
 	Route::get('capaian_kegiatan_bulanan_4','API\KegiatanCapaianBulananAPIController@CapaianKegiatanBulanan4');
 
