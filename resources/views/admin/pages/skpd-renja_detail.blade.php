@@ -40,7 +40,7 @@
 						
   
 						<div class=" tab-pane" id="distribusi_kegiatan">
-							@include('admin.modules.detail_forms.distribusi_kegiatan') 
+							@include('admin.tables.distribusi_kegiatan_detail') 
 						</div>
 						 
 					</div>

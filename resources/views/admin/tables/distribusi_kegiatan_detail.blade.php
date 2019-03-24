@@ -179,17 +179,22 @@
 				
 			break;
 			default: 
+			$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
+			$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
+			$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+			$(".div_kegiatan_detail").hide();
 						
 		
 		}
 	}
 
-	/* $(".tutup_detail_jabatan").click(function(){
-		$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
+	$(".tutup_detail_kegiatan").click(function(){
+		$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
 		$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 		$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 		$(".div_kegiatan_detail").hide();
-	});  */
+		jQuery('#ditribusi_renja').jstree().deselect_all(true);
+	});  
 	
 	
 </script>
