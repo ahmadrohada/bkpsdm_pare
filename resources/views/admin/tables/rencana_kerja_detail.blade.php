@@ -3,7 +3,7 @@
 
 		<div class="table-responsive">
 			<input type='text' id = 'cari' class="form-control" placeholder="cari">
-			<div id="renja" class=""></div>
+			<div id="renja_tree_kegiatan" class=""></div>
 		</div>
 		
 	</div>

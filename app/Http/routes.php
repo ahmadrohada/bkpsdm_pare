@@ -774,6 +774,20 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'HomeSKPDController@showSKPBulanan'
 	]);
 
+
+	//=========================== P E G A W A I  =============================================//
+	Route::get('pegawai/{pegawai_id}', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'PegawaiController@detailPegawai'
+	]);
+
+	Route::get('pegawai/{pegawai_id}/add', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'PegawaiController@addPegawai'
+	]);
+
+
+
 	//----------------------------------------------------------------------------------------//
 	//======================== RENCANA KERJA PERANGKAT DAERAH ================================//
 	//----------------------------------------------------------------------------------------//
