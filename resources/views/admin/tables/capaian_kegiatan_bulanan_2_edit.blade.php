@@ -5,7 +5,7 @@
 		<div class="box box-primary" id='kegiatan_bulanan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					List Capaian Rencana Aksi Eselon IV.a
+					List Capaian Rencana Aksi Eselon III.b
 				</h1>
 
 				<div class="box-tools pull-right">
@@ -21,14 +21,17 @@
 				<table id="capaian_kegiatan_bulanan_table" class="table table-striped table-hover" >
 					<thead>
 						<tr>
-							<th rowspan="2">No</th>
+							<th rowspan="2">NO</th>
 							<th rowspan="2">RENCANA AKSI / KEGIATAN TAHUNAN</th>
-							<th rowspan="2">TARGET TAHUNAN</th>
+							<th colspan="3">KEGIATAN BULANAN</th>
 							<th colspan="3">KEGIATAN BULANAN</th>
 							<th rowspan="2">CAPAIAN</th>
 							<th rowspan="2"><i class="fa fa-cog"></i></th>
 						</tr>
 						<tr>
+							<th>PENANGGUNG JAWAB</th>
+							<th>TARGET</th>
+							<th>CAPAIAN</th>
 							<th>PELAKSANA</th>
 							<th>TARGET</th>
 							<th>CAPAIAN</th>
@@ -63,10 +66,10 @@
 				paging          : false,
 				order 			: [0 , 'asc' ],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3,4,5,6,7 ] }
+									{ className: "text-center", targets: [ 0,2,3,4,5,6,7,8,9 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/capaian_kegiatan_bulanan_3") }}',
+									url	: '{{ url("api_resource/capaian_kegiatan_bulanan_2") }}',
 									data: { 
 										
 											"renja_id" 			: {!! $capaian->SKPBulanan->SKPTahunan->Renja->id !!} , 
@@ -83,19 +86,38 @@
 									},
 									{ data: "rencana_aksi_label", name:"rencana_aksi_label",
 										"render": function ( data, type, row ) {
-											if ( (row.capaian_rencana_aksi_id) <= 0 ){
+											if ( (row.rencana_aksi_id) <= 0 ){
 												return "<p class='text-danger'>"+row.rencana_aksi_label+' / '+row.kegiatan_tahunan_label+"</p>";
 											}else{
 												return row.rencana_aksi_label+' / '+row.kegiatan_tahunan_label;
 											}
 										}
 									}, 
-									{ data: "output", name:"output",
+									{ data: "penanggung_jawab", name:"penanggung_jawab",
+										"render": function ( data, type, row ) {
+											
+											if ( (row.capaian_rencana_aksi_id) <= 0 ){
+												return "<p class='text-danger'>"+row.penanggung_jawab;+"</p>";
+											}else{
+												return row.penanggung_jawab;
+											} 
+										}
+									},
+									{ data: "penanggung_jawab_target", name:"penanggung_jawab_target",
 										"render": function ( data, type, row ) {
 											if ( (row.capaian_rencana_aksi_id) <= 0 ){
-												return "<p class='text-danger'>"+row.target + ' '+ row.satuan+"</p>";
+												return "<p class='text-danger'>"+row.penanggung_jawab_target + ' '+ row.penanggung_jawab_satuan+"</p>";
 											}else{
-												return row.target + ' '+ row.satuan;
+												return row.penanggung_jawab_target + ' '+ row.penanggung_jawab_satuan;
+											}
+										}
+									},
+									{ data: "capaian_rencana_aksi_target", name:"capaian_rencana_aksi_target", width:"80px",
+										"render": function ( data, type, row ) {
+											if ( (row.capaian_rencana_aksi_id) <= 0 ){
+												return "<p class='text-danger'>-</p>";
+											}else{
+												return row.capaian_rencana_aksi_target + ' '+ row.capaian_rencana_aksi_satuan;
 											}
 										}
 									},
@@ -136,7 +158,7 @@
 											if ( (row.capaian_kegiatan_bulanan_id) <= 0 ){
 												return "<p class='text-danger'>-</p>";
 											}else{
-												return "<p class='text-danger'>"+ row.capaian_target + ' '+ row.capaian_satuan+"</p>";
+												return row.capaian_target + ' '+ row.capaian_satuan;
 											}
 
 											
@@ -144,19 +166,22 @@
 									},
 									{ data: "capaian_rencana_aksi_target", name:"capaian_rencana_aksi_target", width:"80px",
 										"render": function ( data, type, row ) {
-											if ( (row.capaian_rencana_aksi_id) <= 0 ){
+											if ( (row.capaian_rencana_aksi_kabid_id) <= 0 ){
 												return "<p class='text-danger'>-</p>";
 											}else{
-												return row.capaian_rencana_aksi_target + ' '+ row.capaian_rencana_aksi_satuan;
+												return row.capaian_rencana_aksi_kabid_target + ' '+ row.capaian_rencana_aksi_kabid_satuan;
 											}
+
+
+
 										}
 									},
 									{  data: 'action',width:"40px",
 											"render": function ( data, type, row ) {
 											
-											if ( (row.capaian_rencana_aksi_id) >= 1 ){
-												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_rencana_aksi"  data-id="'+row.capaian_rencana_aksi_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_rencana_aksi"  data-id="'+row.capaian_rencana_aksi_id+'" data-label="'+row.rencana_aksi_label+'" ><i class="fa fa-close " ></i></a></span>';
+											if ( (row.capaian_rencana_aksi_kabid_id) >= 1 ){
+												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_rencana_aksi"  data-id="'+row.capaian_rencana_aksi_kabid_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_rencana_aksi"  data-id="'+row.capaian_rencana_aksi_kabid_id+'" data-label="'+row.rencana_aksi_label+'" ><i class="fa fa-close " ></i></a></span>';
 											}else{
 												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_capaian_rencana_aksi"  data-id="'+row.rencana_aksi_id+'"><i class="fa fa-plus" ></i></a></span>'+
 														'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';

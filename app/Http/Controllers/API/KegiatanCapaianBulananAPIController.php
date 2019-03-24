@@ -75,6 +75,113 @@ class KegiatanCapaianBulananAPIController extends Controller {
         return $rencana_aksi;
     }
 
+    public function CapaianKegiatanBulanan2(Request $request)
+    {
+            
+        $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan','status')->first();
+        
+        //cari bawahan  , jabatanpelaksanan
+        $pelaksana_id = Jabatan::
+                        leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
+                            $join   ->on('pelaksana.parent_id','=','m_skpd.id');
+                        })
+                        ->SELECT('pelaksana.id')
+                        ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                        ->get()
+                        ->toArray();  
+        $capaian_id = $request->capaian_id;
+        
+        $dt = RencanaAksi::
+                    WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
+                    ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
+                    ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
+                        $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
+                    })
+                    ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                        $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
+                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
+                    })
+                    ->leftjoin('db_pare_2018.capaian_bulanan_kegiatan', function($join){
+                        $join   ->on('capaian_bulanan_kegiatan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
+                    })
+                    ->leftjoin('db_pare_2018.capaian_rencana_aksi', function($join) use($capaian_id){
+                        $join   ->on('capaian_rencana_aksi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                        $join   ->where('capaian_rencana_aksi.capaian_id','!=', $capaian_id);
+                    })
+                    ->leftjoin('db_pare_2018.capaian_rencana_aksi AS capaian_kabid', function($join) use($capaian_id){
+                        $join   ->on('capaian_kabid.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                        $join   ->where('capaian_kabid.capaian_id','=', $capaian_id);
+                    })
+                    ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                                'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
+                                'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
+                                'kegiatan_bulanan.label AS kegiatan_bulanan_label',
+                                'kegiatan_bulanan.id AS kegiatan_bulanan_id',
+                                'kegiatan_bulanan.target AS target_pelaksana',
+                                'kegiatan_bulanan.satuan AS satuan_pelaksana',
+                                'kegiatan_tahunan.target AS penanggung_jawab_target',
+                                'kegiatan_tahunan.satuan AS penanggung_jawab_satuan',
+                                'capaian_bulanan_kegiatan.id AS capaian_kegiatan_bulanan_id',
+                                'capaian_bulanan_kegiatan.capaian_target AS capaian_target',
+                                'capaian_bulanan_kegiatan.satuan AS capaian_satuan',
+                                'capaian_bulanan_kegiatan.bukti',
+                                'capaian_bulanan_kegiatan.alasan_tidak_tercapai',
+                                'capaian_rencana_aksi.id AS capaian_rencana_aksi_id',
+                                'capaian_rencana_aksi.capaian_target AS capaian_rencana_aksi_target',
+                                'capaian_rencana_aksi.satuan AS capaian_rencana_aksi_satuan',
+                                'capaian_kabid.id AS capaian_rencana_aksi_kabid_id',
+                                'capaian_kabid.capaian_target AS capaian_rencana_aksi_kabid_target',
+                                'capaian_kabid.satuan AS capaian_rencana_aksi_kabid_satuan'
+
+                            ) 
+                    ->get();
+        
+        $skp_id = $request->skp_bulanan_id;
+
+
+        $datatables = Datatables::of($dt)
+        ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
+            return $skp_id;
+        })->addColumn('ak', function ($x) {
+            return '';
+        })->addColumn('output', function ($x) {
+            return '';
+        })->addColumn('mutu', function ($x) {
+            return '';
+        })->addColumn('waktu', function ($x) {
+            return '';
+        })->addColumn('biaya', function ($x) {
+            return '';
+        })->addColumn('kegiatan_tahunan_label', function ($x) {
+            return $x->KegiatanTahunan->label;
+        })->addColumn('penanggung_jawab', function ($x) {
+
+            return Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan);
+
+        })->addColumn('pelaksana', function ($x) {
+
+            if ( $x->pelaksana_id != null ){
+                $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
+                $pelaksana = Pustaka::capital_string($dt->skpd);
+            }else{
+                $pelaksana = "-";
+            }
+
+            return $pelaksana;
+        })->addColumn('status_skp', function ($x) use($skp_bln){
+            return $skp_bln->status;
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true); 
+        
+    } 
+
     public function CapaianKegiatanBulanan3(Request $request)
     {
             
@@ -83,6 +190,7 @@ class KegiatanCapaianBulananAPIController extends Controller {
         //cari bawahan  , jabatanpelaksanan
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
         
+        $capaian_id = $request->capaian_id;
 
         $dt = RencanaAksi::
                     WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child )
@@ -98,8 +206,9 @@ class KegiatanCapaianBulananAPIController extends Controller {
                     ->leftjoin('db_pare_2018.capaian_bulanan_kegiatan', function($join){
                         $join   ->on('capaian_bulanan_kegiatan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
                     })
-                    ->leftjoin('db_pare_2018.capaian_rencana_aksi', function($join){
+                    ->leftjoin('db_pare_2018.capaian_rencana_aksi', function($join) use($capaian_id){
                         $join   ->on('capaian_rencana_aksi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                        $join   ->where('capaian_rencana_aksi.capaian_id','=', $capaian_id);
                     })
                     ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
