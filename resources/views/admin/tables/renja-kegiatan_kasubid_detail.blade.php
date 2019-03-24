@@ -1,4 +1,4 @@
-<div class="box box-primary div_kasubid_detail">
+<div class="box box-primary div_kasubid_detail" hidden>
 	<div class="box-header with-border">
 		<h1 class="box-title">
 			Detail Jabatan
@@ -33,7 +33,7 @@
 					
 	</div>
 </div>
-<div class="box box-primary div_kegiatan_kasubid_list">
+<div class="box box-primary div_kegiatan_kasubid_list" hidden>
     <div class="box-header with-border">
 		<h1 class="box-title">
             Kegiatan List
