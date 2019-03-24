@@ -175,12 +175,12 @@ $(document).on('click','.create_sasaran',function(e){
 									timer: 900
 									}).then(function () {
 										$('#sasaran_table').DataTable().ajax.reload(null,false);
-										jQuery('#renja').jstree(true).refresh(true);
+										jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#sasaran_table').DataTable().ajax.reload(null,false);
-											jQuery('#renja').jstree(true).refresh(true);
+											jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 											
 										}
 									}

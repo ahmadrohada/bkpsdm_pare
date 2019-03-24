@@ -170,9 +170,8 @@ function load_kegiatan_kasubid(jabatan_id){
 	function unlink_kegiatan_kasubid(kegiatan_id){
 		Swal.fire({
 			title: "Hapus  Kegiatan",
-			text:/* $(this).data('label')+ */ "Hanya menghapus kegiatan pada jabatan saja",
+			text: "Hanya menghapus kegiatan pada jabatan saja",
 			type: "warning",
-			//type: "question",
 			showCancelButton: true,
 			cancelButtonText: "Batal",
 			confirmButtonText: "Hapus",
@@ -198,6 +197,12 @@ function load_kegiatan_kasubid(jabatan_id){
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
+
+										$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
+										$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
+										$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+										$(".div_kegiatan_detail").hide();
+
 										$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
 										jQuery('#ditribusi_renja').jstree(true).refresh(true);
 										$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
@@ -265,11 +270,13 @@ function load_kegiatan_kasubid(jabatan_id){
 									}).then(function () {
 										$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
 										jQuery('#ditribusi_renja').jstree(true).refresh(true);
+										$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
 											jQuery('#ditribusi_renja').jstree(true).refresh(true);
+											$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
 											
 										}
 									}

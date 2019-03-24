@@ -35,7 +35,7 @@
 
 		
 	function RencanaKerjaList() {
-		$('#renja')
+		$('#renja_tree_kegiatan')
 		.jstree({
             'core' : {
 				'data' : {
@@ -153,7 +153,7 @@
 				});
 		})
 		.on("loaded.jstree", function(){
-			$('#renja').jstree('open_all');
+			$('#renja_tree_kegiatan').jstree('open_all');
 		})
 		.on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
@@ -166,7 +166,7 @@
 
 
 	function context_menu(node){
-		var tree = $('#renja').jstree(true);
+		var tree = $('#renja_tree_kegiatan').jstree(true);
 
 		if (node.type === 'ind_tujuan'){
 			var addLabel = 'Tambah Sasaran';
@@ -245,7 +245,7 @@
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 			var v = $('#cari').val();
-			$('#renja').jstree(true).search(v);
+			$('#renja_tree_kegiatan').jstree(true).search(v);
 		}, 250);
 	});
 	
@@ -358,6 +358,7 @@
 				$(".div_program_detail, .div_ind_program_list").hide();
 				$(".div_ind_program_detail, .div_kegiatan_list").hide();
 				$(".div_kegiatan_detail").hide();
+				jQuery('#renja_tree_kegiatan').jstree().deselect_all(true);
 	}); 
 
 </script>

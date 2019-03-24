@@ -120,7 +120,7 @@
 				}).then(function () {
 					$('.modal-tujuan').modal('hide');
 					$('#tujuan_table').DataTable().ajax.reload(null,false);
-					jQuery('#renja').jstree(true).refresh(true);
+					jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 					
 				},
 					
@@ -173,7 +173,7 @@
 				}).then(function () {
 					$('.modal-tujuan').modal('hide');
 					$('#tujuan_table').DataTable().ajax.reload(null,false);
-					jQuery('#renja').jstree(true).refresh(true);
+					jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 					
 				},
 					

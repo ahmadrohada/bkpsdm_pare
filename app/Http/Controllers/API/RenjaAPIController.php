@@ -524,9 +524,14 @@ class RenjaAPIController extends Controller {
     }	
         
         
+        if(!empty($data)) { 
+            return $data;
+        }else{
+            return "[{}]";
+        }
         
        
-		return $data;
+		
         
     }
     

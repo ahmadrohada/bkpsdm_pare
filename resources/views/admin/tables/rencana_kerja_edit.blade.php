@@ -3,7 +3,7 @@
 
 		<div class="table-responsive">
 			<input type='text' id = 'cari' class="form-control" placeholder="cari">
-			<div id="renja" class=""></div>
+			<div id="renja_tree_kegiatan" class=""></div>
 		</div>
 		
 	</div>
@@ -34,13 +34,18 @@
 <script type="text/javascript">
 
 		
-	function initRenjaTree() {
-		$('#renja')
+	function renja_list_kegiatan_tree() {
+		$('#renja_tree_kegiatan')
 		.jstree({
             'core' : {
 				'data' : {
 						"url" 	: "{{ url("api_resource/skpd_renja_aktivity") }}",
 						"data" 	: function (node) {
+
+							
+							
+							
+						
 							return { "renja_id" : {!! $renja->id !!} };
 						},
 						"dataType" : "json"
@@ -152,7 +157,8 @@
 				});
 		})
 		.on("loaded.jstree", function(){
-			$('#renja').jstree('open_all');
+			$('#renja_tree_kegiatan').jstree('open_all');
+			
 		})
 		.on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
@@ -165,7 +171,7 @@
 
 
 	function context_menu(node){
-		var tree = $('#renja').jstree(true);
+		var tree = $('#renja_tree_kegiatan').jstree(true);
 
 		if (node.type === 'ind_tujuan'){
 			var addLabel = 'Tambah Sasaran';
@@ -244,7 +250,7 @@
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 			var v = $('#cari').val();
-			$('#renja').jstree(true).search(v);
+			$('#renja_tree_kegiatan').jstree(true).search(v);
 		}, 250);
 	});
 	
@@ -357,6 +363,7 @@
 				$(".div_program_detail, .div_ind_program_list").hide();
 				$(".div_ind_program_detail, .div_kegiatan_list").hide();
 				$(".div_kegiatan_detail").hide();
+				jQuery('#renja_tree_kegiatan').jstree().deselect_all(true);
 	}); 
 
 </script>
