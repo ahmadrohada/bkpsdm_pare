@@ -76,9 +76,9 @@
 										"render": function ( data, type, row ) {
 
 										if ( row.action == '1'){
-											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="{{ url('/admin/pegawai') }}/'+row.pegawai_id+'" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';
+											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="../skpd/pegawai/'+row.pegawai_id+'" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';
 										}else{
-											return  '<span  data-toggle="tooltip" title="Tambah" style="margin:1px;" class=""><a href="{{ url('/admin/pegawai') }}/'+row.pegawai_id+'/add" class="btn btn-xs btn-warning"><i class="fa fa-user-plus"></i></a></span>';
+											return  '<span  data-toggle="tooltip" title="Tambah" style="margin:1px;" class=""><a href="../skpd/pegawai/'+row.pegawai_id+'/add" class="btn btn-xs btn-warning"><i class="fa fa-user-plus"></i></a></span>';
 											
 										}
 									}

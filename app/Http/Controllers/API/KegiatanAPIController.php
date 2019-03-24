@@ -295,7 +295,12 @@ class KegiatanAPIController extends Controller {
 
         }	
 
-		return  $kegiatan_list;
+
+        if(!empty($kegiatan_list)) {
+            return  $kegiatan_list;
+        }else{
+            return "[{}]";
+        }
         
     }
 

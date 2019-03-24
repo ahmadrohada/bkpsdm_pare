@@ -72,6 +72,7 @@ $(document).ready(function() {
 		}else if ( id == 'rencana_kerja_tab'){
 			renja_list_kegiatan_tree();
 		}else if ( id == 'distribusi_kegiatan'){
+			$('html, body').animate({scrollTop:0}, 0);
 			initTreeDistribusiKegiatan();
 		}
 

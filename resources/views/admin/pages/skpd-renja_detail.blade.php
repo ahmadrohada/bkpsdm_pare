@@ -22,7 +22,7 @@
 					<ul class="nav nav-tabs" id="myTab">
 						<li class="status"><a href="#status" data-toggle="tab">Status</a></li>
 						<li class="detail"><a href="#detail" data-toggle="tab">Detail</a></li>
-						<li class="renja_tree"><a href="#renja_list" data-toggle="tab">Rencana Kerja</a></li>
+						<li class="rencana_kerja_tab"><a href="#rencana_kerja_tab" data-toggle="tab">Rencana Kerja</a></li>
 						<li class="distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
 					</ul>
 						
@@ -34,7 +34,7 @@
 							@include('admin.modules.edit_forms.renja_detail')
 						</div>
 						
-						<div class=" tab-pane" id="renja_list">
+						<div class=" tab-pane" id="rencana_kerja_tab">
 							@include('admin.tables.rencana_kerja_detail')
 						</div> 
 						
@@ -49,7 +49,7 @@
 	    </section>
 	</div>
 
-	<script type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function() {
 	
 
@@ -70,16 +70,14 @@ $(document).ready(function() {
 		window.location.hash = id;
 		//alert(id);
 
-		if ( id == 'renja_list'){
+		if ( id == 'status'){
+			status_show();
+		}else if ( id == 'rencana_kerja_tab'){
 			//alert(id);
 			RencanaKerjaList();
-			
-		}else if ( id == 'status'){
-			
-			status_show();
 		}else if ( id == 'distribusi_kegiatan'){
+			$('html, body').animate({scrollTop:0}, 0);
 			initTreeDistribusiKegiatan();
-			
 		}
 
 		$('html, body').animate({scrollTop:0}, 0);
