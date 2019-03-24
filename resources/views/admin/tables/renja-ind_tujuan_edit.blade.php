@@ -167,12 +167,12 @@ function load_ind_tujuan(tujuan_id){
 									timer: 900
 									}).then(function () {
 										$('#ind_tujuan_table').DataTable().ajax.reload(null,false);
-										jQuery('#renja').jstree(true).refresh(true);
+										jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#ind_tujuan_table').DataTable().ajax.reload(null,false);
-											jQuery('#renja').jstree(true).refresh(true);
+											jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 											
 										}
 									}

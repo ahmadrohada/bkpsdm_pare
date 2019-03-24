@@ -79,7 +79,7 @@
 				}).then(function () {
 					$('.modal-sasaran').modal('hide');
 					$('#sasaran_table').DataTable().ajax.reload(null,false);
-					jQuery('#renja').jstree(true).refresh(true);
+					jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 					
 				},
 					
@@ -139,7 +139,7 @@
 				}).then(function () {
 					$('.modal-sasaran').modal('hide');
 					$('#sasaran_table').DataTable().ajax.reload(null,false);
-					jQuery('#renja').jstree(true).refresh(true);
+					jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 					
 				},
 					

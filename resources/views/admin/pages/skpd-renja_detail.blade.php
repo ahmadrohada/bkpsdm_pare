@@ -31,11 +31,11 @@
 							@include('admin.modules.timeline.renja_status_detail')	
 						</div>
 						<div class="tab-pane" id="detail">
-							@include('admin.modules.skpd-renja_detail')
+							@include('admin.modules.edit_forms.renja_detail')
 						</div>
 						
 						<div class=" tab-pane" id="renja_list">
-							@include('admin.modules.detail_forms.rencana_kerja')
+							@include('admin.tables.rencana_kerja_detail')
 						</div> 
 						
   

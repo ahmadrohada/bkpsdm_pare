@@ -181,12 +181,12 @@ $(document).on('click','.hapus_program',function(e){
 								timer: 900
 								}).then(function () {
 									$('#program_table').DataTable().ajax.reload(null,false);
-									jQuery('#renja').jstree(true).refresh(true);
+									jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 								},
 								function (dismiss) {
 									if (dismiss === 'timer') {
 										$('#program_table').DataTable().ajax.reload(null,false);
-										jQuery('#renja').jstree(true).refresh(true);
+										jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 										
 									}
 								}

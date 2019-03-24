@@ -394,7 +394,7 @@ class KegiatanAPIController extends Controller {
                 'quality'       => '-',
                 'target_waktu'  => '-',
                 'cost'	        => number_format($x->cost,'0',',','.'),
-                'pejabat'       => Pustaka::capital_string($x->PenanggungJawab->jabatan),
+                'pejabat'       => Pustaka::capital_string($x->jabatan_id != '0' ? $x->PenanggungJawab->jabatan : '0'),
                     
             );
         return $kegiatan;

@@ -30,7 +30,7 @@
 					<!-- ALL jabatan is one status edit -->
 					@include('admin.modules.timeline.skp_tahunan_status_general')	
 					
-					
+					 
 				</div>
 				<div class="tab-pane" id="detail">
 					@include('admin.modules.edit_forms.skp_tahunan_detail')			
