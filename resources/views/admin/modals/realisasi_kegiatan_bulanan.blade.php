@@ -1,18 +1,18 @@
-<div class="modal fade modal-capaian_kegiatan_bulanan" id="createIndikatorProgram" role="dialog"  aria-hidden="true">
+<div class="modal fade modal-realisasi_kegiatan_bulanan" id="createIndikatorProgram" role="dialog"  aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    Capaian Kegiatan Bulanan
+                    Realisasi Kegiatan Bulanan
                 </h4>
             </div>
 
-            <form  id="capaian_kegiatan_bulanan_form" method="POST" action="">
+            <form  id="realisasi_kegiatan_bulanan_form" method="POST" action="">
 			<input type="hidden"  name="kegiatan_bulanan_id" class="kegiatan_bulanan_id">
 			<input type="hidden"  name="skp_bulanan_id" class="skp_bulanan_id">
 			<input type="hidden"  name="capaian_id" class="capaian_id">
-			<input type="hidden"  name="capaian_kegiatan_bulanan_id" class="capaian_kegiatan_bulanan_id">
+			<input type="hidden"  name="realisasi_kegiatan_bulanan_id" class="realisasi_kegiatan_bulanan_id">
 			<input type="hidden"  name="satuan" class="satuan">
 			<div class="modal-body">
 					
@@ -53,10 +53,10 @@
 					<hr>
 					<div class="row">
 						
-						<div class="col-md-6 form-group capaian_target" style="margin-top:8px;">	
-							<label class="control-label">Capaian </label>
+						<div class="col-md-6 form-group realisasi" style="margin-top:8px;">	
+							<label class="control-label">Realisasi </label>
 							<div class="input-group">
-								<input type="text" name="capaian_target" id="capaian_target" required class="form-control input-sm" placeholder="capaian target">
+								<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi target">
 								<div class="input-group-addon">
 									<span class="kegiatan_bulanan_satuan"></span>
 								</div>
@@ -96,19 +96,19 @@
 
 <script type="text/javascript">
 
-	$('.modal-capaian_kegiatan_bulanan').on('shown.bs.modal', function(){
+	$('.modal-realisasi_kegiatan_bulanan').on('shown.bs.modal', function(){
 		reset_submitx();
 	});
 
-	$('.modal-capaian_kegiatan_bulanan').on('hidden.bs.modal', function(){
-		$('.capaian_target, .bukti ').removeClass('has-error');
-		$('.modal-capaian_kegiatan_bulanan').find('[name=capaian_target],[name=file_bukti]').val('');
+	$('.modal-realisasi_kegiatan_bulanan').on('hidden.bs.modal', function(){
+		$('.realisasi, .bukti ').removeClass('has-error');
+		$('.modal-realisasi_kegiatan_bulanan').find('[name=realisasi],[name=file_bukti]').val('');
 	});
 
 
 
-	$('.capaian_target').on('click', function(){
-		$('.capaian_target').removeClass('has-error');
+	$('.realisasi').on('click', function(){
+		$('.realisasi').removeClass('has-error');
 	});
 
 	$('.bukti').on('click', function(){
@@ -116,23 +116,23 @@
 	});
 
 	function on_submitx(){
-		$('.modal-capaian_kegiatan_bulanan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('.modal-realisasi_kegiatan_bulanan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
 		$('#submit-save').prop('disabled',true);
 	}
 	function reset_submitx(){
-		$('.modal-capaian_kegiatan_bulanan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
-		$('.modal-capaian_kegiatan_bulanan').find('.button_simpan').addClass('fa-floppy-o');
+		$('.modal-realisasi_kegiatan_bulanan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-realisasi_kegiatan_bulanan').find('.button_simpan').addClass('fa-floppy-o');
 		$('#submit-save').prop('disabled',false);
 	}
 
 	$(document).on('click','#submit-save',function(e){
 
 		on_submitx();
-		var data = $('#capaian_kegiatan_bulanan_form').serialize();
+		var data = $('#realisasi_kegiatan_bulanan_form').serialize();
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_capaian_kegiatan_bulanan") }}',
+			url		: '{{ url("api_resource/simpan_realisasi_kegiatan_bulanan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -149,8 +149,8 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-capaian_kegiatan_bulanan').modal('hide');
-					$('#capaian_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+					$('.modal-realisasi_kegiatan_bulanan').modal('hide');
+					$('#realisasi_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
 					
 					
 					
@@ -173,7 +173,7 @@
 					//alert (index+":"+value);
 					
 					//error message
-					((index == 'capaian_target')?$('.capaian_target').addClass('has-error'):'');
+					((index == 'realisasi')?$('.realisasi').addClass('has-error'):'');
 					((index == 'bukti')?$('.bukti').addClass('has-error'):'');
 					
 					reset_submitx();
@@ -196,11 +196,11 @@
 	$(document).on('click','#submit-update',function(e){
 
 		on_submitx();
-		var data = $('#capaian_kegiatan_bulanan_form').serialize();
+		var data = $('#realisasi_kegiatan_bulanan_form').serialize();
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_capaian_kegiatan_bulanan") }}',
+			url		: '{{ url("api_resource/update_realisasi_kegiatan_bulanan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -217,8 +217,8 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-capaian_kegiatan_bulanan').modal('hide');
-					$('#capaian_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+					$('.modal-realisasi_kegiatan_bulanan').modal('hide');
+					$('#realisasi_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
 					
 				},
 					
@@ -239,7 +239,7 @@
 					//alert (index+":"+value);
 					
 					//error message
-					((index == 'capaian_target')?$('.capaian_target').addClass('has-error'):'');
+					((index == 'realisasi')?$('.realisasi').addClass('has-error'):'');
 					((index == 'bukti')?$('.bukti').addClass('has-error'):'');
 					reset_submitx();
 

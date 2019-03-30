@@ -157,7 +157,23 @@ class Pustaka {
 	return $data;
 	}
 
-	
+	public static function persen($data,$data2){
+
+		if ( $data == 0 | $data2 == 0 ){
+			$hasil = 0 ;
+		}else{
+
+			if ( ($data*100%$data2) == 0 ){
+				$hasil = number_format(($data/$data2)*100 , 0);
+			}else{
+				$hasil = number_format(($data/$data2)*100 , 2);
+			}
+
+		}
+
+		return $hasil. " %";
+
+	}
 
 	public static function tgl_form($data){
 

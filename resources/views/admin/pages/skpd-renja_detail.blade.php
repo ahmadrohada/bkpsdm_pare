@@ -74,6 +74,7 @@ $(document).ready(function() {
 			status_show();
 		}else if ( id == 'rencana_kerja_tab'){
 			//alert(id);
+			$('html, body').animate({scrollTop:0}, 0);
 			RencanaKerjaList();
 		}else if ( id == 'distribusi_kegiatan'){
 			$('html, body').animate({scrollTop:0}, 0);

@@ -401,27 +401,27 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('simpan_capaian_bulanan','API\CapaianBulananAPIController@Store');
 	Route::post('hapus_capaian_bulanan','API\CapaianBulananAPIController@Destroy');
 
-	//===================== CAPAIAN  KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
+	//===================== REALISASI  KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
 	//========================================================================================================//
-	Route::get('capaian_kegiatan_bulanan_2','API\KegiatanCapaianBulananAPIController@CapaianKegiatanBulanan2');
-	Route::get('capaian_kegiatan_bulanan_3','API\KegiatanCapaianBulananAPIController@CapaianKegiatanBulanan3');
-	Route::get('capaian_kegiatan_bulanan_4','API\KegiatanCapaianBulananAPIController@CapaianKegiatanBulanan4');
+	Route::get('realisasi_kegiatan_bulanan_2','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan2');
+	Route::get('realisasi_kegiatan_bulanan_3','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan3');
+	Route::get('realisasi_kegiatan_bulanan_4','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan4');
 
-	Route::get('capaian_kegiatan_bulanan_detail','API\KegiatanCapaianBulananAPIController@CapaianKegiatanBulananDetail');
+	Route::get('realisasi_kegiatan_bulanan_detail','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulananDetail');
 
-	Route::post('hapus_capaian_kegiatan_bulanan','API\KegiatanCapaianBulananAPIController@Destroy');
-	Route::post('simpan_capaian_kegiatan_bulanan','API\KegiatanCapaianBulananAPIController@Store');
-	Route::post('update_capaian_kegiatan_bulanan','API\KegiatanCapaianBulananAPIController@Update');
+	Route::post('hapus_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@Destroy');
+	Route::post('simpan_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@Store');
+	Route::post('update_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@Update');
 
 	//===================== CAPAIAN  RENCANA AKSI======================================//
 	//========================================================================================================//
 	
-	Route::get('capaian_rencana_aksi_detail','API\RencanaAksiAPIController@CapaianRencanaAksiDetail');
+	Route::get('realisasi_rencana_aksi_detail','API\RealisasiRencanaAksiAPIController@RealisasiRencanaAksiDetail');
 
 
-	Route::post('hapus_capaian_rencana_aksi','API\RencanaAksiAPIController@CapaianDestroy');
-	Route::post('simpan_capaian_rencana_aksi','API\RencanaAksiAPIController@CapaianStore');
-	Route::post('update_capaian_rencana_aksi','API\RencanaAksiAPIController@CapaianUpdate');
+	Route::post('hapus_realisasi_rencana_aksi','API\RealisasiRencanaAksiAPIController@Destroy');
+	Route::post('simpan_realisasi_rencana_aksi','API\RealisasiRencanaAksiAPIController@Store');
+	Route::post('update_realisasi_rencana_aksi','API\RealisasiRencanaAksiAPIController@Update');
 
 
 	//========================================================================================================//

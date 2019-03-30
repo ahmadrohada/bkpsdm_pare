@@ -1,18 +1,18 @@
-<div class="modal fade modal-capaian_rencana_aksi" id="" role="dialog"  aria-hidden="true">
+<div class="modal fade modal-realisasi_rencana_aksi" id="" role="dialog"  aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    Capaian Rencana Aksi
+                    Realisasi Rencana Aksi
                 </h4>
             </div>
 
-            <form  id="capaian_rencana_aksi_form" method="POST" action="">
+            <form  id="realisasi_rencana_aksi_form" method="POST" action="">
 			<input type="hidden"  name="rencana_aksi_id" class="rencana_aksi_id">
 			<input type="hidden"  name="skp_bulanan_id" class="skp_bulanan_id">
-			<input type="hidden"  name="capaian_id" class="capaian_id">
-			<input type="hidden"  name="capaian_rencana_aksi_id" class="capaian_rencana_aksi_id">
+			<input type="hidden"  name="capaian_id" class="realisasi_id">
+			<input type="hidden"  name="realisasi_rencana_aksi_id" class="realisasi_rencana_aksi_id">
 			
 			<div class="modal-body">
 					
@@ -49,15 +49,15 @@
 
 							<i class="fa fa-industry"></i> 
 								Target : <span class="kegiatan_bulanan_output" style="margin-right:10px;"></span>
-								Capaian : <span class="capaian_kegiatan_bulanan_output" style="margin-right:10px;"></span>
+								Realisasi : <span class="realisasi_kegiatan_bulanan_output" style="margin-right:10px;"></span>
 						</div>
 					</div>
 					<hr>
 					<div class="row">
 						
-						<div class="col-md-3 form-group capaian_target" style="margin-top:8px;">	
-							<label class="control-label">Capaian </label>
-							<input type="text" name="capaian_target" id="capaian_target" required class="form-control input-sm" placeholder="capaian target">
+						<div class="col-md-3 form-group realisasi" style="margin-top:8px;">	
+							<label class="control-label">Realisasi </label>
+							<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi target">
 							
 							<input type="hidden"  name="alasan_tidak_tercapai" class="alasan_tidak_tercapai">
 						</div>
@@ -97,19 +97,19 @@
 
 <script type="text/javascript">
 
-	$('.modal-capaian_rencana_aksi').on('shown.bs.modal', function(){
+	$('.modal-realisasi_rencana_aksi').on('shown.bs.modal', function(){
 		reset_submitx();
 	});
 
-	$('.modal-capaian_rencana_aksi').on('hidden.bs.modal', function(){
-		$('.capaian_target,.satuan, .bukti ').removeClass('has-error');
-		$('.modal-capaian_rencana_aksi').find('[name=capaian_target],[name=file_bukti]').val('');
+	$('.modal-realisasi_rencana_aksi').on('hidden.bs.modal', function(){
+		$('.realisasi,.satuan, .bukti ').removeClass('has-error');
+		$('.modal-realisasi_rencana_aksi').find('[name=realisasi],[name=file_bukti]').val('');
 	});
 
 
 
-	$('.capaian_target').on('click', function(){
-		$('.capaian_target').removeClass('has-error');
+	$('.realisasi').on('click', function(){
+		$('.realisasi').removeClass('has-error');
 	});
 
 	$('.satuan').on('click', function(){
@@ -121,23 +121,23 @@
 	});
 
 	function on_submitx(){
-		$('.modal-capaian_rencana_aksi').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('.modal-realisasi_rencana_aksi').find('.button_simpan').addClass('fa-spinner faa-spin animated');
 		$('#submit-save').prop('disabled',true);
 	}
 	function reset_submitx(){
-		$('.modal-capaian_rencana_aksi').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
-		$('.modal-capaian_rencana_aksi').find('.button_simpan').addClass('fa-floppy-o');
+		$('.modal-realisasi_rencana_aksi').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-realisasi_rencana_aksi').find('.button_simpan').addClass('fa-floppy-o');
 		$('#submit-save').prop('disabled',false);
 	}
 
 	$(document).on('click','#submit-save',function(e){
 
 		on_submitx();
-		var data = $('#capaian_rencana_aksi_form').serialize();
+		var data = $('#realisasi_rencana_aksi_form').serialize();
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_capaian_rencana_aksi") }}',
+			url		: '{{ url("api_resource/simpan_realisasi_rencana_aksi") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -154,8 +154,8 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-capaian_rencana_aksi').modal('hide');
-					$('#capaian_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+					$('.modal-realisasi_rencana_aksi').modal('hide');
+					$('#realisasi_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
 					
 					
 					
@@ -178,7 +178,7 @@
 					//alert (index+":"+value);
 					
 					//error message
-					((index == 'capaian_target')?$('.capaian_target').addClass('has-error'):'');
+					((index == 'realisasi')?$('.realisasi').addClass('has-error'):'');
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					((index == 'bukti')?$('.bukti').addClass('has-error'):'');
 					
@@ -202,11 +202,11 @@
 	$(document).on('click','#submit-update',function(e){
 
 		on_submitx();
-		var data = $('#capaian_rencana_aksi_form').serialize();
+		var data = $('#realisasi_rencana_aksi_form').serialize();
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_capaian_rencana_aksi") }}',
+			url		: '{{ url("api_resource/update_realisasi_rencana_aksi") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -223,8 +223,8 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-capaian_rencana_aksi').modal('hide');
-					$('#capaian_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+					$('.modal-realisasi_rencana_aksi').modal('hide');
+					$('#realisasi_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
 					
 				},
 					
@@ -245,7 +245,7 @@
 					//alert (index+":"+value);
 					
 					//error message
-					((index == 'capaian_target')?$('.capaian_target').addClass('has-error'):'');
+					((index == 'realisasi')?$('.realisasi').addClass('has-error'):'');
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					((index == 'bukti')?$('.bukti').addClass('has-error'):'');
 					reset_submitx();
