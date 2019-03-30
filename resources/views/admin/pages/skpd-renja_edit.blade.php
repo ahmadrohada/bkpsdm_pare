@@ -70,13 +70,14 @@ $(document).ready(function() {
 		if ( id == 'status'){
 			status_show();
 		}else if ( id == 'rencana_kerja_tab'){
+			$('html, body').animate({scrollTop:0}, 0);
 			renja_list_kegiatan_tree();
 		}else if ( id == 'distribusi_kegiatan'){
 			$('html, body').animate({scrollTop:0}, 0);
 			initTreeDistribusiKegiatan();
 		}
 
-		$('html, body').animate({scrollTop:0}, 0);
+		
 	});
 
 

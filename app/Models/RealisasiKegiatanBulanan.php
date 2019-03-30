@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class KegiatanCapaianBulanan extends Model
+class RealisasiKegiatanBulanan extends Model
 {
-    protected $table = 'capaian_bulanan_kegiatan';
+    protected $table = 'realisasi_kegiatan_bulanan';
 
     //tes
 

@@ -60,6 +60,7 @@ class StrukturOrganisasiAPIController extends Controller {
 										'pegawai.nama',
 										'pegawai.gelardpn',
 										'pegawai.gelarblk',
+										'pegawai.jenis_kelamin AS jk',
 										'eselon.eselon',
 										'c.jenis_jabatan'
 										//,
@@ -92,7 +93,13 @@ class StrukturOrganisasiAPIController extends Controller {
 			if ( $x->foto != null  ){
 				$sub_data['image']   = 'data:image/jpeg;base64,'.base64_encode( $x->foto );
 			}else{
-				$sub_data['image']   = asset('assets/images/form/sample.jpg');
+
+				if ( $x->jk == 'Perempuan'){
+					$sub_data['image']   = asset('assets/images/form/female_icon.png');
+				}else{
+					$sub_data['image']   = asset('assets/images/form/male_icon.png');
+				}
+				
 			}
 			$sub_data['id']					= $x->id;
 			$sub_data['parent']				= $parent;
