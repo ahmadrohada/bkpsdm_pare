@@ -21,16 +21,20 @@
 					<li class="list-group-item">
 						Capaian Kinerja Bulanan <a class="pull-right st_capaian_kinerja_bulanan" >-</a>
 					</li>
-					<li class="list-group-item st_status_approve_div hidden">
+					<li class="list-group-item">
 						Status Approve <a class="pull-right st_status_approve" >-</a>
 					</li>
 					<li class="list-group-item st_alasan_penolakan_div hidden">
 						Alasan Penolakan <a class="pull-right st_alasan_penolakan" >-</a>
 					</li>
+
+					<li class="list-group-item hidden" >
+						Capaian Kode Etik <a class="pull-right st_capaian_kode_etik" >-</a>
+					</li>
 					
 				</ul>
-				<a href="#" class="btn btn-primary btn-block kirim_capaian "><b>Kirim ke Atasan <i class="send_icon"></i></b></a>
-				
+				<!-- <a href="#" class="btn btn-primary btn-block kirim_capaian "><b>Kirim ke Atasan <i class="send_icon"></i></b></a>
+				 -->
 
 
 			</div>
@@ -97,7 +101,12 @@
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
-					
+					//alert(data);
+					if (data['button_kirim'] == 1 ){
+						$('.close_capaian_bulanan').removeAttr('disabled');
+					}else{
+						$('.close_capaian_bulanan').attr('disabled','disabled');
+					}
 
 					$('.st_created_at').html(data['tgl_dibuat']);
 					$('.st_pejabat_penilai').html(data['p_nama']);
@@ -107,16 +116,10 @@
 					$('.st_alasan_penolakan').html(data['alasan_penolakan']);
 
 
-					if ( data['send_to-atasan'] == 1 ){
-						
-						$('.st_status_approve_div').removeClass('hidden');
-					} 
-
-					if ( data['alasan_penolakan'] != ""){
+					if (data['alasan_penolakan'] != ""){
 						
 						$('.st_alasan_penolakan_div').removeClass('hidden');
 					} 
-					
 					
 
 				},

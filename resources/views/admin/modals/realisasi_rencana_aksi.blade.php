@@ -13,6 +13,8 @@
 			<input type="hidden"  name="skp_bulanan_id" class="skp_bulanan_id">
 			<input type="hidden"  name="capaian_id" class="realisasi_id">
 			<input type="hidden"  name="realisasi_rencana_aksi_id" class="realisasi_rencana_aksi_id">
+			<input type="hidden"  name="satuan" class="satuan">
+
 			
 			<div class="modal-body">
 					
@@ -54,16 +56,17 @@
 					</div>
 					<hr>
 					<div class="row">
-						
-						<div class="col-md-3 form-group realisasi" style="margin-top:8px;">	
+
+						<div class="col-md-6 form-group realisasi" style="margin-top:8px;">	
 							<label class="control-label">Realisasi </label>
-							<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi target">
-							
+							<div class="input-group">
+								<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi">
+								<div class="input-group-addon">
+									<span class="kegiatan_tahunan_satuan"></span>
+								</div>
+							</div>
+
 							<input type="hidden"  name="alasan_tidak_tercapai" class="alasan_tidak_tercapai">
-						</div>
-						<div class="col-md-3 form-group satuan" style="margin-top:8px;">	
-							<label class="control-label">Satuan </label>
-							<input type="text" name="satuan" id="satuan" required class="form-control input-sm" placeholder="satuan">
 						</div>
 
 						<div class="col-md-6 form-group bukti" style="margin-top:8px;">

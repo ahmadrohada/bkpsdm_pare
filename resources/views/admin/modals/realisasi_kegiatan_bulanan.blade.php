@@ -56,7 +56,7 @@
 						<div class="col-md-6 form-group realisasi" style="margin-top:8px;">	
 							<label class="control-label">Realisasi </label>
 							<div class="input-group">
-								<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi target">
+								<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi">
 								<div class="input-group-addon">
 									<span class="kegiatan_bulanan_satuan"></span>
 								</div>

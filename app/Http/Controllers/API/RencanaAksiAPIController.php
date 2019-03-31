@@ -223,11 +223,11 @@ class RencanaAksiAPIController extends Controller {
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
                                 'kegiatan_bulanan.target AS target_pelaksana',
                                 'kegiatan_bulanan.satuan AS satuan_pelaksana',
-                                'kegiatan_tahunan.target',
-                                'kegiatan_tahunan.satuan',
-                                'realisasi_kegiatan_bulanan.id AS capaian_kegiatan_bulanan_id',
+                                'kegiatan_tahunan.target AS target_kegiatan_tahunan',
+                                'kegiatan_tahunan.satuan AS satuan_kegiatan_tahunan',
+                                'realisasi_kegiatan_bulanan.id AS realisasi_kegiatan_bulanan_id',
                                 'realisasi_kegiatan_bulanan.realisasi AS realisasi',
-                                'realisasi_kegiatan_bulanan.satuan AS capaian_satuan',
+                                'realisasi_kegiatan_bulanan.satuan AS realisasi_satuan',
                                 'realisasi_kegiatan_bulanan.bukti',
                                 'realisasi_kegiatan_bulanan.alasan_tidak_tercapai',
                                 'realisasi_rencana_aksi.id AS realisasi_rencana_aksi_id'
@@ -266,8 +266,8 @@ class RencanaAksiAPIController extends Controller {
             'kegiatan_bulanan_satuan'       => $x->satuan_pelaksana,
             'kegiatan_bulanan_output'       => $x->target_pelaksana." ".$x->satuan_pelaksana,
             'realisasi'                     => $x->realisasi,
-            'capaian_satuan'                => $x->capaian_satuan,
-            'capaian_output'                => $x->realisasi." ".$x->capaian_satuan,
+            'realisasi_satuan'              => $x->realisasi_satuan,
+            'realisasi_output'              => $x->realisasi." ".$x->realisasi_satuan,
 
 
 

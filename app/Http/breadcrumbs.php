@@ -225,6 +225,13 @@ Breadcrumbs::register('approval_request-renja', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_renja'), '', ['icon' => Lang::get('sidebar-nav.link_icon_renja')]);
 });
 
+
+Breadcrumbs::register('approval_request-capaian_bulanan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('approval_request');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_bulanan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_bulanan')]);
+});
+
 Breadcrumbs::register('approval_request-skp_tahunan', function($breadcrumbs)
 {
     $breadcrumbs->parent('approval_request');
