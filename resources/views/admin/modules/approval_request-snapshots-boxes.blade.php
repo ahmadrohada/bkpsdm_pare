@@ -27,13 +27,13 @@
 			</div>
 			
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-purple pengukuran_bulanan" style="cursor:pointer;">
+				<div class="small-box bg-orange capaian_bulanan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							*
 						</h3>
 						<p>
-							<strong>Pengukuran Bulanan</strong>
+							<strong>Capaian Bulanan</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -42,14 +42,14 @@
 				</div>
 			</div>
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-green pengukuran_tahunan" style="cursor:pointer;" >
+				<div class="small-box bg-green capaian_tahunan" style="cursor:pointer;" >
 					<div class="inner">
 						<h3>
 							*
 							
 						</h3>
 						<p>
-							<strong>Pengukuran Tahunan</strong>
+							<strong>Capaian Tahunan</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -70,6 +70,10 @@
    
 	$(".renja").click(function(){
 		window.location.assign("renja_approval-request");
+	});
+	
+	$(".capaian_bulanan").click(function(){
+		window.location.assign("capaian_bulanan_approval-request");
     });
 
 	

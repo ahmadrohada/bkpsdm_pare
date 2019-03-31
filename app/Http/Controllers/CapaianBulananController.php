@@ -41,15 +41,77 @@ Use Alert;
 class CapaianBulananController extends Controller {
 
 
+    public function CapaianBulananApprovalRequestList(Request $request)
+	{
+        
+        $user      = \Auth::user();
+        $pegawai   = $user->pegawai;       
+        
+
+        return view('admin.pages.approval_request-capaian_bulanan', [
+               'pegawai' 		        => $pegawai,
+               'nama_skpd'     	        => 'x',
+               'h_box'                  => 'box-warning',
+               
+           ]
+        );   
+
+    }
+
+    public function CapaianBulananApprovalRequest(Request $request)
+	{
+        $capaian_bulanan    = CapaianBulanan::WHERE('id', $request->capaian_bulanan_id)->first();
+        
+        if ( $capaian_bulanan->status_approve != '0' ){
+            return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'telah diterima/ditolak');
+        }else{
+            return view('admin.pages.personal-capaian_bulanan_approvement', ['capaian'=> $capaian_bulanan]);
+        }
+        
+
+    }
+
+
+
     public function PersonalCapaianBulananEdit(Request $request)
 	{
         
         $capaian_bulanan    = CapaianBulanan::WHERE('id', $request->capaian_bulanan_id)->first();
 
-        if ( $capaian_bulanan->status != '0' ){
-            return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'SKP close ');
+        if ( $capaian_bulanan->send_to_atasan != '0' ){
+            return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'terkirim');
         }else{
             return view('admin.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
+        }
+
+          
+
+    }
+
+    public function PersonalCapaianBulananRalat(Request $request)
+	{
+        
+        $capaian_bulanan    = CapaianBulanan::WHERE('id', $request->capaian_bulanan_id)->first();
+
+        if ( $capaian_bulanan->status_approve != '2' ){
+            return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'terkirim');
+        }else{
+            return view('admin.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
+        }
+
+          
+
+    }
+
+    public function PersonalCapaianBulananDetail(Request $request)
+	{
+        
+        $capaian_bulanan    = CapaianBulanan::WHERE('id', $request->capaian_bulanan_id)->first();
+
+        if ( $capaian_bulanan->send_to_atasan == '0' ){
+            return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id.'/edit')->with('status', 'terkirim');
+        }else{
+            return view('admin.pages.personal-capaian_bulanan_detail', ['capaian'=> $capaian_bulanan]);  
         }
 
           

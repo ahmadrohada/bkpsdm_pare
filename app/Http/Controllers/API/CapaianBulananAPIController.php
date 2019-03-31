@@ -127,8 +127,11 @@ class CapaianBulananAPIController extends Controller {
                                 'skp_bulanan.tgl_mulai',
                                 'skp_bulanan.tgl_selesai',
                                 'skp_bulanan.u_jabatan_id',
-                                'skp_bulanan.status',
-                                'capaian_bulanan.id AS capaian_id'
+                                'skp_bulanan.status AS skp_bulanan_status',
+                                'capaian_bulanan.id AS capaian_id',
+                                'capaian_bulanan.status_approve AS capaian_status_approve',
+                                'capaian_bulanan.send_to_atasan AS capaian_send_to_atasan'
+
             
                          )
                        // ->orderBy('bulan','ASC')
@@ -279,7 +282,7 @@ class CapaianBulananAPIController extends Controller {
        
         
         $button_kirim = 0 ;
-
+        $capaian_id = $request->capaian_bulanan_id;
 
         $capaian_bulanan = CapaianBulanan::
                             SELECT(
@@ -287,27 +290,75 @@ class CapaianBulananAPIController extends Controller {
                                 'capaian_bulanan.skp_bulanan_id',
                                 'capaian_bulanan.created_at',
                                 'capaian_bulanan.status_approve',
+                                'capaian_bulanan.send_to_atasan',
+                                'capaian_bulanan.alasan_penolakan',
                                 'capaian_bulanan.p_jabatan_id',
                                 'capaian_bulanan.u_jabatan_id'
                             )
-                            ->where('capaian_bulanan.id','=', $request->capaian_bulanan_id )->first();;
+                            ->where('capaian_bulanan.id','=', $capaian_id )->first();;
     
         $jenis_jabatan = $capaian_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
         $bulan = $capaian_bulanan->SKPBulanan->bulan;
 
         //jm kegiatan pelaksana
         if ( $jenis_jabatan == 4 ){
-           /*  $jm_kegiatan_bulanan = KegiatanSKPBulanan::SELECT('id')
-            ->WHERE('skp_bulanan_id', $capaian_bulanan->skp_bulanan_id )
-            ->count(); */
+            
+            //hitung capaian kinerja bulanan
+            $xdata = KegiatanSKPBulanan::
+                                        leftjoin('db_pare_2018.realisasi_kegiatan_bulanan AS realisasi', function($join) use($capaian_id){
+                                            $join   ->on('realisasi.kegiatan_bulanan_id','=','skp_bulanan_kegiatan.id');
+                                            $join   ->where('realisasi.capaian_id','=',$capaian_id);
+                                        })
+                                        ->SELECT('skp_bulanan_kegiatan.target','realisasi.realisasi')
+                                        ->WHERE('skp_bulanan_kegiatan.skp_bulanan_id','=',$capaian_bulanan->skp_bulanan_id)
+                                        ->get();
+            $capaian_kinerja_bulanan = 0 ;
+            $jm_kegiatan_bulanan = 0 ;
 
-            $jm_kegiatan_bulanan = KegiatanSKPBulanan::WHERE('skp_bulanan_id','=',$capaian_bulanan->skp_bulanan_id)->count();
+            foreach ($xdata as $data) {
+                $jm_kegiatan_bulanan ++;
+
+                $capaian_kinerja_bulanan += Pustaka::persen($data->realisasi,$data->target);
+
+            }
+
+            $capaian_kinerja_bulanan =  Pustaka::persen2($capaian_kinerja_bulanan,$jm_kegiatan_bulanan);
+       
+       
+       
         }else if ( $jenis_jabatan == 3){
             //cari bawahan
             $child = Jabatan::SELECT('id')->WHERE('parent_id',$capaian_bulanan->PejabatYangDinilai->id_jabatan )->get()->toArray(); 
-                    
-            //jm kegiatan kasubid   
-            $jm_kegiatan_bulanan = RencanaAksi::WHEREIN('jabatan_id',$child)->WHERE('waktu_pelaksanaan', $bulan)->count();
+           
+            //hitung capaian kinerja bulanan
+            $xdata = RencanaAksi::
+                        leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
+                            $join   ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan.id');
+                        })
+                        ->leftjoin('db_pare_2018.realisasi_rencana_aksi AS realisasi', function($join) use($capaian_id){
+                            $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                            $join   ->where('realisasi.capaian_id','=',$capaian_id);
+                        })
+                        ->SELECT('kegiatan.target','realisasi.realisasi')
+                        ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child)
+                        ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan', $bulan)
+                        ->get();
+
+            $capaian_kinerja_bulanan = 0 ;
+            $jm_kegiatan_bulanan = 0 ;
+
+            foreach ($xdata as $data) {
+            $jm_kegiatan_bulanan ++;
+
+            $capaian_kinerja_bulanan += Pustaka::persen($data->realisasi,$data->target);
+
+            }
+
+            $capaian_kinerja_bulanan =  Pustaka::persen2($capaian_kinerja_bulanan,$jm_kegiatan_bulanan);
+        
+        
+        
+        
         }else if ( $jenis_jabatan == 2){
             //cari bawahan bawahan nya
 
@@ -320,14 +371,46 @@ class CapaianBulananAPIController extends Controller {
                         ->get()
                         ->toArray();  
             //jm kegiatan kabid   
-            $jm_kegiatan_bulanan = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id)->WHERE('waktu_pelaksanaan', $bulan)->count();
+            //$jm_kegiatan_bulanan = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id)->WHERE('waktu_pelaksanaan', $bulan)->count();
+       
+            //hitung capaian kinerja bulanan
+            $xdata = RencanaAksi::
+                        leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
+                            $join   ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan.id');
+                        })
+                        ->leftjoin('db_pare_2018.realisasi_rencana_aksi AS realisasi', function($join) use($capaian_id){
+                            $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                            $join   ->where('realisasi.capaian_id','=',$capaian_id);
+                        })
+                        ->SELECT('kegiatan.target','realisasi.realisasi')
+                        ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id)
+                        ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan', $bulan)
+                        ->get();
+
+            $capaian_kinerja_bulanan = 0 ;
+            $jm_kegiatan_bulanan = 0 ;
+
+            foreach ($xdata as $data) {
+            $jm_kegiatan_bulanan ++;
+
+            $capaian_kinerja_bulanan += Pustaka::persen($data->realisasi,$data->target);
+
+            }
+
+            $capaian_kinerja_bulanan =  Pustaka::persen2($capaian_kinerja_bulanan,$jm_kegiatan_bulanan);
+        
+        
+        
+       
+       
         }else{
             $jm_kegiatan_bulanan = 000 ;
         }
                         
 
-        //ATASAN
-        $p_detail = HistoryJabatan::WHERE('id',$capaian_bulanan->p_jabatan_id)->first();
+      
+        $p_detail   = $capaian_bulanan->PejabatPenilai;
+        $u_detail   = $capaian_bulanan->PejabatYangDinilai;
 
 
        /*  //apakah skp tahnan ini meiliki kegiatan tahunan dan setiap kegiatan minimal memiliki 1 rencana aksi
@@ -391,22 +474,33 @@ class CapaianBulananAPIController extends Controller {
         }else{
             $button_kirim = 0 ;
         }
-        
-         //STATUS APPROVE
-         if ( ($capaian_bulanan->status_approve) == 1 ){
-            $persetujuan_atasan = 'ok';
+        */
+
+        //STATUS APPROVE
+        if ( ($capaian_bulanan->status_approve) == 1 ){
+            $persetujuan_atasan = 'disetujui';
+            $alasan_penolakan   = "";
+        }else if ( ($capaian_bulanan->status_approve) == 2 ){
+            $persetujuan_atasan = '<span class="text-danger">ditolak</span>';
+            $alasan_penolakan   = $capaian_bulanan->alasan_penolakan;
         }else{
-            $persetujuan_atasan = '-';
-        } */
+            $persetujuan_atasan = 'Menunggu Persetujuan';
+            $alasan_penolakan   = "";
+        }
 
 
         $response = array(
                 
-                'jm_kegiatan_bulanan'   => $jm_kegiatan_bulanan,
-                'skp_bulanan_id'        => $capaian_bulanan->skp_bulanan_id,
-                'bulan'                 => $bulan,
-                'tgl_dibuat'            => Pustaka::balik2($capaian_bulanan->created_at),
-                'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
+                'jm_kegiatan_bulanan'       => $jm_kegiatan_bulanan,
+                'capaian_kinerja_bulanan'   => $capaian_kinerja_bulanan,
+                'status_approve'            => $persetujuan_atasan,
+                'send_to_atasan'            => $capaian_bulanan->send_to_atasan,
+                'alasan_penolakan'          => $alasan_penolakan,
+                'skp_bulanan_id'            => $capaian_bulanan->skp_bulanan_id,
+                'bulan'                     => $bulan,
+                'tgl_dibuat'                => Pustaka::balik2($capaian_bulanan->created_at),
+                'p_nama'                    => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
+                'u_nama'                    => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
 
 
         );
@@ -563,6 +657,173 @@ class CapaianBulananAPIController extends Controller {
 
     }
 
+    public function SendToAtasan(Request $request)
+    {
+        $messages = [
+                'capaian_bulanan_id.required'   => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'capaian_bulanan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $capaian    = CapaianBulanan::find(Input::get('capaian_bulanan_id'));
+        if (is_null($capaian)) {
+            return $this->sendError('ID capaian bulanan tidak ditemukan.');
+        }
+
+
+        $capaian->send_to_atasan    = '1';
+        $capaian->date_of_send      = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+        $capaian->status_approve    = '0';
+
+        if ( $capaian->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+    }
+
+    public function TolakByAtasan(Request $request)
+    {
+        $messages = [
+                'capaian_bulanan_id.required'   => 'Harus diisi',
+                'alasan.required'               => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'capaian_bulanan_id'   => 'required',
+                            'alasan'               => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $capaian    = CapaianBulanan::find(Input::get('capaian_bulanan_id'));
+        if (is_null($capaian)) {
+            return $this->sendError('ID capaian bulanan tidak ditemukan.');
+        }
+
+
+        //$capaian->send_to_atasan    = '1';
+        $capaian->date_of_approve     = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+        $capaian->status_approve      = '2';
+        $capaian->alasan_penolakan    = Input::get('alasan');
+
+        if ( $capaian->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+    }
+
+    public function TerimaByAtasan(Request $request)
+    {
+        $messages = [
+                'capaian_bulanan_id.required'   => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'capaian_bulanan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $capaian    = CapaianBulanan::find(Input::get('capaian_bulanan_id'));
+        if (is_null($capaian)) {
+            return $this->sendError('ID capaian bulanan tidak ditemukan.');
+        }
+
+
+        $capaian->date_of_approve     = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+        $capaian->status_approve      = '1';
+        $capaian->alasan_penolakan    = "";
+
+        if ( $capaian->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+    }
+
+    public function ApprovalRequestList(Request $request)
+    {
+        $pegawai_id = $request->pegawai_id;
+
+        $jabatan_id = HistoryJabatan::SELECT('id')->WHERE('id_pegawai','=',$pegawai_id)->get();
+       
+        $dt = CapaianBulanan::
+                    WHEREIN('capaian_bulanan.p_jabatan_id',$jabatan_id)
+                    ->WHERE('capaian_bulanan.send_to_atasan','=','1')
+                    ->SELECT( 
+                             'capaian_bulanan.id AS capaian_bulanan_id',
+                             'capaian_bulanan.u_nama',
+                             'capaian_bulanan.skp_bulanan_id',
+                             'capaian_bulanan.u_jabatan_id',
+                             'capaian_bulanan.status_approve'
+                            );
+
+
+    
+        $datatables = Datatables::of($dt)
+        ->addColumn('periode', function ($x) {
+            return "";
+        })->addColumn('nama', function ($x) {
+            return $x->u_nama;
+        })->addColumn('jabatan', function ($x) {
+            return Pustaka::capital_string($x->PejabatYangDinilai->Jabatan->skpd);
+        })->addColumn('capaian_bulanan_id', function ($x) {
+            return $x->capaian_bulanan_id;
+        });
+
+        
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
 
     public function Destroy(Request $request)
     {

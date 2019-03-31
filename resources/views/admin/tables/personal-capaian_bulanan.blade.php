@@ -1,7 +1,7 @@
 <div class="box {{ $h_box }}">
     <div class="box-header with-border">
         <h1 class="box-title">
-            Data SKP Bulanan
+            Data Capaian Bulanan
         </h1>
 
         <div class="box-tools pull-right">
@@ -53,7 +53,7 @@
 				
 
 				columns	:[
-								{ data: 'skp_bulanan_id' , orderable: true,searchable:false,
+								{ data: 'capaian_id' , orderable: true,searchable:false,
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
@@ -67,11 +67,27 @@
 								{ data: "capaian" , orderable: false,searchable:false,width:"120px",
 										"render": function ( data, type, row ) {
 										if (row.remaining_time >= 0 ){ 
-											if (row.capaian >= 1 ){
-												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_bulanan"  data-id="'+row.capaian+'"><i class="fa fa-pencil" ></i></a></span>'+
-														'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs lihat_capaian_bulanan"  data-id="'+row.capaian+'"><i class="fa fa-eye" ></i></a></span>'+
-														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_bulanan"  data-id="'+row.capaian+'" data-label="'+row.periode+' [ '+row.bulan+' ]"><i class="fa fa-close " ></i></a></span>';
+											if (row.capaian >= 1 ){ 
 
+
+												if (row.capaian_send_to_atasan == 1 ){
+													if (row.capaian_status_approve == 2){
+														//ditolak
+														return  '<span  data-toggle="tooltip" title="Ralat" style="margin:2px;" ><a class="btn btn-warning btn-xs ralat_capaian_bulanan"  data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_bulanan"  data-id="'+row.capaian_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-close " ></i></a></span>';
+													}else{
+														//diterima
+														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_bulanan"  data-id="'+row.capaian_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-close " ></i></a></span>';
+													}
+												}else{
+													//blm dikirim
+													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_bulanan" data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_bulanan" data-id="'+row.capaian_id+'"><i class="fa fa-close " ></i></a></span>';
+												}
 											}else{
 												return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_bulanan"  data-skp_bulanan_id="'+row.skp_bulanan_id+'" style="width:75px;">Capaian</a></span>';
 											}
@@ -94,11 +110,17 @@
 
 	$(document).on('click','.edit_capaian_bulanan',function(e){
 		var capaian_id = $(this).data('id') ;
-		//alert(skp_tahunan_id);
-
-
-
 		window.location.assign("capaian-bulanan/"+capaian_id+"/edit");
+	});
+
+	$(document).on('click','.ralat_capaian_bulanan',function(e){
+		var capaian_id = $(this).data('id') ;
+		window.location.assign("capaian-bulanan/"+capaian_id+"/ralat");
+	});
+
+	$(document).on('click','.lihat_capaian_bulanan',function(e){
+		var capaian_id = $(this).data('id') ;
+		window.location.assign("capaian-bulanan/"+capaian_id);
 	});
 	
 

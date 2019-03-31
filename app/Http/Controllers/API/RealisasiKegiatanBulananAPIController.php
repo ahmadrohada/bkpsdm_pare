@@ -231,9 +231,9 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                 'kegiatan_tahunan.target',
                                 'kegiatan_tahunan.satuan AS satuan_target',
 
-                                'realisasi_kegiatan_bulanan.id AS capaian_kegiatan_bulanan_id',
+                                'realisasi_kegiatan_bulanan.id AS realisasi_kegiatan_bulanan_id',
                                 'realisasi_kegiatan_bulanan.realisasi AS realisasi',
-                                'realisasi_kegiatan_bulanan.satuan AS capaian_satuan',
+                                'realisasi_kegiatan_bulanan.satuan AS realisasi_satuan',
                                 'realisasi_kegiatan_bulanan.bukti',
                                 'realisasi_kegiatan_bulanan.alasan_tidak_tercapai',
 

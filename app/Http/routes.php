@@ -392,12 +392,20 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('capaian_bulanan_status_pengisian','API\CapaianBulananAPIController@CapaianBulananStatusPengisian');
 
 
+	Route::get('approval_request_capaian_bulanan_list','API\CapaianBulananAPIController@ApprovalRequestList');
 	
 	Route::get('capaian_bulanan_detail','API\CapaianBulananAPIController@CapaianBulananDetail');
 	Route::post('set_pejabat_penilai_capaian_bulanan','API\CapaianBulananAPIController@PejabatPenilaiUpdate');
 
-
+	
 	Route::get('create_capaian_bulanan_confirm','API\CapaianBulananAPIController@CreateConfirm');
+
+	Route::post('kirim_capaian_bulanan','API\CapaianBulananAPIController@SendToAtasan');
+
+	Route::post('tolak_capaian_bulanan','API\CapaianBulananAPIController@TolakByAtasan');
+
+	Route::post('terima_capaian_bulanan','API\CapaianBulananAPIController@TerimaByAtasan');
+
 	Route::post('simpan_capaian_bulanan','API\CapaianBulananAPIController@Store');
 	Route::post('hapus_capaian_bulanan','API\CapaianBulananAPIController@Destroy');
 
@@ -890,6 +898,16 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'SKPTahunanController@SKPTahunanApproval'
 	]);
 
+	Route::get('capaian_bulanan_approval-request', [
+		'as' 			=> '',
+		'uses' 			=> 'CapaianBulananController@CapaianBulananApprovalRequestList'
+	]);
+
+	Route::get('capaian_bulanan_approval-request/{capaian_bulanan_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'CapaianBulananController@CapaianBulananApprovalRequest'
+	]); 
+
 	//=========================================================================================//
 	//================================= SKP TAHUNAN      =====================================//
 	//=========================================================================================//
@@ -915,6 +933,16 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	Route::get('capaian-bulanan/{capaian_bulanan_id}/edit',[
 		'as' 			=> '',
 		'uses' 			=> 'CapaianBulananController@PersonalCapaianBulananEdit'
+	]);
+
+	Route::get('capaian-bulanan/{capaian_bulanan_id}/ralat',[
+		'as' 			=> '',
+		'uses' 			=> 'CapaianBulananController@PersonalCapaianBulananRalat'
+	]);
+
+	Route::get('capaian-bulanan/{capaian_bulanan_id}',[
+		'as' 			=> '',
+		'uses' 			=> 'CapaianBulananController@PersonalCapaianBulananDetail'
 	]);
 
 
