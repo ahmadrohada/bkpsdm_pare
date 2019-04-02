@@ -65,7 +65,7 @@
 						<tr>
 							<th>No</th>
 							<th>KEGIATAN BULANAN</th>
-							<th>TARGET OUTPUT</th>
+							<th>TARGET</th>
 							<th><i class="fa fa-cog"></i></th>
 						</tr>
 					</thead>
@@ -254,12 +254,12 @@
 											}
 										}
 									},
-									{ data: "output", name:"output", width:"140px",
+									{ data: "target", name:"target", width:"140px",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>-</p>";
+												return "<span class='text-danger'>"+row.target+"</span>";
 											}else{
-												return row.target + ' '+ row.satuan;
+												return row.target;
 											}
 										}
 									},
@@ -268,16 +268,14 @@
 
 											if ( row.status_skp != 1 ){
 												if ( (row.kegiatan_bulanan_id) >= 1 ){
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'" data-label="'+row.kegiatan_bulanan_label+'" ><i class="fa fa-close " ></i></a></span>';
+													return  '<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'" data-label="'+row.kegiatan_bulanan_label+'" ><i class="fa fa-close " ></i></a></span>';
 												}else{
-													return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_kegiatan_bulanan"  data-id="'+row.rencana_aksi_id+'" data-skp_bulanan_id="'+row.skp_bulanan_id+'"><i class="fa fa-plus" ></i></a></span>'+
-															'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
+													return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_kegiatan_bulanan"  data-id="'+row.rencana_aksi_id+'" data-skp_bulanan_id="'+row.skp_bulanan_id+'"><i class="fa fa-plus" ></i></a></span>';
+															
 												
 												}
 											}else{ //SUDAH ADA CAPAIAN NYA
-												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-plus" ></i></a></span>'+
-														'<span style="margin:2px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-close " ></i></a></span>';
+												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-close " ></i></a></span>';
 												
 											}		
 										
@@ -485,6 +483,8 @@
 					$('.modal-kegiatan_bulanan').find('[name=rencana_aksi_id]').val(data['id']);
 					$('.modal-kegiatan_bulanan').find('[name=skp_bulanan_id]').val(skp_bulanan_id);
 					$('.modal-kegiatan_bulanan').find('[name=rencana_aksi_label]').val(data['label']);
+					$('.modal-kegiatan_bulanan').find('[name=target]').val(data['target_rencana_aksi']);
+					$('.modal-kegiatan_bulanan').find('[name=satuan]').val(data['satuan_target_rencana_aksi']);
 					$('.modal-kegiatan_bulanan').find('.rencana_aksi_label').html(data['label']);
 
 					$('.modal-kegiatan_bulanan').find('.kegiatan_tahunan_label').html(data['kegiatan_tahunan_label']);

@@ -13,6 +13,11 @@ class SKPTahunan extends Model
     {
         return $this->hasOne('App\Models\Renja','id','renja_id');
     }
+
+    public function KegiatanTahunan()
+    {
+        return $this->hasMany('App\Models\KegiatanSKPTahunan','skp_tahunan_id')->select('id');
+    }
     
     public function PejabatYangDinilai()
     {

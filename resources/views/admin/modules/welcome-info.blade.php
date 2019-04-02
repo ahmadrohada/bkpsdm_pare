@@ -23,22 +23,22 @@
         <div id="myCarousel" class="carousel slide"> <!-- slider -->
 			<div class="carousel-inner">
 							<div class="active item"> <!-- item 2 -->
-								<img src="https://staging.web.bkpsdm.karawangkab.go.id/wp-content/uploads/2019/01/WhatsApp-Image-2019-01-25-at-1.14.36-PM.jpeg" class="img-slide" alt="">
+								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/01/WhatsApp-Image-2019-01-25-at-1.14.36-PM.jpeg" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
-								<img src="https://staging.web.bkpsdm.karawangkab.go.id/wp-content/uploads/2019/01/DSC_0266.jpg" class="img-slide" alt="">
+								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/04/IMG-20190401-WA0045-1024x682.jpg" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
-								<img src="https://staging.web.bkpsdm.karawangkab.go.id/wp-content/uploads/2019/01/WhatsApp-Image-2019-01-25-at-1.14.38-PM.jpeg" class="img-slide" alt="">
+								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/04/IMG-20190401-WA0058-768x512.jpg" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
-								<img src="https://staging.web.bkpsdm.karawangkab.go.id/wp-content/uploads/2019/01/IMG-20181217-WA0047.jpg" class="img-slide" alt="">
+								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/02/WhatsApp-Image-2019-02-20-at-19.44.42-768x373.jpeg" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
-								<img src="https://staging.web.bkpsdm.karawangkab.go.id/wp-content/uploads/2019/01/DSC_0266.jpg" class="img-slide" alt="">
+								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/02/WhatsApp-Image-2019-02-20-at-19.44.54-1024x576.jpeg" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
-								<img src="https://staging.web.bkpsdm.karawangkab.go.id/wp-content/uploads/2019/01/IMG-20181217-WA0017.jpg" class="img-slide" alt="">
+								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/04/IMG-20190401-WA0045-1024x682.jpg" class="img-slide" alt="">
 							</div> <!-- end item -->
 							
 				</div> <!-- end carousel inner -->

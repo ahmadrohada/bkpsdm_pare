@@ -38,7 +38,9 @@
 					</thead>
 							
 				</table>
-
+				<p class="text-danger" style="margin-top:20px;">
+					**SKP bulanan yang sudah memiliki capaian tidak dapat dihapus
+				</p>
 			</div>
 		</div>
 <!--====================== KEGIATAN BULANAN LIST =========================================== -->
@@ -49,13 +51,13 @@
 				</h1>
 
 				<div class="box-tools pull-right">
-				
+					
 				</div>
 			</div>
 			<div class="box-body table-responsive">
 
 				<div class="toolbar">
-
+				
 				</div>
 
 				<table id="kegiatan_bulanan_table" class="table table-striped table-hover" >
@@ -72,6 +74,9 @@
 							
 				</table>
 
+				<p class="text-danger" style="margin-top:20px;">
+					**Kegiatan berwarna merah jika tidak dilaksanakan oleh staff
+				</p>
 			</div>
 		</div>
 
@@ -257,9 +262,9 @@
 									{ data: "output", name:"output", width:"140px",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.target + ' '+ row.satuan+"</p>";
+												return "<p class='text-danger'>"+row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan+"</p>";
 											}else{
-												return row.target + ' '+ row.satuan;
+												return row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan;
 											}
 										}
 									},

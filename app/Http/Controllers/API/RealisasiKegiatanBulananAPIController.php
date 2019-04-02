@@ -194,16 +194,29 @@ class RealisasiKegiatanBulananAPIController extends Controller {
     public function RealisasiKegiatanBulanan3(Request $request)
     {
             
-        $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan','status')->first();
+        $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('skp_tahunan_id','bulan','status')->first();
         
         //cari bawahan  , jabatanpelaksanan
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
+
+        $keg_tahunan = $skp_bln->SKPTahunan->KegiatanTahunan;
         
         $capaian_id = $request->capaian_id;
 
+      /*   $dt = RencanaAksi::
+                            WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child )
+                            ->WHEREIN('skp_tahunan_rencana_aksi.kegiatan_tahunan_id',$keg_tahunan )
+                            ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan','=',$skp_bln->bulan)
+                            ->SELECT('skp_tahunan_rencana_aksi.id')
+                            ->GET();
+
+        return $dt; */
+
+
         $dt = RencanaAksi::
                     WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child )
-                    ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
+                    ->WHEREIN('skp_tahunan_rencana_aksi.kegiatan_tahunan_id',$keg_tahunan )
+                    ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan','=',$skp_bln->bulan)
                     ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
                         $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                         //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
@@ -212,10 +225,10 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                         $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
                         //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
                     })
-                    ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
-                        $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
+                    ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan AS realisasi_bawahan ', function($join){
+                        $join   ->on('realisasi_bawahan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
                     })
-                    ->leftjoin('db_pare_2018.realisasi_rencana_aksi', function($join) use($capaian_id){
+                    ->leftjoin('db_pare_2018.realisasi_rencana_aksi AS realisasi_rencana_aksi', function($join) use($capaian_id){
                         $join   ->on('realisasi_rencana_aksi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                         $join   ->where('realisasi_rencana_aksi.capaian_id','=', $capaian_id);
                     })
@@ -223,23 +236,25 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
+                                'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
+                                'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
+
+                                'kegiatan_tahunan.label AS kegiatan_tahunan_label',
 
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
-                                'kegiatan_bulanan.target AS target_pelaksana',
-                                'kegiatan_bulanan.satuan AS satuan_pelaksana',
-                                'kegiatan_tahunan.target',
-                                'kegiatan_tahunan.satuan AS satuan_target',
-
-                                'realisasi_kegiatan_bulanan.id AS realisasi_kegiatan_bulanan_id',
-                                'realisasi_kegiatan_bulanan.realisasi AS realisasi',
-                                'realisasi_kegiatan_bulanan.satuan AS realisasi_satuan',
-                                'realisasi_kegiatan_bulanan.bukti',
-                                'realisasi_kegiatan_bulanan.alasan_tidak_tercapai',
+                                'kegiatan_bulanan.target AS kegiatan_bulanan_target',
+                                'kegiatan_bulanan.satuan AS kegiatan_bulanan_satuan',
+                                
+                                'realisasi_bawahan.id AS realisasi_kegiatan_bulanan_bawahan_id',
+                                'realisasi_bawahan.realisasi AS realisasi_bawahan',
+                                'realisasi_bawahan.satuan AS satuan_realisasi_bawahan',
+                                'realisasi_bawahan.bukti AS bukti_realisasi_bawahan',
+                                'realisasi_bawahan.alasan_tidak_tercapai',
 
                                 'realisasi_rencana_aksi.id AS realisasi_rencana_aksi_id',
                                 'realisasi_rencana_aksi.realisasi AS realisasi_rencana_aksi',
-                                'realisasi_rencana_aksi.satuan AS satuan_realisasi'
+                                'realisasi_rencana_aksi.satuan AS satuan_rencana_aksi'
 
                             ) 
                     ->get();
@@ -251,25 +266,10 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
             return $skp_id;
         })
-        ->addColumn('ak', function ($x) {
-            return '';
-        })
-        ->addColumn('output', function ($x) {
-            return '';
-        })
-        ->addColumn('mutu', function ($x) {
-            return '';
-        })
-        ->addColumn('waktu', function ($x) {
-            return '';
-        })
-        ->addColumn('biaya', function ($x) {
-            return '';
-            
-        })
+       
         ->addColumn('persentasi_realisasi_rencana_aksi', function ($x) {
           
-            return   Pustaka::persen($x->realisasi_rencana_aksi,$x->target);
+            return   Pustaka::persen($x->realisasi_rencana_aksi,$x->rencana_aksi_target);
     
             
         })
@@ -295,7 +295,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
 
-        return $datatables->make(true); 
+        return $datatables->make(true);
         
     } 
 

@@ -62,7 +62,7 @@
 							<div class="input-group">
 								<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi">
 								<div class="input-group-addon">
-									<span class="kegiatan_tahunan_satuan"></span>
+									<span class="satuan_target_rencana_aksi"></span>
 								</div>
 							</div>
 

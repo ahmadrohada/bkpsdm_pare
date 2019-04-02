@@ -147,8 +147,8 @@
 					timer:1500
 				}).then(function () {
 					$('.modal-kegiatan_tahunan').modal('hide');
-					$('#kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
-					jQuery('#ktj').jstree(true).refresh(true);
+					$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
+					jQuery('#keg_tahunan_3').jstree(true).refresh(true);
 					
 					
 				},
@@ -218,8 +218,8 @@
 					timer:1500
 				}).then(function () {
 					$('.modal-kegiatan_tahunan').modal('hide');
-					$('#kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
-					jQuery('#ktj').jstree(true).refresh(true);
+					$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
+					jQuery('#keg_tahunan_3').jstree(true).refresh(true);
 					
 				},
 					
