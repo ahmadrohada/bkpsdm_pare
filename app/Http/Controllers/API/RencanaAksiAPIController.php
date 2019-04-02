@@ -113,7 +113,7 @@ class RencanaAksiAPIController extends Controller {
                                 
                                 ])
                             ->orderBy('waktu_pelaksanaan','ASC')
-                            ->orderBy('label','ASC')
+                            ->orderBy('id','DESC')
                             ->get();
 
                  
