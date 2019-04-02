@@ -22,7 +22,7 @@
 					<thead>
 						<tr>
 							<th rowspan="2">No</th>
-							<th rowspan="2">RENCANA AKSI</th>
+							<th rowspan="2">KEGIATAN BULANAN</th>
 							<th rowspan="2">PELAKSANA</th>
 							<th colspan="3">OUTPUT</th>
 							
@@ -76,7 +76,7 @@
 									 },
 								},
 				columns			: [
-									{ data: 'rencana_aksi_id' ,width:"10px",
+									{ data: 'kegiatan_bulanan_id' ,width:"10px",
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
@@ -105,12 +105,12 @@
 											
 										}
 									},
-									{ data: "target", name:"target", width:"130px",
+									{ data: "rencana_aksi_target", name:"rencana_aksi_target", width:"130px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
-												return "<p class='text-danger'>"+row.target + ' '+ row.satuan_target+"</p>";
+												return "<p class='text-danger'>"+row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan+"</p>";
 											}else{
-												return row.target + ' '+ row.satuan_target;
+												return row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan;
 											}
 										}
 									},
@@ -120,7 +120,7 @@
 											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
 												return "<p class='text-danger'>-</p>";
 											}else{
-												return row.realisasi_rencana_aksi + ' '+ row.satuan_realisasi;
+												return row.realisasi_rencana_aksi + ' '+ row.satuan_rencana_aksi;
 											}
 
 											
@@ -179,7 +179,7 @@
 					$('.modal-realisasi_rencana_aksi').find('[name=realisasi_rencana_aksi_id]').val("");
 					$('.modal-realisasi_rencana_aksi').find('[name=skp_bulanan_id]').val(data['skp_bulanan_id']);
 					$('.modal-realisasi_rencana_aksi').find('[name=capaian_id]').val({!! $capaian->id !!});
-					$('.modal-realisasi_rencana_aksi').find('[name=satuan]').val(data['kegiatan_tahunan_satuan']);
+					$('.modal-realisasi_rencana_aksi').find('[name=satuan]').val(data['satuan_target_rencana_aksi']);
 
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_tahunan_label').html(data['kegiatan_tahunan_label']);
 					$('.modal-realisasi_rencana_aksi').find('.penanggung_jawab').html(data['penanggung_jawab']);
@@ -193,7 +193,7 @@
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
 					$('.modal-realisasi_rencana_aksi').find('.realisasi_kegiatan_bulanan_output').html(data['realisasi_output']);
 
-					$('.modal-realisasi_rencana_aksi').find('.kegiatan_tahunan_satuan').html(data['kegiatan_tahunan_satuan']);
+					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['satuan_target_rencana_aksi']);
 
 					$('.modal-realisasi_rencana_aksi').find('h4').html('Create Realisasi Kegiatan Bulanan');
 					$('.modal-realisasi_rencana_aksi').find('.btn-submit').attr('id', 'submit-save');
@@ -236,7 +236,7 @@
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_output').html(data['kegiatan_bulanan_output']);
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
 
-					$('.modal-realisasi_rencana_aksi').find('.kegiatan_tahunan_satuan').html(data['kegiatan_tahunan_satuan']);
+					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['realisasi_satuan']);
 					
 					$('.modal-realisasi_rencana_aksi').find('h4').html('Edit realisasi Kegiatan Bulanan');
 					$('.modal-realisasi_rencana_aksi').find('.btn-submit').attr('id', 'submit-update');

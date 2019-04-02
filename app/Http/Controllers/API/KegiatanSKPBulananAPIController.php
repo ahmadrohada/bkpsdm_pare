@@ -130,10 +130,12 @@ class KegiatanSKPBulananAPIController extends Controller {
                     })
                     ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
+                                'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
-                                'kegiatan_bulanan.target',
-                                'kegiatan_bulanan.satuan',
+                                'kegiatan_bulanan.target AS kegiatan_bulanan_target',
+                                'kegiatan_bulanan.satuan AS kegiatan_bulanan_satuan',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id'
                             ) 
                     ->get();
@@ -144,16 +146,13 @@ class KegiatanSKPBulananAPIController extends Controller {
         $datatables = Datatables::of($dt)
         ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
             return $skp_id;
-        })->addColumn('ak', function ($x) {
-            return '';
-        })->addColumn('output', function ($x) {
-            return '';
-        })->addColumn('mutu', function ($x) {
-            return '';
-        })->addColumn('waktu', function ($x) {
-            return '';
-        })->addColumn('biaya', function ($x) {
-            return '';
+        })->addColumn('target', function ($x) {
+            if ( $x->kegiatan_bulanan_id >= 1 ){
+                $target = $x->kegiatan_bulanan_target.' '.$x->kegiatan_bulanan_satuan;
+            }else{
+                $target = $x->rencana_aksi_target.' '.$x->rencana_aksi_satuan;
+            }
+            return $target;
         })->addColumn('status_skp', function ($x) use($skp_bln){
             return $skp_bln->status;
         })->addColumn('kegiatan_tahunan_label', function ($x) use($skp_bln){
@@ -284,13 +283,13 @@ class KegiatanSKPBulananAPIController extends Controller {
                     })
                     ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
+                                'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
                                 'kegiatan_bulanan.target AS target_pelaksana',
-                                'kegiatan_bulanan.satuan AS satuan_pelaksana',
-                                'kegiatan_tahunan.target',
-                                'kegiatan_tahunan.satuan'
+                                'kegiatan_bulanan.satuan AS satuan_pelaksana'
                             ) 
                     ->get();
         
@@ -300,16 +299,6 @@ class KegiatanSKPBulananAPIController extends Controller {
         $datatables = Datatables::of($dt)
         ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
             return $skp_id;
-        })->addColumn('ak', function ($x) {
-            return '';
-        })->addColumn('output', function ($x) {
-            return '';
-        })->addColumn('mutu', function ($x) {
-            return '';
-        })->addColumn('waktu', function ($x) {
-            return '';
-        })->addColumn('biaya', function ($x) {
-            return '';
         })->addColumn('pelaksana', function ($x) {
 
             if ( $x->pelaksana_id != null ){

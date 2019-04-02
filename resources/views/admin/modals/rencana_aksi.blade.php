@@ -72,7 +72,19 @@
 							</select>
 						</div>
 					</div>
+ 
+					<div class="row">
+						
+						<div class="col-md-6 form-group target">
+						<label class="control-label">Target :</label>
+						<input type="text" name="target" id="target" required class="form-control input-sm" placeholder="target" onkeypress='return angka(event)'>        
+						</div>
 
+						<div class="col-md-6 form-group satuan">
+						<label class="control-label">Satuan :</label>
+						<input type="text" name="satuan" autocomplete="off" id="satuan" required class="form-control satuan input-sm" placeholder="satuan">
+						</div>
+					</div>
 
 
 			</div>
@@ -128,20 +140,25 @@
 
 	$('.modal-rencana_aksi').on('shown.bs.modal', function(){
 		reset_submit();
-
-		
-
 	});
 
 	$('.modal-rencana_aksi').on('hidden.bs.modal', function(){
-		$('.label_rencana_aksi').removeClass('has-error');
-		$('.label_waktu_pelaksanaan').removeClass('has-error');
-		$('.modal-rencana_aksi').find('[name=rencana_aksi_id],[name=label]').val('');
+		$('.label_rencana_aksi,.label_waktu_pelaksanaan,.target,.satuan,.label_pelaksana').removeClass('has-error');
+		$('.modal-rencana_aksi').find('[name=rencana_aksi_id],[name=label],[name=target],[name=satuan]').val('');
 		$('.waktu_pelaksanaan').select2('val','');
 	});
 
+	$('.label_pelaksana').on('click', function(){
+		$('.label_pelaksana').removeClass('has-error');
+	});
 	$('.label_rencana_aksi').on('click', function(){
 		$('.label_rencana_aksi').removeClass('has-error');
+	});
+	$('.target').on('click', function(){
+		$('.target').removeClass('has-error');
+	});
+	$('.satuan').on('click', function(){
+		$('.satuan').removeClass('has-error');
 	});
 
 	$('.label_waktu_pelaksanaan').on('click', function(){
@@ -210,6 +227,9 @@
 					//error message
 					((index == 'label')?$('.label_rencana_aksi').addClass('has-error'):'');
 					((index == 'waktu_pelaksanaan')?$('.label_waktu_pelaksanaan').addClass('has-error'):'');
+					((index == 'pelaksana')?$('.label_pelaksana').addClass('has-error'):'');
+					((index == 'target')?$('.target').addClass('has-error'):'');
+					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					reset_submit();
 				
 					
@@ -274,6 +294,9 @@
 					//error message
 					((index == 'label')?$('.label_rencana_aksi').addClass('has-error'):'');
 					((index == 'waktu_pelaksanaan')?$('.label_waktu_pelaksanaan').addClass('has-error'):'');
+					((index == 'pelaksana')?$('.label_pelaksana').addClass('has-error'):'');
+					((index == 'target')?$('.target').addClass('has-error'):'');
+					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					reset_submit();
 
 					
@@ -285,19 +308,6 @@
 			
 		});
 
-
-
-
-
-		});
-
-
-
-
-
-
-
-
-
+	});
 
 </script>

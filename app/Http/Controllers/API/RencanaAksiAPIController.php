@@ -103,16 +103,20 @@ class RencanaAksiAPIController extends Controller {
        
         $dt = RencanaAksi::WHERE('kegiatan_tahunan_id','=', $request->kegiatan_tahunan_id )
 
-                ->select([   
-                    'id AS rencana_aksi_id',
-                    'label',
-                    'waktu_pelaksanaan',
-                    'jabatan_id'
-                    
-                    ])
-                ->get();
+                            ->select([   
+                                'id AS rencana_aksi_id',
+                                'label',
+                                'target',
+                                'satuan',
+                                'waktu_pelaksanaan',
+                                'jabatan_id'
+                                
+                                ])
+                            ->orderBy('waktu_pelaksanaan','ASC')
+                            ->orderBy('label','ASC')
+                            ->get();
 
-                
+                 
                 
         $datatables = Datatables::of($dt)
         ->addColumn('label', function ($x) {
@@ -123,17 +127,11 @@ class RencanaAksiAPIController extends Controller {
             return $kb;
         })
         ->addColumn('target', function ($x) {
-            $kb =  KegiatanSKPBulanan::WHERE('rencana_aksi_id',$x->rencana_aksi_id)->SELECT('id','target','satuan')->first();
             
-            if ($kb){
-                return $kb->target.' '.$kb->satuan;
-            }else{
-                return '';
-            }
+            return $x->target.' '.$x->satuan;
+          
         })
         ->addColumn('pelaksana', function ($x) {
-            
-
             if ($x->jabatan_id > 0 ){
                 return Pustaka::capital_string($x->Pelaksana->jabatan);
             }else{
@@ -216,6 +214,8 @@ class RencanaAksiAPIController extends Controller {
                     })
                     ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                'skp_tahunan_rencana_aksi.target AS target_rencana_aksi',
+                                'skp_tahunan_rencana_aksi.satuan AS satuan_target_rencana_aksi',
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
                                 'skp_tahunan_rencana_aksi.waktu_pelaksanaan',
@@ -223,8 +223,6 @@ class RencanaAksiAPIController extends Controller {
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
                                 'kegiatan_bulanan.target AS target_pelaksana',
                                 'kegiatan_bulanan.satuan AS satuan_pelaksana',
-                                'kegiatan_tahunan.target AS target_kegiatan_tahunan',
-                                'kegiatan_tahunan.satuan AS satuan_kegiatan_tahunan',
                                 'realisasi_kegiatan_bulanan.id AS realisasi_kegiatan_bulanan_id',
                                 'realisasi_kegiatan_bulanan.realisasi AS realisasi',
                                 'realisasi_kegiatan_bulanan.satuan AS realisasi_satuan',
@@ -241,26 +239,13 @@ class RencanaAksiAPIController extends Controller {
             $pelaksana = "-";
         }
 
-        /* $x = RencanaAksi::
-                            SELECT(     'id AS rencana_aksi_id',
-                                        'label',
-                                        'waktu_pelaksanaan',
-                                        'jabatan_id',
-                                        'kegiatan_tahunan_id'
-                                    ) 
-                            ->WHERE('id', $request->rencana_aksi_id)
-                            ->first();
-
-        if ( $x->jabatan_id > 0 ){
-            $pelaksana = Pustaka::capital_string($x->Pelaksana->jabatan);
-        }else{
-            $pelaksana = '-';
-        } */
 		
 		//return  $rencana_aksi;
         $rencana_aksi = array(
             'id'                            => $x->rencana_aksi_id,
             'label'                         => $x->rencana_aksi_label,
+            'target_rencana_aksi'           => $x->target_rencana_aksi,
+            'satuan_target_rencana_aksi'    => $x->satuan_target_rencana_aksi,
             'kegiatan_bulanan_label'        => $x->kegiatan_bulanan_label,
             'kegiatan_bulanan_target'       => $x->target_pelaksana,
             'kegiatan_bulanan_satuan'       => $x->satuan_pelaksana,
@@ -294,6 +279,8 @@ class RencanaAksiAPIController extends Controller {
                 'kegiatan_tahunan_id.required'  => 'Harus diisi',
                 'waktu_pelaksanaan.required'    => 'Harus diisi',
                 'pelaksana.required'            => 'Harus diisi',
+                'target.required'               => 'Harus diisi',
+                'satuan.required'               => 'Harus diisi',
 
         ];
 
@@ -301,9 +288,11 @@ class RencanaAksiAPIController extends Controller {
                         Input::all(),
                         array(
                             'kegiatan_tahunan_id'   => 'required',
-                            'pelaksana'             => 'required',
+                            'pelaksana'             => 'required|numeric|min:1',
                             'waktu_pelaksanaan'     => 'required',
                             'label'                 => 'required',
+                            'target'                => 'required',
+                            'satuan'                => 'required',
                         ),
                         $messages
         );
@@ -323,6 +312,8 @@ class RencanaAksiAPIController extends Controller {
             'jabatan_id'            => Input::get('pelaksana'),
             'label'                 => Input::get('label'),
             'waktu_pelaksanaan'     => $target[$i],
+            'target'                => Input::get('target'),
+            'satuan'                => Input::get('satuan'),
             'created_at'            => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
             );
 
@@ -332,10 +323,6 @@ class RencanaAksiAPIController extends Controller {
 
         $st_ra   = new RencanaAksi;
         $st_ra -> insert($data);
-
-      
-            
-    
     }
 
 
@@ -343,8 +330,10 @@ class RencanaAksiAPIController extends Controller {
     {
 
         $messages = [
-                'rencana_aksi_id.required'   => 'Harus diisi',
-                'label.required'             => 'Harus diisi',
+                'rencana_aksi_id.required'       => 'Harus diisi',
+                'label.required'                 => 'Harus diisi',
+                'target.required'                => 'Harus diisi',
+                'satuan.required'                => 'Harus diisi',
                 'pelaksana.required'             => 'Harus diisi',
                 'waktu_pelaksanaan_edit.required'=> 'Harus diisi'
 
@@ -353,9 +342,11 @@ class RencanaAksiAPIController extends Controller {
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'rencana_aksi_id'        => 'required',
-                            'label'                  => 'required',
-                            'pelaksana'                  => 'required',
+                            'rencana_aksi_id'       => 'required',
+                            'pelaksana'             => 'required|numeric|min:1',
+                            'label'                 => 'required',
+                            'target'                => 'required',
+                            'satuan'                => 'required',
                             'waktu_pelaksanaan_edit'=> 'required'
                         ),
                         $messages
@@ -375,7 +366,9 @@ class RencanaAksiAPIController extends Controller {
 
 
         $st_ra->label               = Input::get('label');
-        $st_ra->jabatan_id               = Input::get('pelaksana');
+        $st_ra->target              = Input::get('target');
+        $st_ra->satuan              = Input::get('satuan');
+        $st_ra->jabatan_id          = Input::get('pelaksana');
         $st_ra->waktu_pelaksanaan	= Input::get('waktu_pelaksanaan_edit');
 
         if ( $st_ra->save()){
