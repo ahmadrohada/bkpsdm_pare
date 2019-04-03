@@ -445,6 +445,15 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('hapus_rencana_aksi','API\RencanaAksiAPIController@Hapus');
 
 	
+	//========================================================================================================//
+	//======================================= PENILAIAN KODE ETIK =====================================//
+	//========================================================================================================//
+
+	Route::get('detail_penilaian_kode_etik','API\PenilaianKodeEtikAPIController@DetailPenilaianKodeEtik');
+
+	
+	Route::post('simpan_penilaian_kode_etik','API\PenilaianKodeEtikAPIController@Store');
+	Route::post('update_penilaian_kode_etik','API\PenilaianKodeEtikAPIController@Update');
 
 	//========================================================================================================//
 	//==================================  P E G A W A I =================================================//

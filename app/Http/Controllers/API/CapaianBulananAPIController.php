@@ -285,7 +285,11 @@ class CapaianBulananAPIController extends Controller {
         $capaian_id = $request->capaian_bulanan_id;
 
         $capaian_bulanan = CapaianBulanan::
-                            SELECT(
+
+                            leftjoin('db_pare_2018.penilaian_kode_etik AS pke', function($join){
+                                $join   ->on('pke.capaian_bulanan_id','=','capaian_bulanan.id');
+                            })
+                            ->SELECT(
                                 'capaian_bulanan.id AS capaian_bulanan_id',
                                 'capaian_bulanan.skp_bulanan_id',
                                 'capaian_bulanan.created_at',
@@ -293,9 +297,16 @@ class CapaianBulananAPIController extends Controller {
                                 'capaian_bulanan.send_to_atasan',
                                 'capaian_bulanan.alasan_penolakan',
                                 'capaian_bulanan.p_jabatan_id',
-                                'capaian_bulanan.u_jabatan_id'
+                                'capaian_bulanan.u_jabatan_id',
+                                'pke.id AS penilaian_kode_etik_id',
+                                'pke.santun',
+                                'pke.amanah',
+                                'pke.harmonis',
+                                'pke.adaptif',
+                                'pke.terbuka',
+                                'pke.efektif'
                             )
-                            ->where('capaian_bulanan.id','=', $capaian_id )->first();;
+                            ->where('capaian_bulanan.id','=', $capaian_id )->first();
     
         $jenis_jabatan = $capaian_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
         $bulan = $capaian_bulanan->SKPBulanan->bulan;
@@ -413,69 +424,6 @@ class CapaianBulananAPIController extends Controller {
         $u_detail   = $capaian_bulanan->PejabatYangDinilai;
 
 
-       /*  //apakah skp tahnan ini meiliki kegiatan tahunan dan setiap kegiatan minimal memiliki 1 rencana aksi
-        $data_kegiatan_tahunan = KegiatanSKPTahunan::SELECT('id')
-                                                ->WHEREIN('kegiatan_id',$kegiatan_renja)
-                                                ->count();
-
-        if ( $data_kegiatan_tahunan == COUNT($kegiatan_renja) ){
-            $kegiatan_tahunan = 'ok';
-
-            $rencana_aksi = 1 ;
-            //cari paakah setiap kegiatan tahunan meiliki minimal 1 rencana aksi
-            $query_x = KegiatanSKPTahunan::SELECT('id')
-                                        ->WHEREIN('kegiatan_id',$kegiatan_renja)
-                                        ->get();
-            foreach ( $query_x AS $x ){
-                $query_y = RencanaAksi::SELECT('id')
-                                        ->WHERE('kegiatan_tahunan_id',$x->id)
-                                        ->count();
-
-                if ($query_y >= 1 ){
-                    $tes_val = 1 ;
-                }else{
-                    $tes_val = 0 ;
-                }
-
-                $rencana_aksi = $rencana_aksi*$tes_val;
-
-            }
-
-            if ( $rencana_aksi == 0 ){
-                $data_rencana_aksi = '-';
-            }else{
-                $data_rencana_aksi = 'ok';
-            }
-
-
-        }else{
-            $data_rencana_aksi = '-';
-            $kegiatan_tahunan = '-';
-        }              
-        
-        //STATUS SKP
-        if ( $capaian_bulanan->capaian_bulanan_id != null ){
-            $created = 'ok';
-        }else{
-            $created = '-';
-        }
-        
-        //STATUS PEJABAT PENILAI
-        if ( $capaian_bulanan->atasan_id != null ){
-            $atasan = 'ok';
-        }else{
-            $atasan = '-';
-        }
-
-
-        //button kirim
-        if ( ( $created == 'ok') && ( $atasan == 'ok') && ( $kegiatan_tahunan == 'ok' ) && (  $data_rencana_aksi == 'ok') ){
-            $button_kirim = 1 ;
-        }else{
-            $button_kirim = 0 ;
-        }
-        */
-
         //STATUS APPROVE
         if ( ($capaian_bulanan->status_approve) == 1 ){
             $persetujuan_atasan = 'disetujui';
@@ -489,10 +437,32 @@ class CapaianBulananAPIController extends Controller {
         }
 
 
+        //penilaian kode etik
+        if ( ($capaian_bulanan->penilaian_kode_etik_id) >= 1 ){
+            $jm = ($capaian_bulanan->santun + $capaian_bulanan->amanah + $capaian_bulanan->harmonis+$capaian_bulanan->adaptif+$capaian_bulanan->terbuka+$capaian_bulanan->efektif);
+            
+            
+            
+            $penilaian_kode_etik = Pustaka::persen($jm,30) ;
+
+            $x = number_format( ($capaian_kinerja_bulanan * 70 / 100)+( $penilaian_kode_etik * 30 / 100 ) , 2 );
+            
+            $capaian_skp_bulanan = Pustaka::persen3($x);
+          
+
+        }else{
+            $penilaian_kode_etik = 0 ;
+            $capaian_skp_bulanan = 0 ;
+        }
+        
+
         $response = array(
                 
                 'jm_kegiatan_bulanan'       => $jm_kegiatan_bulanan,
                 'capaian_kinerja_bulanan'   => $capaian_kinerja_bulanan,
+                'capaian_skp_bulanan'       => $capaian_skp_bulanan,
+                'penilaian_kode_etik_id'    => $capaian_bulanan->penilaian_kode_etik_id,
+                'penilaian_kode_etik'       => $penilaian_kode_etik,
                 'status_approve'            => $persetujuan_atasan,
                 'send_to_atasan'            => $capaian_bulanan->send_to_atasan,
                 'alasan_penolakan'          => $alasan_penolakan,
