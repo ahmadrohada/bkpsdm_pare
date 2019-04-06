@@ -107,6 +107,7 @@
 	
 	$(document).on('click','.penilaian_kode_etik',function(e){
 
+		$('.santun,.amanah,.harmonis,.adaptif,.terbuka,.efektif').rating('update',1);
 
 		$('.modal-penilaian_kode_etik').find('[name=capaian_bulanan_id]').val({!! $capaian->id !!});
 		$('.modal-penilaian_kode_etik').modal('show');
