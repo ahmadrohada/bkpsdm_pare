@@ -29,7 +29,7 @@
 						<a class="pull-right st_penilaian_kode_etik" >-</a>
 					</li>
 
-					<li class="list-group-item st_pke hidden" >
+					<li class="list-group-item st_pke hidden" style="background:#efeff0; border-top: solid #615e68 !important; border-top-width: 2px;">
 						<strong>Capaian SKP Bulanan</strong> <a class="pull-right st_capaian_skp_bulanan" >-</a>
 					</li>
 
@@ -212,4 +212,76 @@
 		});
 	});
 
+
+	
+	$(document).on('click','.terima_capaian_bulanan',function(e){
+		Swal.fire({
+				title: "Terima",
+				text: "Anda akan menerima dan menyetujui Laporan Capaian Bulanan",
+				type: "question",
+				showCancelButton: true,
+				cancelButtonText: "Batal",
+				confirmButtonText: "Terima",
+				cancelButtonColor: "#7a7a7a",
+				closeOnConfirm: false,
+				showLoaderOnConfirm	: true,
+		}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/terima_capaian_bulanan") }}',
+					type	: 'POST',
+					data    : { capaian_bulanan_id:{!! $capaian->id !!}
+							   },
+					cache   : false,
+					success:function(data){
+						Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										location.reload();
+
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+						Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+
+								/* const Toast = Swal.mixin({
+								toast: true,
+								position: 'top-end',
+								showConfirmButton: false,
+								timer: 3000
+								});
+
+								Toast.fire({
+								type: 'success',
+								title: 'Signed in successfully'
+								}) */
+							}
+					});	
+				
+
+					
+			}
+		});
+	});
 </script>

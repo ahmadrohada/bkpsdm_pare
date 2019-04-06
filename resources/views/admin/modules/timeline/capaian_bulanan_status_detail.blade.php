@@ -18,9 +18,7 @@
 					<li class="list-group-item">
 						Jumlah Kegiatan <a class="pull-right st_jm_kegiatan_bulanan" >-</a>
 					</li>
-					<li class="list-group-item">
-						Capaian Kinerja Bulanan <a class="pull-right st_capaian_kinerja_bulanan" >-</a>
-					</li>
+		
 					<li class="list-group-item">
 						Status Approve <a class="pull-right st_status_approve" >-</a>
 					</li>
@@ -28,8 +26,18 @@
 						Alasan Penolakan <a class="pull-right st_alasan_penolakan" >-</a>
 					</li>
 
-					<li class="list-group-item hidden" >
-						Capaian Kode Etik <a class="pull-right st_capaian_kode_etik" >-</a>
+					<li class="list-group-item">
+						Capaian Kinerja Bulanan <span class="text-muted"> (bobot 70%)</span><a class="pull-right st_capaian_kinerja_bulanan" >-</a>
+					</li>
+
+					<li class="list-group-item st_pke hidden" >
+						<input type="hidden" class="penilaian_kode_etik_id">
+						Penilaian Kode Etik <span class="text-muted"> (bobot 30%)</span>
+						<a class="pull-right st_penilaian_kode_etik" >-</a>
+					</li>
+
+					<li class="list-group-item st_pke hidden" style="background:#efeff0; border-top: solid #615e68 !important; border-top-width: 2px;">
+						<strong>Capaian SKP Bulanan</strong> <a class="pull-right st_capaian_skp_bulanan" style="font-weight: bold;" >-</a>
 					</li>
 					
 				</ul>
@@ -41,9 +49,49 @@
 		</div>
 	</div>
 	<div class="col-md-8">
-		<div class="table-responsive">
-			<div id="myTimeline"></div>
-		</div>
+		
+		<div class="box">
+            <div class="box-header" style="height:40px;">
+              <h1 class="box-title text-success" style="font-size:16px;">Penilaian Kode Etik</h1>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <table class="table table-condensed">
+               
+                <tr>
+                  <td style="width: 10px">1.</td>
+                  <td>Santun</td>
+                  <td style="width: 80px"><span class="badge bg-light-blue santun">0 %</span></td>
+                </tr>
+                <tr>
+                  <td>2.</td>
+                  <td>Amanah</td>
+                  <td><span class="badge bg-light-blue amanah">0 %</span></td>
+                </tr>
+                <tr>
+                  <td>3.</td>
+                  <td>Harmonis</td>
+                  <td><span class="badge bg-light-blue harmonis">0 %</span></td>
+                </tr>
+                <tr>
+                  <td>4.</td>
+                  <td>Adaptif</td>
+                  <td><span class="badge bg-light-blue adaptif">0 %</span></td>
+				</tr>
+				<tr>
+                  <td>5.</td>
+                  <td>Terbuka</td>
+                  <td><span class="badge bg-light-blue terbuka">0 %</span></td>
+				</tr>
+				<tr>
+                  <td>6.</td>
+                  <td>Efektif</td>
+                  <td><span class="badge bg-light-blue efektif">0 %</span></td>
+                </tr>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
 	</div>
 
 
@@ -59,42 +107,8 @@
 <script type="text/javascript">
 
 
-	function status_show(){
-		status_pengisian();	
-
-		/* $.ajax({
-				url			: '{{ url("api_resource/capaian_bulanan_general_timeline") }}',
-				data 		: { 
-								
-								},
-				method		: "GET",
-				dataType	: "json",
-				success	: function(data) {
-					status(data);	
-					//status_pengisian();	
-				},
-				error: function(data){
-					
-				}						
-		}); */
-	}
-
-	function status(data){
-		$('#myTimeline').albeTimeline(
-				data, 
-				{
-				effect: 'fadeIn',
-				showGroup: false,
-				language : 'en-us',
-				sortDesc : true,
-				formatDate: 'dd de MMMM de yyyy HH:mm'
-		});	
-	}
-
-
-						
 	
-	function status_pengisian(){
+	function status_show(){
 		$.ajax({
 				url			: '{{ url("api_resource/capaian_bulanan_status_pengisian") }}',
 				data 		: { capaian_bulanan_id : {!! $capaian->id !!} },
@@ -115,6 +129,15 @@
 					$('.st_status_approve').html(data['status_approve']);
 					$('.st_alasan_penolakan').html(data['alasan_penolakan']);
 
+					$('.st_penilaian_kode_etik').html(data['penilaian_kode_etik']);
+					$('.st_capaian_skp_bulanan').html(data['capaian_skp_bulanan']);
+					
+
+					if (data['penilaian_kode_etik_id'] >= 1 ){
+						$('.st_pke').removeClass('hidden');
+						$('.penilaian_kode_etik_id').val(data['penilaian_kode_etik_id']);
+						
+					}
 
 					if (data['alasan_penolakan'] != ""){
 						
@@ -122,6 +145,12 @@
 					} 
 					
 
+					$('.santun').html(data['santun']+' %');
+					$('.amanah').html(data['amanah']+' %');
+					$('.harmonis').html(data['harmonis']+' %');
+					$('.adaptif').html(data['adaptif']+' %');
+					$('.terbuka').html(data['terbuka']+' %');
+					$('.efektif').html(data['efektif']+' %');
 				},
 				error: function(data){
 					
@@ -129,77 +158,5 @@
 		});
 	}
 
-	function on_kirim(){
-		$('.send_icon').addClass('fa fa-spinner faa-spin animated');
-		$('.kirim_capaian').prop('disabled',true);
-	}
-	function reset_kirim(){
-		$('.send_icon').removeClass('fa fa-spinner faa-spin animated');
-		$('.send_icon').addClass('fa fa-send');
-		$('.kirim_capaian').prop('disabled',false);
-	}
-
-	$(document).on('click','.kirim_capaian',function(e){
-		Swal.fire({
-				title: "Kirim Capaian",
-				text: "Capaian Bulanan akan dikirim ke atasan untuk, edit pada capaian tidak bisa dilakukan",
-				type: "question",
-				showCancelButton: true,
-				cancelButtonText: "Batal",
-				confirmButtonText: "Kirim Capaian",
-				confirmButtonClass: "btn btn-success",
-				cancelButtonClass: "btn btn-danger",
-				cancelButtonColor: "#d33",
-				closeOnConfirm: false
-		}).then ((result) => {
-			if (result.value){
-				on_kirim();
-				$.ajax({
-					url		: '{{ url("api_resource/kirim_capaian_bulanan") }}',
-					type	: 'POST',
-					data    : { capaian_bulanan_id : {!! $capaian->id !!} },
-					cache   : false,
-					success:function(data){
-							
-							Swal.fire({
-									title: "",
-									text: "Sukses",
-									type: "success",
-									width: "200px",
-									showConfirmButton: false,
-									allowOutsideClick : false,
-									timer: 900
-									}).then(function () {
-										reset_kirim();
-										location.reload();
-
-									},
-									function (dismiss) {
-										if (dismiss === 'timer') {
-											
-											
-										}
-									}
-								)
-								
-							
-					},
-					error: function(e) {
-							reset_kirim();
-							Swal.fire({
-									title: "Gagal",
-									text: "",
-									type: "warning"
-								}).then (function(){
-										
-								});
-							}
-					});	
-				
-
-					
-			}
-		});
-	}); 
-
+	
 </script>
