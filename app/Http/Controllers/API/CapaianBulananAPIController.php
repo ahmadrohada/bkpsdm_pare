@@ -289,6 +289,7 @@ class CapaianBulananAPIController extends Controller {
                             leftjoin('db_pare_2018.penilaian_kode_etik AS pke', function($join){
                                 $join   ->on('pke.capaian_bulanan_id','=','capaian_bulanan.id');
                             })
+                            
                             ->SELECT(
                                 'capaian_bulanan.id AS capaian_bulanan_id',
                                 'capaian_bulanan.skp_bulanan_id',
@@ -471,6 +472,13 @@ class CapaianBulananAPIController extends Controller {
                 'tgl_dibuat'                => Pustaka::balik2($capaian_bulanan->created_at),
                 'p_nama'                    => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
                 'u_nama'                    => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
+                'santun'                    => $capaian_bulanan->santun*20,
+                'amanah'                    => $capaian_bulanan->amanah*20,
+                'harmonis'                  => $capaian_bulanan->harmonis*20,
+                'adaptif'                   => $capaian_bulanan->adaptif*20,
+                'terbuka'                   => $capaian_bulanan->terbuka*20,
+                'efektif'                   => $capaian_bulanan->efektif*20,
+
 
 
         );
