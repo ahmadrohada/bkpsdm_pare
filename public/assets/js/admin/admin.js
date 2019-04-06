@@ -42525,7 +42525,7 @@ var wysihtml5 = {
     /*----------------------------------------------------------------------------------------------------------------*/
 
     return api;
-}, this);;/**
+}, this);/**
  * Selection save and restore module for Rangy.
  * Saves and restores user selections using marker invisible elements in the DOM.
  *
@@ -42774,7 +42774,7 @@ var wysihtml5 = {
         });
     });
     
-}, this);;/*
+}, this);/*
 	Base.js, version 1.1a
 	Copyright 2006-2010, Dean Edwards
 	License: http://www.opensource.org/licenses/mit-license.php
@@ -42912,7 +42912,7 @@ Base = Base.extend({
 	toString: function() {
 		return String(this.valueOf());
 	}
-});;/**
+});/**
  * Detect browser support for specific features
  */
 wysihtml5.browser = (function() {
@@ -44107,7 +44107,7 @@ wysihtml5.dom.copyAttributes = function(attributesToCopy) {
 
     };
   };
-})(wysihtml5);;/**
+})(wysihtml5);/**
  * Returns the given html wrapped in a div element
  *
  * Fixing IE's inability to treat unknown elements (HTML5 section, article, ...) correctly
@@ -44323,7 +44323,7 @@ wysihtml5.dom.getStyle = (function() {
     }
   }
   return all;
-};;/**
+};/**
  * High performant way to check whether an element with a specific tag name is in the given document
  * Optimized for being heavily executed
  * Unleashes the power of live node lists
@@ -44488,7 +44488,7 @@ wysihtml5.dom.hasElementWithTagName = (function() {
       }
     };
   };
-})(wysihtml5);;/**
+})(wysihtml5);/**
  * Method to set dom events
  *
  * @example
@@ -46052,7 +46052,7 @@ wysihtml5.dom.getAttributes = function(node) {
     }
   }
   return attributes;
-};;/**
+};/**
    * Check whether the given node is a proper loaded image
    * FIXME: Returns undefined when unknown (Chrome, Safari)
 */
@@ -47033,7 +47033,7 @@ wysihtml5.dom.query = function(elements, query) {
     }
     node.parentNode.removeChild(node);
   }
-};;/* 
+};/* 
  * Methods for fetching pasted html before it gets inserted into content
 **/
 
@@ -47073,7 +47073,7 @@ wysihtml5.dom.getPastedHtmlWithDiv = function (composer, f) {
     f(cleanerDiv.innerHTML);
     cleanerDiv.parentNode.removeChild(cleanerDiv);
   }, 0);
-};;/**
+};/**
  * Fix most common html formatting misbehaviors of browsers implementation when inserting
  * content via copy & paste contentEditable
  *
@@ -47149,7 +47149,7 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
     return newHtml;
   };
 
-})();;/**
+})();/**
  * IE and Opera leave an empty paragraph in the contentEditable element after clearing it
  *
  * @param {Object} contentEditableElement The contentEditable element to observe for clearing events
@@ -49613,7 +49613,7 @@ wysihtml5.commands.formatCode = {
       return wysihtml5.dom.getParentElement(selectedNode, { nodeName: "CODE" }) && wysihtml5.dom.getParentElement(selectedNode, { nodeName: "PRE" });
     }
   }
-};;/**
+};/**
  * formatInline scenarios for tag "B" (| = caret, |foo| = selected text)
  *
  *   #1 caret in unformatted text:
@@ -49800,7 +49800,7 @@ wysihtml5.commands.formatCode = {
     }
   };
 
-})(wysihtml5);;wysihtml5.commands.insertHTML = {
+})(wysihtml5);wysihtml5.commands.insertHTML = {
   exec: function(composer, command, html) {
     if (composer.commands.support(command)) {
       composer.doc.execCommand(command, false, html);
@@ -50107,7 +50107,7 @@ wysihtml5.commands.formatCode = {
     }
   };
 
-})(wysihtml5);;wysihtml5.commands.italic = {
+})(wysihtml5);wysihtml5.commands.italic = {
   exec: function(composer, command) {
     wysihtml5.commands.formatInline.execWithToggle(composer, command, "i");
   },
@@ -50484,7 +50484,7 @@ wysihtml5.commands.formatCode = {
     return newList;
   }
 
-};;/**
+};/**
  * Undo Manager for wysihtml5
  * slightly inspired by http://rniwa.com/editing/undomanager.html#the-undomanager-interface
  */

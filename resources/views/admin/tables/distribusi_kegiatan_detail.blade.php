@@ -175,7 +175,7 @@
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail").show();
-						load_ind_kegiatan( tx[1]);;
+						load_ind_kegiatan( tx[1]);
 				
 			break;
 			default: 

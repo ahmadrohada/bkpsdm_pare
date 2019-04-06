@@ -134,7 +134,7 @@ class IndikatorKegiatanAPIController extends Controller {
         $indikator_kegiatan->label         = Input::get('label');
         $indikator_kegiatan->kegiatan_id   = Input::get('kegiatan_id');
         $indikator_kegiatan->target        = Input::get('target');
-        $indikator_kegiatan->satuan        = Input::get('satuan');;
+        $indikator_kegiatan->satuan        = Input::get('satuan');
 
         if ( $indikator_kegiatan->save()){
             return \Response::make('sukses', 200);
