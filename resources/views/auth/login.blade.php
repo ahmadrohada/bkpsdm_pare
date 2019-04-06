@@ -1,6 +1,6 @@
 {{-- Set Template Body Classes --}}
 <?php
-	$templateBodybodyClasses = 'login-page';
+	$templateBodybodyClasses = 'login-page tes';
 ?>
 
 @extends('admin.layouts.auth')
@@ -10,23 +10,49 @@
 @endsection
 
 @section('template_fastload_css')
+.tes{
+	background-image:url({{asset('assets/images/pare_bg.jpg')}} ) ;
+	background-repeat: no-repeat;
+  background-attachment: fixed;
+	background-position: right; 
+	background-size: cover;
+	
+}
+
+.box-login-style{
+	-webkit-box-shadow: 3px 4px 11px 0px rgba(0,0,0,0.41);
+	-moz-box-shadow: 3px 4px 11px 0px rgba(0,0,0,0.41);
+	box-shadow: 3px 4px 11px 0px rgba(0,0,0,0.41);
+	border-radius: 5px !important;
+	padding:20px;
+	background-color:rgba(255,255, 255, 0.2);
+	
+}
 @endsection
 
+
+
+
+
 @section('content')
-    <div class="login-box">
+
+    <div class="login-box box-login-style">
+		
 		<div class="login-logo">
+			
 			
 			<img src="{{asset('assets/images/form/logo.png')}}" >
 			
-			<h3 class="visible-lg visible-md  login-header" style="color:#077821;">Performance Agreement Report by Electronic</h3>
-			<h4 class="visible-sm visible-xs  login-header" style="color:#077821;">Performance Agreement Report by Electronic</h4>
+			<h3 class="visible-lg visible-md  login-header" style="color:#077821; text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px white;">Performance Agreement Report by Electronic</h3>
+			<h4 class="visible-sm visible-xs  login-header" style="color:#077821; text-shadow: 2px 2px 4px #000000;">Performance Agreement Report by Electronic</h4>
 		
 			
 			
 			
 		</div>
-		<div class="login-box-body">
+		<div class="login-box-body" style="border-radius: 3px !important; background-color:rgba(255,255, 255, 0.3);">
 
+			@include('admin.partials.return-messages')
 			<h4 class="login-box-msg">
 			  	{{-- Lang::get('auth.login') --}}
 			</h4>
@@ -36,19 +62,8 @@
 			
 
 			 <hr class="login-full-span">
-
-		<div class="row btn-block">
-			<div class="col-xs-12">
-				{!! HTML::icon_link( "/register", 'fa fa-'.Lang::get('auth.register_icon'), Lang::get('auth.register'), array('title' => Lang::get('auth.register'))) !!}
-			</div>
-		</div>
-
-		<div class="row btn-block">
-			<div class="col-xs-12">
-				{!! HTML::icon_link( "/password/email", 'fa fa-'.Lang::get('auth.forgot_icon'), Lang::get('auth.forgot'), array('title' => Lang::get('auth.forgot'), 'id' => 'forgot')) !!}
-			</div>
-		</div>
-
+			 
+		
 			
 
       	</div>

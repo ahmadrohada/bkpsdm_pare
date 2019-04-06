@@ -11,8 +11,6 @@
     {{-- Load Common Admin Head --}}
 	@include('admin.structure.head')
 
-	{{-- STYLESHEETS --}}
-	{!! HTML::style(asset('/assets/css/admin/login.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
 
 @stop
 

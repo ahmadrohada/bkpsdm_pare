@@ -193,23 +193,6 @@ class Pustaka {
 
 	}
 
-	public static function persen3($data){
-
-		if ( $data == 0){
-			$hasil = 0 ;
-		}else{
-
-			if ( ( ($data%2) == 0 ) | (($data%5) == 0 ) ){
-				$hasil = number_format(($data) , 0);
-			}else{
-				$hasil = number_format(($data) , 2);
-			}
-
-		}
-
-		return $hasil. " %";
-
-	}
 
 	public static function tgl_form($data){
 

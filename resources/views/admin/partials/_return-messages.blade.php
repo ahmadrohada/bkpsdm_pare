@@ -20,10 +20,14 @@
 @if (count($errors) > 0)
 	<div class="alert alert-danger alert-dismissable flat">
 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		<h5>
+		<h4>
 			<i class="icon fa fa-warning"></i>
-			Gagal
-		</h5>
-		
+			<strong>{{ Lang::get('auth.whoops') }}</strong> {{ Lang::get('auth.someProblems') }}
+		</h4>
+		<ul>
+			@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+			@endforeach
+		</ul>
 	</div>
 @endif

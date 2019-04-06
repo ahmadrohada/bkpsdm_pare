@@ -445,9 +445,9 @@ class CapaianBulananAPIController extends Controller {
             
             $penilaian_kode_etik = Pustaka::persen($jm,30) ;
 
-            $x = number_format( ($capaian_kinerja_bulanan * 70 / 100)+( $penilaian_kode_etik * 30 / 100 ) , 2 );
+            $capaian_skp_bulanan = number_format( ($capaian_kinerja_bulanan * 70 / 100)+( $penilaian_kode_etik * 30 / 100 ) , 2 ).' %';
             
-            $capaian_skp_bulanan = Pustaka::persen3($x);
+          
           
 
         }else{
