@@ -9,11 +9,11 @@
 @if (session('anError'))
 	<div class="alert alert-danger alert-dismissable flat">
 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		<h4>
+		<h5>
 			<i class="icon fa fa-warning"></i>
-			Success
-		</h4>
-		{{ session('anError') }}
+			Success Logout
+		</h5>
+		
 	</div>
 @endif
 
