@@ -73,7 +73,7 @@
 @section('template_scripts')
 
 	{!! HTML::script('/assets/js/login.js', array('type' => 'text/javascript')) !!}
-	@include('scripts.checkbox');
-	@include('scripts.show-hide-passwords');
+	@include('scripts.checkbox')
+	@include('scripts.show-hide-passwords')
 
 @endsection

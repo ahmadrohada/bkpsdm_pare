@@ -137,7 +137,7 @@ class SKPTahunanAPIController extends Controller {
                                 'atasan.id AS atasan_id',
                                 'skp_tahunan.status_approve'
                             )
-                            ->where('skp_tahunan.id','=', $request->skp_tahunan_id )->first();;
+                            ->where('skp_tahunan.id','=', $request->skp_tahunan_id )->first();
 
 
         //KEGITAN RENJA KSUBID
@@ -246,7 +246,7 @@ class SKPTahunanAPIController extends Controller {
         $skp_tahunan = SKPTahunan::
                             where('pegawai_id','=', $request->pegawai_id )
                             ->where('u_jabatan_id','=', $request->jabatan_id )
-                            ->exists();;
+                            ->exists();
 
        
 

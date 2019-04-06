@@ -23,7 +23,7 @@ class Skpd extends Model
 
     public function pejabat()
     {
-        return $this->hasOne('App\Models\HistoryJabatan','id_jabatan')->where('status','active');;
+        return $this->hasOne('App\Models\HistoryJabatan','id_jabatan')->where('status','active');
     }
 
    
