@@ -1,8 +1,8 @@
 @if (session('status'))
 	<div class="alert alert-success alert-dismissable flat">
 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		<h4><i class="icon fa fa-check"></i> Success</h4>
-		{{ session('status') }}
+		<h5><i class="icon fa fa-check"></i> Success</h5>
+		
 	</div>
 @endif
 
@@ -11,9 +11,9 @@
 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		<h5>
 			<i class="icon fa fa-warning"></i>
-			Success Logout
+			Success
 		</h5>
-		
+		{{ session('anError') }}
 	</div>
 @endif
 
