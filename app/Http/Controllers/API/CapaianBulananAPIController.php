@@ -351,7 +351,7 @@ class CapaianBulananAPIController extends Controller {
                             $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                             $join   ->where('realisasi.capaian_id','=',$capaian_id);
                         })
-                        ->SELECT('kegiatan.target','realisasi.realisasi')
+                        ->SELECT('skp_tahunan_rencana_aksi.target','realisasi.realisasi')
                         ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child)
                         ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan', $bulan)
                         ->get();
@@ -394,7 +394,7 @@ class CapaianBulananAPIController extends Controller {
                             $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                             $join   ->where('realisasi.capaian_id','=',$capaian_id);
                         })
-                        ->SELECT('kegiatan.target','realisasi.realisasi')
+                        ->SELECT('skp_tahunan_rencana_aksi.target','realisasi.realisasi')
                         ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id)
                         ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan', $bulan)
                         ->get();
@@ -778,6 +778,7 @@ class CapaianBulananAPIController extends Controller {
                              'capaian_bulanan.u_nama',
                              'capaian_bulanan.skp_bulanan_id',
                              'capaian_bulanan.u_jabatan_id',
+                             'capaian_bulanan.tgl_mulai',
                              'capaian_bulanan.status_approve'
                             );
 
@@ -785,7 +786,7 @@ class CapaianBulananAPIController extends Controller {
     
         $datatables = Datatables::of($dt)
         ->addColumn('periode', function ($x) {
-            return "";
+            return Pustaka::periode($x->tgl_mulai);
         })->addColumn('nama', function ($x) {
             return $x->u_nama;
         })->addColumn('jabatan', function ($x) {

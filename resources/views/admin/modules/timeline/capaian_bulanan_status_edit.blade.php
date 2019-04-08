@@ -13,7 +13,7 @@
 						Tanggal dibuat<a class="pull-right st_created_at">-</a>
 					</li>
 					<li class="list-group-item">
-						Nama Pejabat Penilai <a class="pull-right st_pejabat_penilai">-</a>
+						Pejabat Penilai <a class="pull-right st_pejabat_penilai">-</a>
 					</li>
 					<li class="list-group-item">
 						Jumlah Kegiatan <a class="pull-right st_jm_kegiatan_bulanan" >-</a>

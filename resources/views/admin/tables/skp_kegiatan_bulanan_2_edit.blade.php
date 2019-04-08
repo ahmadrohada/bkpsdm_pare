@@ -248,7 +248,7 @@
 									{ data: "label", name:"label",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.rencana_aksi_label+"</p>";
+												return "<span class='text-danger'>"+row.rencana_aksi_label+"</span>";
 											}else{
 												return row.kegiatan_bulanan_label;
 											}
@@ -258,7 +258,7 @@
 									{ data: "output", name:"output", width:"90px",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.target + ' '+ row.satuan+"</p>";
+												return "<span class='text-danger'>"+row.target + ' '+ row.satuan+"</span>";
 											}else{
 												return row.target + ' '+ row.satuan;
 											}
@@ -268,7 +268,7 @@
 										"render": function ( data, type, row ) {
 											
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.penanggung_jawab+"</p>";
+												return "<span class='text-danger'>"+row.penanggung_jawab+"</span>";
 											}else{
 												return row.penanggung_jawab;
 											}
@@ -278,7 +278,7 @@
 									{ data: "pelaksana", name:"pelaksana",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.pelaksana+"</p>";
+												return "<span class='text-danger'>"+row.pelaksana+"</span>";
 											}else{
 												return row.pelaksana;
 											}

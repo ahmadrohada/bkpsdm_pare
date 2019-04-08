@@ -33,6 +33,7 @@
 	$('#approval_request_renja_table').DataTable({
 				processing      : true,
 				serverSide      : true,
+				type			: "post",
 				searching      	: false,
 				paging          : false,
 				order 			: [ 0 , 'desc' ],
@@ -44,6 +45,7 @@
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/approval_request_capaian_bulanan_list") }}',
+									
 									data: { pegawai_id : {!! $pegawai->id !!} },
 									delay:3000
 								},
@@ -64,7 +66,7 @@
 										if (row.status_approve == 0 ){
 											return  '<span  data-toggle="tooltip" title="Berikan Persetujuan" style="margin:1px;" ><a class="btn btn-warning btn-xs approval_capaian_bulanan"  data-capaian_bulanan_id="'+row.capaian_bulanan_id+'">Berikan Persetujuan</a></span>';
 										}else if ( row.status_approve == 1 ){
-											return  '<span  data-toggle="tooltip" title="Detail SKP Tahunan" style="margin:1px;" ><a class="btn btn-success btn-xs lihat_capaian_bulanan"  data-capaian_bulanan_id="'+row.capaian_bulanan_id+'"> Lihat </a></span>';
+											return  '<span  data-toggle="tooltip" title="Detail Capaian Tahunan" style="margin:1px;" ><a class="btn btn-success btn-xs lihat_capaian_bulanan"  data-capaian_bulanan_id="'+row.capaian_bulanan_id+'"> Lihat </a></span>';
 										}else if ( row.status_approve == 2 ){
 											return  '<span  data-toggle="tooltip" title="Capaian Bulanan telah ditolak" style="margin:1px;" ><a class="btn btn-danger btn-xs lihat_capaian_bulanan"  data-capaian_bulanan_id="'+row.capaian_bulanan_id+'"> Ditolak </a></span>';
 										}

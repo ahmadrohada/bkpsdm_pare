@@ -59,10 +59,46 @@
 									}
 								},
 								
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "bulan" ,  name:"bulan", orderable: true, searchable: true},
-								{ data: "pelaksanaan" ,  name:"pelaksanaan", orderable: true, searchable: true,width:"250px"},
-								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true},
+								{ data: "periode" ,  name:"periode", orderable: true, searchable: true,
+									"render": function ( data, type, row ) {
+										if (row.capaian_status_approve == 2){
+											return "<span class='text-danger'>"+row.periode+"</span>";
+										}else{
+											return row.periode;
+										}
+
+									}	
+								},
+								{ data: "bulan" ,  name:"bulan", orderable: true, searchable: true,
+									"render": function ( data, type, row ) {
+										if (row.capaian_status_approve == 2){
+											return "<span class='text-danger'>"+row.bulan+"</span>";
+										}else{
+											return row.bulan;
+										}
+
+									}	
+								},
+								{ data: "pelaksanaan" ,  name:"pelaksanaan", orderable: true, searchable: true,width:"250px",
+									"render": function ( data, type, row ) {
+										if (row.capaian_status_approve == 2){
+											return "<span class='text-danger'>"+row.pelaksanaan+"</span>";
+										}else{
+											return row.pelaksanaan;
+										}
+
+									}	
+								},
+								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true,
+									"render": function ( data, type, row ) {
+										if (row.capaian_status_approve == 2){
+											return "<span class='text-danger'>"+row.jabatan+"</span>";
+										}else{
+											return row.jabatan;
+										}
+
+									}	
+								},
 								
 								{ data: "capaian" , orderable: false,searchable:false,width:"120px",
 										"render": function ( data, type, row ) {
