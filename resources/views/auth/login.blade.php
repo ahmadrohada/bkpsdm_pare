@@ -11,7 +11,7 @@
 
 @section('template_fastload_css')
 .tes{
-	background-image:url({{asset('assets/images/pare_bg.jpg')}} ) ;
+	background-image:url({{asset('assets/images/pare_bg_2.jpg')}} ) ;
 	background-repeat: no-repeat;
   background-attachment: fixed;
 	background-position: right; 
@@ -28,6 +28,20 @@
 	background-color:rgba(255,255, 255, 0.2);
 	
 }
+
+@media screen and ( max-width:700px){
+	.box-login-style{
+		-webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
+		-moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
+		box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
+		border: none !important;
+		padding:20px;
+		background-color:rgba(255,255, 255, 0);
+	
+	}
+}
+
+
 @endsection
 
 
@@ -44,7 +58,7 @@
 			<img src="{{asset('assets/images/form/logo.png')}}" >
 			
 			<h3 class="visible-lg visible-md  login-header" style="color:#077821; text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px white;">Performance Agreement Report by Electronic</h3>
-			<h4 class="visible-sm visible-xs  login-header" style="color:#077821; text-shadow: 2px 2px 4px #000000;">Performance Agreement Report by Electronic</h4>
+			<h4 class="visible-sm visible-xs  login-header" style="color:#077821; text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px white;">Performance Agreement Report by Electronic</h4>
 		
 			
 			
