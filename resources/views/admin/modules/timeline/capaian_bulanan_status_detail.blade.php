@@ -13,7 +13,7 @@
 						Tanggal dibuat<a class="pull-right st_created_at">-</a>
 					</li>
 					<li class="list-group-item">
-						Nama Pejabat Penilai <a class="pull-right st_pejabat_penilai">-</a>
+						Pejabat Penilai <a class="pull-right st_pejabat_penilai">-</a>
 					</li>
 					<li class="list-group-item">
 						Jumlah Kegiatan <a class="pull-right st_jm_kegiatan_bulanan" >-</a>
@@ -50,7 +50,7 @@
 	</div>
 	<div class="col-md-8">
 		
-		<div class="box">
+		<div class="box st_pke hidden">
             <div class="box-header" style="height:40px;">
               <h1 class="box-title text-success" style="font-size:16px;">Penilaian Kode Etik</h1>
             </div>
@@ -133,7 +133,7 @@
 					$('.st_capaian_skp_bulanan').html(data['capaian_skp_bulanan']);
 					
 
-					if (data['penilaian_kode_etik_id'] >= 1 ){
+					if ((data['penilaian_kode_etik_id'] >= 1 ) && (data['alasan_penolakan'] == "") && (data['status_approve'] == "disetujui") ){
 						$('.st_pke').removeClass('hidden');
 						$('.penilaian_kode_etik_id').val(data['penilaian_kode_etik_id']);
 						

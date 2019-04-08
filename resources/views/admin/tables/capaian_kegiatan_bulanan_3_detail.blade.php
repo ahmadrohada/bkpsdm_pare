@@ -102,12 +102,12 @@
 											
 										}
 									},
-									{ data: "target", name:"target", width:"130px",
+									{ data: "rencana_aksi_target", name:"rencana_aksi_target", width:"130px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
-												return "<p class='text-danger'>"+row.target + ' '+ row.satuan_target+"</p>";
+												return "<p class='text-danger'>"+row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan+"</p>";
 											}else{
-												return row.target + ' '+ row.satuan_target;
+												return row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan;
 											}
 										}
 									},
@@ -117,7 +117,7 @@
 											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
 												return "<p class='text-danger'>-</p>";
 											}else{
-												return row.realisasi_rencana_aksi + ' '+ row.satuan_realisasi;
+												return row.realisasi_rencana_aksi + ' '+ row.satuan_rencana_aksi;
 											}
 
 											

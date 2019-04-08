@@ -82,7 +82,7 @@
 									{ data: "label", name:"label",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.kegiatan_bulanan_label+' / '+row.kegiatan_tahunan_label+"</p>";
+												return "<span class='text-danger'>"+row.kegiatan_bulanan_label+' / '+row.kegiatan_tahunan_label+"</span>";
 											}else{
 												return row.kegiatan_bulanan_label+' / '+row.kegiatan_tahunan_label;
 											}
@@ -91,7 +91,7 @@
 									{ data: "target", name:"target", width:"130px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.target + ' '+ row.satuan+"</p>";
+												return "<span class='text-danger'>"+row.target + ' '+ row.satuan+"</span>";
 											}else{
 												return row.target + ' '+ row.satuan;
 											}
@@ -100,7 +100,7 @@
 									{ data: "realisasi", name:"realisasi", width:"130px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>-</p>";
+												return "<span class='text-danger'>-</span>";
 											}else{
 												return row.realisasi + ' '+ row.realisasi_satuan;
 											}
@@ -109,7 +109,7 @@
 									{ data: "persentase_realisasi", name:"persentase_realisasi", width:"80px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>-</p>";
+												return "<span class='text-danger'>-</span>";
 											}else{
 												return row.persentase_realisasi;
 											}

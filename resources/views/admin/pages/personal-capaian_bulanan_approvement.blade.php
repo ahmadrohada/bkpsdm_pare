@@ -38,7 +38,7 @@
 
 					<!-- 2. KASUBID -->
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.modules.timeline.capaian_bulanan_status_edit')
+						@include('admin.modules.timeline.capaian_bulanan_status_approvement')
 					@endif
 
 					<!-- 2. PELAKSANA -->
@@ -64,7 +64,7 @@
 
 					<!-- 2. KASUBID -->
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.tables.capaian_kegiatan_bulanan_3_edit')
+						@include('admin.tables.capaian_kegiatan_bulanan_3_detail')
 					@endif
 
 					<!-- 2. PELAKSANA -->
