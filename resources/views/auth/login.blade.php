@@ -11,7 +11,7 @@
 
 @section('template_fastload_css')
 .tes{
-	background-image:url({{asset('assets/images/pare_bg_2.jpg')}} ) ;
+	background-image:url({{asset('assets/images/pare_bg.jpg')}} ) ;
 	background-repeat: no-repeat;
   background-attachment: fixed;
 	background-position: right; 
