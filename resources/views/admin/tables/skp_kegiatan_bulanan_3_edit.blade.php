@@ -2,7 +2,7 @@
 	<div class="col-md-5">
 		<div class="table-responsive">
 			<input type='text' id = 'cari_skp_bulanan' class="form-control" placeholder="cari">
-			<div id="skp_bulanan_3_tree" class="demo"></div>
+			<div id="skp_bulanan_tree" class="demo"></div>
 			
 		</div>
 
@@ -26,7 +26,7 @@
 					<span  data-toggle="tooltip" title="Create SKP Bulanan"><a class="btn btn-info btn-xs create_skp_bulanan" ><i class="fa fa-plus" ></i> SKP Bulanan</a></span>
 				</div>
 
-				<table id="skp_bulanan_3_table" class="table table-striped table-hover" >
+				<table id="skp_bulanan_table" class="table table-striped table-hover" >
 					<thead>
 						<tr>
 							<th >No</th>
@@ -96,7 +96,7 @@
 <script type="text/javascript">
 
 	function initTreeKegBulanan() {
-		$('#skp_bulanan_3_tree')
+		$('#skp_bulanan_tree')
 		.jstree({
             'core' : {
 				'data' : {
@@ -126,7 +126,7 @@
 				modal_create_skp_bulanan();
 				
 		}).on("loaded.jstree", function(){
-			$('#skp_bulanan_3_tree').jstree('open_all');
+			$('#skp_bulanan_tree').jstree('open_all');
 		}).on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
 				//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
@@ -139,7 +139,7 @@
 
 
 	function context_menus(node){
-			var tree = $('#skp_bulanan_3_tree').jstree(true);
+			var tree = $('#skp_bulanan_tree').jstree(true);
 
 			if (node.type === 'skp_tahunan'){
 				var addLabel = 'Create SKP Bulanan';
@@ -309,7 +309,7 @@
 	}
 
 	
-		$('#skp_bulanan_3_table').DataTable({
+		$('#skp_bulanan_table').DataTable({
 				destroy			    : true,
 				processing      : false,
 				serverSide      : true,
@@ -365,7 +365,7 @@
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 		var v = $('#cari_skp_bulanan').val();
-		$('#skp_bulanan_3_tree').jstree(true).search(v);
+		$('#skp_bulanan_tree').jstree(true).search(v);
 		}, 250);
 	});
 	
@@ -455,14 +455,14 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										$('#skp_bulanan_3_table').DataTable().ajax.reload(null,false);
-										jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
+										$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+										jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
-											$('#skp_bulanan_3_table').DataTable().ajax.reload(null,false);
-											jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
+											$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+											jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 											
 										}
 									}
@@ -521,12 +521,12 @@
 									timer: 900
 									}).then(function () {
 										$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
-										jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
+										jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
-											jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
+											jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 											
 										}
 									}

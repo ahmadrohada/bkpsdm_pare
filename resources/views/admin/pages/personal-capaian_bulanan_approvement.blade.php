@@ -33,7 +33,7 @@
 
 					<!-- 2. KABID -->
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('admin.modules.timeline.capaian_bulanan_status_edit')
+						@include('admin.modules.timeline.capaian_bulanan_status_approvement')
 					@endif
 
 					<!-- 2. KASUBID -->
@@ -59,7 +59,7 @@
 
 					<!-- 2. KABID -->
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('admin.tables.capaian_kegiatan_bulanan_2_edit')
+						@include('admin.tables.capaian_kegiatan_bulanan_2_detail')
 					@endif
 
 					<!-- 2. KASUBID -->
