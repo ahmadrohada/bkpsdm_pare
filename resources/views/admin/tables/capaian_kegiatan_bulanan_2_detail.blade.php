@@ -30,7 +30,7 @@
 						<tr>
 						
 							<th>TARGET</th>
-							<th>realisasi</th>
+							<th>REALISASI</th>
 							<th>%</th>
 						</tr>
 					</thead>
@@ -74,15 +74,15 @@
 									 },
 								},
 				columns			: [
-									{ data: 'rencana_aksi_id' ,width:"10px",
+					{ data: 'kegiatan_bulanan_id' ,width:"10px",
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 									},
 									{ data: "rencana_aksi_label", name:"rencana_aksi_label",
 										"render": function ( data, type, row ) {
-											if ( (row.rencana_aksi_id) <= 0 ){
-												return "<p class='text-danger'>"+row.rencana_aksi_label+' / '+row.kegiatan_tahunan_label+"</p>";
+											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
+												return "<span class='text-danger'>"+row.rencana_aksi_label+' / '+row.kegiatan_tahunan_label+"</span>";
 											}else{
 												return row.rencana_aksi_label+' / '+row.kegiatan_tahunan_label;
 											}
@@ -116,10 +116,10 @@
 									{ data: "target", name:"target", width:"130px",
 										"render": function ( data, type, row ) {
 										
-											if ( (row.capaian_kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.target+" "+row.satuan_target+"</p>";
+											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
+												return "<p class='text-danger'>"+row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan+"</p>";
 											}else{
-												return row.target+" "+row.satuan_target;
+												return row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan;
 											}
 											
 											
@@ -127,23 +127,23 @@
 									},
 									
 									
-									{ data: "realisasi_kabid", name:"realisasi_kabid", width:"130px",
+									{ data: "realisasi_rencana_aksi", name:"realisasi_rencana_aksi", width:"130px",
 										"render": function ( data, type, row ) {
-											if ( (row.realisasi_kabid_id) <= 0 ){
+											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
 												return "<p class='text-danger'>-</p>";
 											}else{
-												return row.realisasi_kabid + ' '+ row.satuan_kabid;
+												return row.realisasi_rencana_aksi + ' '+ row.satuan_rencana_aksi;
 											}
 
 											
 										}
 									},
-									{ data: "persentasi_realisasi_kabid", name:"persentasi_realisasi_kabid", width:"80px",
+									{ data: "persentasi_realisasi_rencana_aksi", name:"persentasi_realisasi_rencana_aksi", width:"80px",
 										"render": function ( data, type, row ) {
-											if ( (row.realisasi_kabid_id) <= 0 ){
+											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
 												return "<p class='text-danger'>-</p>";
 											}else{
-												return row.persentasi_realisasi_kabid;
+												return row.persentasi_realisasi_rencana_aksi;
 											}
 										}
 									},

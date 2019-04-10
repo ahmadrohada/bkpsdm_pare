@@ -174,12 +174,10 @@
 				}).then(function () {
 					$('.modal-skp_bulanan').modal('hide');
 					$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
-					$('#skp_bulanan_3_table').DataTable().ajax.reload(null,false);
-					
-					//jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
-					jQuery('#skp_bulanan_3_tree').jstree(true).refresh(true);
+					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 					
 					
+					//skp_bulanan_pelaksana
 				},
 					
 					function (dismiss) {

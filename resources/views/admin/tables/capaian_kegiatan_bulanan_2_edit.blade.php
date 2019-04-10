@@ -31,7 +31,7 @@
 						<tr>
 						
 							<th>TARGET</th>
-							<th>realisasi</th>
+							<th>REALISASI</th>
 							<th>%</th>
 						</tr>
 					</thead>
@@ -60,7 +60,7 @@
 				destroy			: true,
 				processing      : false,
 				serverSide      : true,
-				searching      	: false,
+				searching      	: true,
 				paging          : false,
 				order 			: [0 , 'asc' ],
 				columnDefs		: [
@@ -77,15 +77,15 @@
 									 },
 								},
 				columns			: [
-									{ data: 'rencana_aksi_id' ,width:"10px",
+									{ data: 'kegiatan_bulanan_id' ,width:"10px",
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 									},
 									{ data: "rencana_aksi_label", name:"rencana_aksi_label",
 										"render": function ( data, type, row ) {
-											if ( (row.rencana_aksi_id) <= 0 ){
-												return "<p class='text-danger'>"+row.rencana_aksi_label+' / '+row.kegiatan_tahunan_label+"</p>";
+											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
+												return "<span class='text-danger'>"+row.rencana_aksi_label+' / '+row.kegiatan_tahunan_label+"</span>";
 											}else{
 												return row.rencana_aksi_label+' / '+row.kegiatan_tahunan_label;
 											}
@@ -119,10 +119,10 @@
 									{ data: "target", name:"target", width:"130px",
 										"render": function ( data, type, row ) {
 										
-											if ( (row.capaian_kegiatan_bulanan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.target+" "+row.satuan_target+"</p>";
+											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
+												return "<p class='text-danger'>"+row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan+"</p>";
 											}else{
-												return row.target+" "+row.satuan_target;
+												return row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan;
 											}
 											
 											
@@ -130,32 +130,32 @@
 									},
 									
 									
-									{ data: "realisasi_kabid", name:"realisasi_kabid", width:"130px",
+									{ data: "realisasi_rencana_aksi", name:"realisasi_rencana_aksi", width:"130px",
 										"render": function ( data, type, row ) {
-											if ( (row.realisasi_kabid_id) <= 0 ){
+											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
 												return "<p class='text-danger'>-</p>";
 											}else{
-												return row.realisasi_kabid + ' '+ row.satuan_kabid;
+												return row.realisasi_rencana_aksi + ' '+ row.satuan_rencana_aksi;
 											}
 
 											
 										}
 									},
-									{ data: "persentasi_realisasi_kabid", name:"persentasi_realisasi_kabid", width:"80px",
+									{ data: "persentasi_realisasi_rencana_aksi", name:"persentasi_realisasi_rencana_aksi", width:"80px",
 										"render": function ( data, type, row ) {
-											if ( (row.realisasi_kabid_id) <= 0 ){
+											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
 												return "<p class='text-danger'>-</p>";
 											}else{
-												return row.persentasi_realisasi_kabid;
+												return row.persentasi_realisasi_rencana_aksi;
 											}
 										}
 									},
 									{  data: 'action',width:"40px",
 											"render": function ( data, type, row ) {
 											
-											if ( (row.realisasi_kabid_id) >= 1 ){
-												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_rencana_aksi"  data-id="'+row.realisasi_kabid_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_rencana_aksi"  data-id="'+row.realisasi_kabid_id+'" data-label="'+row.rencana_aksi_label+'" ><i class="fa fa-close " ></i></a></span>';
+											if ( (row.realisasi_rencana_aksi_id) >= 1 ){
+												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_rencana_aksi"  data-id="'+row.realisasi_rencana_aksi_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_rencana_aksi"  data-id="'+row.realisasi_rencana_aksi_id+'" data-label="'+row.rencana_aksi_label+'" ><i class="fa fa-close " ></i></a></span>';
 											}else{
 												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_realisasi_rencana_aksi"  data-id="'+row.rencana_aksi_id+'"><i class="fa fa-plus" ></i></a></span>'+
 														'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
@@ -194,7 +194,7 @@
 					$('.modal-realisasi_rencana_aksi').find('[name=realisasi_rencana_aksi_id]').val("");
 					$('.modal-realisasi_rencana_aksi').find('[name=skp_bulanan_id]').val(data['skp_bulanan_id']);
 					$('.modal-realisasi_rencana_aksi').find('[name=capaian_id]').val({!! $capaian->id !!});
-					$('.modal-realisasi_rencana_aksi').find('[name=satuan]').val(data['kegiatan_tahunan_satuan']);
+					$('.modal-realisasi_rencana_aksi').find('[name=satuan]').val(data['satuan_target_rencana_aksi']);
 
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_tahunan_label').html(data['kegiatan_tahunan_label']);
 					$('.modal-realisasi_rencana_aksi').find('.penanggung_jawab').html(data['penanggung_jawab']);
@@ -208,7 +208,7 @@
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
 					$('.modal-realisasi_rencana_aksi').find('.realisasi_kegiatan_bulanan_output').html(data['realisasi_output']);
 
-					$('.modal-realisasi_rencana_aksi').find('.kegiatan_tahunan_satuan').html(data['kegiatan_tahunan_satuan']);
+					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['satuan_target_rencana_aksi']);
 
 					$('.modal-realisasi_rencana_aksi').find('h4').html('Create Realisasi Kegiatan Bulanan');
 					$('.modal-realisasi_rencana_aksi').find('.btn-submit').attr('id', 'submit-save');
@@ -251,8 +251,8 @@
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_output').html(data['kegiatan_bulanan_output']);
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
 
-					$('.modal-realisasi_rencana_aksi').find('.kegiatan_tahunan_satuan').html(data['kegiatan_tahunan_satuan']);
-
+					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['realisasi_satuan']);
+					
 					$('.modal-realisasi_rencana_aksi').find('h4').html('Edit realisasi Kegiatan Bulanan');
 					$('.modal-realisasi_rencana_aksi').find('.btn-submit').attr('id', 'submit-update');
 					$('.modal-realisasi_rencana_aksi').find('[name=text_button_submit]').html('Update Data');
