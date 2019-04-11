@@ -228,7 +228,9 @@ class RencanaAksiAPIController extends Controller {
                                 'realisasi_kegiatan_bulanan.satuan AS realisasi_satuan',
                                 'realisasi_kegiatan_bulanan.bukti',
                                 'realisasi_kegiatan_bulanan.alasan_tidak_tercapai',
-                                'realisasi_rencana_aksi.id AS realisasi_rencana_aksi_id'
+                                'realisasi_rencana_aksi.id AS realisasi_rencana_aksi_id',
+                                'realisasi_rencana_aksi.realisasi AS realisasi_rencana_aksi',
+                                'realisasi_rencana_aksi.satuan AS satuan_rencana_aksi'
 
                             ) 
                     ->first();
@@ -253,6 +255,9 @@ class RencanaAksiAPIController extends Controller {
             'realisasi'                     => $x->realisasi,
             'realisasi_satuan'              => $x->realisasi_satuan,
             'realisasi_output'              => $x->realisasi." ".$x->realisasi_satuan,
+
+            'realisasi_rencana_aksi'        => $x->realisasi_rencana_aksi,
+            'satuan_rencana_aksi'           => $x->satuan_rencana_aksi,
 
 
 

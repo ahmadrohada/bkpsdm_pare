@@ -133,7 +133,12 @@
 									{ data: "realisasi_rencana_aksi", name:"realisasi_rencana_aksi", width:"130px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
-												return "<p class='text-danger'>-</p>";
+												if ( row.realisasi_rencana_aksi_bawahan != null ){
+													return "<p class='text-danger'>"+row.realisasi_rencana_aksi_bawahan+' '+row.satuan_rencana_aksi_bawahan+"</p>";
+												}else{
+													return "<p class='text-danger'>0 "+row.rencana_aksi_satuan+"</p>";
+												}
+												
 											}else{
 												return row.realisasi_rencana_aksi + ' '+ row.satuan_rencana_aksi;
 											}
@@ -209,6 +214,8 @@
 					$('.modal-realisasi_rencana_aksi').find('.realisasi_kegiatan_bulanan_output').html(data['realisasi_output']);
 
 					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['satuan_target_rencana_aksi']);
+
+					$('.modal-realisasi_rencana_aksi').find('[name=realisasi]').val(data['realisasi_rencana_aksi']);
 
 					$('.modal-realisasi_rencana_aksi').find('h4').html('Create Realisasi Kegiatan Bulanan');
 					$('.modal-realisasi_rencana_aksi').find('.btn-submit').attr('id', 'submit-save');
