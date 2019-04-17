@@ -11,6 +11,7 @@
             <form  id="rencana_aksi_form" method="POST" action="">
 			<input type="hidden" required name="kegiatan_tahunan_id" class="kegiatan_tahunan_id">
 			<input type="hidden" required name="rencana_aksi_id" class="rencana_aksi_id">
+			<input type="hidden" required name="renja_id" class="renja_id" value="{!! $skp->renja_id !!}">
 			<div class="modal-body">
 					
 					<br>
