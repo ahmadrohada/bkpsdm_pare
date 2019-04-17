@@ -74,7 +74,7 @@ class CapaianBulananAPIController extends Controller {
             );
         }else{
             $data = array(
-                    'periode'	        => $renja->Periode->label,
+                    'periode'	        => $capaian->SKPBulanan->SKPTahunan->Renja->Periode->label,
                     'date_created'	    => Pustaka::tgl_jam($capaian->created_at),
                     'masa_penilaian'    => Pustaka::tgl_form($capaian->tgl_mulai).' s.d  '.Pustaka::tgl_form($capaian->tgl_selesai),
 
@@ -205,16 +205,34 @@ class CapaianBulananAPIController extends Controller {
 
         $jenis_jabatan = $skp_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
 
-        //jm kegiatan pelaksana
+
+        $renja_id = $skp_bulanan->SKPTahunan->renja_id;
+        //$kegiatan_tahunan = KegiatanSKPTahunan::WHERE('skp_tahunan_id',$skp_bulanan->skp_tahunan_id)->get()->toArray();
+
+
+        //================================= PELAKSANA ===========================================//
         if ( $jenis_jabatan == 4 ){
-            $jm_kegiatan = KegiatanSKPBulanan::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
+            $jm_kegiatan = KegiatanSKPBulanan::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))
+                                                ->WHERE('renja_id',$renja_id)
+                                                ->count();
+       
+        //================================= K A S U B I D ========================================// 
         }else if ( $jenis_jabatan == 3){
             //cari bawahan
             $child = Jabatan::SELECT('id')->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get()->toArray(); 
 
-        //jm kegiatan kasubid   
-            $jm_kegiatan = RencanaAksi::WHEREIN('jabatan_id',$child)->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)->count();
+         
+            $jm_kegiatan = RencanaAksi::WHEREIN('jabatan_id',$child)->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
+                                        ->WHERE('renja_id',$renja_id)
+                                        ->count();
+        
+        //================================= K A B I D ========================================// 
         }else if ( $jenis_jabatan == 2){
+
+            //cari bawahan
+            $bawahan = Jabatan::SELECT('id')->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
+
+
             //cari bawahan  , jabatanpelaksanan
             $pelaksana_id = Jabatan::
                     leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
@@ -225,7 +243,11 @@ class CapaianBulananAPIController extends Controller {
                     ->get()
                     ->toArray(); 
             //jm kegiatan kasubid   
-            $jm_kegiatan = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id)->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)->count();
+            $jm_kegiatan = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id)->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
+                                    ->WHERE('renja_id',$renja_id)
+                                    ->count();
+        
+        //===================================================================================// 
         }else{
             $jm_kegiatan = 0 ;
         }
@@ -238,7 +260,8 @@ class CapaianBulananAPIController extends Controller {
 
 
         $data = array(
-                    'status'			    => 'pass',
+                    'status'			    =>  'pass',
+                    'renja_id'              =>  $renja_id,
                     'pegawai_id'            =>  $skp_bulanan->pegawai_id,
                     'skp_bulanan_id'        =>  $skp_bulanan->skp_bulanan_id,
                     'periode_label'			=>  Pustaka::bulan($skp_bulanan->bulan),
@@ -494,12 +517,12 @@ class CapaianBulananAPIController extends Controller {
 	{
         $messages = [
                  'pegawai_id.required'                   => 'Harus diisi',
-                'skp_bulanan_id.required'               => 'Harus diisi',
-                'tgl_mulai.required'                    => 'Harus diisi',
-                'tgl_selesai.required'                  => 'Harus diisi',
-                'u_nama.required'                       => 'Harus diisi',
-                'u_jabatan_id.required'                 => 'Harus diisi',
-                'jm_kegiatan_bulanan'                   => 'Harus Lebih dari nol'
+                 'skp_bulanan_id.required'               => 'Harus diisi',
+                 'tgl_mulai.required'                    => 'Harus diisi',
+                 'tgl_selesai.required'                  => 'Harus diisi',
+                 'u_nama.required'                       => 'Harus diisi',
+                 'u_jabatan_id.required'                 => 'Harus diisi',
+                 'jm_kegiatan_bulanan'                   => 'Harus Lebih dari nol'
 
         ];
 

@@ -282,6 +282,7 @@ class RencanaAksiAPIController extends Controller {
 
         $messages = [
                 'kegiatan_tahunan_id.required'  => 'Harus diisi',
+                'renja_id.required'             => 'Harus diisi',
                 'waktu_pelaksanaan.required'    => 'Harus diisi',
                 'pelaksana.required'            => 'Harus diisi',
                 'target.required'               => 'Harus diisi',
@@ -293,6 +294,7 @@ class RencanaAksiAPIController extends Controller {
                         Input::all(),
                         array(
                             'kegiatan_tahunan_id'   => 'required',
+                            'renja_id'              => 'required',
                             'pelaksana'             => 'required|numeric|min:1',
                             'waktu_pelaksanaan'     => 'required',
                             'label'                 => 'required',
@@ -314,6 +316,7 @@ class RencanaAksiAPIController extends Controller {
             $data[] = array(
 
             'kegiatan_tahunan_id'   => Input::get('kegiatan_tahunan_id'),
+            'renja_id'              => Input::get('renja_id'),
             'jabatan_id'            => Input::get('pelaksana'),
             'label'                 => Input::get('label'),
             'waktu_pelaksanaan'     => $target[$i],
