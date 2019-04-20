@@ -22,13 +22,13 @@
 					<div class="active tab-pane" id="tab_a">
 <!-- ============================================================================================================= -->
 						
-						<div class="form-horizontal col-md-6" style="padding-right:90px; margin-top:10px;">
+						<div class="form-horizontal col-md-6 " style="margin-top:10px;">
 							<div class="form-group form-group-sm skp_bulanan_id">
 								<label>Periode Capaian</label>
 								<span id="periode_label" class="form-control"> TEXT PERIODE</span>
 							</div>
 						</div>
-						<div class="form-horizontal col-md-6" style="margin-top:10px;">
+						<div class="form-horizontal col-md-5 col-md-offset-1" style="margin-top:10px;">
 							<div class="form-group form-group-sm masa_penilaian">
 								<label>Masa Penilaian SKP</label>
 								<div class="input-group input-group-sm ">
@@ -39,13 +39,17 @@
 							</div>
 						</div>
 
-						 
 						<div class="form-horizontal col-md-12" style="margin-top:20px;">
-							<div class="form-group form-group-sm jm_kegiatan_bulanan">
-								<label>Jumlah Kegiatan</label>
-								<span id="jm_kegiatan_bulanan" class="form-control" ></span>
+							<div class="form-group form-group-sm header_list" hidden>
+									
+								<label>Jabatan Bawahan </label> <label class="pull-right">Kegiatan / Realisasi</label>
+							</div>
+							
+							<div class="form-group form-group-sm" style="margin-top:-10px;">
+								<ul class="list-group list-group-unbordered" id="list_bawahan"></ul>
 							</div>
 						</div>
+						
 
 					
 					
@@ -208,6 +212,10 @@
 		$('.u_jabatan, .p_jabatan, .masa_penilaian, .skp_bulanan_id, .jm_kegiatan_bulanan').removeClass('has-error');
 		$('.error_renja_id').hide();
 		$('.modal-create_capaian_bulanan_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
+		
+		document.getElementById('list_bawahan').innerHTML = "";
+
+		
 	});
 
 	$('.tgl').on('click', function(){
@@ -232,7 +240,19 @@
 					$('#periode_label').html(data['periode_label']); 
 					$('.mulai').val(data['tgl_mulai']); 
 					$('.selesai').val(data['tgl_selesai']); 
-					$('#jm_kegiatan_bulanan').html(data['jm_kegiatan_bulanan']);
+					//$('#jm_kegiatan_bulanan').html(data['jm_kegiatan_bulanan']);
+
+					var bawahan = document.getElementById('list_bawahan');
+					for(var i = 0 ; i < data['list_bawahan'].length; i++ ){
+						$('.header_list').show(); 
+						$("<li class='list-group-item' style='padding:3px 4px 3px 4px;;'>"+data['list_bawahan'][i].jabatan+" <a class='pull-right'>"+data['list_bawahan'][i].jm_keg+"/"+data['list_bawahan'][i].jm_realisasi+"</a> </li>").appendTo(bawahan);
+					}
+						$("<li class='list-group-item' style='background:#ededed; border-top:solid #3d3d3d 2px; padding:5px 4px 5px 4px;'><b>Total Kegiatan </b><a class='pull-right'>"+data['jm_kegiatan_bulanan']+"</a> </li>").appendTo(bawahan);
+						
+						
+				
+
+
 
 
 					
@@ -339,17 +359,6 @@
 						$('.masa_penilaian').addClass('has-error');
 					}
 
-					/* if (index == 'u_jabatan_id'){
-
-						$('#myTab a[href="#tab_b"]').tab('show');
-						$('.u_jabatan').addClass('has-error')
-					}
-
-					if (index == 'p_jabatan_id'){
-
-						$('#myTab a[href="#tab_c"]').tab('show');
-						$('.p_jabatan').addClass('has-error')
-					} */
 					if (index == 'jm_kegiatan_bulanan'){
 
 						$('#myTab a[href="#tab_a"]').tab('show');

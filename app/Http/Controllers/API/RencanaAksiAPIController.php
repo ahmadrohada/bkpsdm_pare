@@ -193,7 +193,7 @@ class RencanaAksiAPIController extends Controller {
         
     }
  
-    public function RencanaAksiDetail(Request $request)
+    public function RencanaAksiDetail2(Request $request)
     {
        
         $x = RencanaAksi::
@@ -209,7 +209,7 @@ class RencanaAksiAPIController extends Controller {
                     ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
                         $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
                     })
-                    ->leftjoin('db_pare_2018.realisasi_rencana_aksi', function($join){
+                    ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kabid AS realisasi_rencana_aksi', function($join){
                         $join   ->on('realisasi_rencana_aksi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                     })
                     ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
@@ -277,6 +277,89 @@ class RencanaAksiAPIController extends Controller {
         return $rencana_aksi;
     }
 
+    public function RencanaAksiDetail3(Request $request)
+    {
+       
+        $x = RencanaAksi::
+                    WHERE('skp_tahunan_rencana_aksi.id', $request->rencana_aksi_id)
+                    ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
+                        $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
+                    })
+                    ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                        $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
+                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
+                    })
+                    ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
+                        $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
+                    })
+                    ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi_rencana_aksi', function($join){
+                        $join   ->on('realisasi_rencana_aksi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                    })
+                    ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                                'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                'skp_tahunan_rencana_aksi.target AS target_rencana_aksi',
+                                'skp_tahunan_rencana_aksi.satuan AS satuan_target_rencana_aksi',
+                                'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
+                                'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
+                                'skp_tahunan_rencana_aksi.waktu_pelaksanaan',
+                                'kegiatan_bulanan.label AS kegiatan_bulanan_label',
+                                'kegiatan_bulanan.id AS kegiatan_bulanan_id',
+                                'kegiatan_bulanan.target AS target_pelaksana',
+                                'kegiatan_bulanan.satuan AS satuan_pelaksana',
+                                'realisasi_kegiatan_bulanan.id AS realisasi_kegiatan_bulanan_id',
+                                'realisasi_kegiatan_bulanan.realisasi AS realisasi',
+                                'realisasi_kegiatan_bulanan.satuan AS realisasi_satuan',
+                                'realisasi_kegiatan_bulanan.bukti',
+                                'realisasi_kegiatan_bulanan.alasan_tidak_tercapai',
+                                'realisasi_rencana_aksi.id AS realisasi_rencana_aksi_id',
+                                'realisasi_rencana_aksi.realisasi AS realisasi_rencana_aksi',
+                                'realisasi_rencana_aksi.satuan AS satuan_rencana_aksi'
+
+                            ) 
+                    ->first();
+        if ( $x->pelaksana_id != null ){
+            $dt = SKPD::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
+            $pelaksana = Pustaka::capital_string($dt->skpd);
+        }else{
+            $pelaksana = "-";
+        }
+
+		
+		//return  $rencana_aksi;
+        $rencana_aksi = array(
+            'id'                            => $x->rencana_aksi_id,
+            'label'                         => $x->rencana_aksi_label,
+            'target_rencana_aksi'           => $x->target_rencana_aksi,
+            'satuan_target_rencana_aksi'    => $x->satuan_target_rencana_aksi,
+            'kegiatan_bulanan_label'        => $x->kegiatan_bulanan_label,
+            'kegiatan_bulanan_target'       => $x->target_pelaksana,
+            'kegiatan_bulanan_satuan'       => $x->satuan_pelaksana,
+            'kegiatan_bulanan_output'       => $x->target_pelaksana." ".$x->satuan_pelaksana,
+            'realisasi'                     => $x->realisasi,
+            'realisasi_satuan'              => $x->realisasi_satuan,
+            'realisasi_output'              => $x->realisasi." ".$x->realisasi_satuan,
+
+            'realisasi_rencana_aksi'        => $x->realisasi_rencana_aksi,
+            'satuan_rencana_aksi'           => $x->satuan_rencana_aksi,
+
+
+
+            'waktu_pelaksanaan'             => $x->waktu_pelaksanaan,
+            'jabatan_id'                    => $x->pelaksana_id,
+            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan),
+            'nama_jabatan'                  => $pelaksana,
+            'pelaksana'                     => $pelaksana,
+            'kegiatan_tahunan_label'        => $x->KegiatanTahunan->label,
+            'kegiatan_tahunan_target'       => $x->KegiatanTahunan->target,
+            'kegiatan_tahunan_satuan'       => $x->KegiatanTahunan->satuan,
+            'kegiatan_tahunan_waktu'        => $x->KegiatanTahunan->target_waktu,
+            'kegiatan_tahunan_cost'         => number_format($x->KegiatanTahunan->cost,'0',',','.'),
+            'kegiatan_tahunan_output'       => $x->KegiatanTahunan->target.' '.$x->KegiatanTahunan->satuan,
+ 
+        );
+        return $rencana_aksi;
+    }
     public function Store(Request $request)
     {
 

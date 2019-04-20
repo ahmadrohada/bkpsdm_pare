@@ -5,7 +5,7 @@
 		<div class="box box-primary" id='kegiatan_bulanan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					List realisasi Rencana Aksi Eselon III.b
+					List Realisasi Rencana Aksi Eselon III.b
 				</h1>
 
 				<div class="box-tools pull-right">
@@ -48,7 +48,7 @@
 	
 </div>
 
-@include('admin.modals.realisasi_rencana_aksi')
+@include('admin.modals.realisasi_rencana_aksi_kabid')
 
 <script type="text/javascript">
 
@@ -190,7 +190,7 @@
 
 	function show_modal_create(rencana_aksi_id){
 		$.ajax({
-				url			  : '{{ url("api_resource/rencana_aksi_detail") }}',
+				url			  : '{{ url("api_resource/rencana_aksi_detail_2") }}',
 				data 		  : {rencana_aksi_id : rencana_aksi_id},
 				method		: "GET",
 				dataType	: "json",
@@ -217,7 +217,7 @@
 
 					$('.modal-realisasi_rencana_aksi').find('[name=realisasi]').val(data['realisasi_rencana_aksi']);
 
-					$('.modal-realisasi_rencana_aksi').find('h4').html('Create Realisasi Kegiatan Bulanan');
+					$('.modal-realisasi_rencana_aksi').find('h4').html('Create Realisasi Rencana Aksi');
 					$('.modal-realisasi_rencana_aksi').find('.btn-submit').attr('id', 'submit-save');
 					$('.modal-realisasi_rencana_aksi').find('[name=text_button_submit]').html('Simpan Data');
 					$('.modal-realisasi_rencana_aksi').modal('show'); 
@@ -235,7 +235,7 @@
 	
 		var realisasi_rencana_aksi_id = $(this).data('id');
 		$.ajax({
-				url			  	: '{{ url("api_resource/realisasi_rencana_aksi_detail") }}',
+				url			  	: '{{ url("api_resource/realisasi_rencana_aksi_detail_2") }}',
 				data 		  	: {realisasi_rencana_aksi_id : realisasi_rencana_aksi_id},
 				method			: "GET",
 				dataType		: "json",
@@ -258,9 +258,9 @@
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_output').html(data['kegiatan_bulanan_output']);
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
 
-					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['realisasi_satuan']);
+					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['realisasi_rencana_aksi_satuan']);
 					
-					$('.modal-realisasi_rencana_aksi').find('h4').html('Edit realisasi Kegiatan Bulanan');
+					$('.modal-realisasi_rencana_aksi').find('h4').html('Edit realisasi Rencana Aksi');
 					$('.modal-realisasi_rencana_aksi').find('.btn-submit').attr('id', 'submit-update');
 					$('.modal-realisasi_rencana_aksi').find('[name=text_button_submit]').html('Update Data');
 					$('.modal-realisasi_rencana_aksi').modal('show'); 
@@ -293,7 +293,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_rencana_aksi") }}',
+					url		: '{{ url("api_resource/hapus_realisasi_rencana_aksi_2") }}',
 					type	: 'POST',
 					data    : {realisasi_rencana_aksi_id:realisasi_rencana_aksi_id},
 					cache   : false,

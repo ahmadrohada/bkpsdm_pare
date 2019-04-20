@@ -7,7 +7,7 @@ use App\Models\PeriodeTahunan;
 use App\Models\PerjanjianKinerja;
 use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPBulanan;
-use App\Models\RealisasiRencanaAksi;
+use App\Models\RealisasiRencanaAksiKabid;
 
 
 
@@ -34,7 +34,7 @@ use Gravatar;
 use Input;
 Use Alert;
 
-class RealisasiRencanaAksiAPIController extends Controller {
+class RealisasiRencanaAksiKabidAPIController extends Controller {
 
 
 
@@ -42,9 +42,9 @@ class RealisasiRencanaAksiAPIController extends Controller {
     {
        
 
-        $x = RealisasiRencanaAksi::WHERE('realisasi_rencana_aksi.id', $request->realisasi_rencana_aksi_id)
+        $x = RealisasiRencanaAksiKabid::WHERE('realisasi_rencana_aksi_kabid.id', $request->realisasi_rencana_aksi_id)
                     ->leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS skp_tahunan_rencana_aksi', function($join){
-                        $join   ->on('skp_tahunan_rencana_aksi.id','=','realisasi_rencana_aksi.rencana_aksi_id');
+                        $join   ->on('skp_tahunan_rencana_aksi.id','=','realisasi_rencana_aksi_kabid.rencana_aksi_id');
                        
                     })
                     ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
@@ -75,10 +75,10 @@ class RealisasiRencanaAksiAPIController extends Controller {
                                 'realisasi_kegiatan_bulanan.satuan AS realisasi_satuan',
                                 'realisasi_kegiatan_bulanan.bukti',
                                 'realisasi_kegiatan_bulanan.alasan_tidak_tercapai',
-                                'realisasi_rencana_aksi.id AS realisasi_rencana_aksi_id',
-                                'realisasi_rencana_aksi.rencana_aksi_id',
-                                'realisasi_rencana_aksi.realisasi AS realisasi_rencana_aksi_target',
-                                'realisasi_rencana_aksi.satuan AS realisasi_rencana_aksi_satuan'
+                                'realisasi_rencana_aksi_kabid.id AS realisasi_rencana_aksi_id',
+                                'realisasi_rencana_aksi_kabid.rencana_aksi_id',
+                                'realisasi_rencana_aksi_kabid.realisasi AS realisasi_rencana_aksi_target',
+                                'realisasi_rencana_aksi_kabid.satuan AS realisasi_rencana_aksi_satuan'
 
                             ) 
                     ->first();
@@ -169,7 +169,7 @@ class RealisasiRencanaAksiAPIController extends Controller {
         }
 
 
-        $st_kt    = new RealisasiRencanaAksi;
+        $st_kt    = new RealisasiRencanaAksiKabid;
 
         $st_kt->rencana_aksi_id         = Input::get('rencana_aksi_id');
         $st_kt->capaian_id              = Input::get('capaian_id');
@@ -215,7 +215,7 @@ class RealisasiRencanaAksiAPIController extends Controller {
         }
 
         
-        $st_ra    = RealisasiRencanaAksi::find(Input::get('realisasi_rencana_aksi_id'));
+        $st_ra    = RealisasiRencanaAksiKabid::find(Input::get('realisasi_rencana_aksi_id'));
         if (is_null($st_ra)) {
             return $this->sendError('Capaian Rencana Aksi tidak ditemukan.');
         }
@@ -256,7 +256,7 @@ class RealisasiRencanaAksiAPIController extends Controller {
         }
 
         
-        $st_ra    = RealisasiRencanaAksi::find(Input::get('realisasi_rencana_aksi_id'));
+        $st_ra    = RealisasiRencanaAksiKabid::find(Input::get('realisasi_rencana_aksi_id'));
         if (is_null($st_ra)) {
             return $this->sendError('Capaian Rencana Aksi tidak ditemukan.');
         }

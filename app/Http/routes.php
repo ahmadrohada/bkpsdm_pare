@@ -421,16 +421,38 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('simpan_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@Store');
 	Route::post('update_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@Update');
 
-	//===================== CAPAIAN  RENCANA AKSI======================================//
+	//===================== REALISASI  RENCANA AKSI KASUBID    ======================================//
 	//========================================================================================================//
 	
-	Route::get('realisasi_rencana_aksi_detail','API\RealisasiRencanaAksiAPIController@RealisasiRencanaAksiDetail');
+	Route::get('realisasi_rencana_aksi_detail_3','API\RealisasiRencanaAksiKasubidAPIController@RealisasiRencanaAksiDetail');
 
 
-	Route::post('hapus_realisasi_rencana_aksi','API\RealisasiRencanaAksiAPIController@Destroy');
-	Route::post('simpan_realisasi_rencana_aksi','API\RealisasiRencanaAksiAPIController@Store');
-	Route::post('update_realisasi_rencana_aksi','API\RealisasiRencanaAksiAPIController@Update');
+	Route::post('hapus_realisasi_rencana_aksi_3','API\RealisasiRencanaAksiKasubidAPIController@Destroy');
+	Route::post('simpan_realisasi_rencana_aksi_3','API\RealisasiRencanaAksiKasubidAPIController@Store');
+	Route::post('update_realisasi_rencana_aksi_3','API\RealisasiRencanaAksiKasubidAPIController@Update');
 
+
+
+	//===================== REALISASI  RENCANA AKSI KABID   ======================================//
+	//========================================================================================================//
+	
+	Route::get('realisasi_rencana_aksi_detail_2','API\RealisasiRencanaAksiKabidAPIController@RealisasiRencanaAksiDetail');
+
+
+	Route::post('hapus_realisasi_rencana_aksi_2','API\RealisasiRencanaAksiKabidAPIController@Destroy');
+	Route::post('simpan_realisasi_rencana_aksi_2','API\RealisasiRencanaAksiKabidAPIController@Store');
+	Route::post('update_realisasi_rencana_aksi_2','API\RealisasiRencanaAksiKabidAPIController@Update');
+
+
+		//===================== REALISASI  RENCANA AKSI KABAN   ======================================//
+	//========================================================================================================//
+	
+	Route::get('realisasi_rencana_aksi_detail_1','API\RealisasiRencanaAksiKabanAPIController@RealisasiRencanaAksiDetail');
+
+
+	Route::post('hapus_realisasi_rencana_aksi_1','API\RealisasiRencanaAksiKabanAPIController@Destroy');
+	Route::post('simpan_realisasi_rencana_aksi_1','API\RealisasiRencanaAksiKabanAPIController@Store');
+	Route::post('update_realisasi_rencana_aksi_1','API\RealisasiRencanaAksiKabanAPIController@Update');
 
 	//========================================================================================================//
 	//======================================= RENCANA AKSI  SKP THAUNAN ======================================//
@@ -439,6 +461,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skp_tahunan_rencana_aksi','API\RencanaAksiAPIController@RencanaAksiList');
 	Route::get('skp_tahunan_rencana_aksi_4','API\RencanaAksiAPIController@RencanaAksiList4');
 	Route::get('rencana_aksi_detail','API\RencanaAksiAPIController@RencanaAksiDetail');
+	Route::get('rencana_aksi_detail_1','API\RencanaAksiAPIController@RencanaAksiDetail1');
+	Route::get('rencana_aksi_detail_2','API\RencanaAksiAPIController@RencanaAksiDetail2');
+	Route::get('rencana_aksi_detail_3','API\RencanaAksiAPIController@RencanaAksiDetail3');
 
 	Route::post('simpan_rencana_aksi','API\RencanaAksiAPIController@Store');
 	Route::post('update_rencana_aksi','API\RencanaAksiAPIController@Update');
