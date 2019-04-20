@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RealisasiRencanaAksi extends Model
+class RealisasiRencanaAksiKabid extends Model
 {
-    protected $table = 'realisasi_rencana_aksi';
+    protected $table = 'realisasi_rencana_aksi_kabid';
 
     public function CapaianBulanan()
     {
