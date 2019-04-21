@@ -219,6 +219,7 @@ class CapaianBulananAPIController extends Controller {
             $jm_kegiatan = KegiatanSKPBulanan::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
        
             $list_bawahan = "";
+            $kegiatan_list = "";
         //================================= K A S U B I D ========================================// 
         }else if ( $jenis_jabatan == 3){
             //cari bawahan
@@ -249,24 +250,30 @@ class CapaianBulananAPIController extends Controller {
                 $pelaksana_list[] = $data_jabatan_id ;
                 $jm_kegiatan += $dt_reaksi;
             }
-            $list_bawahan = $pelaksana_list;                            
-        
+            $list_bawahan  = $pelaksana_list;                            
+            $kegiatan_list = "";
         //================================= K A B I D ========================================// 
         }else if ( $jenis_jabatan == 2){
 
             //cari bawahan
             $bawahan = Jabatan::SELECT('id','skpd AS jabatan' )->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
 
-
+            $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get()->toArray();
             //cari bawahan  , jabatanpelaksanan
-            $pelaksana_id = Jabatan::
-                                leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
-                                    $join   ->on('pelaksana.parent_id','=','m_skpd.id');
-                                })
-                                ->SELECT('pelaksana.id')
-                                ->WHERE('m_skpd.parent_id', $skp_bulanan->PejabatYangDinilai->id_jabatan )
+            $pelaksana_list = Jabatan::
+                                SELECT('id')
+                                ->WHEREIN('parent_id', $bawahan_ls)
                                 ->get()
                                 ->toArray(); 
+
+            $kegiatan_list = RencanaAksi::
+                                        WHEREIN('jabatan_id',$pelaksana_list)
+                                        ->SELECT('id')
+                                        ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
+                                        ->WHERE('renja_id',$renja_id)
+                                        ->get(); 
+
+            //$kegiatan_list = $pelaksana_list;
            
 
             //list bawahan
@@ -296,6 +303,7 @@ class CapaianBulananAPIController extends Controller {
                 $jm_kegiatan += $dt_reaksi;
             }
             $list_bawahan = $kasubid_list;
+            $kegiatan_list = $kegiatan_list;
             
         
         //===================================================================================// 
@@ -314,6 +322,7 @@ class CapaianBulananAPIController extends Controller {
                     'status'			    =>  'pass',
                     'renja_id'              =>  $renja_id,
                     'list_bawahan'          =>  $list_bawahan,
+                    'list_kegiatan'         =>  $kegiatan_list,
                     'pegawai_id'            =>  $skp_bulanan->pegawai_id,
                     'skp_bulanan_id'        =>  $skp_bulanan->skp_bulanan_id,
                     'periode_label'			=>  Pustaka::bulan($skp_bulanan->bulan),
