@@ -18,7 +18,7 @@
 				</ul>
 
 
-				<div class="tab-content"  style="margin-left:10px; min-height:300px;">
+				<div class="tab-content"  style="margin-left:10px; min-height:320px;">
 					<div class="active tab-pane" id="tab_a">
 <!-- ============================================================================================================= -->
 						
@@ -163,7 +163,7 @@
 
 <!-- ============================================================================================================= -->
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer" style="border:none; margin-top:-20px;">
 				
 					<input type="hidden" class="form-control pegawai_id" name="pegawai_id"  />
 					<input type="hidden" class="form-control skp_bulanan_id" name="skp_bulanan_id"  />
@@ -175,6 +175,10 @@
 					<input type="hidden" class="form-control p_nama	" name="p_nama"  />
 					<input type="hidden" class="form-control p_jabatan_id	" name="p_jabatan_id"  />
 
+					<input type="hidden" class="form-control jabatan_id" name="jabatan_id"  />
+					<input type="hidden" class="form-control renja_id" name="renja_id"  />
+					<input type="hidden" class="form-control jenis_jabatan" name="jenis_jabatan"  />
+					<input type="hidden" class="form-control waktu_pelaksanaan" name="waktu_pelaksanaan"  />
 
                	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
                	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right btn-flat', 'type' => 'button', 'id' => 'save_capaian_bulanan' )) !!}
@@ -250,12 +254,6 @@
 						$("<li class='list-group-item' style='background:#ededed; border-top:solid #3d3d3d 2px; padding:5px 4px 5px 4px;'><b>Total Kegiatan </b><a class='pull-right'>"+data['jm_kegiatan_bulanan']+"</a> </li>").appendTo(bawahan);
 						
 						
-				
-
-
-
-
-					
 					$('#u_nip').html(data['u_nip']); 
 					$('#u_nama').html(data['u_nama']); 
 					$('#u_golongan').html(data['u_pangkat']+' / '+data['u_golongan']); 
@@ -281,8 +279,11 @@
 					$('.p_nama').val(data['p_nama']); 
 					$('.p_jabatan_id').val(data['p_jabatan_id']);
  
-
-
+					$('.jenis_jabatan').val(data['u_jenis_jabatan']); 
+					$('.jabatan_id').val(data['jabatan_id']);
+					$('.renja_id').val(data['renja_id']);
+					$('.waktu_pelaksanaan').val(data['waktu_pelaksanaan']);
+					
 					$('.modal-create_capaian_bulanan_confirm').modal('show'); 
 				}else if (data['status']==='fail'){
 				
@@ -377,7 +378,7 @@
 				
 			}
 			
-		  });
+		  }); 
 
 
 	});

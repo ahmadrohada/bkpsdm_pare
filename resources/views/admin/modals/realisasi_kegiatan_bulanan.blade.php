@@ -53,7 +53,7 @@
 					<hr>
 					<div class="row">
 						
-						<div class="col-md-3 col-xs-6 form-group" style="margin-top:8px;">	
+						<div class="col-md-6 col-xs-6 form-group" style="margin-top:8px;">	
 							<label class="control-label">Target </label>
 							<div class="input-group">
 								<span type="text" class="form-control input-sm kegiatan_bulanan_target"></span>
@@ -63,7 +63,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-3 col-xs-6 form-group realisasi" style="margin-top:8px;">	
+						<div class="col-md-6 col-xs-6 form-group realisasi" style="margin-top:8px;">	
 							<label class="control-label">Realisasi </label>
 							<div class="input-group">
 								<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi">

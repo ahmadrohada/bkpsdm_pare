@@ -8,7 +8,9 @@
                 </h4>
             </div>
 
-            <form  id="realisasi_rencana_aksi_form" method="POST" action="">
+            <form  id="realisasi_rencana_aksi_form" method="POST" action="self">
+
+			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<input type="hidden"  name="rencana_aksi_id" class="rencana_aksi_id">
 			<input type="hidden"  name="skp_bulanan_id" class="skp_bulanan_id">
 			<input type="hidden"  name="capaian_id" class="realisasi_id">
@@ -57,7 +59,7 @@
 					<hr>
 					<div class="row">
 
-						<div class="col-md-3 col-xs-6 form-group" style="margin-top:8px;">	
+						<div class="col-md-6 col-xs-6 form-group" style="margin-top:8px;">	
 							<label class="control-label">Target </label>
 							<div class="input-group">
 							<span type="text" class="form-control input-sm rencana_aksi_target"></span>
@@ -68,7 +70,7 @@
 
 							<input type="hidden"  name="alasan_tidak_tercapai" class="alasan_tidak_tercapai">
 						</div>
-						<div class="col-md-3 col-xs-6 form-group realisasi" style="margin-top:8px;">	
+						<div class="col-md-6 col-xs-6 form-group realisasi" style="margin-top:8px;">	
 							<label class="control-label">Realisasi </label>
 							<div class="input-group">
 								<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi">
@@ -108,6 +110,8 @@
 
 
 <script type="text/javascript">
+
+	
 
 	$('.modal-realisasi_rencana_aksi').on('shown.bs.modal', function(){
 		$('#realisasi').focus();
