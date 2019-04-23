@@ -5,7 +5,7 @@
 		<div class="box box-primary" id='kegiatan_bulanan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					List Capaian Kegiatan Bulanan
+					List Realisasi Kegiatan Bulanan
 				</h1>
 
 				<div class="box-tools pull-right">

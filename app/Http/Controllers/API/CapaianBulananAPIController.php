@@ -273,7 +273,7 @@ class CapaianBulananAPIController extends Controller {
                                         ->WHERE('renja_id',$renja_id)
                                         ->get(); 
 
-            //$kegiatan_list = $pelaksana_list;
+          
            
 
             //list bawahan
@@ -322,13 +322,17 @@ class CapaianBulananAPIController extends Controller {
                     'status'			    =>  'pass',
                     'renja_id'              =>  $renja_id,
                     'list_bawahan'          =>  $list_bawahan,
-                    'list_kegiatan'         =>  $kegiatan_list,
+                    //'list_kegiatan'         =>  $kegiatan_list,
+                    'jabatan_id'            => $skp_bulanan->PejabatYangDinilai->id_jabatan,
                     'pegawai_id'            =>  $skp_bulanan->pegawai_id,
                     'skp_bulanan_id'        =>  $skp_bulanan->skp_bulanan_id,
                     'periode_label'			=>  Pustaka::bulan($skp_bulanan->bulan),
                     'tgl_mulai'			    =>  Pustaka::tgl_form($skp_bulanan->tgl_mulai),
                     'tgl_selesai'			=>  Pustaka::tgl_form($skp_bulanan->tgl_selesai),
                     'jm_kegiatan_bulanan'	=>  $jm_kegiatan,
+
+                    'renja_id'	            =>  $skp_bulanan->SKPTahunan->Renja->id,
+                    'waktu_pelaksanaan'	    =>  $skp_bulanan->bulan,
 
                    
                     'u_jabatan_id'	        => $u_detail->id,
@@ -340,6 +344,7 @@ class CapaianBulananAPIController extends Controller {
                     'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
                     'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
                     'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
+                    'u_jenis_jabatan'	    => $u_detail->Eselon->Jenis_jabatan->id,
 
                     'p_jabatan_id'	        => $p_detail->id,
                     'p_nip'	                => $p_detail->nip,
@@ -582,6 +587,7 @@ class CapaianBulananAPIController extends Controller {
                  'tgl_mulai.required'                    => 'Harus diisi',
                  'tgl_selesai.required'                  => 'Harus diisi',
                  'u_nama.required'                       => 'Harus diisi',
+                 'jenis_jabatan.required'              => 'Harus diisi',
                  'u_jabatan_id.required'                 => 'Harus diisi',
                  'jm_kegiatan_bulanan'                   => 'Harus Lebih dari nol'
 
@@ -596,6 +602,7 @@ class CapaianBulananAPIController extends Controller {
                             'tgl_selesai'           => 'required',
                             'u_nama'                => 'required',
                             'u_jabatan_id'          => 'required',
+                            'jenis_jabatan'       => 'required',
                             'jm_kegiatan_bulanan'   => 'required|integer|min:1'
                         ),
                         $messages
@@ -636,6 +643,38 @@ class CapaianBulananAPIController extends Controller {
             if ( $capaian_bulanan->save()){
                 //SKPTahunanTimeline::INSERT(['capaian_bulanan_id'=>$capaian_bulanan->id]);
                 SKPBulanan::WHERE('id',Input::get('skp_bulanan_id'))->UPDATE(['status' => '1']);
+
+
+                //jika kabid, auto add kegiatan
+                $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id',Input::get('jabatan_id'))->get()->toArray();
+                //cari bawahan  , jabatanpelaksanan
+                $pelaksana_list = Jabatan::SELECT('id')->WHEREIN('parent_id', $bawahan_ls)->get()->toArray(); 
+    
+                $kegiatan_list = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_list)
+                                            ->SELECT('id','target','satuan')
+                                            ->WHERE('waktu_pelaksanaan',Input::get('waktu_pelaksanaan'))
+                                            ->WHERE('renja_id',Input::get('renja_id'))
+                                            ->get(); 
+                $i = 0 ;
+                foreach ($kegiatan_list as $x) {
+                    $data[] = array(
+                                    
+                        'rencana_aksi_id'       => $x->id,
+                        'capaian_id'            => $capaian_bulanan->id,
+                        'realisasi'             => $x->target,
+                        'satuan'                => $x->satuan,
+                        'created_at'            => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
+                    );
+                    $i++;
+                }
+                        
+                if ( $i >= 1 ){
+                    $st_ra   = new RealisasiRencanaAksiKabid;
+                    $st_ra -> insert($data);
+                }
+               
+                
+
                 return \Response::make($capaian_bulanan->id, 200);
             }else{
                 return \Response::make('error', 500);

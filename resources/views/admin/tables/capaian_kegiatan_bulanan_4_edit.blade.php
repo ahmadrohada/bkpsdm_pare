@@ -5,7 +5,7 @@
 		<div class="box box-primary" id='kegiatan_bulanan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					List Capaian Kegiatan Bulanan
+					List Realisasi Kegiatan Bulanan
 				</h1>
 
 				<div class="box-tools pull-right">
@@ -172,7 +172,7 @@
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_target').html(data['kegiatan_bulanan_target']);
 
-					$('.modal-realisasi_kegiatan_bulanan').find('h4').html('Create Capaian Kegiatan Bulanan');
+					$('.modal-realisasi_kegiatan_bulanan').find('h4').html('Add Realisasi Kegiatan Bulanan');
 					$('.modal-realisasi_kegiatan_bulanan').find('.btn-submit').attr('id', 'submit-save');
 					$('.modal-realisasi_kegiatan_bulanan').find('[name=text_button_submit]').html('Simpan Data');
 					$('.modal-realisasi_kegiatan_bulanan').modal('show'); 
@@ -212,8 +212,9 @@
 					$('.modal-realisasi_kegiatan_bulanan').find('.pelaksana').html(data['pelaksana']);
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_output').html(data['kegiatan_bulanan_output']);
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
-
-					$('.modal-realisasi_kegiatan_bulanan').find('h4').html('Edit Capaian Kegiatan Bulanan');
+					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_target').html(data['kegiatan_bulanan_target']);
+					
+					$('.modal-realisasi_kegiatan_bulanan').find('h4').html('Edit Realisasi Kegiatan Bulanan');
 					$('.modal-realisasi_kegiatan_bulanan').find('.btn-submit').attr('id', 'submit-update');
 					$('.modal-realisasi_kegiatan_bulanan').find('[name=text_button_submit]').html('Update Data');
 					$('.modal-realisasi_kegiatan_bulanan').modal('show'); 
@@ -231,7 +232,7 @@
 		//alert(kegiatan_bulanan_id);
 
 		Swal.fire({
-			title: "Hapus  Capaian Kegiatan",
+			title: "Hapus  Realisasi",
 			text:$(this).data('label'),
 			type: "warning",
 			//type: "question",

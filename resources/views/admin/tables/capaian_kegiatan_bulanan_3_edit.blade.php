@@ -198,7 +198,7 @@
 					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['satuan_target_rencana_aksi']);
 					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').html(data['target_rencana_aksi']);
 
-					$('.modal-realisasi_rencana_aksi').find('h4').html('Create Realisasi Rencana Aksi');
+					$('.modal-realisasi_rencana_aksi').find('h4').html('Add Realisasi Rencana Aksi');
 					$('.modal-realisasi_rencana_aksi').find('.btn-submit').attr('id', 'submit-save');
 					$('.modal-realisasi_rencana_aksi').find('[name=text_button_submit]').html('Simpan Data');
 					$('.modal-realisasi_rencana_aksi').modal('show'); 
