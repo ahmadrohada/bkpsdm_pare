@@ -587,7 +587,7 @@ class CapaianBulananAPIController extends Controller {
                  'tgl_mulai.required'                    => 'Harus diisi',
                  'tgl_selesai.required'                  => 'Harus diisi',
                  'u_nama.required'                       => 'Harus diisi',
-                 'jenis_jabatan.required'              => 'Harus diisi',
+                 'jenis_jabatan.required'                => 'Harus diisi',
                  'u_jabatan_id.required'                 => 'Harus diisi',
                  'jm_kegiatan_bulanan'                   => 'Harus Lebih dari nol'
 
@@ -651,9 +651,12 @@ class CapaianBulananAPIController extends Controller {
                 $pelaksana_list = Jabatan::SELECT('id')->WHEREIN('parent_id', $bawahan_ls)->get()->toArray(); 
     
                 $kegiatan_list = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_list)
-                                            ->SELECT('id','target','satuan')
-                                            ->WHERE('waktu_pelaksanaan',Input::get('waktu_pelaksanaan'))
-                                            ->WHERE('renja_id',Input::get('renja_id'))
+                                            ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
+                                                $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                                            })
+                                            ->SELECT('skp_tahunan_rencana_aksi.id','realisasi.realisasi','skp_tahunan_rencana_aksi.satuan')
+                                            ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',Input::get('waktu_pelaksanaan'))
+                                            ->WHERE('skp_tahunan_rencana_aksi.renja_id',Input::get('renja_id'))
                                             ->get(); 
                 $i = 0 ;
                 foreach ($kegiatan_list as $x) {
@@ -661,7 +664,7 @@ class CapaianBulananAPIController extends Controller {
                                     
                         'rencana_aksi_id'       => $x->id,
                         'capaian_id'            => $capaian_bulanan->id,
-                        'realisasi'             => $x->target,
+                        'realisasi'             => $x->realisasi,
                         'satuan'                => $x->satuan,
                         'created_at'            => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
                     );
