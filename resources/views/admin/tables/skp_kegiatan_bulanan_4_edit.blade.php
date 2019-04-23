@@ -481,7 +481,7 @@
 
 	function show_modal_create(rencana_aksi_id,skp_bulanan_id){
 		$.ajax({
-				url			  : '{{ url("api_resource/rencana_aksi_detail") }}',
+				url			  : '{{ url("api_resource/rencana_aksi_detail_4") }}',
 				data 		  : {rencana_aksi_id : rencana_aksi_id},
 				method		: "GET",
 				dataType	: "json",
