@@ -57,7 +57,7 @@
 						</div>
 					</div>
 					<hr>
-					<div class="row">
+					<div class="row"> 
 
 						<div class="col-md-6 col-xs-6 form-group" style="margin-top:8px;">	
 							<label class="control-label">Target </label>

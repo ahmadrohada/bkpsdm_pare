@@ -64,6 +64,8 @@ class RealisasiRencanaAksiKabidAPIController extends Controller {
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
                                 'skp_tahunan_rencana_aksi.waktu_pelaksanaan',
+                                'skp_tahunan_rencana_aksi.target AS target_rencana_aksi',
+                                'skp_tahunan_rencana_aksi.satuan AS satuan_target_rencana_aksi',
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
                                 'kegiatan_bulanan.target AS target_pelaksana',
@@ -112,6 +114,8 @@ class RealisasiRencanaAksiKabidAPIController extends Controller {
             'realisasi_rencana_aksi_target'   => $x->realisasi_rencana_aksi_target,
             'realisasi_rencana_aksi_satuan'   => $x->realisasi_rencana_aksi_satuan,
 
+            'target_rencana_aksi'           => $x->target_rencana_aksi,
+            'satuan_target_rencana_aksi'    => $x->satuan_target_rencana_aksi,
 
             'kegiatan_bulanan_label'        => $x->kegiatan_bulanan_label,
             'kegiatan_bulanan_target'       => $x->target_pelaksana,

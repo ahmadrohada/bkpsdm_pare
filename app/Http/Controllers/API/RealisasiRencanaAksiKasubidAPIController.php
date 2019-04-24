@@ -41,7 +41,7 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
     public function RealisasiRencanaAksiDetail(Request $request)
     {
        
-
+ 
         $x = RealisasiRencanaAksiKasubid::WHERE('realisasi_rencana_aksi_kasubid.id', $request->realisasi_rencana_aksi_id)
                     ->leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS skp_tahunan_rencana_aksi', function($join){
                         $join   ->on('skp_tahunan_rencana_aksi.id','=','realisasi_rencana_aksi_kasubid.rencana_aksi_id');
@@ -64,6 +64,8 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
                                 'skp_tahunan_rencana_aksi.waktu_pelaksanaan',
+                                'skp_tahunan_rencana_aksi.target AS target_rencana_aksi',
+                                'skp_tahunan_rencana_aksi.satuan AS satuan_target_rencana_aksi',
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
                                 'kegiatan_bulanan.target AS target_pelaksana',
@@ -112,12 +114,14 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
             'realisasi_rencana_aksi_target'   => $x->realisasi_rencana_aksi_target,
             'realisasi_rencana_aksi_satuan'   => $x->realisasi_rencana_aksi_satuan,
 
+            'target_rencana_aksi'           => $x->target_rencana_aksi,
+            'satuan_target_rencana_aksi'    => $x->satuan_target_rencana_aksi,
 
             'kegiatan_bulanan_label'        => $x->kegiatan_bulanan_label,
             'kegiatan_bulanan_target'       => $x->target_pelaksana,
             'kegiatan_bulanan_satuan'       => $x->satuan_pelaksana,
             'kegiatan_bulanan_output'       => $x->target_pelaksana." ".$x->satuan_pelaksana,
-            'realisasi'                => $x->realisasi,
+            'realisasi'                     => $x->realisasi,
             'realisasi_satuan'                => $x->realisasi_satuan,
             'realisasi_output'                => $x->realisasi." ".$x->realisasi_satuan,
 
