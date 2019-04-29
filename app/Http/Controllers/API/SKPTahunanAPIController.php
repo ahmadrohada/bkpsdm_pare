@@ -86,6 +86,9 @@ class SKPTahunanAPIController extends Controller {
                     'date_created'	    => Pustaka::tgl_jam($skp->created_at),
                     'masa_penilaian'    => Pustaka::tgl_form($skp->tgl_mulai).' s.d  '.Pustaka::tgl_form($skp->tgl_selesai),
 
+                    'tgl_mulai'         => $skp->tgl_mulai,
+                    'pegawai_id'	        => $skp->pegawai_id,
+                    
                     'u_jabatan_id'	        => $u_detail->id,
                     'u_nip'	                => $u_detail->nip,
                     'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
@@ -105,6 +108,7 @@ class SKPTahunanAPIController extends Controller {
                     'p_jabatan'	            => '',
                     'p_unit_kerja'	        => '',
                     'p_skpd'	            => '', 
+                    'skp_bulanan_list'      => $skp_bulanan_list,
                 
                 
 

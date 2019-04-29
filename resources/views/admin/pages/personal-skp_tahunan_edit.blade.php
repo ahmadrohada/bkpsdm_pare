@@ -37,9 +37,9 @@
 				</div>
 								
 				<div class=" tab-pane" id="kegiatan_tahunan_tab">
-					<!-- 1. ka SKPD -->
+					<!-- 1. KABAN -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
-						@include('admin.tables.skp_kegiatan_tahunan_1_edit')
+						@include('admin.tables.skp_kegiatan_tahunan_1_detail')
 					@endif
 
 					<!-- 2. KABID -->
@@ -61,7 +61,12 @@
 				</div>
 				<div class="tab-pane" id="kegiatan_bulanan_tab">
 
-					<!-- 3. KASUBID -->
+					<!-- 1. KABAN -->
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
+						@include('admin.tables.skp_kegiatan_bulanan_1_edit')
+					@endif
+
+					<!-- 2. KASUBID -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
 						@include('admin.tables.skp_kegiatan_bulanan_2_edit')
 					@endif

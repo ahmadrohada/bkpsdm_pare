@@ -4,7 +4,7 @@
 		<div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    SKP Bulanan KABid
+                    SKP Bulanan KABan
                 </h4>
             </div>
 
@@ -175,7 +175,6 @@
 					$('.modal-skp_bulanan').modal('hide');
 					$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
 					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
-					
 					
 					
 				},
