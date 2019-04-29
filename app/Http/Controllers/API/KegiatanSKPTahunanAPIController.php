@@ -92,12 +92,11 @@ class KegiatanSKPTahunanAPIController extends Controller {
         //return $child;
 
         //KEGIATAN KABAN
-        $skp_tahunan_id = $request->skp_tahunan_id;
 
         $kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
-                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 
                             })
