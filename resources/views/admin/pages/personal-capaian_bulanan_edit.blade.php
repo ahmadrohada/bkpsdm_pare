@@ -26,9 +26,9 @@
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
 				<div class="active tab-pane" id="status">
-					<!-- 1. ka SKPD -->
+					<!-- 1. KABAN -->
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
-						
+						@include('admin.modules.timeline.capaian_bulanan_status_edit')
 					@endif
 
 					<!-- 2. KABID -->
@@ -52,9 +52,9 @@
 				</div>
 								
 				<div class=" tab-pane" id="kegiatan_bulanan_tab">
-					<!-- 1. ka capaianD -->
+					<!-- 1. KABAN  -->
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
-						
+						@include('admin.tables.capaian_kegiatan_bulanan_1_edit')
 					@endif
 
 					<!-- 2. KABID -->

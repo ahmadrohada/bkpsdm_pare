@@ -306,6 +306,74 @@ class CapaianBulananAPIController extends Controller {
             $kegiatan_list = $kegiatan_list;
             
         
+        //============================   K A B A N   ===================================// 
+        }else if ( $jenis_jabatan == 1){
+
+            //cari KAsubid
+            $bawahan = Jabatan::
+                            
+                                leftjoin('demo_asn.m_skpd AS kasubid', function($join){
+                                    $join   ->on('kasubid.parent_id','=','m_skpd.id');
+                                })
+                                ->SELECT('kasubid.id','kasubid.skpd AS jabatan')
+                                ->WHERE('m_skpd.parent_id', $skp_bulanan->PejabatYangDinilai->id_jabatan )
+                                ->get();
+            $bawahan_ls = Jabatan::
+                            
+                                leftjoin('demo_asn.m_skpd AS kasubid', function($join){
+                                    $join   ->on('kasubid.parent_id','=','m_skpd.id');
+                                })
+                                ->SELECT('kasubid.id')
+                                ->WHERE('m_skpd.parent_id', $skp_bulanan->PejabatYangDinilai->id_jabatan )
+                                ->get()
+                                ->toArray(); 
+                               
+            $pelaksana_list = Jabatan::
+                                SELECT('id')
+                                ->WHEREIN('parent_id', $bawahan_ls)
+                                ->get()
+                                ->toArray(); 
+
+            $kegiatan_list = RencanaAksi::
+                                        WHEREIN('jabatan_id',$pelaksana_list)
+                                        ->SELECT('id')
+                                        ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
+                                        ->WHERE('renja_id',$renja_id)
+                                        ->get(); 
+
+          
+           
+
+            //list bawahan
+            $jm_kegiatan = 0 ; 
+            foreach ($bawahan as $x) {
+                //list pelaksana
+                $child = Jabatan::SELECT('id')->WHERE('parent_id',$x->id )->get()->toArray();
+                $dt_reaksi = RencanaAksi::WHEREIN('jabatan_id',$child)
+                                            ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
+                                            ->WHERE('renja_id',$renja_id)
+                                            ->count();
+                $ls_reaksi = RencanaAksi::WHEREIN('jabatan_id',$child)
+                                            ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
+                                            ->WHERE('renja_id',$renja_id)
+                                            ->SELECT('id')
+                                            ->get()->toArray();
+                //realisasi bawahan
+                $jm_realisasi   = RealisasiRencanaAksiKasubid::WHEREIN('rencana_aksi_id',$ls_reaksi)->count();
+
+                $data_jabatan_id['jabatan']         = Pustaka::capital_string($x->jabatan);
+                $data_jabatan_id['jm_keg']          = $dt_reaksi;
+                $data_jabatan_id['jm_realisasi']    = $jm_realisasi;
+
+
+
+                $kasubid_list[] = $data_jabatan_id ;
+                $jm_kegiatan += $dt_reaksi;
+            }
+            $list_bawahan = $kasubid_list;
+            $kegiatan_list = $kegiatan_list;
+            
+        
         //===================================================================================// 
         }else{
             $jm_kegiatan = 0 ;
@@ -317,7 +385,49 @@ class CapaianBulananAPIController extends Controller {
         $u_detail = HistoryJabatan::WHERE('id',$skp_bulanan->u_jabatan_id)->first();
         $p_detail = HistoryJabatan::WHERE('id',$skp_bulanan->p_jabatan_id)->first();
 
+        if ( $skp_bulanan->p_jabatan_id >= 1 ){
+            $data = array(
+                'status'			    =>  'pass',
+                'renja_id'              =>  $renja_id,
+                'list_bawahan'          =>  $list_bawahan,
+                //'list_kegiatan'         =>  $kegiatan_list,
+                'jabatan_id'            => $skp_bulanan->PejabatYangDinilai->id_jabatan,
+                'pegawai_id'            =>  $skp_bulanan->pegawai_id,
+                'skp_bulanan_id'        =>  $skp_bulanan->skp_bulanan_id,
+                'periode_label'			=>  Pustaka::bulan($skp_bulanan->bulan),
+                'tgl_mulai'			    =>  Pustaka::tgl_form($skp_bulanan->tgl_mulai),
+                'tgl_selesai'			=>  Pustaka::tgl_form($skp_bulanan->tgl_selesai),
+                'jm_kegiatan_bulanan'	=>  $jm_kegiatan,
 
+                'renja_id'	            =>  $skp_bulanan->SKPTahunan->Renja->id,
+                'waktu_pelaksanaan'	    =>  $skp_bulanan->bulan,
+
+               
+                'u_jabatan_id'	        => $u_detail->id,
+                'u_nip'	                => $u_detail->nip,
+                'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
+                'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
+                'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
+                'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
+                'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
+                'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
+                'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
+                'u_jenis_jabatan'	    => $u_detail->Eselon->Jenis_jabatan->id,
+
+                'p_jabatan_id'	        => $p_detail->id,
+                'p_nip'	                => $p_detail->nip,
+                'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
+                'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
+                'p_golongan'	        => $p_detail->Golongan ? $p_detail->Golongan->golongan : '',
+                'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
+                'p_jabatan'	            => Pustaka::capital_string($p_detail->Jabatan ? $p_detail->Jabatan->skpd : ''),
+                'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
+                'p_skpd'	            => Pustaka::capital_string($p_detail->Skpd ? $p_detail->Skpd->skpd : ''),
+                
+                );
+        }else{
+
+        
         $data = array(
                     'status'			    =>  'pass',
                     'renja_id'              =>  $renja_id,
@@ -346,17 +456,18 @@ class CapaianBulananAPIController extends Controller {
                     'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
                     'u_jenis_jabatan'	    => $u_detail->Eselon->Jenis_jabatan->id,
 
-                    'p_jabatan_id'	        => $p_detail->id,
-                    'p_nip'	                => $p_detail->nip,
-                    'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
-                    'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
-                    'p_golongan'	        => $p_detail->Golongan ? $p_detail->Golongan->golongan : '',
-                    'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
-                    'p_jabatan'	            => Pustaka::capital_string($p_detail->Jabatan ? $p_detail->Jabatan->skpd : ''),
-                    'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
-                    'p_skpd'	            => Pustaka::capital_string($p_detail->Skpd ? $p_detail->Skpd->skpd : ''),
+                    'p_jabatan_id'	        => "",
+                    'p_nip'	                => "",
+                    'p_nama'                => "",
+                    'p_pangkat'	            => "",
+                    'p_golongan'	        => "",
+                    'p_eselon'	            => "",
+                    'p_jabatan'	            => "",
+                    'p_unit_kerja'	        => "",
+                    'p_skpd'	            => "",
                     
                     );
+        }
 
         return $data;
 
@@ -471,6 +582,61 @@ class CapaianBulananAPIController extends Controller {
                         ->WHERE('m_skpd.parent_id', $capaian_bulanan->PejabatYangDinilai->id_jabatan )
                         ->get()
                         ->toArray();  
+            //jm kegiatan kabid   
+            //$jm_kegiatan_bulanan = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id)->WHERE('waktu_pelaksanaan', $bulan)->count();
+       
+            //hitung capaian kinerja bulanan
+            $xdata = RencanaAksi::
+                        leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
+                            $join   ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan.id');
+                        })
+                        ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kabid AS realisasi', function($join) use($capaian_id){
+                            $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                            $join   ->where('realisasi.capaian_id','=',$capaian_id);
+                        })
+                        ->SELECT('skp_tahunan_rencana_aksi.target','realisasi.realisasi')
+                        ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id)
+                        ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan', $bulan)
+                        ->get();
+
+            $capaian_kinerja_bulanan = 0 ;
+            $jm_kegiatan_bulanan = 0 ;
+
+            foreach ($xdata as $data) {
+            $jm_kegiatan_bulanan ++;
+
+            $capaian_kinerja_bulanan += Pustaka::persen($data->realisasi,$data->target);
+
+            }
+
+            $capaian_kinerja_bulanan =  Pustaka::persen2($capaian_kinerja_bulanan,$jm_kegiatan_bulanan);
+        
+        
+        
+       
+       
+        }else if ( $jenis_jabatan == 1){ //KABAN
+            //cari bawahan bawahan nya
+
+            //CARI KASUBID
+            $child = Jabatan::
+                                
+                    leftjoin('demo_asn.m_skpd AS kasubid', function($join){
+                        $join   ->on('kasubid.parent_id','=','m_skpd.id');
+                    })
+                    ->SELECT('kasubid.id')
+                    ->WHERE('m_skpd.parent_id',  $capaian_bulanan->PejabatYangDinilai->id_jabatan )
+                    ->get()
+                    ->toArray();
+
+            //cari bawahan  , jabatanpelaksanan
+            $pelaksana_id = Jabatan::
+                    SELECT('m_skpd.id')
+                    ->WHEREIN('m_skpd.parent_id', $child )
+                    ->get()
+                    ->toArray();  
+
+           
             //jm kegiatan kabid   
             //$jm_kegiatan_bulanan = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id)->WHERE('waktu_pelaksanaan', $bulan)->count();
        
