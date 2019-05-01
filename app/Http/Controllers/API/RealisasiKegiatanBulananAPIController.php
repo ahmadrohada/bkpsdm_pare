@@ -75,6 +75,124 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         return $rencana_aksi;
     }
 
+    public function RealisasiKegiatanBulanan1(Request $request) 
+    {
+            
+        $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan','status','skp_tahunan_id')->first();
+        
+         //CARI KASUBID
+         $child = Jabatan::
+                            
+                            leftjoin('demo_asn.m_skpd AS kasubid', function($join){
+                                $join   ->on('kasubid.parent_id','=','m_skpd.id');
+                            })
+                            ->SELECT('kasubid.id')
+                            ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                            ->get()
+                            ->toArray();
+
+        //cari bawahan  , jabatanpelaksanan
+        $pelaksana_id = Jabatan::
+                        SELECT('m_skpd.id')
+                        ->WHEREIN('m_skpd.parent_id', $child )
+                        ->get()
+                        ->toArray();  
+
+        $capaian_id = $request->capaian_id;
+        
+        $dt = RencanaAksi::
+                    WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
+                    ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
+                    ->WHERE('skp_tahunan_rencana_aksi.renja_id',$skp_bln->SKPTahunan->renja_id)
+                    ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
+                        $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
+                    })
+                    ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                        $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
+                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
+                    })
+                    ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
+                        $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
+                    })
+                    //realisasi bawahan
+                    ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi_rencana_aksi', function($join) use($capaian_id){
+                        $join   ->on('realisasi_rencana_aksi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                        $join   ->where('realisasi_rencana_aksi.capaian_id','!=', $capaian_id);
+                    })
+                    //self rencana aksi
+                    ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kaban AS realisasi_kabid', function($join) use($capaian_id){
+                        $join   ->on('realisasi_kabid.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                        $join   ->where('realisasi_kabid.capaian_id','=', $capaian_id);
+                    })
+                    ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                                'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
+                                'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
+                                'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
+                                'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
+
+                                'kegiatan_tahunan.label AS kegiatan_tahunan_label',
+
+                                'kegiatan_bulanan.label AS kegiatan_bulanan_label',
+                                'kegiatan_bulanan.id AS kegiatan_bulanan_id',
+                                'kegiatan_bulanan.target AS kegiatan_bulanan_target',
+                                'kegiatan_bulanan.satuan AS kegiatan_bulanan_satuan',
+
+
+                                'realisasi_rencana_aksi.id AS realisasi_rencana_aksi_bawahan_id',
+                                'realisasi_rencana_aksi.realisasi AS realisasi_rencana_aksi_bawahan',
+                                'realisasi_rencana_aksi.satuan AS satuan_rencana_aksi_bawahan',
+
+                                'realisasi_kabid.id AS realisasi_rencana_aksi_id',
+                                'realisasi_kabid.realisasi AS realisasi_rencana_aksi',
+                                'realisasi_kabid.satuan AS satuan_rencana_aksi'
+
+                            ) 
+                    ->get();
+        
+        $skp_id = $request->skp_bulanan_id;
+
+
+        $datatables = Datatables::of($dt)
+        ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
+            return $skp_id;
+       
+        })->addColumn('kegiatan_tahunan_label', function ($x) {
+            return $x->KegiatanTahunan->label;
+            
+        })->addColumn('persentasi_realisasi_rencana_aksi', function ($x) {
+          
+            return   Pustaka::persen($x->realisasi_rencana_aksi,$x->rencana_aksi_target);
+    
+            
+        })->addColumn('penanggung_jawab', function ($x) {
+
+            return Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan);
+
+        })->addColumn('pelaksana', function ($x) {
+
+            if ( $x->pelaksana_id != null ){
+                $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
+                $pelaksana = Pustaka::capital_string($dt->skpd);
+            }else{
+                $pelaksana = "-";
+            }
+
+            return $pelaksana;
+        })->addColumn('status_skp', function ($x) use($skp_bln){
+            return $skp_bln->status;
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true); 
+        
+        
+    } 
+
     public function RealisasiKegiatanBulanan2(Request $request) 
     {
             

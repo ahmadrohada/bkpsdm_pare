@@ -414,6 +414,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	//===================== REALISASI  KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
 	//========================================================================================================//
+	Route::get('realisasi_kegiatan_bulanan_1','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan1');
 	Route::get('realisasi_kegiatan_bulanan_2','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan2');
 	Route::get('realisasi_kegiatan_bulanan_3','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan3');
 	Route::get('realisasi_kegiatan_bulanan_4','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan4');
@@ -447,7 +448,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('update_realisasi_rencana_aksi_2','API\RealisasiRencanaAksiKabidAPIController@Update');
 
 
-		//===================== REALISASI  RENCANA AKSI KABAN   ======================================//
+	//===================== REALISASI  RENCANA AKSI KABAN   ======================================//
 	//========================================================================================================//
 	
 	Route::get('realisasi_rencana_aksi_detail_1','API\RealisasiRencanaAksiKabanAPIController@RealisasiRencanaAksiDetail');

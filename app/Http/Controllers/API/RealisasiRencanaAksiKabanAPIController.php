@@ -42,9 +42,9 @@ class RealisasiRencanaAksiKabanAPIController extends Controller {
     {
        
 
-        $x = RealisasiRencanaAksiKaban::WHERE('realisasi_rencana_aksi.id', $request->realisasi_rencana_aksi_id)
+        $x = RealisasiRencanaAksiKaban::WHERE('realisasi_rencana_aksi_kaban.id', $request->realisasi_rencana_aksi_id)
                     ->leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS skp_tahunan_rencana_aksi', function($join){
-                        $join   ->on('skp_tahunan_rencana_aksi.id','=','realisasi_rencana_aksi.rencana_aksi_id');
+                        $join   ->on('skp_tahunan_rencana_aksi.id','=','realisasi_rencana_aksi_kaban.rencana_aksi_id');
                        
                     })
                     ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
@@ -75,10 +75,10 @@ class RealisasiRencanaAksiKabanAPIController extends Controller {
                                 'realisasi_kegiatan_bulanan.satuan AS realisasi_satuan',
                                 'realisasi_kegiatan_bulanan.bukti',
                                 'realisasi_kegiatan_bulanan.alasan_tidak_tercapai',
-                                'realisasi_rencana_aksi.id AS realisasi_rencana_aksi_id',
-                                'realisasi_rencana_aksi.rencana_aksi_id',
-                                'realisasi_rencana_aksi.realisasi AS realisasi_rencana_aksi_target',
-                                'realisasi_rencana_aksi.satuan AS realisasi_rencana_aksi_satuan'
+                                'realisasi_rencana_aksi_kaban.id AS realisasi_rencana_aksi_id',
+                                'realisasi_rencana_aksi_kaban.rencana_aksi_id',
+                                'realisasi_rencana_aksi_kaban.realisasi AS realisasi_rencana_aksi_target',
+                                'realisasi_rencana_aksi_kaban.satuan AS realisasi_rencana_aksi_satuan'
 
                             ) 
                     ->first();
