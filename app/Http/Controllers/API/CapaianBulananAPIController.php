@@ -250,8 +250,7 @@ class CapaianBulananAPIController extends Controller {
                 $pelaksana_list[] = $data_jabatan_id ;
                 $jm_kegiatan += $dt_reaksi;
             }
-            $list_bawahan  = $pelaksana_list;                            
-            $kegiatan_list = "";
+            $list_bawahan  = $pelaksana_list;    
         //================================= K A B I D ========================================// 
         }else if ( $jenis_jabatan == 2){
 
@@ -266,15 +265,7 @@ class CapaianBulananAPIController extends Controller {
                                 ->get()
                                 ->toArray(); 
 
-            $kegiatan_list = RencanaAksi::
-                                        WHEREIN('jabatan_id',$pelaksana_list)
-                                        ->SELECT('id')
-                                        ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
-                                        ->WHERE('renja_id',$renja_id)
-                                        ->get(); 
-
-          
-           
+         
 
             //list bawahan
             $jm_kegiatan = 0 ; 
@@ -303,14 +294,21 @@ class CapaianBulananAPIController extends Controller {
                 $jm_kegiatan += $dt_reaksi;
             }
             $list_bawahan = $kasubid_list;
-            $kegiatan_list = $kegiatan_list;
             
         
         //============================   K A B A N   ===================================// 
         }else if ( $jenis_jabatan == 1){
 
-            //cari KAsubid
-            $bawahan = Jabatan::
+            //cari KABID
+            $kabid = Jabatan::SELECT('id','skpd AS jabatan')
+                                ->WHERE('m_skpd.parent_id', $skp_bulanan->PejabatYangDinilai->id_jabatan )
+                                ->get();
+
+
+
+
+
+            /* $bawahan = Jabatan::
                             
                                 leftjoin('demo_asn.m_skpd AS kasubid', function($join){
                                     $join   ->on('kasubid.parent_id','=','m_skpd.id');
@@ -318,37 +316,24 @@ class CapaianBulananAPIController extends Controller {
                                 ->SELECT('kasubid.id','kasubid.skpd AS jabatan')
                                 ->WHERE('m_skpd.parent_id', $skp_bulanan->PejabatYangDinilai->id_jabatan )
                                 ->get();
-            $bawahan_ls = Jabatan::
-                            
+
+             */
+
+
+            //list bawahan
+            $jm_kegiatan = 0 ; 
+            foreach ($kabid as $x) {
+
+                //pelaksana
+                $child = Jabatan::
                                 leftjoin('demo_asn.m_skpd AS kasubid', function($join){
                                     $join   ->on('kasubid.parent_id','=','m_skpd.id');
                                 })
                                 ->SELECT('kasubid.id')
-                                ->WHERE('m_skpd.parent_id', $skp_bulanan->PejabatYangDinilai->id_jabatan )
+                                ->WHERE('m_skpd.parent_id', $x->id )
                                 ->get()
                                 ->toArray(); 
-                               
-            $pelaksana_list = Jabatan::
-                                SELECT('id')
-                                ->WHEREIN('parent_id', $bawahan_ls)
-                                ->get()
-                                ->toArray(); 
-
-            $kegiatan_list = RencanaAksi::
-                                        WHEREIN('jabatan_id',$pelaksana_list)
-                                        ->SELECT('id')
-                                        ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
-                                        ->WHERE('renja_id',$renja_id)
-                                        ->get(); 
-
-          
-           
-
-            //list bawahan
-            $jm_kegiatan = 0 ; 
-            foreach ($bawahan as $x) {
-                //list pelaksana
-                $child = Jabatan::SELECT('id')->WHERE('parent_id',$x->id )->get()->toArray();
+              
                 $dt_reaksi = RencanaAksi::WHEREIN('jabatan_id',$child)
                                             ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
                                             ->WHERE('renja_id',$renja_id)
@@ -367,11 +352,10 @@ class CapaianBulananAPIController extends Controller {
 
 
 
-                $kasubid_list[] = $data_jabatan_id ;
+                $kabid_list[] = $data_jabatan_id ;
                 $jm_kegiatan += $dt_reaksi;
             }
-            $list_bawahan = $kasubid_list;
-            $kegiatan_list = $kegiatan_list;
+            $list_bawahan = $kabid_list;
             
         
         //===================================================================================// 
@@ -390,7 +374,6 @@ class CapaianBulananAPIController extends Controller {
                 'status'			    =>  'pass',
                 'renja_id'              =>  $renja_id,
                 'list_bawahan'          =>  $list_bawahan,
-                //'list_kegiatan'         =>  $kegiatan_list,
                 'jabatan_id'            => $skp_bulanan->PejabatYangDinilai->id_jabatan,
                 'pegawai_id'            =>  $skp_bulanan->pegawai_id,
                 'skp_bulanan_id'        =>  $skp_bulanan->skp_bulanan_id,
@@ -807,40 +790,84 @@ class CapaianBulananAPIController extends Controller {
             
     
             if ( $capaian_bulanan->save()){
-                //SKPTahunanTimeline::INSERT(['capaian_bulanan_id'=>$capaian_bulanan->id]);
+               
                 SKPBulanan::WHERE('id',Input::get('skp_bulanan_id'))->UPDATE(['status' => '1']);
 
-
                 //jika kabid, auto add kegiatan
-                $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id',Input::get('jabatan_id'))->get()->toArray();
-                //cari bawahan  , jabatanpelaksanan
-                $pelaksana_list = Jabatan::SELECT('id')->WHEREIN('parent_id', $bawahan_ls)->get()->toArray(); 
-    
-                $kegiatan_list = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_list)
-                                            ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
-                                                $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
-                                            })
-                                            ->SELECT('skp_tahunan_rencana_aksi.id','realisasi.realisasi','skp_tahunan_rencana_aksi.satuan')
-                                            ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',Input::get('waktu_pelaksanaan'))
-                                            ->WHERE('skp_tahunan_rencana_aksi.renja_id',Input::get('renja_id'))
-                                            ->get(); 
-                $i = 0 ;
-                foreach ($kegiatan_list as $x) {
-                    $data[] = array(
-                                    
-                        'rencana_aksi_id'       => $x->id,
-                        'capaian_id'            => $capaian_bulanan->id,
-                        'realisasi'             => $x->realisasi,
-                        'satuan'                => $x->satuan,
-                        'created_at'            => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
-                    );
-                    $i++;
+                if ( Input::get('jenis_jabatan') == '2'){
+                    $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id',Input::get('jabatan_id'))->get()->toArray();
+                    //cari bawahan  , jabatanpelaksanan
+                    $pelaksana_list = Jabatan::SELECT('id')->WHEREIN('parent_id', $bawahan_ls)->get()->toArray(); 
+        
+                    $kegiatan_list = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_list)
+                                                ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
+                                                    $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                                                })
+                                                ->SELECT('skp_tahunan_rencana_aksi.id','realisasi.realisasi','skp_tahunan_rencana_aksi.satuan')
+                                                ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',Input::get('waktu_pelaksanaan'))
+                                                ->WHERE('skp_tahunan_rencana_aksi.renja_id',Input::get('renja_id'))
+                                                ->get(); 
+                    $i = 0 ;
+                    foreach ($kegiatan_list as $x) {
+                        $data[] = array(
+                                        
+                            'rencana_aksi_id'       => $x->id,
+                            'capaian_id'            => $capaian_bulanan->id,
+                            'realisasi'             => $x->realisasi,
+                            'satuan'                => $x->satuan,
+                            'created_at'            => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
+                        );
+                        $i++;
+                    }
+                            
+                    if ( $i >= 1 ){
+                        $st_ra   = new RealisasiRencanaAksiKabid;
+                        $st_ra -> insert($data);
+                    }
+                }else if ( Input::get('jenis_jabatan') == '1'){ //KAABAN
+
+                    $kasubid_ls = Jabatan::
+                                        leftjoin('demo_asn.m_skpd AS kasubid', function($join){
+                                            $join   ->on('kasubid.parent_id','=','m_skpd.id');
+                                        })
+                                        ->SELECT('kasubid.id')
+                                        ->WHERE('m_skpd.parent_id',Input::get('jabatan_id') )
+                                        ->get()
+                                        ->toArray(); 
+
+                  
+                    //cari bawahan  , jabatanpelaksanan
+                    $pelaksana_list = Jabatan::SELECT('id')->WHEREIN('parent_id', $kasubid_ls)->get()->toArray(); 
+        
+                    $kegiatan_list = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_list)
+                                                ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
+                                                    $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                                                })
+                                                ->SELECT('skp_tahunan_rencana_aksi.id','realisasi.realisasi','skp_tahunan_rencana_aksi.satuan')
+                                                ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',Input::get('waktu_pelaksanaan'))
+                                                ->WHERE('skp_tahunan_rencana_aksi.renja_id',Input::get('renja_id'))
+                                                ->get(); 
+                    $i = 0 ;
+                    foreach ($kegiatan_list as $x) {
+                        $data[] = array(
+                                        
+                            'rencana_aksi_id'       => $x->id,
+                            'capaian_id'            => $capaian_bulanan->id,
+                            'realisasi'             => $x->realisasi,
+                            'satuan'                => $x->satuan,
+                            'created_at'            => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
+                        );
+                        $i++;
+                    }
+                            
+                    if ( $i >= 1 ){
+                        $st_ra   = new RealisasiRencanaAksiKaban;
+                        $st_ra -> insert($data);
+                    }
+                
                 }
-                        
-                if ( $i >= 1 ){
-                    $st_ra   = new RealisasiRencanaAksiKabid;
-                    $st_ra -> insert($data);
-                }
+                
+              
                
                 
 
