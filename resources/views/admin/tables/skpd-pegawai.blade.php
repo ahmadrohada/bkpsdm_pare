@@ -32,14 +32,9 @@
 </div>
 
 
-@section('template_scripts')
-
-@include('admin.structure.dashboard-scripts')
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		//alert();
-		
+
 		$('#pegawai_table').DataTable({
 				processing      : true,
 				serverSide      : true,
@@ -88,16 +83,4 @@
 			
 		});
 	
-	/* 	$(document).on('click','.lihat',function(e){
-			
-			pegawai_id = $(this).val();
-			alert(pegawai_id);
-
-			//window.location.assign("lihat_users");
-		}); */
-		
-		
-	});
 </script>
-
-@endsection
