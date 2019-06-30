@@ -9,14 +9,14 @@
 	 <div class="content-wrapper">
 	    <section class="content-header">
 			<h1>
-				Capaian SKP Personal
+				SKP Personal
 			</h1>
-				{!! Breadcrumbs::render('capaian_bulanan') !!}
+				{!! Breadcrumbs::render('skp') !!}
       </section>
 	    <section class="content">
-				@include('admin.modules.personal-home-snapshots-boxes')
+				@include('admin.modules.personal-skp-snapshots-boxes')
 
-				@include('admin.tables.personal-capaian_bulanan')
+				@include('admin.tables.personal-skp_jabatan')
 	    </section>
 	</div>
 @stop

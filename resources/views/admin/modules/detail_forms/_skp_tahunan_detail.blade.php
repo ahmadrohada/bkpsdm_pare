@@ -23,7 +23,7 @@
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4">Masa Penilaian</label>
 			<div class="col-md-8">
-				<span id="masa_penilaian" class="form-control">{!! $skp->tgl_mulai !!} s.d {!! $skp->tgl_selesai !!}</span>
+				<span id="masa_penilaian" class="form-control">{!! Pustaka::tgl_form($skp->tgl_mulai) !!} s.d {!! Pustaka::tgl_form($skp->tgl_selesai) !!}</span>
 			</div>
 		</div>
 					

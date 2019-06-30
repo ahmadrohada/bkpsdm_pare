@@ -32,6 +32,14 @@ Use Alert;
 
 class SKPTahunanAPIController extends Controller {
 
+    //=======================================================================================//
+    protected function jabatan($id_jabatan){
+        $jabatan       = HistoryJabatan::WHERE('id',$id_jabatan)
+                        ->SELECT('jabatan')
+                        ->first();
+        return Pustaka::capital_string($jabatan->jabatan);
+    }
+
 
     protected function SKPTahunandDetail(Request $request){
      
@@ -581,6 +589,74 @@ class SKPTahunanAPIController extends Controller {
 
 
     public function PersonalSKPTahunanList(Request $request)
+    {
+            
+        $id_pegawai = $request->pegawai_id;
+
+        $pegawai = Pegawai::SELECT('id')->WHERE('id',$id_pegawai)->first();
+
+        
+        $SKPTahunan = SKPTahunan::WHERE('pegawai_id',$id_pegawai)
+                        //PERIODE
+                        ->leftjoin('db_pare_2018.renja AS renja', function($join){
+                            $join   ->on('renja.id','=','skp_tahunan.renja_id');
+                        }) 
+                        ->leftjoin('db_pare_2018.periode AS periode', function($join){
+                            $join   ->on('renja.periode_id','=','periode.id');
+                        }) 
+                        //SKPD
+                        ->leftjoin('demo_asn.m_skpd AS skpd', function($join){
+                            $join   ->on('skpd.id','=','renja.skpd_id');
+                        }) 
+                        ->SELECT(   'skp_tahunan.tgl_mulai',
+                                    'skp_tahunan.tgl_selesai',
+                                    'skp_tahunan.u_jabatan_id',
+                                    'skp_tahunan.id AS skp_tahunan_id',
+                                    'skpd.skpd',
+                                    'periode.label',
+                                    'skp_tahunan.status'
+                                )
+                        ->get();
+
+
+
+
+
+        $datatables = Datatables::of($SKPTahunan)
+            ->addColumn('periode', function ($x) {
+                return $x->label;
+            }) 
+            ->addColumn('masa_penilaian', function ($x) {
+                return Pustaka::balik($x->tgl_mulai)." s.d ". Pustaka::balik($x->tgl_selesai);
+            })
+           
+            ->addColumn('jabatan', function ($x) {
+            
+                return  $this->jabatan($x->u_jabatan_id);
+                
+            })
+            ->addColumn('skpd', function ($x) {
+                return  Pustaka::capital_string($x->skpd);
+            })
+            ->addColumn('skp_tahunan_id', function ($x) {
+                    return $x->skp_tahunan_id;
+                
+                 
+            });
+    
+            if ($keyword = $request->get('search')['value']) {
+                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            } 
+            
+    
+        return $datatables->make(true); 
+        //return $response; 
+        
+        
+    }
+
+
+    public function PersonalSKPJabatanList(Request $request)
     {
             
         $id_pegawai = $request->pegawai_id;

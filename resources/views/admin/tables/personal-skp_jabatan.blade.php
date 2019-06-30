@@ -1,7 +1,7 @@
 <div class="box {{ $h_box }}">
     <div class="box-header with-border">
         <h1 class="box-title">
-            Data SKP Tahunan
+            Data SKP Jabatan
         </h1>
 
         <div class="box-tools pull-right">
@@ -16,10 +16,12 @@
 				<tr class="success">
 					<th>NO</th>
 					<th>PERIODE</th>
-					<th>MASA PENILAIAN</th>
+					<th>TMT</th>
 					<th>JABATAN</th>
 					<th>SKPD</th>
-					<th><i class="fa fa-cog"></i></th>
+					<th>RENJA</th>
+
+					<th>SKP TAHUNAN</th>
 				</tr>
 			</thead>
 			
@@ -29,6 +31,9 @@
 	</div>
 </div>
 
+@include('admin.modals.create_skp_tahunan_confirm')
+
+@include('admin.modals.skp_tahunan_bawahan')
 
 <script type="text/javascript">
 	$('#skp_tahunan_table').DataTable({
@@ -40,11 +45,11 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,2,5 ] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,2,5,6 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/personal_skp_tahunan_list") }}',
+									url	: '{{ url("api_resource/personal_skp_jabatan_list") }}',
 									data: { pegawai_id : {!! $pegawai->id !!} },
 									delay:3000
 
@@ -59,26 +64,44 @@
 								},
 								
 								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "masa_penilaian" ,  name:"masa_penilaian", orderable: true, searchable: true},
+								{ data: "tmt_jabatan" ,  name:"tmt_jabatan", orderable: true, searchable: true},
 								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true},
 								{ data: "skpd" ,  name:"skpd", orderable: true, searchable: true},
-								{ data: "skp_tahunan" , orderable: false,searchable:false,width:"100px",
+								{ data: "renja" , orderable: false,searchable:false,width:"40px",
 										"render": function ( data, type, row ) {
-										
-
-										if ( row.status == 0 ){
-											return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs" disabled><i class="fa fa-eye" ></i></a></span>'
-													+'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'
-													+'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_skp_tahunan"  data-id="'+row.skp_tahunan_id+'" data-periode="'+row.periode+'" ><i class="fa fa-close " ></i></a></span>';
-										
+										if (row.renja == true ){
+											return  '<span class="label label-success"><i class="fa fa-check"></i></span>';
 										}else{
-											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-eye" ></i></a></span>'
-													+'<span style="margin:1px;" ><a class="btn btn-default btn-xs "  disabled><i class="fa fa-pencil" ></i></a></span>'
-													+'<span style="margin:1px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-close " ></i></a></span>';
-										
+											return  '<span class="label label-default"><i class="fa fa-close"></i></span>';
+											
 										}
 										
+									}
+								},
+								{ data: "skp_tahunan" , orderable: false,searchable:false,width:"120px",
+										"render": function ( data, type, row ) {
+										if (row.skp_tahunan == 0 ){ 
+											return  '<span  data-toggle="tooltip" title="Create SKP Tahunan" style="margin:1px;" ><a class="btn btn-warning btn-xs create_skp_tahunan"  data-jabatan_id="'+row.jabatan_id+'" data-periode_id="'+row.periode_id+'" data-pegawai_id="'+row.pegawai_id+'">Create SKP</a></span>';
+										}else if (row.skp_tahunan == 1 ){
+
+
+											if ( row.status == 0 ){
+												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs" disabled><i class="fa fa-eye" ></i></a></span>'
+														+'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'
+														+'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_skp_tahunan"  data-id="'+row.skp_tahunan_id+'" data-periode="'+row.periode+'" ><i class="fa fa-close " ></i></a></span>';
+											
+											}else{
+												return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-eye" ></i></a></span>'
+														+'<span style="margin:1px;" ><a class="btn btn-default btn-xs "  disabled><i class="fa fa-pencil" ></i></a></span>'
+														+'<span style="margin:1px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-close " ></i></a></span>';
+											
+											}
 										
+										
+										
+										}else if (row.skp_tahunan == 2 ){
+											return  '<span class="btn btn-default btn-xs" disabled>Create SKP</i></span>';
+										}
 									}
 								},
 								

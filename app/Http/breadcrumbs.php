@@ -184,12 +184,31 @@ Breadcrumbs::register('perjanjian_kinerja', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_perjanjian_kinerja'), '/pare_2018/skpd/perjanjian-kinerja', ['icon' => Lang::get('sidebar-nav.link_icon_perjanjian_kinerja')]);
 });
 
+// DASHBOARD PERSONAL
+Breadcrumbs::register('personal-dashboard', function($breadcrumbs)
+{
+	$breadcrumbs->push(Lang::get('sidebar-nav.link_title_dashboard'), '/bkpsdm_pare/public/personal', ['icon' => Lang::get('sidebar-nav.link_icon_dashboard')]);
+});
+
+// DASHBOARD >SKP
+Breadcrumbs::register('skp', function($breadcrumbs)
+{
+    $breadcrumbs->parent('personal-dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp'), '/bkpsdm_pare/public/personal/skp', ['icon' => Lang::get('sidebar-nav.link_icon_skp')]);
+});
 
 // DASHBOARD >SKP TAHUNAN
 Breadcrumbs::register('personal_skp_tahunan', function($breadcrumbs)
 {
-    $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_tahunan'), '/pare_2018/personal/skp-tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_tahunan')]);
+    $breadcrumbs->parent('personal-dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_tahunan'), '/bkpsdm_pare/public/personal/skp-tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_tahunan')]);
+});
+
+// DASHBOARD >SKP BULANAN
+Breadcrumbs::register('personal_skp_bulanan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('personal-dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_bulanan'), '/bkpsdm_pare/public/personal/skp-bulanan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_bulanan')]);
 });
 
 Breadcrumbs::register('personal_edit_skp_tahunan', function($breadcrumbs)
@@ -201,7 +220,7 @@ Breadcrumbs::register('personal_edit_skp_tahunan', function($breadcrumbs)
 // DASHBOARD >CAPAIAN BULANAN
 Breadcrumbs::register('capaian_bulanan', function($breadcrumbs)
 {
-    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->parent('personal-dashboard');
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_bulanan'), '/pare_2018/personal/capaian-bulanan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_bulanan')]);
 });
 
