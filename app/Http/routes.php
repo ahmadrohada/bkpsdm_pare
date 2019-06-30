@@ -292,10 +292,21 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skpd_indikator_kegiatan_perjanjian_kinerja_list','API\IndikatorKegiatanAPIController@SKPD_indikator_kegiatan_perjanjian_kinerja_list');
 	Route::post('skpd_simpan_indikator_kegiatan','API\IndikatorKegiatanAPIController@Store');
  */
+
+ 	//========================================================================================================//
+	//==================================  SKP JABATAN    =================================================//
+	//========================================================================================================//
+	Route::get('personal_skp_jabatan_list','API\SKPTahunanAPIController@PersonalSKPJabatanList');
+
+
+
 	//========================================================================================================//
 	//==================================  SKP THAUNAN=================================================//
 	//========================================================================================================//
 	Route::get('personal_skp_tahunan_list','API\SKPTahunanAPIController@PersonalSKPTahunanList');
+
+
+	
 
 	//KASUBID
 	Route::get('skp_tahunan_status_pengisian3','API\SKPTahunanAPIController@SKPTahunanStatusPengisian3');
@@ -367,7 +378,13 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skp_bulanan_list_3','API\SKPBulananAPIController@SKPBulananList3');
 	Route::get('skp_bulanan_list_4','API\SKPBulananAPIController@SKPBulananList4');
 
+	Route::get('personal_skp_bulanan_list','API\SKPBulananAPIController@PersonalSKPBulananList');
+
+
+	
+
 	Route::post('create_skp_bulanan','API\SKPBulananAPIController@Store');
+	Route::get('skp_bulanan_detail','API\SKPBulananAPIController@SKPBulanandDetail');
 	Route::post('hapus_skp_bulanan','API\SKPBulananAPIController@Destroy');
 
 
@@ -896,10 +913,37 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 
 Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
+	Route::get('', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePersonalController@showDashboard'
+	]);
+
+
+
 	//======================= H O M E   P E R S O N A L ========================================//
+	Route::get('skp', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePersonalController@showSKPJabatan'
+	]);
+	
+	
+	
+	
+	
+	Route::get('skp-jabatan', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePersonalController@showSKPJabatan'
+	]);
+	
+	
 	Route::get('skp-tahunan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showSKPTahunan'
+	]);
+
+	Route::get('skp-bulanan', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePersonalController@showSKPBulanan'
 	]);
 
 
@@ -965,6 +1009,25 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	Route::get('skp-tahunan/{skp_tahunan_id}/ralat',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPTahunanController@PersonalSKPTahunanRalat'
+	]);
+
+
+	//=========================================================================================//
+	//================================= SKP BULANAN      =====================================//
+	//=========================================================================================//
+	Route::get('skp-bulanan/{skp_bulanan_id}/edit',[
+		'as' 			=> '',
+		'uses' 			=> 'SKPBulananController@PersonalSKPBulananEdit'
+	]);
+
+	Route::get('skp-bulanan/{skp_bulanan_id}',[
+		'as' 			=> '',
+		'uses' 			=> 'SKPBulananController@PersonalSKPBulananDetail'
+	]);
+
+	Route::get('skp-bulanan/{skp_bulanan_id}/ralat',[
+		'as' 			=> '',
+		'uses' 			=> 'SKPBulananController@PersonalSKPBulananRalat'
 	]);
 
 

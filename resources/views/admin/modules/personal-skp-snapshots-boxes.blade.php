@@ -11,13 +11,13 @@
 		<div class="row">
 			
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-red skp" style="cursor:pointer;">
+				<div class="small-box bg-red skp_jabatan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							*
 						</h3>
 						<p>
-							<strong>SKP</strong>
+							<strong>SKP Jabatan</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -27,17 +27,33 @@
 			</div>
 
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-yellow capaian" style="cursor:pointer;">
+				<div class="small-box bg-yellow skp_tahunan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							*
 						</h3>
 						<p>
-							<strong>Capaian</strong>
+							<strong>SKP Tahunan</strong>
 						</p>
 					</div>
 					<div class="icon">
-						<i class="ion ion-stats-bars"></i>
+						<i class="fa  fa-tasks"></i>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 col-xs-6">
+				<div class="small-box bg-aqua skp_bulanan" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							<strong>SKP Bulanan</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa  fa-tasks"></i>
 					</div>
 				</div>
 			</div>
@@ -53,12 +69,16 @@
 $(document).ready(function(){
 
    
-	$(".skp").click(function(){
-		window.location.assign("personal/skp");
+	$(".skp_jabatan").click(function(){
+		window.location.assign("skp-jabatan");
     });
 
-	$(".capaian").click(function(){
-		window.location.assign("capaian");
+	$(".skp_tahunan").click(function(){
+		window.location.assign("skp-tahunan");
+    });
+
+	$(".skp_bulanan").click(function(){
+		window.location.assign("skp-bulanan");
     });
 
 	

@@ -63,6 +63,21 @@ class SKPBulananController extends Controller {
         );    
     } */
 
+    
+    public function PersonalSKPBulananDetail(Request $request)
+	{
+        $skp_bulanan = SKPBulanan::where('id', $request->skp_bulanan_id )->first();
+
+        if( ($skp_bulanan->status) == 0 ) {
+            return redirect('/personal/skp-bulanan/'.$request->skp_bulanan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
+        }else{
+            return view('admin.pages.personal-skp_bulanan_detail', ['skp'=> $skp_bulanan]);  
+        }
+    }
+
+
+
+
     public function SKPBulananDetail(Request $skp_bulanan_id)
 	{
         
