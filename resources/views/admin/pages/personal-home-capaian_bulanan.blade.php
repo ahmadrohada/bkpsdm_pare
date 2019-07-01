@@ -11,12 +11,12 @@
 			<h1>
 				Capaian SKP Personal
 			</h1>
-				{!! Breadcrumbs::render('capaian_bulanan') !!}
+				{!! Breadcrumbs::render('capaian') !!}
       </section>
 	    <section class="content">
-				@include('admin.modules.personal-home-snapshots-boxes')
+				@include('admin.modules.personal-capaian-snapshots-boxes')
 
 				@include('admin.tables.personal-capaian_bulanan')
 	    </section>
-	</div>
+	</div> 
 @stop

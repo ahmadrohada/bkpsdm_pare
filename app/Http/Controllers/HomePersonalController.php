@@ -139,7 +139,7 @@ class HomePersonalController extends Controller {
         
 
         return view('admin.pages.personal-home-capaian_bulanan', [
-               //'pegawai' 		        => $pegawai,
+               'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                'h_box'                  => 'box-warning',
                

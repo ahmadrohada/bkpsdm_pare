@@ -11,7 +11,7 @@
 			<h1>
 				Detail SKP Bulanan Periode {!! Pustaka::periode($skp->tgl_mulai) !!}
 			</h1>
-				{!! Breadcrumbs::render('personal_edit_skp_tahunan') !!}
+				{!! Breadcrumbs::render('personal_detail_skp_bulanan') !!}
       </section>
 	  
 	    <section class="content">
@@ -28,7 +28,26 @@
 				</div>
 								
 				<div class=" tab-pane" id="kegiatan_bulanan_tab">
-				
+				<!-- 1. KABAN -->
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
+						@include('admin.tables.skp_kegiatan_bulanan_1_detail')
+					@endif
+
+					<!-- 2. KASUBID -->
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
+						@include('admin.tables.skp_kegiatan_bulanan_2_detail')
+					@endif
+
+
+					<!-- 3. KASUBID -->
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+						@include('admin.tables.skp_kegiatan_bulanan_3_detail')
+					@endif
+
+					<!-- 4. PELAKSANA -->
+					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
+						@include('admin.tables.skp_kegiatan_bulanan_4_detail')		
+					@endif
 				</div>
 
 			</div>			
@@ -58,9 +77,7 @@ $(document).ready(function() {
 		window.location.hash = id;
 
 		if ( id == 'kegiatan_bulanan_tab'){
-			initTree();
-		}else if ( id == 'status'){
-			status_show();
+			load_kegiatan_bulanan();
 		}else if ( id == 'detail'){
 			detail_show();
 		}

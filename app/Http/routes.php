@@ -926,15 +926,10 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'HomePersonalController@showSKPJabatan'
 	]);
 	
-	
-	
-	
-	
 	Route::get('skp-jabatan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showSKPJabatan'
 	]);
-	
 	
 	Route::get('skp-tahunan', [
 		'as' 			=> '',
@@ -944,6 +939,13 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	Route::get('skp-bulanan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showSKPBulanan'
+	]);
+
+
+
+	Route::get('capaian', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePersonalController@showCapaianBulanan'
 	]);
 
 
