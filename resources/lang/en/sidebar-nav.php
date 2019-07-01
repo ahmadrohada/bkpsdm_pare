@@ -123,15 +123,30 @@ return [
 	'link_title_skp_tahunan'    => 'SKP Tahunan',
 	'link_icon_skp_tahunan'     => 'fa-tasks',
 	
-	'link_title_skp_bulanan'    => 'SKP Bulanan',
-	'link_icon_skp_bulanan'     => 'fa-tasks',
-	
+
 	'link_title_edit_skp_tahunan'    => 'Edit',
 	'link_icon_edit_skp_tahunan'     => 'fa-pencil',
 
 
-	// CAPAIAN BULANAN
+	// SKP BULANAN LINKS
+
+	'link_title_skp_bulanan'    => 'SKP Bulanan',
+	'link_icon_skp_bulanan'     => 'fa-tasks',
 	
+	'link_title_skp_bulanan'    => 'SKP Bulanan',
+	'link_icon_skp_bulanan'     => 'fa-tasks',
+	
+	'link_title_edit_skp_bulanan'    => 'Edit',
+	'link_icon_edit_skp_bulanan'     => 'fa-pencil',
+
+	'link_title_detail_skp_bulanan'    => 'Detail',
+	'link_icon_detail_skp_bulanan'     => 'fa-eye',
+
+
+	// CAPAIAN BULANAN
+	'link_title_capaian'    		=> 'Capaian',
+	'link_icon_capaian'     		=> 'fa-bar-chart',
+
 	'link_title_capaian_bulanan'    		=> 'Capaian Bulanan',
 	'link_icon_capaian_bulanan'     		=> 'fa-bar-chart',
 	

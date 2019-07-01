@@ -35,4 +35,9 @@ class SKPBulanan extends Model
     {
         return $this->hasOne('App\Models\HistoryJabatan','id','p_jabatan_id');
     }
+
+    public function PejabatPenilai()
+    {
+        return $this->hasOne('App\Models\HistoryJabatan','id','p_jabatan_id');
+    }
 }

@@ -174,7 +174,7 @@ class SKPBulananAPIController extends Controller {
         if ( $p_detail != null ){
             $data = array(
                     'periode'	            => $renja->Periode->label,
-                    'date_created'	        => Pustaka::tgl_jam($skp->created_at),
+                    'date_created'	        => Pustaka::tgl_form($skp->created_at),
                     'masa_penilaian'        => Pustaka::tgl_form($skp->tgl_mulai).' s.d  '.Pustaka::tgl_form($skp->tgl_selesai),
 
                     'tgl_mulai'             => $skp->tgl_mulai,
@@ -206,7 +206,7 @@ class SKPBulananAPIController extends Controller {
         }else{
             $data = array(
                     'periode'	            => $renja->Periode->label,
-                    'date_created'	        => "",
+                    'date_created'	        => Pustaka::tgl_form($skp->created_at),
                     'masa_penilaian'        => Pustaka::tgl_form($skp->tgl_mulai).' s.d  '.Pustaka::tgl_form($skp->tgl_selesai),
 
                     'tgl_mulai'             => $skp->tgl_mulai,
@@ -222,7 +222,7 @@ class SKPBulananAPIController extends Controller {
                     'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
                     'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
                 
-                    'p_jabatan_id'	        => '',
+                    'p_jabatan_id'	        => $p_detail,
                     'p_nip'	                => '',
                     'p_nama'                => '',
                     'p_pangkat'	            => '',
