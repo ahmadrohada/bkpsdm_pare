@@ -931,28 +931,18 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'HomePersonalController@showSKPJabatan'
 	]);
 	
-	Route::get('skp-tahunan', [
-		'as' 			=> '',
-		'uses' 			=> 'HomePersonalController@showSKPTahunan'
-	]);
-
-	Route::get('skp-bulanan', [
-		'as' 			=> '',
-		'uses' 			=> 'HomePersonalController@showSKPBulanan'
-	]);
-
-
+	
 
 	Route::get('capaian', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showCapaianBulanan'
 	]);
 
+	
 
-	Route::get('capaian-bulanan', [
-		'as' 			=> '',
-		'uses' 			=> 'HomePersonalController@showCapaianBulanan'
-	]);
+
+	
+	
 
 
 
@@ -998,6 +988,11 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	//=========================================================================================//
 	//================================= SKP TAHUNAN      =====================================//
 	//=========================================================================================//
+	Route::get('skp-tahunan', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePersonalController@showSKPTahunan'
+	]);
+
 	Route::get('skp-tahunan/{skp_tahunan_id}/edit',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPTahunanController@PersonalSKPTahunanEdit'
@@ -1017,6 +1012,11 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	//=========================================================================================//
 	//================================= SKP BULANAN      =====================================//
 	//=========================================================================================//
+	Route::get('skp-bulanan', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePersonalController@showSKPBulanan'
+	]);
+
 	Route::get('skp-bulanan/{skp_bulanan_id}/edit',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPBulananController@PersonalSKPBulananEdit'
@@ -1033,9 +1033,21 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	]);
 
 
+	
+
 	//=========================================================================================//
 	//=============================   CAPAIAN BULANAN     =====================================//
 	//=========================================================================================//
+	Route::get('capaian-bulanan', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePersonalController@showCapaianBulanan'
+	]);
+
+	Route::get('capaian-bulanan/{capaian_bulanan_id}',[
+		'as' 			=> '',
+		'uses' 			=> 'CapaianBulananController@PersonalCapaianBulananDetail'
+	]);
+
 	Route::get('capaian-bulanan/{capaian_bulanan_id}/edit',[
 		'as' 			=> '',
 		'uses' 			=> 'CapaianBulananController@PersonalCapaianBulananEdit'
@@ -1046,11 +1058,24 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'CapaianBulananController@PersonalCapaianBulananRalat'
 	]);
 
-	Route::get('capaian-bulanan/{capaian_bulanan_id}',[
+	//=========================================================================================//
+	//=============================   CAPAIAN TRIWULAN     ====================================//
+	//=========================================================================================//
+	Route::get('capaian-triwulan', [
 		'as' 			=> '',
-		'uses' 			=> 'CapaianBulananController@PersonalCapaianBulananDetail'
+		'uses' 			=> 'HomePersonalController@showCapaianTriwulan'
 	]);
 
+
+	//=========================================================================================//
+	//=============================   CAPAIAN TRIWULAN     ====================================//
+	//=========================================================================================//
+	Route::get('capaian-tahunan', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePersonalController@showCapaianTahunan'
+	]);
+	
+	
 
 	
 

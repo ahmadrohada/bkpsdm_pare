@@ -152,6 +152,17 @@ return [
 	
 	'link_title_edit_capaian_bulanan'    		=> 'Edit',
 	'link_icon_edit_capaian_bulanan'     		=> 'fa-pencil',
+
+	'link_title_detail_capaian_bulanan'    		=> 'Detail',
+	'link_icon_detail_capaian_bulanan'     		=> 'fa-eye',
+
+	// CAPAIAN TRIWULAN
+	'link_title_capaian_triwulan'    		=> 'Capaian Triwulan',
+	'link_icon_capaian_triwulan'     		=> 'fa-bar-chart',
+
+	// CAPAIAN TAHUNAN
+	'link_title_capaian_tahunan'    		=> 'Capaian Tahunan',
+	'link_icon_capaian_tahunan'     		=> 'fa-bar-chart',
 	
 	// PETA JABATAN LINKS
 	
