@@ -149,4 +149,38 @@ class HomePersonalController extends Controller {
         
     }
 
+    public function showCapaianTriwulan(Request $request)
+    {
+        $user      = \Auth::user();
+        $pegawai   = $user->pegawai;       
+        
+
+        return view('admin.pages.personal-home-capaian_triwulan', [
+               'pegawai' 		        => $pegawai,
+               'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+               'h_box'                  => 'box-info',
+               
+           ]
+        );   
+
+        
+    }
+
+    public function showCapaianTahunan(Request $request)
+    {
+        $user      = \Auth::user();
+        $pegawai   = $user->pegawai;       
+        
+
+        return view('admin.pages.personal-home-capaian_tahunan', [
+               'pegawai' 		        => $pegawai,
+               'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+               'h_box'                  => 'box-danger',
+               
+           ]
+        );   
+
+        
+    }
+
 }

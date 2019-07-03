@@ -225,17 +225,10 @@ Breadcrumbs::register('personal_detail_skp_bulanan', function($breadcrumbs)
 
 // DASHBOARD >CAPAIAN BULANAN
 
-Breadcrumbs::register('capaian', function($breadcrumbs)
-{
-    $breadcrumbs->parent('personal-dashboard');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian'), '/pare_2018/personal/capaian-bulanan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_bulanan')]);
-});
-
-
 Breadcrumbs::register('capaian_bulanan', function($breadcrumbs)
 {
-    $breadcrumbs->parent('capaian');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_bulanan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_capaian')]);
+    $breadcrumbs->parent('personal-dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_bulanan'), '/bkpsdm_pare/public/personal/capaian-bulanan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian')]);
 });
 
 Breadcrumbs::register('personal_edit_capaian_bulanan', function($breadcrumbs)
@@ -243,6 +236,31 @@ Breadcrumbs::register('personal_edit_capaian_bulanan', function($breadcrumbs)
     $breadcrumbs->parent('capaian_bulanan');
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_edit_capaian_bulanan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_edit_capaian_bulanan')]);
 });
+
+Breadcrumbs::register('personal_detail_capaian_bulanan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('capaian_bulanan');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_detail_capaian_bulanan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_detail_capaian_bulanan')]);
+});
+
+
+// DASHBOARD >CAPAIAN TRIWULAN
+
+Breadcrumbs::register('capaian_triwulan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('personal-dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_triwulan'), '/bkpsdm_pare/public/personal/capaian-triwulan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian')]);
+});
+
+
+// DASHBOARD >CAPAIAN TAHUNAN
+
+Breadcrumbs::register('capaian_tahunan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('personal-dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_tahunan'), '/bkpsdm_pare/public/personal/capaian-tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian')]);
+});
+
 
 
 // DASHBOARD > APPROVAL REQUEST

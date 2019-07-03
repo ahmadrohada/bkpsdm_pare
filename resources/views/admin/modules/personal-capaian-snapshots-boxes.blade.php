@@ -11,23 +11,7 @@
 		<div class="row">
 			
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-red skp" style="cursor:pointer;">
-					<div class="inner">
-						<h3>
-							*
-						</h3>
-						<p>
-							<strong>Create Capaian</strong>
-						</p>
-					</div>
-					<div class="icon">
-						<i class="fa  fa-tasks"></i>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-yellow capaian" style="cursor:pointer;">
+				<div class="small-box bg-yellow capaian_bulanan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							*
@@ -44,7 +28,7 @@
 
 
 				<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-yellow capaian" style="cursor:pointer;">
+				<div class="small-box bg-aqua capaian_triwulan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							*
@@ -61,7 +45,7 @@
 
 
 				<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-yellow capaian" style="cursor:pointer;">
+				<div class="small-box bg-red capaian_tahunan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							*
@@ -87,14 +71,18 @@
 $(document).ready(function(){
 
    
-	$(".skp").click(function(){
-		window.location.assign("personal/skp");
+	$(".capaian_bulanan").click(function(){
+		window.location.assign("capaian-bulanan");
     });
 
-	$(".capaian").click(function(){
-		window.location.assign("personal/capaian");
+	$(".capaian_triwulan").click(function(){
+		window.location.assign("capaian-triwulan");
     });
 
+	$(".capaian_tahunan").click(function(){
+		window.location.assign("capaian-tahunan");
+    });
+	
 	
 
 });

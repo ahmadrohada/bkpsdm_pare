@@ -11,7 +11,7 @@
 			<h1>
 				Capaian Bulanan Detail
 			</h1>
-				{!! Breadcrumbs::render('personal_edit_capaian_bulanan') !!}
+				{!! Breadcrumbs::render('personal_detail_capaian_bulanan') !!}
       </section>
 	  
 	    <section class="content">
