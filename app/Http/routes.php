@@ -429,6 +429,21 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('simpan_capaian_bulanan','API\CapaianBulananAPIController@Store');
 	Route::post('hapus_capaian_bulanan','API\CapaianBulananAPIController@Destroy');
 
+
+
+	//========================================================================================================//
+	//============================== =======    CAPAIAN TRIWULAN ================================================//
+	//========================================================================================================//
+	
+	Route::get('create_capaian_triwulan_confirm','API\CapaianTriwulanAPIController@CreateConfirm');
+	
+	Route::get('personal_capaian_triwulan_list','API\CapaianTriwulanAPIController@PersonalCapaianTriwulanList');
+	
+	Route::post('simpan_capaian_triwulan','API\CapaianTriwulanAPIController@Store');
+
+
+
+
 	//===================== REALISASI  KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
 	//========================================================================================================//
 	Route::get('realisasi_kegiatan_bulanan_1','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan1');

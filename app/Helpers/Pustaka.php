@@ -414,5 +414,36 @@ class Pustaka {
 
     }
 
+	public static function triwulan_lalu($data) {
+       
+	
+		$tanggal = substr($data,8,2); 
+		$bulan   = substr($data,5,2); 
+		$tahun   = substr($data,0,4); 
+
+		$hasil =  mktime(0, 0, 0, date($bulan)-2, date($tanggal), date($tahun));
+		//return date("Y-m-d", $hasil);
+
+		return date("Y-m-01",$hasil);
+	}
+	
+	public static function tgl_besok($data) {
+       
+	
+		$tanggal = substr($data,8,2); 
+		$bulan   = substr($data,5,2); 
+		$tahun   = substr($data,0,4); 
+
+		$hasil =  mktime(0, 0, 0, date($bulan), date($tanggal)+1, date($tahun));
+		return date("Y-m-d", $hasil);
+		
+	}
+	
+	public static function tgl_akhir($data) {
+       
+		return date("Y-m-t", strtotime($data));
+    }
+	
+
 
 }
