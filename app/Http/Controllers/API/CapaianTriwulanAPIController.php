@@ -139,14 +139,12 @@ class CapaianTriwulanAPIController extends Controller {
 
        
            $datatables = Datatables::of($capaian_triwulan)
-             ->addColumn('periode', function ($x) {
-                return  Pustaka::periode($x->tgl_mulai);
-            }) 
-           
-            ->addColumn('pelaksanaan', function ($x) {
+             ->addColumn('periode_capaian', function ($x) {
                 $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
                 return   $masa_penilaian;
             }) 
+           
+           
             ->addColumn('jabatan', function ($x) {
                 
                 return   Pustaka::capital_string($x->PejabatYangDinilai->Jabatan->skpd);
@@ -154,15 +152,6 @@ class CapaianTriwulanAPIController extends Controller {
             ->addColumn('capaian', function ($x) {
                 return $x->capaian_id;
              
-            })
-            ->addColumn('remaining_time', function ($x) {
-
-                $tgl_selesai = strtotime($x->tgl_selesai);
-                $now         = time();
-                return floor(($tgl_selesai - $now)/ (60*60*24)) * -1;
-
-            
-                
             });
     
             if ($keyword = $request->get('search')['value']) {

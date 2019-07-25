@@ -424,6 +424,13 @@ class Pustaka {
 		$hasil =  mktime(0, 0, 0, date($bulan)-2, date($tanggal), date($tahun));
 		//return date("Y-m-d", $hasil);
 
+		if ( date("Y",$hasil) == ($tahun - 1)){
+			$hasil =  mktime(0, 0, 0, date($bulan)-1, date($tanggal), date($tahun));
+		}else if ( date("Y",$hasil) == ($tahun - 1)){
+			$hasil =  mktime(0, 0, 0, date($bulan), date($tanggal), date($tahun));
+		}
+
+
 		return date("Y-m-01",$hasil);
 	}
 	
