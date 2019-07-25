@@ -19,10 +19,9 @@
 			<thead>
 				<tr class="success">
 					<th>NO</th>
-					<th>PERIODE</th>
-					<th>PELAKSANAAN</th>
+					<th>PERIODE CAPAIAN</th>
 					<th>JABATAN</th>
-					<th>CAPAIAN</th>
+					<th>AKSI</th>
 				</tr>
 			</thead>
 			
@@ -44,7 +43,7 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,2,3,4 ] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,2,3 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
@@ -62,26 +61,12 @@
 									}
 								},
 								
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true,
+								{ data: "periode_capaian" ,  name:"periode_capaian", orderable: true, searchable: true,
 									"render": function ( data, type, row ) {
-										if (row.capaian_status_approve == 2){
-											return "<span class='text-danger'>"+row.periode+"</span>";
-										}else{
-											return row.periode;
-										}
-
+										return row.periode_capaian;
 									}	
 								},
-								{ data: "pelaksanaan" ,  name:"pelaksanaan", orderable: true, searchable: true,width:"250px",
-									"render": function ( data, type, row ) {
-										if (row.capaian_status_approve == 2){
-											return "<span class='text-danger'>"+row.pelaksanaan+"</span>";
-										}else{
-											return row.pelaksanaan;
-										}
-
-									}	
-								},
+								
 								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true,
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
@@ -94,41 +79,11 @@
 								},
 								
 								{ data: "capaian" , orderable: false,searchable:false,width:"120px",
-										"render": function ( data, type, row ) {
-										if (row.remaining_time >= 0 ){ 
-											if (row.capaian >= 1 ){ 
-
-
-												if (row.capaian_send_to_atasan == 1 ){
-													if (row.capaian_status_approve == 2){
-														//ditolak
-														return  '<span  data-toggle="tooltip" title="Ralat" style="margin:2px;" ><a class="btn btn-warning btn-xs ralat_capaian_bulanan"  data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_bulanan"  data-id="'+row.capaian_id+'"><i class="fa fa-eye" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-close " ></i></a></span>';
-													}else{
-														//diterima
-														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_bulanan"  data-id="'+row.capaian_id+'"><i class="fa fa-eye" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-close " ></i></a></span>';
-													}
-												}else{
-													//blm dikirim
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_bulanan" data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_bulanan" data-id="'+row.capaian_id+'"><i class="fa fa-close " ></i></a></span>';
-												}
-											}else{
-												return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_bulanan"  data-capaian_triwulan_id="'+row.capaian_triwulan_id+'" style="width:75px;">Capaian</a></span>';
-											}
-
-
-											
-										}else{
-
-											return row.remaining_time;
-											
-										
-										}
+									"render": function ( data, type, row ) {
+										return  '<span  data-toggle="tooltip" title="Ralat" style="margin:2px;" ><a class="btn btn-warning btn-xs ralat_capaian_bulanan"  data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+												'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_bulanan"  data-id="'+row.capaian_id+'"><i class="fa fa-eye" ></i></a></span>'+
+												'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-close " ></i></a></span>';
+												
 									}
 								},
 								

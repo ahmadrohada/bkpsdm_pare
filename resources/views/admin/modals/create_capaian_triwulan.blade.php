@@ -21,7 +21,7 @@
 <!-- ============================================================================================================= -->
 						
 						<div class="form-horizontal col-md-12" style="margin-top:10px;">
-							<div class="form-group form-group-sm masa_penilaian">
+							<!-- <div class="form-group form-group-sm masa_penilaian">
 								<label>Pilih Akhir Periode SKP</label>
 								<div class="input-group input-group-sm ">
 									<input type="text" class="form-control tgl selesai" name="tgl_selesai"  placeholder="Tanggal Selesai"/>
@@ -30,7 +30,24 @@
 										<span type="button" class="btn btn-info btn-flat tampilkan">Tampilkan</span>
 									</span>
 								</div>     
+							</div> -->
+							<div class="form-group form-group-sm masa_penilaian">
+								<label>Pilih Periode Capaian Triwulan</label>
+								<div class="input-group input-group-sm ">
+								
+									<select class="form-control selesai">	
+										<option value="20-03-2019">Periode I</option>
+										<option value="20-06-2019">Periode II</option>
+										<option value="20-09-2019">Periode III</option>
+										<option value="20-12-2019">Periode IV</option>
+									</select>
+									<span class="input-group-btn" type="text">
+										<span type="button" class="btn btn-info btn-flat tampilkan">Tampilkan</span>
+									</span>
+								</div>     
 							</div>
+
+
 						</div>
 						<div class="form-horizontal col-md-12">
 							<div class="form-group form-group-sm">
