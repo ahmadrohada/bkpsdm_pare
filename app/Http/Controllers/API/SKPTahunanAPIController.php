@@ -616,7 +616,7 @@ class SKPTahunanAPIController extends Controller {
                                     'periode.label',
                                     'skp_tahunan.status'
                                 )
-                        ->get();
+                        ->get(); 
 
 
 

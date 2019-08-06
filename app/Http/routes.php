@@ -435,7 +435,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//============================== =======    CAPAIAN TRIWULAN ================================================//
 	//========================================================================================================//
 	
-	Route::get('create_capaian_triwulan_confirm','API\CapaianTriwulanAPIController@CreateConfirm');
+	Route::get('capaian_triwulan_create_confirm','API\CapaianTriwulanAPIController@CreateConfirm');
 	
 	Route::get('personal_capaian_triwulan_list','API\CapaianTriwulanAPIController@PersonalCapaianTriwulanList');
 	
@@ -1076,9 +1076,19 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	//=========================================================================================//
 	//=============================   CAPAIAN TRIWULAN     ====================================//
 	//=========================================================================================//
+	
+	
+	
+	
 	Route::get('capaian-triwulan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showCapaianTriwulan'
+	]);
+
+
+	Route::get('capaian-triwulan/{capaian_triwulan_id}/edit',[
+		'as' 			=> '',
+		'uses' 			=> 'CapaianTriwulanController@PersonalCapaianTriwulanEdit'
 	]);
 
 
