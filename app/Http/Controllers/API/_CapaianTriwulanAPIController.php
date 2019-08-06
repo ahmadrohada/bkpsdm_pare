@@ -34,19 +34,10 @@ Use Alert;
 
 class CapaianTriwulanAPIController extends Controller {
 
-     //=======================================================================================//
-     protected function jabatan($id_jabatan){
-        $jabatan       = HistoryJabatan::WHERE('id',$id_jabatan)
-                        ->SELECT('jabatan')
-                        ->first();
-        return Pustaka::capital_string($jabatan->jabatan);
-    }
-
-
-    /* public function CreateConfirm(Request $request)
+    public function CreateConfirm(Request $request)
 	{
 
-        //data yang harus diterima yaitu SKP tahunan ID dan trimester
+        //data yang harus diterima yaitu Pegawai ID dan tgl jangka waktu penilaian
 
         //dapatkan tgl akhir bulan
         $to     = Pustaka::tgl_akhir(Pustaka::tgl_sql($request->get('tgl_selesai')));
@@ -127,140 +118,40 @@ class CapaianTriwulanAPIController extends Controller {
                 );
 
         return $data;
-    } */
-
-
-    public function CreateConfirm(Request $request)
-	{
-
-        //data yang harus diterima yaitu SKP tahunan ID dan trimester
-        $skp_tahunan_id = $request->skp_tahunan_id;
-        $trimester = $request->trimester;
-
-        $cp_status = SKPTahunan::WHERE('skp_tahunan.id',$skp_tahunan_id)
-                            //CAPAIAN TRIWULAN I
-                            ->rightjoin('db_pare_2018.capaian_triwulan AS triwulan', function($join)  use($trimester){
-                                $join   ->on('triwulan.skp_tahunan_id','=','skp_tahunan.id');
-                                $join   ->where('triwulan.trimester','=',$trimester);
-                            })
-                            ->count();
-      
-
-        
-
-        return $cp_status;
     }
 
 
     public function PersonalCapaianTriwulanList(Request $request)
     {
+        $capaian_triwulan = CapaianTriwulan::
+                        WHERE('capaian_triwulan.pegawai_id',$request->pegawai_id)
+                        ->select(
+                                'capaian_triwulan.id AS capaian_triwulan_id',
+                                'capaian_triwulan.tgl_mulai',
+                                'capaian_triwulan.tgl_selesai',
+                                'capaian_triwulan.u_jabatan_id',
+                                'capaian_triwulan.status AS skp_bulanan_status'
 
-
-        $id_pegawai = $request->pegawai_id;
-
-        $pegawai = Pegawai::SELECT('id')->WHERE('id',$id_pegawai)->first();
-
-        
-        $SKPTahunan = SKPTahunan::WHERE('skp_tahunan.pegawai_id',$id_pegawai)
-                        //PERIODE
-                        ->leftjoin('db_pare_2018.renja AS renja', function($join){
-                            $join   ->on('renja.id','=','skp_tahunan.renja_id');
-                        }) 
-                        ->leftjoin('db_pare_2018.periode AS periode', function($join){
-                            $join   ->on('renja.periode_id','=','periode.id');
-                        }) 
-                        //SKPD
-                        ->leftjoin('demo_asn.m_skpd AS skpd', function($join){
-                            $join   ->on('skpd.id','=','renja.skpd_id');
-                        }) 
-
-                        //CAPAIAN TRIWULAN I
-                        ->leftjoin('db_pare_2018.capaian_triwulan AS triwulan1', function($join){
-                            $join   ->on('triwulan1.skp_tahunan_id','=','skp_tahunan.id');
-                            $join   ->where('triwulan1.trimester','=','1');
-                        })
-                         //CAPAIAN TRIWULAN II
-                        ->leftjoin('db_pare_2018.capaian_triwulan AS triwulan2', function($join){
-                            $join   ->on('triwulan2.skp_tahunan_id','=','skp_tahunan.id');
-                            $join   ->where('triwulan2.trimester','=','2');
-                        })
-                        //CAPAIAN TRIWULAN III
-                        ->leftjoin('db_pare_2018.capaian_triwulan AS triwulan3', function($join){
-                            $join   ->on('triwulan3.skp_tahunan_id','=','skp_tahunan.id');
-                            $join   ->where('triwulan3.trimester','=','3');
-                        })
-                         //CAPAIAN TRIWULAN IV
-                        ->leftjoin('db_pare_2018.capaian_triwulan AS triwulan4', function($join){
-                            $join   ->on('triwulan4.skp_tahunan_id','=','skp_tahunan.id');
-                            $join   ->where('triwulan4.trimester','=','4');
-                        })
-                        ->SELECT(   
-                            
-                            
-                                    'skp_tahunan.id AS skp_tahunan_id',
-                                    'periode.label',
-                                    'skp_tahunan.tgl_mulai',
-                                    'skp_tahunan.tgl_selesai',
-                                    'skp_tahunan.u_jabatan_id',
-                                    'skp_tahunan.status',
-
-                                    'triwulan1.id AS capaian_triwulan1_id',
-                                    'triwulan2.id AS capaian_triwulan2_id',
-                                    'triwulan3.id AS capaian_triwulan3_id',
-                                    'triwulan4.id AS capaian_triwulan4_id'
-                                )
-                        ->get(); 
+            
+                         )
+                       // ->orderBy('bulan','ASC')
+                        ->get();
 
        
-
-
-
-
-
-           $datatables = Datatables::of($SKPTahunan)
-            ->addColumn('periode_SKP_tahunan', function ($x) {
-                return $x->label;
+           $datatables = Datatables::of($capaian_triwulan)
+             ->addColumn('periode_capaian', function ($x) {
+                $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
+                return   $masa_penilaian;
             }) 
+           
+           
             ->addColumn('jabatan', function ($x) {
                 
-                return  $this->jabatan($x->u_jabatan_id);
+                return   Pustaka::capital_string($x->PejabatYangDinilai->Jabatan->skpd);
             })
-            
-            ->addColumn('remaining_time_triwulan1', function ($x) {
-
-                $tgl_selesai = strtotime("2019-04-01");
-                $now         = time();
-                return floor(($tgl_selesai - $now)/ (60*60*24)) * -1;
-
-            
-                
-            })
-            ->addColumn('remaining_time_triwulan2', function ($x) {
-
-                $tgl_selesai = strtotime("2019-07-01");
-                $now         = time();
-                return floor(($tgl_selesai - $now)/ (60*60*24)) * -1;
-
-            
-                
-            })
-            ->addColumn('remaining_time_triwulan3', function ($x) {
-
-                $tgl_selesai = strtotime("2019-10-01");
-                $now         = time();
-                return floor(($tgl_selesai - $now)/ (60*60*24)) * -1;
-
-            
-                
-            })
-            ->addColumn('remaining_time_triwulan4', function ($x) {
-
-                $tgl_selesai = strtotime("2020-01-01");
-                $now         = time();
-                return floor(($tgl_selesai - $now)/ (60*60*24)) * -1;
-
-            
-                
+            ->addColumn('capaian', function ($x) {
+                return $x->capaian_id;
+             
             });
     
             if ($keyword = $request->get('search')['value']) {
@@ -278,9 +169,9 @@ class CapaianTriwulanAPIController extends Controller {
 	{
         $messages = [
                  'pegawai_id.required'                   => 'Harus diisi',
-                 //'tgl_selesai_capaian.required'          => 'Harus diisi',
-                 //'tgl_mulai_capaian.required'            => 'Harus diisi',
-                 //'tgl_selesai.required'                  => 'Harus diisi',
+                 'tgl_selesai_capaian.required'          => 'Harus diisi',
+                 'tgl_mulai_capaian.required'            => 'Harus diisi',
+                 'tgl_selesai.required'                  => 'Harus diisi',
                  'u_nama.required'                       => 'Harus diisi',
                  'u_jabatan_id.required'                 => 'Harus diisi',
 
@@ -290,9 +181,9 @@ class CapaianTriwulanAPIController extends Controller {
                         Input::all(),
                         array(
                             'pegawai_id'            => 'required',
-                            //'tgl_selesai_capaian'   => 'required',
-                            //'tgl_mulai_capaian'     => 'required',
-                            //'tgl_selesai'           => 'required',
+                            'tgl_selesai_capaian'   => 'required',
+                            'tgl_mulai_capaian'     => 'required',
+                            'tgl_selesai'           => 'required',
                             'u_nama'                => 'required',
                             'u_jabatan_id'          => 'required',
                         ),
@@ -314,12 +205,12 @@ class CapaianTriwulanAPIController extends Controller {
 
             $capaian_triwulan                              = new CapaianTriwulan;
             $capaian_triwulan->pegawai_id                  = Input::get('pegawai_id');
-            $capaian_triwulan->trimester                   = Input::get('trimester');
-            $capaian_triwulan->skp_tahunan_id              = Input::get('skp_tahunan_id');
             $capaian_triwulan->u_nama                      = Input::get('u_nama');
             $capaian_triwulan->u_jabatan_id                = Input::get('u_jabatan_id');
             $capaian_triwulan->p_nama                      = Input::get('p_nama');
             $capaian_triwulan->p_jabatan_id                = Input::get('p_jabatan_id');
+            $capaian_triwulan->tgl_mulai                   = Input::get('tgl_mulai_capaian');
+            $capaian_triwulan->tgl_selesai                 = Input::get('tgl_selesai_capaian');
             
     
             
