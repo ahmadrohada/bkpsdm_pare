@@ -333,5 +333,43 @@ class CapaianTriwulanAPIController extends Controller {
 
     }   
    
+    public function Destroy(Request $request)
+    {
+
+        $messages = [
+                'capaian_triwulan_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'capaian_triwulan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $st_kt    = CapaianTriwulan::find(Input::get('capaian_triwulan_id'));
+        if (is_null($st_kt)) {
+            //return $this->sendError('Kegiatan Bulanan tidak ditemukan.');
+            return response()->json('Capaian Triwulan tidak ditemukan',422);
+        }
+
+
+        if ( $st_kt->delete()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
 
 }
