@@ -185,9 +185,9 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_capaian_bulanan") }}',
+					url		: '{{ url("api_resource/hapus_capaian_triwulan") }}',
 					type	: 'POST',
-					data    : { capaian_bulanan_id:capaian_bulanan_id },
+					data    : { capaian_triwulan_id:capaian_triwulan_id },
 					cache   : false,
 					success:function(data){
 							Swal.fire({
@@ -199,12 +199,12 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+										$('#capaian_triwulan_table').DataTable().ajax.reload(null,false);
 										
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
-											$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+											$('#capaian_triwulan_table').DataTable().ajax.reload(null,false);
 											
 											
 										}

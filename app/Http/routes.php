@@ -441,8 +441,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	Route::post('simpan_capaian_triwulan','API\CapaianTriwulanAPIController@Store');
 
+	Route::post('hapus_capaian_triwulan','API\CapaianTriwulanAPIController@Destroy');
 
-
+	
 
 	//===================== REALISASI  KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
 	//========================================================================================================//
