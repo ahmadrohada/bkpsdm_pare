@@ -160,6 +160,10 @@ return [
 	'link_title_capaian_triwulan'    		=> 'Capaian Triwulan',
 	'link_icon_capaian_triwulan'     		=> 'fa-bar-chart',
 
+	'link_title_edit_capaian_triwulan'    		=> 'Edit',
+	'link_icon_edit_capaian_triwulan'     		=> 'fa-pencil',
+
+
 	// CAPAIAN TAHUNAN
 	'link_title_capaian_tahunan'    		=> 'Capaian Tahunan',
 	'link_icon_capaian_tahunan'     		=> 'fa-bar-chart',

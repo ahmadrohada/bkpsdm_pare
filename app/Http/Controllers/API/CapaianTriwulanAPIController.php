@@ -332,6 +332,156 @@ class CapaianTriwulanAPIController extends Controller {
 
 
     }   
+
+    protected function CapaianTriwulanDetail(Request $request){
+     
+
+        $capaian = CapaianTriwulan::WHERE('capaian_triwulan.id',$request->capaian_triwulan_id)->first();
+
+    
+        $p_detail   = $capaian->PejabatPenilai;
+        $u_detail   = $capaian->PejabatYangDinilai;
+       
+
+        if ( $p_detail != null ){
+            $data = array(
+                    'date_created'	        => Pustaka::tgl_jam($capaian->created_at),
+                    'periode_triwulan'	    => Pustaka::trimester($capaian->trimester),
+
+                    'periode_skp_tahunan'	=> $capaian->SKPTahunan->Renja->Periode->label,
+                    'masa_penilaian_skp_tahunan'=> Pustaka::tgl_form($capaian->SKPTahunan->tgl_mulai).' s.d  '.Pustaka::tgl_form($capaian->SKPTahunan->tgl_selesai),
+
+                    'tgl_mulai'             => $capaian->tgl_mulai,
+                    'pegawai_id'	        => $capaian->pegawai_id,
+
+                    'u_jabatan_id'	        => $u_detail->id,
+                    'u_nip'	                => $u_detail->nip,
+                    'u_nama'                => $capaian->u_nama,
+                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
+                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
+                    'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
+                    'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
+                    'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
+                    'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
+                
+                    'p_jabatan_id'	        => $p_detail->id,
+                    'p_nip'	                => $p_detail->nip,
+                    'p_nama'                => $capaian->p_nama,
+                    'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
+                    'p_golongan'	        => $p_detail->Golongan ? $p_detail->Golongan->golongan : '',
+                    'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
+                    'p_jabatan'	            => Pustaka::capital_string($p_detail->Jabatan ? $p_detail->Jabatan->skpd : ''),
+                    'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
+                    'p_skpd'	            => Pustaka::capital_string($p_detail->Skpd ? $p_detail->Skpd->skpd : ''), 
+                
+                   
+
+            );
+        }else{
+            $data = array(
+                    'periode'	        => $capaian->SKPBulanan->SKPTahunan->Renja->Periode->label,
+                    'date_created'	    => Pustaka::tgl_jam($capaian->created_at),
+                    'masa_penilaian'    => Pustaka::tgl_form($capaian->tgl_mulai).' s.d  '.Pustaka::tgl_form($capaian->tgl_selesai),
+
+                    'u_jabatan_id'	        => $u_detail->id,
+                    'u_nip'	                => $u_detail->nip,
+                    'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
+                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
+                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
+                    'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
+                    'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
+                    'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
+                    'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
+                
+                    'p_jabatan_id'	        => '',
+                    'p_nip'	                => '',
+                    'p_nama'                => '',
+                    'p_pangkat'	            => '',
+                    'p_golongan'	        => '',
+                    'p_eselon'	            => '',
+                    'p_jabatan'	            => '',
+                    'p_unit_kerja'	        => '',
+                    'p_skpd'	            => '', 
+                
+                
+
+            );
+
+        }
+
+        return $data; 
+    }
+
+    public function PejabatPenilaiUpdate(Request $request)
+	{
+        $messages = [
+            'pejabat_penilai_id.required'           => 'Harus set Pegawai ID',
+            'capaian_triwulan_id.required'           => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+            Input::all(),
+            array(
+                'pejabat_penilai_id'     => 'required',
+                'capaian_triwulan_id'    => 'required',
+            ),
+            $messages
+        );
+
+        if ( $validator->fails() ){
+                return response()->json(['errors'=>$validator->messages()],422);
+        }
+
+
+        //Cari nama dan id pejabatan penilai
+        $pegawai     = Pegawai::SELECT('*')->where('id',$request->pejabat_penilai_id )->first();
+
+        //$jabatan_x     = $pegawai->JabatanAktif;
+
+        if ( $pegawai->JabatanAktif ){
+
+            $p_jabatan_id  =  $pegawai->JabatanAktif->id;
+        }else{
+            return \Response::make('Jabatan tidak ditemukan', 500);
+        }
+
+
+        
+       
+
+        $capaian_triwulan    = CapaianTriwulan::find($request->get('capaian_triwulan_id'));
+        if (is_null($capaian_triwulan)) {
+            return $this->sendError('Capaian Triwulan tidak ditemukan tidak ditemukan.');
+        }
+
+        
+        $capaian_triwulan->p_jabatan_id    = $p_jabatan_id;
+        $capaian_triwulan->p_nama          = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+   
+        
+        $item = array(
+           
+            "p_nip"			=> $pegawai->nip,
+            "p_nama"		=> Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+            "p_pangkat"	    => $pegawai->JabatanAktif->golongan?$pegawai->JabatanAktif->golongan->pangkat:'',
+            "p_golongan"	=> $pegawai->JabatanAktif->golongan?$pegawai->JabatanAktif->golongan->golongan:'',
+            "p_eselon"		=> $pegawai->JabatanAktif->Eselon?$pegawai->JabatanAktif->Eselon->eselon:'',
+            "p_jabatan"		=> Pustaka::capital_string($pegawai->JabatanAktif->Jabatan?$pegawai->JabatanAktif->Jabatan->skpd:''),
+            "p_unit_kerja"	=> Pustaka::capital_string($pegawai->JabatanAktif->Skpd?$pegawai->JabatanAktif->Skpd->skpd:''),
+            );
+
+
+        
+        if (  $capaian_triwulan->save() ){
+            return \Response::make(  $item , 200);
+
+
+        }else{
+            return \Response::make('error', 500);
+        } 
+
+    }
    
     public function Destroy(Request $request)
     {
@@ -361,7 +511,7 @@ class CapaianTriwulanAPIController extends Controller {
             return response()->json('Capaian Triwulan tidak ditemukan',422);
         }
 
-
+ 
         if ( $st_kt->delete()){
             return \Response::make('sukses', 200);
         }else{

@@ -11,29 +11,29 @@
 			<h1>
 				Edit Capaian Triwulan
 			</h1>
-				{!! Breadcrumbs::render('personal_edit_capaian_bulanan') !!}
+				{!! Breadcrumbs::render('personal_edit_capaian_triwulan') !!}
       </section>
 	  
 	    <section class="content">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
-				<li class="status"><a href="#status" data-toggle="tab">Status </a></li>
+				<!-- <li class="status"><a href="#status" data-toggle="tab">Status </a></li> -->
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
-				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan Bulanan Eselon {!! $capaian_triwulan->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="kegiatan_triwulan_tab"><a href="#kegiatan_triwulan_tab" data-toggle="tab">Kegiatan Bulanan Eselon {!! $capaian_triwulan->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				
 			</ul>
 
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
-				<div class="active tab-pane" id="status">
+				<div class=" tab-pane" id="status">
 				
 					
 				</div>
-				<div class="tab-pane" id="detail">
-							
+				<div class="active tab-pane" id="detail">
+					@include('admin.modules.edit_forms.capaian_triwulan_detail')		
 				</div>
 								
-				<div class=" tab-pane" id="kegiatan_bulanan_tab">
+				<div class=" tab-pane" id="kegiatan_triwulan_tab">
 					
 				
 					
@@ -66,8 +66,8 @@ $(document).ready(function() {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
 
-		if ( id == 'kegiatan_bulanan_tab'){
-			load_kegiatan_bulanan();
+		if ( id == 'kegiatan_triwulan_tab'){
+			load_kegiatan_triwulan();
 		}else if ( id == 'status'){
 			status_show();
 		}
