@@ -441,6 +441,11 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	Route::post('simpan_capaian_triwulan','API\CapaianTriwulanAPIController@Store');
 
+	Route::get('ganti_atasan_capaian_triwulan','API\PegawaiAPIController@selectAtasanCapaianTriwulan');
+	Route::post('set_pejabat_penilai_capaian_triwulan','API\CapaianTriwulanAPIController@PejabatPenilaiUpdate');
+
+	Route::get('capaian_triwulan_detail','API\CapaianTriwulanAPIController@CapaianTriwulanDetail');
+
 	Route::post('hapus_capaian_triwulan','API\CapaianTriwulanAPIController@Destroy');
 
 	

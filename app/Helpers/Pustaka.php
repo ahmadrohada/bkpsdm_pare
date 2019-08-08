@@ -412,6 +412,27 @@ class Pustaka {
 		$data=$tanggal.'   '.$nm_bulan.'  '.$tahun;
 	return $data . "&nbsp;&nbsp;[" .$jam. "]" ;
 
+	}
+	
+	public static function trimester($data) {
+       
+	
+		switch($data)
+					{
+						
+				case 1 : $trimester='Trimester I ( Januari - Maret )';
+						break;
+				case 2 : $trimester='FebruTrimester II ( April - Juni )';
+						break;
+				case 3 : $trimester='Trimester III ( Juli - September )';
+						break;
+				case 4 : $trimester='Trimester IV ( Oktober - Desember )';
+						break;
+						
+					}
+
+		return $trimester;
+
     }
 
 	public static function triwulan_lalu($data) {

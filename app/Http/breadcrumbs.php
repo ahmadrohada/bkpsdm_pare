@@ -252,6 +252,11 @@ Breadcrumbs::register('capaian_triwulan', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_triwulan'), '/bkpsdm_pare/public/personal/capaian-triwulan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian')]);
 });
 
+Breadcrumbs::register('personal_edit_capaian_triwulan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('capaian_triwulan');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_edit_capaian_triwulan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_edit_capaian_triwulan')]);
+});
 
 // DASHBOARD >CAPAIAN TAHUNAN
 

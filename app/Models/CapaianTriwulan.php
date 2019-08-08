@@ -8,7 +8,10 @@ class CapaianTriwulan extends Model
 {
     protected $table = 'capaian_triwulan';
 
-   
+    public function SKPTahunan()
+    {
+        return $this->hasOne('App\Models\SKPTahunan','id','skp_tahunan_id');
+    }
    
     public function PejabatYangDinilai()
     {
