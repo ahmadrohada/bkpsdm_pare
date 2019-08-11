@@ -448,7 +448,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::post('hapus_capaian_triwulan','API\CapaianTriwulanAPIController@Destroy');
 
-	
+	//==================================== REALISASI CAPAIAN TRIWULAN =============================================//
+	//=============================================================================================================//
+	Route::get('realisasi_kegiatan_triwulan_2','API\RealisasiKegiatanTriwulanAPIController@RealisasiKegiatanTriwulan2');
+
 
 	//===================== REALISASI  KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
 	//========================================================================================================//
