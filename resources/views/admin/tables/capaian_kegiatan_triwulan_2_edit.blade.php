@@ -23,14 +23,14 @@
 						<tr>
 							<th rowspan="2">No</th>
 							<th rowspan="2">KEGIATAN TAHUNAN</th>
-							<th colspan="3">OUTPUT</th>
+							<th rowspan="2">PENANGGUNG JAWAB</th>
+							<th colspan="2">OUTPUT</th>
 							
 							<th rowspan="2"><i class="fa fa-cog"></i></th>
 						</tr>
 						<tr>
 							<th>TARGET</th>
 							<th>REALISASI</th>
-							<th>%</th>
 						</tr>
 					</thead>
 							
@@ -46,7 +46,7 @@
 	
 </div>
 
-
+@include('admin.modals.realisasi_triwulan_kabid')
 
 <script type="text/javascript">
 
@@ -62,7 +62,7 @@
 				paging          : false,
 				//order 			: [0 , 'asc' ],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3,4,5 ] }
+									{ "orderable": false, className: "text-center", targets: [ 0,2,4,5 ] }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/realisasi_kegiatan_triwulan_2") }}',
@@ -70,7 +70,7 @@
 										
 											"renja_id" 			: {!! $capaian_triwulan->SKPTahunan->Renja->id !!} , 
 											"jabatan_id" 		: {!! $capaian_triwulan->PejabatYangDinilai->Jabatan->id !!},
-											"capaian_id" 		: {!! $capaian_triwulan->id !!}
+											"capaian_triwulan_id" 		: {!! $capaian_triwulan->id !!}
 									 },
 								},
 				columns			: [
@@ -85,17 +85,26 @@
 											
 										}
 									}, 
+									{ data: "kegiatan_tahunan_label", name:"kegiatan_tahunan_label",
+										"render": function ( data, type, row ) {
+											return row.label;
+											
+										}
+									}, 
 									
-									{ data: "target", name:"target", width:"130px",
+									{ data: "target", name:"target", width:"350px",
 										"render": function ( data, type, row ) {
 										
-											return row.output;
+											return '<i class="fa  fa-gg"></i> <span style="margin-right:10px;">'+row.ak+'</span>'+
+													'<i class="fa fa-industry"></i> <span style="margin-right:10px;">'+row.output+'</span>'+
+													'<i class="fa fa-hourglass-start"></i> <span style="margin-right:10px;">'+row.waktu+'</span>'+
+													'<i class="fa fa-money"></i> <span style="margin-right:10px;">'+row.biaya+'</span>';
 											
 										}
 									},
 									
 									
-									{ data: "realisasi_rencana_aksi", name:"realisasi_rencana_aksi", width:"130px",
+									{ data: "realisasi_triwulan", name:"realisasi_triwulan", width:"130px",
 										"render": function ( data, type, row ) {
 										
 											return "";
@@ -103,23 +112,15 @@
 											
 										}
 									},
-									{ data: "persentasi_realisasi_rencana_aksi", name:"persentasi_realisasi_rencana_aksi", width:"80px",
-										"render": function ( data, type, row ) {
-											/* if ( (row.realisasi_rencana_aksi_id) <= 0 ){
-												return "<p class='text-danger'>-</p>";
-											}else{
-												return row.persentasi_realisasi_rencana_aksi;
-											} */
-										}
-									},
+									
 									{  data: 'action',width:"40px",
 											"render": function ( data, type, row ) {
 											
 											if ( (row.realisasi_kegiatan_id) >= 1 ){
-												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_rencana_aksi"  data-id="'+row.realisasi_rencana_aksi_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_rencana_aksi"  data-id="'+row.realisasi_rencana_aksi_id+'" data-label="'+row.rencana_aksi_label+'" ><i class="fa fa-close " ></i></a></span>';
+												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_triwulan"  data-id="'+row.realisasi_triwulan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_triwulan"  data-id="'+row.realisasi_triwulan_id+'" data-label="'+row.triwulan_label+'" ><i class="fa fa-close " ></i></a></span>';
 											}else{
-												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_realisasi_rencana_aksi"  data-id="'+row.rencana_aksi_id+'"><i class="fa fa-plus" ></i></a></span>'+
+												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_realisasi_triwulan"  data-id="'+row.triwulan_id+'"><i class="fa fa-plus" ></i></a></span>'+
 														'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
 											
 											} 
@@ -136,6 +137,12 @@
 		});	
 	}
 
+	$(document).on('click','.create_realisasi_triwulan',function(e){
+	
+		var triwulan_id = $(this).data('id');
+		//show_modal_create(rencana_aksi_id);
+		alert();
+	});
 
 
 	

@@ -56,7 +56,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                                         'kegiatan_tahunan.angka_kredit',
                                         'kegiatan_tahunan.quality',
                                         'kegiatan_tahunan.cost',
-                                        'kegiatan_tahunan.target_waktu'
+                                        'kegiatan_tahunan.target_waktu' 
                                     ) 
                             ->get();
 
@@ -66,7 +66,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
         ->addColumn('label', function ($x) {
             return $x->kegiatan_tahunan_label;
         })->addColumn('ak', function ($x) {
-            return $x->ak;
+            return $x->angka_kredit;
         })->addColumn('output', function ($x) {
             return $x->target.' '.$x->satuan;
         })->addColumn('mutu', function ($x) {
@@ -74,7 +74,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
         })->addColumn('waktu', function ($x) {
             return $x->target_waktu;
         })->addColumn('biaya', function ($x) {
-            return number_format($x->cost,'0',',','.');
+            return "Rp. ".number_format($x->cost,'0',',','.');
         });
 
         if ($keyword = $request->get('search')['value']) {
