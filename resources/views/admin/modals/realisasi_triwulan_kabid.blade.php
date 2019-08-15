@@ -39,30 +39,15 @@
 						</div>
 					</div>
 					<br>
-					<div class="row">
-						<div class="col-md-12 form-group label_kegiatan ">
-							<strong>Kegiatan Bulanan  </strong>
-							<p class="text-muted " style="margin-top:8px;">
-								<span class="kegiatan_bulanan_label"></span>
-							</p>
-							<p>
-								<i class="fa fa-user"></i> <span class="pelaksana" style="margin-right:10px;"></span>
-							</p>
-
-							<i class="fa fa-industry"></i> 
-								Target : <span class="kegiatan_bulanan_output" style="margin-right:10px;"></span>
-								Realisasi : <span class="realisasi_kegiatan_bulanan_output" style="margin-right:10px;"></span>
-						</div>
-					</div>
-					<hr>
+					
 					<div class="row"> 
 
 						<div class="col-md-6 col-xs-6 form-group" style="margin-top:8px;">	
 							<label class="control-label">Target </label>
 							<div class="input-group">
-							<span type="text" class="form-control input-sm triwulan_target"></span>
+							<span type="text" class="form-control input-sm target"></span>
 								<div class="input-group-addon">
-									<span class="satuan_target_triwulan"></span>
+									<span class="satuan_target"></span>
 								</div>
 							</div>
 
@@ -73,19 +58,11 @@
 							<div class="input-group">
 								<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi">
 								<div class="input-group-addon">
-									<span class="satuan_target_triwulan"></span>
+									<span class="satuan_target"></span>
 								</div>
 							</div>
 						</div>
 
-						<div class="col-md-6 form-group bukti" style="margin-top:8px;">
-							<div class="form-group">
-								<label for="file_bukti">Bukti</label>
-								<input type="file" id="file_bukti" name="file_bukti">
-								<p class="help-block">Unggah Dokumen sebagai bukti kegiatan</p>
-							</div>
-						</div>
-				
 						
 
 					</div>
