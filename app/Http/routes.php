@@ -451,8 +451,12 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//==================================== REALISASI CAPAIAN TRIWULAN =============================================//
 	//=============================================================================================================//
 	Route::get('realisasi_kegiatan_triwulan_2','API\RealisasiKegiatanTriwulanAPIController@RealisasiKegiatanTriwulan2');
+	Route::get('realisasi_kegiatan_triwulan_3','API\RealisasiKegiatanTriwulanAPIController@RealisasiKegiatanTriwulan3');
 
+	Route::get('realisasi_triwulan_kegiatan_tahunan_detail','API\RealisasiKegiatanTriwulanAPIController@Detail');
 
+	Route::post('simpan_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@Store');
+	Route::post('hapus_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@Destroy');
 	//===================== REALISASI  KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
 	//========================================================================================================//
 	Route::get('realisasi_kegiatan_bulanan_1','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan1');
