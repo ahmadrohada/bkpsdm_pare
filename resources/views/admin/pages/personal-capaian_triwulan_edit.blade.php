@@ -18,7 +18,7 @@
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
 				<!-- <li class="status"><a href="#status" data-toggle="tab">Status </a></li> -->
-				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
+				<li class="detail active"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<li class="kegiatan_triwulan_tab"><a href="#kegiatan_triwulan_tab" data-toggle="tab">Kegiatan Bulanan Eselon {!! $capaian_triwulan->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				
 			</ul>
@@ -39,6 +39,11 @@
 					<!-- 2. KABID -->
 					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
 						@include('admin.tables.capaian_kegiatan_triwulan_2_edit')
+					@endif
+
+					<!-- 3. KASUBID -->
+					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+						@include('admin.tables.capaian_kegiatan_triwulan_3_edit')
 					@endif
 
 				

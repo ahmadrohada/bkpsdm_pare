@@ -4,21 +4,19 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    Realisasi Kegiatan Tahunan
+					Add Realisasi Kegiatan Tahunan Trimester
                 </h4>
             </div>
 
             <form  id="realisasi_triwulan_form" method="POST" action="">
-			<input type="hidden"  name="triwulan_id" class="triwulan_id">
-			<input type="hidden"  name="skp_bulanan_id" class="skp_bulanan_id">
-			<input type="hidden"  name="capaian_id" class="realisasi_id">
-			<input type="hidden"  name="realisasi_triwulan_id" class="realisasi_triwulan_id">
+			<input type="hidden"  name="kegiatan_tahunan_id" class="kegiatan_tahunan_id">
+			<input type="hidden"  name="capaian_triwulan_id" class="capaian_triwulan_id">
 			<input type="hidden"  name="satuan" class="satuan">
+			
 
 			
 			<div class="modal-body">
 					
-					<br>
 					<div class="row">
 						<div class="col-md-12 form-group label_kegiatan_tahunan">
 							<strong>Kegiatan Tahunan  </strong>
@@ -30,41 +28,46 @@
 							</p>
 
 							
-							<i class="fa fa-industry" ></i> <span class="kegiatan_tahunan_output" style="margin-right:10px;"></span>
-							<i class="fa fa-hourglass-start"></i> <span class="kegiatan_tahunan_waktu" style="margin-right:10px;"></span>
-							<i class="fa fa-money"></i> <span class="kegiatan_tahunan_cost" style="margin-right:10px;"></span>
-							<br>
-							
-
 						</div>
 					</div>
 					<br>
 					
 					<div class="row"> 
-
-						<div class="col-md-6 col-xs-6 form-group" style="margin-top:8px;">	
-							<label class="control-label">Target </label>
+						<div class="col-md-12 form-group label_kegiatan_tahunan">
+							<strong>Capaian Kegiatan Tahunan  Trimester I</strong>
+						</div>
+						<div class="col-md-6 col-xs-12 form-group">	
+							<label class="control-label">Qty Target </label>
 							<div class="input-group">
-							<span type="text" class="form-control input-sm target"></span>
+							<span type="text" class="form-control input-sm qty_target"></span>
 								<div class="input-group-addon">
-									<span class="satuan_target"></span>
+									<span class="qty_satuan"></span>
 								</div>
 							</div>
-
-							<input type="hidden"  name="alasan_tidak_tercapai" class="alasan_tidak_tercapai">
 						</div>
-						<div class="col-md-6 col-xs-6 form-group realisasi" style="margin-top:8px;">	
-							<label class="control-label">Realisasi </label>
+						<div class="col-md-6 col-xs-12 form-group realisasi">	
+							<label class="control-label">Qty Realisasi </label>
 							<div class="input-group">
-								<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi">
+								<input type="text" name="qty_realisasi" id="qty_realisasi" required class="form-control input-sm" placeholder="realisasi">
 								<div class="input-group-addon">
-									<span class="satuan_target"></span>
+									<span class="qty_satuan"></span>
 								</div>
 							</div>
 						</div>
 
 						
 
+					</div>
+					<div class="row"> 
+						<div class="col-md-6 col-xs-12 form-group">	
+							<label class="control-label">Cost Target </label>
+							<span type="text" class="form-control input-sm cost_target"></span>
+						</div>
+						<div class="col-md-6 col-xs-12 form-group cost_realisasi">	
+							<label class="control-label">Cost Realisasi </label>
+							<input type="text" name="cost_realisasi" id="cost_realisasi" required class="form-control input-sm" placeholder="cost realisasi">
+							
+						</div>
 					</div>
 					
 
@@ -87,28 +90,25 @@
 <script type="text/javascript">
 
 	$('.modal-realisasi_triwulan').on('shown.bs.modal', function(){
-		$('#realisasi').focus();
+		$('#qty_realisasi').focus();
 		reset_submitx();
 	});
 
 	$('.modal-realisasi_triwulan').on('hidden.bs.modal', function(){
-		$('.realisasi,.satuan, .bukti ').removeClass('has-error');
-		$('.modal-realisasi_triwulan').find('[name=realisasi],[name=file_bukti]').val('');
+		$('.qty_realisasi,.satuacost_realisasin').removeClass('has-error');
+		$('.modal-realisasi_triwulan').find('[name=qty_realisasi],[name=cost_realisasi]').val('');
 	});
 
 
 
 	$('.realisasi').on('click', function(){
-		$('.realisasi').removeClass('has-error');
+		$('.qty_realisasi').removeClass('has-error');
 	});
 
-	$('.satuan').on('click', function(){
-		$('.satuan').removeClass('has-error');
+	$('.cost_realisasi').on('click', function(){
+		$('.cost_realisasi').removeClass('has-error');
 	});
 
-	$('.bukti').on('click', function(){
-		$('.bukti').removeClass('has-error');
-	});
 
 	function on_submitx(){
 		$('.modal-realisasi_triwulan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
@@ -127,7 +127,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_realisasi_triwulan_2") }}',
+			url		: '{{ url("api_resource/simpan_realisasi_kegiatan_triwulan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -145,7 +145,7 @@
 					timer:1500
 				}).then(function () {
 					$('.modal-realisasi_triwulan').modal('hide');
-					$('#realisasi_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+					$('#realisasi_kegiatan_triwulan_table').DataTable().ajax.reload(null,false);
 					
 					
 					
@@ -214,7 +214,7 @@
 					timer:1500
 				}).then(function () {
 					$('.modal-realisasi_triwulan').modal('hide');
-					$('#realisasi_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+					$('#realisasi_kegiatan_triwulan_table').DataTable().ajax.reload(null,false);
 					
 				},
 					
