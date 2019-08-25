@@ -388,7 +388,7 @@ class SKPTahunanAPIController extends Controller {
             }else{
                 $jabatan = "";
             } */
-            $jabatan = Pustaka::capital_string($x->PejabatYangDinilai?$x->PejabatYangDinilai->jabatan:'');
+            $jabatan = Pustaka::capital_string($tm->SKPTahunan->PejabatYangDinilai?$tm->SKPTahunan->PejabatYangDinilai->jabatan:'');
 
             $h['time']	    = $tm->created_at->format('Y-m-d H:i:s');
             $h['body']	    = [ ['tag'=>'p','content'=>'<b class="text-success">'.$tm->SKPTahunan->u_nama.'</b>'] , 
