@@ -155,7 +155,7 @@ class CapaianBulananAPIController extends Controller {
             }) 
             ->addColumn('jabatan', function ($x) {
                 
-                return   Pustaka::capital_string($x->PejabatYangDinilai->Jabatan->skpd);
+                return   Pustaka::capital_string($x->PejabatYangDinilai->jabatan);
             })
             ->addColumn('capaian', function ($x) {
                 return $x->capaian_id;
@@ -1109,7 +1109,7 @@ class CapaianBulananAPIController extends Controller {
         })->addColumn('nama', function ($x) {
             return $x->u_nama;
         })->addColumn('jabatan', function ($x) {
-            return Pustaka::capital_string($x->PejabatYangDinilai->Jabatan->skpd);
+            return Pustaka::capital_string($x->PejabatYangDinilai->jabatan);
         })->addColumn('capaian_bulanan_id', function ($x) {
             return $x->capaian_bulanan_id;
         });
