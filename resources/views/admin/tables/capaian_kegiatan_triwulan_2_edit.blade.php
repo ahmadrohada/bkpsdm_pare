@@ -48,7 +48,7 @@
 	
 </div>
 
-@include('admin.modals.realisasi_triwulan_kabid')
+@include('admin.modals.realisasi_triwulan_kegiatan_tahunan')
 
 <script type="text/javascript">
 
@@ -131,11 +131,22 @@
 											"render": function ( data, type, row ) {
 											
 											if ( (row.realisasi_kegiatan_id) >= 1 ){
-												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_triwulan"  data-id="'+row.realisasi_kegiatan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_triwulan"  data-id="'+row.realisasi_kegiatan_id+'" data-label="'+row.kegiatan_tahunan_label+'" ><i class="fa fa-close " ></i></a></span>';
+												if ( {!! $capaian_triwulan->status !!} == 1 ){
+													return '<span style="margin:2px;" ><a class="btn btn-default btn-xs" ><i class="fa fa-pencil" ></i></a></span>';
+												}else{
+													return '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_triwulan"  data-id="'+row.realisasi_kegiatan_id+'"><i class="fa fa-pencil" ></i></a></span>';
+												}
+												
+														
 											}else{
-												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_realisasi_triwulan"  data-kegiatan_tahunan_id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-plus" ></i></a></span>'+
-														'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
+												if ( {!! $capaian_triwulan->status !!} == 1 ){
+													return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-plus" ></i></a></span>';
+												
+												}else{
+													return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_realisasi_triwulan"  data-kegiatan_tahunan_id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-plus" ></i></a></span>';
+												
+												}
+														
 											
 											} 
 													
@@ -166,7 +177,7 @@
 				dataType	: "json",
 				success	: function(data) {
 					$('.modal-realisasi_triwulan').find('[name=capaian_triwulan_id]').val({!! $capaian_triwulan->id !!});
-						$('.modal-realisasi_triwulan').find('[name=kegiatan_tahunan_id]').val(data['id']);
+					$('.modal-realisasi_triwulan').find('[name=kegiatan_tahunan_id]').val(data['id']);
 					$('.modal-realisasi_triwulan').find('[name=satuan]').val(data['satuan_target_triwulan']);
 					$('.modal-realisasi_triwulan').find('.satuan').val(data['satuan']);
 
@@ -190,66 +201,43 @@
 		
 	}
 
+	$(document).on('click','.edit_realisasi_triwulan',function(e){
 
-	$(document).on('click','.hapus_realisasi_triwulan',function(e){
-		var realisasi_kegiatan_id = $(this).data('id') ;
+		var realisasi_triwulan_kegiatan_tahunan_id = $(this).data('id');
+		$.ajax({
+				url			  	: '{{ url("api_resource/realisasi_triwulan_kegiatan_tahunan_detail") }}',
+				data 		  	: { id : realisasi_triwulan_kegiatan_tahunan_id},
+				method			: "GET",
+				dataType		: "json",
+				success	: function(data) {
 
-		Swal.fire({
-			title: "Hapus  realisasi Kegiatan",
-			text:$(this).data('label'),
-			type: "warning",
-			//type: "question",
-			showCancelButton: true,
-			cancelButtonText: "Batal",
-			confirmButtonText: "Hapus",
-			confirmButtonClass: "btn btn-success",
-			cancelButtonColor: "btn btn-danger",
-			cancelButtonColor: "#d33",
-			closeOnConfirm: false,
-			closeOnCancel:false
-		}).then ((result) => {
-			if (result.value){
-				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_kegiatan_triwulan") }}',
-					type	: 'POST',
-					data    : {realisasi_kegiatan_id:realisasi_kegiatan_id},
-					cache   : false,
-					success:function(data){
-							Swal.fire({
-									title: "",
-									text: "Sukses",
-									type: "success",
-									width: "200px",
-									showConfirmButton: false,
-									allowOutsideClick : false,
-									timer: 900
-									}).then(function () {
-										$('#realisasi_kegiatan_triwulan_table').DataTable().ajax.reload(null,false);
-										
-									},
-									function (dismiss) {
-										if (dismiss === 'timer') {
-											$('#realisasi_kegiatan_triwulan_table').DataTable().ajax.reload(null,false);
-											
-											
-										}
-									}
-								)
-								
-							
-					},
-					error: function(e) {
-							Swal.fire({
-									title: "Gagal",
-									text: "",
-									type: "warning"
-								}).then (function(){
-										
-								});
-							}
-					});	
-			}
-		});
+					$('.modal-realisasi_triwulan').find('.realisasi_triwulan_id').val(data['id']);
+					$('.modal-realisasi_triwulan').find('[name=capaian_triwulan_id]').val({!! $capaian_triwulan->id !!});
+					$('.modal-realisasi_triwulan').find('[name=kegiatan_tahunan_id]').val(data['id']);
+					$('.modal-realisasi_triwulan').find('.satuan').val(data['triwulan_satuan']);
+
+					$('.modal-realisasi_triwulan').find('.kegiatan_tahunan_label').html(data['triwulan_label']);
+					$('.modal-realisasi_triwulan').find('.penanggung_jawab').html(data['triwulan_pejabat']);
+					
+					$('.modal-realisasi_triwulan').find('.qty_satuan').html(data['triwulan_satuan']);
+					$('.modal-realisasi_triwulan').find('.qty_target').html(data['triwulan_qty_target']);
+					$('.modal-realisasi_triwulan').find('.cost_target').html(data['triwulan_cost_target']);
+
+					$('.modal-realisasi_triwulan').find('.qty_realisasi').val(data['triwulan_qty_realisasi']);
+					$('.modal-realisasi_triwulan').find('.cost_realisasi').val(data['triwulan_cost_realisasi']);
+
+
+					$('.modal-realisasi_triwulan').find('h4').html('Edit Realisasi Kegiatan Tahunan');
+					$('.modal-realisasi_triwulan').find('.btn-submit').attr('id', 'submit-update');
+					$('.modal-realisasi_triwulan').find('[name=text_button_submit]').html('Update Data');
+					$('.modal-realisasi_triwulan').modal('show');  
+				},
+				error: function(data){
+					
+				}						
+		});	
+		
+
 	});
 
 	

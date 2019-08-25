@@ -14,4 +14,9 @@ class KegiatanSKPTahunan extends Model
         return $this->belongsTo('App\Models\Kegiatan','kegiatan_id');
     } 
 
+    public function RenjaKegiatan()
+    {
+        return $this->hasOne('App\Models\Kegiatan','id','kegiatan_id');
+    } 
+
 }
