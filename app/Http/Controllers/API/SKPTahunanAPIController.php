@@ -382,12 +382,13 @@ class SKPTahunanAPIController extends Controller {
         foreach($timeline as $tm) {
 
             //Jabatan
-            if ( $tm->SKPTahunan->PejabatYangDinilai->Jabatan != '' ){
+            /* if ( $tm->SKPTahunan->PejabatYangDinilai->jabatan != '' ){
                 $jabatan = Pustaka::capital_string($tm->SKPTahunan->PejabatYangDinilai->Jabatan->skpd);
 
             }else{
                 $jabatan = "";
-            }
+            } */
+            $jabatan = Pustaka::capital_string($x->PejabatYangDinilai?$x->PejabatYangDinilai->jabatan:'');
 
             $h['time']	    = $tm->created_at->format('Y-m-d H:i:s');
             $h['body']	    = [ ['tag'=>'p','content'=>'<b class="text-success">'.$tm->SKPTahunan->u_nama.'</b>'] , 
