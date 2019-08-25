@@ -444,11 +444,16 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('ganti_atasan_capaian_triwulan','API\PegawaiAPIController@selectAtasanCapaianTriwulan');
 	Route::post('set_pejabat_penilai_capaian_triwulan','API\CapaianTriwulanAPIController@PejabatPenilaiUpdate');
 
+	Route::get('capaian_triwulan_status_pengisian','API\CapaianTriwulanAPIController@CapaianTriwulanStatusPengisian');
+
+
 	Route::get('capaian_triwulan_detail','API\CapaianTriwulanAPIController@CapaianTriwulanDetail');
 
 	Route::post('hapus_capaian_triwulan','API\CapaianTriwulanAPIController@Destroy');
 
-	//==================================== REALISASI CAPAIAN TRIWULAN =============================================//
+	Route::post('tutup_capaian_triwulan','API\CapaianTriwulanAPIController@Close');
+
+	//==================================== REALISASI TRIWULAN KEGIATAN TAHUNAN =============================================//
 	//=============================================================================================================//
 	Route::get('realisasi_kegiatan_triwulan_2','API\RealisasiKegiatanTriwulanAPIController@RealisasiKegiatanTriwulan2');
 	Route::get('realisasi_kegiatan_triwulan_3','API\RealisasiKegiatanTriwulanAPIController@RealisasiKegiatanTriwulan3');
@@ -456,7 +461,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('realisasi_triwulan_kegiatan_tahunan_detail','API\RealisasiKegiatanTriwulanAPIController@Detail');
 
 	Route::post('simpan_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@Store');
+	Route::post('update_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@Update');
 	Route::post('hapus_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@Destroy');
+
+
 	//===================== REALISASI  KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//
 	//========================================================================================================//
 	Route::get('realisasi_kegiatan_bulanan_1','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan1');

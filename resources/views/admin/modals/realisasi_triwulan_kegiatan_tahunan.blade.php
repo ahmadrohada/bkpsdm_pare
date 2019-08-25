@@ -11,6 +11,7 @@
             <form  id="realisasi_triwulan_form" method="POST" action="">
 			<input type="hidden"  name="kegiatan_tahunan_id" class="kegiatan_tahunan_id">
 			<input type="hidden"  name="capaian_triwulan_id" class="capaian_triwulan_id">
+			<input type="hidden"  name="realisasi_triwulan_id" class="realisasi_triwulan_id">
 			<input type="hidden"  name="satuan" class="satuan">
 			
 
@@ -45,10 +46,10 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6 col-xs-12 form-group realisasi">	
+						<div class="col-md-6 col-xs-12 form-group quantity">	
 							<label class="control-label">Qty Realisasi </label>
 							<div class="input-group">
-								<input type="text" name="qty_realisasi" id="qty_realisasi" required class="form-control input-sm" placeholder="realisasi">
+								<input type="text" name="qty_realisasi" id="qty_realisasi" required class="form-control input-sm qty_realisasi" placeholder="realisasi">
 								<div class="input-group-addon">
 									<span class="qty_satuan"></span>
 								</div>
@@ -63,9 +64,9 @@
 							<label class="control-label">Cost Target </label>
 							<span type="text" class="form-control input-sm cost_target"></span>
 						</div>
-						<div class="col-md-6 col-xs-12 form-group cost_realisasi">	
+						<div class="col-md-6 col-xs-12 form-group cost">	
 							<label class="control-label">Cost Realisasi </label>
-							<input type="text" name="cost_realisasi" id="cost_realisasi" required class="form-control input-sm" placeholder="cost realisasi">
+							<input type="text" name="cost_realisasi" id="cost_realisasi" required class="form-control input-sm cost_realisasi" placeholder="cost realisasi">
 							
 						</div>
 					</div>
@@ -95,18 +96,18 @@
 	});
 
 	$('.modal-realisasi_triwulan').on('hidden.bs.modal', function(){
-		$('.qty_realisasi,.satuacost_realisasin').removeClass('has-error');
+		$('.quantity,.cost').removeClass('has-error');
 		$('.modal-realisasi_triwulan').find('[name=qty_realisasi],[name=cost_realisasi]').val('');
 	});
 
 
 
-	$('.realisasi').on('click', function(){
-		$('.qty_realisasi').removeClass('has-error');
+	$('.qty_realisasi').on('click', function(){
+		$('.quantity').removeClass('has-error');
 	});
 
 	$('.cost_realisasi').on('click', function(){
-		$('.cost_realisasi').removeClass('has-error');
+		$('.cost').removeClass('has-error');
 	});
 
 
@@ -168,9 +169,8 @@
 					//alert (index+":"+value);
 					
 					//error message
-					((index == 'realisasi')?$('.realisasi').addClass('has-error'):'');
-					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
-					((index == 'bukti')?$('.bukti').addClass('has-error'):'');
+					((index == 'qty_realisasi')?$('.quantity').addClass('has-error'):'');
+					((index == 'cost_realisasi')?$('.cost').addClass('has-error'):'');
 					
 					reset_submitx();
 					
@@ -196,12 +196,11 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_realisasi_triwulan_2") }}',
+			url		: '{{ url("api_resource/update_realisasi_kegiatan_triwulan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
 				
-				//$('#program_table').DataTable().ajax.reload(null,false);
 			
 				reset_submitx();
 				Swal.fire({

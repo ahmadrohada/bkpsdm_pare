@@ -9,7 +9,7 @@
 	 <div class="content-wrapper" >
 	    <section class="content-header">
 			<h1>
-				Edit Capaian Triwulan
+				Edit Capaian Triwulan [ {!! Pustaka::trimester($capaian_triwulan->trimester) !!} ]
 			</h1>
 				{!! Breadcrumbs::render('personal_edit_capaian_triwulan') !!}
       </section>
@@ -17,19 +17,27 @@
 	    <section class="content">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
-				<!-- <li class="status"><a href="#status" data-toggle="tab">Status </a></li> -->
-				<li class="detail active"><a href="#detail" data-toggle="tab" >Detail</a></li>
+				<li class="status active"><a href="#status" data-toggle="tab">Status </a></li>
+				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<li class="kegiatan_triwulan_tab"><a href="#kegiatan_triwulan_tab" data-toggle="tab">Kegiatan Bulanan Eselon {!! $capaian_triwulan->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				
 			</ul>
 
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
-				<div class=" tab-pane" id="status">
-				
+				<div class="active tab-pane" id="status">
+					<!-- 2. KABID -->
+					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
+						@include('admin.modules.timeline.capaian_triwulan_status_edit')
+					@endif
+
+					<!-- 2. KASUBID -->
+					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+						@include('admin.modules.timeline.capaian_triwulan_status_edit')
+					@endif
 					
 				</div>
-				<div class="active tab-pane" id="detail">
+				<div class="tab-pane" id="detail">
 					@include('admin.modules.edit_forms.capaian_triwulan_detail')		
 				</div>
 								
@@ -80,7 +88,7 @@ $(document).ready(function() {
 		if ( id == 'kegiatan_triwulan_tab'){
 			load_kegiatan_triwulan();
 		}else if ( id == 'status'){
-			status_show();
+			status_pengisian();
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});

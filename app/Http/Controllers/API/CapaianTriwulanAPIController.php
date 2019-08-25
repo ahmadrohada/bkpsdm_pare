@@ -412,6 +412,57 @@ class CapaianTriwulanAPIController extends Controller {
         return $data; 
     }
 
+
+    
+    public function CapaianTriwulanStatusPengisian( Request $request )
+    {
+       
+        
+        $capaian_id = $request->capaian_triwulan_id;
+
+        $capaian_triwulan = CapaianTriwulan::
+                            SELECT(
+                                'capaian_triwulan.id AS capaian_triwulan_id',
+                                'capaian_triwulan.skp_tahunan_id',
+                                'capaian_triwulan.created_at',
+                                'capaian_triwulan.status_approve',
+                                'capaian_triwulan.send_to_atasan',
+                                'capaian_triwulan.alasan_penolakan',
+                                'capaian_triwulan.p_jabatan_id',
+                                'capaian_triwulan.u_jabatan_id',
+                                'capaian_triwulan.status'
+                            )
+                            ->where('capaian_triwulan.id','=', $capaian_id )->first();
+        
+        
+        //Jumlah KEGIATAN KASUBID
+        $keg_skp_tahunan = KegiatanSKPTahunan::WHERE('skp_tahunan_id',$capaian_triwulan->skp_tahunan_id)->count();
+       
+        
+      
+        $p_detail   = $capaian_triwulan->PejabatPenilai;
+
+
+    
+        $response = array(
+                
+                'jm_kegiatan_tahunan'       => $keg_skp_tahunan,
+                'status'                    => $capaian_triwulan->status,
+                'send_to_atasan'            => $capaian_triwulan->send_to_atasan,
+                'tgl_dibuat'                => Pustaka::balik2($capaian_triwulan->created_at),
+                'p_nama'                    => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
+               
+
+        );
+       
+        return $response;
+
+
+    }
+
+
+
+
     public function PejabatPenilaiUpdate(Request $request)
 	{
         $messages = [
@@ -477,6 +528,45 @@ class CapaianTriwulanAPIController extends Controller {
             return \Response::make(  $item , 200);
 
 
+        }else{
+            return \Response::make('error', 500);
+        } 
+
+    }
+
+
+    public function Close(Request $request)
+	{
+        $messages = [
+           
+            'capaian_triwulan_id.required'           => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+            Input::all(),
+            array(
+                'capaian_triwulan_id'    => 'required',
+            ),
+            $messages
+        );
+
+        if ( $validator->fails() ){
+                return response()->json(['errors'=>$validator->messages()],422);
+        }
+
+
+        $capaian_triwulan    = CapaianTriwulan::find($request->get('capaian_triwulan_id'));
+        if (is_null($capaian_triwulan)) {
+            return $this->sendError('Capaian Triwulan tidak ditemukan tidak ditemukan.');
+        }
+
+        
+        $capaian_triwulan->status    = '1';
+       
+        
+        if (  $capaian_triwulan->save() ){
+            return \Response::make( 'sukses', 200);
         }else{
             return \Response::make('error', 500);
         } 

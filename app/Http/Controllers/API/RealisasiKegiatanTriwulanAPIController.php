@@ -52,7 +52,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                             //LEFT JOIN TERHADAP REALISASI TRIWULAN NYA
                             ->leftjoin('db_pare_2018.realisasi_triwulan_kegiatan_tahunan AS realisasi_triwulan', function($join) use ( $capaian_triwulan_id ){
                                 $join   ->on('realisasi_triwulan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
-                                $join   ->WHERE('realisasi_triwulan.capaian_id','=',  $capaian_triwulan_id);
+                                //$join   ->WHERE('realisasi_triwulan.capaian_id','=',  $capaian_triwulan_id);
                                 
                             })
 
@@ -115,8 +115,13 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                             //LEFT JOIN TERHADAP REALISASI TRIWULAN NYA
                             ->leftjoin('db_pare_2018.realisasi_triwulan_kegiatan_tahunan AS realisasi_triwulan', function($join) use ( $capaian_triwulan_id ){
                                 $join   ->on('realisasi_triwulan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
-                                $join   ->WHERE('realisasi_triwulan.capaian_id','=',  $capaian_triwulan_id );
+                                //$join   ->WHERE('realisasi_triwulan.capaian_id','=',  $capaian_triwulan_id );
                                 
+                            })
+
+                            //LEFT JOIN KE CAPAIAN TRIWULAN
+                            ->leftjoin('db_pare_2018.capaian_triwulan AS capaian_triwulan', function($join){
+                                $join   ->on('capaian_triwulan.id','=','realisasi_triwulan.capaian_id');
                             })
 
                             ->SELECT(   
@@ -128,7 +133,8 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                                         'kegiatan_tahunan.satuan',
                                         'realisasi_triwulan.id AS realisasi_kegiatan_id',
                                         'realisasi_triwulan.quantity AS qty_realisasi',
-                                        'realisasi_triwulan.cost AS cost_realisasi'
+                                        'realisasi_triwulan.cost AS cost_realisasi',
+                                        'capaian_triwulan.status'
                                     ) 
                             ->get();
 
@@ -193,7 +199,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
         $st_kt->capaian_id              = Input::get('capaian_triwulan_id');
         $st_kt->quantity                = Input::get('qty_realisasi');
         $st_kt->satuan                  = Input::get('satuan');
-        $st_kt->cost                    = Input::get('cost_realisasi');
+        $st_kt->cost                    = preg_replace('/[^0-9]/', '', Input::get('cost_realisasi'));
        
 
         if ( $st_kt->save()){
@@ -211,18 +217,26 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
        
         
         $x = RealisasiKegiatanTriwulan::
-                             //LEFT JOIN ke Kegiatan SKP TAHUNAN
+                            //LEFT JOIN ke Kegiatan SKP TAHUNAN
                             leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.id','=','realisasi_triwulan_kegiatan_tahunan.kegiatan_tahunan_id');
-                                
                             })
+
+                            //LEFT JOIN KE CAPAIAN TRIWULAN
+                            ->leftjoin('db_pare_2018.capaian_triwulan AS capaian_triwulan', function($join){
+                                $join   ->on('capaian_triwulan.id','=','realisasi_triwulan_kegiatan_tahunan.capaian_id');
+                            })
+
                             ->SELECT(   'realisasi_triwulan_kegiatan_tahunan.id AS realisasi_triwulan_kegiatan_tahunan_id',
                                         'realisasi_triwulan_kegiatan_tahunan.quantity AS qty_realisasi',
                                         'realisasi_triwulan_kegiatan_tahunan.satuan',
                                         'realisasi_triwulan_kegiatan_tahunan.cost AS cost_realisasi',
+                                        'realisasi_triwulan_kegiatan_tahunan.kegiatan_tahunan_id',
                                         'kegiatan_tahunan.label AS label',
+                                        'kegiatan_tahunan.kegiatan_id AS kegiatan_id',
                                         'kegiatan_tahunan.target AS qty_target',
-                                        'kegiatan_tahunan.cost AS cost_target'
+                                        'kegiatan_tahunan.cost AS cost_target',
+                                        'capaian_triwulan.status'
 
                                     ) 
                             ->WHERE('realisasi_triwulan_kegiatan_tahunan.id', $request->id)
@@ -236,8 +250,10 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
 		
 		//return  $rencana_aksi;
         $triwulan = array(
-            'id'                        => $x->realisasi_kegiatan_triwulan_id,
+            'id'                        => $x->realisasi_triwulan_kegiatan_tahunan_id,
+            'capaian_status'            => $x->status,
             'triwulan_label'            => $x->label,
+            'triwulan_pejabat'          => Pustaka::capital_string($x->KegiatanSKPTahunan->RenjaKegiatan->PenanggungJawab->jabatan),
             'triwulan_qty_target'       => $x->qty_target,
             'triwulan_satuan'           => $x->satuan,
             'triwulan_cost_target'      => "Rp. ".number_format($x->cost_target,'0',',','.'),
@@ -248,6 +264,61 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
         );
         return $triwulan;
     }
+
+
+
+
+
+    public function Update(Request $request)
+    {
+
+        $messages = [
+                'realisasi_triwulan_id.required'   => 'Harus diisi',
+                'qty_realisasi.required'       => 'Harus diisi',
+                'satuan.required'              => 'Harus diisi',
+                'cost_realisasi.required'      => 'Harus diisi'
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'realisasi_triwulan_id'  => 'required',
+                            'qty_realisasi'          => 'required',
+                            'cost_realisasi'         => 'required',
+                            'satuan'                 => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $st_kt    = RealisasiKegiatanTriwulan::find(Input::get('realisasi_triwulan_id'));
+        if (is_null($st_kt)) {
+            return $this->sendError('Realisasi Kegiatan Triwulan tidak ditemukan.');
+        }
+
+
+        $st_kt->quantity                = Input::get('qty_realisasi');
+        $st_kt->satuan                  = Input::get('satuan');
+        $st_kt->cost                    = preg_replace('/[^0-9]/', '', Input::get('cost_realisasi'));
+       
+
+        if ( $st_kt->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
+
+
 
     public function Destroy(Request $request)
     {

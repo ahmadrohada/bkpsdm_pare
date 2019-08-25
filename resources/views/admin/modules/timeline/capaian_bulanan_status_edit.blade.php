@@ -107,7 +107,7 @@
 					$('.st_alasan_penolakan').html(data['alasan_penolakan']);
 
 
-					if ( data['send_to-atasan'] == 1 ){
+					if ( data['send_to_atasan'] == 1 ){
 						
 						$('.st_status_approve_div').removeClass('hidden');
 					} 
