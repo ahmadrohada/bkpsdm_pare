@@ -17,7 +17,7 @@
 							*
 						</h3>
 						<p>
-							<strong>SKP Jabatan</strong>
+							<strong>Create SKP</strong>
 						</p>
 					</div>
 					<div class="icon">

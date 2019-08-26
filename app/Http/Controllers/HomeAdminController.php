@@ -322,4 +322,52 @@ class HomeAdminController extends Controller {
     }
    
     
+    public function AdministratorSKPDPegawai(Request $request)
+    {
+            
+        $skpd_id     = $request->skpd_id;
+        
+       
+
+		return view('admin.pages.administrator-skpd-pegawai', [
+                //'users' 		          => $users,
+                'skpd_id'                 => $skpd_id,
+                'nama_skpd'     	      => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	      => $this->total_pegawai_skpd($skpd_id),
+                'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
+                'total_jabatan'           => 'x',
+                'total_renja'             => 'x',
+                'h_box'                   => 'box-info',
+                
+        	]
+        );   
+
+        
+    }
+
+
+    
+    public function AdministratorSKPDStrukturOrganisasi(Request $request)
+    {
+            
+
+        $skpd_id     = $request->skpd_id;
+       
+
+        return view('admin.pages.administrator-skpd-struktur_organisasi', [
+               //'users' 		         => $users,
+               'skpd_id'                => $skpd_id,
+               'nama_skpd'     	        => $this->nama_skpd($skpd_id),
+               'total_pegawai' 	        => $this->total_pegawai_skpd($skpd_id),
+               'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
+               'total_jabatan'          => 'x',
+               'total_renja'            => 'x',
+               'h_box'                  => 'box-success',
+               
+           ]
+        ); 
+        
+    }
+
+
 }

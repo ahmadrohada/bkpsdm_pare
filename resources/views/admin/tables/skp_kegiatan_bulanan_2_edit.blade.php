@@ -404,17 +404,29 @@
 					$('.modal-skp_bulanan').find('[name=u_nama]').val(data['u_nama']);
 					$('.modal-skp_bulanan').find('[name=p_nama]').val(data['p_nama']);
 
-					//DISABLED BULAN YANG UDAH ADA
+
+					//HANYA ENABLE BULAN YANG MASUK RANGE MASA PENILAIAN
+
+					$('.periode_skp_bulanan').children().each(function(index,element){
+						for (i = 0; i <= 12  ; i++){
+							$(this).prop('disabled',true);
+							if ( $(element).val() >= data['bln_awal']  && $(element).val() <= data['bln_akhir'] ){
+								$(this).prop('disabled',false);
+							}
+						}
+					})
+					
+				   //DISABLED BULAN YANG UDAH ADA
 					//data['skp_bulanan_list'][0]['bulan']
 					bln = data['skp_bulanan_list'];
 					$('.periode_skp_bulanan').children().each(function(index,element){
 					
-        		for (i = 0; i < bln.length ; i++){
+        				for (i = 0; i < bln.length ; i++){
 							if ( $(element).val() == data['skp_bulanan_list'][i]['bulan']){
 								$(this).prop('disabled',true);
 							}
 						}
-					})
+					}) 
 
 					$('.modal-skp_bulanan').find('h4').html('Create SKP Bulanan');
 					$('.modal-skp_bulanan').find('.btn-submit').attr('id', 'submit-save_skp_bulanan');

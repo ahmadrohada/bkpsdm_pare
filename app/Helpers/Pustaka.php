@@ -296,6 +296,14 @@ class Pustaka {
 
 	}
 
+
+	public static function angka_bln($data){
+		$bulan = substr($data,5,2); 
+	
+		return $bulan;
+
+	}
+
 	public static function tahun($data){
 		$tanggal = substr($data,8,2); 
 		$bulan = substr($data,5,2); 

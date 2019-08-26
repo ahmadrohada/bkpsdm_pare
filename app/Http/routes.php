@@ -757,27 +757,43 @@ Route::group(['middleware' => 'administrator'], function () {
 	]);
 
 	//============================================================================================//
-	//====================================  S K P D  =============================================//
+	//============================= PEGAWAI      S K P D  ========================================//
 	//============================================================================================//
 	
 
 	Route::get('admin/skpd/{skpd_id}', [
 		'as' 			=> '{username}',
-		'uses' 			=> 'SKPDController@pegawaiSKPDAdministrator'
+		'uses' 			=> 'HomeAdminController@AdministratorSKPDPegawai'
 	]);
 
 	Route::get('admin/skpd/{skpd_id}/pegawai', [
 		'as' 			=> '{username}',
-		'uses' 			=> 'SKPDController@showSKPDPegawai'
+		'uses' 			=> 'HomeAdminController@AdministratorSKPDPegawai'
+	]); 
+
+	Route::get('admin/skpd/pegawai/{pegawai_id}', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'PegawaiController@detailPegawai'
+	]); 
+
+	Route::get('admin/skpd/pegawai/{pegawai_id}/add', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'PegawaiController@addPegawai'
+	]); 
+
+
+	//============================================================================================//
+	Route::get('admin/skpd/{skpd_id}/struktur-organisasi', [
+		'uses' 			=> 'HomeAdminController@AdministratorSKPDStrukturOrganisasi'
 	]);
+
+
 
 	Route::get('admin/skpd/{skpd_id}/unit-kerja', [
 		'uses' 			=> 'SKPDController@showSKPDUnitKerja'
 	]);
 
-	Route::get('admin/skpd/{skpd_id}/struktur-organisasi', [
-		'uses' 			=> 'SKPDController@showSKPDStrukturOrganisasi'
-	]);
+	
 
 	Route::get('admin/skpd/{skpd_id}/rencana-kerja-perangkat-daerah', [
 		'uses' 			=> 'SKPDController@showSKPDRencanaKerjaPerangkatDaerah'

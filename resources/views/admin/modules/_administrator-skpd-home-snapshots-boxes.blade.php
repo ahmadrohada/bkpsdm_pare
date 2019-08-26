@@ -62,7 +62,7 @@
 							*
 						</h3>
 						<p>
-							<strong>Pohon Kinerja</strong>
+							<strong>Renja</strong>
 						</p>
 					</div>
 					<div class="icon">
