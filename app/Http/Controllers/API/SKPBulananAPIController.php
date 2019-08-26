@@ -142,8 +142,6 @@ class SKPBulananAPIController extends Controller {
             })
             ->addColumn('skp_bulanan_id', function ($x) {
                     return $x->skp_bulanan_id;
-                
-                 
             });
     
             if ($keyword = $request->get('search')['value']) {
