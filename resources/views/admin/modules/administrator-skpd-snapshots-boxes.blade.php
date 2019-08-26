@@ -5,8 +5,7 @@
         </h3>
         <div class="box-tools pull-right">
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
-            {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
-        </div>
+           </div>
     </div>
 	<div class="box-body">
 		<div class="row">
@@ -26,7 +25,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-3 col-xs-6 hidden">
 				<div class="small-box bg-red unit_kerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -42,13 +41,13 @@
 				</div>
 			</div>
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-green peta_jabatan" style="cursor:pointer;">
+				<div class="small-box bg-green struktur_organisasi" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							{{$total_jabatan}}
+							*
 						</h3>
 						<p>
-							<strong>Peta Jabatan</strong>
+							<strong>Struktur Organisasi</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -56,11 +55,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-3 col-xs-6 hidden">
 				<div class="small-box bg-yellow rencana_kerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							{{$total_renja}}
+							*
 						</h3>
 						<p>
 							<strong>Renja</strong>
@@ -71,6 +70,58 @@
 					</div>
 				</div>
 			</div>
+
+
+			<div class="col-md-3 col-xs-6 hidden">
+				<div class="small-box bg-aqua perjanjian_kinerja" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							<strong>Perjanjian Kinerja</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa fa-tasks"></i>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 col-xs-6 hidden">
+				<div class="small-box bg-red skp_tahunan" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							<strong>SKP Tahunan</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa  fa-tasks"></i>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-md-3 col-xs-6" hidden>
+				<div class="small-box bg-green skp_bulanan" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							<strong>SKP Bulanan</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa  fa-tasks"></i>
+					</div>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 </div>
@@ -80,19 +131,31 @@
 $(document).ready(function(){
 
     $(".pegawai").click(function(){
-		window.location.assign("pegawai");
+		window.location.assign("./pegawai");
     });
 
 	$(".unit_kerja").click(function(){
 		window.location.assign("unit-kerja");
     });
 
-	$(".peta_jabatan").click(function(){
-		window.location.assign("peta-jabatan");
+	$(".struktur_organisasi").click(function(){
+		window.location.assign("struktur-organisasi");
     });
 
 	$(".rencana_kerja").click(function(){
 		window.location.assign("renja");
+    });
+
+	$(".perjanjian_kinerja").click(function(){
+		window.location.assign("perjanjian-kinerja");
+    });
+
+	$(".skp_tahunan").click(function(){
+		window.location.assign("skp-tahunan");
+    });
+
+	$(".skp_bulanan").click(function(){
+		window.location.assign("skp-bulanan");
     });
 
 

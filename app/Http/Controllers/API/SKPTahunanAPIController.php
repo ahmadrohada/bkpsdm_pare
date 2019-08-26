@@ -50,6 +50,10 @@ class SKPTahunanAPIController extends Controller {
 
         $skp_bulanan_list = SKPBulanan::SELECT('bulan')->WHERE('skp_tahunan_id',$request->skp_tahunan_id)->get()->toArray();
 
+        //Bulan penilaian range 
+
+        $bln_awal  = Pustaka::angka_bln($skp->tgl_mulai);
+        $bln_akhir = Pustaka::angka_bln($skp->tgl_selesai);
 
         $renja      = $skp->Renja;
         $p_detail   = $skp->PejabatPenilai;
@@ -86,6 +90,8 @@ class SKPTahunanAPIController extends Controller {
                     'p_skpd'	            => Pustaka::capital_string($p_detail->Skpd ? $p_detail->Skpd->skpd : ''), 
                 
                     'skp_bulanan_list'      => $skp_bulanan_list,
+                    'bln_awal'              => $bln_awal,
+                    'bln_akhir'             => $bln_akhir,
 
             );
         }else{
@@ -117,6 +123,8 @@ class SKPTahunanAPIController extends Controller {
                     'p_unit_kerja'	        => '',
                     'p_skpd'	            => '', 
                     'skp_bulanan_list'      => $skp_bulanan_list,
+                    'bln_awal'              => $bln_awal,
+                    'bln_akhir'             => $bln_akhir,
                 
                 
 

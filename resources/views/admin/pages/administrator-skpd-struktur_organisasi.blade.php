@@ -1,7 +1,7 @@
 @extends('admin.layouts.dashboard')
 
 @section('template_title')
-	Administrator
+{{ Pustaka::capital_string($nama_skpd) }}
 @endsection
 
 @section('template_fastload_css')
@@ -15,7 +15,7 @@
 				Administrator - SKPD
 			</h1>
 
-			{!! Breadcrumbs::render('skpd-pegawai') !!}
+			{!! Breadcrumbs::render('skpd') !!}
 
 	    </section>
 	    <section class="content">
@@ -23,8 +23,8 @@
 			
 				@include('admin.modules.administrator-skpd-snapshots-boxes')
 
- 				@include('admin.tables.administrator-skpd-pegawai')
-		 
+ 				@include('admin.modules.administrator-skpd-struktur_organisasi')
+		
 	    </section>
 	</div>
 @endsection
