@@ -144,7 +144,8 @@ class CapaianBulananAPIController extends Controller {
        
            $datatables = Datatables::of($skp)
              ->addColumn('periode', function ($x) {
-                return  $x->SKPTahunan->Renja->Periode->label;
+                return  Pustaka::Tahun($x->tgl_mulai);
+                //$x->SKPTahunan->Renja->Periode->label;
             }) 
             ->addColumn('bulan', function ($x) {
                 return Pustaka::bulan($x->bulan);
