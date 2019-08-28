@@ -588,8 +588,11 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skpd_struktur_organisasi','API\StrukturOrganisasiAPIController@skpd_struktur_organisasi');
 
 
-	
-
+	//========================================================================================================//
+	//==================================  ADMIN SKPD USER ROLE  ==============================================//
+	//========================================================================================================//
+	Route::post('add_admin_skpd','API\RoleUserAPIController@AddAdminSKPD');
+	Route::post('remove_admin_skpd','API\RoleUserAPIController@RemoveAdminSKPD');
 
 });
 

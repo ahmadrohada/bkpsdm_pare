@@ -21,6 +21,7 @@
 					<th>GOL</th>
 					<th>JABATAN</th>
 					<th>UNIT KERJA</th>
+					<th><i class="fa fa-get-pocket" style="margin-left:12px !important;"></i></th>
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
 			</thead>
@@ -44,7 +45,7 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,3,4,7] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,3,4,7,8] }/* ,
 									{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
@@ -69,8 +70,22 @@
 								{ data: "nama_unit_kerja" , name:"unit_kerja.unit_kerja", orderable: true, searchable: true},
 								{ data: "action" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
+										if ( row.user == '1'){
+											if ( row.role_admin == '1'){
+												return  '<span  data-toggle="tooltip" title="Remove from Admin" style="margin:1px;" class="remove btn btn-xs btn-info" data-id="'+row.admin_role_user+'">Admin</span>';
+											}else{
+												return  '<span  data-toggle="tooltip" title="Add to Admin" style="margin:1px;" class="add btn btn-xs btn-default" data-id="'+row.user_id+'">Admin</span>';
+												
+											}
+										}else{
+											return  '<span style="margin:1px;" class="btn btn-xs btn-default" disabled>Admin</span>';
+										}
+									}
+								},
+								{ data: "action" , orderable: false,searchable:false,width:"50px",
+										"render": function ( data, type, row ) {
 
-										if ( row.action == '1'){
+										if ( row.user == '1'){
 											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="../pegawai/'+row.pegawai_id+'" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';
 										}else{
 											return  '<span  data-toggle="tooltip" title="Tambah" style="margin:1px;" class=""><a href="../pegawai/'+row.pegawai_id+'/add" class="btn btn-xs btn-warning"><i class="fa fa-user-plus"></i></a></span>';
@@ -81,6 +96,131 @@
 								
 							]
 			
+		});
+
+
+
+
+
+
+
+		$(document).on('click','.add',function(e){
+			var user_id = $(this).data('id') ;
+			
+			Swal.fire({
+				title: "Jadikan Admin SKPD",
+				type: "question",
+				//type: "question",
+				showCancelButton: true,
+				cancelButtonText: "Batal",
+				confirmButtonText: "Setuju",
+				confirmButtonClass: "btn btn-success",
+				cancelButtonColor: "btn btn-danger",
+				cancelButtonColor: "#d33",
+				closeOnConfirm: false,
+				closeOnCancel:false
+			}).then ((result) => {
+				if (result.value){
+					$.ajax({
+						url		: '{{ url("api_resource/add_admin_skpd") }}',
+						type	: 'POST',
+						data    : {user_id:user_id},
+						cache   : false,
+						success:function(data){
+								Swal.fire({
+										title: "",
+										text: "Sukses",
+										type: "success",
+										width: "200px",
+										showConfirmButton: false,
+										allowOutsideClick : false,
+										timer: 900
+										}).then(function () {
+											$('#pegawai_table').DataTable().ajax.reload(null,false);
+
+										},
+										function (dismiss) {
+											if (dismiss === 'timer') {
+												$('#pegawai_table').DataTable().ajax.reload(null,false);
+												
+											}
+										}
+									)
+									
+								
+						},
+						error: function(e) {
+								Swal.fire({
+										title: "Gagal",
+										text: "",
+										type: "warning"
+									}).then (function(){
+											
+									});
+								}
+						});	
+				}
+			});
+		});
+
+
+		$(document).on('click','.remove',function(e){
+			var user_role_id = $(this).data('id') ;
+			
+			Swal.fire({
+				title: "Hapus Admin SKPD",
+				type: "warning",
+				//type: "question",
+				showCancelButton: true,
+				cancelButtonText: "Batal",
+				confirmButtonText: "Setuju",
+				confirmButtonClass: "btn btn-success",
+				cancelButtonColor: "btn btn-danger",
+				cancelButtonColor: "#d33",
+				closeOnConfirm: false,
+				closeOnCancel:false
+			}).then ((result) => {
+				if (result.value){
+					$.ajax({
+						url		: '{{ url("api_resource/remove_admin_skpd") }}',
+						type	: 'POST',
+						data    : {user_role_id:user_role_id},
+						cache   : false,
+						success:function(data){
+								Swal.fire({
+										title: "",
+										text: "Sukses",
+										type: "success",
+										width: "200px",
+										showConfirmButton: false,
+										allowOutsideClick : false,
+										timer: 900
+										}).then(function () {
+											$('#pegawai_table').DataTable().ajax.reload(null,false);
+
+										},
+										function (dismiss) {
+											if (dismiss === 'timer') {
+												$('#pegawai_table').DataTable().ajax.reload(null,false);
+												
+											}
+										}
+									)
+									
+								
+						},
+						error: function(e) {
+								Swal.fire({
+										title: "Gagal",
+										text: "",
+										type: "warning"
+									}).then (function(){
+											
+									});
+								}
+						});	
+				}
+			});
 		});
 	
 </script>

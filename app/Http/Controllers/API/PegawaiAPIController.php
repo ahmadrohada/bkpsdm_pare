@@ -301,8 +301,6 @@ class PegawaiAPIController extends Controller {
                     $join   ->on('a.id_pegawai','=','pegawai.id');
                     
                 })
-                
-
                 //eselon
                 ->leftjoin('demo_asn.m_eselon AS eselon', 'a.id_eselon','=','eselon.id')
 
@@ -317,6 +315,14 @@ class PegawaiAPIController extends Controller {
                 ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
                 ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
 
+                //LEFT JOIN ke user
+                ->leftjoin('db_pare_2018.users', 'users.id_pegawai','=','pegawai.id')
+
+                //LEFT JOIN ke roles admin SKPD
+                ->leftjoin('db_pare_2018.role_user AS role', function($join){
+                            $join   ->on('role.user_id','=','users.id');
+                            $join   ->where('role.role_id','=','2');
+                })
                 
                 ->select([  'pegawai.nama',
                             'pegawai.id AS pegawai_id',
@@ -326,7 +332,9 @@ class PegawaiAPIController extends Controller {
                             'eselon.eselon AS eselon',
                             'golongan.golongan AS golongan',
                             'jabatan.skpd AS jabatan',
-                            'unit_kerja.unit_kerja'
+                            'unit_kerja.unit_kerja',
+                            'users.id AS user_id',
+                            'role.id AS admin_role_user'
                 
                         ])
                        
@@ -350,11 +358,23 @@ class PegawaiAPIController extends Controller {
             
             return Pustaka::capital_string($x->jabatan);
         
-        })->addColumn('action', function ($x) {
+        })->addColumn('user', function ($x) {
 
-            $num_rows = User::WHERE('id_pegawai',$x->pegawai_id)->count();
+           // $num_rows = User::WHERE('id_pegawai',$x->pegawai_id)->count();
+            //return $num_rows;
 
-            return $num_rows;
+            if ( $x->user_id != null ){
+                return 1 ;
+            }else{
+                return 0 ;
+            }
+        })->addColumn('role_admin', function ($x) {
+            if ( $x->admin_role_user != null ){
+                return 1 ;
+            }else{
+                return 0 ;
+            }
+           
         });
 
         
