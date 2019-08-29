@@ -22,7 +22,7 @@
 					<ul class="nav nav-tabs " id="myTab">
 						<li class="status"><a href="#status" data-toggle="tab">Status</a></li>
 						<li class="detail"><a href="#detail" data-toggle="tab">Detail</a></li>
-						<li class="renja_tree"><a href="#renja_list" data-toggle="tab">Rencana Kerja</a></li>
+						<li class="renja_tree"><a href="#renja_list" data-toggle="tab">Pohon Kinerja</a></li>
 						<li class="distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
 					</ul>
 						
