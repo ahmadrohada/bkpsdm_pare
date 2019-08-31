@@ -429,13 +429,16 @@ class RenjaAPIController extends Controller {
 
 //KEGIATAN
 
-                            $kegiatan = Kegiatan:: where('indikator_program_id','=',$e->id)->select('id','label')->get();
+                            $kegiatan = Kegiatan:: where('indikator_program_id','=',$e->id)->select('id','label','cost')->get();
                                 foreach ($kegiatan as $f) {
                                     $sub_data_kegiatan['id']	        = "kegiatan|".$f->id;
-                                    $sub_data_kegiatan['text']			= Pustaka::capital_string($f->label);
-                                    $sub_data_kegiatan['icon']          = "jstree-kegiatan";
+                                    $sub_data_kegiatan['text']			= Pustaka::capital_string($f->label); 
                                     $sub_data_kegiatan['type']          = "kegiatan";
-                                   
+                                    if ( $f->cost > 0 ){
+                                        $sub_data_kegiatan['icon']          = "jstree-kegiatan";
+                                    }else{
+                                        $sub_data_kegiatan['icon']          = "jstree-kegiatan_non_anggaran";
+                                    }
 
 
 //INDIKATOR KEGIATAN

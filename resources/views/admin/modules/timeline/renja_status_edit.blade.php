@@ -4,8 +4,8 @@
 		<div class="box box-default">
 			<div class="box-body box-profile">
 			
-				<h3 class="profile-username text-center">RENCANA KERJA</h3>
-				<p class="text-muted text-center"></p>
+				<!-- <h3 class="profile-username text-center">RENCANA KERJA</h3>
+				<p class="text-muted text-center"></p>-->
 
 				<ul class="list-group list-group-unbordered">
 					<li class="list-group-item">
@@ -19,7 +19,7 @@
 					</li>
 				</ul>
 				<div class="kirim_renja">
-					<button class="btn btn-primary btn-block kirim_renja " disabled>Kirim kepada Kepala SKPD</button>
+					<button class="btn btn-primary btn-block kirim_renja " disabled>Submit</button>
 				</div>
 			</div>
 		</div>
@@ -111,12 +111,12 @@
 
 	$(document).on('click','.kirim_renja',function(e){
 		Swal.fire({
-				title: "Kirim Renja",
-				text: "Renja akan dikirim kepada Kepala SKPD untuk mendapatkan persetujuan",
+				title: "Submit Pohon Kinerja",
+				text: "Pohon Kinerja dikirim kepada Kepala SKPD untuk mendapatkan persetujuan",
 				type: "question",
 				showCancelButton: true,
 				cancelButtonText: "Batal",
-				confirmButtonText: "Kirim",
+				confirmButtonText: "Submit",
 				confirmButtonClass: "btn btn-success",
 				cancelButtonClass: "btn btn-danger",
 				cancelButtonColor: "#d33",

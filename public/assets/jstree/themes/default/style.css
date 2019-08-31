@@ -659,6 +659,25 @@
   margin:-5px 0 0 -5px;
 }
 
+.jstree-default .jstree-kegiatan_non_anggaran {
+  
+  height:18px !important;
+  width:150px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(5, 85, 16);
+  font-size:13px;
+  
+  
+}
+.jstree-kegiatan_non_anggaran:after{
+  content:'Kegiatan non anggaran';
+  
+  display:block;
+  margin:-5px 0 0 -5px;
+}
 
 
 .jstree-default .jstree-ind_kegiatan {

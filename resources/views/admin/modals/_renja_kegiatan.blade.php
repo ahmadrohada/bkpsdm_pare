@@ -14,22 +14,41 @@
 			<input type="hidden"  name="renja_id" class="renja_id" value="{!! $renja->id !!}">
 			<div class="modal-body">
 					
+					<br>
 
 					<div class="row">
-						<div class="col-md-12 form-group label_kegiatan">
-							<label class="control-label">Kegiatan :</label>
-							<textarea name="label_kegiatan" rows="2" required class="form-control label_kegiatan" id="label_kegiatan" style="resize:none;"></textarea>
+						<div class="col-md-12 form-group label_kegiatan ">
+							<label class="control-label">Label :</label>
+							<textarea name="label_kegiatan" rows="3" required class="form-control label_kegiatan" id="label_kegiatan" style="resize:none;"></textarea>
 						</div>
 					</div>
 
 					<div class="row">
-						<div class="col-md-12 form-group cost_kegiatan">
-							<label class="control-label">Anggaran :</label>
-							<input type="text" name="cost_kegiatan" autocomplete="off" id="cost_kegiatan" required class="form-control input-sm" placeholder="cost">
+						<div class="col-md-12 form-group label_ind_kegiatan ">
+							<label class="control-label">Indikator :</label>
+							<textarea name="label_ind_kegiatan" rows="2" required class="form-control label_ind_kegiatan" id="label_kegiatan" style="resize:none;"></textarea>
 						</div>
 					</div>
 
-				
+					<div class="row">
+						
+						<div class="col-md-3 form-group target_kegiatan">
+						<label class="control-label">Target :</label>
+						<input type="text" name="target_kegiatan" id="target_kegiatan" required class="form-control input-sm" placeholder="target">        
+						</div>
+
+						<div class="col-md-4 form-group satuan_kegiatan">
+						<label class="control-label">Satuan :</label>
+						<input type="text" name="satuan_kegiatan" autocomplete="off" id="satuan_kegiatan" required class="form-control input-sm" placeholder="satuan">
+						</div>
+
+						<div class="col-md-5 form-group satuan_ind_kegiatan">
+						<label class="control-label">Anggaran :</label>
+						<input type="text" name="cost_kegiatan" autocomplete="off" id="cost_kegiatan" required class="form-control input-sm" placeholder="cost">
+						</div>
+					</div>
+
+					<br>
 					
 			</div>
 			<div class="modal-footer">
@@ -52,17 +71,24 @@
 	});
 
 	$('.modal-kegiatan').on('hidden.bs.modal', function(){
-		$('.label_kegiatan,.cost_kegiatan').removeClass('has-error');
-		$('.modal-kegiatan').find('[name=label_kegiatan],[name=cost_kegiatan]').val('');
+		$('.label_kegiatan,.label_ind_kegiatan,.target_kegiatan,.satuan_kegiatan').removeClass('has-error');
+		$('.modal-kegiatan').find('[name=label_kegiatan],[name=label_ind_kegiatan],[name=target_kegiatan],[name=satuan_kegiatan],[name=cost_kegiatan]').val('');
 	});
 
 	$('.label_kegiatan').on('click', function(){
 		$('.label_kegiatan').removeClass('has-error');
 	});
-	
-	/* $('.cost_kegiatan').on('click', function(){
-		$('.cost_kegiatan').removeClass('has-error');
-	}); */
+	$('.label_ind_kegiatan').on('click', function(){
+		$('.label_ind_kegiatan').removeClass('has-error');
+	});
+
+	$('.target_kegiatan').on('click', function(){
+		$('.target_kegiatan').removeClass('has-error');
+	});
+
+	$('.satuan_kegiatan').on('click', function(){
+		$('.satuan_kegiatan').removeClass('has-error');
+	});
 
 
 
@@ -92,7 +118,6 @@
 				}).then(function () {
 					$('.modal-kegiatan').modal('hide');
 					$('#kegiatan_table').DataTable().ajax.reload(null,false);
-					$('#kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
 					jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 					
 				},
@@ -114,7 +139,9 @@
 					//alert (index+":"+value);
 					//error message
 					((index == 'label_kegiatan')?$('.label_kegiatan').addClass('has-error'):'');
-					//((index == 'cost_kegiatan')?$('.cost_kegiatan').addClass('has-error'):'');
+					((index == 'label_ind_kegiatan')?$('.label_ind_kegiatan').addClass('has-error'):'');
+					((index == 'target_kegiatan')?$('.target_kegiatan').addClass('has-error'):'');
+					((index == 'satuan_kegiatan')?$('.satuan_kegiatan').addClass('has-error'):'');
 				});
 
 			
@@ -154,7 +181,6 @@
 				}).then(function () {
 					$('.modal-kegiatan').modal('hide');
 					$('#kegiatan_table').DataTable().ajax.reload(null,false);
-					$('#kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
 					jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 					
 				},
@@ -177,6 +203,9 @@
 					
 					//error message
 					((index == 'label_kegiatan')?$('.label_kegiatan').addClass('has-error'):'');
+					((index == 'label_ind_kegiatan')?$('.label_ind_kegiatan').addClass('has-error'):'');
+					((index == 'target_kegiatan')?$('.target_kegiatan').addClass('has-error'):'');
+					((index == 'satuan_kegiatan')?$('.satuan_kegiatan').addClass('has-error'):'');
 				
 				});
 
