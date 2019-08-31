@@ -456,6 +456,7 @@ class KegiatanAPIController extends Controller {
 
         $dt = Kegiatan::where('indikator_program_id', '=' ,$request->get('ind_program_id'))
                         ->WHERE('renja_id',$request->get('renja_id'))
+                        ->WHERE('cost','>', 0 )
                         ->select([   
                             'id AS kegiatan_id',
                             'label AS label_kegiatan',
@@ -481,6 +482,65 @@ class KegiatanAPIController extends Controller {
         })
         ->addColumn('action', function ($x) {
             return $x->kegiatan_id;
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
+
+    public function KegiatanNonAnggaranList(Request $request)
+    {
+
+
+        //JUMLAH kegiatan anggaran
+        $jm_data = Kegiatan::where('indikator_program_id', '=' ,$request->get('ind_program_id'))
+                ->WHERE('renja_id',$request->get('renja_id'))
+                ->WHERE('cost','>', 0 )
+                ->select([   
+                    'id AS kegiatan_id',
+                    'label AS label_kegiatan',
+                    'indikator',
+                    'target',
+                    'satuan',
+                    'cost'
+                    ])
+                    ->count();
+
+        $dt = Kegiatan::where('indikator_program_id', '=' ,$request->get('ind_program_id'))
+                        ->WHERE('renja_id',$request->get('renja_id'))
+                        ->WHERE('cost','<=', 0 )
+                        ->select([   
+                            'id AS kegiatan_id',
+                            'label AS label_kegiatan',
+                            'indikator',
+                            'target',
+                            'satuan',
+                            'cost'
+                            ])
+                            ->get();
+
+        $datatables = Datatables::of($dt)
+        ->addColumn('label_kegiatan', function ($x) {
+            return $x->label_kegiatan;
+        })
+        ->addColumn('indikator_kegiatan', function ($x) {
+            return $x->indikator;
+        })
+        ->addColumn('target_kegiatan', function ($x) {
+            return $x->target.' '.$x->satuan ;
+        })
+        ->addColumn('cost_kegiatan', function ($x) {
+            return "Rp.  " .number_format($x->cost,'0',',','.') ;
+        })
+        ->addColumn('action', function ($x) {
+            return $x->kegiatan_id;
+        })
+        ->addColumn('jm_data', function ($x) use($jm_data) {
+            return $jm_data;
         });
 
         if ($keyword = $request->get('search')['value']) {
@@ -631,21 +691,6 @@ class KegiatanAPIController extends Controller {
 
         Kegiatan::whereIn('id',$x)
                 ->update(['jabatan_id' => $dt]);
-
-          /*  $kegiatan = Kegiatan::find($request->id);
-        if (is_null($kegiatan)) {
-            return \Response::make('Kegiatan  tidak ditemukan', 404);
-        }
-
-        $kegiatan->label = $request->text;
-        
-        
-        if ( $kegiatan->save()){
-            return \Response::make('Sukses', 200);
-        }else{
-            return \Response::make('error', 500);
-        }
- */
         
       
     }
@@ -705,11 +750,12 @@ class KegiatanAPIController extends Controller {
     {
 
         $messages = [
-                'ind_program_id.required'     => 'Harus diisi',
-                'renja_id.required'           => 'Harus diisi',
-                'label_kegiatan.required'     => 'Harus diisi',
-                'label_ind_kegiatan.required' => 'Harus diisi',
-                'target_kegiatan.required'  => 'Harus diisi',
+                'ind_program_id.required'       => 'Harus diisi',
+                'renja_id.required'             => 'Harus diisi',
+                'label_kegiatan.required'       => 'Harus diisi',
+                //'cost_kegiatan'                 => 'Harus diisi',
+                //'label_ind_kegiatan.required'   => 'Harus diisi',
+                //'target_kegiatan.required'      => 'Harus diisi',
                 //'satuan_kegiatan.required'    => 'Harus diisi',
 
         ];
@@ -720,9 +766,9 @@ class KegiatanAPIController extends Controller {
                             'ind_program_id'        => 'required',
                             'renja_id'              => 'required',
                             'label_kegiatan'        => 'required',
-                            'label_ind_kegiatan'    => 'required',
-                            'target_kegiatan'     => 'required',
-                            //'satuan_kegiatan'       => 'required',
+                            //'cost_kegiatan'         => 'required',
+                            //'target_kegiatan'       => 'required',
+                            //'satuan_kegiatan'     => 'required',
 
                         ),
                         $messages
@@ -740,9 +786,9 @@ class KegiatanAPIController extends Controller {
         $sr->indikator_program_id       = Input::get('ind_program_id');
         $sr->renja_id                   = Input::get('renja_id');
         $sr->label                      = Input::get('label_kegiatan');
-        $sr->indikator                  = Input::get('label_ind_kegiatan');
-        $sr->target                   = Input::get('target_kegiatan');
-        $sr->satuan                     = Input::get('satuan_kegiatan');
+        //$sr->indikator                  = Input::get('label_ind_kegiatan');
+        //$sr->target                     = Input::get('target_kegiatan');
+        //$sr->satuan                     = Input::get('satuan_kegiatan');
         $sr->cost                       = preg_replace('/[^0-9]/', '', Input::get('cost_kegiatan'));
 
         if ( $sr->save()){
@@ -760,9 +806,9 @@ class KegiatanAPIController extends Controller {
         $messages = [
                 'kegiatan_id.required'          => 'Harus diisi',
                 'label_kegiatan.required'       => 'Harus diisi',
-                'label_ind_kegiatan.required'   => 'Harus diisi',
-                'target_kegiatan.required'    => 'Harus diisi',
-                //'satuan_kegiatan.required'      => 'Harus diisi',
+                //'cost_kegiatan.required'        => 'Harus diisi',
+                //'target_kegiatan.required'    => 'Harus diisi',
+                //'satuan_kegiatan.required'    => 'Harus diisi',
                 
 
         ];
@@ -772,9 +818,9 @@ class KegiatanAPIController extends Controller {
                         array(
                             'kegiatan_id'           => 'required',
                             'label_kegiatan'        => 'required',
-                            'label_ind_kegiatan'    => 'required',
-                            'target_kegiatan'     => 'required',
-                            //'satuan_kegiatan'       => 'required',
+                            //'cost_kegiatan'         => 'required',
+                            //'target_kegiatan'     => 'required',
+                            //'satuan_kegiatan'     => 'required',
                             
                         ),
                         $messages
@@ -794,9 +840,9 @@ class KegiatanAPIController extends Controller {
 
 
         $sr->label                      = Input::get('label_kegiatan');
-        $sr->indikator                  = Input::get('label_ind_kegiatan');
-        $sr->target                   = Input::get('target_kegiatan');
-        $sr->satuan                     = Input::get('satuan_kegiatan');
+        //$sr->indikator                  = Input::get('label_ind_kegiatan');
+        //$sr->target                     = Input::get('target_kegiatan');
+        //$sr->satuan                     = Input::get('satuan_kegiatan');
         $sr->cost                       = preg_replace('/[^0-9]/', '', Input::get('cost_kegiatan'));
 
         if ( $sr->save()){

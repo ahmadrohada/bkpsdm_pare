@@ -201,6 +201,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	
 	Route::get('skpd-renja_kegiatan_list','API\KegiatanAPIController@KegiatanList');
+	Route::get('skpd-renja_kegiatan_non_anggaran_list','API\KegiatanAPIController@KegiatanNonAnggaranList');
 
 	Route::get('kegiatan_detail','API\KegiatanAPIController@KegiatanDetail');
 	Route::get('kegiatan_renja_detail','API\KegiatanAPIController@KegiatanDetail');

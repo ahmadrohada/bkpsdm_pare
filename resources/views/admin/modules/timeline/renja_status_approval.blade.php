@@ -4,8 +4,8 @@
 		<div class="box box-default">
 			<div class="box-body box-profile">
 			
-				<h3 class="profile-username text-center">RENCANA KERJA</h3>
-				<p class="text-muted text-center"></p>
+				<!-- <h3 class="profile-username text-center">RENCANA KERJA</h3>
+				<p class="text-muted text-center"></p> -->
 
 				<ul class="list-group list-group-unbordered">
 					<li class="list-group-item">
