@@ -10,7 +10,7 @@
 			@include('admin.tables.distribusi_kegiatan-kabid')
 			@include('admin.tables.distribusi_kegiatan-kasubid_detail')
 			@include('admin.tables.distribusi_kegiatan-ind_kegiatan_detail')
-
+			@include('admin.tables.pohon_kinerja-ind_kegiatan2_edit')
  
 
 	</div>
@@ -151,6 +151,7 @@
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+						$(".div_ind_kegiatan_detail").hide();
 						load_kegiatan_ka_skpd(tx[1]);
 				
 			break;
@@ -159,6 +160,7 @@
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").show();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+						$(".div_ind_kegiatan_detail").hide();
 						load_kegiatan_kabid(tx[1]);
 				
 			break;
@@ -167,6 +169,7 @@
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").show();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+						$(".div_ind_kegiatan_detail").hide();
 						load_kegiatan_kasubid(tx[1]);
 				
 			break;
@@ -175,11 +178,17 @@
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").show();
+						$(".div_ind_kegiatan_detail").hide();
 						load_ind_kegiatan2( tx[1]);
 				
 			break;
 			case 'ind_kegiatan':
-					
+						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
+						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
+						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+						$(".div_ind_kegiatan_detail").show();
+						load_ind_kegiatan_end( tx[1]);
 				
 			break;
 
@@ -188,6 +197,7 @@
 			$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 			$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 			$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+			$(".div_ind_kegiatan_detail").hide();
 						
 		
 		}
@@ -198,6 +208,7 @@
 		$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 		$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 		$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+		$(".div_ind_kegiatan_detail").hide();
 		jQuery('#ditribusi_renja').jstree().deselect_all(true);
 	});  
 	

@@ -18,7 +18,7 @@
 		@include('admin.tables.pohon_kinerja-ind_kegiatan_detail')
 		@include('admin.tables.pohon_kinerja-ind_kegiatan2_edit')
 		
-
+ 
 	</div>
 </div>
 
