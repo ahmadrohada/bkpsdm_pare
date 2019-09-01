@@ -228,7 +228,7 @@
 									{ data: "label", name:"label", width:"220px",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_tahunan_id) <= 0 ){
-												return "<p class='text-muted'>"+row.kegiatan_label+"</p>";
+												return "<p class='text-muted'>"+row.ind_kegiatan_label+"</p>";
 											}else{
 												return row.kegiatan_tahunan_label;
 											}

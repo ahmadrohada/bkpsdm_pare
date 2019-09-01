@@ -4,7 +4,7 @@
 {{ Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)  }}
 @stop
 
-
+ 
 @section('content')
 	 <div class="content-wrapper" >
 	    <section class="content-header">
@@ -109,6 +109,7 @@ $(document).ready(function() {
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
+		//alert(id);
 
 		if ( id == 'kegiatan_tahunan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
