@@ -107,6 +107,7 @@ class JabatanAPIController extends Controller {
                             })
                             ->leftjoin('demo_asn.tb_pegawai AS asn', function($join){
                                 $join   ->on('asn.id','=','pejabat.id_pegawai');
+                                $join   ->WHERE('asn.status','=', 'active' );
                             })
                             ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
                               $join   ->on('pejabat.id_eselon','=','eselon.id');
