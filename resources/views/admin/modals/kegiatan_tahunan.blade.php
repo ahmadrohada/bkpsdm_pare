@@ -9,7 +9,7 @@
             </div>
 
             <form  id="kegiatan_tahunan_form" method="POST" action="">
-			<input type="hidden"  name="kegiatan_id" class="kegiatan_id">
+			<input type="hidden"  name="ind_kegiatan_id" class="ind_kegiatan_id">
 			<input type="hidden"  name="kegiatan_tahunan_id" class="kegiatan_tahunan_id">
 			<input type="hidden"  name="skp_tahunan_id" class="skp_tahunan_id" value="{{ $skp->id }}">
 			<div class="modal-body">

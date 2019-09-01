@@ -10,7 +10,7 @@
 			@include('admin.tables.distribusi_kegiatan-kabid')
 			@include('admin.tables.distribusi_kegiatan-kasubid')
 			@include('admin.tables.distribusi_kegiatan-ind_kegiatan_edit')
-			@include('admin.tables.pohon_kinerja-ind_kegiatan2_edit')
+			@include('admin.tables.distribusi_kegiatan-ind_kegiatan2_edit')
 
 
 	</div>
@@ -189,7 +189,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 						$(".div_ind_kegiatan_detail").show();
-						load_ind_kegiatan_end( tx[1]);
+						load_ind_kegiatan_end2( tx[1]);
 				
 			break;
 			default: 
@@ -203,7 +203,7 @@
 		}
 	}
 
-	$(".tutup_detail_kegiatan").click(function(){
+	$(".tutup_detail").click(function(){
 		$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
 		$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 		$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();

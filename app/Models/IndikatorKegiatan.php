@@ -15,8 +15,11 @@ class IndikatorKegiatan extends Model
     }
 
 
-    public function kegiatan()
+    public function Kegiatan()
     {
-        return $this->belongTo('App\Models\Kegiatan');
+        return $this->belongsTo('App\Models\Kegiatan','kegiatan_id');
     }
+
+
+
 }
