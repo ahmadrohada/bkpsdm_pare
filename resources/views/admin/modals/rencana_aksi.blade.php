@@ -203,7 +203,7 @@
 				}).then(function () {
 					$('.modal-rencana_aksi').modal('hide');
 					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-					jQuery('#ktj').jstree(true).refresh(true);
+					jQuery('#keg_tahunan_3').jstree(true).refresh(true);
 					
 					
 				},
@@ -272,7 +272,7 @@
 				}).then(function () {
 					$('.modal-rencana_aksi').modal('hide');
 					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-					jQuery('#ktj').jstree(true).refresh(true);
+					jQuery('#keg_tahunan_3').jstree(true).refresh(true);
 					
 				},
 					

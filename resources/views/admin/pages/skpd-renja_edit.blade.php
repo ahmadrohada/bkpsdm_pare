@@ -35,10 +35,10 @@
 						</div>
 						
 						<div class=" tab-pane" id="rencana_kerja_tab">
-							@include('admin.tables.rencana_kerja_edit')
+							@include('admin.modules.tab.pohon_kinerja_edit')
 						</div>
 						<div class=" tab-pane" id="distribusi_kegiatan">
-							@include('admin.tables.distribusi_kegiatan_edit') 
+							@include('admin.modules.tab.distribusi_kegiatan_edit') 
 						</div>
 						
 					</div>

@@ -1,7 +1,7 @@
 <div class="box {{ $h_box }}">
     <div class="box-header with-border">
         <h1 class="box-title">
-            Approval Request Rencana Kerja
+            Approval Request Pohon Kinerja
         </h1>
 
         <div class="box-tools pull-right">
@@ -66,11 +66,11 @@
 								{ data: "renja_id" , orderable: false,searchable:false,width:"120px",
 										"render": function ( data, type, row ) {
 										if (row.status_approve == 0 ){
-											return  '<span  data-toggle="tooltip" title="Berikan Persetujuan renja" style="margin:1px;" ><a class="btn btn-warning btn-xs approval_renja"  data-renja_id="'+row.renja_id+'">Approval</a></span>';
+											return  '<span  data-toggle="tooltip" title="Berikan Persetujuan Pohon Kinerja" style="margin:1px;" ><a class="btn btn-warning btn-xs approval_renja"  data-renja_id="'+row.renja_id+'">Approval</a></span>';
 										}else if ( row.status_approve == 1 ){
-											return  '<span  data-toggle="tooltip" title="Detail Rencana Kerja" style="margin:1px;" ><a class="btn btn-success btn-xs lihat_renja"  data-renja_id="'+row.renja_id+'"> Lihat </a></span>';
+											return  '<span  data-toggle="tooltip" title="Detail Pohon Kinerja" style="margin:1px;" ><a class="btn btn-success btn-xs lihat_renja"  data-renja_id="'+row.renja_id+'"> Lihat </a></span>';
 										}else if ( row.status_approve == 2 ){
-											return  '<span  data-toggle="tooltip" title="Rencana Kerja telah ditolak" style="margin:1px;" ><a class="btn btn-danger btn-xs "  > Ditolak </a></span>';
+											return  '<span  data-toggle="tooltip" title="Pohon Kinerja telah ditolak" style="margin:1px;" ><a class="btn btn-danger btn-xs "  > Ditolak </a></span>';
 										}
 									}
 								},

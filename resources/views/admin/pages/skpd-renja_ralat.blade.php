@@ -19,10 +19,10 @@
 	    <section class="content">
 
 				<div class="nav-tabs-custom ">
-					<ul class="nav nav-tabs " id="myTab">
+					<ul class="nav nav-tabs" id="myTab">
 						<li class="status"><a href="#status" data-toggle="tab">Status</a></li>
 						<li class="detail"><a href="#detail" data-toggle="tab">Detail</a></li>
-						<li class="renja_tree"><a href="#renja_list" data-toggle="tab">Pohon Kinerja</a></li>
+						<li class="rencana_kerja_tab"><a href="#rencana_kerja_tab" data-toggle="tab">Pohon Kinerja</a></li>
 						<li class="distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
 					</ul>
 						
@@ -31,16 +31,14 @@
 							@include('admin.modules.timeline.renja_status_edit')	
 						</div>
 						<div class="tab-pane" id="detail">
-							@include('admin.modules.skpd-renja_detail')
+							@include('admin.modules.edit_forms.renja_detail')
 						</div>
 						
-						<div class=" tab-pane" id="renja_list">
-							@include('admin.modules.edit_forms.rencana_kerja')
+						<div class=" tab-pane" id="rencana_kerja_tab">
+							@include('admin.modules.tab.pohon_kinerja_edit')
 						</div>
-						
-  
 						<div class=" tab-pane" id="distribusi_kegiatan">
-							@include('admin.modules.edit_forms.distribusi_kegiatan') 
+							@include('admin.modules.tab.distribusi_kegiatan_edit') 
 						</div>
 						
 					</div>
@@ -49,7 +47,7 @@
 	    </section>
 	</div>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 $(document).ready(function() {
 	
 
@@ -69,19 +67,17 @@ $(document).ready(function() {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
 		//alert(id);
-
-		if ( id == 'renja_list'){
-			initRenjaTree();
-			
-		}else if ( id == 'status'){
-			
+		if ( id == 'status'){
 			status_show();
+		}else if ( id == 'rencana_kerja_tab'){
+			$('html, body').animate({scrollTop:0}, 0);
+			renja_list_kegiatan_tree();
 		}else if ( id == 'distribusi_kegiatan'){
+			$('html, body').animate({scrollTop:0}, 0);
 			initTreeDistribusiKegiatan();
-			
 		}
 
-		$('html, body').animate({scrollTop:0}, 0);
+		
 	});
 
 
@@ -96,6 +92,7 @@ $(document).ready(function() {
 
 });
 </script>
+
 
 
 

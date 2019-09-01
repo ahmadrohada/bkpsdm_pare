@@ -1,7 +1,7 @@
 <div class="box box-primary div_misi_detail">
 	<div class="box-header with-border">
 		<h1 class="box-title">
-			Detail Rencana Kerja SKPD
+			Detail Pohon Kinerja SKPD
 		</h1>
 
 

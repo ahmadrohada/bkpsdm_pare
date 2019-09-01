@@ -18,7 +18,7 @@
 						<b>Persetujuan Kepala SKPD</b> <a class="pull-right st_persetujuan_kaban">-</a>
 					</li>
 				</ul>
-				<div class="kirim_renja">
+				<div class="kirim_renja" hidden>
 					<button class="btn btn-primary btn-block kirim_renja " disabled>Submit</button>
 				</div>
 			</div>

@@ -119,7 +119,7 @@
 	$(document).on('click','.setuju_renja',function(e){
 		Swal.fire({
 				title: "Setuju",
-				text: "Pengajuan  Renja",
+				text: "Pengajuan  Pohon Kinerja",
 				type: "question",
 				showCancelButton: true,
 				cancelButtonText: "Batal",
@@ -191,7 +191,7 @@
 
 	$(document).on('click','.tolak_renja',function(e){
 		Swal.fire({
-			title				: 'Tolak Renja',
+			title				: 'Tolak Pohon Kinerja',
 			text				:'Berikan alasan penolakan',
 			input				: 'text',
 			type				: "question",

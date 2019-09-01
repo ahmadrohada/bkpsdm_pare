@@ -17,7 +17,7 @@
 							
 						</h3>
 						<p>
-							<strong>Rencana Kerja</strong>
+							<strong>Pohon Kinerja</strong>
 						</p>
 					</div>
 					<div class="icon">

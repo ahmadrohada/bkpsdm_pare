@@ -563,8 +563,8 @@ class SKPTahunanAPIController extends Controller {
         $renja = Renja::
             
                 where('renja.skpd_id',$skpd_id)
-                ->where('renja.send_to_kaban','1')
-                ->where('renja.status_approve','1')
+                //->where('renja.send_to_kaban','1')
+                //->where('renja.status_approve','1')
                 ->where('renja.periode_id',$periode_id)
                 ->exists();
 
@@ -965,8 +965,8 @@ class SKPTahunanAPIController extends Controller {
         //cari perjanjian kinerja dari periode ID
         $renja_id   = Renja::WHERE('renja.periode_id',$request->get('periode_id'))
                         ->WHERE('renja.skpd_id',$skpd_id)
-                        ->WHERE('renja.send_to_kaban','1')
-                        ->WHERE('renja.status_approve','1')
+                        //->WHERE('renja.send_to_kaban','1')
+                        //->WHERE('renja.status_approve','1')
                         /* ->leftjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
                             $join   ->on('renja.id','=','pk.renja_id');
                         }) */

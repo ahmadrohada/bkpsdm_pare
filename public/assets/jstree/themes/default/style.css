@@ -682,7 +682,7 @@
 
 .jstree-default .jstree-ind_kegiatan {
   height:18px !important;
-  width:110px !important;
+  width:120px !important;
   margin-top:3px;
   border-radius:8px 8px 8px 8px;
   background-color:white;
@@ -695,7 +695,7 @@
   content:'Indikator Kegiatan';
   
   display:block;
-  margin:-5px 0 0 5px;
+  margin:-5px 0 0 -5px;
 }
 
 .jstree-default .jstree-rencana_aksi {

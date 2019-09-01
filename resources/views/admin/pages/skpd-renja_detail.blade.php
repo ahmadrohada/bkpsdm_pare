@@ -10,7 +10,7 @@
 	    <section class="content-header">
 
 			<h1>
-				Rencana Kerja
+				Pohon Kinerja
 			</h1>
 
 				{!! Breadcrumbs::render('skpd-renja') !!}
@@ -35,12 +35,12 @@
 						</div>
 						
 						<div class=" tab-pane" id="rencana_kerja_tab">
-							@include('admin.tables.rencana_kerja_detail')
+							@include('admin.modules.tab.pohon_kinerja_detail')
 						</div> 
 						
   
 						<div class=" tab-pane" id="distribusi_kegiatan">
-							@include('admin.tables.distribusi_kegiatan_detail') 
+							@include('admin.modules.tab.distribusi_kegiatan_detail') 
 						</div>
 						 
 					</div>

@@ -26,13 +26,13 @@
 								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/01/WhatsApp-Image-2019-01-25-at-1.14.36-PM.jpeg" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
-								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/04/IMG-20190401-WA0045-1024x682.jpg" class="img-slide" alt="">
+								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/08/WhatsApp-Image-2019-08-30-at-13.45.36-768x432.jpeg" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
-								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/04/IMG-20190401-WA0058-768x512.jpg" class="img-slide" alt="">
+								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/08/WhatsApp-Image-2019-08-30-at-13.45.12-1024x576.jpeg" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
-								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/02/WhatsApp-Image-2019-02-20-at-19.44.42-768x373.jpeg" class="img-slide" alt="">
+								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/08/WhatsApp-Image-2019-08-30-at-14.01.55-1024x576.jpeg" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
 								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/02/WhatsApp-Image-2019-02-20-at-19.44.54-1024x576.jpeg" class="img-slide" alt="">
