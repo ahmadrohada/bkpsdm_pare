@@ -108,12 +108,12 @@
 
 	$(document).on('click','.batalkan_renja',function(e){
 		Swal.fire({
-				title: "Tarik - Renja",
-				text: "Renja akan dibatalkan permintaan persetujuannya",
+				title: "Batalkan Permintaan Persetujuan",
+				text: "Pohon Kinerja akan dibatalkan permintaan persetujuannya",
 				type: "question",
 				showCancelButton: true,
-				cancelButtonText: "Batal",
-				confirmButtonText: "Tarik",
+				cancelButtonText: "Tidak",
+				confirmButtonText: "Ya",
 				confirmButtonClass: "btn btn-success",
 				cancelButtonClass: "btn btn-danger",
 				cancelButtonColor: "#d33",

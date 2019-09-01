@@ -27,19 +27,21 @@ class IndikatorKegiatanAPIController extends Controller {
     {
             
       
-        $dt = IndikatorKegiatan::where('kegiatan_id', '=' ,$request->get('kegiatan_renja_id'))
-            ->select([   
-                'id AS indikator_kegiatan_id',
-                'kegiatan_id',
-                'label',
-                'target',
-                'satuan'
-                ])
-                ->get();
+        $dt = IndikatorKegiatan::where('kegiatan_id', '=' ,$request->get('kegiatan_id'))
+                                ->select([   
+                                    'id AS ind_kegiatan_id',
+                                    'kegiatan_id',
+                                    'label',
+                                    'target',
+                                    'satuan'
+                                    ])
+                                    ->get();
+
+
         $datatables = Datatables::of($dt)
-        ->addColumn('label', function ($x) {
-            return $x->label."  ";
-        })->addColumn('target', function ($x) {
+        ->addColumn('label_ind_kegiatan', function ($x) {
+            return $x->label;
+        })->addColumn('target_ind_kegiatan', function ($x) {
             return $x->target."  ".$x->satuan;
         });
 
@@ -88,41 +90,54 @@ class IndikatorKegiatanAPIController extends Controller {
         return $datatables->make(true);
     }
 
+    public function IndikatorKegiatanDetail(Request $request)
+    {
+       
+        
+        $x = IndikatorKegiatan::
+                SELECT(     'renja_indikator_kegiatan.id AS ind_kegiatan_id',
+                            'renja_indikator_kegiatan.label',
+                            'renja_indikator_kegiatan.target',
+                            'renja_indikator_kegiatan.satuan'
 
+
+                                    ) 
+                            ->WHERE('renja_indikator_kegiatan.id', $request->ind_kegiatan_id)
+                            ->first();
+
+        $ind_kegiatan = array(
+            'id'            => $x->ind_kegiatan_id,
+            'label'         => $x->label,
+            'target'        => $x->target,
+            'satuan'        => $x->satuan
+
+        );
+        return $ind_kegiatan;
+    }
   
     public function Store(Request $request)
     {
 
-        $pk = new IndikatorKegiatan;
-        $pk->label                  = Input::get('text');
-        $pk->kegiatan_id            = Input::get('parent_id');
+        $messages = [
+                'kegiatan_id.required'          => 'Harus diisi',
+                'label_ind_kegiatan.required'   => 'Harus diisi',
+                'target_ind_kegiatan.required'  => 'Harus diisi',
+                'satuan_ind_kegiatan.required'  => 'Harus diisi',
 
-    
-        if ( $pk->save()){
-            $tes = array('id' => 'ind_kegiatan|'.$pk->id);
-            return \Response::make($tes, 200);
-        }else{
-            return \Response::make('error', 500);
-        }
-       
-       /*  $messages = [
-                //'label.required' => ':attribute Indikator Sasaran Harus diisi. ',
-                'label.required' => 'Label Indikator Sasaran Harus diisi. ',
-                'target.required' => 'Target tidak boleh kosong. ',
-                'satuan.required' => 'Satuan tidak boleh kosong. ',
         ];
 
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'kegiatan_id'    => 'required',
-                            'label'          => 'required|max:200',
-                            'target'         => 'required',
-                            'satuan'         => 'required'
+                            'kegiatan_id'           => 'required',
+                            'label_ind_kegiatan'    => 'required',
+                            'target_ind_kegiatan'   => 'required',
+                            'satuan_ind_kegiatan'   => 'required',
+
                         ),
                         $messages
         );
-       
+
         if ( $validator->fails() ){
             //$messages = $validator->messages();
             return response()->json(['errors'=>$validator->messages()],422);
@@ -130,43 +145,115 @@ class IndikatorKegiatanAPIController extends Controller {
         }
 
 
-        $indikator_kegiatan = new IndikatorKegiatan;
-        $indikator_kegiatan->label         = Input::get('label');
-        $indikator_kegiatan->kegiatan_id   = Input::get('kegiatan_id');
-        $indikator_kegiatan->target        = Input::get('target');
-        $indikator_kegiatan->satuan        = Input::get('satuan');
+        $sr    = new IndikatorKegiatan;
 
-        if ( $indikator_kegiatan->save()){
-            return \Response::make('sukses', 200);
+        $sr->kegiatan_id       = Input::get('kegiatan_id');
+        $sr->label             = Input::get('label_ind_kegiatan');
+        $sr->target            = Input::get('target_ind_kegiatan');
+        $sr->satuan            = Input::get('satuan_ind_kegiatan');
+        
+        if ( $sr->save()){
+            $tes = array('id' => 'Indkegiatan|'.$sr->id);
+            return \Response::make($tes, 200);
         }else{
             return \Response::make('error', 500);
-        }  */
-       
+        } 
        
     }
    
 
-
-    public function Rename(Request $request )
+    public function Update(Request $request)
     {
-        
 
-        $ind_kegiatan = IndikatorKegiatan::find($request->id);
-        if (is_null($ind_kegiatan)) {
-            return \Response::make('Indikator Kegiatan  tidak ditemukan', 404);
+        $messages = [
+            'ind_kegiatan_id.required'       => 'Harus diisi',
+            'label_ind_kegiatan.required'    => 'Harus diisi',
+            'target_ind_kegiatan.required' => 'Harus diisi',
+            'satuan_ind_kegiatan.required'   => 'Harus diisi',
+                
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'ind_kegiatan_id'        => 'required',
+                            'label_ind_kegiatan'     => 'required',
+                            'target_ind_kegiatan'  => 'required',
+                            'satuan_ind_kegiatan'    => 'required',
+                            
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
         }
 
-        $ind_kegiatan->label = $request->text;
         
-        
-        if ( $ind_kegiatan->save()){
-            return \Response::make('Sukses', 200);
+        $is    = IndikatorKegiatan::find(Input::get('ind_kegiatan_id'));
+        if (is_null($is)) {
+            return $this->sendError('Indikator Kegiatan idak ditemukan.');
+        }
+
+
+        $is->label             = Input::get('label_ind_kegiatan');
+        $is->target          = Input::get('target_ind_kegiatan');
+        $is->satuan            = Input::get('satuan_ind_kegiatan');
+
+        if ( $is->save()){
+            return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);
+        } 
+            
+            
+
+    
+    }
+
+
+
+    public function Hapus(Request $request)
+    {
+
+        $messages = [
+                'ind_kegiatan_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'ind_kegiatan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
         }
 
         
-      
+        $is    = IndikatorKegiatan::find(Input::get('ind_kegiatan_id'));
+        if (is_null($is)) {
+            return $this->sendError('Indikator Kegiatan tidak ditemukan.');
+        }
+
+
+        if ( $is->delete()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
     }
 
+
+   
 }

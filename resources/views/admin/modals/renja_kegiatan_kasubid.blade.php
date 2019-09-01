@@ -23,30 +23,13 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-12 form-group label_ind_kegiatan ">
-							<label class="control-label">Indikator :</label>
-							<textarea name="label_ind_kegiatan" rows="2" required class="form-control label_ind_kegiatan" id="label_kegiatan" style="resize:none;"></textarea>
-						</div>
-					</div>
-
-					<div class="row">
-						
-						<div class="col-md-3 form-group target_kegiatan">
-						<label class="control-label">Target :</label>
-						<input type="text" name="target_kegiatan" id="target_kegiatan" required class="form-control input-sm" placeholder="target">        
-						</div>
-
-						<div class="col-md-4 form-group satuan_kegiatan">
-						<label class="control-label">Satuan :</label>
-						<input type="text" name="satuan_kegiatan" autocomplete="off" id="satuan_kegiatan" required class="form-control input-sm" placeholder="satuan">
-						</div>
-
-						<div class="col-md-5 form-group satuan_ind_kegiatan">
+						<div class="col-md-12 form-group cost_ind_kegiatan ">
 						<label class="control-label">Anggaran :</label>
 						<input type="text" name="cost_kegiatan" autocomplete="off" id="cost_kegiatan" required class="form-control input-sm" placeholder="cost">
 						</div>
 					</div>
 
+					
 					<br>
 					
 			</div>
@@ -138,8 +121,8 @@
 					//error message
 					((index == 'label_kegiatan')?$('.label_kegiatan').addClass('has-error'):'');
 					((index == 'label_ind_kegiatan')?$('.label_ind_kegiatan').addClass('has-error'):'');
-					((index == 'target_kegiatan')?$('.target_kegiatan').addClass('has-error'):'');
-					((index == 'satuan_kegiatan')?$('.satuan_kegiatan').addClass('has-error'):'');
+					//((index == 'target_kegiatan')?$('.target_kegiatan').addClass('has-error'):'');
+					//((index == 'satuan_kegiatan')?$('.satuan_kegiatan').addClass('has-error'):'');
 				
 				});
 

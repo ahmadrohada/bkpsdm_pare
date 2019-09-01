@@ -56,15 +56,37 @@ class KegiatanAPIController extends Controller {
                     $data_kasubid['type']           = "kasubid";
                     
 
-                    $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label')->get();
+                    $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label','cost')->get();
                     foreach ($kegiatan as $a) {
                         $data_kegiatan['id']	        = "kegiatan|".$a->id;
                         $data_kegiatan['text']			= Pustaka::capital_string($a->label);
-                        $data_kegiatan['icon']          = "jstree-kegiatan";
                         $data_kegiatan['type']          = "kegiatan";
+
+                        if ( $a->cost > 0 ){
+                            $data_kegiatan['icon']      = "jstree-kegiatan";
+                        }else{
+                            $data_kegiatan['icon']      = "jstree-kegiatan_non_anggaran";
+                        }
                         
         
-                        $kegiatan_list[] = $data_kegiatan ;
+                            $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$a->id)->select('id','label')->get();
+                            foreach ($ind_kegiatan as $g) {
+                                $sub_data_ind_kegiatan['id']	        = "ind_kegiatan|".$g->id;
+                                $sub_data_ind_kegiatan['text']			= Pustaka::capital_string($g->label);
+                                $sub_data_ind_kegiatan['icon']          = "jstree-ind_kegiatan";
+                                $sub_data_ind_kegiatan['type']          = "ind_kegiatan";
+
+                                    $ind_kegiatan_list[] = $sub_data_ind_kegiatan ;
+                                }
+
+                                if(!empty($ind_kegiatan_list)) {
+                                    $data_kegiatan['children']     = $ind_kegiatan_list;
+                                }
+
+                                $kegiatan_list[] = $data_kegiatan ;
+                                $ind_kegiatan_list = "";
+                                unset($data_kegiatan['children']);
+                                
                    
                     }
 

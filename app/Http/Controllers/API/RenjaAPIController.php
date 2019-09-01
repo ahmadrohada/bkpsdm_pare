@@ -441,7 +441,7 @@ class RenjaAPIController extends Controller {
                                     }
 
 
-//INDIKATOR KEGIATAN
+//INDIKATOR KEGIATAN  
 
                                 $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$f->id)->select('id','label')->get();
                                     foreach ($ind_kegiatan as $g) {

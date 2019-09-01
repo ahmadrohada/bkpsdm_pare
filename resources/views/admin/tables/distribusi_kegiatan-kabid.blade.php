@@ -1,4 +1,4 @@
-<div class="box box-primary div_ka_skpd_detail">
+<div class="box box-primary div_kabid_detail " hidden>
 	<div class="box-header with-border">
 		<h1 class="box-title">
 			Detail Jabatan
@@ -14,26 +14,26 @@
 		
 		<strong>Jabatan</strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="jabatan_ka_skpd"></span>
+			<span class="jabatan_kabid"></span>
 		</p>
 
 		<strong>Jenis Jabatan / Eselon</strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="jj_ka_skpd"></span>
+			<span class="jj_kabid"></span>
 		</p>
 
 		<strong>Nama</strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="nama_ka_skpd"></span>
+			<span class="nama_kabid"></span>
 		</p>
 		<strong>NIP</strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="nip_ka_skpd"></span>
+			<span class="nip_kabid"></span>
 		</p>
 					
 	</div>
 </div>
-<div class="box box-primary div_kegiatan_ka_skpd_list">
+<div class="box box-primary div_kegiatan_kabid_list" hidden>
     <div class="box-header with-border">
 		<h1 class="box-title">
             Kegiatan List
@@ -51,12 +51,11 @@
 		<div class="toolbar">
 		
 		</div>
-		<table id="kegiatan_ka_skpd_table" class="table table-striped table-hover table-condensed" >
+		<table id="kegiatan_kabid_table" class="table table-striped table-hover table-condensed" >
 			<thead>
 				<tr class="success">
 					<th>NO</th>
 					<th >LABEL</th>
-					<th >TARGET</th>
 					<th >ANGGARAN</th>
 				</tr>
 			</thead>
@@ -70,9 +69,9 @@
 <script type="text/javascript">
 
 
-load_kegiatan_ka_skpd({!!$renja->KepalaSKPD->id_jabatan!!});
+//load_kegiatan_kabid({!!$renja->KepalaSKPD->id_jabatan!!});
 
-function load_kegiatan_ka_skpd(jabatan_id){
+function load_kegiatan_kabid(jabatan_id){
 
 	$.ajax({
 		url			: '{{ url("api_resource/detail_pejabat_aktif") }}',
@@ -80,10 +79,10 @@ function load_kegiatan_ka_skpd(jabatan_id){
 		method		: "GET",
 		dataType	: "json",
 		success	: function(data) {
-				$('.jabatan_ka_skpd').html(data['jabatan']);
-				$('.jj_ka_skpd').html(data['jenis_jabatan']+' ( eselon '+data['eselon']+' )');
-				$('.nama_ka_skpd').html(data['nama']);
-				$('.nip_ka_skpd').html(data['nip']);
+				$('.jabatan_kabid').html(data['jabatan']);
+				$('.jj_kabid').html(data['jenis_jabatan']+' ( eselon '+data['eselon']+' )');
+				$('.nama_kabid').html(data['nama']);
+				$('.nip_kabid').html(data['nip']);
 				
 		},
 		error: function(data){
@@ -93,8 +92,7 @@ function load_kegiatan_ka_skpd(jabatan_id){
 
 
 
-
-    $('#kegiatan_ka_skpd_table').DataTable({
+    $('#kegiatan_kabid_table').DataTable({
 				destroy			: true,
 				processing      : false,
 				serverSide      : true,
@@ -102,11 +100,11 @@ function load_kegiatan_ka_skpd(jabatan_id){
 				paging          : true,
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2 ] },
-									{ className: "text-right", targets: [ 3 ] }
+									{ className: "text-center", targets: [ 0 ] },
+									{ className: "text-right", targets: [ 2 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skpd-renja_kegiatan_list_kaskpd") }}',
+									url	: '{{ url("api_resource/skpd-renja_kegiatan_list_kabid") }}',
 									data: { jabatan_id: jabatan_id ,
 											renja_id:{!! $renja->id !!}
 										},
@@ -118,8 +116,8 @@ function load_kegiatan_ka_skpd(jabatan_id){
 										}
 									},
 								{ data: "label_kegiatan", name:"label_kegiatan", orderable: true, searchable: true},
-								{ data: "target_kegiatan", name:"target_kegiatan", orderable: true, searchable: true},
-								{ data: "cost_kegiatan", name:"cost_kegiatan", orderable: true, searchable: true},
+								//{ data: "target_kegiatan", name:"target_kegiatan", orderable: true, searchable: true},
+								{ data: "cost_kegiatan", name:"cost_kegiatan", orderable: true, searchable: true,width:"110px"},
 								
 								
 								/* {  data: 'action',width:"60px",

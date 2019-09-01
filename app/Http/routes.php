@@ -215,9 +215,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 
 
-	Route::post('kegiatan_store','API\KegiatanAPIController@Store');
-	Route::post('kegiatan_rename','API\KegiatanAPIController@Rename');
-	Route::get('kegiatan_renja_detail','API\KegiatanAPIController@KegiatanDetail');
+	//Route::post('kegiatan_store','API\KegiatanAPIController@Store');
+	//Route::post('kegiatan_rename','API\KegiatanAPIController@Rename');
+	//Route::get('kegiatan_renja_detail','API\KegiatanAPIController@KegiatanDetail');
 
 
 
@@ -226,6 +226,20 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	Route::get('renja_kegiatan_list','API\KegiatanAPIController@RenjaKegiatanList');
 	Route::post('add_kegiatan_to_pejabat','API\KegiatanAPIController@AddKegiatanToPejabat');
+
+
+	//========================================================================================================//
+	//======================================  I N D I K A T O R    K E G I A T A N    ========================//
+	//========================================================================================================//
+
+	Route::get('skpd-renja_ind_kegiatan_list','API\IndikatorKegiatanAPIController@IndikatorKegiatanList');
+	Route::get('ind_kegiatan_detail','API\IndikatorKegiatanAPIController@IndikatorKegiatanDetail');
+
+
+	Route::post('simpan_ind_kegiatan','API\IndikatorKegiatanAPIController@Store');
+	Route::post('update_ind_kegiatan','API\IndikatorKegiatanAPIController@Update');
+	Route::post('hapus_ind_kegiatan','API\IndikatorKegiatanAPIController@Hapus');
+
 
 	//========================================================================================================//
 	//============================= D I S T R I B U S I    K E G I A T A N    ========================//
@@ -256,14 +270,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	Route::post('hapus_kegiatan_kasubid','API\KegiatanAPIController@RemoveKegiatanFromPejabat');
 
-	//========================================================================================================//
-	//======================================  I N D I K A T O R    K E G I A T A N    ========================//
-	//========================================================================================================//
-
-	/* Route::post('ind_kegiatan_store','API\IndikatorKegiatanAPIController@Store');
-	Route::post('ind_kegiatan_rename','API\IndikatorKegiatanAPIController@Rename');
-	Route::get('indikator_kegiatan_list','API\IndikatorKegiatanAPIController@IndikatorKegiatanList');
-	 */
+		
 
 /* 
 

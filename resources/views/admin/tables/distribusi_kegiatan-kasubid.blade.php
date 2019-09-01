@@ -15,6 +15,7 @@
 		<strong>Jabatan</strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 			<span class="jabatan_kasubid"></span>
+			<input type="hidden" class="jj_jabatan_id">
 		</p>
 
 		<strong>Jenis Jabatan / Eselon</strong>
@@ -30,6 +31,9 @@
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 			<span class="nip_kasubid"></span>
 		</p>
+
+		<span  data-toggle="tooltip" title="Add Kegiatan"><a class="btn btn-info btn-sm btn-block add_kegiatan"><i class="fa fa-plus" ></i> Add Kegiatan</a></span>
+			
 					
 	</div>
 </div>
@@ -56,7 +60,6 @@
 				<tr class="success">
 					<th>NO</th>
 					<th >LABEL</th>
-					<th >TARGET</th>
 					<th >ANGGARAN</th>
 					<th><i class="fa fa-cog"></i></th>
 				</tr>
@@ -83,6 +86,7 @@ function load_kegiatan_kasubid(jabatan_id){
 		method		: "GET",
 		dataType	: "json",
 		success	: function(data) {
+				$('.jj_jabatan_id').val(jabatan_id);
 				$('.jabatan_kasubid').html(data['jabatan']);
 				$('.jj_kasubid').html(data['jenis_jabatan']+' ( eselon '+data['eselon']+' )');
 				$('.nama_kasubid').html(data['nama']);
@@ -104,8 +108,8 @@ function load_kegiatan_kasubid(jabatan_id){
 				paging          : true,
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,4 ] },
-									{ className: "text-right", targets: [ 3 ] }
+									{ className: "text-center", targets: [ 0,3 ] },
+									{ className: "text-right", targets: [ 2 ] }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/skpd-renja_kegiatan_list_kasubid") }}',
@@ -120,7 +124,7 @@ function load_kegiatan_kasubid(jabatan_id){
 										}
 									},
 								{ data: "label_kegiatan", name:"label_kegiatan", orderable: true, searchable: true},
-								{ data: "target_kegiatan", name:"target_kegiatan", orderable: true, searchable: true,width:'80px'},
+								//{ data: "target_kegiatan", name:"target_kegiatan", orderable: true, searchable: true,width:'80px'},
 								{ data: "cost_kegiatan", name:"cost_kegiatan", orderable: true, searchable: true,width:'80px'},
 								
 								
@@ -140,6 +144,18 @@ function load_kegiatan_kasubid(jabatan_id){
 
 }
 
+
+
+
+
+	$(document).on('click','.add_kegiatan',function(e){
+		var id_jabatan = $(".jj_jabatan_id").val() ;
+		//alert(id_jabatan);
+		$('.distribusi_kegiatan_add, #tes').val(id_jabatan);
+		//SHOW MODAL UNTUK ADD KEGIATAN
+		$('.distribusi_kegiatan_add').modal('show');
+
+	});
 
 	$(document).on('click','.edit_kegiatan_kasubid',function(e){
 		var kegiatan_id = $(this).data('id') ;

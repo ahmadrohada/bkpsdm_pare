@@ -19,7 +19,7 @@
 					<th>TMT</th>
 					<th>JABATAN</th>
 					<th>SKPD</th>
-					<th>RENJA</th>
+					<th>POHON KINERJA</th>
 
 					<th>SKP TAHUNAN</th>
 				</tr>

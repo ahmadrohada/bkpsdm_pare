@@ -61,6 +61,8 @@
 	</div>
 </div>
 
+
+
 @include('admin.modals.renja_kegiatan')
 
 <script type="text/javascript">

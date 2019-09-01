@@ -8,14 +8,14 @@
 		
 	</div>
 	<div class="col-md-7">
-		@include('admin.tables.renja-tujuan_edit')
-		@include('admin.tables.renja-ind_tujuan_edit')
-		@include('admin.tables.renja-sasaran_edit')
-		@include('admin.tables.renja-ind_sasaran_edit')
-		@include('admin.tables.renja-program_edit')
-		@include('admin.tables.renja-ind_program_edit')
-		@include('admin.tables.renja-kegiatan_edit')
-		@include('admin.tables.renja-ind_kegiatan_edit')
+		@include('admin.tables.pohon_kinerja-tujuan_detail')
+		@include('admin.tables.pohon_kinerja-ind_tujuan_detail')
+		@include('admin.tables.pohon_kinerja-sasaran_detail')
+		@include('admin.tables.pohon_kinerja-ind_sasaran_detail')
+		@include('admin.tables.pohon_kinerja-program_detail')
+		@include('admin.tables.pohon_kinerja-ind_program_detail')
+		@include('admin.tables.pohon_kinerja-kegiatan_detail')
+		@include('admin.tables.pohon_kinerja-ind_kegiatan_detail')
 		
 
 	</div>
@@ -34,18 +34,13 @@
 <script type="text/javascript">
 
 		
-	function renja_list_kegiatan_tree() {
+	function RencanaKerjaList() {
 		$('#renja_tree_kegiatan')
 		.jstree({
             'core' : {
 				'data' : {
 						"url" 	: "{{ url("api_resource/skpd_renja_aktivity") }}",
 						"data" 	: function (node) {
-
-							
-							
-							
-						
 							return { "renja_id" : {!! $renja->id !!} };
 						},
 						"dataType" : "json"
@@ -54,7 +49,8 @@
 						'themes' : {
 							'responsive' : false
 						}
-			},'contextmenu' : { 
+			}
+			,'contextmenu' : {
 					'items' : context_menu
 				},
 				'plugins' : [/* 'contextmenu', */ 'types' ,'search'],
@@ -158,7 +154,6 @@
 		})
 		.on("loaded.jstree", function(){
 			$('#renja_tree_kegiatan').jstree('open_all');
-			
 		})
 		.on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
@@ -269,7 +264,7 @@
 							$(".div_ind_sasaran_detail, .div_program_list").hide();
 							$(".div_program_detail, .div_ind_program_list").hide();
 							$(".div_ind_program_detail, .div_kegiatan_list").hide();
-							$(".div_kegiatan_detail").hide();
+							$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 							load_ind_tujuan( tx[1]);
 					
 				break;
@@ -281,7 +276,7 @@
 							$(".div_ind_sasaran_detail, .div_program_list").hide();
 							$(".div_program_detail, .div_ind_program_list").hide();
 							$(".div_ind_program_detail, .div_kegiatan_list").hide();
-							$(".div_kegiatan_detail").hide();
+							$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 							load_sasaran( tx[1]);
 					
 				break;
@@ -293,7 +288,7 @@
 							$(".div_ind_sasaran_detail, .div_program_list").hide();
 							$(".div_program_detail, .div_ind_program_list").hide();
 							$(".div_ind_program_detail, .div_kegiatan_list").hide();
-							$(".div_kegiatan_detail").hide();
+							$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 							load_ind_sasaran( tx[1]);
 					
 				break;
@@ -306,6 +301,7 @@
 							$(".div_ind_sasaran_detail, .div_program_list").show();
 							$(".div_program_detail, .div_ind_program_list").hide();
 							$(".div_ind_program_detail, .div_kegiatan_list").hide();
+							$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 							load_program( tx[1]);
 					
 				break;
@@ -317,7 +313,7 @@
 							$(".div_ind_sasaran_detail, .div_program_list").hide();
 							$(".div_program_detail, .div_ind_program_list").show();
 							$(".div_ind_program_detail, .div_kegiatan_list").hide();
-							$(".div_kegiatan_detail").hide();
+							$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 							load_ind_program( tx[1]);
 					
 				break;
@@ -329,7 +325,7 @@
 							$(".div_ind_sasaran_detail, .div_program_list").hide();
 							$(".div_program_detail, .div_ind_program_list").hide();
 							$(".div_ind_program_detail, .div_kegiatan_list").show();
-							$(".div_kegiatan_detail").hide();
+							$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 							load_kegiatan( tx[1]);
 					
 				break;
@@ -341,7 +337,7 @@
 							$(".div_ind_sasaran_detail, .div_program_list").hide();
 							$(".div_program_detail, .div_ind_program_list").hide();
 							$(".div_ind_program_detail, .div_kegiatan_list").hide();
-							$(".div_kegiatan_detail").show();
+							$(".div_kegiatan_detail, .div_ind_kegiatan_list").show();
 							load_ind_kegiatan( tx[1]);
 					
 				break;
@@ -362,7 +358,7 @@
 				$(".div_ind_sasaran_detail, .div_program_list").hide();
 				$(".div_program_detail, .div_ind_program_list").hide();
 				$(".div_ind_program_detail, .div_kegiatan_list").hide();
-				$(".div_kegiatan_detail").hide();
+				$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 				jQuery('#renja_tree_kegiatan').jstree().deselect_all(true);
 	}); 
 

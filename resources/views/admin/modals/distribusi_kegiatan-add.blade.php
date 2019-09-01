@@ -15,7 +15,7 @@
 						<tr class="success">
 							<th>ADD</th>
 							<th>KEGIATAN</th>
-							<th>TARGET</th>
+							<!-- <th>TARGET</th> -->
 							<th>ANGGARAN</th>
 						</tr>
 					</thead>
@@ -59,8 +59,8 @@
 					paging          : true,
 					lengthMenu		: [10,20,50],
 					columnDefs		: [
-										{ 	className: "text-center", targets: [ 0,2 ] },
-										{ className: "text-right", targets: [ 3 ] }
+										{ 	className: "text-center", targets: [ 0 ] },
+										{ className: "text-right", targets: [ 2 ] }
 									],
 					ajax			: {
 										url	: '{{ url("api_resource/renja_kegiatan_list") }}',
@@ -73,12 +73,12 @@
 									{ data: "checkbox" ,  name:"checkbox", orderable: false, searchable: false, width:'40px'},
 								
 									{ data: "label" ,  name:"label", orderable: true, searchable: true},
-									{ data: "kegiatan_target" ,  name:"kegiatan_target", orderable: true, searchable: false,width:'140px'},
+									//{ data: "kegiatan_target" ,  name:"kegiatan_target", orderable: true, searchable: false,width:'140px'},
 									{ data: "kegiatan_anggaran" ,  name:"kegiatan_anggaran", orderable: true, searchable: false,width:'140px'},
 									
 									
 								]
-				
+				 
 			});
 
 
