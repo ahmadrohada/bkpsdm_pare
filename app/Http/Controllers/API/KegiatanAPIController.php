@@ -247,7 +247,7 @@ class KegiatanAPIController extends Controller {
        
         //Kegiatan nya KSUBID
         $skp_tahunan_id = $request->skp_tahunan_id;
-        $kegiatan = Kegiatan::SELECT('id','label')
+        /* $kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
@@ -260,8 +260,13 @@ class KegiatanAPIController extends Controller {
                                         'kegiatan_tahunan.label AS kegiatan_tahunan_label'
 
                                     ) 
+<<<<<<< HEAD
                             ->get(); 
         /* $renja_id       = $request->renja_id;
+=======
+                            ->get(); */
+        $renja_id       = $request->renja_id;
+>>>>>>> 787e68c216c78f8de485e3f9242468916bf6f503
         $jabatan_id     = $request->jabatan_id;
         $skp_tahunan_id = $request->skp_tahunan_id;
         
@@ -287,22 +292,28 @@ class KegiatanAPIController extends Controller {
                                         'kegiatan_tahunan.label AS kegiatan_tahunan_label'
 
                                     ) 
+<<<<<<< HEAD
                             ->get(); */
 
                           
+=======
+                            ->get();
+>>>>>>> 787e68c216c78f8de485e3f9242468916bf6f503
 
-		foreach ($kegiatan as $x) {
+                          
+
+		foreach ($ind_kegiatan as $x) {
             if ( $x->kegiatan_tahunan_id >= 1 ){
-                $kegiatan_id    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
-                $kegiatan_label = $x->kegiatan_tahunan_label;
+                $ind_kegiatan_id    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
+                $ind_kegiatan_label = $x->kegiatan_tahunan_label;
             }else{
-                $kegiatan_id    = "KegiatanRenja|".$x->kegiatan_id."|".$x->kegiatan_label;
-                $kegiatan_label = $x->kegiatan_label;
+                $ind_kegiatan_id    = "IndikatorKegiatanRenja|".$x->ind_kegiatan_id."|".$x->ind_kegiatan_label;
+                $ind_kegiatan_label = $x->ind_kegiatan_label;
             }
 
-            $data_kegiatan['id']	        = $kegiatan_id;
-            $data_kegiatan['text']			= Pustaka::capital_string($kegiatan_label);
-            $data_kegiatan['icon']	        = 'jstree-kegiatan';
+            $data_ind_kegiatan['id']	        = $ind_kegiatan_id;
+            $data_ind_kegiatan['text']			= Pustaka::capital_string($ind_kegiatan_label);
+            $data_ind_kegiatan['icon']	        = 'jstree-ind_kegiatan';
           
 
             //RENCANA AKSI
@@ -338,17 +349,17 @@ class KegiatanAPIController extends Controller {
 
 
             if(!empty($rencana_aksi_list)) {
-                $data_kegiatan['children']     = $rencana_aksi_list;
+                $data_ind_kegiatan['children']     = $rencana_aksi_list;
             }
-            $kegiatan_list[] = $data_kegiatan ;
+            $ind_kegiatan_list[] = $data_ind_kegiatan ;
             $rencana_aksi_list = "";
-            unset($data_kegiatan['children']);
+            unset($data_ind_kegiatan['children']);
 
         }	
 
 
-        if(!empty($kegiatan_list)) {
-            return  $kegiatan_list;
+        if(!empty($ind_kegiatan_list)) {
+            return  $ind_kegiatan_list;
         }else{
             return "[{}]";
         } 

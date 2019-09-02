@@ -12,6 +12,7 @@ use App\Models\KegiatanSKPTahunan;
 use App\Models\RencanaAksi;
 use App\Models\IndikatorProgram;
 use App\Models\Kegiatan;
+use App\Models\IndikatorKegiatan;
 use App\Models\Jabatan;
 use App\Models\SKPD;
 use App\Models\SKPTahunan;
@@ -203,9 +204,47 @@ class KegiatanSKPTahunanAPIController extends Controller {
     public function KegiatanTahunan3(Request $request)
     {
              
-       //KEGIATAN KASUBID
+        //KEGIATAN KASUBID
+        $renja_id       = $request->renja_id;
+        $jabatan_id     = $request->jabatan_id;
         $skp_tahunan_id = $request->skp_tahunan_id;
-        $kegiatan = Kegiatan::SELECT('id','label')
+
+        $kegiatan = IndikatorKegiatan::SELECT('id','label')
+                            //RIGHT ke Kegiatan
+                            ->join('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) use ( $renja_id,$jabatan_id ){
+                                $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
+                                $join   ->WHERE('renja_kegiatan.renja_id','=', $renja_id );
+                                $join   ->WHERE('renja_kegiatan.jabatan_id', '=' ,$jabatan_id );
+                            })
+                            
+                            //LEFT ke kegiatan tahunan
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
+                                $join   ->on('kegiatan_tahunan.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
+                                $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
+                            })
+                            ->SELECT(   'renja_indikator_kegiatan.id AS ind_kegiatan_id',
+                                        'renja_indikator_kegiatan.label AS ind_kegiatan_label',
+                                        'renja_indikator_kegiatan.target AS renja_target',
+                                        'renja_indikator_kegiatan.satuan AS renja_satuan',
+
+                                        'renja_kegiatan.cost AS renja_biaya',
+
+                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label',
+                                        'kegiatan_tahunan.id AS kegiatan_tahunan_id',
+                                        'kegiatan_tahunan.target',
+                                        'kegiatan_tahunan.satuan',
+                                        'kegiatan_tahunan.angka_kredit',
+                                        'kegiatan_tahunan.quality',
+                                        'kegiatan_tahunan.cost',
+                                        'kegiatan_tahunan.target_waktu'
+
+                                       
+
+                                        
+                                        
+                                    ) 
+                            ->get();
+        /* $kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
@@ -227,7 +266,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                                         'renja_kegiatan.satuan AS renja_satuan',
                                         'renja_kegiatan.cost AS renja_biaya'
                                     ) 
-                            ->get();
+                            ->get(); */
 
                  
                 
@@ -329,7 +368,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                                         'skp_tahunan_kegiatan.quality',
                                         'skp_tahunan_kegiatan.cost',
                                         'skp_tahunan_kegiatan.target_waktu',
-                                        'skp_tahunan_kegiatan.kegiatan_id'
+                                        'skp_tahunan_kegiatan.indikator_kegiatan_id'
 
                                     ) 
                             ->WHERE('skp_tahunan_kegiatan.id', $request->kegiatan_tahunan_id)
@@ -347,8 +386,8 @@ class KegiatanSKPTahunanAPIController extends Controller {
             'quality'       => $x->quality,
             'target_waktu'  => $x->target_waktu,
             'cost'	        => number_format($x->cost,'0',',','.'),
-            'pejabat'       => Pustaka::capital_string($x->Kegiatan->PenanggungJawab->jabatan)
-
+            'pejabat'       => Pustaka::capital_string($x->IndikatorKegiatan->Kegiatan->PenanggungJawab->jabatan),
+            //'pejabat'       => $x->IndikatorKegiatan->Kegiatan,
         );
         return $kegiatan_tahunan;
     }
@@ -360,7 +399,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
     {
 
         $messages = [
-                'kegiatan_id.required'           => 'Harus diisi',
+                'ind_kegiatan_id.required'       => 'Harus diisi',
                 'skp_tahunan_id.required'        => 'Harus diisi',
                 'label.required'                 => 'Harus diisi',
                 'target.required'                => 'Harus diisi',
@@ -373,13 +412,13 @@ class KegiatanSKPTahunanAPIController extends Controller {
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'kegiatan_id'   => 'required',
-                            'skp_tahunan_id'=> 'required',
-                            'label'         => 'required',
-                            'target'        => 'required|numeric',
-                            'satuan'        => 'required',
-                            'quality'       => 'required|numeric|min:1|max:100',
-                            'target_waktu'  => 'required|numeric|min:1|max:12',
+                            'ind_kegiatan_id'   => 'required',
+                            'skp_tahunan_id'    => 'required',
+                            'label'             => 'required',
+                            'target'            => 'required|numeric',
+                            'satuan'            => 'required',
+                            'quality'           => 'required|numeric|min:1|max:100',
+                            'target_waktu'      => 'required|numeric|min:1|max:12',
                         ),
                         $messages
         );
@@ -393,15 +432,15 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
         $st_kt    = new KegiatanSKPtahunan;
 
-        $st_kt->kegiatan_id       = Input::get('kegiatan_id');
-        $st_kt->skp_tahunan_id    = Input::get('skp_tahunan_id');
-        $st_kt->label             = Input::get('label');
-        $st_kt->target            = Input::get('target');
-        $st_kt->satuan            = Input::get('satuan');
-        $st_kt->angka_kredit      = Input::get('angka_kredit');
-        $st_kt->quality           = Input::get('quality');
-        $st_kt->cost              = preg_replace('/[^0-9]/', '', Input::get('cost'));
-        $st_kt->target_waktu      = Input::get('target_waktu');
+        $st_kt->indikator_kegiatan_id   = Input::get('ind_kegiatan_id');
+        $st_kt->skp_tahunan_id          = Input::get('skp_tahunan_id');
+        $st_kt->label                   = Input::get('label');
+        $st_kt->target                  = Input::get('target');
+        $st_kt->satuan                  = Input::get('satuan');
+        $st_kt->angka_kredit            = Input::get('angka_kredit');
+        $st_kt->quality                 = Input::get('quality');
+        $st_kt->cost                    = preg_replace('/[^0-9]/', '', Input::get('cost'));
+        $st_kt->target_waktu            = Input::get('target_waktu');
 
         if ( $st_kt->save()){
             return \Response::make('sukses', 200);
@@ -430,12 +469,12 @@ class KegiatanSKPTahunanAPIController extends Controller {
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'kegiatan_id'   => 'required',
-                            'label'         => 'required',
-                            'target'      => 'required|numeric',
-                            'satuan'        => 'required',
-                            'quality'       => 'required|numeric|min:1|max:100',
-                            'target_waktu'  => 'required|numeric|min:1|max:12',
+                            'kegiatan_tahunan_id'   => 'required',
+                            'label'                 => 'required',
+                            'target'                => 'required|numeric',
+                            'satuan'                => 'required',
+                            'quality'               => 'required|numeric|min:1|max:100',
+                            'target_waktu'          => 'required|numeric|min:1|max:12',
                         ),
                         $messages
         );
