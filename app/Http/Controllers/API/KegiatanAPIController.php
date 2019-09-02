@@ -247,7 +247,7 @@ class KegiatanAPIController extends Controller {
        
         //Kegiatan nya KSUBID
         $skp_tahunan_id = $request->skp_tahunan_id;
-        /* $kegiatan = Kegiatan::SELECT('id','label')
+        $kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
@@ -260,13 +260,8 @@ class KegiatanAPIController extends Controller {
                                         'kegiatan_tahunan.label AS kegiatan_tahunan_label'
 
                                     ) 
-<<<<<<< HEAD
                             ->get(); 
         /* $renja_id       = $request->renja_id;
-=======
-                            ->get(); */
-        $renja_id       = $request->renja_id;
->>>>>>> 787e68c216c78f8de485e3f9242468916bf6f503
         $jabatan_id     = $request->jabatan_id;
         $skp_tahunan_id = $request->skp_tahunan_id;
         
@@ -292,13 +287,9 @@ class KegiatanAPIController extends Controller {
                                         'kegiatan_tahunan.label AS kegiatan_tahunan_label'
 
                                     ) 
-<<<<<<< HEAD
                             ->get(); */
 
                           
-=======
-                            ->get();
->>>>>>> 787e68c216c78f8de485e3f9242468916bf6f503
 
                           
 
