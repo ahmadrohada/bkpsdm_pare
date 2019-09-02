@@ -293,18 +293,18 @@ class KegiatanAPIController extends Controller {
 
                           
 
-		foreach ($ind_kegiatan as $x) {
+		foreach ($kegiatan as $x) {
             if ( $x->kegiatan_tahunan_id >= 1 ){
-                $ind_kegiatan_id    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
-                $ind_kegiatan_label = $x->kegiatan_tahunan_label;
+                $kegiatan_id    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
+                $kegiatan_label = $x->kegiatan_tahunan_label;
             }else{
-                $ind_kegiatan_id    = "IndikatorKegiatanRenja|".$x->ind_kegiatan_id."|".$x->ind_kegiatan_label;
-                $ind_kegiatan_label = $x->ind_kegiatan_label;
+                $kegiatan_id    = "KegiatanRenja|".$x->kegiatan_id."|".$x->kegiatan_label;
+                $kegiatan_label = $x->kegiatan_label;
             }
 
-            $data_ind_kegiatan['id']	        = $ind_kegiatan_id;
-            $data_ind_kegiatan['text']			= Pustaka::capital_string($ind_kegiatan_label);
-            $data_ind_kegiatan['icon']	        = 'jstree-ind_kegiatan';
+            $data_kegiatan['id']	        = $kegiatan_id;
+            $data_kegiatan['text']			= Pustaka::capital_string($kegiatan_label);
+            $data_kegiatan['icon']	        = 'jstree-kegiatan';
           
 
             //RENCANA AKSI
@@ -340,17 +340,17 @@ class KegiatanAPIController extends Controller {
 
 
             if(!empty($rencana_aksi_list)) {
-                $data_ind_kegiatan['children']     = $rencana_aksi_list;
+                $data_kegiatan['children']     = $rencana_aksi_list;
             }
-            $ind_kegiatan_list[] = $data_ind_kegiatan ;
+            $kegiatan_list[] = $data_kegiatan ;
             $rencana_aksi_list = "";
-            unset($data_ind_kegiatan['children']);
+            unset($data_kegiatan['children']);
 
         }	
 
 
-        if(!empty($ind_kegiatan_list)) {
-            return  $ind_kegiatan_list;
+        if(!empty($kegiatan_list)) {
+            return  $kegiatan_list;
         }else{
             return "[{}]";
         } 

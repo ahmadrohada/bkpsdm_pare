@@ -204,11 +204,8 @@ class KegiatanSKPTahunanAPIController extends Controller {
     public function KegiatanTahunan3(Request $request)
     {
              
-        //KEGIATAN KASUBID
-        $renja_id       = $request->renja_id;
-        $jabatan_id     = $request->jabatan_id;
-        $skp_tahunan_id = $request->skp_tahunan_id;
-
+       
+        /* 
         $kegiatan = IndikatorKegiatan::SELECT('id','label')
                             //RIGHT ke Kegiatan
                             ->join('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) use ( $renja_id,$jabatan_id ){
@@ -243,8 +240,13 @@ class KegiatanSKPTahunanAPIController extends Controller {
                                         
                                         
                                     ) 
-                            ->get();
-        /* $kegiatan = Kegiatan::SELECT('id','label')
+                            ->get(); */
+        //KEGIATAN KASUBID
+        $renja_id       = $request->renja_id;
+        $jabatan_id     = $request->jabatan_id;
+        $skp_tahunan_id = $request->skp_tahunan_id;
+
+        $kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
@@ -266,7 +268,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                                         'renja_kegiatan.satuan AS renja_satuan',
                                         'renja_kegiatan.cost AS renja_biaya'
                                     ) 
-                            ->get(); */
+                            ->get();
 
                  
                 
