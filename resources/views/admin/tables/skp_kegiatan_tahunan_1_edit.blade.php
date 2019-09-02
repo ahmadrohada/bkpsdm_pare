@@ -288,7 +288,7 @@
 									{ data: "label", name:"label", width:"220px",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_tahunan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.ind_kegiatan_label+"</p>";
+												return "<p class='text-danger'>"+row.kegiatan_label+"</p>";
 											}else{
 												return row.kegiatan_tahunan_label;
 											}
@@ -340,10 +340,10 @@
 
 
 	
-	function detail_kegiatan_renja(ind_kegiatan_id){
+	function detail_kegiatan_renja(kegiatan_id){
         $.ajax({
                 url			: '{{ url("api_resource/kegiatan_renja_detail") }}',
-                data 		: {ind_kegiatan_id : ind_kegiatan_id},
+                data 		: {kegiatan_id : kegiatan_id},
                 method		: "GET",
                 dataType	: "json",
                 success	: function(data) {

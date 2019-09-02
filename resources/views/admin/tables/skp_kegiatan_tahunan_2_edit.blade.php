@@ -251,7 +251,7 @@
 									{ data: "label", name:"label", width:"220px",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_tahunan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.ind_kegiatan_label+"</p>";
+												return "<p class='text-danger'>"+row.kegiatan_label+"</p>";
 											}else{
 												return row.kegiatan_tahunan_label;
 											}
@@ -301,7 +301,7 @@
 												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
 											}else{
-												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_kegiatan_tahunan"  data-id="'+row.ind_kegiatan_id+'" data-label="'+row.ind_kegiatan_label+'"><i class="fa fa-plus" ></i></a></span>'+
+												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_kegiatan_tahunan"  data-id="'+row.kegiatan_id+'" data-label="'+row.kegiatan_label+'"><i class="fa fa-plus" ></i></a></span>'+
 														'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
 											
 											}
@@ -319,19 +319,19 @@
 
 	$(document).on('click','.create_kegiatan_tahunan',function(e){
 	
-    var ind_kegiatan_id = $(this).data('id');
-		show_modal_create(ind_kegiatan_id);
+    var kegiatan_id = $(this).data('id');
+		show_modal_create(kegiatan_id);
 
 	});
 
-	function show_modal_create(ind_kegiatan_id){
+	function show_modal_create(kegiatan_id){
 		$.ajax({
-				url			: '{{ url("api_resource/ind_kegiatan_detail") }}',
-				data 		: {ind_kegiatan_id : ind_kegiatan_id},
+				url			: '{{ url("api_resource/kegiatan_detail") }}',
+				data 		: {kegiatan_id : kegiatan_id},
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
-					$('.modal-kegiatan_tahunan').find('[name=ind_kegiatan_id]').val(data['ind_kegiatan_id']);
+					$('.modal-kegiatan_tahunan').find('[name=kegiatan_id]').val(data['kegiatan_id']);
 					$('.modal-kegiatan_tahunan').find('[name=label]').val(data['label']);
 					$('.modal-kegiatan_tahunan').find('[name=target]').val(data['target']);
 					$('.modal-kegiatan_tahunan').find('[name=satuan]').val(data['satuan']);
