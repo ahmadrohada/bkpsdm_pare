@@ -33,14 +33,14 @@
 							<th rowspan="2">No</th>
 							<th rowspan="2">KEGIATAN TAHUNAN</th>
 							<th rowspan="2">AK</th>
-							<th colspan="4">TARGET</th>
+							<th colspan="3">TARGET</th>
 							<th rowspan="2"><i class="fa fa-cog"></i></th>
 						</tr>
 						<tr>
-							<th>OUTPUT</th>
+							<!-- <th>OUTPUT</th> -->
 							<th>MUTU</th>
 							<th>WAKTU</th>
-							<th>BIAYA</th>
+							<th>ANGGARAN</th>
 						</tr>
 					</thead>
 							
@@ -90,17 +90,27 @@
 				</div>
 				<div class="box-body table-responsive">
 
-					<strong>Nama Kegiatan Tahunan</strong>
-					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
+					<strong>Kegiatan Tahunan</strong>
+					<p class="text-muted " style="margin-top:8px;padding-bottom:8px;">
 						<span class="kegiatan_tahunan_label"></span>
 						<input type="hidden" class="kegiatan_tahunan_id">
 					</p>
-
-					<i class="fa  fa-gg"></i> <span class="txt_ak" style="margin-right:10px;"></span>
-					<i class="fa fa-industry"></i> <span class="txt_output" style="margin-right:10px;"></span>
-					<i class="fa fa-hourglass-start"></i> <span class="txt_waktu" style="margin-right:10px;"></span>
-					<i class="fa fa-money"></i> <span class="txt_cost" style="margin-right:10px;"></span>
+					<strong>Anggaran Kegiatan</strong>
+					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
+						<span class="txt_cost"></span>
+					</p>
 					
+					<table class="table table-hover table-condensed">
+						<tr class="success">
+							<th>No</th>
+							<th>Indikator</th>
+							<th>Target</th>
+						</tr>
+					</table>
+					<table class="table table-hover table-condensed" id="list_indikator">
+					
+					</table>
+			  
 				</div>
 			</div>
 
@@ -210,7 +220,7 @@
                   	load_rencana_aksi( tx[1]);
                        
 				break; 
-				case 'IndikatorKegiatanRenja':
+				case 'KegiatanRenja':
 					show_modal_create(tx[1]);
 				break;
 				case 'RencanaAksi':
@@ -244,9 +254,9 @@
 				searching      	: false,
 				paging          : false,
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3,4,5,7 ] },
-									{ className: "text-right", targets: [ 6 ] },
-									{ "orderable": false, targets: [ 0,1,2,3,4,5,6,7 ]  }
+									{ className: "text-center", targets: [ 0,2,3,4,6 ] },
+									{ className: "text-right", targets: [ 5 ] },
+									{ "orderable": false, targets: [ 0,1,2,3,4,5,6 ]  }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/kegiatan_tahunan_3") }}',
@@ -278,21 +288,12 @@
 										}
 									},
 									{ data: "angka_kredit", name:"angka_kredit" },
-									{ data: "output", name:"output",
-										"render": function ( data, type, row ) {
-											if ( (row.kegiatan_tahunan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.renja_output+"</p>";									
-											}else{
-												return row.output;									
-											}
-										}
-									},
 									{ data: "mutu", name:"mutu",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_tahunan_id) <= 0 ){
 												return "<p class='text-danger'>-</p>";									
 											}else{
-												return row.mutu;									
+												return row.mutu+" %";									
 											}
 										}
 									},
@@ -301,16 +302,17 @@
 											if ( (row.kegiatan_tahunan_id) <= 0 ){
 												return "<p class='text-danger'>-</p>";									
 											}else{
-												return row.waktu;									
+												return row.waktu+" bln";									
 											}
 										}
 									},
 									{ data: "biaya", name:"biaya",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_tahunan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.renja_biaya+"</p>";									
+												return "<p class='text-danger'>Rp. "+row.renja_biaya+"</p>";									
 											}else{
-												return row.biaya;									
+												
+												return "Rp. "+row.biaya;									
 											}
 										}
 									},
@@ -359,6 +361,11 @@
 
 					$('.modal-kegiatan_tahunan').find('[name=quality]').val(100);
 
+					document.getElementById('list_indikator_modal').innerHTML = "";
+					var bawahan = document.getElementById('list_indikator_modal');
+					for(var i = 0 ; i < data['list_indikator'].length; i++ ){
+						$("<tr><td>"+ (i+1) +"</td><td>"+data['list_indikator'][i].label+"</td><td>"+data['list_indikator'][i].target+" "+data['list_indikator'][i].satuan+"</td></tr>").appendTo(bawahan);
+					}
 
 					$('.modal-kegiatan_tahunan').find('h4').html('Create Kegiatan Tahunan');
 					$('.modal-kegiatan_tahunan').find('.btn-submit').attr('id', 'submit-save');
@@ -602,7 +609,7 @@
 	
 	function load_rencana_aksi(kegiatan_tahunan_id){
 
-
+		
 
 		$.ajax({
 				url			: '{{ url("api_resource/kegiatan_tahunan_detail") }}',
@@ -616,6 +623,13 @@
 						$('.txt_output').html(data['output']);
 						$('.txt_waktu').html(data['target_waktu'] +' bln');
 						$('.txt_cost').html('Rp. ' +data['cost']);
+
+						document.getElementById('list_indikator').innerHTML = "";
+						var bawahan = document.getElementById('list_indikator');
+						for(var i = 0 ; i < data['list_indikator'].length; i++ ){
+							 
+							$("<tr><td>"+ (i+1) +"</td><td>"+data['list_indikator'][i].label+"</td><td>"+data['list_indikator'][i].target+" "+data['list_indikator'][i].satuan+"</td></tr>").appendTo(bawahan);
+						}
 						
 				},
 				error: function(data){

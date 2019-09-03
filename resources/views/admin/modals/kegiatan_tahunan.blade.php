@@ -19,10 +19,23 @@
 					<div class="row">
 						<div class="col-md-12 form-group label_kegiatan ">
 							<label class="control-label">Kegiatan :</label>
-							<textarea name="label" rows="3" required class="form-control txt-label" id="label" style="resize:none;"></textarea>
+							<textarea name="label" rows="2" required class="form-control txt-label" id="label" style="resize:none;"></textarea>
 						</div>
 					</div>
-					<br>
+
+					<table class="table table-hover table-condensed">
+						<tr class="success">
+							<th>No</th>
+							<th>Indikator</th>
+							<th>Target</th>
+						</tr>
+					</table>
+					<table class="table table-hover table-condensed" id="list_indikator_modal" style="margin-top:-20px;">
+					
+					</table>
+
+
+					<hr>
 					<div class="row">
 						<div class="col-md-4 form-group ak_field">
 						<label class="control-label">Angka Kredit :</label>
@@ -56,10 +69,10 @@
 						</div>
 						</div>
 						<div class="col-md-4 form-group cost">
-						<label class="control-label">Biaya Kegiatan :</label>
+						<label class="control-label">Anggaran Kegiatan :</label>
 						<div class="input-group input-group-sm">
 						<span class="input-group-addon">Rp.</span>
-						<input type="text" name="cost" id="cost" required class="form-control" placeholder="biaya kegiatan" maxlength="14" onkeypress='return angka(event)'>
+						<input type="text" name="cost" id="cost" required class="form-control" placeholder="Anggaran kegiatan" maxlength="14" onkeypress='return angka(event)'>
 						</div>
 						</div>
 					</div>

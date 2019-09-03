@@ -9,11 +9,11 @@ class KegiatanSKPTahunan extends Model
     protected $table = 'skp_tahunan_kegiatan';
 
 
-    public function IndikatorKegiatan()
+    public function Kegiatan()
     {
-        return $this->belongsTo('App\Models\IndikatorKegiatan','indikator_kegiatan_id');
+        return $this->belongsTo('App\Models\Kegiatan','kegiatan_id');
     } 
 
-  
+    
 
 }
