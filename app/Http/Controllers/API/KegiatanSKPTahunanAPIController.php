@@ -370,12 +370,17 @@ class KegiatanSKPTahunanAPIController extends Controller {
                                         'skp_tahunan_kegiatan.quality',
                                         'skp_tahunan_kegiatan.cost',
                                         'skp_tahunan_kegiatan.target_waktu',
-                                        'skp_tahunan_kegiatan.indikator_kegiatan_id'
+                                        'skp_tahunan_kegiatan.kegiatan_id'
 
                                     ) 
                             ->WHERE('skp_tahunan_kegiatan.id', $request->kegiatan_tahunan_id)
                             ->first();
-
+        //list indikator
+        $list = IndikatorKegiatan::SELECT('id','label','target','satuan')
+                                    ->WHERE('kegiatan_id','=',$x->kegiatan_id)
+                                    ->get()
+                                    ->toArray();
+        
 		
 		//return  $kegiatan_tahunan;
         $kegiatan_tahunan = array(
@@ -388,8 +393,8 @@ class KegiatanSKPTahunanAPIController extends Controller {
             'quality'       => $x->quality,
             'target_waktu'  => $x->target_waktu,
             'cost'	        => number_format($x->cost,'0',',','.'),
-            'pejabat'       => Pustaka::capital_string($x->IndikatorKegiatan->Kegiatan->PenanggungJawab->jabatan),
-            //'pejabat'       => $x->IndikatorKegiatan->Kegiatan,
+            'pejabat'       => Pustaka::capital_string($x->Kegiatan->PenanggungJawab->jabatan),
+            'list_indikator'=> $list,
         );
         return $kegiatan_tahunan;
     }
@@ -401,7 +406,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
     {
 
         $messages = [
-                'ind_kegiatan_id.required'       => 'Harus diisi',
+                'kegiatan_id.required'           => 'Harus diisi',
                 'skp_tahunan_id.required'        => 'Harus diisi',
                 'label.required'                 => 'Harus diisi',
                 'target.required'                => 'Harus diisi',
@@ -414,7 +419,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'ind_kegiatan_id'   => 'required',
+                            'kegiatan_id'       => 'required',
                             'skp_tahunan_id'    => 'required',
                             'label'             => 'required',
                             'target'            => 'required|numeric',
@@ -434,7 +439,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
         $st_kt    = new KegiatanSKPtahunan;
 
-        $st_kt->indikator_kegiatan_id   = Input::get('ind_kegiatan_id');
+        $st_kt->kegiatan_id             = Input::get('kegiatan_id');
         $st_kt->skp_tahunan_id          = Input::get('skp_tahunan_id');
         $st_kt->label                   = Input::get('label');
         $st_kt->target                  = Input::get('target');

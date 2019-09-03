@@ -439,7 +439,10 @@ class KegiatanAPIController extends Controller {
 
                                     ) 
                             ->first();
-
+        $list = IndikatorKegiatan::SELECT('id','label','target','satuan')
+                            ->WHERE('kegiatan_id','=', $request->get('kegiatan_id') )
+                            ->get()
+                            ->toArray();
 
 		
         $kegiatan = array(
@@ -453,7 +456,7 @@ class KegiatanAPIController extends Controller {
                 'target_waktu'  => '-',
                 'cost'	        => number_format($x->cost,'0',',','.'),
                 'pejabat'       => Pustaka::capital_string($x->jabatan_id != '0' ? $x->PenanggungJawab->jabatan : '0'),
-                    
+                'list_indikator'=> $list,   
             );
         return $kegiatan;
         
