@@ -22,21 +22,7 @@
 							<textarea name="label" rows="2" required class="form-control txt-label" id="label" style="resize:none;"></textarea>
 						</div>
 					</div>
-
-					<table class="table table-hover table-condensed">
-						<tr class="success">
-							<th>No</th>
-							<th>Indikator</th>
-							<th>Target</th>
-						</tr>
-					</table>
-					<table class="table table-hover table-condensed" id="list_indikator_modal" style="margin-top:-20px;">
-					
-					</table>
-
-
-					<hr>
-					<div class="row">
+					<div class="row" hidden>
 						<div class="col-md-4 form-group ak_field">
 						<label class="control-label">Angka Kredit :</label>
 						<input type="text" name="angka_kredit" id="angka_kredit" required class="form-control input-sm" placeholder="AK" maxlength="5" onkeypress='return angka(event)'>
@@ -52,7 +38,6 @@
 						<input type="text" name="satuan" autocomplete="off" id="satuan" required class="form-control satuan input-sm" placeholder="satuan">
 						</div>
 					</div>
-					<br>
 					<div class="row">
 						<div class="col-md-4 form-group quality">
 						<label class="control-label">Kualitas/Mutu :</label>
@@ -76,6 +61,21 @@
 						</div>
 						</div>
 					</div>
+
+
+					<table class="table table-hover table-condensed">
+						<tr class="success">
+							<th>No</th>
+							<th>Indikator</th>
+							<th>Output</th>
+						</tr>
+					</table>
+					<table class="table table-hover table-condensed" id="list_indikator_modal" style="margin-top:-20px;">
+					
+					</table>
+
+
+					
 
 
 

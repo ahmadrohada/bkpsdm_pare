@@ -295,16 +295,18 @@ class KegiatanAPIController extends Controller {
 
 		foreach ($kegiatan as $x) {
             if ( $x->kegiatan_tahunan_id >= 1 ){
-                $kegiatan_id    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
-                $kegiatan_label = $x->kegiatan_tahunan_label;
+                $kegiatan_id                    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
+                $kegiatan_label                 = $x->kegiatan_tahunan_label;
+                $data_kegiatan['icon']	        = 'jstree-kegiatan_tahunan';
             }else{
-                $kegiatan_id    = "KegiatanRenja|".$x->kegiatan_id."|".$x->kegiatan_label;
-                $kegiatan_label = $x->kegiatan_label;
+                $kegiatan_id                    = "KegiatanRenja|".$x->kegiatan_id."|".$x->kegiatan_label;
+                $kegiatan_label                 = $x->kegiatan_label;
+                $data_kegiatan['icon']	        = 'jstree-kegiatan';
             }
 
-            $data_kegiatan['id']	        = $kegiatan_id;
-            $data_kegiatan['text']			= Pustaka::capital_string($kegiatan_label);
-            $data_kegiatan['icon']	        = 'jstree-kegiatan';
+            $data_kegiatan['id']	            = $kegiatan_id;
+            $data_kegiatan['text']			    = Pustaka::capital_string($kegiatan_label);
+            
           
 
             //RENCANA AKSI

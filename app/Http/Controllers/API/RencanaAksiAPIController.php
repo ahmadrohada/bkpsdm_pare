@@ -429,7 +429,7 @@ class RencanaAksiAPIController extends Controller {
 
 
 
-            'waktu_pelaksanaan'             => $x->waktu_pelaksanaan,
+            'waktu_pelaksanaan'             => Pustaka::bulan($x->waktu_pelaksanaan),
             'jabatan_id'                    => $x->pelaksana_id,
             'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan),
             'nama_jabatan'                  => $pelaksana,
