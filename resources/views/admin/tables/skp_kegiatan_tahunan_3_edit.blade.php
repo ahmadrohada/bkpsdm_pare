@@ -68,10 +68,8 @@
 						<input type="hidden" class="kegiatan_tahunan_id">
 					</p>
 
-					<i class="fa  fa-gg"></i> <span class="txt_ak" style="margin-right:10px;"></span>
 					<i class="fa fa-industry"></i> <span class="txt_output" style="margin-right:10px;"></span>
 					<i class="fa fa-hourglass-start"></i> <span class="txt_waktu" style="margin-right:10px;"></span>
-					<i class="fa fa-money"></i> <span class="txt_cost" style="margin-right:10px;"></span>
 					
 				</div>
 			</div>
@@ -95,10 +93,16 @@
 						<span class="kegiatan_tahunan_label"></span>
 						<input type="hidden" class="kegiatan_tahunan_id">
 					</p>
-					<strong>Anggaran Kegiatan</strong>
-					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-						<span class="txt_cost"></span>
-					</p>
+
+					<p><strong>Target</strong></p>
+					<i class="fa  fa-gg"></i> <span class="txt_ak" style="margin-right:10px;"></span>
+					<i class="fa fa-industry"></i> <span class="txt_output" style="margin-right:10px;"></span>
+					<i class="fa fa-hourglass-start"></i> <span class="txt_waktu_pelaksanaan" style="margin-right:10px;"></span>
+					<i class="fa fa-money"></i> <span class="txt_cost" style="margin-right:10px;"></span>
+
+					<hr>
+					
+					
 					
 					<table class="table table-hover table-condensed">
 						<tr class="success">
@@ -224,7 +228,10 @@
 					show_modal_create(tx[1]);
 				break;
 				case 'RencanaAksi':
-									
+					$("#kegiatan_tahunan").hide();
+					$("#rencana_aksi").hide();
+					$("#rencana_aksi_detail").show();
+					load_rencana_aksi_detail( tx[1]);	
 				break;
 				case 'KegiatanBulanan':
 
@@ -311,7 +318,7 @@
 											if ( (row.kegiatan_tahunan_id) <= 0 ){
 												return "<p class='text-danger'>Rp. "+row.renja_biaya+"</p>";									
 											}else{
-												
+
 												return "Rp. "+row.biaya;									
 											}
 										}
@@ -592,10 +599,8 @@
 				success	: function(data) {
 						$('.kegiatan_tahunan_id').val(data['id']);
 						$('.kegiatan_tahunan_label').html(data['label']);
-						$('.txt_ak').html(data['ak']);
-						$('.txt_output').html(data['output']);
-						$('.txt_waktu').html(data['target_waktu'] +' bln');
-						$('.txt_cost').html('Rp. ' +data['cost']);
+						$('.txt_output').html(data['target_rencana_aksi']+" "+data['satuan_target_rencana_aksi']);
+						$('.txt_waktu').html(data['waktu_pelaksanaan']);
 						
 				},
 				error: function(data){
@@ -621,8 +626,9 @@
 						$('.kegiatan_tahunan_label').html(data['label']);
 						$('.txt_ak').html(data['ak']);
 						$('.txt_output').html(data['output']);
-						$('.txt_waktu').html(data['target_waktu'] +' bln');
+						$('.txt_waktu_pelaksanaan').html(data['target_waktu'] +' bulan');
 						$('.txt_cost').html('Rp. ' +data['cost']);
+						$('.txt_kualitas').html(data['quality']+" %");
 
 						document.getElementById('list_indikator').innerHTML = "";
 						var bawahan = document.getElementById('list_indikator');
