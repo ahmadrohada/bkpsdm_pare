@@ -18,6 +18,8 @@
 						<b>Persetujuan Kepala SKPD</b> <a class="pull-right st_persetujuan_kaban">-</a>
 					</li>
 				</ul>
+
+			
 				<div class="batalkan_renja" hidden>
 					<button class="btn btn-warning btn-block batalkan_renja ">Batalkan Permintaan Persetujuan</button>
 				</div>
@@ -87,11 +89,13 @@
 				dataType	: "json",
 				success	: function(data) {
 					//alert(data);
-					if (data['data_persetujuan_kaban'] == 'ok' ){
+					if ( (data['data_persetujuan_kaban'] == 'ok' ) | (data['administrator'] == true) ){
 						$('.batalkan_renja').hide();
 					}else{
 						$('.batalkan_renja').show();
 					}
+
+
 
 					$('.st_created_at').html(data['created']);
 					$('.st_kepala_skpd').html(data['data_kepala_skpd']);

@@ -125,7 +125,7 @@ class HomeAdminController extends Controller {
 
         $total_users_new        = 78;
 
-        $userRole               = $user->hasRole('user');
+        $userRole               = $user->hasRole('personal');
         $admin_skpdRole         = $user->hasRole('admin_skpd');
         $adminRole              = $user->hasRole('administrator');
 
@@ -179,7 +179,7 @@ class HomeAdminController extends Controller {
         $total_users_new        = 0;
 
 
-        $userRole               = $user->hasRole('user');
+        $userRole               = $user->hasRole('personal');
         $admin_skpdRole         = $user->hasRole('admin_skpd');
         $adminRole              = $user->hasRole('administrator');
 
@@ -234,7 +234,7 @@ class HomeAdminController extends Controller {
         $total_users_new        = 78;
 
 
-        $userRole               = $user->hasRole('user');
+        $userRole               = $user->hasRole('personal');
         $admin_skpdRole         = $user->hasRole('admin_skpd');
         $adminRole              = $user->hasRole('administrator');
 
@@ -286,7 +286,7 @@ class HomeAdminController extends Controller {
         $total_users_new        = 78;
 
 
-        $userRole               = $user->hasRole('user');
+        $userRole               = $user->hasRole('personal');
         $admin_skpdRole         = $user->hasRole('admin_skpd');
         $adminRole              = $user->hasRole('administrator');
 
@@ -340,7 +340,7 @@ class HomeAdminController extends Controller {
         $total_users_new        = 78;
 
 
-        $userRole               = $user->hasRole('user');
+        $userRole               = $user->hasRole('personal');
         $admin_skpdRole         = $user->hasRole('admin_skpd');
         $adminRole              = $user->hasRole('administrator');
 

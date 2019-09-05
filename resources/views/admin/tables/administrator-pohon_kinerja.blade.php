@@ -83,7 +83,7 @@
 	$(document).on('click','.lihat_renja',function(e){
 		var renja_id = $(this).data('id') ;
 		
-		window.location.assign("renja/"+renja_id);
+		window.location.assign("pohon_kinerja/"+renja_id);
 	});
 
 });
