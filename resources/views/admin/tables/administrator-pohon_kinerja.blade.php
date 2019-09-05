@@ -1,7 +1,7 @@
 <div class="box {{ $h_box }}">
     <div class="box-header with-border">
         <h1 class="box-title">
-            Pohon Kinerja SKPD
+            Pohon Kinerja SKPD 
         </h1>
 
         <div class="box-tools pull-right">
