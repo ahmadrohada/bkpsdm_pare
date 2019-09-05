@@ -228,6 +228,8 @@ class RenjaAPIController extends Controller {
             $data_persetujuan_kaban = '-';
         }
 
+        //user role
+        $administrator = \Auth::user()->hasRole('administrator');
       
 
 
@@ -235,7 +237,8 @@ class RenjaAPIController extends Controller {
                 'created'                 => $created,
                 'data_kepala_skpd'        => $data_kepala_skpd,
                 'data_persetujuan_kaban'  => $data_persetujuan_kaban,
-                'button_kirim'            => $button_kirim
+                'button_kirim'            => $button_kirim,
+                'administrator'           => $administrator
 
 
         );

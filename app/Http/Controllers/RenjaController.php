@@ -56,6 +56,14 @@ class RenjaController extends Controller {
         return $nama_skpd->skpd;
     }
 
+    public function AdministratorRenjaDetail(Request $request)
+	{
+        $renja	= Renja::where('id', '=', $request->renja_id)->first();
+
+        return view('admin.pages.administrator-renja_detail', ['renja'=> $renja]);  
+       
+    }
+
 
     public function SKPDRenjaDetail(Request $request)
 	{
