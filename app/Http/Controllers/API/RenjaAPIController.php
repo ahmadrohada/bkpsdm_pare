@@ -270,7 +270,7 @@ class RenjaAPIController extends Controller {
         })->addColumn('renja_id', function ($x) {
             return $x->renja_id;
         })->addColumn('nama_skpd', function ($x) {
-           return Pustaka::capital_string($x->SKPD;
+           return $x->SKPD;
         })->addColumn('ka_skpd', function ($x) {
             if ( $x->KepalaSKPD != null ){
                 $pegawai =  $x->KepalaSKPD->pegawai;
