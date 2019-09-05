@@ -273,14 +273,13 @@ class RenjaAPIController extends Controller {
            //return Pustaka::capital_string($x->SKPD->skpd);
            return "";
         })->addColumn('ka_skpd', function ($x) {
-            return "";
-           /*  if ( $x->KepalaSKPD != null ){
+            if ( $x->KepalaSKPD != null ){
                 $pegawai =  $x->KepalaSKPD->pegawai;
                 //return $pegawai;
                 return Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
             }else{
                 return "-";
-            } */
+            } 
 
         });
 
