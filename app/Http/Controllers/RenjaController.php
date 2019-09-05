@@ -60,7 +60,7 @@ class RenjaController extends Controller {
 	{
         $renja	= Renja::where('id', '=', $request->renja_id)->first();
 
-        return view('admin.pages.administrator-renja_detail', ['renja'=> $renja]);  
+        return view('admin.pages.administrator-pohon_kinerja_detail', ['renja'=> $renja]);  
        
     }
 

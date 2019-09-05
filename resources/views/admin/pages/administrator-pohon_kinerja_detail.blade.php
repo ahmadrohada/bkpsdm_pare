@@ -10,7 +10,7 @@
 	    <section class="content-header">
 
 			<h1>
-				Pohon Kinerja
+				Pohon Kinerja {{ Pustaka::capital_string($renja->SKPD->skpd) }}
 			</h1>
 
 				{!! Breadcrumbs::render('skpd-renja') !!}
