@@ -76,7 +76,6 @@
 		});
 	
 	
-	});
 
 	
 	$(document).on('click','.lihat_renja',function(e){
@@ -85,5 +84,6 @@
 		window.location.assign("renja/"+renja_id);
 	});
 
+});
 
 </script>
