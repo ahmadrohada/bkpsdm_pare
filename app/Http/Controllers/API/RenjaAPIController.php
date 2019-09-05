@@ -271,6 +271,11 @@ class RenjaAPIController extends Controller {
             return $x->renja_id;
         })->addColumn('nama_skpd', function ($x) {
            return Pustaka::capital_string($x->SKPD->skpd);
+        })->addColumn('jm_tujuan', function ($x) {
+            $jm = Tujuan::WHERE('renja_id','=',$x->renja_id)->count();
+
+
+            return $jm;
         })->addColumn('ka_skpd', function ($x) {
             if ( $x->KepalaSKPD != null ){
                 $pegawai =  $x->KepalaSKPD->pegawai;
