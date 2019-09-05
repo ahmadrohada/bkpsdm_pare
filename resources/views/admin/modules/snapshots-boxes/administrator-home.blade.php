@@ -71,6 +71,23 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-md-3 col-xs-6">
+				<div class="small-box bg-yellow pohon_kinerja_skpd" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							<strong>Pohon Kinerja SKPD</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa fa-tasks"></i>
+					</div>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 </div>
@@ -93,6 +110,10 @@ $(document).ready(function(){
 
 	$(".masa_pemerintahan").click(function(){
 		window.location.assign("masa_pemerintahan");
+	});
+
+	$(".pohon_kinerja_skpd").click(function(){
+		window.location.assign("pohon_kinerja");
     });
 
 
