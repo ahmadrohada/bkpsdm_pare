@@ -18,6 +18,7 @@
 					<th>PERIODE</th>
 					<th>NAMA SKPD</th>
 					<th>KA SKPD</th>
+					<th>JM TUJUAN</th>
 
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
@@ -44,7 +45,7 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,4 ] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,4,5 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
@@ -65,6 +66,7 @@
 								{ data: "periode" ,  name:"periode", orderable: true, searchable: false},
 								{ data: "nama_skpd" ,  name:"nama_skpd", orderable: true, searchable: false},
 								{ data: "ka_skpd" ,  name:"ka_skpd", orderable: true, searchable: false},
+								{ data: "jm_tujuan" ,  name:"jm_tujuan", orderable: true, searchable: false},
 								{ data: "status" , orderable: false,searchable:false,
 									"render": function ( data, type, row ) {
 										return  '<span  data-toggle="tooltip" title="Lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_renja"  data-id="'+row.renja_id+'" ><i class="fa fa-eye" ></i></a></span>'
