@@ -1,10 +1,10 @@
-<?php
+tes<?php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Skpd extends Model
+class SKPD extends Model
 {
 
     protected $connection = 'mysql2';
