@@ -55,7 +55,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 
 	//========================================================================================================//
-	//==============================     POHON KINERJA PERANGKAT  DAERAH      =============================//
+	//==============================      RENCANA  KERJA  PERANGKAT  DAERAH      =============================//
 	//========================================================================================================//
 	
 
@@ -707,7 +707,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 // ADMINISTRATOR ACCESS LEVEL PAGE ROUTES - RUNNING THROUGH ADMINISTRATOR MIDDLEWARE
-Route::group(['prefix' => 'admin','middleware' => 'administrator'], function () {
+Route::group(['middleware' => 'administrator'], function () {
 
 
 
@@ -715,27 +715,27 @@ Route::group(['prefix' => 'admin','middleware' => 'administrator'], function () 
 	//============================================================================================//
 	//============================ ADMIN HOME / ADMIN SNAPSHOTS ====================================//
 	//============================================================================================//
-	Route::get('pegawai', [
+	Route::get('admin/pegawai', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeAdminController@showPegawai'
 	]);
 
-	Route::get('users', [
+	Route::get('admin/users', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeAdminController@showUser'
 	]);
 
-	Route::get('skpd', [
+	Route::get('admin/skpd', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeAdminController@showSKPD'
 	]);
 
-	Route::get('masa_pemerintahan', [
+	Route::get('admin/masa_pemerintahan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeAdminController@showMasaPemerintahan'
 	]);
 
-	Route::get('pohon_kinerja', [
+	Route::get('admin/pohon_kinerja', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeAdminController@showPohonKinerja'
 	]);
@@ -744,7 +744,7 @@ Route::group(['prefix' => 'admin','middleware' => 'administrator'], function () 
 	//----------------------------------------------------------------------------------------//
 	//============================ MASA PEMERINTAHAN ======== ================================//
 	//----------------------------------------------------------------------------------------//
-	Route::get('masa_pemerintahan/{masa_pemerintahan_id}',[
+	Route::get('admin/masa_pemerintahan/{masa_pemerintahan_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'MasaPemerintahanController@showMasaPemerintahan'
 	]);
@@ -753,13 +753,13 @@ Route::group(['prefix' => 'admin','middleware' => 'administrator'], function () 
 	//====================================  PEGAWAI  =============================================//
 	//============================================================================================//
 	
-	Route::get('pegawai/{pegawai_id}', [
+	Route::get('admin/pegawai/{pegawai_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@detailPegawai'
 	]);
 
 
-	Route::get('pegawai/{pegawai_id}/add', [
+	Route::get('admin/pegawai/{pegawai_id}/add', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@addPegawai'
 	]);
@@ -769,7 +769,7 @@ Route::group(['prefix' => 'admin','middleware' => 'administrator'], function () 
 	//============================================================================================//
 	
 
-	Route::get('users/{user_id}', [
+	Route::get('admin/users/{user_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'UserController@detailUser'
 	]);
@@ -779,52 +779,52 @@ Route::group(['prefix' => 'admin','middleware' => 'administrator'], function () 
 	//============================================================================================//
 	
 
-	Route::get('skpd/{skpd_id}', [
+	Route::get('admin/skpd/{skpd_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'HomeAdminController@AdministratorSKPDPegawai'
 	]);
 
-	Route::get('skpd/{skpd_id}/pegawai', [
+	Route::get('admin/skpd/{skpd_id}/pegawai', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'HomeAdminController@AdministratorSKPDPegawai'
 	]); 
 
-	Route::get('skpd/pegawai/{pegawai_id}', [
+	Route::get('admin/skpd/pegawai/{pegawai_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@detailPegawai'
 	]); 
 
-	Route::get('skpd/pegawai/{pegawai_id}/add', [
+	Route::get('admin/skpd/pegawai/{pegawai_id}/add', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@addPegawai'
 	]); 
 
 
 	//============================================================================================//
-	Route::get('skpd/{skpd_id}/struktur-organisasi', [
+	Route::get('admin/skpd/{skpd_id}/struktur-organisasi', [
 		'uses' 			=> 'HomeAdminController@AdministratorSKPDStrukturOrganisasi'
 	]);
 
 
 
-	Route::get('skpd/{skpd_id}/unit-kerja', [
+	Route::get('admin/skpd/{skpd_id}/unit-kerja', [
 		'uses' 			=> 'SKPDController@showSKPDUnitKerja'
 	]);
 
 	
 
-	Route::get('skpd/{skpd_id}/rencana-kerja-perangkat-daerah', [
+	Route::get('admin/skpd/{skpd_id}/rencana-kerja-perangkat-daerah', [
 		'uses' 			=> 'SKPDController@showSKPDRencanaKerjaPerangkatDaerah'
 	]);
 
-	Route::get('skpd/{skpd_id}/peta-jabatan', [
+	Route::get('admin/skpd/{skpd_id}/peta-jabatan', [
 		'uses' 			=> 'SKPDController@showSKPDPetaJabatan'
 	]);
 	
 	
 
 	// AJAX REQUEST TEST
-	Route::get('skp-tahunan', [
+	Route::get('admin/skp-tahunan', [
 		'as' 			=> '',
 		'uses' 			=> 'RencanaKerjaController@DataTes'
 	]);
@@ -838,7 +838,7 @@ Route::group(['prefix' => 'admin','middleware' => 'administrator'], function () 
 	]);
 
 	// TAG CONTROLLER PAGE ROUTE
-	Route::resource('skilltags', 'SkillsTagController', ['except' => 'show']);
+	Route::resource('admin/skilltags', 'SkillsTagController', ['except' => 'show']);
 
 	
 	
