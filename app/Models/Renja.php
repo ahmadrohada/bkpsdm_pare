@@ -21,7 +21,7 @@ class Renja extends Model
 
         public function KepalaSKPD()
         {
-            return $this->hasOne('App\Models\HistoryJabatan','id','kaban_id');
+            return $this->hasOne('App\Models\HistoryJabatan','id','kepala_skpd_id');
         } 
 
         public function AdminSKPD()

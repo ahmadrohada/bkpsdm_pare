@@ -255,7 +255,7 @@ class RenjaAPIController extends Controller {
                                  'renja.periode_id',
                                  'renja.skpd_id',
                                  'renja.send_to_kaban AS send_to_kaban',
-                                 'renja.kepala_skpd_id AS kaban_id',
+                                 'renja.kepala_skpd_id',
                                  'renja.nama_kepala_skpd AS kaban_nama',
                                  'renja.status_approve'
 
