@@ -15,7 +15,7 @@
 				Administrator
 			</h1>
 
-			{!! Breadcrumbs::render('users') !!}
+			{!! Breadcrumbs::render('masa_pemerintahan') !!}
 
 	    </section>
 	    <section class="content">
@@ -23,7 +23,7 @@
 			
 				@include('admin.modules.snapshots-boxes.administrator-home')
 
- 				@include('admin.tables.administrator-users-list-datatable')
+ 				@include('admin.tables.administrator-pohon_kinerja')
 		
 	    </section>
 	</div>

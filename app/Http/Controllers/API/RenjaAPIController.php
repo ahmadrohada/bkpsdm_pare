@@ -246,6 +246,53 @@ class RenjaAPIController extends Controller {
     }
 
 
+    public function AdministratorPohonKinerjaList(Request $request)
+    {
+       
+        
+        $dt = Renja::SELECT(
+                                 'renja.id AS renja_id',
+                                 'renja.periode_id',
+                                 'renja.skpd_id',
+                                 'renja.send_to_kaban AS send_to_kaban',
+                                 'renja.kepala_skpd_id AS kaban_id',
+                                 'renja.nama_kepala_skpd AS kaban_nama',
+                                 'renja.status_approve'
+
+
+                                );
+
+
+    
+        $datatables = Datatables::of($dt)
+        ->addColumn('periode', function ($x) {
+            return $x->Periode->label;
+        })->addColumn('renja_id', function ($x) {
+            return $x->renja_id;
+        })->addColumn('nama_skpd', function ($x) {
+           return Pustaka::capital_string($x->SKPD->skpd);
+        })->addColumn('ka_skpd', function ($x) {
+            
+            if ( $x->KepalaSKPD != null ){
+                $pegawai =  $x->KepalaSKPD->pegawai;
+                //return $pegawai;
+                return Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+            }else{
+                return "-";
+            }
+
+        });
+
+        
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
+
+
     public function SKPDRenjaList(Request $request)
     {
        

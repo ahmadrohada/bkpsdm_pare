@@ -21,7 +21,7 @@
 	    <section class="content">
 
 			
-				@include('admin.modules.administrator-home-snapshots-boxes')
+				@include('admin.modules.snapshots-boxes.administrator-home')
 
  				@include('admin.tables.administrator-skpd-list-datatable')
 		
