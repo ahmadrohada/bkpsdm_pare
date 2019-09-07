@@ -25,7 +25,7 @@ use App\Models\Eselon;
 use App\Helpers\Pustaka;
 
 use Datatables;
-use Validator;
+use Validator; 
 use Gravatar;
 use Input;
 Use Alert;
@@ -33,11 +33,16 @@ Use Alert;
 class SKPTahunanAPIController extends Controller {
 
     //=======================================================================================//
-    protected function jabatan($id_jabatan){
+    protected function jabatan($id_jabatan){ 
         $jabatan       = HistoryJabatan::WHERE('id',$id_jabatan)
                         ->SELECT('jabatan')
                         ->first();
-        return Pustaka::capital_string($jabatan->jabatan);
+        if ( $jabatan == null ){
+            return $jabatan;
+        }else{
+            return Pustaka::capital_string($jabatan->jabatan);
+        }
+        
     }
 
 
@@ -258,7 +263,7 @@ class SKPTahunanAPIController extends Controller {
     {
 
 
-        $pegawai  = Pegawai::SELECT('nip','id')->WHERE('id', $request->pegawai_id )->first();
+        /* $pegawai  = Pegawai::SELECT('nip','id')->WHERE('id', $request->pegawai_id )->first();
 
         $mp = MasaPemerintahan::WHERE('status','1')->first();
         //status true artinya sudah bikin, false  artinya blm bikin pada jabatan ini
@@ -278,7 +283,7 @@ class SKPTahunanAPIController extends Controller {
                 'periode_aktif'          => $mp->PeriodeAktif->label,
         );
        
-        return $response;
+        return $response; */
 
 
     }
@@ -601,10 +606,8 @@ class SKPTahunanAPIController extends Controller {
     {
             
         $id_pegawai = $request->pegawai_id;
+        //$pegawai = Pegawai::SELECT('id')->WHERE('id',$id_pegawai)->first();
 
-        $pegawai = Pegawai::SELECT('id')->WHERE('id',$id_pegawai)->first();
-
-        
         $SKPTahunan = SKPTahunan::WHERE('pegawai_id',$id_pegawai)
                         //PERIODE
                         ->leftjoin('db_pare_2018.renja AS renja', function($join){
@@ -617,6 +620,7 @@ class SKPTahunanAPIController extends Controller {
                         ->leftjoin('demo_asn.m_skpd AS skpd', function($join){
                             $join   ->on('skpd.id','=','renja.skpd_id');
                         }) 
+                        ->OrderBY('skp_tahunan.id','DESC')
                         ->SELECT(   'skp_tahunan.tgl_mulai',
                                     'skp_tahunan.tgl_selesai',
                                     'skp_tahunan.u_jabatan_id',
@@ -641,7 +645,12 @@ class SKPTahunanAPIController extends Controller {
            
             ->addColumn('jabatan', function ($x) {
             
-                return  $this->jabatan($x->u_jabatan_id);
+                if ( $this->jabatan($x->u_jabatan_id) == null ){
+                    return "ID Jabatan : ".$x->u_jabatan_id;
+                }else{
+                    return  $this->jabatan($x->u_jabatan_id);
+                }
+                    
                 
             })
             ->addColumn('skpd', function ($x) {
@@ -651,6 +660,16 @@ class SKPTahunanAPIController extends Controller {
                     return $x->skp_tahunan_id;
                 
                  
+            })
+            ->addColumn('error_status', function ($x) {
+            
+                if ( $this->jabatan($x->u_jabatan_id) == null ){
+                    return "1";
+                }else{
+                    return  "0";
+                }
+                    
+                
             });
     
             if ($keyword = $request->get('search')['value']) {

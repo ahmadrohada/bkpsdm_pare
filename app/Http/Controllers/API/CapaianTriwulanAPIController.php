@@ -35,11 +35,16 @@ Use Alert;
 class CapaianTriwulanAPIController extends Controller {
 
      //=======================================================================================//
-     protected function jabatan($id_jabatan){
+    protected function jabatan($id_jabatan){ 
         $jabatan       = HistoryJabatan::WHERE('id',$id_jabatan)
                         ->SELECT('jabatan')
                         ->first();
-        return Pustaka::capital_string($jabatan->jabatan);
+        if ( $jabatan == null ){
+            return $jabatan;
+        }else{
+            return Pustaka::capital_string($jabatan->jabatan);
+        }
+        
     }
 
 
@@ -222,8 +227,11 @@ class CapaianTriwulanAPIController extends Controller {
                 return $x->label;
             }) 
             ->addColumn('jabatan', function ($x) {
-                
-                return  $this->jabatan($x->u_jabatan_id);
+                if ( $this->jabatan($x->u_jabatan_id) == null ){
+                    return "ID Jabatan : ".$x->u_jabatan_id;
+                }else{
+                    return  $this->jabatan($x->u_jabatan_id);
+                }
             })
             
             ->addColumn('remaining_time_triwulan1', function ($x) {

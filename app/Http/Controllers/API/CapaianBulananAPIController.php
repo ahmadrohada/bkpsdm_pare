@@ -33,9 +33,24 @@ Use Alert;
 
 class CapaianBulananAPIController extends Controller {
 
+    protected function jabatan($id_jabatan){ 
+        $jabatan       = HistoryJabatan::WHERE('id',$id_jabatan)
+                        ->SELECT('jabatan')
+                        ->first();
+        if ( $jabatan == null ){
+            return $jabatan;
+        }else{
+            return Pustaka::capital_string($jabatan->jabatan);
+        }
+        
+    }
   
     protected function CapaianBulananDetail(Request $request){
      
+
+
+
+
 
         $capaian = CapaianBulanan::WHERE('capaian_bulanan.id',$request->capaian_bulanan_id)->first();
 
@@ -155,8 +170,11 @@ class CapaianBulananAPIController extends Controller {
                 return   $masa_penilaian;
             }) 
             ->addColumn('jabatan', function ($x) {
-                
-                return   Pustaka::capital_string($x->PejabatYangDinilai->jabatan);
+                if ( $this->jabatan($x->u_jabatan_id) == null ){
+                    return "ID Jabatan : ".$x->u_jabatan_id;
+                }else{
+                    return  $this->jabatan($x->u_jabatan_id);
+                }
             })
             ->addColumn('capaian', function ($x) {
                 return $x->capaian_id;
