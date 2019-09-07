@@ -7,7 +7,7 @@
         </font>
         </h3>
         <h5 class="widget-user-desc" style="text-shadow: 1px 1px 1px #000, 3px 3px 5px #000;">
-            {{ $nip }}
+            {{ \Auth::user()->pegawai->nip }}
         </h5>
     </div>
 
@@ -21,19 +21,19 @@
 
             <div class="col-sm-4 border-right">
                 <div class="description-block">
-                    <h5 class="description-header text-warning">28</h5>
+                    <h5 class="description-header text-warning"></h5>
                     <span class="description-text text-success">SKP</span>
                 </div>
             </div>
             <div class="col-sm-4 border-right">
                 <div class="description-block">
-                    <h5 class="description-header text-warning">24</h5>
+                    <h5 class="description-header text-warning"></h5>
                     <span class="description-text text-success">CAPAIAN</span>
                 </div>
             </div>
             <div class="col-sm-4 border-right">
                 <div class="description-block">
-                    <h5 class="description-header text-warning">36</h5>
+                    <h5 class="description-header text-warning"></h5>
                     <span class="description-text text-success">TPP</span>
                 </div>
             </div>
@@ -45,6 +45,7 @@
 
         <div class="box-body" style="margin-top:-20px;">
                 
+        @if (  \Auth::user()->pegawai->JabatanAktif != null )			
                 <hr>
                 <strong><i class="fa fa-university margin-r-5"></i> SKPD</strong>
                 <p class="text-muted">
@@ -70,7 +71,7 @@
                 {{ $golongan}} / 
                 {{ $tmt_jabatan }}
                 </p>
-
+        @endif
                 <hr>
                 <strong><i class="fa   fa-phone margin-r-5"></i> No. Handphone</strong>
                 <p class="text-muted">

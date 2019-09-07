@@ -4,7 +4,8 @@
     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
     </a>
-          
+		  
+	
 	<div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
             
@@ -43,7 +44,16 @@
 						
 						<p >
 						  <font style="font-size:15px; color:#e0c200;">{{ Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)  }}</font>
-						  <small style="color:#d7dff9;">{{ Pustaka::capital_string(\Auth::user()->pegawai->JabatanAktif->Jabatan->skpd ) }}</small>
+						  <small style="color:#d7dff9;">
+						  @if (  \Auth::user()->pegawai->JabatanAktif != null )
+						  	{{ Pustaka::capital_string(\Auth::user()->pegawai->JabatanAktif->Jabatan->skpd ) }}
+						  @else
+							<span class="text-danger">Tidak Ada Jabatan Aktif</span>
+						  @endif
+						  
+						
+						
+							</small>
 						</p>
 					  </li>
 					  <!-- Menu Body -->

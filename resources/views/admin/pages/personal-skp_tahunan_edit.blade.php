@@ -4,7 +4,7 @@
 {{ Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)  }}
 @stop
 
- 
+  
 @section('content')
 	 <div class="content-wrapper" >
 	    <section class="content-header">
@@ -49,7 +49,7 @@
 
 					<!-- 3. KASUBID -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.tables.skp_kegiatan_tahunan_3_edit')
+						@include('admin.modules.tab.kegiatan_tahunan_3_edit')
 					@endif
 
 					<!-- 4. PELAKSANA -->

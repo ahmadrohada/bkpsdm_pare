@@ -7,6 +7,8 @@
 
 @extends('admin.structure.master')
 
+
+
 {{-- Load Auth Layout Head --}}
 @section('layout-head')
     {{-- Load Common Admin Head --}}

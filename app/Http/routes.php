@@ -604,6 +604,16 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('add_admin_skpd','API\RoleUserAPIController@AddAdminSKPD');
 	Route::post('remove_admin_skpd','API\RoleUserAPIController@RemoveAdminSKPD');
 
+
+
+
+	//========================================================================================================//
+	//==================================  B A N T U A N     ==============================================//
+	//========================================================================================================//
+	Route::get('bantuan_detail','API\BantuanAPIController@Detail');
+	
+
+
 });
 
 

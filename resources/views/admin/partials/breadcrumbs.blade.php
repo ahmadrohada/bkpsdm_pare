@@ -1,3 +1,6 @@
+@include('admin.modals.bantuan')
+
+
 @if ($breadcrumbs)
     <ol class="breadcrumb">
         @foreach ($breadcrumbs as $breadcrumb)
@@ -17,3 +20,4 @@
         @endforeach
     </ol>
 @endif
+

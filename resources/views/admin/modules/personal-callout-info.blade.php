@@ -12,6 +12,14 @@
 	</p>
 </div>
 
+@if (  \Auth::user()->pegawai->JabatanAktif == null )				
+	<div class="callout callout-danger skp_tahunan_status" style="height:60px;">
+		<p style="font-family:mainandra; font-size:12pt; color:#ebecf5; font-weight:bold; ">
+			Anda tidak memiliki Jabatan yang Aktif, Silakan buka <a href="http://silk.bkpsdm.karawangkab.go.id/simpeg_asn/" target="_blank">SIMPEG</a>
+		</p>
+	</div>
+@endif
+
 
 
 
@@ -30,8 +38,7 @@ $(document).ready(function(){
 			url		: '{{ url("api_resource/personal_cek_status_skp_tahunan") }}',
 			type	: 'GET',
 			data	:  	{ 
-							pegawai_id : {!! $user->Pegawai->id !!},
-							jabatan_id : {!! $user->Pegawai->JabatanAktif->id !!}
+							pegawai_id : {!! $user->id_pegawai !!}
 						},
 			success	: function(data) {
 				//alert(data['status']);
