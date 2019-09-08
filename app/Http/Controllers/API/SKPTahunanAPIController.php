@@ -1026,8 +1026,8 @@ class SKPTahunanAPIController extends Controller {
 
                 $renja = Renja::WHERE('skpd_id',$skpd_id)
                                 ->WHERE('periode_id',$request->periode_id)
-                                ->WHERE('send_to_kaban','1')
-                                ->WHERE('status_approve','1')
+                                //->WHERE('send_to_kaban','1')
+                                //->WHERE('status_approve','1')
                                 /* ->rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
                                     $join   ->on('pk.renja_id','=','renja.id');
                                     $join   ->where('pk.status_approve','=','1');
