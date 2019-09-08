@@ -185,6 +185,11 @@
 					$('.modal-kegiatan_tahunan').find('[name=target_waktu]').val(data['target_waktu']);
 					$('.modal-kegiatan_tahunan').find('[name=cost]').val(data['cost']);
 
+					document.getElementById('list_indikator_modal').innerHTML = "";
+					var bawahan = document.getElementById('list_indikator_modal');
+					for(var i = 0 ; i < data['list_indikator'].length; i++ ){
+						$("<tr><td>"+ (i+1) +"</td><td>"+data['list_indikator'][i].label+"</td><td>"+data['list_indikator'][i].target+" "+data['list_indikator'][i].satuan+"</td></tr>").appendTo(bawahan);
+					}
 
 					$('.modal-kegiatan_tahunan').find('[name=kegiatan_tahunan_id]').val(data['id']);
 					$('.modal-kegiatan_tahunan').find('h4').html('Edit Kegiatan Tahunan');

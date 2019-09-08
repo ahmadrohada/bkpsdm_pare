@@ -366,6 +366,9 @@ class RencanaAksiAPIController extends Controller {
        
         $x = RencanaAksi::
                     WHERE('skp_tahunan_rencana_aksi.id', $request->rencana_aksi_id)
+                    ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
+                        $join   ->on('skp_tahunan_rencana_aksi.indikator_kegiatan_id','=','indikator_kegiatan.id');
+                    })
                     ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
                         $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                         //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
@@ -387,6 +390,8 @@ class RencanaAksiAPIController extends Controller {
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
                                 'skp_tahunan_rencana_aksi.waktu_pelaksanaan',
+                                'indikator_kegiatan.id AS indikator_kegiatan_id',
+                                'indikator_kegiatan.label AS indikator_kegiatan_label',
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
                                 'kegiatan_bulanan.target AS target_pelaksana',
@@ -416,6 +421,8 @@ class RencanaAksiAPIController extends Controller {
             'label'                         => $x->rencana_aksi_label,
             'target_rencana_aksi'           => $x->target_rencana_aksi,
             'satuan_target_rencana_aksi'    => $x->satuan_target_rencana_aksi,
+            'indikator_kegiatan_label'      => $x->indikator_kegiatan_label,
+            'indikator_kegiatan_id'         => $x->indikator_kegiatan_id,
             'kegiatan_bulanan_label'        => $x->kegiatan_bulanan_label,
             'kegiatan_bulanan_target'       => $x->target_pelaksana,
             'kegiatan_bulanan_satuan'       => $x->satuan_pelaksana,
@@ -430,6 +437,7 @@ class RencanaAksiAPIController extends Controller {
 
 
             'waktu_pelaksanaan'             => Pustaka::bulan($x->waktu_pelaksanaan),
+            'waktu_pelaksanaan_int'         => $x->waktu_pelaksanaan,
             'jabatan_id'                    => $x->pelaksana_id,
             'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan),
             'nama_jabatan'                  => $pelaksana,
