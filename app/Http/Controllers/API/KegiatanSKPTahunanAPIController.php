@@ -384,17 +384,18 @@ class KegiatanSKPTahunanAPIController extends Controller {
 		
 		//return  $kegiatan_tahunan;
         $kegiatan_tahunan = array(
-            'id'            => $x->kegiatan_tahunan_id,
-            'label'         => $x->label,
-            'ak'            => $x->angka_kredit,
-            'output'        => $x->target.' '.$x->satuan,
-            'satuan'        => $x->satuan,
-            'target'      => $x->target,
-            'quality'       => $x->quality,
-            'target_waktu'  => $x->target_waktu,
-            'cost'	        => number_format($x->cost,'0',',','.'),
-            'pejabat'       => Pustaka::capital_string($x->Kegiatan->PenanggungJawab->jabatan),
-            'list_indikator'=> $list,
+            'id'                    => $x->kegiatan_tahunan_id,
+            'kegiatan_renja_id'     => $x->Kegiatan->id,
+            'label'                 => $x->label,
+            'ak'                    => $x->angka_kredit,
+            'output'                => $x->target.' '.$x->satuan,
+            'satuan'                => $x->satuan,
+            'target'                => $x->target,
+            'quality'               => $x->quality,
+            'target_waktu'          => $x->target_waktu,
+            'cost'	                => number_format($x->cost,'0',',','.'),
+            'pejabat'               => Pustaka::capital_string($x->Kegiatan->PenanggungJawab->jabatan),
+            'list_indikator'        => $list,
         );
         return $kegiatan_tahunan;
     }

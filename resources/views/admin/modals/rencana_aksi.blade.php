@@ -15,11 +15,26 @@
 			<div class="modal-body">
 					
 					<br>
+					<div class="row">
+						<div class="col-md-12 form-group label_kegiatan_tahunan ">
+							<label class="control-label">Kegiatan Tahunan</label>
+							<p class="kegiatan_tahunan_label"></p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12 form-group form-group-sm label_indikator_kegiatan">
+							<label>Indikator Kegiatan</label>
+							<select id= "ind_kegiatan" class="form-control" name="indikator_kegiatan_id" style="width: 100%;">
+								<option value = '0' > pilih Indikator Kegiatan </option>
+							</select>
+						</div>
+					</div>
 
 					<div class="row">
 						<div class="col-md-12 form-group label_rencana_aksi ">
 							<label class="control-label">Rencana Aksi :</label>
-							<textarea name="label" rows="3" required class="form-control txt-label" id="label" placeholder="" style="resize:none;"></textarea>
+							<textarea name="label" rows="1" required class="form-control txt-label" id="label" placeholder="" style="resize:none;"></textarea>
 						</div>
 					</div>
 
@@ -32,8 +47,8 @@
 						</div>
 					</div>
 
-					<div class="row tp">
-						<div class="col-md-12 form-group form-group-sm label_waktu_pelaksanaan">
+					<div class="row">
+						<div class="tp col-md-6 col-xs-12 form-group form-group-sm label_waktu_pelaksanaan">
 							<label>Waktu</label>
 							<select class="form-control  waktu_pelaksanaan" multiple="multiple" name="waktu_pelaksanaan[]" style="width: 100%;">
 								<option value="01">Januari</option>
@@ -48,13 +63,10 @@
 								<option value="10">Oktober</option>
 								<option value="11">November</option>
 								<option value="12">Desember</option>
-
 							</select>
 						</div>
-					</div>
 
-					<div class="row tp_edit">
-						<div class="col-md-12 form-group form-group-sm label_waktu_pelaksanaan">
+						<div class="tp_edit col-md-6 col-xs-12 form-group form-group-sm label_waktu_pelaksanaan">
 							<label>Waktu</label>
 							<select class="form-control  waktu_pelaksanaan_edit" name="waktu_pelaksanaan_edit" style="width: 100%;">
 								<option value="01">Januari</option>
@@ -69,21 +81,17 @@
 								<option value="10">Oktober</option>
 								<option value="11">November</option>
 								<option value="12">Desember</option>
-
 							</select>
 						</div>
-					</div>
- 
-					<div class="row">
 						
-						<div class="col-md-6 form-group target">
-						<label class="control-label">Target :</label>
-						<input type="text" name="target" id="target" required class="form-control input-sm" placeholder="target" onkeypress='return angka(event)'>        
+						<div class="col-md-3 col-xs-12 form-group target">
+							<label class="control-label">Target :</label>
+							<input type="text" name="target" id="target" required class="form-control input-sm" placeholder="target" onkeypress='return angka(event)'>        
 						</div>
 
-						<div class="col-md-6 form-group satuan">
-						<label class="control-label">Satuan :</label>
-						<input type="text" name="satuan" autocomplete="off" id="satuan" required class="form-control satuan input-sm" placeholder="satuan">
+						<div class="col-md-3 col-xs-12 form-group satuan">
+							<label class="control-label">Satuan :</label>
+							<input type="text" name="satuan" autocomplete="off" id="satuan" required class="form-control satuan input-sm" placeholder="satuan">
 						</div>
 					</div>
 
@@ -103,6 +111,44 @@
 
 
 <script type="text/javascript">
+
+	var kegiatan_renja_id = $('.kegiatan_renja_id').val();	
+	$('#ind_kegiatan').select2({
+		ajax: {
+			url				: '{{ url("api_resource/select2_indikator_kegiatan_list") }}',
+			dataType		: 'json',
+			quietMillis		: 100,
+			data			: function (params) {
+				var queryParameters = {
+					jabatan					: params.term,
+					kegiatan_renja_id		: kegiatan_renja_id,
+				}
+				return queryParameters;
+			},
+			processResults: function (data) {
+				return {
+					results: $.map(data, function (item) {
+						return {
+							text	: item.text,
+							id		: item.id,
+							target	: item.target,
+							satuan 	: item.satuan,
+						}	
+					})
+				};		
+			}
+		},
+	});
+
+	$('#ind_kegiatan').on('select2:select', function (e) {
+		var data = e.params.data;
+		//alert(data['target']);
+		$('.modal-rencana_aksi').find('[id=target]').val(data['target']);
+		$('.modal-rencana_aksi').find('[id=satuan]').val(data['satuan']);
+
+
+	});
+
 
 
 	$('.waktu_pelaksanaan,.waktu_pelaksanaan_edit').select2();
@@ -124,19 +170,14 @@
 			processResults: function (data) {
 				return {
 					results: $.map(data, function (item) {
-								
 						return {
 							text	: item.jabatan,
 							id		: item.id,
-						}
-								
+						}		
 					})
 				};
-						
 			}
 		},
-		
-		
 	});
 
 	$('.modal-rencana_aksi').on('shown.bs.modal', function(){
@@ -144,13 +185,16 @@
 	});
 
 	$('.modal-rencana_aksi').on('hidden.bs.modal', function(){
-		$('.label_rencana_aksi,.label_waktu_pelaksanaan,.target,.satuan,.label_pelaksana').removeClass('has-error');
+		$('.label_indikator_kegiatan,.label_rencana_aksi,.label_waktu_pelaksanaan,.target,.satuan,.label_pelaksana').removeClass('has-error');
 		$('.modal-rencana_aksi').find('[name=rencana_aksi_id],[name=label],[name=target],[name=satuan]').val('');
 		$('.waktu_pelaksanaan').select2('val','');
 	});
 
 	$('.label_pelaksana').on('click', function(){
 		$('.label_pelaksana').removeClass('has-error');
+	});
+	$('.label_indikator_kegiatan').on('click', function(){
+		$('.label_indikator_kegiatan').removeClass('has-error');
 	});
 	$('.label_rencana_aksi').on('click', function(){
 		$('.label_rencana_aksi').removeClass('has-error');
@@ -203,7 +247,10 @@
 				}).then(function () {
 					$('.modal-rencana_aksi').modal('hide');
 					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-					jQuery('#keg_tahunan_3').jstree(true).refresh(true);
+					//jQuery('#keg_tahunan_3').jstree(true).refresh(true);
+					jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
+					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+					
 					
 					
 				},
@@ -226,6 +273,7 @@
 					//alert (index+":"+value);
 					
 					//error message
+					((index == 'indikator_kegiatan_id')?$('.label_indikator_kegiatan').addClass('has-error'):'');
 					((index == 'label')?$('.label_rencana_aksi').addClass('has-error'):'');
 					((index == 'waktu_pelaksanaan')?$('.label_waktu_pelaksanaan').addClass('has-error'):'');
 					((index == 'pelaksana')?$('.label_pelaksana').addClass('has-error'):'');
@@ -272,8 +320,10 @@
 				}).then(function () {
 					$('.modal-rencana_aksi').modal('hide');
 					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-					jQuery('#keg_tahunan_3').jstree(true).refresh(true);
+					//jQuery('#keg_tahunan_3').jstree(true).refresh(true);
 					
+					jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
+					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 				},
 					
 					function (dismiss) {
