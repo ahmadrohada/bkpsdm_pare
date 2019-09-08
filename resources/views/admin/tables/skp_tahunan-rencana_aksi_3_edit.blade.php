@@ -75,6 +75,7 @@
 <script type="text/javascript">
 
 $(document).on('click','.create_rencana_aksi',function(e){
+	
 		$('.modal-rencana_aksi').find('h4').html('Create Rencana Aksi');
 		$('.modal-rencana_aksi').find('.btn-submit').attr('id', 'submit-save_rencana_aksi');
 		$('.modal-rencana_aksi').find('[name=text_button_submit]').html('Simpan Data');

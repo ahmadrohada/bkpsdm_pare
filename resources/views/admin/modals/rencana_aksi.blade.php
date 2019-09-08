@@ -112,7 +112,8 @@
 
 <script type="text/javascript">
 
-	var kegiatan_renja_id = $('.kegiatan_renja_id').val();	
+
+
 	$('#ind_kegiatan').select2({
 		ajax: {
 			url				: '{{ url("api_resource/select2_indikator_kegiatan_list") }}',
@@ -121,7 +122,7 @@
 			data			: function (params) {
 				var queryParameters = {
 					jabatan					: params.term,
-					kegiatan_renja_id		: kegiatan_renja_id,
+					kegiatan_renja_id		: $('.kegiatan_renja_id').val(),
 				}
 				return queryParameters;
 			},
@@ -188,6 +189,7 @@
 		$('.label_indikator_kegiatan,.label_rencana_aksi,.label_waktu_pelaksanaan,.target,.satuan,.label_pelaksana').removeClass('has-error');
 		$('.modal-rencana_aksi').find('[name=rencana_aksi_id],[name=label],[name=target],[name=satuan]').val('');
 		$('.waktu_pelaksanaan').select2('val','');
+		$('#ind_kegiatan').select2('val','');
 	});
 
 	$('.label_pelaksana').on('click', function(){
