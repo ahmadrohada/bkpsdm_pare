@@ -17,8 +17,8 @@
 			<strong>Kegiatan Tahunan</strong>
 			<p class="text-muted " style="margin-top:8px;padding-bottom:8px;">
 				<span class="kegiatan_tahunan_label"></span>
-				<input type="text" class="kegiatan_tahunan_id">
-				<input type="text" class="kegiatan_renja_id">
+				<input type="hidden" class="kegiatan_tahunan_id">
+				<input type="hidden" class="kegiatan_renja_id">
 			</p>
 
 			<p><strong>Target</strong></p>
