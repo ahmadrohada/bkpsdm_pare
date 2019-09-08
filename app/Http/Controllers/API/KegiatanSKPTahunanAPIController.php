@@ -410,8 +410,8 @@ class KegiatanSKPTahunanAPIController extends Controller {
                 'kegiatan_id.required'           => 'Harus diisi',
                 'skp_tahunan_id.required'        => 'Harus diisi',
                 'label.required'                 => 'Harus diisi',
-                'target.required'                => 'Harus diisi',
-                'satuan.required'                => 'Harus diisi',
+                //'target.required'                => 'Harus diisi',
+                //'satuan.required'                => 'Harus diisi',
                 'quality.required'               => 'Harus diisi',
                 'target_waktu.required'          => 'Harus diisi',
 
@@ -423,8 +423,8 @@ class KegiatanSKPTahunanAPIController extends Controller {
                             'kegiatan_id'       => 'required',
                             'skp_tahunan_id'    => 'required',
                             'label'             => 'required',
-                            'target'            => 'required|numeric',
-                            'satuan'            => 'required',
+                            //'target'            => 'required|numeric',
+                            //'satuan'            => 'required',
                             'quality'           => 'required|numeric|min:1|max:100',
                             'target_waktu'      => 'required|numeric|min:1|max:12',
                         ),
@@ -467,8 +467,8 @@ class KegiatanSKPTahunanAPIController extends Controller {
         $messages = [
                 'kegiatan_tahunan_id.required'   => 'Harus diisi',
                 'label.required'                 => 'Harus diisi',
-                'target.required'              => 'Harus diisi',
-                'satuan.required'                => 'Harus diisi',
+                //'target.required'              => 'Harus diisi',
+                //'satuan.required'                => 'Harus diisi',
                 'quality.required'               => 'Harus diisi',
                 'target_waktu.required'          => 'Harus diisi',
 
@@ -479,8 +479,8 @@ class KegiatanSKPTahunanAPIController extends Controller {
                         array(
                             'kegiatan_tahunan_id'   => 'required',
                             'label'                 => 'required',
-                            'target'                => 'required|numeric',
-                            'satuan'                => 'required',
+                            //'target'                => 'required|numeric',
+                            //'satuan'                => 'required',
                             'quality'               => 'required|numeric|min:1|max:100',
                             'target_waktu'          => 'required|numeric|min:1|max:12',
                         ),

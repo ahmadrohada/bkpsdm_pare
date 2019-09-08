@@ -163,6 +163,10 @@
 					$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
 					jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
 
+					$("#kegiatan_tahunan").show();
+					$("#rencana_aksi").hide();
+					jQuery('#keg_tahunan_3_tree').jstree().deselect_all(true);
+
 					
 					
 				},
