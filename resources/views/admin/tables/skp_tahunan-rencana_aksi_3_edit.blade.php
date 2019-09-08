@@ -102,12 +102,13 @@ $(document).on('click','.create_rencana_aksi',function(e){
 					$('.modal-rencana_aksi').find('[name=satuan]').val(data['satuan_target_rencana_aksi']);
 					$('.tp_edit').show();
 					$('.tp').hide();
-				 //	$('.modal-rencana_aksi').find('[name=pelaksana]').val(1358).trigger('change.select2');
+				 	//	$('.modal-rencana_aksi').find('[name=pelaksana]').val(1358).trigger('change.select2');
 
-				 $('.modal-rencana_aksi').find('[name=pelaksana]').empty().append('<option value="'+data['jabatan_id']+'">'+data['nama_jabatan']+'</option>').val(data['jabatan_id']).trigger('change');
+				 	$('.modal-rencana_aksi').find('[name=pelaksana]').empty().append('<option value="'+data['jabatan_id']+'">'+data['nama_jabatan']+'</option>').val(data['jabatan_id']).trigger('change');
+					$('.modal-rencana_aksi').find('[name=indikator_kegiatan_id]').empty().append('<option value="'+data['indikator_kegiatan_id']+'">'+data['indikator_kegiatan_label']+'</option>').val(data['indikator_kegiatan_id']).trigger('change');
 
 
-					$('.modal-rencana_aksi').find('[name=waktu_pelaksanaan_edit]').val(data['waktu_pelaksanaan']).trigger('change.select2');
+					$('.modal-rencana_aksi').find('[name=waktu_pelaksanaan_edit]').val(data['waktu_pelaksanaan_int']).trigger('change.select2');
 				
 					$('.modal-rencana_aksi').find('[name=rencana_aksi_id]').val(data['id']);
 					$('.modal-rencana_aksi').find('h4').html('Edit Rencana Aksi');

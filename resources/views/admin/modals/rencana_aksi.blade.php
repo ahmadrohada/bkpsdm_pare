@@ -141,6 +141,7 @@
 		},
 	});
 
+
 	$('#ind_kegiatan').on('select2:select', function (e) {
 		var data = e.params.data;
 		//alert(data['target']);
