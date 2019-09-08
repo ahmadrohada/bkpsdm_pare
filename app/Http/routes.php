@@ -238,6 +238,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('ind_kegiatan_detail','API\IndikatorKegiatanAPIController@IndikatorKegiatanDetail');
 
 
+	Route::get('select2_indikator_kegiatan_list','API\IndikatorKegiatanAPIController@Select2IndikatorKegiatanList');
+	
+
 	Route::post('simpan_ind_kegiatan','API\IndikatorKegiatanAPIController@Store');
 	Route::post('update_ind_kegiatan','API\IndikatorKegiatanAPIController@Update');
 	Route::post('hapus_ind_kegiatan','API\IndikatorKegiatanAPIController@Hapus');

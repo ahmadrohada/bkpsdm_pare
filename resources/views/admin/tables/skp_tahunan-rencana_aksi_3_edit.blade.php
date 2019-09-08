@@ -17,7 +17,8 @@
 			<strong>Kegiatan Tahunan</strong>
 			<p class="text-muted " style="margin-top:8px;padding-bottom:8px;">
 				<span class="kegiatan_tahunan_label"></span>
-				<input type="hidden" class="kegiatan_tahunan_id">
+				<input type="text" class="kegiatan_tahunan_id">
+				<input type="text" class="kegiatan_renja_id">
 			</p>
 
 			<p><strong>Target</strong></p>
@@ -83,6 +84,9 @@ $(document).on('click','.create_rencana_aksi',function(e){
 
 		$('.modal-rencana_aksi').modal('show');
 	});
+
+
+//============================ RENCANA AKSI ========================================//
 
 	$(document).on('click','.edit_rencana_aksi',function(e){
 		var rencana_aksi_id = $(this).data('id') ;

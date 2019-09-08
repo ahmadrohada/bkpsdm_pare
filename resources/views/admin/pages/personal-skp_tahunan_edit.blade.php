@@ -74,7 +74,7 @@
 
 					<!-- 3. KASUBID -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.tables.skp_kegiatan_bulanan_3_edit')
+						@include('admin.modules.tab.kegiatan_bulanan_3_edit')
 					@endif
 
 					<!-- 4. PELAKSANA -->

@@ -187,6 +187,7 @@
 				dataType	: "json",
 				success	: function(data) {
 						$('.kegiatan_tahunan_id').val(data['id']);
+						$('.kegiatan_renja_id').val(data['kegiatan_renja_id']);
 						$('.kegiatan_tahunan_label').html(data['label']);
 						$('.txt_ak').html(data['ak']);
 						$('.txt_output').html(data['output']);

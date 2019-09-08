@@ -90,6 +90,36 @@ class IndikatorKegiatanAPIController extends Controller {
         return $datatables->make(true);
     }
 
+
+    public function Select2IndikatorKegiatanList(Request $request)
+    {
+
+       
+        $data       = IndikatorKegiatan::where('kegiatan_id', $request->get('kegiatan_renja_id'))
+                                        ->SELECT('id','label','target','satuan')
+                                        ->get();
+
+        $ind_kegiatan_list = [];
+        foreach  ( $data as $x){
+           
+            
+            $ind_kegiatan_list[] = array(
+                'id'		=> $x->id,
+                'text'		=> $x->label,
+                'satuan'    => $x->satuan,
+                'target'	=> $x->target,
+            );
+             
+
+
+        } 
+                    
+        return $ind_kegiatan_list;
+
+
+    }
+
+
     public function IndikatorKegiatanDetail(Request $request)
     {
        
