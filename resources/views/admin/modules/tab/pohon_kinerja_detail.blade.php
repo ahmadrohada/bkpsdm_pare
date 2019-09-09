@@ -1,5 +1,10 @@
 <div class="row">
-	<div class="col-md-5">
+	<div class="left_div col-md-6">
+		<div class="box-tools pull-right">
+			<i class="btn btn-box-tool fa fa-arrow-right tutup_right_div"></i>
+			<i class="btn btn-box-tool fa fa-arrow-left buka_right_div "></i>
+		</div>
+
 
 		<div class="table-responsive">
 			<input type='text' id = 'cari' class="form-control" placeholder="cari">
@@ -7,7 +12,7 @@
 		</div>
 		
 	</div>
-	<div class="col-md-7">
+	<div class="right_div col-md-6">
 		@include('admin.tables.pohon_kinerja-tujuan_detail')
 		@include('admin.tables.pohon_kinerja-ind_tujuan_detail')
 		@include('admin.tables.pohon_kinerja-sasaran_detail')
@@ -34,6 +39,25 @@
 
 <script type="text/javascript">
 
+	$('.buka_right_div').hide();
+	$(".tutup_right_div").click(function(){
+		$('.left_div').removeClass('col-md-6');
+		$('.left_div').addClass('col-md-12');
+
+		$('.right_div').hide();
+		$('.tutup_right_div').hide();
+		$('.buka_right_div').show();
+
+	});
+	$(".buka_right_div").click(function(){
+		$('.left_div').removeClass('col-md-12');
+		$('.left_div').addClass('col-md-6');
+
+		$('.right_div').show();
+		$('.tutup_right_div').show();
+		$('.buka_right_div').hide();
+
+	});
 		
 	function RencanaKerjaList() {
 		$('#renja_tree_kegiatan')

@@ -98,6 +98,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 
 	Route::get('skpd_skp_tahunan_list','API\SKPTahunanAPIController@SKPDSKPTahunanList');
+	Route::get('administrator_skp_tahunan_list','API\SKPTahunanAPIController@AdminSKPTahunanList');
 	Route::get('skp_tahunan_timeline_status','API\SKPTahunanAPIController@SKPTahunanTimelineStatus');
 	Route::get('skp_tahunan_general_timeline','API\SKPTahunanAPIController@SKPTahunanGeneralTimeline');
 
@@ -542,7 +543,14 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('update_rencana_aksi','API\RencanaAksiAPIController@Update');
 	Route::post('hapus_rencana_aksi','API\RencanaAksiAPIController@Hapus');
 
+	//========================================================================================================//
+	//======================================= RENCANA AKSI  RENJA      ======================================//
+	//========================================================================================================//
 	
+	Route::get('renja_rencana_aksi','API\RencanaAksiAPIController@RenjaRencanaAksiList');
+	
+
+
 	//========================================================================================================//
 	//======================================= PENILAIAN KODE ETIK =====================================//
 	//========================================================================================================//
@@ -753,6 +761,11 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'HomeAdminController@showPohonKinerja'
 	]);
 
+	Route::get('admin/skp_tahunan', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeAdminController@showSKPTahunan'
+	]);
+
 
 	//----------------------------------------------------------------------------------------//
 	//============================ MASA PEMERINTAHAN ======== ================================//
@@ -768,6 +781,14 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/pohon_kinerja/{renja_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'RenjaController@AdministratorRenjaDetail'
+	]);
+
+	//----------------------------------------------------------------------------------------//
+	//========================      SKP TAHUNAN SKPD       ================================//
+	//----------------------------------------------------------------------------------------//
+	Route::get('admin/skp_tahunan/{skp_tahunan_id}',[
+		'as' 			=> '',
+		'uses' 			=> 'SKPTahunanController@PersonalSKPTahunanDetail'
 	]);
 
 

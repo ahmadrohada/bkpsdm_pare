@@ -24,6 +24,7 @@
 						<li class="detail"><a href="#detail" data-toggle="tab">Detail</a></li>
 						<li class="rencana_kerja_tab"><a href="#rencana_kerja_tab" data-toggle="tab">Pohon Kinerja</a></li>
 						<li class="distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
+						<li class="rencana_aksi"><a href="#rencana_aksi" data-toggle="tab">Rencana Aksi</a></li>
 					</ul>
 						
 					<div class="tab-content"  style="margin-left:20px;">
@@ -41,6 +42,10 @@
   
 						<div class=" tab-pane" id="distribusi_kegiatan">
 							@include('admin.modules.tab.distribusi_kegiatan_detail') 
+						</div>
+
+						<div class=" tab-pane" id="rencana_aksi">
+							@include('admin.modules.tab.rencana_aksi_detail') 
 						</div>
 						 
 					</div>
@@ -79,6 +84,10 @@ $(document).ready(function() {
 		}else if ( id == 'distribusi_kegiatan'){
 			$('html, body').animate({scrollTop:0}, 0);
 			initTreeDistribusiKegiatan();
+		}else if ( id == 'rencana_aksi'){
+			//alert(id);
+			$('html, body').animate({scrollTop:0}, 0);
+			
 		}
 
 		$('html, body').animate({scrollTop:0}, 0);
