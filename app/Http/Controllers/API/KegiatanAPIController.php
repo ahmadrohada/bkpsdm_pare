@@ -309,43 +309,63 @@ class KegiatanAPIController extends Controller {
             
           
 
-            //RENCANA AKSI
-            $ra = RencanaAksi::WHERE('kegiatan_tahunan_id',$x->kegiatan_tahunan_id)->orderBY('waktu_pelaksanaan')->orderBY('id','DESC')->get();
+            //Indikator Kegiatan
+            $ik = IndikatorKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->get();
 
-            foreach ($ra as $y) {
-                $data_rencana_aksi['id']	        = "RencanaAksi|".$y->id;
-                $data_rencana_aksi['text']			= Pustaka::capital_string($y->label).' ['. Pustaka::bulan($y->waktu_pelaksanaan).']';
-                $data_rencana_aksi['icon']	        = 'jstree-rencana_aksi';
+            foreach ($ik as $y) {
+                $data_ind_kegiatan['id']	        = "IndikatorKegiatan|".$y->id;
+                $data_ind_kegiatan['text']			= Pustaka::capital_string($y->label);
+                $data_ind_kegiatan['icon']	        = 'jstree-ind_kegiatan';
               
 
-                    $kb = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$y->id)->get();
-                    foreach ($kb as $z) {
-                        $data_keg_bulanana['id']	        = "KegiatanBulanan|".$z->id;
-                        $data_keg_bulanana['text']			=  'Target : '. $z->target.' '.$z->satuan.' ['.Pustaka::capital_string($z->RencanaAksi->pelaksana->jabatan).']';
-                        $data_keg_bulanana['icon']	        = 'jstree-kegiatan_bulanan';
+                    //Rencana aksi
+                    $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$y->id)->get();
+
+                    foreach ($ra as $z) {
+                        $data_rencana_aksi['id']	        = "RencanaAksi|".$z->id;
+                        $data_rencana_aksi['text']			= Pustaka::capital_string($z->label).' ['. Pustaka::bulan($z->waktu_pelaksanaan).']';
+                        $data_rencana_aksi['icon']	        = 'jstree-rencana_aksi';
                       
         
-                        $keg_bulanan_list[] = $data_keg_bulanana ;
+                        //TARGET PADA KEGIATAN BULANAN
+                        $kb = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$z->id)->get();
+                        foreach ($kb as $z) {
+                            $data_keg_bulanan['id']	        = "KegiatanBulanan|".$z->id;
+                            $data_keg_bulanan['text']			=  'Target : '. $z->target.' '.$z->satuan.' / Pelaksana : '.Pustaka::capital_string($z->RencanaAksi->pelaksana->jabatan);
+                            $data_keg_bulanan['icon']	        = 'jstree-target';
+                        
+            
+                            $keg_bulanan_list[] = $data_keg_bulanan ;
+                        }	
+
+                        if(!empty($keg_bulanan_list)) {
+                            $data_rencana_aksi['children']     = $keg_bulanan_list;
+                        }
+                        $rencana_aksi_list[] = $data_rencana_aksi ;
+                        $keg_bulanan_list = "";
+                        unset($data_rencana_aksi['children']);
                     }	
 
                     
-                if(!empty($keg_bulanan_list)) {
-                    $data_rencana_aksi['children']     = $keg_bulanan_list;
+                if(!empty($rencana_aksi_list)) {
+                    $data_ind_kegiatan['children']     = $rencana_aksi_list;
                 }
-                $rencana_aksi_list[] = $data_rencana_aksi ;
-                $keg_bulanan_list = "";
-                unset($data_rencana_aksi['children']);
+
+                $ind_kegiatan_list[] = $data_ind_kegiatan ;
+                $rencana_aksi_list = "";
+                unset($data_ind_kegiatan['children']);
 
 
                
             }	
 
 
-            if(!empty($rencana_aksi_list)) {
-                $data_kegiatan['children']     = $rencana_aksi_list;
+            if(!empty($ind_kegiatan_list)) {
+                $data_kegiatan['children']     = $ind_kegiatan_list;
             }
+
             $kegiatan_list[] = $data_kegiatan ;
-            $rencana_aksi_list = "";
+            $ind_kegiatan_list = "";
             unset($data_kegiatan['children']);
 
         }	
