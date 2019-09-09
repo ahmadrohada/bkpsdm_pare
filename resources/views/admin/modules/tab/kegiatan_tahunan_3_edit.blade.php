@@ -58,6 +58,7 @@
 	function initTreeKegTahunan() {
 		$('#keg_tahunan_3_tree')
 		.on("loaded.jstree", function(){
+			$('#keg_tahunan_3_tree').jstree('open_all');
 		})
 		.on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
@@ -67,7 +68,7 @@
 		.jstree({
             'core' : {
 						'data' : {
-						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_3") }}", //Eselon 2
+						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_3") }}", //Eselon 4
 						"data" 	: function (node) {
 							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
                                         "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
