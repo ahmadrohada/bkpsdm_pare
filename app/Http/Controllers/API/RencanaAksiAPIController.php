@@ -97,6 +97,59 @@ class RencanaAksiAPIController extends Controller {
 
 
 
+    public function RenjaRencanaAksiList(Request $request)
+    {
+            
+       
+        $dt = RencanaAksi::WHERE('renja_id','=', $request->renja_id )
+
+                            ->select([   
+                                'id AS rencana_aksi_id',
+                                'label',
+                                'target',
+                                'satuan',
+                                'waktu_pelaksanaan',
+                                'jabatan_id'
+                                
+                                ])
+                            ->orderBy('waktu_pelaksanaan','ASC')
+                            ->orderBy('id','DESC')
+                            ->get();
+
+                 
+                
+        $datatables = Datatables::of($dt)
+        ->addColumn('label', function ($x) {
+            return $x->label;
+        })
+        ->addColumn('kegiatan_bulanan', function ($x) {
+            $kb =  KegiatanSKPBulanan::WHERE('rencana_aksi_id',$x->rencana_aksi_id)->SELECT('id')->count();
+            return $kb;
+        })
+        ->addColumn('target', function ($x) {
+            
+            return $x->target.' '.$x->satuan;
+          
+        })
+        ->addColumn('pelaksana', function ($x) {
+            if ($x->jabatan_id > 0 ){
+                return Pustaka::capital_string($x->Pelaksana->jabatan);
+            }else{
+                return '-';
+            }
+        })     
+        ->addColumn('waktu_pelaksanaan', function ($x) {
+            return Pustaka::bulan($x->waktu_pelaksanaan);
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true); 
+        
+    }
+
     public function RencanaAksiList(Request $request)
     {
             

@@ -83,6 +83,22 @@
 					</div>
 					<div class="icon">
 						<i class="fa fa-tasks"></i>
+					</div> 
+				</div>
+			</div>
+
+			<div class="col-md-3 col-xs-6">
+				<div class="small-box bg-red skp skp_tahunan" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							<strong>SKP Tahunan</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa  fa-tasks"></i>
 					</div>
 				</div>
 			</div>
@@ -114,6 +130,10 @@ $(document).ready(function(){
 
 	$(".pohon_kinerja_skpd").click(function(){
 		window.location.assign("pohon_kinerja");
+    });
+
+	$(".skp_tahunan").click(function(){
+		window.location.assign("skp_tahunan");
     });
 
 

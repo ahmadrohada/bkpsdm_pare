@@ -56,7 +56,11 @@
 			
 
 				columns	:[
-								{ data: 'rownum' , orderable: true,searchable:false},
+								{ data: 'id' , orderable: true,searchable:false,
+									"render": function ( data, type, row ,meta) {
+										return meta.row + meta.settings._iDisplayStart + 1 ;
+									}
+								},
 								{ data: "skpd" , name:"skpd.skpd", orderable: true, searchable: true},
 								{ data: "jm_unit_kerja" , orderable: false, searchable: false,width:"120px"},
 								{ data: "jm_pegawai" , orderable: false, searchable: false,width:"120px"},

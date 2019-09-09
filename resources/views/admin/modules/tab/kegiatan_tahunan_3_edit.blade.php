@@ -27,7 +27,7 @@
 				</div>
 				<div class="box-body table-responsive">
 
-					<strong>Nama Kegiatan Tahunan</strong>
+					<strong>Label</strong>
 					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 						<span class="kegiatan_tahunan_label"></span>
 						<input type="hidden" class="kegiatan_tahunan_id">
@@ -35,6 +35,30 @@
 
 					<i class="fa fa-industry"></i> <span class="txt_output" style="margin-right:10px;"></span>
 					<i class="fa fa-hourglass-start"></i> <span class="txt_waktu" style="margin-right:10px;"></span>
+					
+				</div>
+			</div>
+		</div>
+
+		<div id='indikator_kegiatan_detail' hidden>
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h1 class="box-title">
+						Detail Indikator Kegiatan
+					</h1>
+
+					<div class="box-tools pull-right">
+						{!! Form::button('<i class="fa fa-remove "></i>', array('class' => 'btn btn-box-tool tutup_detail_detail_kegiatan_tahunan','title' => 'Tutup', 'data-toggle' => 'tooltip')) !!}
+					</div>
+				</div>
+				<div class="box-body table-responsive">
+
+					<strong>Label</strong>
+					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
+						<span class="indikator_kegiatan_label"></span>
+					</p>
+
+					<i class="fa fa-industry"></i> <span class="txt_output_indikator_kegiatan" style="margin-right:10px;"></span>
 					
 				</div>
 			</div>
@@ -110,6 +134,7 @@
                   	//SHOW DETAIL KEGIATAN TAHUNAN DAN RENCANA KERJA LIST
                   	$("#kegiatan_tahunan").hide();
 					$("#rencana_aksi").show();
+					$("#indikator_kegiatan_detail").hide();
 					$("#rencana_aksi_detail").hide();
                   	load_rencana_aksi( tx[1]);
                        
@@ -120,15 +145,22 @@
 				case 'RencanaAksi':
 					$("#kegiatan_tahunan").hide();
 					$("#rencana_aksi").hide();
+					$("#indikator_kegiatan_detail").hide();
 					$("#rencana_aksi_detail").show();
 					load_rencana_aksi_detail( tx[1]);	
 				break;
-				case 'KegiatanBulanan':
+				case 'IndikatorKegiatan':
+					$("#kegiatan_tahunan").hide();
+					$("#rencana_aksi").hide();
+					$("#indikator_kegiatan_detail").show();
+					$("#rencana_aksi_detail").hide();
+					load_indikator_kegiatan_detail( tx[1]);	
 
 				break;
 				default:
 					$("#kegiatan_tahunan").show();
 					$("#rencana_aksi").hide();
+					$("#indikator_kegiatan_detail").hide();
 					$("#rencana_aksi_detail").hide();
 				
 			}
@@ -149,7 +181,23 @@
 	
 
 	
-
+	function load_indikator_kegiatan_detail(id){
+		$.ajax({
+				url			: '{{ url("api_resource/ind_kegiatan_detail") }}',
+				data 		: {ind_kegiatan_id : id},
+				method		: "GET",
+				dataType	: "json",
+				success	: function(data) {
+						
+						$('.indikator_kegiatan_label').html(data['label']);
+						$('.txt_output_indikator_kegiatan').html(data['target']+" "+data['satuan']);
+						
+				},
+				error: function(data){
+					
+				}						
+		});
+	}
 	
 	
 	function load_rencana_aksi_detail(rencana_aksi_id){

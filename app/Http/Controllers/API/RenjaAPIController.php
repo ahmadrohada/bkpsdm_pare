@@ -23,6 +23,8 @@ use App\Models\Program;
 use App\Models\IndikatorProgram;
 use App\Models\Kegiatan;
 use App\Models\IndikatorKegiatan;
+use App\Models\KegiatanSKPBulanan;
+use App\Models\RencanaAksi;
 use App\Models\PetaJabatan;
 use App\Models\MasaPemerintahan;
 
@@ -504,8 +506,42 @@ class RenjaAPIController extends Controller {
                                         $sub_data_ind_kegiatan['icon']          = "jstree-ind_kegiatan";
                                         $sub_data_ind_kegiatan['type']          = "ind_kegiatan";
 
+//RENCANA AKSI
+                                    $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$g->id)->get();
 
-                                        $ind_kegiatan_list[] = $sub_data_ind_kegiatan ;
+                                        foreach ($ra as $za) {
+                                            $data_rencana_aksi['id']	= "RencanaAksi|".$za->id;
+                                            $data_rencana_aksi['text']	= Pustaka::capital_string($za->label).' ['. Pustaka::bulan($za->waktu_pelaksanaan).']';
+                                            $data_rencana_aksi['icon']  = 'jstree-rencana_aksi';
+
+
+
+ //TARGET PADA KEGIATAN BULANAN
+                                        $kb = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$za->id)->get();
+                                            foreach ($kb as $az) {
+                                                $data_keg_bulanan['id']	    = "KegiatanBulanan|".$az->id;
+                                                $data_keg_bulanan['text']	=  'Target : '. $az->target.' '.$az->satuan.' / Pelaksana : '.Pustaka::capital_string($az->RencanaAksi->pelaksana->jabatan);
+                                                $data_keg_bulanan['icon']	= 'jstree-target';
+                                            
+
+                                                $keg_bulanan_list[] = $data_keg_bulanan ;
+                                            }	
+                                                if(!empty($keg_bulanan_list)) {
+                                                    $data_rencana_aksi['children']     = $keg_bulanan_list;
+                                                }
+
+                                                $rencana_aksi_list[] = $data_rencana_aksi ;
+                                                $keg_bulanan_list = "";
+                                                unset($data_rencana_aksi['children']);
+
+                                            if(!empty($rencana_aksi_list)) {
+                                                $sub_data_ind_kegiatan['children']     = $rencana_aksi_list;
+                                            }
+                                            
+                                            $ind_kegiatan_list[] = $sub_data_ind_kegiatan ;
+                                            $rencana_aksi_list = "";
+                                            unset($sub_data_ind_kegiatan['children']);
+                                        }
                                     }
 
                                     if(!empty($ind_kegiatan_list)) {

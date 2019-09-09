@@ -14,7 +14,7 @@
 				{!! Breadcrumbs::render('dashboard') !!}
       </section>
 	    <section class="content">
-				@include('admin.modules.personal-home-snapshots-boxes')
+				@include('admin.modules.snapshots-boxes-personal-home')
 
 	    </section>
 	</div>
