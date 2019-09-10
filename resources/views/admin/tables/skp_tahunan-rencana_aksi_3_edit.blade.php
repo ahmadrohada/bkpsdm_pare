@@ -2,7 +2,7 @@
 	<div class="box box-primary">
 		<div class="box-header with-border">
 			<h1 class="box-title">
-				Detail Kegiatan Tahunan
+				Detail Kegiatan Tahunan 
 			</h1>
 
 			<div class="box-tools pull-right">

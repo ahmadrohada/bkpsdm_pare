@@ -548,6 +548,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	
 	Route::get('renja_rencana_aksi','API\RencanaAksiAPIController@RenjaRencanaAksiList');
+	Route::get('kegiatan_rencana_aksi','API\RencanaAksiAPIController@KegiatanRencanaAksiList');
+	
+	
 	
 
 

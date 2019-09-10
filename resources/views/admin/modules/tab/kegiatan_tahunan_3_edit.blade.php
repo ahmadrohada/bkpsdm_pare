@@ -253,6 +253,7 @@
 						
 				},
 				error: function(data){
+						document.getElementById('list_indikator').innerHTML = "";
 					
 				}						
 		});

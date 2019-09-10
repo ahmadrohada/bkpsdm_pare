@@ -150,7 +150,7 @@
 						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
-						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+						$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
 						load_kegiatan_ka_skpd(tx[1]);
 				
@@ -159,7 +159,7 @@
 						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").show();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
-						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+						$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
 						load_kegiatan_kabid(tx[1]);
 				
@@ -168,7 +168,7 @@
 						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").show();
-						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+						$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
 						load_kegiatan_kasubid(tx[1]);
 				
@@ -177,26 +177,43 @@
 						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
-						$(".div_kegiatan_detail, .div_ind_kegiatan_list").show();
+						$(".div_kegiatan_detail, .div_rencana_aksi_list").show();
 						$(".div_ind_kegiatan_detail").hide();
-						load_ind_kegiatan2( tx[1]);
+						//load_ind_kegiatan2( tx[1]);
+						load_rencana_aksi2(tx[1]);
 				
 			break;
 			case 'ind_kegiatan':
 						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
-						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+						$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
 						$(".div_ind_kegiatan_detail").show();
 						load_ind_kegiatan_end2( tx[1]);
 				
-			break;
+				break;
+				case 'rencana_aksi':
+						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
+						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
+						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+						$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
+						$(".div_ind_kegiatan_detail").hide();
+					
+				break;
+				case 'kegiatan_bulanan':
+						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
+						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
+						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+						$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
+						$(".div_ind_kegiatan_detail").hide();
+					
+				break;
 
 			default: 
 			$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
 			$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 			$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
-			$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+			$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
 			$(".div_ind_kegiatan_detail").hide();
 						
 		
@@ -207,7 +224,7 @@
 		$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
 		$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 		$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
-		$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+		$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
 		$(".div_ind_kegiatan_detail").hide();
 		jQuery('#ditribusi_renja').jstree().deselect_all(true);
 	});  
