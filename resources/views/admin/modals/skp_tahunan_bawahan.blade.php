@@ -1,7 +1,9 @@
 <div class="modal fade modal-skp_tahunan_bawahan" id="" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
-			<div class="modal-body">
+			<div class="modal-body"> 
+
+			<div class="box-body table-responsive">
 		
 				List bawahan yang belum membuat SKP Tahunan
 				<table id="skp_tahunan_table_bawahan" class="table table-striped table-hover table-condensed">
@@ -17,7 +19,7 @@
 					
 				</table>
 	
-			
+			</div>
 
         	</div>
 			<div class="modal-footer">
