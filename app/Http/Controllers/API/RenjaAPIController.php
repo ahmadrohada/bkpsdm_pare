@@ -450,8 +450,7 @@ class RenjaAPIController extends Controller {
                
             
 //SASARAN 
-            $sasaran = Sasaran::where('indikator_tujuan_id','=',$v->id)
-                                ->select('id','label')->get();
+            $sasaran = Sasaran::where('indikator_tujuan_id','=',$v->id)->select('id','label')->get();
             foreach ($sasaran as $y) {
                 $sub_data_sasaran['id']		        = "sasaran|".$y->id;
                 $sub_data_sasaran['text']			= Pustaka::capital_string($y->label);
@@ -533,15 +532,15 @@ class RenjaAPIController extends Controller {
                                                 $rencana_aksi_list[] = $data_rencana_aksi ;
                                                 $keg_bulanan_list = "";
                                                 unset($data_rencana_aksi['children']);
-
+                                            }
                                             if(!empty($rencana_aksi_list)) {
                                                 $sub_data_ind_kegiatan['children']     = $rencana_aksi_list;
                                             }
                                             
-                                            $ind_kegiatan_list[] = $sub_data_ind_kegiatan ;
-                                            $rencana_aksi_list = "";
-                                            unset($sub_data_ind_kegiatan['children']);
-                                        }
+                                        $ind_kegiatan_list[] = $sub_data_ind_kegiatan ;
+                                        $rencana_aksi_list = "";
+                                        unset($sub_data_ind_kegiatan['children']);
+                                        
                                     }
 
                                     if(!empty($ind_kegiatan_list)) {
