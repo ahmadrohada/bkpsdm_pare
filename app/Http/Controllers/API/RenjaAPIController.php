@@ -509,7 +509,7 @@ class RenjaAPIController extends Controller {
                                     $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$g->id)->get();
 
                                         foreach ($ra as $za) {
-                                            $data_rencana_aksi['id']	= "RencanaAksi|".$za->id;
+                                            $data_rencana_aksi['id']	= "rencana_aksi|".$za->id;
                                             $data_rencana_aksi['text']	= Pustaka::capital_string($za->label).' ['. Pustaka::bulan($za->waktu_pelaksanaan).']';
                                             $data_rencana_aksi['icon']  = 'jstree-rencana_aksi';
 
@@ -518,7 +518,7 @@ class RenjaAPIController extends Controller {
  //TARGET PADA KEGIATAN BULANAN
                                         $kb = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$za->id)->get();
                                             foreach ($kb as $az) {
-                                                $data_keg_bulanan['id']	    = "KegiatanBulanan|".$az->id;
+                                                $data_keg_bulanan['id']	    = "kegiatan_bulanan|".$az->id;
                                                 $data_keg_bulanan['text']	=  'Target : '. $az->target.' '.$az->satuan.' / Pelaksana : '.Pustaka::capital_string($az->RencanaAksi->pelaksana->jabatan);
                                                 $data_keg_bulanan['icon']	= 'jstree-target';
                                             

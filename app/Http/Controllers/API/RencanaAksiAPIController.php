@@ -8,7 +8,7 @@ use App\Models\PerjanjianKinerja;
 use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\CapaianRencanaAksi;
-
+use App\Models\HistoryJabatan;
 
 
 use App\Models\Tujuan;
@@ -36,7 +36,18 @@ Use Alert;
 
 class RencanaAksiAPIController extends Controller {
 
-
+    //=======================================================================================//
+    protected function jabatan($id_jabatan){ 
+        $jabatan       = HistoryJabatan::WHERE('id',$id_jabatan)
+                        ->SELECT('jabatan')
+                        ->first();
+        if ( $jabatan == null ){
+            return $jabatan;
+        }else{
+            return Pustaka::capital_string($jabatan->jabatan);
+        }
+        
+    }
 
     public function rencana_aksi_tree(Request $request)
     {
@@ -95,6 +106,63 @@ class RencanaAksiAPIController extends Controller {
         
     }
 
+    public function KegiatanRencanaAksiList(Request $request)
+    {
+            
+       
+
+        $ind_kegiatan = IndikatorKegiatan::WHERE('kegiatan_id',$request->kegiatan_id) 
+                                        ->join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                                            $join   ->on('rencana_aksi.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
+                                        })
+                                        ->select([   
+                                            'rencana_aksi.id AS rencana_aksi_id',
+                                            'rencana_aksi.label',
+                                            'rencana_aksi.target',
+                                            'rencana_aksi.satuan',
+                                            'rencana_aksi.waktu_pelaksanaan',
+                                            'rencana_aksi.jabatan_id'
+                                            
+                                            ])
+                                        ->orderBy('rencana_aksi.waktu_pelaksanaan','ASC')
+                                        ->orderBy('rencana_aksi.id','DESC')
+                                        ->get();
+
+        $datatables = Datatables::of($ind_kegiatan)
+        ->addColumn('label', function ($x) {
+            return $x->label;
+        })
+        ->addColumn('target', function ($x) {
+            return $x->target.' '.$x->satuan;
+        })
+        ->addColumn('pelaksana', function ($x) {
+            if ( $x->jabatan_id > 0){
+        
+                if ( $this->jabatan($x->jabatan_id) == null ){
+                    return "ID Jabatan : ".$x->jabatan_id;
+                }else{
+                    return  $this->jabatan($x->jabatan_id);
+                }
+
+            }else{
+                return '-';
+            }
+        })     
+        ->addColumn('waktu_pelaksanaan', function ($x) {
+            if ( $x->waktu_pelaksanaan != 0){
+                return Pustaka::bulan($x->waktu_pelaksanaan);
+            }else{
+                return "-";
+            }
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true); 
+        
+    }
 
 
     public function RenjaRencanaAksiList(Request $request)

@@ -21,5 +21,11 @@ class IndikatorKegiatan extends Model
     }
 
 
+    public function Rencanaaksi()
+    {
+        return $this->hasMany('App\Models\RencanAksi');
+    }
+
+
 
 }
