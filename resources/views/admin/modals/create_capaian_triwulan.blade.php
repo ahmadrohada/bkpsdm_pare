@@ -162,13 +162,13 @@
 			<div class="modal-footer" style="border:none; margin-top:-20px;">
 				
 
-					<input type="text" class="form-control pegawai_id" name="pegawai_id"  />
-					<input type="text" class="form-control trimester" name="trimester"  />
-					<input type="text" class="form-control skp_tahunan_id" name="skp_tahunan_id"  />
-					<input type="text" class="form-control u_nama	" name="u_nama"  />
-					<input type="text" class="form-control u_jabatan_id " name="u_jabatan_id"  />
-					<input type="text" class="form-control p_nama	" name="p_nama"  />
-					<input type="text" class="form-control p_jabatan_id	" name="p_jabatan_id"  />
+					<input type="hidden" class="form-control pegawai_id" name="pegawai_id"  />
+					<input type="hidden" class="form-control trimester" name="trimester"  />
+					<input type="hidden" class="form-control skp_tahunan_id" name="skp_tahunan_id"  />
+					<input type="hidden" class="form-control u_nama	" name="u_nama"  />
+					<input type="hidden" class="form-control u_jabatan_id " name="u_jabatan_id"  />
+					<input type="hidden" class="form-control p_nama	" name="p_nama"  />
+					<input type="hidden" class="form-control p_jabatan_id	" name="p_jabatan_id"  />
 
 
                	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}

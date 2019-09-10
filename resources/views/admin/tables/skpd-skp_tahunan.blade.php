@@ -39,7 +39,7 @@
 				processing      : true,
 				serverSide      : true,
 				searching      	: false,
-				paging          : false,
+				paging          : true,
 				//order 			: [ 3 , 'asc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],

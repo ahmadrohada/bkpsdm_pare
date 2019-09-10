@@ -39,6 +39,24 @@ Use Alert;
 
 class SKPTahunanController extends Controller {
 
+    public function AdministratorSKPTahunanDetail(Request $request)
+	{
+        $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
+
+        
+        return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan]);  
+       
+    }
+
+    public function SKPDSKPTahunanDetail(Request $request)
+	{
+        $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
+
+        
+        return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan]);  
+       
+    }
+
     public function PersonalSKPTahunanDetail(Request $request)
 	{
         $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
