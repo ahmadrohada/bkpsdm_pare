@@ -54,7 +54,7 @@
 
 					<!-- 4. PELAKSANA -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
-						@include('admin.tables.skp_kegiatan_tahunan_4_detail')
+					@include('admin.modules.tab.kegiatan_tahunan_4_detail')
 					@endif
 				
 					
