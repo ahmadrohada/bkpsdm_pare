@@ -49,6 +49,19 @@ class RencanaAksiAPIController extends Controller {
         
     }
 
+    //=======================================================================================//
+    protected function pelaksana($id_jabatan){ 
+        $jabatan       = SKPD::WHERE('id',$id_jabatan)
+                        ->SELECT('skpd')
+                        ->first();
+        if ( $jabatan == null ){
+            return $jabatan;
+        }else{
+            return Pustaka::capital_string($jabatan->jabatan);
+        }
+        
+    }
+
     public function rencana_aksi_tree(Request $request)
     {
        
@@ -138,10 +151,10 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('pelaksana', function ($x) {
             if ( $x->jabatan_id > 0){
         
-                if ( $this->jabatan($x->jabatan_id) == null ){
+                if ( $this->pelaksana($x->jabatan_id) == null ){
                     return "ID Jabatan : ".$x->jabatan_id;
                 }else{
-                    return  $this->jabatan($x->jabatan_id);
+                    return  $this->pelaksana($x->jabatan_id);
                 }
 
             }else{

@@ -24,7 +24,8 @@
 						<li class="detail"><a href="#detail" data-toggle="tab">Detail</a></li>
 						<li class="rencana_kerja_tab"><a href="#rencana_kerja_tab" data-toggle="tab">Pohon Kinerja</a></li>
 						<li class="distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
-						
+						<li class="kegiatan_tahunan"><a href="#kegiatan_tahunan" data-toggle="tab">Kegiatan Tahunan</a></li>
+					
 					</ul>
 						
 					<div class="tab-content"  style="margin-left:20px;">
@@ -42,6 +43,11 @@
   
 						<div class=" tab-pane" id="distribusi_kegiatan">
 							@include('admin.modules.tab.distribusi_kegiatan_detail') 
+						</div>
+
+						
+						<div class=" tab-pane" id="kegiatan_tahunan">
+							@include('admin.modules.tab.pohon_kinerja-kegiatan_tahunan_detail') 
 						</div>
 
 						
@@ -86,6 +92,9 @@ $(document).ready(function() {
 			//alert(id);
 			$('html, body').animate({scrollTop:0}, 0);
 			
+		}else if ( id == 'kegiatan_tahunan'){
+			$('html, body').animate({scrollTop:0}, 0);
+			initTreeKegTahunanPK();
 		}
 
 		$('html, body').animate({scrollTop:0}, 0);

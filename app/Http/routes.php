@@ -206,6 +206,11 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skpd-renja_kegiatan_list','API\KegiatanAPIController@KegiatanList');
 	Route::get('skpd-renja_kegiatan_non_anggaran_list','API\KegiatanAPIController@KegiatanNonAnggaranList');
 
+	Route::get('pohon_kinerja-kegiatan_tree','API\KegiatanAPIController@PohonKinerjaKegiatanTree');
+	Route::get('pohon_kinerja-kegiatan_list','API\KegiatanAPIController@PohonKinerjaKegiatanKegiatanList');
+	Route::get('pohon_kinerja-kegiatan_non_anggaran_list','API\KegiatanAPIController@PohonKinerjaKegiatanKegiatanNonAnggaranList');
+
+
 	Route::get('kegiatan_detail','API\KegiatanAPIController@KegiatanDetail');
 	Route::get('kegiatan_renja_detail','API\KegiatanAPIController@KegiatanDetail');
 

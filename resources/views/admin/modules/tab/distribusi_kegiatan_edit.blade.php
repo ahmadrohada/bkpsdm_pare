@@ -20,8 +20,6 @@
 
      
 
-<link rel="stylesheet" href="{{asset('assets/jstree/themes/default/style.css')}}" />
-<script src="{{asset('assets/jstree/jstree.min.js')}}"></script>
 
 
 @include('admin.modals.distribusi_kegiatan-add')

@@ -228,27 +228,11 @@
 					
 				break;
 				case 'rencana_aksi':
-							$(".div_misi_detail, .div_tujuan_list").hide();
-							$(".div_tujuan_detail, .div_ind_tujuan_list").hide();
-							$(".div_ind_tujuan_detail, .div_sasaran_list").hide();
-							$(".div_sasaran_detail, .div_ind_sasaran_list").hide();
-							$(".div_ind_sasaran_detail, .div_program_list").hide();
-							$(".div_program_detail, .div_ind_program_list").hide();
-							$(".div_ind_program_detail, .div_kegiatan_list").hide();
-							$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
-							$(".div_ind_kegiatan_detail").hide();
+							
 					
 				break;
 				case 'kegiatan_bulanan':
-							$(".div_misi_detail, .div_tujuan_list").hide();
-							$(".div_tujuan_detail, .div_ind_tujuan_list").hide();
-							$(".div_ind_tujuan_detail, .div_sasaran_list").hide();
-							$(".div_sasaran_detail, .div_ind_sasaran_list").hide();
-							$(".div_ind_sasaran_detail, .div_program_list").hide();
-							$(".div_program_detail, .div_ind_program_list").hide();
-							$(".div_ind_program_detail, .div_kegiatan_list").hide();
-							$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
-							$(".div_ind_kegiatan_detail").hide();
+						
 					
 				break;
 				
