@@ -242,8 +242,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::get('skpd-renja_ind_kegiatan_list','API\IndikatorKegiatanAPIController@IndikatorKegiatanList');
 	Route::get('ind_kegiatan_detail','API\IndikatorKegiatanAPIController@IndikatorKegiatanDetail');
-
-
+	Route::get('ind_kegiatan_for_realisasi','API\IndikatorKegiatanAPIController@IndikatorKegiatanDetail4Realisasi');
+	
 	Route::get('select2_indikator_kegiatan_list','API\IndikatorKegiatanAPIController@Select2IndikatorKegiatanList');
 	
 

@@ -429,7 +429,7 @@ class KegiatanAPIController extends Controller {
               
 
                     //Rencana aksi
-                    /* $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$y->id)->get();
+                    $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$y->id)->get();
 
                     foreach ($ra as $z) {
                         $data_rencana_aksi['id']	        = "RencanaAksi|".$z->id;
@@ -463,8 +463,8 @@ class KegiatanAPIController extends Controller {
 
                 $ind_kegiatan_list[] = $data_ind_kegiatan ;
                 $rencana_aksi_list = "";
-                unset($data_ind_kegiatan['children']); */
-                $ind_kegiatan_list[] = $data_ind_kegiatan ;
+                unset($data_ind_kegiatan['children']); 
+                //$ind_kegiatan_list[] = $data_ind_kegiatan ;
 
                
             }	
