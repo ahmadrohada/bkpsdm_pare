@@ -216,13 +216,13 @@ table.dataTable  thead th  {
 	font-weight:bold;
 	font-size:13px;
   text-shadow: black 0.1em 0.1em 0.2em;
-  border : 1px solid rgb(245, 245, 245);
+  border : 1px solid rgb(223, 223, 223);
 	
 }
 
 
 table.dataTable  td  {
   
-  border : 1px solid rgb(245, 245, 245);
+  border : 1px solid rgb(223, 223, 223);
 	
 }

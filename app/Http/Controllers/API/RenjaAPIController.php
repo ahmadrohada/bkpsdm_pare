@@ -506,7 +506,7 @@ class RenjaAPIController extends Controller {
                                         $sub_data_ind_kegiatan['type']          = "ind_kegiatan";
 
 //RENCANA AKSI
-                                    $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$g->id)->get();
+                                    /* $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$g->id)->get();
 
                                         foreach ($ra as $za) {
                                             $data_rencana_aksi['id']	= "rencana_aksi|".$za->id;
@@ -540,7 +540,8 @@ class RenjaAPIController extends Controller {
                                         $ind_kegiatan_list[] = $sub_data_ind_kegiatan ;
                                         $rencana_aksi_list = "";
                                         unset($sub_data_ind_kegiatan['children']);
-                                        
+                                         */
+                                        $ind_kegiatan_list[] = $sub_data_ind_kegiatan ;
                                     }
 
                                     if(!empty($ind_kegiatan_list)) {

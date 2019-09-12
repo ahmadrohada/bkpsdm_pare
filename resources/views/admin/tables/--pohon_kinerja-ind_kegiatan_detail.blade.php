@@ -36,7 +36,7 @@
 		</div>
 	</div>
 
-<!-- 
+
 	<div class="box box-primary div_rencana_aksi_list" hidden>
 		<div class="box-header with-border">
 			<h1 class="box-title">
@@ -62,7 +62,7 @@
 			</table>
 
 		</div>
-	</div> -->
+	</div>
 
 
 <script type="text/javascript">
@@ -97,7 +97,7 @@
 		});
 
 
-		/* var table_rencana_aksi = $('#rencana_aksi_table').DataTable({
+		var table_rencana_aksi = $('#rencana_aksi_table').DataTable({
 				destroy			: true,
 				processing      : false,
 				serverSide      : true,
@@ -130,7 +130,7 @@
 				
 							
 			
-		});	 */
+		});	
 	}
 
 </script>

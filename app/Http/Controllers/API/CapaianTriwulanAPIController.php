@@ -212,7 +212,11 @@ class CapaianTriwulanAPIController extends Controller {
                                     'triwulan1.id AS capaian_triwulan1_id',
                                     'triwulan2.id AS capaian_triwulan2_id',
                                     'triwulan3.id AS capaian_triwulan3_id',
-                                    'triwulan4.id AS capaian_triwulan4_id'
+                                    'triwulan4.id AS capaian_triwulan4_id',
+                                    'triwulan1.status AS capaian_triwulan1_status',
+                                    'triwulan2.status AS capaian_triwulan2_status',
+                                    'triwulan3.status AS capaian_triwulan3_status',
+                                    'triwulan4.status AS capaian_triwulan4_status'
                                 )
                         ->get(); 
 

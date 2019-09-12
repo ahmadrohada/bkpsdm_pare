@@ -28,6 +28,113 @@ Use Alert;
 
 class KegiatanAPIController extends Controller {
 
+
+    public function PohonKinerjaKegiatanTree(Request $request)
+    {
+       
+        
+        $skp_tahunan_id = $request->skp_tahunan_id;
+        $kegiatan = Kegiatan::SELECT('id','label')
+                            ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
+                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
+                            })
+                            ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
+                                        'renja_kegiatan.label AS kegiatan_label',
+                                        'kegiatan_tahunan.id AS kegiatan_tahunan_id',
+                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label'
+
+                                    ) 
+                            ->get(); 
+        
+
+            
+		foreach ($kegiatan as $x) {
+            if ( $x->kegiatan_tahunan_id >= 1 ){
+                $kegiatan_id                    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
+                $kegiatan_label                 = $x->kegiatan_tahunan_label;
+                $data_kegiatan['icon']	        = 'jstree-kegiatan_tahunan';
+            }else{
+                $kegiatan_id                    = "KegiatanRenja|".$x->kegiatan_id."|".$x->kegiatan_label;
+                $kegiatan_label                 = $x->kegiatan_label;
+                $data_kegiatan['icon']	        = 'jstree-kegiatan';
+            }
+
+            $data_kegiatan['id']	            = $kegiatan_id;
+            $data_kegiatan['text']			    = Pustaka::capital_string($kegiatan_label);
+            
+          
+
+            //Indikator Kegiatan
+            $ik = IndikatorKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->get();
+
+            foreach ($ik as $y) {
+                $data_ind_kegiatan['id']	        = "IndikatorKegiatan|".$y->id;
+                $data_ind_kegiatan['text']			= Pustaka::capital_string($y->label);
+                $data_ind_kegiatan['icon']	        = 'jstree-ind_kegiatan';
+              
+
+                    //Rencana aksi
+                    $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$y->id)->get();
+
+                    foreach ($ra as $z) {
+                        $data_rencana_aksi['id']	        = "RencanaAksi|".$z->id;
+                        $data_rencana_aksi['text']			= Pustaka::capital_string($z->label).' ['. Pustaka::bulan($z->waktu_pelaksanaan).']';
+                        $data_rencana_aksi['icon']	        = 'jstree-rencana_aksi';
+                      
+        
+                        //TARGET PADA KEGIATAN BULANAN
+                        $kb = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$z->id)->get();
+                        foreach ($kb as $a) {
+                            $data_keg_bulanan['id']	        = "KegiatanBulanan|".$a->id;
+                            $data_keg_bulanan['text']			=  'Target : '. $a->target.' '.$a->satuan.' / Pelaksana : '.Pustaka::capital_string($a->RencanaAksi->pelaksana->jabatan);
+                            $data_keg_bulanan['icon']	        = 'jstree-target';
+                        
+            
+                            $keg_bulanan_list[] = $data_keg_bulanan ;
+                        }	
+
+                        if(!empty($keg_bulanan_list)) {
+                            $data_rencana_aksi['children']     = $keg_bulanan_list;
+                        }
+                        $rencana_aksi_list[] = $data_rencana_aksi ;
+                        $keg_bulanan_list = "";
+                        unset($data_rencana_aksi['children']);
+                    }	
+
+                    
+                if(!empty($rencana_aksi_list)) {
+                    $data_ind_kegiatan['children']     = $rencana_aksi_list;
+                }
+
+                $ind_kegiatan_list[] = $data_ind_kegiatan ;
+                $rencana_aksi_list = "";
+                unset($data_ind_kegiatan['children']); 
+
+            }	
+
+
+            if(!empty($ind_kegiatan_list)) {
+                $data_kegiatan['children']     = $ind_kegiatan_list;
+            }
+
+            $kegiatan_list[] = $data_kegiatan ;
+            $ind_kegiatan_list = "";
+            unset($data_kegiatan['children']);
+
+        }	
+
+
+        if(!empty($kegiatan_list)) {
+            return  $kegiatan_list;
+        }else{
+            return "[{}]";
+        } 
+        
+    }
+
+
     public function RenjaDistribusiKegiatanTree(Request $request)
     {
        
@@ -293,38 +400,9 @@ class KegiatanAPIController extends Controller {
 
                                     ) 
                             ->get(); 
-        /* $renja_id       = $request->renja_id;
-        $jabatan_id     = $request->jabatan_id;
-        $skp_tahunan_id = $request->skp_tahunan_id;
         
-        $ind_kegiatan = IndikatorKegiatan::SELECT('id','label')
-                            //RIGHT ke Kegiatan
-                            ->join('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) use ( $renja_id,$jabatan_id ){
-                                $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
-                                $join   ->WHERE('renja_kegiatan.renja_id','=', $renja_id );
-                                $join   ->WHERE('renja_kegiatan.jabatan_id', '=' ,$jabatan_id );
-                            })
-                            //LEFT ke SKP kegiatan
-                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
-                                $join   ->on('kegiatan_tahunan.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
-                                //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
-                            })
 
-                            ->SELECT(   'renja_indikator_kegiatan.id AS ind_kegiatan_id',
-                                        'renja_indikator_kegiatan.label AS ind_kegiatan_label',
-                                        'renja_kegiatan.cost AS indikator_kegiatan_cost',
-                                        'renja_kegiatan.id AS kegiatan_id',
-                                        'renja_kegiatan.renja_id AS renja_id',
-                                        'kegiatan_tahunan.id AS kegiatan_tahunan_id',
-                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label'
-
-                                    ) 
-                            ->get(); */
-
-                          
-
-                          
-
+            
 		foreach ($kegiatan as $x) {
             if ( $x->kegiatan_tahunan_id >= 1 ){
                 $kegiatan_id                    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
@@ -385,8 +463,8 @@ class KegiatanAPIController extends Controller {
 
                 $ind_kegiatan_list[] = $data_ind_kegiatan ;
                 $rencana_aksi_list = "";
-                unset($data_ind_kegiatan['children']);
-
+                unset($data_ind_kegiatan['children']); 
+                //$ind_kegiatan_list[] = $data_ind_kegiatan ;
 
                
             }	
@@ -573,7 +651,8 @@ class KegiatanAPIController extends Controller {
                             'indikator',
                             'target',
                             'satuan',
-                            'cost'
+                            'cost',
+                            'jabatan_id'
                             ])
                             ->get();
 
@@ -610,15 +689,7 @@ class KegiatanAPIController extends Controller {
         $jm_data = Kegiatan::where('indikator_program_id', '=' ,$request->get('ind_program_id'))
                 ->WHERE('renja_id',$request->get('renja_id'))
                 ->WHERE('cost','>', 0 )
-                ->select([   
-                    'id AS kegiatan_id',
-                    'label AS label_kegiatan',
-                    'indikator',
-                    'target',
-                    'satuan',
-                    'cost'
-                    ])
-                    ->count();
+                ->count();
 
         $dt = Kegiatan::where('indikator_program_id', '=' ,$request->get('ind_program_id'))
                         ->WHERE('renja_id',$request->get('renja_id'))
@@ -629,7 +700,8 @@ class KegiatanAPIController extends Controller {
                             'indikator',
                             'target',
                             'satuan',
-                            'cost'
+                            'cost',
+                            'jabatan_id'
                             ])
                             ->get();
 
@@ -651,6 +723,118 @@ class KegiatanAPIController extends Controller {
         })
         ->addColumn('jm_data', function ($x) use($jm_data) {
             return $jm_data;
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
+
+    public function PohonKinerjaKegiatanKegiatanList(Request $request)
+    {
+
+        $dt = Kegiatan::where('renja_id', '=' ,$request->get('renja_id'))
+                        ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                            
+                        })
+                        ->WHERE('renja_kegiatan.cost','>', 0 )
+                        ->select([   
+                            'kegiatan_tahunan.id AS kegiatan_tahunan_id',
+                            'renja_kegiatan.id AS kegiatan_id',
+                            'renja_kegiatan.label AS label_kegiatan',
+                            'renja_kegiatan.indikator',
+                            'renja_kegiatan.target',
+                            'renja_kegiatan.satuan',
+                            'renja_kegiatan.cost',
+                            'renja_kegiatan.jabatan_id'
+                            ])
+                            ->get();
+
+        $datatables = Datatables::of($dt)
+            ->addColumn('label_kegiatan', function ($x) {
+            return $x->label_kegiatan;
+         })
+         ->addColumn('indikator_kegiatan', function ($x) {
+            return $x->indikator;
+        })
+        ->addColumn('target_kegiatan', function ($x) {
+            return $x->target.' '.$x->satuan ;
+        })
+        ->addColumn('cost_kegiatan', function ($x) {
+            return "Rp.  " .number_format($x->cost,'0',',','.') ;
+        })
+        ->addColumn('action', function ($x) {
+            return $x->kegiatan_id;
+        })
+        ->addColumn('penanggung_jawab', function ($x) {
+            if ( $x->PenanggungJawab != null ){
+                return Pustaka::capital_string($x->PenanggungJawab->jabatan);
+            }else{
+                return "-";
+            }
+            
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
+
+    public function PohonKinerjaKegiatanKegiatanNonAnggaranList(Request $request)
+    {
+
+
+        //JUMLAH kegiatan anggaran
+        $jm_data = Kegiatan::WHERE('renja_id',$request->get('renja_id'))
+                ->WHERE('cost','>', 0 )
+                ->count();
+
+        $dt = Kegiatan::WHERE('renja_id',$request->get('renja_id'))
+                        ->WHERE('cost','<=', 0 )
+                        ->select([   
+                            'id AS kegiatan_id',
+                            'label AS label_kegiatan',
+                            'indikator',
+                            'target',
+                            'satuan',
+                            'cost',
+                            'jabatan_id'
+                            ])
+                            ->get();
+
+        $datatables = Datatables::of($dt)
+        ->addColumn('label_kegiatan', function ($x) {
+            return $x->label_kegiatan;
+        })
+        ->addColumn('indikator_kegiatan', function ($x) {
+            return $x->indikator;
+        })
+        ->addColumn('target_kegiatan', function ($x) {
+            return $x->target.' '.$x->satuan ;
+        })
+        ->addColumn('cost_kegiatan', function ($x) {
+            return "Rp.  " .number_format($x->cost,'0',',','.') ;
+        })
+        ->addColumn('action', function ($x) {
+            return $x->kegiatan_id;
+        })
+        ->addColumn('jm_data', function ($x) use($jm_data) {
+            return $jm_data;
+        })
+        ->addColumn('penanggung_jawab', function ($x) {
+            if ( $x->PenanggungJawab != null ){
+                return Pustaka::capital_string($x->PenanggungJawab->jabatan);
+            }else{
+                return "-";
+            }
+            
         });
 
         if ($keyword = $request->get('search')['value']) {

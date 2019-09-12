@@ -76,8 +76,8 @@ return [
 	'link_title_home'    		=> 'Home',
 	'link_icon_home'     		=> 'fa-home',
 	
-	// RENCANA KERJA LINKS
-	'link_title_renja'    		=> 'Rencana Kerja',
+	// Pohon Kinerja LINKS
+	'link_title_renja'    		=> 'Pohon Kinerja',
 	'link_icon_renja'     		=> 'fa-calendar-check-o',
 
 	'link_title_renja-pd'    	=> 'Renja Pemerintah Daerah',

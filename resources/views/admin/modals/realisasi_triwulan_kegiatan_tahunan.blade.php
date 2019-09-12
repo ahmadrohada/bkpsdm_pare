@@ -9,7 +9,7 @@
             </div>
 
             <form  id="realisasi_triwulan_form" method="POST" action="">
-			<input type="hidden"  name="kegiatan_tahunan_id" class="kegiatan_tahunan_id">
+			<input type="hidden"  name="ind_kegiatan_id" class="ind_kegiatan_id">
 			<input type="hidden"  name="capaian_triwulan_id" class="capaian_triwulan_id">
 			<input type="hidden"  name="realisasi_triwulan_id" class="realisasi_triwulan_id">
 			<input type="hidden"  name="satuan" class="satuan">
@@ -21,14 +21,21 @@
 					<div class="row">
 						<div class="col-md-12 form-group label_kegiatan_tahunan">
 							<strong>Kegiatan Tahunan  </strong>
-							<p class="text-info " style="margin-top:8px;">
+							<p class="text-info " style="margin-top:1px;">
 								<span class="kegiatan_tahunan_label"></span>
 							</p>
-							<p>
-								<i class="fa fa-user"></i> <span class="penanggung_jawab" style="margin-right:10px;"></span>
+						</div>
+						<div class="col-md-12 form-group label_kegiatan_tahunan">
+							<strong>Anggaran </strong>
+							<p class="text-info " style="margin-top:1px;">
+								<span class="anggaran_kegiatan"></span>
 							</p>
-
-							
+						</div>
+						<div class="col-md-12 form-group label_kegiatan_tahunan">
+							<strong>Indikator </strong>
+							<p class="text-info " style="margin-top:1px;">
+								<span class="indikator_label"></span>
+							</p>
 						</div>
 					</div>
 					<br>
@@ -37,7 +44,7 @@
 						<div class="col-md-12 form-group label_kegiatan_tahunan">
 							<strong>Capaian Kegiatan Tahunan  Trimester I</strong>
 						</div>
-						<div class="col-md-6 col-xs-12 form-group">	
+						<div class="col-md-4 col-xs-12 form-group">	
 							<label class="control-label">Qty Target </label>
 							<div class="input-group">
 							<span type="text" class="form-control input-sm qty_target"></span>
@@ -46,7 +53,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6 col-xs-12 form-group quantity">	
+						<div class="col-md-4 col-xs-12 form-group quantity">	
 							<label class="control-label">Qty Realisasi </label>
 							<div class="input-group">
 								<input type="text" name="qty_realisasi" id="qty_realisasi" required class="form-control input-sm qty_realisasi" placeholder="realisasi">
@@ -56,21 +63,15 @@
 							</div>
 						</div>
 
-						
-
-					</div>
-					<div class="row"> 
-						<div class="col-md-6 col-xs-12 form-group">	
-							<label class="control-label">Cost Target </label>
-							<span type="text" class="form-control input-sm cost_target"></span>
-						</div>
-						<div class="col-md-6 col-xs-12 form-group cost">	
+						<div class="col-md-4 col-xs-12 form-group cost">	
 							<label class="control-label">Cost Realisasi </label>
 							<input type="text" name="cost_realisasi" id="cost_realisasi" required class="form-control input-sm cost_realisasi" placeholder="cost realisasi">
 							
 						</div>
+
+						
+
 					</div>
-					
 
 
 

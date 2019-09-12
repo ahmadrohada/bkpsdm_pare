@@ -14,7 +14,7 @@
 			</div>
 			<div class="box-body table-responsive">
 
-				<div class="toolbar">
+				<div class="toolbar"> 
 
 				</div>
 
@@ -23,6 +23,7 @@
 						<tr>
 							<th rowspan="2">No</th>
 							<th rowspan="2">KEGIATAN TAHUNAN</th>
+							<th rowspan="2">INDIKATOR</th>
 							<th colspan="2">TARGET</th>
 							<th colspan="2">REALISASI</th>
 							<th rowspan="2"><i class="fa fa-cog"></i></th>
@@ -49,6 +50,8 @@
 
 @include('admin.modals.realisasi_triwulan_kegiatan_tahunan')
 
+<script src="{{asset('assets/js/dataTables.rowsGroup.js')}}"></script>
+
 <script type="text/javascript">
 
 	
@@ -63,30 +66,42 @@
 				paging          : false,
 				//order 			: [0 , 'asc' ],
 				columnDefs		: [
-									{ "orderable": false, className: "text-center", targets: [ 0,2,4,6 ] },
-									{ className: "text-right", targets: [ 3,5 ] },
+									{ "orderable": false, className: "text-center", targets: [ 0,3,5,7 ] },
+									{ className: "text-right", targets: [ 4,6] },
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/realisasi_kegiatan_triwulan_3") }}',
 									data: { 
 										
-											"renja_id" 			: {!! $capaian_triwulan->SKPTahunan->Renja->id !!} , 
-											"jabatan_id" 		: {!! $capaian_triwulan->PejabatYangDinilai->Jabatan->id !!},
-											"capaian_triwulan_id" 		: {!! $capaian_triwulan->id !!}
+											"renja_id" 				: {!! $capaian_triwulan->SKPTahunan->Renja->id !!} , 
+											"jabatan_id" 			: {!! $capaian_triwulan->PejabatYangDinilai->Jabatan->id !!},
+											"capaian_triwulan_id" 	: {!! $capaian_triwulan->id !!}
 									 },
 								},
+				targets			: 'no-sort',
+				bSort			: false,
+				rowsGroup		: [ 0,1,4 ],
 				columns			: [
-									{ data: 'id' ,width:"10px",
+									{ data: 'kegiatan_id' ,width:"10px",
 										"render": function ( data, type, row ,meta) {
-											return meta.row + meta.settings._iDisplayStart + 1 ;
+											//return meta.row + meta.settings._iDisplayStart + 1 ;
+											//return numCols = $('#realisasi_kegiatan_triwulan_table').length ;
+											return numCols = $('#realisasi_kegiatan_triwulan_table').DataTable().rows(1).nodes().length + 1;
 									}
 									},
-									{ data: "kegiatan_tahunan_label", name:"kegiatan_tahunan_label",
+									{ data: "kegiatan_label", name:"kegiatan_label",
 										"render": function ( data, type, row ) {
-											return row.label;
+											return row.kegiatan_label;
 											
 										}
 									}, 
+									{ data: "indikator_label", name:"indikator_label",
+										"render": function ( data, type, row ) {
+											return row.indikator_label;
+											
+										}
+									}, 
+									
 									{ data: "qty_target", name:"qty_target", width:"100px",
 										"render": function ( data, type, row ) {
 											return row.qty_target ;
@@ -97,7 +112,6 @@
 											return row.cost_target ;
 										}
 									},
-									
 									{ data: "qty_realisasi", name:"qty_realisasi", width:"100px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_kegiatan_id) >= 1 ){
@@ -109,8 +123,7 @@
 
 											
 										}
-									},
-									{ data: "cost_realisasi", name:"cost_realisasi", width:"100px",
+									},{ data: "cost_realisasi", name:"cost_realisasi", width:"100px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_kegiatan_id) >= 1 ){
 												return row.cost_realisasi ;
@@ -118,6 +131,8 @@
 												return  '-';
 											
 											} 
+
+											
 										}
 									},
 									{  data: 'action',width:"60px",
@@ -128,9 +143,9 @@
 											}else{
 												if ( (row.realisasi_kegiatan_id) >= 1 ){
 													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_triwulan"  data-id="'+row.realisasi_kegiatan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_triwulan"  data-id="'+row.realisasi_kegiatan_id+'" data-label="'+row.kegiatan_tahunan_label+'" ><i class="fa fa-close " ></i></a></span>';
+															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_triwulan"  data-id="'+row.realisasi_kegiatan_id+'" data-label="'+row.indikator_label+'" ><i class="fa fa-close " ></i></a></span>';
 												}else{
-													return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_realisasi_triwulan"  data-kegiatan_tahunan_id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-plus" ></i></a></span>'+
+													return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_realisasi_triwulan"  data-indikator_id="'+row.indikator_id+'"><i class="fa fa-plus" ></i></a></span>'+
 															'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
 												
 												} 
@@ -148,29 +163,30 @@
 
 	$(document).on('click','.create_realisasi_triwulan',function(e){
 	
-		var kegiatan_tahunan_id = $(this).data('kegiatan_tahunan_id');
-		show_modal_create(kegiatan_tahunan_id);
+		var ind_kegiatan_id = $(this).data('indikator_id');
+		show_modal_create(ind_kegiatan_id);
 		//alert(kegiatan_tahunan_id);
 	});
 
-	function show_modal_create(kegiatan_tahunan_id){
+	function show_modal_create(ind_kegiatan_id){
 		$.ajax({
-				url			  : '{{ url("api_resource/kegiatan_tahunan_detail") }}',
-				data 		  : {kegiatan_tahunan_id : kegiatan_tahunan_id},
-				method		: "GET",
-				dataType	: "json",
+				url			  	: '{{ url("api_resource/ind_kegiatan_for_realisasi") }}',
+				data 		  	: {ind_kegiatan_id : ind_kegiatan_id},
+				method			: "GET",
+				dataType		: "json",
 				success	: function(data) {
 					$('.modal-realisasi_triwulan').find('[name=capaian_triwulan_id]').val({!! $capaian_triwulan->id !!});
-					$('.modal-realisasi_triwulan').find('[name=kegiatan_tahunan_id]').val(data['id']);
+					$('.modal-realisasi_triwulan').find('[name=ind_kegiatan_id]').val(data['ind_kegiatan_id']);
 					$('.modal-realisasi_triwulan').find('[name=satuan]').val(data['satuan_target_triwulan']);
 					$('.modal-realisasi_triwulan').find('.satuan').val(data['satuan']);
 
-					$('.modal-realisasi_triwulan').find('.kegiatan_tahunan_label').html(data['label']);
-					$('.modal-realisasi_triwulan').find('.penanggung_jawab').html(data['pejabat']);
+					$('.modal-realisasi_triwulan').find('.kegiatan_tahunan_label').html(data['kegiatan_tahunan_label']);
+					$('.modal-realisasi_triwulan').find('.anggaran_kegiatan').html('Rp. '+data['anggaran_kegiatan']);
+					$('.modal-realisasi_triwulan').find('.indikator_label').html(data['indikator_label']);
 					
 					$('.modal-realisasi_triwulan').find('.qty_satuan').html(data['satuan']);
 					$('.modal-realisasi_triwulan').find('.qty_target').html(data['target']);
-					$('.modal-realisasi_triwulan').find('.cost_target').html('Rp. '+data['cost']);
+					
 
 					$('.modal-realisasi_triwulan').find('h4').html('Add Realisasi Kegiatan Tahunan');
 					$('.modal-realisasi_triwulan').find('.btn-submit').attr('id', 'submit-save');
@@ -197,11 +213,12 @@
 
 					$('.modal-realisasi_triwulan').find('.realisasi_triwulan_id').val(data['id']);
 					$('.modal-realisasi_triwulan').find('[name=capaian_triwulan_id]').val({!! $capaian_triwulan->id !!});
-					$('.modal-realisasi_triwulan').find('[name=kegiatan_tahunan_id]').val(data['id']);
+					$('.modal-realisasi_triwulan').find('[name=indikator_kegiatan_id]').val(data['indikator_kegiatan_id']);
 					$('.modal-realisasi_triwulan').find('.satuan').val(data['triwulan_satuan']);
 
-					$('.modal-realisasi_triwulan').find('.kegiatan_tahunan_label').html(data['triwulan_label']);
-					$('.modal-realisasi_triwulan').find('.penanggung_jawab').html(data['triwulan_pejabat']);
+					$('.modal-realisasi_triwulan').find('.kegiatan_tahunan_label').html(data['kegiatan_tahunan_label']);
+					$('.modal-realisasi_triwulan').find('.anggaran_kegiatan').html('Rp. '+data['anggaran_kegiatan']);
+					$('.modal-realisasi_triwulan').find('.indikator_label').html(data['indikator_label']);
 					
 					$('.modal-realisasi_triwulan').find('.qty_satuan').html(data['triwulan_satuan']);
 					$('.modal-realisasi_triwulan').find('.qty_target').html(data['triwulan_qty_target']);
