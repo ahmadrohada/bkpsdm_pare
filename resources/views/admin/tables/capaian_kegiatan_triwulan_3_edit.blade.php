@@ -80,7 +80,7 @@
 								},
 				targets			: 'no-sort',
 				bSort			: false,
-				rowsGroup		: [ 0,1,4 ],
+				rowsGroup		: [ 0,1,4,6 ],
 				columns			: [
 									{ data: 'kegiatan_id' ,width:"10px",
 										"render": function ( data, type, row ,meta) {
@@ -171,21 +171,26 @@
 	function show_modal_create(ind_kegiatan_id){
 		$.ajax({
 				url			  	: '{{ url("api_resource/ind_kegiatan_for_realisasi") }}',
-				data 		  	: {ind_kegiatan_id : ind_kegiatan_id},
+				data 		  	: { ind_kegiatan_id : ind_kegiatan_id , capaian_triwulan_id : {!! $capaian_triwulan->id !!} },
 				method			: "GET",
 				dataType		: "json",
 				success	: function(data) {
+					$('.modal-realisasi_triwulan').find('[name=qty_realisasi],[name=cost_realisasi]').val('');
 					$('.modal-realisasi_triwulan').find('[name=capaian_triwulan_id]').val({!! $capaian_triwulan->id !!});
 					$('.modal-realisasi_triwulan').find('[name=ind_kegiatan_id]').val(data['ind_kegiatan_id']);
 					$('.modal-realisasi_triwulan').find('[name=satuan]').val(data['satuan_target_triwulan']);
+					$('.modal-realisasi_triwulan').find('[name=kegiatan_tahunan_id]').val(data['kegiatan_tahunan_id']);
+					$('.modal-realisasi_triwulan').find('[name=realisasi_triwulan_anggaran_kegiatan_id]').val(data['realisasi_triwulan_anggaran_kegiatan_id']);
+					
 					$('.modal-realisasi_triwulan').find('.satuan').val(data['satuan']);
 
 					$('.modal-realisasi_triwulan').find('.kegiatan_tahunan_label').html(data['kegiatan_tahunan_label']);
-					$('.modal-realisasi_triwulan').find('.anggaran_kegiatan').html('Rp. '+data['anggaran_kegiatan']);
+					$('.modal-realisasi_triwulan').find('.anggaran_kegiatan').html(data['anggaran_kegiatan']);
 					$('.modal-realisasi_triwulan').find('.indikator_label').html(data['indikator_label']);
 					
 					$('.modal-realisasi_triwulan').find('.qty_satuan').html(data['satuan']);
 					$('.modal-realisasi_triwulan').find('.qty_target').html(data['target']);
+					$('.modal-realisasi_triwulan').find('.cost_realisasi').val(data['triwulan_cost_realisasi']);
 					
 
 					$('.modal-realisasi_triwulan').find('h4').html('Add Realisasi Kegiatan Tahunan');
@@ -206,7 +211,9 @@
 		var realisasi_triwulan_kegiatan_tahunan_id = $(this).data('id');
 		$.ajax({
 				url			  	: '{{ url("api_resource/realisasi_triwulan_kegiatan_tahunan_detail") }}',
-				data 		  	: { id : realisasi_triwulan_kegiatan_tahunan_id},
+				data 		  	: { id : realisasi_triwulan_kegiatan_tahunan_id, 
+									capaian_triwulan_id : {{ $capaian_triwulan->id }}	
+								  },
 				method			: "GET",
 				dataType		: "json",
 				success	: function(data) {
@@ -214,10 +221,12 @@
 					$('.modal-realisasi_triwulan').find('.realisasi_triwulan_id').val(data['id']);
 					$('.modal-realisasi_triwulan').find('[name=capaian_triwulan_id]').val({!! $capaian_triwulan->id !!});
 					$('.modal-realisasi_triwulan').find('[name=indikator_kegiatan_id]').val(data['indikator_kegiatan_id']);
+					$('.modal-realisasi_triwulan').find('[name=kegiatan_tahunan_id]').val(data['kegiatan_tahunan_id']);
+					$('.modal-realisasi_triwulan').find('[name=realisasi_triwulan_anggaran_kegiatan_id]').val(data['realisasi_triwulan_anggaran_kegiatan_id']);
 					$('.modal-realisasi_triwulan').find('.satuan').val(data['triwulan_satuan']);
 
 					$('.modal-realisasi_triwulan').find('.kegiatan_tahunan_label').html(data['kegiatan_tahunan_label']);
-					$('.modal-realisasi_triwulan').find('.anggaran_kegiatan').html('Rp. '+data['anggaran_kegiatan']);
+					$('.modal-realisasi_triwulan').find('.anggaran_kegiatan').html(data['anggaran_kegiatan']);
 					$('.modal-realisasi_triwulan').find('.indikator_label').html(data['indikator_label']);
 					
 					$('.modal-realisasi_triwulan').find('.qty_satuan').html(data['triwulan_satuan']);
