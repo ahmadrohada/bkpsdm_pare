@@ -123,7 +123,8 @@ class IndikatorKegiatanAPIController extends Controller {
     public function IndikatorKegiatanDetail4Realisasi(Request $request)
     {
        
-        
+        $capaian_triwulan_id = $request->capaian_triwulan_id;
+
         $x = IndikatorKegiatan::
                 leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
                     $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
@@ -131,14 +132,22 @@ class IndikatorKegiatanAPIController extends Controller {
                 ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) {
                     $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                 })
+                ->leftjoin('db_pare_2018.realisasi_triwulan_anggaran_kegiatan AS anggaran_tahunan', function($join) use($capaian_triwulan_id) {
+                    $join   ->on('anggaran_tahunan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
+                    $join   ->WHERE('anggaran_tahunan.capaian_id','=', $capaian_triwulan_id );
+                })
+
+
                 ->SELECT(       'renja_indikator_kegiatan.id AS ind_kegiatan_id',
                                 'renja_indikator_kegiatan.label AS indikator_label',
                                 'renja_indikator_kegiatan.target AS qty_target',
                                 'renja_indikator_kegiatan.satuan AS satuan_target',
-
+                                'anggaran_tahunan.cost AS cost_realisasi',
+                                'anggaran_tahunan.id AS realisasi_triwulan_anggaran_kegiatan_id',
 
                                 'kegiatan_tahunan.cost AS anggaran',
-                                'kegiatan_tahunan.label AS kegiatan_tahunan_label'
+                                'kegiatan_tahunan.label AS kegiatan_tahunan_label',
+                                'kegiatan_tahunan.id AS kegiatan_tahunan_id'
                         ) 
                             ->WHERE('renja_indikator_kegiatan.id', $request->ind_kegiatan_id)
                             ->first();
@@ -146,10 +155,13 @@ class IndikatorKegiatanAPIController extends Controller {
         $ind_kegiatan = array(
             'ind_kegiatan_id'           => $x->ind_kegiatan_id,
             'indikator_label'           => $x->indikator_label,
+            'kegiatan_tahunan_id'       => $x->kegiatan_tahunan_id,
             'kegiatan_tahunan_label'    => $x->kegiatan_tahunan_label,
             'anggaran_kegiatan'         => number_format($x->anggaran,'0',',','.'),
             'target'                    => $x->qty_target,
-            'satuan'                    => $x->satuan_target
+            'satuan'                    => $x->satuan_target,
+            'triwulan_cost_realisasi'   => number_format($x->cost_realisasi,'0',',','.'),
+            'realisasi_triwulan_anggaran_kegiatan_id' => $x->realisasi_triwulan_anggaran_kegiatan_id,
 
         );
         return $ind_kegiatan;
