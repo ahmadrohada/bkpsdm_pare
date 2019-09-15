@@ -16,7 +16,6 @@
 				<tr class="success">
 					<th>NO</th>
 					<th>PERIODE</th>
-					<th>BULAN</th>
 					<th>PELAKSANAAN</th>
 					<th>JABATAN</th>
 					<th>CAPAIAN</th>
@@ -29,7 +28,7 @@
 	</div>
 </div>
 
-@include('admin.modals.create_capaian_bulanan_confirm')
+@include('admin.modals.create_capaian_tahunan_before_end_confirm')
 
 <script type="text/javascript">
 	$('#skp_bulanan_table').DataTable({
@@ -41,11 +40,11 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,2,3,5,] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,2,4] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/personal_capaian_bulanan_list") }}',
+									url	: '{{ url("api_resource/personal_capaian_tahunan_list") }}',
 									data: { pegawai_id : {!! $pegawai->id !!} },
 									delay:3000
 
@@ -65,16 +64,6 @@
 											return "<span class='text-danger'>"+row.periode+"</span>";
 										}else{
 											return row.periode;
-										}
-
-									}	
-								},
-								{ data: "bulan" ,  name:"bulan", orderable: true, searchable: true,
-									"render": function ( data, type, row ) {
-										if (row.capaian_status_approve == 2){
-											return "<span class='text-danger'>"+row.bulan+"</span>";
-										}else{
-											return row.bulan;
 										}
 
 									}	
@@ -132,7 +121,7 @@
 											
 										}else{
 
-											return row.remaining_time;
+											return  '<span style="margin:1px;" ><a class="progress-bar progress-bar-aqua btn btn-warning btn-xs create_capaian_tahunan_before_end"  data-skp_bulanan_id="'+row.skp_bulanan_id+'" style="width:120px;">Create ['+row.remaining_time+']</a></span>';
 											
 										
 										}
@@ -159,6 +148,39 @@
 		window.location.assign("capaian-bulanan/"+capaian_id);
 	});
 	
+	
+
+	$(document).on('click','.create_capaian_tahunan_before_end',function(e){
+		var capaian_bulanan_id = $(this).data('id') ;
+
+		Swal.fire({
+			title: "Create Capaian Tahunan",
+			//text:$(this).data('label'),
+			text:"Anda membuat Capaian Tahunan sebelum masa penilaian berakhir",
+			//type: "warning",
+			type: "question",
+			showCancelButton: true,
+			cancelButtonText: "Batal",
+			confirmButtonText: "Ya",
+			confirmButtonClass: "btn btn-success",
+			cancelButtonColor: "btn btn-danger",
+			cancelButtonColor: "#d33",
+			closeOnConfirm: false,
+			closeOnCancel:false
+		}).then ((result) => {
+			if (result.value){
+				
+
+
+
+			}
+		});
+	});
+
+
+
+
+
 
 	$(document).on('click','.hapus_capaian_bulanan',function(e){
 		var capaian_bulanan_id = $(this).data('id') ;
