@@ -472,6 +472,16 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::post('tutup_capaian_triwulan','API\CapaianTriwulanAPIController@Close');
 
+
+	
+	//========================================================================================================//
+	//============================== =======    CAPAIAN TAHUNAN ================================================//
+	//========================================================================================================//
+	Route::get('personal_capaian_tahunan_list','API\CapaianTahunanAPIController@PersonalCapaianTahunanList');
+	
+
+
+
 	//==================================== REALISASI TRIWULAN KEGIATAN TAHUNAN =============================================//
 	//=============================================================================================================//
 	Route::get('realisasi_kegiatan_triwulan_2','API\RealisasiKegiatanTriwulanAPIController@RealisasiKegiatanTriwulan2');
