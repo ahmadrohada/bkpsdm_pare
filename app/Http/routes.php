@@ -479,7 +479,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	Route::get('personal_capaian_tahunan_list','API\CapaianTahunanAPIController@PersonalCapaianTahunanList');
 	
-
+	Route::get('create_capaian_tahunan_before_end_confirm','API\CapaianTahunanAPIController@BeforeEndCreateConfirm');
+	
 
 
 	//==================================== REALISASI TRIWULAN KEGIATAN TAHUNAN =============================================//

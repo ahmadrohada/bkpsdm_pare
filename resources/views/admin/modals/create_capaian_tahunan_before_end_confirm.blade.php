@@ -1,4 +1,4 @@
-<div class="modal fade modal-create_capaian_bulanan_confirm" id="CreateSKPTahunanConfirm" role="dialog"  aria-hidden="true">
+<div class="modal fade modal-create_capaian_tahunan_before_end_confirm" id="CreateSKPTahunanConfirm" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <!-- <div class="modal-header">
@@ -7,12 +7,12 @@
                         Create SKP Tahunan Confirm
                     </h4>
 			</div> -->
-			<form  id="create-capaian_bulanan_confirm-form" method="POST" action="">
+			<form  id="create-capaian_tahunan_before_end_confirm-form" method="POST" action="">
 			<div class="modal-body">
 <!-- ============================================================================================================= -->
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs" id="myTab">
-					<li class="active"><a href="#tab_a" data-toggle="tab"><i class="fa fa-tag"></i> Capaian Bulanan </a></li>
+					<li class="active"><a href="#tab_a" data-toggle="tab"><i class="fa fa-tag"></i> Capaian Tahunan </a></li>
 					<li class=""><a href="#tab_b" data-toggle="tab" ><i class="fa fa-user"></i> Data Pribadi</a></li>
 					<li class=""><a href="#tab_c" data-toggle="tab"><i class="fa fa-user"></i> Data Atasan</a></li>
 				</ul>
@@ -23,33 +23,38 @@
 <!-- ============================================================================================================= -->
 						
 						<div class="form-horizontal col-md-6 " style="margin-top:10px;">
-							<div class="form-group form-group-sm skp_bulanan_id">
-								<label>Periode Capaian</label>
+							<div class="form-group form-group-sm skp_tahunan_id">
+								<label>Periode SKP Tahunan</label>
 								<span id="periode_label" class="form-control"> TEXT PERIODE</span>
 							</div>
 						</div>
 						<div class="form-horizontal col-md-5 col-md-offset-1" style="margin-top:10px;">
-							<div class="form-group form-group-sm masa_penilaian">
+							<div class="form-group form-group-sm">
 								<label>Masa Penilaian SKP</label>
 								<div class="input-group input-group-sm ">
-									<input type="text" class="form-control tgl mulai" name="tgl_mulai"  placeholder="Tanggal Mulai"/>
+									<input type="text" class="form-control  mulai" name="tgl_mulai"  placeholder="Tanggal Mulai"/>
 									<span class="input-group-addon">s.d.</span>
-									<input type="text" class="form-control tgl selesai" name="tgl_selesai"  placeholder="Tanggal Selesai"/>
+									<input type="text" class="form-control  selesai" name="tgl_selesai"  placeholder="Tanggal Selesai"/>
 								</div>     
 							</div>
 						</div>
 
-						<div class="form-horizontal col-md-12" style="margin-top:20px;">
-							<div class="form-group form-group-sm header_list" hidden>
-									
-								<label>Jabatan Bawahan </label> <label class="pull-right">Kegiatan / Realisasi</label>
-							</div>
-							
-							<div class="form-group form-group-sm" style="margin-top:-10px;">
-								<ul class="list-group list-group-unbordered" id="list_bawahan"></ul>
+						<div class="form-horizontal col-md-12 " style="padding-left:0px; margin-top:10px;">
+							<p class="text-danger">- Anda membuat Capaian Tahunan sebelum masa penilaian berakhir</p>
+							<p class="text-danger">- Silakan pilih <b>tanggal akhir masa penilaian</b> SKP Tahunan anda</p><span class="text-success masa_penilaian_baru"></span>
+							<p class="text-danger">- SKP bulanan setelah <b>tanggal akhir masa penilaian</b> yang baru akan dihapus secara permanen dan tidak dapat dikembalikan</p>
+						</div>
+
+						<div class="form-horizontal col-md-6" style="margin-top:10px;">
+							<div class="form-group form-group-sm masa_penilaian">
+								<label>Aktual Masa Penilaian</label>
+								<div class="input-group input-group-sm ">
+									<input type="text" class="form-control  mulai" placeholder="Tanggal Mulai"/>
+									<span class="input-group-addon">s.d.</span>
+									<input type="text" class="form-control tgl selesai_baru" name="tgl_selesai_baru" placeholder="Tanggal Selesai"/>
+								</div>     
 							</div>
 						</div>
-						
 
 					
 					
@@ -166,8 +171,7 @@
 			<div class="modal-footer" style="border:none; margin-top:-20px;">
 				
 					<input type="hidden" class="form-control pegawai_id" name="pegawai_id"  />
-					<input type="hidden" class="form-control skp_bulanan_id" name="skp_bulanan_id"  />
-					<input type="hidden" class="form-control jm_kegiatan_bulanan	" name="jm_kegiatan_bulanan"  />
+					<input type="hidden" class="form-control skp_tahunan_id" name="skp_tahunan_id"  />
 				
 					<input type="hidden" class="form-control u_nama	" name="u_nama"  />
 					<input type="hidden" class="form-control u_jabatan_id " name="u_jabatan_id"  />
@@ -178,10 +182,9 @@
 					<input type="hidden" class="form-control jabatan_id" name="jabatan_id"  />
 					<input type="hidden" class="form-control renja_id" name="renja_id"  />
 					<input type="hidden" class="form-control jenis_jabatan" name="jenis_jabatan"  />
-					<input type="hidden" class="form-control waktu_pelaksanaan" name="waktu_pelaksanaan"  />
 
                	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-               	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right btn-flat', 'type' => 'button', 'id' => 'save_capaian_bulanan' )) !!}
+               	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right btn-flat', 'type' => 'button', 'id' => 'save_capaian_tahunan' )) !!}
 			
 			
 				
@@ -199,129 +202,39 @@
 
 <script type="text/javascript">
 
+	
 	$('.tgl').datetimepicker({
 		yearOffset:0,
 		lang:'en',
 		timepicker:false,
 		format:'d-m-Y',
-		formatDate:'d-m-Y'
+		formatDate:'d-m-Y',
+		
 	}); 
 
 	
-	$('.modal-create_capaian_bulanan_confirm').on('shown.bs.modal', function(){
+
+	$('.modal-create_capaian_tahunan_before_end_confirm').on('hidden.bs.modal', function(){
+		$('.u_jabatan, .p_jabatan, .masa_penilaian, .skp_tahunan_id, .jm_kegiatan_tahunan').removeClass('has-error');
+		
+		$('.modal-create_capaian_tahunan_before_end_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
+		
+	
 		
 	});
 
-	$('.modal-create_capaian_bulanan_confirm').on('hidden.bs.modal', function(){
-		$('.u_jabatan, .p_jabatan, .masa_penilaian, .skp_bulanan_id, .jm_kegiatan_bulanan').removeClass('has-error');
-		$('.error_renja_id').hide();
-		$('.modal-create_capaian_bulanan_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
+	
 		
-		document.getElementById('list_bawahan').innerHTML = "";
 
-		
-	});
-
-	$('.tgl').on('click', function(){
-		$('.masa_penilaian').removeClass('has-error');
-	});
-
-	$(document).on('click','.create_capaian_bulanan',function(e){
-		var skp_bulanan_id = $(this).data('skp_bulanan_id') ;
-		
+	$(document).on('click', '#save_capaian_tahunan', function(){
+		var data = $('#create-capaian_tahunan_before_end_confirm-form').serialize();
 
 		$.ajax({
-			url		: '{{ url("api_resource/create_capaian_bulanan_confirm") }}',
-			type	: 'GET',
-			data	:  	{ 
-							skp_bulanan_id : skp_bulanan_id
-						},
-			success	: function(data) {
-				
-				if (data['status']==='pass'){
-
-
-					$('#periode_label').html(data['periode_label']); 
-					$('.mulai').val(data['tgl_mulai']); 
-					$('.selesai').val(data['tgl_selesai']); 
-					//$('#jm_kegiatan_bulanan').html(data['jm_kegiatan_bulanan']);
-
-					var bawahan = document.getElementById('list_bawahan');
-					for(var i = 0 ; i < data['list_bawahan'].length; i++ ){
-						$('.header_list').show(); 
-						$("<li class='list-group-item' style='padding:3px 4px 3px 4px;;'>"+data['list_bawahan'][i].jabatan+" <a class='pull-right'>"+data['list_bawahan'][i].jm_keg+"/"+data['list_bawahan'][i].jm_realisasi+"</a> </li>").appendTo(bawahan);
-					}
-						$("<li class='list-group-item' style='background:#ededed; border-top:solid #3d3d3d 2px; padding:5px 4px 5px 4px;'><b>Total Kegiatan </b><a class='pull-right'>"+data['jm_kegiatan_bulanan']+"</a> </li>").appendTo(bawahan);
-						
-						
-					$('#u_nip').html(data['u_nip']); 
-					$('#u_nama').html(data['u_nama']); 
-					$('#u_golongan').html(data['u_pangkat']+' / '+data['u_golongan']); 
-					$('#u_eselon').html(data['u_eselon']); 
-					$('#u_jabatan').html(data['u_jabatan']); 
-					$('#u_unit_kerja').html(data['u_unit_kerja']); 
-					$('#txt_u_jabatan').html(data['u_jabatan']); 
-					$('#txt_u_skpd').html(data['u_skpd']); 
-
-
-					$('#p_nip').html(data['p_nip']); 
-					$('#p_nama').html(data['p_nama']); 
-					$('#p_golongan').html(data['p_pangkat']+' / '+data['p_golongan']); 
-					$('#p_eselon').html(data['p_eselon']); 
-					$('#p_jabatan').html(data['p_jabatan']); 
-					$('#p_unit_kerja').html(data['p_unit_kerja']); 
-
-					$('.pegawai_id').val(data['pegawai_id']); 
-					$('.skp_bulanan_id').val(data['skp_bulanan_id']); 
-					$('.jm_kegiatan_bulanan').val(data['jm_kegiatan_bulanan']);
-					$('.u_nama').val(data['u_nama']); 
-					$('.u_jabatan_id').val(data['u_jabatan_id']); 
-					$('.p_nama').val(data['p_nama']); 
-					$('.p_jabatan_id').val(data['p_jabatan_id']);
- 
-					$('.jenis_jabatan').val(data['u_jenis_jabatan']); 
-					$('.jabatan_id').val(data['jabatan_id']);
-					$('.renja_id').val(data['renja_id']);
-					$('.waktu_pelaksanaan').val(data['waktu_pelaksanaan']);
-					
-					$('.modal-create_capaian_bulanan_confirm').modal('show'); 
-				}else if (data['status']==='fail'){
-				
-
-
-
-
-				}else{
-					Swal.fire({
-						title: 'Error!',
-						text: 'Capaian Bulanan belum bisa dibuat',
-						type: 'error',
-						confirmButtonText: 'Tutup'
-					})
-				}
-				
-			},
-			error: function(jqXHR , textStatus, errorThrown) {
-
-					Swal.fire({
-						title: 'Error!',
-						text: 'Capaian Bulanan  belum bisa dibuat',
-						type: 'error',
-						confirmButtonText: 'Tutup'
-					})
-			}
-			
-		});
-
-	$(document).on('click', '#save_capaian_bulanan', function(){
-		var data = $('#create-capaian_bulanan_confirm-form').serialize();
-
-		$.ajax({
-			url		: '{{ url("api_resource/simpan_capaian_bulanan") }}',
+			url		: '{{ url("api_resource/simpan_capaian_tahunan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
-				$('#capaian_bulanan').DataTable().ajax.reload(null,false);
+				$('#capaian_tahunan').DataTable().ajax.reload(null,false);
 				
 
 				Swal.fire({
@@ -333,9 +246,9 @@
 					allowOutsideClick : false,
 					timer: 1500
 				}).then(function () {
-						$('.modal-create_capaian_bulanan_confirm').modal('hide');
-						$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
-						window.location.assign("capaian-bulanan/"+data+"/edit");
+						$('.modal-capaian_tahunan_before_end_confirm').modal('hide');
+						$('#skp_capaian_table').DataTable().ajax.reload(null,false);
+						window.location.assign("capaian-tahunan/"+data+"/edit");
 
 				},
 					function (dismiss) {
@@ -354,22 +267,17 @@
 					//alert (index+":"+value);
 					
 					//error message
-					if ( (index == 'tgl_mulai') | (index == 'tgl_selesai') | (index == 'masa_penilaian')){
+					if ( index == 'tgl_selesai_baru' ){
 
 						$('#myTab a[href="#tab_a"]').tab('show');
 						$('.masa_penilaian').addClass('has-error');
 					}
 
-					if (index == 'jm_kegiatan_bulanan'){
+					
+					if (index == 'skp_tahunan_id'){
 
 						$('#myTab a[href="#tab_a"]').tab('show');
-						$('.jm_kegiatan_bulanan').addClass('has-error');
-
-					}
-					if (index == 'skp_bulanan_id'){
-
-						$('#myTab a[href="#tab_a"]').tab('show');
-						$('.skp_bulanan_id').addClass('has-error');
+						$('.skp_tahunan_id').addClass('has-error');
 					}
 
 					
@@ -385,6 +293,4 @@
 
 		
 
-
-});
 </script>

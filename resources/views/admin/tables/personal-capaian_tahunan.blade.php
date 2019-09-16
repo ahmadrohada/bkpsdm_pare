@@ -11,7 +11,7 @@
     </div>
 	<div class="box-body table-responsive">
 
-		<table id="skp_bulanan_table" class="table table-striped table-hover table-condensed">
+		<table id="skp_tahunan_table" class="table table-striped table-hover table-condensed">
 			<thead>
 				<tr class="success">
 					<th>NO</th>
@@ -31,7 +31,7 @@
 @include('admin.modals.create_capaian_tahunan_before_end_confirm')
 
 <script type="text/javascript">
-	$('#skp_bulanan_table').DataTable({
+	$('#skp_tahunan_table').DataTable({
 				processing      : true,
 				serverSide      : true,
 				searching      	: false,
@@ -121,7 +121,7 @@
 											
 										}else{
 
-											return  '<span style="margin:1px;" ><a class="progress-bar progress-bar-aqua btn btn-warning btn-xs create_capaian_tahunan_before_end"  data-skp_bulanan_id="'+row.skp_bulanan_id+'" style="width:120px;">Create ['+row.remaining_time+']</a></span>';
+											return  '<span style="margin:1px;" ><a class="progress-bar progress-bar-aqua btn btn-warning btn-xs create_capaian_tahunan_before_end"  data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:120px;">Create ['+row.remaining_time+']</a></span>';
 											
 										
 										}
@@ -151,7 +151,7 @@
 	
 
 	$(document).on('click','.create_capaian_tahunan_before_end',function(e){
-		var capaian_bulanan_id = $(this).data('id') ;
+		var skp_tahunan_id = $(this).data('skp_tahunan_id') ;
 
 		Swal.fire({
 			title: "Create Capaian Tahunan",
@@ -170,6 +170,8 @@
 		}).then ((result) => {
 			if (result.value){
 				
+			
+				open_modal_create_capaian_before_end(skp_tahunan_id);
 
 
 
@@ -178,6 +180,83 @@
 	});
 
 
+	function open_modal_create_capaian_before_end(skp_tahunan_id){
+
+
+		$.ajax({
+			url		: '{{ url("api_resource/create_capaian_tahunan_before_end_confirm") }}',
+			type	: 'GET',
+			data	:  	{ 
+							skp_tahunan_id : skp_tahunan_id
+						},
+			success	: function(data) {
+				
+				if (data['status']==='pass'){
+
+
+					$('#periode_label').html(data['periode_label']); 
+					$('.mulai').val(data['tgl_mulai']); 
+					$('.selesai').val(data['tgl_selesai']); 
+					$('.selesai_baru').val(data['tgl_selesai_baru']); 
+				
+						
+					$('#u_nip').html(data['u_nip']); 
+					$('#u_nama').html(data['u_nama']); 
+					$('#u_golongan').html(data['u_pangkat']+' / '+data['u_golongan']); 
+					$('#u_eselon').html(data['u_eselon']); 
+					$('#u_jabatan').html(data['u_jabatan']); 
+					$('#u_unit_kerja').html(data['u_unit_kerja']); 
+					$('#txt_u_jabatan').html(data['u_jabatan']); 
+					$('#txt_u_skpd').html(data['u_skpd']); 
+
+
+					$('#p_nip').html(data['p_nip']); 
+					$('#p_nama').html(data['p_nama']); 
+					$('#p_golongan').html(data['p_pangkat']+' / '+data['p_golongan']); 
+					$('#p_eselon').html(data['p_eselon']); 
+					$('#p_jabatan').html(data['p_jabatan']); 
+					$('#p_unit_kerja').html(data['p_unit_kerja']); 
+
+					$('.pegawai_id').val(data['pegawai_id']); 
+					$('.skp_tahunan_id').val(data['skp_tahunan_id']); 
+					$('.u_nama').val(data['u_nama']); 
+					$('.u_jabatan_id').val(data['u_jabatan_id']); 
+					$('.p_nama').val(data['p_nama']); 
+					$('.p_jabatan_id').val(data['p_jabatan_id']);
+ 
+					$('.jenis_jabatan').val(data['u_jenis_jabatan']); 
+					$('.jabatan_id').val(data['jabatan_id']);
+					$('.renja_id').val(data['renja_id']);
+					
+					$('.modal-create_capaian_tahunan_before_end_confirm').modal('show'); 
+				}else if (data['status']==='fail'){
+				
+
+
+
+
+				}else{
+					Swal.fire({
+						title: 'Error!',
+						text: 'Capaian tahunan belum bisa dibuat',
+						type: 'error',
+						confirmButtonText: 'Tutup'
+					})
+				}
+				
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
+
+					Swal.fire({
+						title: 'Error!',
+						text: 'Capaian tahunan  belum bisa dibuat',
+						type: 'error',
+						confirmButtonText: 'Tutup'
+					})
+			}
+			
+		});
+	}
 
 
 
