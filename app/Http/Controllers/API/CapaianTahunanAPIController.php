@@ -75,8 +75,8 @@ class CapaianTahunanAPIController extends Controller {
        
            $datatables = Datatables::of($skp)
              ->addColumn('periode', function ($x) {
-                //return  Pustaka::Tahun($x->tgl_mulai);
-                return $x->Renja->Periode->label;
+                return  Pustaka::Tahun($x->tgl_mulai);
+                //return $x->Renja->Periode->label;
             }) 
             ->addColumn('pelaksanaan', function ($x) {
                 $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
