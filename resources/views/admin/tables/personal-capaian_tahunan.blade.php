@@ -98,23 +98,23 @@
 												if (row.capaian_send_to_atasan == 1 ){
 													if (row.capaian_status_approve == 2){
 														//ditolak
-														return  '<span  data-toggle="tooltip" title="Ralat" style="margin:2px;" ><a class="btn btn-warning btn-xs ralat_capaian_bulanan"  data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_bulanan"  data-id="'+row.capaian_id+'"><i class="fa fa-eye" ></i></a></span>'+
+														return  '<span  data-toggle="tooltip" title="Ralat" style="margin:2px;" ><a class="btn btn-warning btn-xs ralat_capaian_tahunan"  data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_tahunan"  data-id="'+row.capaian_id+'"><i class="fa fa-eye" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-close " ></i></a></span>';
 													}else{
 														//diterima
 														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_bulanan"  data-id="'+row.capaian_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_tahunan"  data-id="'+row.capaian_id+'"><i class="fa fa-eye" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-close " ></i></a></span>';
 													}
 												}else{
 													//blm dikirim
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_bulanan" data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_tahunan" data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_bulanan" data-id="'+row.capaian_id+'"><i class="fa fa-close " ></i></a></span>';
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_tahunan" data-id="'+row.capaian_id+'"><i class="fa fa-close " ></i></a></span>';
 												}
 											}else{
-												return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_bulanan"  data-skp_bulanan_id="'+row.skp_bulanan_id+'" style="width:75px;">Capaian</a></span>';
+												return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_tahunan"  data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
 											}
 
 
@@ -133,19 +133,19 @@
 	});
 
 
-	$(document).on('click','.edit_capaian_bulanan',function(e){
+	$(document).on('click','.edit_capaian_tahunan',function(e){
 		var capaian_id = $(this).data('id') ;
-		window.location.assign("capaian-bulanan/"+capaian_id+"/edit");
+		window.location.assign("capaian-tahunan/"+capaian_id+"/edit");
 	});
 
-	$(document).on('click','.ralat_capaian_bulanan',function(e){
+	$(document).on('click','.ralat_capaian_tahunan',function(e){
 		var capaian_id = $(this).data('id') ;
-		window.location.assign("capaian-bulanan/"+capaian_id+"/ralat");
+		window.location.assign("capaian-tahunan/"+capaian_id+"/ralat");
 	});
 
-	$(document).on('click','.lihat_capaian_bulanan',function(e){
+	$(document).on('click','.lihat_capaian_tahunan',function(e){
 		var capaian_id = $(this).data('id') ;
-		window.location.assign("capaian-bulanan/"+capaian_id);
+		window.location.assign("capaian-tahunan/"+capaian_id);
 	});
 	
 	
@@ -157,8 +157,8 @@
 			title: "Create Capaian Tahunan",
 			//text:$(this).data('label'),
 			text:"Anda membuat Capaian Tahunan sebelum masa penilaian berakhir",
-			//type: "warning",
-			type: "question",
+			type: "warning",
+			//type: "question",
 			showCancelButton: true,
 			cancelButtonText: "Batal",
 			confirmButtonText: "Ya",
@@ -198,6 +198,7 @@
 					$('.mulai').val(data['tgl_mulai']); 
 					$('.selesai').val(data['tgl_selesai']); 
 					$('.selesai_baru').val(data['tgl_selesai_baru']); 
+					$('.jm_kegiatan_txt').val(data['jm_kegiatan']); 
 				
 						
 					$('#u_nip').html(data['u_nip']); 
@@ -227,6 +228,7 @@
 					$('.jenis_jabatan').val(data['u_jenis_jabatan']); 
 					$('.jabatan_id').val(data['jabatan_id']);
 					$('.renja_id').val(data['renja_id']);
+					$('.jm_kegiatan').html(data['jm_kegiatan']); 
 					
 					$('.modal-create_capaian_tahunan_before_end_confirm').modal('show'); 
 				}else if (data['status']==='fail'){
@@ -261,11 +263,11 @@
 
 
 
-	$(document).on('click','.hapus_capaian_bulanan',function(e){
-		var capaian_bulanan_id = $(this).data('id') ;
+	$(document).on('click','.hapus_capaian_tahunan',function(e){
+		var capaian_tahuhan_id = $(this).data('id') ;
 
 		Swal.fire({
-			title: "Hapus  Capaian Bulanan",
+			title: "Hapus  Capaian Tahunan",
 			text:$(this).data('label'),
 			type: "warning",
 			//type: "question",
@@ -280,9 +282,9 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_capaian_bulanan") }}',
+					url		: '{{ url("api_resource/hapus_capaian_tahunan") }}',
 					type	: 'POST',
-					data    : { capaian_bulanan_id:capaian_bulanan_id },
+					data    : { capaian_tahunan_id:capaian_tahunan_id },
 					cache   : false,
 					success:function(data){
 							Swal.fire({
@@ -294,12 +296,12 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+										$('#skp_tahunan_table').DataTable().ajax.reload(null,false);
 										
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
-											$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+											$('#skp_tahunan_table').DataTable().ajax.reload(null,false);
 											
 											
 										}

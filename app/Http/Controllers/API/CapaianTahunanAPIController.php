@@ -134,6 +134,33 @@ class CapaianTahunanAPIController extends Controller {
                                 )
                         ->first();
 
+        $jenis_jabatan = $skp_tahunan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
+
+        /*  1 : KABAN     / ESELON 2
+            2 : KABID     / ESELON 3
+            3 : KASUBID   / ESELON 4
+            4 : PELAKSANA / JFU
+        */
+
+        //================================= PELAKSANA / JFU ================================================//
+        if ( $jenis_jabatan == 4 ){
+
+
+        //================================= KASUBID   / ESELON 4 ===========================================//
+        }else if ( $jenis_jabatan == 3 ){
+            $jm_kegiatan = KegiatanSKPTahunan::WHERE('skp_tahunan_id',$skp_tahunan->skp_tahunan_id)->count();
+
+
+        //================================= KABID     / ESELON 3 ===========================================//
+        }else if ( $jenis_jabatan == 2 ){
+
+        //================================= KABAN     / ESELON 2 ===========================================//
+        }else if ( $jenis_jabatan == 1 ){
+
+        }else{
+
+        }
+
       
         //DETAIL data pribadi dan atasan
         $u_detail = HistoryJabatan::WHERE('id',$skp_tahunan->u_jabatan_id)->first();
@@ -142,7 +169,7 @@ class CapaianTahunanAPIController extends Controller {
         if ( $skp_tahunan->p_jabatan_id >= 1 ){
             $data = array(
                 'status'			    =>  'pass',
-                'skp_tahunan_id'        => $skp_tahunan->skp_tahunan_id,
+                'skp_tahunan_id'        =>  $skp_tahunan->skp_tahunan_id,
                 'jabatan_id'            =>  $skp_tahunan->PejabatYangDinilai->id_jabatan,
                 'pegawai_id'            =>  $skp_tahunan->pegawai_id,
                 'periode_label'			=>  $skp_tahunan->Renja->Periode->label,
@@ -152,6 +179,7 @@ class CapaianTahunanAPIController extends Controller {
                 'tgl_selesai_baru'      => date("d-m-Y"),
 
                 'renja_id'	            =>  $skp_tahunan->Renja->id,
+                'jm_kegiatan'           =>  $jm_kegiatan,
 
                
                 'u_jabatan_id'	        => $u_detail->id,
@@ -217,10 +245,166 @@ class CapaianTahunanAPIController extends Controller {
         }
 
         return $data;
-
-
-
-         
     }
+
+    public function BeforeEndStore(Request $request)
+	{
+        $messages = [
+                 'pegawai_id.required'                   => 'Harus diisi',
+                 'skp_tahunan_id.required'               => 'Harus diisi',
+                 'tgl_mulai.required'                    => 'Harus diisi',
+                 'tgl_selesai.required'                  => 'Harus diisi',
+                 'tgl_selesai_baru.required'             => 'Harus diisi',
+                 'u_nama.required'                       => 'Harus diisi',
+                 'jenis_jabatan.required'                => 'Harus diisi',
+                 'u_jabatan_id.required'                 => 'Harus diisi',
+                 'jm_kegiatan'                           => 'Harus Lebih dari nol'
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'pegawai_id'            => 'required',
+                            'skp_tahunan_id'        => 'required',
+                            'tgl_mulai'             => 'required',
+                            'tgl_selesai'           => 'required',
+                            'tgl_selesai_baru'      => 'required',
+                            'u_nama'                => 'required',
+                            'u_jabatan_id'          => 'required',
+                            'jenis_jabatan'         => 'required',
+                            'jm_kegiatan'           => 'required|integer|min:1'
+                        ),
+                        $messages
+        );
+    
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+                    return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        if ( (Pustaka::tgl_sql(Input::get('tgl_mulai'))) >= (Pustaka::tgl_sql(Input::get('tgl_selesai_baru'))) ){
+            $pesan =  ['masa_penilaian'  => 'Error'] ;
+            return response()->json(['errors'=> $pesan ],422);
+            
+        }
+
+
+        $cek = CapaianTahunan::WHERE('pegawai_id',Input::get('pegawai_id'))
+                                ->WHERE('skp_tahunan_id',Input::get('skp_tahunan_id'))
+                                ->SELECT('id')
+                                ->count();
+
+        if ( $cek == 0 ){
+            $capaian_tahunan                              = new CapaianTahunan;
+            $capaian_tahunan->pegawai_id                  = Input::get('pegawai_id');
+            $capaian_tahunan->skp_tahunan_id              = Input::get('skp_tahunan_id');
+            $capaian_tahunan->u_nama                      = Input::get('u_nama');
+            $capaian_tahunan->u_jabatan_id                = Input::get('u_jabatan_id');
+            $capaian_tahunan->p_nama                      = Input::get('p_nama');
+            $capaian_tahunan->p_jabatan_id                = Input::get('p_jabatan_id');
+            $capaian_tahunan->tgl_mulai                   = Pustaka::tgl_sql(Input::get('tgl_mulai'));
+            $capaian_tahunan->tgl_selesai                 = Pustaka::tgl_sql(Input::get('tgl_selesai_baru'));
+            
+    
+            
+    
+            if ( $capaian_tahunan->save()){
+               
+                SKPTahunan::WHERE('id',Input::get('skp_tahunan_id'))->UPDATE( [ 'status' => '1',
+                                                                                'tgl_selesai' => Pustaka::tgl_sql(Input::get('tgl_selesai_baru'))
+                                                                             ]);
+
+               /*  //jika kabid, auto add kegiatan
+                if ( Input::get('jenis_jabatan') == '2'){
+                    $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id',Input::get('jabatan_id'))->get()->toArray();
+                    //cari bawahan  , jabatanpelaksanan
+                    $pelaksana_list = Jabatan::SELECT('id')->WHEREIN('parent_id', $bawahan_ls)->get()->toArray(); 
+        
+                    $kegiatan_list = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_list)
+                                                ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
+                                                    $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                                                })
+                                                ->SELECT('skp_tahunan_rencana_aksi.id','realisasi.realisasi','skp_tahunan_rencana_aksi.satuan')
+                                                ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',Input::get('waktu_pelaksanaan'))
+                                                ->WHERE('skp_tahunan_rencana_aksi.renja_id',Input::get('renja_id'))
+                                                ->get(); 
+                    $i = 0 ;
+                    foreach ($kegiatan_list as $x) {
+                        $data[] = array(
+                                        
+                            'rencana_aksi_id'       => $x->id,
+                            'capaian_id'            => $capaian_bulanan->id,
+                            'realisasi'             => $x->realisasi,
+                            'satuan'                => $x->satuan,
+                            'created_at'            => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
+                        );
+                        $i++;
+                    }
+                            
+                    if ( $i >= 1 ){
+                        $st_ra   = new RealisasiRencanaAksiKabid;
+                        $st_ra -> insert($data);
+                    }
+                }else if ( Input::get('jenis_jabatan') == '1'){ //KAABAN
+
+                    $kasubid_ls = Jabatan::
+                                        leftjoin('demo_asn.m_skpd AS kasubid', function($join){
+                                            $join   ->on('kasubid.parent_id','=','m_skpd.id');
+                                        })
+                                        ->SELECT('kasubid.id')
+                                        ->WHERE('m_skpd.parent_id',Input::get('jabatan_id') )
+                                        ->get()
+                                        ->toArray(); 
+
+                  
+                    //cari bawahan  , jabatanpelaksanan
+                    $pelaksana_list = Jabatan::SELECT('id')->WHEREIN('parent_id', $kasubid_ls)->get()->toArray(); 
+        
+                    $kegiatan_list = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_list)
+                                                ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
+                                                    $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                                                })
+                                                ->SELECT('skp_tahunan_rencana_aksi.id','realisasi.realisasi','skp_tahunan_rencana_aksi.satuan')
+                                                ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',Input::get('waktu_pelaksanaan'))
+                                                ->WHERE('skp_tahunan_rencana_aksi.renja_id',Input::get('renja_id'))
+                                                ->get(); 
+                    $i = 0 ;
+                    foreach ($kegiatan_list as $x) {
+                        $data[] = array(
+                                        
+                            'rencana_aksi_id'       => $x->id,
+                            'capaian_id'            => $capaian_bulanan->id,
+                            'realisasi'             => $x->realisasi,
+                            'satuan'                => $x->satuan,
+                            'created_at'            => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
+                        );
+                        $i++;
+                    }
+                            
+                    if ( $i >= 1 ){
+                        $st_ra   = new RealisasiRencanaAksiKaban;
+                        $st_ra -> insert($data);
+                    }
+                
+                }
+                 */
+              
+               
+                
+
+                return \Response::make($capaian_tahunan->id, 200);
+            }else{
+                return \Response::make('error', 500);
+            } 
+
+        //IF CEK SUDAH ADA CAPAIAN NYA
+        }else{
+            return \Response::make('Capaian untuk SKP ini sudah ada :'. $cek, 500);
+        } 
+
+    }   
+
 
 }

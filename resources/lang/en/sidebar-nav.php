@@ -167,6 +167,10 @@ return [
 	// CAPAIAN TAHUNAN
 	'link_title_capaian_tahunan'    		=> 'Capaian Tahunan',
 	'link_icon_capaian_tahunan'     		=> 'fa-bar-chart',
+
+
+	'link_title_edit_capaian_tahunan'    		=> 'Edit',
+	'link_icon_edit_capaian_tahunan'     		=> 'fa-pencil',
 	
 	// PETA JABATAN LINKS
 	
