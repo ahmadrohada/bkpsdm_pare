@@ -38,6 +38,12 @@
 								</div>     
 							</div>
 						</div>
+						<div class="form-horizontal col-md-12 " style="">
+							<div class="form-group form-group-sm">
+								<label>Jumlah Kegiatan Tahunan</label>
+								<span id="jm_kegiatan" class="form-control jm_kegiatan"></span>
+							</div>
+						</div>
 
 						<div class="form-horizontal col-md-12 " style="padding-left:0px; margin-top:10px;">
 							<p class="text-danger">- Anda membuat Capaian Tahunan sebelum masa penilaian berakhir</p>
@@ -172,6 +178,7 @@
 				
 					<input type="hidden" class="form-control pegawai_id" name="pegawai_id"  />
 					<input type="hidden" class="form-control skp_tahunan_id" name="skp_tahunan_id"  />
+					<input type="hidden" class="form-control jm_kegiatan_txt" name="jm_kegiatan"  />
 				
 					<input type="hidden" class="form-control u_nama	" name="u_nama"  />
 					<input type="hidden" class="form-control u_jabatan_id " name="u_jabatan_id"  />
@@ -230,7 +237,7 @@
 		var data = $('#create-capaian_tahunan_before_end_confirm-form').serialize();
 
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_capaian_tahunan") }}',
+			url		: '{{ url("api_resource/simpan_capaian_tahunan_before_end") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

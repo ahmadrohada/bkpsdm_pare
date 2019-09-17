@@ -481,7 +481,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	Route::get('create_capaian_tahunan_before_end_confirm','API\CapaianTahunanAPIController@BeforeEndCreateConfirm');
 	
-
+	
+	Route::post('simpan_capaian_tahunan_before_end','API\CapaianTahunanAPIController@BeforeEndStore');
 
 	//==================================== REALISASI TRIWULAN KEGIATAN TAHUNAN =============================================//
 	//=============================================================================================================//
@@ -1038,8 +1039,10 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 
 });
 
+
+
 //===============================================================================================================//
-//=============== PEGAWAI ACCESS LEVEL PAGE ROUTES - RUNNING THROUGH PEGAWAI MIDDLEWARE ====================//
+//=============== PERSONAL ACCESS LEVEL PAGE ROUTES - RUNNING THROUGH PERSONAL MIDDLEWARE ====================//
 //===============================================================================================================//
 
 Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
@@ -1209,14 +1212,20 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
 
 	//=========================================================================================//
-	//=============================   CAPAIAN TRIWULAN     ====================================//
+	//=============================   CAPAIAN TAHUNAN     ====================================//
 	//=========================================================================================//
 	Route::get('capaian-tahunan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showCapaianTahunan'
 	]);
 	
+	Route::get('capaian-tahunan/{capaian_tahunan_id}/edit',[
+		'as' 			=> '',
+		'uses' 			=> 'CapaianTahunanController@PersonalCapaianTahunanEdit'
+	]);
 	
+
+
 
 	
 
