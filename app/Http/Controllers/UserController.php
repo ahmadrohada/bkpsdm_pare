@@ -33,6 +33,31 @@ use Input;
 class UserController extends Controller {
 
 	
+  //=======================================================================================//
+  protected function golongan_aktif($pegawai_id){
+    //GOLONGAN 
+    $gol       = \DB::table('demo_asn.tb_history_golongan')
+                        ->leftjoin('demo_asn.m_golongan AS golongan', function($join){
+                            $join   ->on('tb_history_golongan.id_golongan','=','golongan.id');
+                        })
+                        ->WHERE('tb_history_golongan.id_pegawai',$pegawai_id)
+                        ->WHERE('tb_history_golongan.status','=','active')
+                        ->SELECT(['golongan.golongan'])
+                        ->first();
+    return $gol->golongan;
+}
+
+//=======================================================================================//
+  protected function tmt_golongan_aktif($pegawai_id){
+    //GOLONGAN 
+    $gol       = \DB::table('demo_asn.tb_history_golongan')
+                       
+                        ->WHERE('tb_history_golongan.id_pegawai',$pegawai_id)
+                        ->WHERE('tb_history_golongan.status','=','active')
+                        ->SELECT(['tb_history_golongan.tmt_golongan'])
+                        ->first();
+    return $gol->tmt_golongan;
+}
 
     
 	
@@ -139,12 +164,7 @@ class UserController extends Controller {
                                         $join   ->on('a.id_pegawai','=','pegawai.id');
                                         $join   ->where('a.status','=', 'active');
                             })
-                           
-                            //unit_kerja
-                            ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
-                            ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
                     
-
                             ->leftjoin('demo_asn.m_unit_kerja AS c ', function($join){
                                 $join   ->on('a.id_skpd','=','c.id');
                             })
@@ -154,19 +174,16 @@ class UserController extends Controller {
                             ->leftjoin('demo_asn.m_jenis_jabatan AS e ', function($join){
                                 $join   ->on('d.id_jenis_jabatan','=','e.id');
                             })
-                            ->leftjoin('demo_asn.m_golongan AS f ', function($join){
-                                $join   ->on('a.id_golongan','=','f.id');
-                            })
+                          
                             ->leftjoin('demo_asn.foto AS y ', function($join){
                                 $join   ->on('a.nip','=','y.nipbaru');
                             }) 
                             ->SELECT(   'pegawai.*',
                                         'a.*',
-                                        'unit_kerja.unit_kerja AS unit_kerja',
+                                        'a.unit_kerja AS unit_kerja',
                                         'c.unit_kerja AS skpd',
                                         'd.eselon AS eselon',
                                         'e.jenis_jabatan AS jenis_jabatan',
-                                        'f.golongan AS golongan',
                                         'y.isi AS foto',
                                         'users.username AS username',
                                         'users.id AS user_id'
@@ -191,8 +208,9 @@ class UserController extends Controller {
         $jenis_jabatan  = $profil->jenis_jabatan;
         $eselon         = $profil->eselon;
         $jenis_jabatan  = $profil->jenis_jabatan;
-        $golongan       = $profil->golongan;
         $tmt_jabatan    = $profil->tmt_jabatan;
+        $golongan       = $this->golongan_aktif($user->Pegawai->id);
+        $tmt_golongan   = $this->tmt_golongan_aktif($user->Pegawai->id);
         $no_hp          = $profil->no_hp;
         $email          = $profil->email;
         $alamat         = $profil->alamat;
@@ -227,6 +245,7 @@ class UserController extends Controller {
                 'eselon'                => $eselon,
                 'jenis_jabatan'         => $jenis_jabatan,
                 'golongan'              => $golongan,
+                'tmt_golongan'          => $tmt_golongan,
                 'tmt_jabatan'           => $tmt_jabatan,
                 'no_hp'                 => $no_hp,
                 'email'                 => $email,

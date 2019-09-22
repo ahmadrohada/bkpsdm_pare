@@ -17,13 +17,43 @@ use App\Helpers\Pustaka;
 class DashboardController extends Controller
 {
 
-//NEW AUTH
+
+
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+
+      //=======================================================================================//
+      protected function golongan_aktif($pegawai_id){
+        //GOLONGAN 
+        $gol       = \DB::table('demo_asn.tb_history_golongan')
+                            ->leftjoin('demo_asn.m_golongan AS golongan', function($join){
+                                $join   ->on('tb_history_golongan.id_golongan','=','golongan.id');
+                            })
+                            ->WHERE('tb_history_golongan.id_pegawai',$pegawai_id)
+                            ->WHERE('tb_history_golongan.status','=','active')
+                            ->SELECT(['golongan.golongan'])
+                            ->first();
+        return $gol->golongan;
+    }
+
+    //=======================================================================================//
+      protected function tmt_golongan_aktif($pegawai_id){
+        //GOLONGAN 
+        $gol       = \DB::table('demo_asn.tb_history_golongan')
+                           
+                            ->WHERE('tb_history_golongan.id_pegawai',$pegawai_id)
+                            ->WHERE('tb_history_golongan.status','=','active')
+                            ->SELECT(['tb_history_golongan.tmt_golongan'])
+                            ->first();
+        return $gol->tmt_golongan;
+    }
+
+
 
     public function index()
     {
@@ -71,12 +101,11 @@ class DashboardController extends Controller
                                 $join   ->on('d.id_jenis_jabatan','=','e.id');
                             })
 
-                            //golongan
-                            ->leftjoin('demo_asn.m_golongan AS f', 'a.id_golongan','=','f.id')
-                    
+                            //FOTO
                             ->leftjoin('demo_asn.foto AS y ', function($join){
-                                $join   ->on('a.nip','=','y.nipbaru');
+                                $join   ->on('tb_pegawai.nip','=','y.nipbaru');
                             }) 
+                          
                            
                             ->SELECT(   'tb_pegawai.*',
                                         'a.*',
@@ -84,7 +113,6 @@ class DashboardController extends Controller
                                         'c.skpd AS skpd',
                                         'd.eselon AS eselon',
                                         'e.jenis_jabatan AS jenis_jabatan',
-                                        'f.golongan AS golongan',
                                         'y.isi AS foto'
                                        
                                        
@@ -104,7 +132,9 @@ class DashboardController extends Controller
         $jenis_jabatan  = $profil->jenis_jabatan;
         $eselon         = $profil->eselon;
         $jenis_jabatan  = $profil->jenis_jabatan;
-        $golongan       = $profil->golongan;
+        $golongan       = $this->golongan_aktif($user->id_pegawai);
+        $tmt_golongan   = $this->tmt_golongan_aktif($user->id_pegawai);
+
         $tmt_jabatan    = $profil->tmt_jabatan;
         $no_hp          = $profil->no_hp;
         $email          = $profil->email;
@@ -156,6 +186,7 @@ class DashboardController extends Controller
                         'eselon'                => $eselon,
                         'jenis_jabatan'         => $jenis_jabatan,
                         'golongan'              => $golongan,
+                        'tmt_golongan'          => $tmt_golongan,
                         'tmt_jabatan'           => $tmt_jabatan,
                         'no_hp'                 => $no_hp,
                         'email'                 => $email,

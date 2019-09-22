@@ -171,10 +171,11 @@
 				
 					<input type="hidden" class="form-control u_nama	" name="u_nama"  />
 					<input type="hidden" class="form-control u_jabatan_id " name="u_jabatan_id"  />
+					<input type="hidden" class="form-control u_golongan_id " name="u_golongan_id"  />
 
 					<input type="hidden" class="form-control p_nama	" name="p_nama"  />
 					<input type="hidden" class="form-control p_jabatan_id	" name="p_jabatan_id"  />
-
+					<input type="hidden" class="form-control p_golongan_id " name="p_golongan_id"  />
 
                	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
                	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right btn-flat', 'type' => 'button', 'id' => 'save_skp_tahunan' )) !!}
@@ -257,8 +258,10 @@
 					$('.renja_id').val(data['renja_id']); 
 					$('.u_nama').val(data['u_nama']); 
 					$('.u_jabatan_id').val(data['u_jabatan_id']); 
+					$('.u_golongan_id').val(data['u_golongan_id']); 
 					$('.p_nama').val(data['p_nama']); 
 					$('.p_jabatan_id').val(data['p_jabatan_id']); 
+					$('.p_golongan_id').val(data['p_golongan_id']); 
 
 
 

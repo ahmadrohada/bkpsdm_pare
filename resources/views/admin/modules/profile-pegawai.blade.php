@@ -41,7 +41,7 @@
                 <strong><i class="fa  fa-users margin-r-5"></i> Golongan Terakhir</strong>
                 <p class="text-muted">
                 {{ $golongan}} / 
-                {{ $tmt_jabatan }}
+                {{ $tmt_golongan }}
                 </p>
 
                 <hr>

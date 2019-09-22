@@ -27,4 +27,14 @@ class CapaianTahunan extends Model
     {
         return $this->hasOne('App\Models\HistoryJabatan','id','p_jabatan_id');
     }
+    public function GolonganYangDinilai()
+    {
+        return $this->hasOne('App\Models\HistoryGolongan','id','u_golongan_id');
+    }
+
+    public function GolonganPenilai()
+    {
+        return $this->hasOne('App\Models\HistoryGolongan','id','p_golongan_id');
+    }
+    
 }

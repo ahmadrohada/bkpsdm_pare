@@ -10,6 +10,7 @@ use App\Models\Pegawai;
 use App\Models\SKPTahunan;
 use App\Models\CapaianBulanan;
 use App\Models\CapaianTriwulan;
+use App\Models\CapaianTahunan;
 use App\Models\Jabatan;
 use App\Models\HistoryJabatan;
 use App\Models\User;
@@ -217,6 +218,38 @@ class PegawaiAPIController extends Controller {
         
     }
 
+    public function selectAtasanCapaianTahunan(Request $request)
+    {
+
+        //cari pejabat dan penilai Capaian
+        $capaian    = CapaianTahunan::where('id', $request->get('capaian_tahunan_id'))->first();
+        if ( $capaian->p_jabatan_id != 0 ){
+            $atasan_id = $capaian->PejabatPenilai->id;
+        }else{
+            $atasan_id = "0";
+        }
+
+        $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
+                        ->where('id','!=',$capaian->PejabatYangDinilai->id )
+                        ->where('id','!=',$atasan_id )
+                        ->get();
+
+
+        $no = 0;
+        $pegawai_list = [];
+        foreach  ( $pegawai as $x){
+            $no++;
+            $pegawai_list[] = array(
+                            'id'		=> $x->id,
+                            'nama'		=> Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk),
+                            );
+            } 
+        
+        return $pegawai_list;
+        
+        
+    }
+
   
     public function administrator_pegawai_list(Request $request)
     {
@@ -239,9 +272,6 @@ class PegawaiAPIController extends Controller {
                 //skpd
                 ->leftjoin('demo_asn.m_skpd AS skpd', 'a.id_skpd','=','skpd.id')
 
-                //unit_kerja
-                ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
-                ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
                 
                  ->select([ 'pegawai.nama AS nama',
                             'pegawai.id AS pegawai_id',
@@ -251,8 +281,8 @@ class PegawaiAPIController extends Controller {
                             'eselon.eselon AS eselon',
                             'golongan.golongan AS golongan',
                             'jabatan.skpd AS jabatan',
-                            'unit_kerja.unit_kerja',
-                            'skpd.skpd AS skpd'
+                            'skpd.skpd AS skpd',
+                            'a.unit_kerja AS unit_kerja'
                                 
                         ])
                 //->where('a.id_skpd','=', $id_skpd)
@@ -311,10 +341,7 @@ class PegawaiAPIController extends Controller {
                 ->leftjoin('demo_asn.m_skpd AS jabatan', 'a.id_jabatan','=','jabatan.id')
 
 
-                //unit_kerja
-                ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
-                ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
-
+                
                 //LEFT JOIN ke user
                 ->leftjoin('db_pare_2018.users', 'users.id_pegawai','=','pegawai.id')
 
@@ -332,7 +359,7 @@ class PegawaiAPIController extends Controller {
                             'eselon.eselon AS eselon',
                             'golongan.golongan AS golongan',
                             'jabatan.skpd AS jabatan',
-                            'unit_kerja.unit_kerja',
+                            'a.unit_kerja AS unit_kerja',
                             'users.id AS user_id',
                             'role.id AS admin_role_user'
                 
