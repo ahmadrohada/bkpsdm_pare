@@ -44,7 +44,31 @@ Use Alert;
 
 class PegawaiController extends Controller {
     
-    
+    //=======================================================================================//
+     protected function golongan_aktif($pegawai_id){
+        //GOLONGAN 
+        $gol       = \DB::table('demo_asn.tb_history_golongan')
+                            ->leftjoin('demo_asn.m_golongan AS golongan', function($join){
+                                $join   ->on('tb_history_golongan.id_golongan','=','golongan.id');
+                            })
+                            ->WHERE('tb_history_golongan.id_pegawai',$pegawai_id)
+                            ->WHERE('tb_history_golongan.status','=','active')
+                            ->SELECT(['golongan.golongan'])
+                            ->first();
+        return $gol->golongan;
+    }
+
+    //=======================================================================================//
+      protected function tmt_golongan_aktif($pegawai_id){
+        //GOLONGAN 
+        $gol       = \DB::table('demo_asn.tb_history_golongan')
+                           
+                            ->WHERE('tb_history_golongan.id_pegawai',$pegawai_id)
+                            ->WHERE('tb_history_golongan.status','=','active')
+                            ->SELECT(['tb_history_golongan.tmt_golongan'])
+                            ->first();
+        return $gol->tmt_golongan;
+    }
 
     //=======================================================================================//
     protected function nama_skpd($skpd_id){
@@ -148,9 +172,7 @@ class PegawaiController extends Controller {
                             //jenis jabatan
                             ->leftjoin('demo_asn.m_jenis_jabatan AS jenis_jabatan ', 'eselon.id_jenis_jabatan','=','jenis_jabatan.id' )
 
-                            //golongan
-                            ->leftjoin('demo_asn.m_golongan AS golongan', 'a.id_golongan','=','golongan.id')
-                            
+                           
                             //jabatan
                             ->leftjoin('demo_asn.m_skpd AS jabatan', 'a.id_jabatan','=','jabatan.id')
                             
@@ -159,10 +181,6 @@ class PegawaiController extends Controller {
                             //skpd
                             ->leftjoin('demo_asn.m_skpd AS skpd', 'a.id_skpd','=','skpd.id')
             
-                            //unit_kerja
-                            ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
-                            ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
-
                             //foto
                             ->leftjoin('demo_asn.foto AS foto ','a.nip','=','foto.nipbaru')
 
@@ -176,9 +194,8 @@ class PegawaiController extends Controller {
                                         'tb_pegawai.gelarblk AS gelarblk',
                                         'eselon.eselon AS eselon',
                                         'jenis_jabatan.jenis_jabatan AS jenis_jabatan',
-                                        'golongan.golongan AS golongan',
                                         'jabatan.skpd AS jabatan',
-                                        'unit_kerja.unit_kerja',
+                                        'a.unit_kerja AS unit_kerja',
                                         'skpd.skpd AS skpd',
                                         'a.tmt_jabatan AS tmt_jabatan',
                                         'tb_pegawai.no_hp',
@@ -204,8 +221,9 @@ class PegawaiController extends Controller {
         $jenis_jabatan  = $dt->jenis_jabatan;
         $eselon         = $dt->eselon;
         $jenis_jabatan  = $dt->jenis_jabatan;
-        $golongan       = $dt->golongan;
         $tmt_jabatan    = $dt->tmt_jabatan;
+        $golongan       = $this->golongan_aktif($pegawai_id);
+        $tmt_golongan   = $this->tmt_golongan_aktif($pegawai_id);
         $no_hp          = $dt->no_hp;
         $email          = $dt->email;
         $alamat         = $dt->alamat;
@@ -234,6 +252,7 @@ class PegawaiController extends Controller {
                 'eselon'                => $eselon,
                 'jenis_jabatan'         => $jenis_jabatan,
                 'golongan'              => $golongan,
+                'tmt_golongan'          => $tmt_golongan,
                 'tmt_jabatan'           => $tmt_jabatan,
                 'no_hp'                 => $no_hp,
                 'email'                 => $email,
@@ -295,15 +314,15 @@ class PegawaiController extends Controller {
                                             $join   ->on('a.id_pegawai','=','tb_pegawai.id');
                                                 
                                         })
-                            //eselon
+                           //eselon
                             ->leftjoin('demo_asn.m_eselon AS eselon', 'a.id_eselon','=','eselon.id')
             
                             //jenis jabatan
                             ->leftjoin('demo_asn.m_jenis_jabatan AS jenis_jabatan ', 'eselon.id_jenis_jabatan','=','jenis_jabatan.id' )
 
-                            //golongan
-                            ->leftjoin('demo_asn.m_golongan AS golongan', 'a.id_golongan','=','golongan.id')
                             
+
+
                             //jabatan
                             ->leftjoin('demo_asn.m_skpd AS jabatan', 'a.id_jabatan','=','jabatan.id')
                             
@@ -313,8 +332,8 @@ class PegawaiController extends Controller {
                             ->leftjoin('demo_asn.m_skpd AS skpd', 'a.id_skpd','=','skpd.id')
             
                             //unit_kerja
-                            ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
-                            ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
+                            //->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
+                            //->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
 
                             //foto
                             ->leftjoin('demo_asn.foto AS foto ','a.nip','=','foto.nipbaru')
@@ -329,9 +348,8 @@ class PegawaiController extends Controller {
                                         'tb_pegawai.gelarblk AS gelarblk',
                                         'eselon.eselon AS eselon',
                                         'jenis_jabatan.jenis_jabatan AS jenis_jabatan',
-                                        'golongan.golongan AS golongan',
                                         'jabatan.skpd AS jabatan',
-                                        'unit_kerja.unit_kerja',
+                                        'a.unit_kerja AS unit_kerja',
                                         'skpd.skpd AS skpd',
                                         'a.tmt_jabatan AS tmt_jabatan',
                                         'tb_pegawai.no_hp',
@@ -361,7 +379,8 @@ class PegawaiController extends Controller {
         $jenis_jabatan  = $dt->jenis_jabatan;
         $eselon         = $dt->eselon;
         $jenis_jabatan  = $dt->jenis_jabatan;
-        $golongan       = $dt->golongan;
+        $golongan       = $this->golongan_aktif($pegawai_id);
+        $tmt_golongan   = $this->tmt_golongan_aktif($pegawai_id);
         $tmt_jabatan    = $dt->tmt_jabatan;
         $no_hp          = $dt->no_hp;
         $email          = $dt->email;
@@ -397,6 +416,7 @@ class PegawaiController extends Controller {
                 'eselon'                => $eselon,
                 'jenis_jabatan'         => $jenis_jabatan,
                 'golongan'              => $golongan,
+                'tmt_golongan'          => $tmt_golongan,
                 'tmt_jabatan'           => $tmt_jabatan,
                 'no_hp'                 => $no_hp,
                 'email'                 => $email,

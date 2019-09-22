@@ -11,7 +11,7 @@
     </div>
 	<div class="box-body table-responsive">
 
-		<table id="skp_tahunan_table" class="table table-striped table-hover table-condensed">
+		<table id="capaian_tahunan_table" class="table table-striped table-hover table-condensed">
 			<thead>
 				<tr class="success">
 					<th>NO</th>
@@ -19,6 +19,7 @@
 					<th>PELAKSANAAN</th>
 					<th>JABATAN</th>
 					<th>CAPAIAN</th>
+					<th><i class="fa fa-cog"></i></th> 
 				</tr>
 			</thead>
 			
@@ -28,10 +29,11 @@
 	</div>
 </div>
 
-@include('admin.modals.create_capaian_tahunan_before_end_confirm')
+
+@include('admin.modals.create_capaian_tahunan')
 
 <script type="text/javascript">
-	$('#skp_tahunan_table').DataTable({
+	$('#capaian_tahunan_table').DataTable({
 				processing      : true,
 				serverSide      : true,
 				searching      	: false,
@@ -40,7 +42,7 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,2,4] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,2,4,5] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
@@ -88,11 +90,16 @@
 
 									}	
 								},
+								{ data: "capaian_skp" ,  name:"capaian_skp", orderable: true, searchable: true,
+									"render": function ( data, type, row ) {
+										return "";
+
+									}	
+								},
 								
 								{ data: "capaian" , orderable: false,searchable:false,width:"120px",
 										"render": function ( data, type, row ) {
-										if (row.remaining_time >= 0 ){ 
-											if (row.capaian >= 1 ){ 
+										if (row.capaian >= 1 ){ 
 
 
 												if (row.capaian_send_to_atasan == 1 ){
@@ -109,7 +116,7 @@
 													}
 												}else{
 													//blm dikirim
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_tahunan" data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+													return  	'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_tahunan" data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_tahunan" data-id="'+row.capaian_id+'"><i class="fa fa-close " ></i></a></span>';
 												}
@@ -117,14 +124,6 @@
 												return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_tahunan"  data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
 											}
 
-
-											
-										}else{
-
-											return  '<span style="margin:1px;" ><a class="progress-bar progress-bar-aqua btn btn-warning btn-xs create_capaian_tahunan_before_end"  data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:120px;">Create ['+row.remaining_time+']</a></span>';
-											
-										
-										}
 									}
 								},
 								
@@ -150,55 +149,23 @@
 	
 	
 
-	$(document).on('click','.create_capaian_tahunan_before_end',function(e){
+	$(document).on('click','.create_capaian_tahunan',function(e){
 		var skp_tahunan_id = $(this).data('skp_tahunan_id') ;
-
-		Swal.fire({
-			title: "Create Capaian Tahunan",
-			//text:$(this).data('label'),
-			text:"Anda membuat Capaian Tahunan sebelum masa penilaian berakhir",
-			type: "warning",
-			//type: "question",
-			showCancelButton: true,
-			cancelButtonText: "Batal",
-			confirmButtonText: "Ya",
-			confirmButtonClass: "btn btn-success",
-			cancelButtonColor: "btn btn-danger",
-			cancelButtonColor: "#d33",
-			closeOnConfirm: false,
-			closeOnCancel:false
-		}).then ((result) => {
-			if (result.value){
-				
-			
-				open_modal_create_capaian_before_end(skp_tahunan_id);
-
-
-
-			}
-		});
-	});
-
-
-	function open_modal_create_capaian_before_end(skp_tahunan_id){
-
-
 		$.ajax({
-			url		: '{{ url("api_resource/create_capaian_tahunan_before_end_confirm") }}',
+			url		: '{{ url("api_resource/create_capaian_tahunan_confirm") }}',
 			type	: 'GET',
 			data	:  	{ 
 							skp_tahunan_id : skp_tahunan_id
 						},
 			success	: function(data) {
-				
-				if (data['status']==='pass'){
+
+					$('.periode_label').html(data['periode_label']); 
+					$('.masa_penilaian_skp_tahunan').html(data['masa_penilaian']); 
+					$('.jm_kegiatan').val(data['jm_kegiatan']); 
 
 
-					$('#periode_label').html(data['periode_label']); 
-					$('.mulai').val(data['tgl_mulai']); 
-					$('.selesai').val(data['tgl_selesai']); 
-					$('.selesai_baru').val(data['tgl_selesai_baru']); 
-					$('.jm_kegiatan_txt').val(data['jm_kegiatan']); 
+					$('.cap_tgl_mulai').val(data['cap_tgl_mulai']); 
+					$('.cap_tgl_selesai').val(data['cap_tgl_selesai']); 
 				
 						
 					$('#u_nip').html(data['u_nip']); 
@@ -222,20 +189,53 @@
 					$('.skp_tahunan_id').val(data['skp_tahunan_id']); 
 					$('.u_nama').val(data['u_nama']); 
 					$('.u_jabatan_id').val(data['u_jabatan_id']); 
+					$('.u_golongan_id').val(data['u_golongan_id']); 
 					$('.p_nama').val(data['p_nama']); 
 					$('.p_jabatan_id').val(data['p_jabatan_id']);
+					$('.p_golongan_id').val(data['p_golongan_id']); 
  
 					$('.jenis_jabatan').val(data['u_jenis_jabatan']); 
 					$('.jabatan_id').val(data['jabatan_id']);
 					$('.renja_id').val(data['renja_id']);
 					$('.jm_kegiatan').html(data['jm_kegiatan']); 
+
+
+
+
+
+				if (data['status']==='pass'){
+					$('.before_end').hide(); 
+					$('.modal-create_capaian_tahunan_confirm').modal('show'); 
+				}else if (data['status']==='pass_before_end'){
+
+					Swal.fire({
+						title: "Create Capaian Tahunan",
+						//text:$(this).data('label'),
+						text:"Anda membuat Capaian Tahunan sebelum masa penilaian berakhir",
+						type: "warning",
+						//type: "question",
+						showCancelButton: true,
+						cancelButtonText: "Batal",
+						confirmButtonText: "Ya",
+						confirmButtonClass: "btn btn-success",
+						cancelButtonColor: "btn btn-danger",
+						cancelButtonColor: "#d33",
+						closeOnConfirm: false,
+						closeOnCancel:false
+					}).then ((result) => {
+						if (result.value){
+
+
+							
+							$('.before_end').show(); 
+							$('.modal-create_capaian_tahunan_confirm').modal('show'); 
+
+						}
+					});
+
 					
-					$('.modal-create_capaian_tahunan_before_end_confirm').modal('show'); 
 				}else if (data['status']==='fail'){
-				
-
-
-
+					
 
 				}else{
 					Swal.fire({
@@ -251,20 +251,20 @@
 
 					Swal.fire({
 						title: 'Error!',
-						text: 'Capaian tahunan  belum bisa dibuat',
+						text: 'Capaian Tahunan  belum bisa dibuat',
 						type: 'error',
 						confirmButtonText: 'Tutup'
 					})
 			}
 			
 		});
-	}
-
+		
+	});
 
 
 
 	$(document).on('click','.hapus_capaian_tahunan',function(e){
-		var capaian_tahuhan_id = $(this).data('id') ;
+		var capaian_tahunan_id = $(this).data('id') ;
 
 		Swal.fire({
 			title: "Hapus  Capaian Tahunan",
@@ -296,12 +296,12 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										$('#skp_tahunan_table').DataTable().ajax.reload(null,false);
+										$('#capaian_tahunan_table').DataTable().ajax.reload(null,false);
 										
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
-											$('#skp_tahunan_table').DataTable().ajax.reload(null,false);
+											$('#capaian_tahunan_table').DataTable().ajax.reload(null,false);
 											
 											
 										}

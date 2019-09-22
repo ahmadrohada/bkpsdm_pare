@@ -47,6 +47,29 @@ class Pustaka {
 
     }
 	
+	public static function sakip($data){
+		
+				switch($data)
+					{
+				case "AA" : $nilai= 7;
+						break;
+				case "A"  : $nilai= 6;
+						break;
+				case "AB" : $nilai= 5;
+						break;
+				case "B"  : $nilai= 4;
+						break;
+				case "CC" : $nilai= 3;
+						break;
+				case "C"  : $nilai= 2;
+						break;
+				case "D"  : $nilai= 1;
+						break;
+					}
+
+	return $nilai;
+
+	}
 	
 	public static function balik($data){
 		$tanggal = substr($data,8,2); 
@@ -92,6 +115,54 @@ class Pustaka {
 
 	}
 
+//================================== RUMUS PERHITUNGAN REALISASI KEGIATAN PADA CAPAIAN TAHUAN ==========//
+/** RUMUS UNTUK MENENTUKAN CAPAIAN SKP TAHUNAN **/
+/* 
+	//Aspek kuantitas
+	$capaian_output = ( $data->capaian_output / $data->target_output )*100;
+	
+	//Aspek kualitas
+	$persen_capaian_kualitas = ( ($akurasi+$ketelitian+$kerapihan+$keterampilan) / 20 )*100;
+	
+	$capaian_kualitas = ($persen_capaian_kualitas / $data->target_kualitas)*100;
+	
+	//Aspek waktu
+	$persen_efisiensi_waktu = 100 - ( ($data->capaian_waktu / $data->target_waktu) * 100);
+	
+	if ( $persen_efisiensi_waktu <= 24 ) {
+		
+		$capaian_waktu = ((1.76 * $data->target_waktu - $data->capaian_waktu)/ $data->target_waktu )*100;
+	}else{
+		
+		$capaian_waktu = 76 - (((1.76 * $data->target_waktu - $data->capaian_waktu)/ $data->target_waktu )*100) -100;
+	}
+	
+	//jika kegiatan tidak ada biaya
+	if ( ( $data->capaian_biaya != 0 ) && ( $data->target_biaya != 0 )){
+		//Aspek biaya
+		$persen_efisiensi_biaya = 100 - ( ($data->capaian_biaya / $data->target_biaya) * 100);
+		
+		
+		if ( $persen_efisiensi_biaya <= 24 ) {
+			$capaian_biaya = ((1.76 * $data->target_biaya - $data->capaian_biaya)/ $data->target_biaya )*100;
+		}else{
+			$capaian_biaya = 76 - (((1.76 * $data->target__biaya - $data->capaian_biaya)/ $data->target_biaya )*100) -100;
+		}
+		
+		
+		
+	}else{
+		$capaian_biaya = 0;
+	}
+	
+	
+		if ( $capaian_biaya != 0 ){
+			$capaian_skp = ($capaian_output+$capaian_kualitas+$capaian_waktu+$capaian_biaya)/4 ;
+		}else{
+			$capaian_skp = ($capaian_output+$capaian_kualitas+$capaian_waktu)/3 ;
+		}
+
+**/
 	
 
 	public static function balik2($data){
@@ -190,6 +261,27 @@ class Pustaka {
 		}
 
 		return $hasil. " %";
+
+	}
+
+	public static function persen_bulat($data){
+
+		if ( $data > 0 ){
+			$x	= explode('.',$data);
+
+			if ( $x[1] == '00' ){
+				$hasil = number_format(($data) , 0);
+			}else{
+				$hasil = number_format(($data) , 2);
+			}
+
+		}else{
+			$hasil = 0 ;
+		}
+		
+
+
+		return $hasil;
 
 	}
 

@@ -14,6 +14,7 @@ use App\Models\SKPTahunan;
 use App\Models\SKPBulanan;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
+use App\Models\HistoryGolongan;
 use App\Models\Skpd;
 use App\Models\Golongan;
 use App\Models\Jabatan;
@@ -45,6 +46,19 @@ class SKPTahunanAPIController extends Controller {
         
     }
 
+     //=======================================================================================//
+     protected function golongan($id_golongan){ 
+        $golongan       = HistoryGolongan::WHERE('id',$id_golongan)
+                        ->SELECT('jabatan')
+                        ->first();
+        if ( $golongan == null ){
+            return $golongan;
+        }else{
+            return Pustaka::capital_string($golongan->golongan);
+        }
+        
+    }
+
 
     protected function SKPTahunandDetail(Request $request){
      
@@ -63,6 +77,9 @@ class SKPTahunanAPIController extends Controller {
         $renja      = $skp->Renja;
         $p_detail   = $skp->PejabatPenilai;
         $u_detail   = $skp->PejabatYangDinilai;
+
+        $p_gol      = $skp->GolonganPenilai;
+        $u_gol      = $skp->GolonganYangDinilai;
        
 
         if ( $p_detail != null ){
@@ -77,8 +94,8 @@ class SKPTahunanAPIController extends Controller {
                     'u_jabatan_id'	        => $u_detail->id,
                     'u_nip'	                => $u_detail->nip,
                     'u_nama'                => $skp->u_nama,
-                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
-                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
+                    'u_pangkat'	            => $u_gol ? $u_gol->Golongan->pangkat : '',
+                    'u_golongan'	        => $u_gol ? $u_gol->Golongan->golongan : '',
                     'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
                     'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
                     'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
@@ -87,8 +104,8 @@ class SKPTahunanAPIController extends Controller {
                     'p_jabatan_id'	        => $p_detail->id,
                     'p_nip'	                => $p_detail->nip,
                     'p_nama'                => $skp->p_nama,
-                    'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
-                    'p_golongan'	        => $p_detail->Golongan ? $p_detail->Golongan->golongan : '',
+                    'p_pangkat'	            => $u_gol ? $u_gol->Golongan->pangkat : '',
+                    'p_golongan'	        => $u_gol ? $u_gol->Golongan->golongan : '',
                     'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
                     'p_jabatan'	            => Pustaka::capital_string($p_detail->Jabatan ? $p_detail->Jabatan->skpd : ''),
                     'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
@@ -111,8 +128,8 @@ class SKPTahunanAPIController extends Controller {
                     'u_jabatan_id'	        => $u_detail->id,
                     'u_nip'	                => $u_detail->nip,
                     'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
-                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
-                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
+                    'u_pangkat'	            => $u_gol->Golongan ? $u_gol->Golongan->pangkat : '',
+                    'u_golongan'	        => $u_gol->Golongan ? $u_gol->Golongan->golongan : '',
                     'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
                     'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
                     'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
@@ -942,15 +959,25 @@ class SKPTahunanAPIController extends Controller {
         $periode    = Periode::WHERE('id',$periode_id)->first();
 
         //return Pustaka::tgl_form($periode->awal);
-        
-
+    
         //DETAIL data pribadi dan atasan
         $u_detail = HistoryJabatan::WHERE('id',$jabatan_id)->first();
+
+
+        //Golongan Aktif
+        $u_gol = HistoryGolongan::WHERE('id_pegawai', $u_detail->id_pegawai)
+                                    ->WHERE('status','active')
+                                    ->first();
 
 
         //detail atasan
         $id_jab_atasan = SKPD::WHERE('id',$u_detail->id_jabatan)->first()->parent_id;
         $p_detail = HistoryJabatan::WHERE('id_jabatan', $id_jab_atasan)
+                                    ->WHERE('status','active')
+                                    ->first();
+
+         //Golongan Aktif
+        $p_gol = HistoryGolongan::WHERE('id_pegawai', $p_detail->id_pegawai)
                                     ->WHERE('status','active')
                                     ->first();
 
@@ -960,20 +987,22 @@ class SKPTahunanAPIController extends Controller {
                     'periode_label'	        => $periode->label,
                     'renja_id'	            => $renja_id,
                     'u_jabatan_id'	        => $u_detail->id,
+                    'u_golongan_id'         => $u_gol->id,
                     'u_nip'	                => $u_detail->nip,
                     'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
                     'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
-                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
+                    'u_golongan'	        => $u_gol->Golongan ? $u_gol->Golongan->golongan : '',
                     'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
                     'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
                     'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
                     'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
 
                     'p_jabatan_id'	        => $p_detail->id,
+                    'p_golongan_id'         => $p_gol->id,
                     'p_nip'	                => $p_detail->nip,
                     'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
                     'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
-                    'p_golongan'	        => $p_detail->Golongan ? $p_detail->Golongan->golongan : '',
+                    'p_golongan'	        => $p_gol->Golongan ? $p_gol->Golongan->golongan : '',
                     'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
                     'p_jabatan'	            => Pustaka::capital_string($p_detail->Jabatan ? $p_detail->Jabatan->skpd : ''),
                     'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
@@ -1007,6 +1036,12 @@ class SKPTahunanAPIController extends Controller {
         //DETAIL data pribadi dan atasan
         $u_detail = HistoryJabatan::WHERE('id',$jabatan_id)->first();
 
+        //Golongan Aktif
+        $u_gol = HistoryGolongan::WHERE('id_pegawai', $u_detail->id_pegawai)
+                                ->WHERE('status','active')
+                                ->first();
+
+
 
         //detail atasan
        /*  $id_jab_atasan = SKPD::WHERE('id',$u_detail->id_jabatan)->first()->parent_id;
@@ -1022,8 +1057,8 @@ class SKPTahunanAPIController extends Controller {
                     'u_jabatan_id'	        => $u_detail->id,
                     'u_nip'	                => $u_detail->nip,
                     'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
-                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
-                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
+                    'u_pangkat'	            => $u_gol->Golongan ? $u_gol->Golongan->pangkat : '',
+                    'u_golongan'	        => $u_gol->Golongan ? $u_gol->Golongan->golongan : '',
                     'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
                     'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
                     'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
@@ -1421,6 +1456,7 @@ class SKPTahunanAPIController extends Controller {
                 'tgl_selesai.required'                  => 'Harus diisi',
                 'u_nama.required'                       => 'Harus diisi',
                 'u_jabatan_id.required'                 => 'Harus diisi',
+                'u_golongan_id.required'                => 'Harus diisi',
                // 'p_nama.required'                       => 'Harus diisi',
                 //'p_jabatan_id.required'                 => 'Harus diisi',
 
@@ -1435,6 +1471,7 @@ class SKPTahunanAPIController extends Controller {
                             'tgl_selesai'           => 'required',
                             'u_nama'                => 'required',
                             'u_jabatan_id'          => 'required',
+                            'u_golongan_id'          => 'required',
                             //'p_nama'                => 'required',
                             //'p_jabatan_id'          => 'required',
                         ),
@@ -1456,11 +1493,13 @@ class SKPTahunanAPIController extends Controller {
 
         $skp_tahunan    = new SKPTahunan;
         $skp_tahunan->pegawai_id                  = Input::get('pegawai_id');
-        $skp_tahunan->renja_id       = Input::get('renja_id');
+        $skp_tahunan->renja_id                    = Input::get('renja_id');
         $skp_tahunan->u_nama                      = Input::get('u_nama');
         $skp_tahunan->u_jabatan_id                = Input::get('u_jabatan_id');
+        $skp_tahunan->u_golongan_id               = Input::get('u_golongan_id');
         $skp_tahunan->p_nama                      = Input::get('p_nama');
         $skp_tahunan->p_jabatan_id                = Input::get('p_jabatan_id');
+        $skp_tahunan->p_golongan_id               = Input::get('p_golongan_id');
         $skp_tahunan->tgl_mulai                   = Pustaka::tgl_sql(Input::get('tgl_mulai'));
         $skp_tahunan->tgl_selesai                 = Pustaka::tgl_sql(Input::get('tgl_selesai'));
         

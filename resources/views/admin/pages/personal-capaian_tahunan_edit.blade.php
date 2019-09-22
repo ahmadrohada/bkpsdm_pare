@@ -9,7 +9,7 @@
 	 <div class="content-wrapper" >
 	    <section class="content-header">
 			<h1>
-				Edit Capaian Tahunan
+				Edit Capaian Tahunan Eselon {{ $capaian->PejabatYangDinilai->Eselon->eselon }}
 			</h1>
 				{!! Breadcrumbs::render('personal_edit_capaian_tahunan') !!}
       </section>
@@ -26,16 +26,25 @@
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
 				<div class="active tab-pane" id="status">
-					<!-- 1. KABAN -->
+
+
+					<!-- 2. KASUBID -->
+					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+						@include('admin.modules.timeline.capaian_tahunan_status_edit')
+					@endif
 					
 					
 				</div>
 				<div class="tab-pane" id="detail">
-					@include('admin.modules.edit_forms.capaian_bulanan_detail')			
+					@include('admin.modules.edit_forms.capaian_tahunan_detail')			
 				</div>
 								
 				<div class=" tab-pane" id="kegiatan_tahunan_tab">
-					
+
+					<!-- 3. KASUBID -->
+					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+						@include('admin.tables.capaian_kegiatan_tahunan_edit')
+					@endif
 				
 					
 				</div>
@@ -68,9 +77,10 @@ $(document).ready(function() {
 		window.location.hash = id;
 
 		if ( id == 'kegiatan_tahunan_tab'){
-			load_kegiatan_bulanan();
+			load_kegiatan_tahunan();
 		}else if ( id == 'status'){
 			status_show();
+			
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});

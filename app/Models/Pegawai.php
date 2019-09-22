@@ -27,6 +27,11 @@ class Pegawai extends Model
     return $this->hasOne('App\Models\HistoryJabatan', 'id_pegawai')->where('status','active');
     }
 
+    public function GolonganAktif()
+    {
+    return $this->hasOne('App\Models\HistoryGolongan', 'id_pegawai')->where('status','active');
+    }
+
 
     public function foto()
     {

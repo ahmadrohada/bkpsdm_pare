@@ -148,6 +148,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
 
                                         'kegiatan_tahunan.id AS kegiatan_tahunan_id',
                                         'kegiatan_tahunan.cost AS cost_target',
+                                        'kegiatan_tahunan.target_waktu AS waktu_target',
                                         'realisasi_triwulan.id AS realisasi_kegiatan_id',
                                         'realisasi_triwulan.quantity AS qty_realisasi',
                                         

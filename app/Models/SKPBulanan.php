@@ -31,6 +31,9 @@ class SKPBulanan extends Model
         return $this->hasOne('App\Models\HistoryJabatan','id','u_jabatan_id');
     }
 
+
+
+
     public function Pejabat_penilai()
     {
         return $this->hasOne('App\Models\HistoryJabatan','id','p_jabatan_id');
@@ -40,4 +43,15 @@ class SKPBulanan extends Model
     {
         return $this->hasOne('App\Models\HistoryJabatan','id','p_jabatan_id');
     }
+
+    public function GolonganYangDinilai()
+    {
+        return $this->hasOne('App\Models\HistoryGolongan','id','u_golongan_id');
+    }
+
+    public function GolonganPenilai()
+    {
+        return $this->hasOne('App\Models\HistoryGolongan','id','p_golongan_id');
+    }
+    
 }

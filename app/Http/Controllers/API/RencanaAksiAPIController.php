@@ -266,8 +266,8 @@ class RencanaAksiAPIController extends Controller {
           
         })
         ->addColumn('pelaksana', function ($x) {
-            if ($x->jabatan_id > 0 ){
-                return Pustaka::capital_string($x->Pelaksana->jabatan);
+            if ( ( $x->jabatan_id > 0 ) & ( $x->Pelaksana != null ) ){
+                return Pustaka::capital_string($x->Pelaksana->jabatan)."[".$x->jabatan_id."]";
             }else{
                 return '-';
             }

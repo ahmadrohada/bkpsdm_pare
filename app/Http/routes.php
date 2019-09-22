@@ -242,7 +242,6 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::get('skpd-renja_ind_kegiatan_list','API\IndikatorKegiatanAPIController@IndikatorKegiatanList');
 	Route::get('ind_kegiatan_detail','API\IndikatorKegiatanAPIController@IndikatorKegiatanDetail');
-	Route::get('ind_kegiatan_for_realisasi','API\IndikatorKegiatanAPIController@IndikatorKegiatanDetail4Realisasi');
 	
 	Route::get('select2_indikator_kegiatan_list','API\IndikatorKegiatanAPIController@Select2IndikatorKegiatanList');
 	
@@ -479,10 +478,16 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	Route::get('personal_capaian_tahunan_list','API\CapaianTahunanAPIController@PersonalCapaianTahunanList');
 	
-	Route::get('create_capaian_tahunan_before_end_confirm','API\CapaianTahunanAPIController@BeforeEndCreateConfirm');
-	
-	
-	Route::post('simpan_capaian_tahunan_before_end','API\CapaianTahunanAPIController@BeforeEndStore');
+	Route::get('create_capaian_tahunan_confirm','API\CapaianTahunanAPIController@CreateConfirm');
+	Route::get('ganti_atasan_capaian_tahunan','API\PegawaiAPIController@selectAtasanCapaianTahunan');
+	Route::post('set_pejabat_penilai_capaian_tahunan','API\CapaianTahunanAPIController@PejabatPenilaiUpdate');
+
+
+	Route::get('capaian_tahunan_detail','API\CapaianTahunanAPIController@CapaianTahunanDetail');
+
+	Route::post('simpan_capaian_tahunan','API\CapaianTahunanAPIController@Store');
+	Route::post('hapus_capaian_tahunan','API\CapaianTahunanAPIController@Destroy');
+
 
 	//==================================== REALISASI TRIWULAN KEGIATAN TAHUNAN =============================================//
 	//=============================================================================================================//
@@ -541,6 +546,20 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('hapus_realisasi_rencana_aksi_1','API\RealisasiRencanaAksiKabanAPIController@Destroy');
 	Route::post('simpan_realisasi_rencana_aksi_1','API\RealisasiRencanaAksiKabanAPIController@Store');
 	Route::post('update_realisasi_rencana_aksi_1','API\RealisasiRencanaAksiKabanAPIController@Update');
+
+
+
+
+	//=====================          REALISASI   KEGIATAN TAHUNAN      = =====================================//
+	//========================================================================================================//
+	
+	Route::get('realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan');
+
+	Route::get('add_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@AddRealisasiKegiatanTahunan');
+	
+	Route::post('simpan_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@Store');
+	Route::post('update_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@Update');
+	Route::post('hapus_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@Destroy');
 
 	//========================================================================================================//
 	//======================================= RENCANA AKSI  SKP THAUNAN ======================================//

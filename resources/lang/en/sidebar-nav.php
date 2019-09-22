@@ -171,6 +171,9 @@ return [
 
 	'link_title_edit_capaian_tahunan'    		=> 'Edit',
 	'link_icon_edit_capaian_tahunan'     		=> 'fa-pencil',
+
+	'link_title_detail_capaian_tahunan'    		=> 'Detail',
+	'link_icon_detail_capaian_tahunan'     		=> 'fa-eye',
 	
 	// PETA JABATAN LINKS
 	

@@ -1,4 +1,4 @@
-<div class="modal fade modal-create_capaian_tahunan_before_end_confirm" id="CreateSKPTahunanConfirm" role="dialog"  aria-hidden="true">
+<div class="modal fade modal-create_capaian_tahunan_confirm" id="CreateSKPTahunanConfirm" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <!-- <div class="modal-header">
@@ -7,7 +7,7 @@
                         Create SKP Tahunan Confirm
                     </h4>
 			</div> -->
-			<form  id="create-capaian_tahunan_before_end_confirm-form" method="POST" action="">
+			<form  id="create-capaian_tahunan_confirm-form" method="POST" action="">
 			<div class="modal-body">
 <!-- ============================================================================================================= -->
 			<div class="nav-tabs-custom">
@@ -18,51 +18,48 @@
 				</ul>
 
 
-				<div class="tab-content"  style="margin-left:10px; min-height:320px;">
+				<div class="tab-content"  style="margin-left:10px; min-height:370px;">
 					<div class="active tab-pane" id="tab_a">
 <!-- ============================================================================================================= -->
 						
 						<div class="form-horizontal col-md-6 " style="margin-top:10px;">
 							<div class="form-group form-group-sm skp_tahunan_id">
 								<label>Periode SKP Tahunan</label>
-								<span id="periode_label" class="form-control"> TEXT PERIODE</span>
+								<p class="text-muted periode_label" ></p>
 							</div>
 						</div>
 						<div class="form-horizontal col-md-5 col-md-offset-1" style="margin-top:10px;">
 							<div class="form-group form-group-sm">
-								<label>Masa Penilaian SKP</label>
-								<div class="input-group input-group-sm ">
-									<input type="text" class="form-control  mulai" name="tgl_mulai"  placeholder="Tanggal Mulai"/>
-									<span class="input-group-addon">s.d.</span>
-									<input type="text" class="form-control  selesai" name="tgl_selesai"  placeholder="Tanggal Selesai"/>
-								</div>     
+								<label>Masa Penilaian SKP Tahunan</label>
+								<p class="text-muted masa_penilaian_skp_tahunan"></p>   
 							</div>
 						</div>
 						<div class="form-horizontal col-md-12 " style="">
 							<div class="form-group form-group-sm">
 								<label>Jumlah Kegiatan Tahunan</label>
-								<span id="jm_kegiatan" class="form-control jm_kegiatan"></span>
+								<p class="text-muted jm_kegiatan"></p>
 							</div>
 						</div>
+						
+						<hr>
 
-						<div class="form-horizontal col-md-12 " style="padding-left:0px; margin-top:10px;">
+						<div class="form-horizontal col-md-12 before_end" style="padding-left:0px; " hidden>
 							<p class="text-danger">- Anda membuat Capaian Tahunan sebelum masa penilaian berakhir</p>
 							<p class="text-danger">- Silakan pilih <b>tanggal akhir masa penilaian</b> SKP Tahunan anda</p><span class="text-success masa_penilaian_baru"></span>
 							<p class="text-danger">- SKP bulanan setelah <b>tanggal akhir masa penilaian</b> yang baru akan dihapus secara permanen dan tidak dapat dikembalikan</p>
 						</div>
 
-						<div class="form-horizontal col-md-6" style="margin-top:10px;">
+						
+						<div class="form-horizontal col-md-6 before_end" style="" hidden>
 							<div class="form-group form-group-sm masa_penilaian">
-								<label>Aktual Masa Penilaian</label>
+								<label>Masa Penilaian SKP Tahunan dan Capaian Tahunan</label>
 								<div class="input-group input-group-sm ">
-									<input type="text" class="form-control  mulai" placeholder="Tanggal Mulai"/>
+									<input type="text" class="form-control cap_tgl_mulai" name="cap_tgl_mulai" placeholder="Tanggal Mulai"/>
 									<span class="input-group-addon">s.d.</span>
-									<input type="text" class="form-control tgl selesai_baru" name="tgl_selesai_baru" placeholder="Tanggal Selesai"/>
+									<input type="text" class="form-control tgl cap_tgl_selesai" name="cap_tgl_selesai" placeholder="Tanggal Selesai"/>
 								</div>     
 							</div>
 						</div>
-
-					
 					
 <!-- ============================================================================================================= -->
 					</div>
@@ -178,13 +175,15 @@
 				
 					<input type="hidden" class="form-control pegawai_id" name="pegawai_id"  />
 					<input type="hidden" class="form-control skp_tahunan_id" name="skp_tahunan_id"  />
-					<input type="hidden" class="form-control jm_kegiatan_txt" name="jm_kegiatan"  />
+					<input type="hidden" class="form-control jm_kegiatan" name="jm_kegiatan"  />
 				
 					<input type="hidden" class="form-control u_nama	" name="u_nama"  />
 					<input type="hidden" class="form-control u_jabatan_id " name="u_jabatan_id"  />
+					<input type="hidden" class="form-control u_golongan_id " name="u_golongan_id"  />
 
 					<input type="hidden" class="form-control p_nama	" name="p_nama"  />
 					<input type="hidden" class="form-control p_jabatan_id	" name="p_jabatan_id"  />
+					<input type="hidden" class="form-control p_golongan_id	" name="p_golongan_id"  />
 
 					<input type="hidden" class="form-control jabatan_id" name="jabatan_id"  />
 					<input type="hidden" class="form-control renja_id" name="renja_id"  />
@@ -221,10 +220,10 @@
 
 	
 
-	$('.modal-create_capaian_tahunan_before_end_confirm').on('hidden.bs.modal', function(){
+	$('.modal-create_capaian_tahunan_confirm').on('hidden.bs.modal', function(){
 		$('.u_jabatan, .p_jabatan, .masa_penilaian, .skp_tahunan_id, .jm_kegiatan_tahunan').removeClass('has-error');
 		
-		$('.modal-create_capaian_tahunan_before_end_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
+		$('.modal-create_capaian_tahunan_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
 		
 	
 		
@@ -234,10 +233,10 @@
 		
 
 	$(document).on('click', '#save_capaian_tahunan', function(){
-		var data = $('#create-capaian_tahunan_before_end_confirm-form').serialize();
+		var data = $('#create-capaian_tahunan_confirm-form').serialize();
 
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_capaian_tahunan_before_end") }}',
+			url		: '{{ url("api_resource/simpan_capaian_tahunan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -253,8 +252,8 @@
 					allowOutsideClick : false,
 					timer: 1500
 				}).then(function () {
-						$('.modal-capaian_tahunan_before_end_confirm').modal('hide');
-						$('#skp_capaian_table').DataTable().ajax.reload(null,false);
+						$('.modal-capaian_tahunan_confirm').modal('hide');
+						$('#capaian_tahunan_table').DataTable().ajax.reload(null,false);
 						window.location.assign("capaian-tahunan/"+data+"/edit");
 
 				},
