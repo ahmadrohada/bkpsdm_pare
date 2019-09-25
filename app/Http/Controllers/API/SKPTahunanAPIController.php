@@ -981,42 +981,43 @@ class SKPTahunanAPIController extends Controller {
                                     ->WHERE('status','active')
                                     ->first();
 
-        $data = array(
-                    'status'			    => 'pass',
-                    'pegawai_id'			=> $u_detail->id_pegawai,
-                    'periode_label'	        => $periode->label,
-                    'renja_id'	            => $renja_id,
-                    'u_jabatan_id'	        => $u_detail->id,
-                    'u_golongan_id'         => $u_gol->id,
-                    'u_nip'	                => $u_detail->nip,
-                    'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
-                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
-                    'u_golongan'	        => $u_gol->Golongan ? $u_gol->Golongan->golongan : '',
-                    'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
-                    'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
-                    'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
-                    'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
+        if ( ( $u_gol!=null )&&($p_gol!=null)){
+            $data = array(
+                        'status'			    => 'pass',
+                        'pegawai_id'			=> $u_detail->id_pegawai,
+                        'periode_label'	        => $periode->label,
+                        'renja_id'	            => $renja_id,
+                        'u_jabatan_id'	        => $u_detail->id,
+                        'u_golongan_id'         => $u_gol->id,
+                        'u_nip'	                => $u_detail->nip,
+                        'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
+                        'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
+                        'u_golongan'	        => $u_gol->Golongan ? $u_gol->Golongan->golongan : '',
+                        'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
+                        'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
+                        'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
+                        'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
 
-                    'p_jabatan_id'	        => $p_detail->id,
-                    'p_golongan_id'         => $p_gol->id,
-                    'p_nip'	                => $p_detail->nip,
-                    'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
-                    'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
-                    'p_golongan'	        => $p_gol->Golongan ? $p_gol->Golongan->golongan : '',
-                    'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
-                    'p_jabatan'	            => Pustaka::capital_string($p_detail->Jabatan ? $p_detail->Jabatan->skpd : ''),
-                    'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
-                    'p_skpd'	            => Pustaka::capital_string($p_detail->Skpd ? $p_detail->Skpd->skpd : ''),
+                        'p_jabatan_id'	        => $p_detail->id,
+                        'p_golongan_id'         => $p_gol->id,
+                        'p_nip'	                => $p_detail->nip,
+                        'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
+                        'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
+                        'p_golongan'	        => $p_gol->Golongan ? $p_gol->Golongan->golongan : '',
+                        'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
+                        'p_jabatan'	            => Pustaka::capital_string($p_detail->Jabatan ? $p_detail->Jabatan->skpd : ''),
+                        'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
+                        'p_skpd'	            => Pustaka::capital_string($p_detail->Skpd ? $p_detail->Skpd->skpd : ''),
 
-        );
+            );
 
-        return $data;
+            return $data;
 
+        }else{
+            return response()->json(['errors'=> "Golongan Pejabat penilai/yang dinilai tidak aktif" ],422);
+        }
 
-
-
-
-        //nama lengkap pribdai dan atasan
+       
 
 
 
