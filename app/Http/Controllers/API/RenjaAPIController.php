@@ -52,17 +52,35 @@ class RenjaAPIController extends Controller {
             //PEIRODE
             $periode = Periode::WHERE('id',$request->get('periode_id'))->first();
 
+            //ADMIN
+            $admin = Pegawai::WHERE('id',$request->admin_id)->first();
+
             //KABAN
             $kaban = SKPD::WHERE('parent_id', '=',$request->skpd_id )->first();
             if ( $kaban->pejabat != null ){
-                $pegawai =  $kaban->pejabat->pegawai;
+                $pegawai            = $kaban->pejabat->pegawai;
+                $kaban_jabatan_id   = $pegawai->JabatanAktif->id;
+                $kaban_nip          = $pegawsai_nip;
+                $kaban_nama         = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+                $kaban_pangkat      = $pegawai->JabatanAktif->golongan->pangkat;
+                $kaban_golongan     = $pegawai->JabatanAktif->golongan->pangkat;
+                $kaban_eselon       = $pegawai->JabatanAktif->eselon->eselon;
+                $kaban_jabatan      = Pustaka::capital_string($pegawai->JabatanAktif->Jabatan->skpd);
+           
+           
             }else{
                 $pegawai = "";
+                $kaban_jabatan_id   = $admin->JabatanAktif->id;
+                $kaban_nip          = "";
+                $kaban_nama         = Pustaka::nama_pegawai($admin->gelardpn , $admin->nama , $admin->gelarblk);
+                $kaban_pangkat      = "";
+                $kaban_golongan     = "";
+                $kaban_eselon       = "";
+                $kaban_jabatan      = "";
             }
             
 
-            //ADMIN
-            $admin = Pegawai::WHERE('id',$request->admin_id)->first();
+            
 
             $data = array(
                 'status'			    => 'pass',
@@ -70,13 +88,13 @@ class RenjaAPIController extends Controller {
                 'periode_label'	        => $periode->label,
                 'skpd_id'	            => $request->get('skpd_id'),
 
-                'kaban_jabatan_id'	    => $pegawai->JabatanAktif->id,
-                'kaban_nip'	            => $pegawai->nip,
-                'kaban_nama'	        => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
-                'kaban_pangkat'	        => $pegawai->JabatanAktif->golongan->golongan,
-                'kaban_golongan'	    => $pegawai->JabatanAktif->golongan->pangkat,
-                'kaban_eselon'	        => $pegawai->JabatanAktif->eselon->eselon,
-                'kaban_jabatan'	        => Pustaka::capital_string($pegawai->JabatanAktif->Jabatan->skpd),
+                'kaban_jabatan_id'	    => $kaban_jabatan_id,
+                'kaban_nip'	            => $kaban_nip,
+                'kaban_nama'	        => $kaban_nama,
+                'kaban_pangkat'	        => $kaban_pangkat,
+                'kaban_golongan'	    => $kaban_golongan,
+                'kaban_eselon'	        => $kaban_eselon,
+                'kaban_jabatan'	        => $kaban_jabatan,
 
                 'admin_nama'            => Pustaka::nama_pegawai($admin->gelardpn , $admin->nama , $admin->gelarblk),
                 'admin_jabatan_id'	    => $admin->JabatanAktif->id,
@@ -647,8 +665,8 @@ class RenjaAPIController extends Controller {
         $messages = [
                 'skpd_id.required'           => 'Harus diisi',
                 'periode_id.required'        => 'Harus diisi',
-                'kaban_nama.required'        => 'Harus diisi',
-                'kaban_jabatan_id.required'  => 'Harus diisi',
+                //'kaban_nama.required'        => 'Harus diisi',
+                //'kaban_jabatan_id.required'  => 'Harus diisi',
                 'admin_nama.required'        => 'Harus diisi',
                 'admin_jabatan_id.required'  => 'Harus diisi',
 
@@ -659,8 +677,8 @@ class RenjaAPIController extends Controller {
                         array(
                             'skpd_id'            => 'required',
                             'periode_id'        => 'required',
-                            'kaban_nama'                => 'required',
-                            'kaban_jabatan_id'          => 'required',
+                            //'kaban_nama'                => 'required',
+                            //'kaban_jabatan_id'          => 'required',
                             'admin_nama'                => 'required',
                             'admin_jabatan_id'          => 'required',
                         ),
@@ -682,7 +700,7 @@ class RenjaAPIController extends Controller {
 
         $renja    = new Renja;
         $renja->skpd_id                  = Input::get('skpd_id');
-        $renja->periode_id              = Input::get('periode_id');
+        $renja->periode_id               = Input::get('periode_id');
         $renja->kepala_skpd_id           = Input::get('kaban_jabatan_id');
         $renja->nama_kepala_skpd                = Input::get('kaban_nama');
         $renja->admin_skpd_id                      = Input::get('admin_jabatan_id');
