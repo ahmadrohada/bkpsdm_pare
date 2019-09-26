@@ -54,7 +54,12 @@ class RenjaAPIController extends Controller {
 
             //KABAN
             $kaban = SKPD::WHERE('parent_id', '=',$request->skpd_id )->first();
-            $pegawai =  $kaban->pejabat->pegawai;
+            if ( $kaban->pejabat != null ){
+                $pegawai =  $kaban->pejabat->pegawai;
+            }else{
+                $pegawai = "";
+            }
+            
 
             //ADMIN
             $admin = Pegawai::WHERE('id',$request->admin_id)->first();
@@ -341,17 +346,23 @@ class RenjaAPIController extends Controller {
             if ( $x->renja_id == null ){
                 //Tampilkan nama kaban yang aktif
                 $kaban = SKPD::WHERE('parent_id', $skpd_id)->first();
-                $pegawai =  $kaban->pejabat->pegawai;
-                return Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+
+                if ( $kaban->pejabat != null ){
+                    $pegawai =  $kaban->pejabat->pegawai;
+                    return Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+                }else{
+                    return "Kepala SKPD tidak ditemukan";
+                }
+                
             }else{
                 return $x->kaban_nama;
             }
             
         
         })->addColumn('skpd', function ($x) {
-            //return Pustaka::capital_string($x->skpd);
+            
         })->addColumn('status_approve', function ($x) {
-            if ( $x->renja_id == null ){
+            if ( $x->renja_id != null ){
                 return 0 ;
             }else{
                 return $x->status_approve;

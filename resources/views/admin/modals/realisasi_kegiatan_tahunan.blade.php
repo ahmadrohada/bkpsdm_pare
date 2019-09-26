@@ -63,7 +63,7 @@
 						</div>
 					</div>
 
-					<div class="row" style="margin-top:-20px;"> 
+					<div class="row" style="margin-top:-20px;" hidden> 
 						<div class="col-md-6 col-xs-6 form-group">	
 							<label class="control-label">Target Quality </label>
 							<div class="input-group">
