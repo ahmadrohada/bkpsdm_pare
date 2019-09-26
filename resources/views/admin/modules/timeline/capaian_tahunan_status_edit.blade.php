@@ -15,11 +15,11 @@
 					<li class="list-group-item">
 						Pejabat Penilai <a class="pull-right st_pejabat_penilai">-</a>
 					</li>
-					<li class="list-group-item">
-						Jumlah Kegiatan <a class="pull-right st_jm_kegiatan_bulanan" >-</a>
+					<li class="list-group-item hidden">
+						Jumlah Kegiatan <a class="pull-right st_jm_kegiatan_tahunan" >-</a>
 					</li>
-					<li class="list-group-item">
-						Capaian Kinerja Bulanan <a class="pull-right st_capaian_kinerja_bulanan" >-</a>
+					<li class="list-group-item  hidden">
+						Capaian Kinerja <a class="pull-right st_capaian_kinerja" >-</a>
 					</li>
 					<li class="list-group-item st_status_approve_div hidden">
 						Status Approve <a class="pull-right st_status_approve" >-</a>
@@ -49,14 +49,12 @@
 <script type="text/javascript">
 
 
-	function status_show(){
-		status_pengisian();	
-	}
+	
 
 	function status_pengisian(){
 		$.ajax({
-				url			: '{{ url("api_resource/capaian_bulanan_status_pengisian") }}',
-				data 		: { capaian_bulanan_id : {!! $capaian->id !!} },
+				url			: '{{ url("api_resource/capaian_tahunan_status_pengisian") }}',
+				data 		: { capaian_tahunan_id : {!! $capaian->id !!} },
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
@@ -64,14 +62,14 @@
 
 					$('.st_created_at').html(data['tgl_dibuat']);
 					$('.st_pejabat_penilai').html(data['p_nama']);
-					$('.st_jm_kegiatan_bulanan').html(data['jm_kegiatan_bulanan']);
-					$('.st_capaian_kinerja_bulanan').html(data['capaian_kinerja_bulanan']);
+					$('.st_jm_kegiatan_tahunan').html(data['jm_kegiatan_tahunan']);
+					$('.st_capaian_kinerja_tahunan').html(data['capaian_kinerja_tahunan']);
 					$('.st_status_approve').html(data['status_approve']);
 					$('.st_alasan_penolakan').html(data['alasan_penolakan']);
 
 
 					if ( data['send_to_atasan'] == 1 ){
-						
+						$('.kirim_capaian').hide();
 						$('.st_status_approve_div').removeClass('hidden');
 					} 
 
@@ -102,7 +100,7 @@
 	$(document).on('click','.kirim_capaian',function(e){
 		Swal.fire({
 				title: "Kirim Capaian",
-				text: "Capaian Bulanan akan dikirim ke atasan untuk, edit pada capaian tidak bisa dilakukan",
+				text: "Capaian Tahunan akan dikirim ke atasan untuk, edit pada capaian tidak bisa dilakukan",
 				type: "question",
 				showCancelButton: true,
 				cancelButtonText: "Batal",
@@ -115,9 +113,9 @@
 			if (result.value){
 				on_kirim();
 				$.ajax({
-					url		: '{{ url("api_resource/kirim_capaian_bulanan") }}',
+					url		: '{{ url("api_resource/kirim_capaian_tahunan") }}',
 					type	: 'POST',
-					data    : { capaian_bulanan_id : {!! $capaian->id !!} },
+					data    : { capaian_tahunan_id : {!! $capaian->id !!} },
 					cache   : false,
 					success:function(data){
 							

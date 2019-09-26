@@ -65,6 +65,16 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
 
     }
 
+    protected function hitung_quality($target,$a,$b,$c,$d){
+        //Aspek kualitas
+        $persen_capaian_kualitas = ( ($a+$b+$c+$d) / 20 )*100;
+            
+        $capaian_kualitas = ($persen_capaian_kualitas / $target)*100;
+            
+        return $capaian_kualitas;
+
+    }
+
     protected function hitung_waktu($target,$capaian){
 
         $persen_efisiensi_waktu = 100 - ( ($capaian / $target) * 100);
@@ -169,6 +179,10 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                                         'realisasi_kegiatan.hitung_quality',
                                         'realisasi_kegiatan.hitung_waktu',
                                         'realisasi_kegiatan.hitung_cost',
+                                        'realisasi_kegiatan.akurasi',
+                                        'realisasi_kegiatan.ketelitian',
+                                        'realisasi_kegiatan.kerapihan',
+                                        'realisasi_kegiatan.keterampilan',
 
 
                                         'capaian_tahunan.status'
@@ -216,6 +230,19 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
             return Pustaka::persen_bulat($x->hitung_waktu);
         })->addColumn('hitung_cost', function ($x) {
             return Pustaka::persen_bulat($x->hitung_cost);
+        })->addColumn('realisasi_kegiatan_id', function ($x) {
+        
+            return $x->realisasi_kegiatan_id;
+
+            
+        })->addColumn('penilaian', function ($x) {
+            if ( ($x->akurasi + $x->ketelitian + $x->kerapihan + $x->keterampilan ) == 0) {
+                return 0;
+            }else{
+                return 1;
+            }
+
+            
         });
 
         if ($keyword = $search ) {
@@ -318,6 +345,36 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
      
     } 
 
+    public function PenilaianKualitasKerja(Request $request)
+    {
+        $realisasi_kegiatan_id = $request->realisasi_kegiatan_id;
+        $x = RealisasiKegiatanTahunan::WHERE('id',$realisasi_kegiatan_id)
+                                        ->SELECT(   'id',
+                                                    'akurasi',
+                                                    'ketelitian',
+                                                    'kerapihan',
+                                                    'keterampilan'
+                                        
+                                                )
+                                        ->first();
+
+
+
+        //return  $rencana_aksi;
+        $realisasi_kegiatan_tahunan = array(
+            'realisasi_kegiatan_tahunan_id' => $x->id,
+            'akurasi'                       => $x->akurasi,
+            'ketelitian'                    => $x->ketelitian,
+            'kerapihan'                     => $x->kerapihan,
+            'keterampilan'                  => $x->keterampilan,
+           
+ 
+        );
+        return $realisasi_kegiatan_tahunan;
+
+
+
+    }
     
     public function AddRealisasiKegiatanTahunan(Request $request)
     {
@@ -418,6 +475,74 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
 
     
     
+
+
+
+
+    public function UpdateKualitasKerja(Request $request)
+    {
+
+            $messages = [
+                'realisasi_kegiatan_tahunan_id.required'=> 'Harus diisi',
+                'akurasi.required'                      => 'Harus diisi',
+                'ketelitian.required'                   => 'Harus diisi',
+                'kerapihan.required'                    => 'Harus diisi',
+                'keterampilan.required'                 => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'realisasi_kegiatan_tahunan_id' => 'required',
+                            'akurasi'                       => 'required|numeric|min:0|max:5',
+                            'ketelitian'                    => 'required|numeric|min:0|max:5',
+                            'kerapihan'                     => 'required|numeric|min:0|max:5',
+                            'keterampilan'                  => 'required|numeric|min:0|max:5',
+
+
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+
+        $st_update                      = RealisasiKegiatanTahunan::find(Input::get('realisasi_kegiatan_tahunan_id'));
+
+
+
+        //hitung QUALITY
+        $hitung_quality = $this->hitung_quality($st_update->target_quality,
+                                                Input::get('akurasi'),
+                                                Input::get('ketelitian'),
+                                                Input::get('kerapihan'),
+                                                Input::get('keterampilan'));
+
+        $realisasi_quality = ( ( Input::get('akurasi') + Input::get('ketelitian') + Input::get('kerapihan') + Input::get('keterampilan') ) / 20 )*100;
+
+        $st_update->realisasi_quality = $realisasi_quality;
+        $st_update->hitung_quality =  $realisasi_quality;
+
+        $st_update->akurasi         = Input::get('akurasi');
+        $st_update->ketelitian      = Input::get('ketelitian');
+        $st_update->kerapihan       = Input::get('kerapihan');
+        $st_update->keterampilan    = Input::get('keterampilan');
+    
+    
+
+        if ( $st_update->save()){
+
+            return \Response::make('sukses'+$st_update->target_quality, 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+    } 
+
+
     public function Store(Request $request)
     {
 
@@ -434,7 +559,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                 'satuan.required'               => 'Harus diisi',
 
                 'realisasi_quantity.required'   => 'Harus diisi',
-                'realisasi_quality.required'    => 'Harus diisi',
+                //'realisasi_quality.required'    => 'Harus diisi',
                 'realisasi_waktu.required'      => 'Harus diisi',
                 'realisasi_cost.required'       => 'Harus diisi',
         
@@ -455,7 +580,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             'target_cost'           => 'required',
 
                             'realisasi_quantity'    => 'required|numeric|min:1',
-                            'realisasi_quality'     => 'required|numeric|min:1|max:100',
+                            //'realisasi_quality'     => 'required|numeric|min:1|max:100',
                             'realisasi_waktu'       => 'required|numeric|min:1|max:12',
                             'realisasi_cost'        => 'required',
                             'satuan'                => 'required',
@@ -511,7 +636,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
 
                 //$rkt_save->realisasi_angka_kredit   = Input::get('realisasi_angka_kredit');
                 $rkt_save->jumlah_indikator         = Input::get('jumlah_indikator');
-                $rkt_save->realisasi_quality        = Input::get('realisasi_quality');
+                //$rkt_save->realisasi_quality        = Input::get('realisasi_quality');
                 $rkt_save->realisasi_cost           = preg_replace('/[^0-9]/', '', Input::get('realisasi_cost'));
                 $rkt_save->realisasi_waktu          = Input::get('realisasi_waktu');
 
@@ -529,7 +654,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
 
                 $rkt_update                           = RealisasiKegiatanTahunan::find(Input::get('realisasi_kegiatan_tahunan_id'));
                 $rkt_update->jumlah_indikator         = Input::get('jumlah_indikator');
-                $rkt_update->realisasi_quality        = Input::get('realisasi_quality');
+                //$rkt_update->realisasi_quality        = Input::get('realisasi_quality');
                 $rkt_update->realisasi_cost           = preg_replace('/[^0-9]/', '', Input::get('realisasi_cost'));
                 $rkt_update->realisasi_waktu          = Input::get('realisasi_waktu');
 
@@ -572,7 +697,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                 'satuan.required'               => 'Harus diisi',
 
                 'realisasi_quantity.required'   => 'Harus diisi',
-                'realisasi_quality.required'    => 'Harus diisi',
+                //'realisasi_quality.required'    => 'Harus diisi',
                 'realisasi_waktu.required'      => 'Harus diisi',
                 'realisasi_cost.required'       => 'Harus diisi',
         
@@ -594,7 +719,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             'target_cost'           => 'required',
 
                             'realisasi_quantity'    => 'required|numeric|min:1',
-                            'realisasi_quality'     => 'required|numeric|min:1|max:100',
+                            //'realisasi_quality'     => 'required|numeric|min:1|max:100',
                             'realisasi_waktu'       => 'required|numeric|min:1|max:12',
                             'realisasi_cost'        => 'required',
                             'satuan'                => 'required',
@@ -646,7 +771,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
 
                 //$rkt_save->realisasi_angka_kredit   = Input::get('realisasi_angka_kredit');
                 $rkt_save->jumlah_indikator        = Input::get('jumlah_indikator');
-                $rkt_save->realisasi_quality        = Input::get('realisasi_quality');
+                //$rkt_save->realisasi_quality        = Input::get('realisasi_quality');
                 $rkt_save->realisasi_cost           = preg_replace('/[^0-9]/', '', Input::get('realisasi_cost'));
                 $rkt_save->realisasi_waktu          = Input::get('realisasi_waktu');
 
@@ -662,7 +787,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
 
                 $rkt_update                           = RealisasiKegiatanTahunan::find(Input::get('realisasi_kegiatan_tahunan_id'));
                 $rkt_update->jumlah_indikator         = Input::get('jumlah_indikator');
-                $rkt_update->realisasi_quality        = Input::get('realisasi_quality');
+                //$rkt_update->realisasi_quality        = Input::get('realisasi_quality');
                 $rkt_update->realisasi_cost           = preg_replace('/[^0-9]/', '', Input::get('realisasi_cost'));
                 $rkt_update->realisasi_waktu          = Input::get('realisasi_waktu');
 

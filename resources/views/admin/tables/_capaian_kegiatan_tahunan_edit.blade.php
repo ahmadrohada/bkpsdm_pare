@@ -25,7 +25,13 @@
 							<th rowspan="2">KEGIATAN TAHUNAN</th>
 							<th rowspan="2">INDIKATOR</th>
 							<th colspan="4" >TARGET</th>
-							<th colspan="3">REALISASI</th>
+							<th colspan="4">REALISASI</th>
+							<th rowspan="2" >HITUNG <br>QUANTITY</th>
+							<th rowspan="2">HITUNG <br>QUALITY</th>
+							<th rowspan="2">HITUNG <br>WAKTU</th>
+							<th rowspan="2">HITUNG <br>ANGGARAN</th>
+							<th rowspan="2">JUMLAH</th>
+							<th rowspan="2">CAPAIAN <br>SKP</th>
 							<th rowspan="2"><i class="fa fa-cog"></i></th>
 						</tr>
 						<tr>
@@ -34,6 +40,7 @@
 							<th>WAKTU</th>
 							<th>ANGGARAN</th>
 							<th>QUANTITY</th>
+							<th>QUALITY</th>
 							<th>WAKTU</th>
 							<th>ANGGARAN</th>
 						</tr>
@@ -76,8 +83,8 @@ table.dataTable tbody td {
 				//fixedColumns	: true,
 				//order 			: [0 , 'asc' ],
 				columnDefs		: [
-									{ "orderable": false, className: "text-center", targets: [ 0,3,4,5,7,8,10 ] },
-									{ className: "text-right", targets: [ 6,9] },
+									{ "orderable": false, className: "text-center", targets: [ 0,3,4,5,7,8,9,11,12,13,14,15,16,17 ] },
+									{ className: "text-right", targets: [ 6,10] },
 									{ },
 								],
 				ajax			: {
@@ -92,7 +99,7 @@ table.dataTable tbody td {
 								},
 				targets			: 'no-sort',
 				bSort			: false,
-				rowsGroup		: [ 0,1,4,5,6,8,9 ],
+				rowsGroup		: [ 0,1,4,5,6,8,9,10,11,12,13,14,15,16 ],
 				columns			: [
 									{ data: 'kegiatan_tahunan_id' ,width:"10px",
 										"render": function ( data, type, row ,meta) {
@@ -142,6 +149,11 @@ table.dataTable tbody td {
 											return  row.realisasi_quantity;
 										}
 									},
+									{ data: "realisasi_quality", name:"realisasi_quality", width:"100px","visible": false,
+										"render": function ( data, type, row ) {
+											return row.realisasi_quality ;
+										}
+									},
 									{ data: "realisasi_waktu", name:"realisasi_waktu", width:"50px",
 										"render": function ( data, type, row ) {
 											return row.realisasi_waktu ;
@@ -150,6 +162,36 @@ table.dataTable tbody td {
 									{ data: "realisasi_cost", name:"realisasi_cost", width:"50px",
 										"render": function ( data, type, row ) {
 											return row.realisasi_cost ;
+										}
+									},
+									{ data: "hitung_quantity", name:"hitung_quantity", width:"50px","visible": false,
+										"render": function ( data, type, row ) {
+											return row.hitung_quantity +" %";
+										}
+									},
+									{ data: "hitung_quality", name:"hitung_quality", width:"50px","visible": false,
+										"render": function ( data, type, row ) {
+											return row.hitung_quality +" %";
+										}
+									},
+									{ data: "hitung_waktu", name:"hitung_waktu", width:"50px","visible": false,
+										"render": function ( data, type, row ) {
+											return row.hitung_waktu +" %";
+										}
+									},
+									{ data: "hitung_cost", name:"hitung_cost", width:"50px","visible": false,
+										"render": function ( data, type, row ) {
+											return row.hitung_cost +" %";
+										}
+									},
+									{ data: "jumlah", name:"jumlah", width:"50px","visible": false,
+										"render": function ( data, type, row ) {
+											return row.jumlah ;
+										}
+									},
+									{ data: "capaian_skp", name:"capaian_skp", width:"50px","visible": false,
+										"render": function ( data, type, row ) {
+											return row.capaian_skp ;
 										}
 									},
 									{  data: 'action',width:"6%",

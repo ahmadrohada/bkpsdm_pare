@@ -482,8 +482,15 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('ganti_atasan_capaian_tahunan','API\PegawaiAPIController@selectAtasanCapaianTahunan');
 	Route::post('set_pejabat_penilai_capaian_tahunan','API\CapaianTahunanAPIController@PejabatPenilaiUpdate');
 
-
+	Route::get('capaian_tahunan_status_pengisian','API\CapaianTahunanAPIController@CapaianTahunanStatusPengisian');
+	
 	Route::get('capaian_tahunan_detail','API\CapaianTahunanAPIController@CapaianTahunanDetail');
+
+	Route::get('approval_request_capaian_tahunan_list','API\CapaianTahunanAPIController@ApprovalRequestList');
+
+	Route::post('kirim_capaian_tahunan','API\CapaianTahunanAPIController@SendToAtasan');
+	Route::post('tolak_capaian_tahunan','API\CapaianTahunanAPIController@TolakByAtasan');
+	Route::post('terima_capaian_bulanan','API\CapaianTahunanAPIController@TerimaByAtasan');
 
 	Route::post('simpan_capaian_tahunan','API\CapaianTahunanAPIController@Store');
 	Route::post('hapus_capaian_tahunan','API\CapaianTahunanAPIController@Destroy');
@@ -560,6 +567,40 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('simpan_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@Store');
 	Route::post('update_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@Update');
 	Route::post('hapus_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@Destroy');
+
+
+	//=====================        PENILAIAN KUALITAS KERJA      = =====================================//
+	//========================================================================================================//
+	
+	Route::get('penilaian_kualitas_kerja_detail','API\RealisasiKegiatanTahunanAPIController@PenilaianKualitasKerja');
+	Route::post('simpan_penilaian_kualitas_kerja','API\RealisasiKegiatanTahunanAPIController@UpdateKualitasKerja');
+	
+
+	//=====================        PENILAIAN PERILAKU KERJA      = =====================================//
+	//========================================================================================================//
+	
+	Route::get('detail_penilaian_perilaku_kerja','API\PerilakuKerjaAPIController@PenilaianPerilakuKerjaDetail');
+	Route::post('simpan_penilaian_perilaku_kerja','API\PerilakuKerjaAPIController@Store');
+	
+	
+
+	//=================================         TUGAS TAMBAHAN     = =====================================//
+	//=====================================================================================================//
+	Route::get('tugas_tambahan_list','API\TugasTambahanAPIController@TugasTambahanList');
+	Route::get('tugas_tambahan_detail','API\TugasTambahanAPIController@Detail');
+	
+	Route::post('simpan_tugas_tambahan','API\TugasTambahanAPIController@Store');
+	Route::post('update_tugas_tambahan','API\TugasTambahanAPIController@Update');
+	Route::post('hapus_tugas_tambahan','API\TugasTambahanAPIController@Destroy');
+
+	//=================================         K R E A T I V I T A S     = ==================================//
+	//========================================================================================================//
+	Route::get('kreativitas_list','API\KreativitasAPIController@KreativitasList');
+	Route::get('kreativitas_detail','API\KreativitasAPIController@Detail');
+	
+	Route::post('simpan_kreativitas','API\KreativitasAPIController@Store');
+	Route::post('update_kreativitas','API\KreativitasAPIController@Update');
+	Route::post('hapus_kreativitas','API\KreativitasAPIController@Destroy');
 
 	//========================================================================================================//
 	//======================================= RENCANA AKSI  SKP THAUNAN ======================================//
@@ -1138,6 +1179,17 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'CapaianBulananController@CapaianBulananApprovalRequest'
 	]); 
 
+
+	Route::get('capaian_tahunan_approval-request', [
+		'as' 			=> '',
+		'uses' 			=> 'CapaianTahunanController@CapaianTahunanApprovalRequestList'
+	]);
+
+	Route::get('capaian_tahunan_approval-request/{capaian_tahunan_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'CapaianTahunanController@CapaianTahunanApprovalRequest'
+	]); 
+
 	//=========================================================================================//
 	//================================= SKP TAHUNAN      =====================================//
 	//=========================================================================================//
@@ -1241,6 +1293,11 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	Route::get('capaian-tahunan/{capaian_tahunan_id}/edit',[
 		'as' 			=> '',
 		'uses' 			=> 'CapaianTahunanController@PersonalCapaianTahunanEdit'
+	]);
+
+	Route::get('capaian-tahunan/{capaian_tahunan_id}',[
+		'as' 			=> '',
+		'uses' 			=> 'CapaianTahunanController@PersonalCapaianTahunanDetail'
 	]);
 	
 

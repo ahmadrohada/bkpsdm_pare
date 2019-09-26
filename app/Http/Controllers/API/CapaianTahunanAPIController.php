@@ -15,7 +15,7 @@ use App\Models\HistoryJabatan;
 use App\Models\HistoryGolongan;
 use App\Models\Jabatan;
 use App\Models\Golongan;
-use App\Models\Eselon;
+use App\Models\Eselon; 
 
 use App\Models\KegiatanSKPTahunan;
 use App\Models\RencanaAksi;
@@ -470,6 +470,294 @@ class CapaianTahunanAPIController extends Controller {
 
     }
 
+
+    public function SendToAtasan(Request $request)
+    {
+        $messages = [
+                'capaian_tahunan_id.required'   => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'capaian_tahunan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $capaian    = CapaianTahunan::find(Input::get('capaian_tahunan_id'));
+        if (is_null($capaian)) {
+            return $this->sendError('ID capaian tahunan tidak ditemukan.');
+        }
+
+
+        $capaian->send_to_atasan    = '1';
+        $capaian->date_of_send      = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+        $capaian->status_approve    = '0';
+
+        if ( $capaian->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+    }
+
+
+    public function TolakByAtasan(Request $request)
+    {
+        $messages = [
+                'capaian_tahunan_id.required'   => 'Harus diisi',
+                'alasan.required'               => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'capaian_tahunan_id'   => 'required',
+                            'alasan'               => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $capaian    = CapaianTahunan::find(Input::get('capaian_tahunan_id'));
+        if (is_null($capaian)) {
+            return $this->sendError('ID capaian tahunan tidak ditemukan.');
+        }
+
+
+        //$capaian->send_to_atasan    = '1';
+        $capaian->date_of_approve     = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+        $capaian->status_approve      = '2';
+        $capaian->alasan_penolakan    = Input::get('alasan');
+
+        if ( $capaian->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+    }
+
+    public function TerimaByAtasan(Request $request)
+    {
+        $messages = [
+                'capaian_tahunan_id.required'   => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'capaian_tahunan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $capaian    = CapaianTahunan::find(Input::get('capaian_tahunan_id'));
+        if (is_null($capaian)) {
+            return $this->sendError('ID capaian tahunan tidak ditemukan.');
+        }
+
+
+        $capaian->date_of_approve     = date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s');
+        $capaian->status_approve      = '1';
+        $capaian->alasan_penolakan    = "";
+
+        if ( $capaian->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+    }
+
+
+    public function ApprovalRequestList(Request $request)
+    {
+        $pegawai_id = $request->pegawai_id;
+
+        $jabatan_id = HistoryJabatan::SELECT('id')->WHERE('id_pegawai','=',$pegawai_id)->get();
+       
+        $dt = CapaianTahunan::
+                    WHEREIN('capaian_tahunan.p_jabatan_id',$jabatan_id)
+                    ->WHERE('capaian_tahunan.send_to_atasan','=','1')
+                    ->SELECT( 
+                             'capaian_tahunan.id AS capaian_tahunan_id',
+                             'capaian_tahunan.u_nama',
+                             'capaian_tahunan.skp_tahunan_id',
+                             'capaian_tahunan.u_jabatan_id',
+                             'capaian_tahunan.tgl_mulai',
+                             'capaian_tahunan.status_approve'
+                            );
+ 
+
+    
+        $datatables = Datatables::of($dt)
+        ->addColumn('periode', function ($x) {
+            return Pustaka::periode($x->tgl_mulai);
+        })->addColumn('nama', function ($x) {
+            return $x->u_nama;
+        })->addColumn('jabatan', function ($x) {
+            return Pustaka::capital_string($x->PejabatYangDinilai?$x->PejabatYangDinilai->jabatan:'');
+        })->addColumn('capaian_tahunan_id', function ($x) {
+            return $x->capaian_tahunan_id;
+        });
+
+        
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
+
+
+    public function CapaianTahunanStatusPengisian( Request $request )
+    {
+       
+        
+        $button_kirim = 0 ;
+        $capaian_id = $request->capaian_tahunan_id;
+
+        $capaian_tahunan = CapaianTahunan::
+
+                            leftjoin('db_pare_2018.penilaian_perilaku_kerja AS pke', function($join){
+                                $join   ->on('pke.capaian_tahunan_id','=','capaian_tahunan.id');
+                            })
+                            
+                            ->SELECT(
+                                'capaian_tahunan.id AS capaian_tahunan_id',
+                                'capaian_tahunan.skp_tahunan_id',
+                                'capaian_tahunan.created_at',
+                                'capaian_tahunan.status_approve',
+                                'capaian_tahunan.send_to_atasan',
+                                'capaian_tahunan.alasan_penolakan',
+                                'capaian_tahunan.p_jabatan_id',
+                                'capaian_tahunan.u_jabatan_id',
+                                'pke.id AS penilaian_perilaku_kerja'
+                            )
+                            ->where('capaian_tahunan.id','=', $capaian_id )->first();
+    
+        $jenis_jabatan = $capaian_tahunan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
+        //$bulan = $capaian_bulanan->SKPBulanan->bulan;
+
+        //jm kegiatan pelaksana
+        if ( $jenis_jabatan == 4 ){
+            
+           
+       
+       
+        }else if ( $jenis_jabatan == 3){  //kasubid
+            //cari bawahan
+            
+        }else if ( $jenis_jabatan == 2){ //kabid
+            //cari bawahan bawahan nya
+
+       
+        }else if ( $jenis_jabatan == 1){ //KABAN
+            //cari bawahan bawahan nya
+       
+        }else{
+            $jm_kegiatan_tahunan = 000 ;
+        }
+                        
+
+      
+        $p_detail   = $capaian_tahunan->PejabatPenilai;
+        $u_detail   = $capaian_tahunan->PejabatYangDinilai;
+
+
+        //STATUS APPROVE
+        if ( ($capaian_tahunan->status_approve) == 1 ){
+            $persetujuan_atasan = 'disetujui';
+            $alasan_penolakan   = "";
+        }else if ( ($capaian_tahunan->status_approve) == 2 ){
+            $persetujuan_atasan = '<span class="text-danger">ditolak</span>';
+            $alasan_penolakan   = $capaian_tahunan->alasan_penolakan;
+        }else{
+            $persetujuan_atasan = 'Menunggu Persetujuan';
+            $alasan_penolakan   = "";
+        }
+
+
+       /*  //penilaian kode etik
+        if ( ($capaian_tahunan->penilaian_perilaku_kerja) >= 1 ){
+            $jm = ($capaian_tahunan->santun + $capaian_tahunan->amanah + $capaian_tahunan->harmonis+$capaian_tahunan->adaptif+$capaian_tahunan->terbuka+$capaian_tahunan->efektif);
+            
+            
+            
+            $penilaian_kode_etik = Pustaka::persen($jm,30) ;
+
+            $capaian_skp_tahunan = number_format( ($capaian_kinerja_tahunan * 70 / 100)+( $penilaian_kode_etik * 30 / 100 ) , 2 ).' %';
+
+        }else{ */
+            $penilaian_kode_etik = 0 ;
+            $capaian_skp_tahunan = 0 ;
+       // }
+        
+
+        $response = array(
+                
+                'jm_kegiatan_tahunan'       => "0",
+                'capaian_kinerja_tahunan'   => "0",
+                'capaian_skp_tahunan'       => $capaian_skp_tahunan,
+                'penilaian_perilaku_kerja'  => $capaian_tahunan->penilaian_perilaku_kerja,
+                'penilaian_kode_etik'       => $penilaian_kode_etik,
+                'status_approve'            => $persetujuan_atasan,
+                'send_to_atasan'            => $capaian_tahunan->send_to_atasan,
+                'alasan_penolakan'          => $alasan_penolakan,
+                'skp_tahunan_id'            => $capaian_tahunan->skp_tahunan_id,
+                'bulan'                     => "",
+                'tgl_dibuat'                => Pustaka::balik2($capaian_tahunan->created_at),
+                'p_nama'                    => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
+                'u_nama'                    => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
+                'santun'                    => $capaian_tahunan->santun*20,
+                'amanah'                    => $capaian_tahunan->amanah*20,
+                'harmonis'                  => $capaian_tahunan->harmonis*20,
+                'adaptif'                   => $capaian_tahunan->adaptif*20,
+                'terbuka'                   => $capaian_tahunan->terbuka*20,
+                'efektif'                   => $capaian_tahunan->efektif*20,
+
+
+
+        );
+       
+        return $response;
+
+
+    }
+    
     public function Store(Request $request)
 	{
         $messages = [

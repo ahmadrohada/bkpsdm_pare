@@ -9,7 +9,7 @@
 	 <div class="content-wrapper" >
 	    <section class="content-header">
 			<h1>
-				Edit Capaian Tahunan Eselon {{ $capaian->PejabatYangDinilai->Eselon->eselon }}
+				Capaian Tahunan Approvement
 			</h1>
 				{!! Breadcrumbs::render('personal_edit_capaian_tahunan') !!}
       </section>
@@ -21,6 +21,7 @@
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				<li class="unsur_penunjang_tab"><a href="#unsur_penunjang_tab" data-toggle="tab">Unsur Penunjang</a></li>
+			
 			</ul>
 
  
@@ -30,26 +31,28 @@
 
 					<!-- 2. KASUBID -->
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.modules.timeline.capaian_tahunan_status_edit')
+						@include('admin.modules.timeline.capaian_tahunan_status_approvement')
 					@endif
 					
 					
 				</div>
 				<div class="tab-pane" id="detail">
-					@include('admin.modules.edit_forms.capaian_tahunan_detail')			
+					@include('admin.modules.detail_forms.capaian_tahunan_detail')			
 				</div>
 								
 				<div class=" tab-pane" id="kegiatan_tahunan_tab">
 
 					<!-- 3. KASUBID -->
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.tables.capaian_kegiatan_tahunan_edit')
+						@include('admin.tables.capaian_kegiatan_tahunan_approvement')
 					@endif
 				
+					
 				</div>
 				<div class=" tab-pane" id="unsur_penunjang_tab">
-					@include('admin.tables.unsur_penunjang_edit')
+					@include('admin.tables.unsur_penunjang_detail')
 				</div>
+			
 
 			</div>			
 		</div>
@@ -80,6 +83,7 @@ $(document).ready(function() {
 			load_kegiatan_tahunan();
 		}else if ( id == 'status'){
 			status_pengisian(); 
+			
 		}else if ( id == 'unsur_penunjang_tab'){
 			load_tugas_tambahan(); 
 			load_kreativitas();

@@ -76,6 +76,10 @@
 		window.location.assign("capaian_bulanan_approval-request");
     });
 
+	$(".capaian_tahunan").click(function(){
+		window.location.assign("capaian_tahunan_approval-request");
+    });
+
 	
 
 	

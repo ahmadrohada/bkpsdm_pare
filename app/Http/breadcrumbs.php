@@ -293,6 +293,12 @@ Breadcrumbs::register('approval_request-capaian_bulanan', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_bulanan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_bulanan')]);
 });
 
+Breadcrumbs::register('approval_request-capaian_tahunan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('approval_request');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_tahunan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_tahunan')]);
+});
+
 Breadcrumbs::register('approval_request-skp_tahunan', function($breadcrumbs)
 {
     $breadcrumbs->parent('approval_request');

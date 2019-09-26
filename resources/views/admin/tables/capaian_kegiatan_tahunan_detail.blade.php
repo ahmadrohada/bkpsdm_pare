@@ -18,7 +18,7 @@
 
 				</div>
 
-				<table id="realisasi_kegiatan_tahunan_table" class="table table-striped table-hover display" style="width:100%">
+				<table id="realisasi_kegiatan_tahunan_table" class="table table-striped table-hover" style="width:100%">
 					<thead>
 						<tr>
 							<th rowspan="2">No</th>
@@ -26,7 +26,12 @@
 							<th rowspan="2">INDIKATOR</th>
 							<th colspan="4" >TARGET</th>
 							<th colspan="3">REALISASI</th>
-							<th rowspan="2"><i class="fa fa-cog"></i></th>
+							<th rowspan="2" >HITUNG <br>QUANTITY</th>
+							<th rowspan="2">HITUNG <br>QUALITY</th>
+							<th rowspan="2">HITUNG <br>WAKTU</th>
+							<th rowspan="2">HITUNG <br>ANGGARAN</th>
+							<th rowspan="2">JUMLAH</th>
+							<th rowspan="2">CAPAIAN <br>SKP</th>
 						</tr>
 						<tr>
 							<th>QUANTITY</th>
@@ -76,9 +81,9 @@ table.dataTable tbody td {
 				//fixedColumns	: true,
 				//order 			: [0 , 'asc' ],
 				columnDefs		: [
-									{ "orderable": false, className: "text-center", targets: [ 0,3,4,5,7,8,10 ] },
+									{ "orderable": false, className: "text-center", targets: [ 0,3,4,5,7,8,10,11,12,13,14,15 ] },
 									{ className: "text-right", targets: [ 6,9] },
-									{ },
+									
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/realisasi_kegiatan_tahunan") }}',
@@ -92,7 +97,7 @@ table.dataTable tbody td {
 								},
 				targets			: 'no-sort',
 				bSort			: false,
-				rowsGroup		: [ 0,1,4,5,6,8,9 ],
+				rowsGroup		: [ 0,1,4,5,6,8,9,10,11,12,13,14,15],
 				columns			: [
 									{ data: 'kegiatan_tahunan_id' ,width:"10px",
 										"render": function ( data, type, row ,meta) {
@@ -103,7 +108,7 @@ table.dataTable tbody td {
 											
 										}
 									},
-									{ data: "kegiatan_label", name:"kegiatan_label",width:"20%",
+									{ data: "kegiatan_label", name:"kegiatan_label",width:"30%",
 										"render": function ( data, type, row ) {
 											return row.kegiatan_label;
 											
@@ -117,60 +122,96 @@ table.dataTable tbody td {
 									}, 
 									
 								
-									{ data: "target_quantity", name:"target_quantity", width:"100px",
+									{ data: "target_quantity", name:"target_quantity",
 										"render": function ( data, type, row ) {
 											return row.target_quantity ;
 										}
 									},
-									{ data: "target_quality", name:"target_quality", width:"100px",
+									{ data: "target_quality", name:"target_quality", 
 										"render": function ( data, type, row ) {
 											return row.target_quality ;
 										}
 									},
-									{ data: "target_waktu", name:"target_waktu", width:"100px",
+									{ data: "target_waktu", name:"target_waktu", 
 										"render": function ( data, type, row ) {
 											return row.target_waktu ;
 										}
 									},
-									{ data: "target_cost", name:"target_cost", width:"100px",
+									{ data: "target_cost", name:"target_cost",
 										"render": function ( data, type, row ) {
 											return row.target_cost ;
 										}
 									},
-									{ data: "realisasi_quantity", name:"realisasi_quantity", width:"100px",
+									{ data: "realisasi_quantity", name:"realisasi_quantity",
 										"render": function ( data, type, row ) {
 											return  row.realisasi_quantity;
 										}
 									},
-									{ data: "realisasi_waktu", name:"realisasi_waktu", width:"50px",
+									{ data: "realisasi_waktu", name:"realisasi_waktu", 
 										"render": function ( data, type, row ) {
 											return row.realisasi_waktu ;
 										}
 									},
-									{ data: "realisasi_cost", name:"realisasi_cost", width:"50px",
+									{ data: "realisasi_cost", name:"realisasi_cost", 
 										"render": function ( data, type, row ) {
 											return row.realisasi_cost ;
 										}
 									},
-									{  data: 'action',width:"6%",
-											"render": function ( data, type, row ) {
-											if ( {!! $capaian->status !!} == 1 ){
-												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs "  "><i class="fa fa-pencil" ></i></a></span>'+
-														'<span style="margin:2px;" ><a class="btn btn-default btn-xs "  "><i class="fa fa-close " ></i></a></span>';
+									{ data: "hitung_quantity", name:"hitung_quantity", 
+										"render": function ( data, type, row ) {
+											if ( row.hitung_quality == 0 ){
+												return "<span class='text-danger'> - </span>";
 											}else{
-												if ( (row.realisasi_indikator_id) >= 1 ){
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_tahunan"  data-indikator_id="'+row.indikator_kegiatan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_tahunan"  data-realisasi_kegiatan_id ="'+row.realisasi_kegiatan_id+'"  data-realisasi_indikator_kegiatan_id="'+row.realisasi_indikator_id+'"  data-kegiatan_id="'+row.kegiatan_id+'"  data-label="'+row.indikator_label+'" ><i class="fa fa-close " ></i></a></span>';
-												}else{
-													return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_realisasi_tahunan"  data-indikator_id="'+row.indikator_kegiatan_id+'" data-kegiatan_tahunan_id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-plus" ></i></a></span>'+
-															'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
-												
-												} 
+												return row.hitung_quantity +" %";
+											}
+										}
+									},
+									{ data: "hitung_quality", name:"hitung_quality", 
+										"render": function ( data, type, row ) {
+											if ( row.hitung_quality == 0 ){
+												return "<span class='text-danger'> - </span>";
+											}else{
+												return row.hitung_quality +" %";
+											}
+										}
+									},
+									{ data: "hitung_waktu", name:"hitung_waktu",
+										"render": function ( data, type, row ) {
+											if ( row.hitung_quality == 0 ){
+												return "<span class='text-danger'> - </span>";
+											}else{
+												return row.hitung_waktu +" %";
+											}
+										}
+									},
+									{ data: "hitung_cost", name:"hitung_cost", 
+										"render": function ( data, type, row ) {
+											if ( row.hitung_quality == 0 ){
+												return "<span class='text-danger'> - </span>";
+											}else{
+												return row.hitung_cost +" %";
+											}
+										}
+									},
+									{ data: "jumlah", name:"jumlah", 
+										"render": function ( data, type, row ) {
+											if ( row.hitung_quality == 0 ){
+												return "<span class='text-danger'> - </span>";
+											}else{
+												return row.jumlah ;
+											}
+										}
+									},
+									{ data: "capaian_skp", name:"capaian_skp",
+										"render": function ( data, type, row ) {
+											if ( row.hitung_quality == 0 ){
+												return "<span class='text-danger'> - </span>";
+											}else{
+												return row.capaian_skp ;
 											}
 										}
 									},
 									
-								
 								],
 								initComplete: function(settings, json) {
 								
