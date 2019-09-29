@@ -18,6 +18,8 @@ use App\Models\Golongan;
 use App\Models\Eselon; 
 
 use App\Models\KegiatanSKPTahunan;
+use App\Models\RealisasiKegiatanTahunan;
+use App\Models\PerilakuKerja;
 use App\Models\RencanaAksi;
 use App\Models\RealisasiRencanaAksiKasubid;
 use App\Models\RealisasiRencanaAksiKabid;
@@ -643,22 +645,23 @@ class CapaianTahunanAPIController extends Controller {
     }
 
 
-    public function CapaianTahunanStatusPengisian( Request $request )
+    public function CapaianTahunanStatus( Request $request )
     {
        
-        
         $button_kirim = 0 ;
         $capaian_id = $request->capaian_tahunan_id;
 
         $capaian_tahunan = CapaianTahunan::
-
-                            leftjoin('db_pare_2018.penilaian_perilaku_kerja AS pke', function($join){
+                            leftjoin('db_pare_2018.realisasi_kegiatan_tahunan AS rkt', function($join){
+                                $join   ->on('rkt.capaian_id','=','capaian_tahunan.id');
+                            })
+                            ->leftjoin('db_pare_2018.penilaian_perilaku_kerja AS pke', function($join){
                                 $join   ->on('pke.capaian_tahunan_id','=','capaian_tahunan.id');
                             })
                             
                             ->SELECT(
                                 'capaian_tahunan.id AS capaian_tahunan_id',
-                                'capaian_tahunan.skp_tahunan_id',
+                                'capaian_tahunan.skp_tahunan_id AS skp_tahunan_id',
                                 'capaian_tahunan.created_at',
                                 'capaian_tahunan.status_approve',
                                 'capaian_tahunan.send_to_atasan',
@@ -669,18 +672,27 @@ class CapaianTahunanAPIController extends Controller {
                             )
                             ->where('capaian_tahunan.id','=', $capaian_id )->first();
     
-        $jenis_jabatan = $capaian_tahunan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
+        $jenis_jabatan = $capaian_tahunan->PejabatYangDinilai->Jabatan->Eselon->id_jenis_jabatan;
         //$bulan = $capaian_bulanan->SKPBulanan->bulan;
 
         //jm kegiatan pelaksana
         if ( $jenis_jabatan == 4 ){
             
            
-       
-       
         }else if ( $jenis_jabatan == 3){  //kasubid
-            //cari bawahan
-            
+            //Jumlah kegiatan 
+            $jm_kegiatan = KegiatanSKPTahunan::WHERE('skp_tahunan_id',$capaian_tahunan->skp_tahunan_id)->count();
+            $jm_realisasi = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->count();
+
+            //cari nilai_capaian Kegiatan tahunan
+            $data_cap = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->get();
+            $nilai_capaian_kegiatan_tahunan = 0 ;
+            foreach ($data_cap as $x) {
+                $nilai_capaian_kegiatan_tahunan =  $nilai_capaian_kegiatan_tahunan + $x->hitung_quantity;
+            }
+
+
+
         }else if ( $jenis_jabatan == 2){ //kabid
             //cari bawahan bawahan nya
 
@@ -692,6 +704,32 @@ class CapaianTahunanAPIController extends Controller {
             $jm_kegiatan_tahunan = 000 ;
         }
                         
+        //Penilaian Perilkau kerja
+        $x = PerilakuKerja::
+                            SELECT( '*') 
+                            ->WHERE('penilaian_perilaku_kerja.capaian_tahunan_id', $capaian_id)
+                            ->first();
+
+		if ( $x != null ){
+            $pelayanan = ($x->pelayanan_01+$x->pelayanan_02+$x->pelayanan_03)/15 * 100;
+            $integritas = ($x->integritas_01+$x->integritas_02+$x->integritas_03+$x->integritas_04)/20*100;
+            $komitmen = ($x->komitmen_03+$x->komitmen_03+$x->komitmen_03)/15*100;
+            $disiplin = ($x->disiplin_01+$x->disiplin_02+$x->disiplin_03+$x->disiplin_04)/20*100;
+            $kerjasama = ($x->kerjasama_01+$x->kerjasama_02+$x->kerjasama_03+$x->kerjasama_04+$x->kerjasama_05)/25*100;
+            $kepemimpinan = ($x->kepemimpinan_01+$x->kepemimpinan_02+$x->kepemimpinan_03+$x->kepemimpinan_04+$x->kepemimpinan_05+$x->kepemimpinan_06)/30*100;
+
+            if ( $x->CapaianTahunan->PejabatYangDinilai->Jabatan->Eselon->id_jenis_jabatan < 4 ){
+                $jumlah = $pelayanan+$integritas+$komitmen+$disiplin+$kerjasama+$kepemimpinan;
+                $ave    = $jumlah / 6 ;
+            }else{
+                $jumlah = $pelayanan+$integritas+$komitmen+$disiplin+$kerjasama;
+                $ave    = $jumlah / 5 ; 
+            }
+        }else{
+            $ave    = 0 ; 
+        }
+
+
 
       
         $p_detail   = $capaian_tahunan->PejabatPenilai;
@@ -711,43 +749,29 @@ class CapaianTahunanAPIController extends Controller {
         }
 
 
-       /*  //penilaian kode etik
-        if ( ($capaian_tahunan->penilaian_perilaku_kerja) >= 1 ){
-            $jm = ($capaian_tahunan->santun + $capaian_tahunan->amanah + $capaian_tahunan->harmonis+$capaian_tahunan->adaptif+$capaian_tahunan->terbuka+$capaian_tahunan->efektif);
-            
-            
-            
-            $penilaian_kode_etik = Pustaka::persen($jm,30) ;
-
-            $capaian_skp_tahunan = number_format( ($capaian_kinerja_tahunan * 70 / 100)+( $penilaian_kode_etik * 30 / 100 ) , 2 ).' %';
-
-        }else{ */
             $penilaian_kode_etik = 0 ;
             $capaian_skp_tahunan = 0 ;
-       // }
-        
-
+      
         $response = array(
                 
-                'jm_kegiatan_tahunan'       => "0",
+                'jm_kegiatan_tahunan'           => $jm_kegiatan,
+                'jm_realisasi_kegiatan_tahunan' => $jm_realisasi,
+
+                'nilai_capaian_kegiatan_tahunan'=> $nilai_capaian_kegiatan_tahunan,
+                'penilaian_perilaku_kerja'  => Pustaka::persen_bulat($ave),
+
+
                 'capaian_kinerja_tahunan'   => "0",
                 'capaian_skp_tahunan'       => $capaian_skp_tahunan,
-                'penilaian_perilaku_kerja'  => $capaian_tahunan->penilaian_perilaku_kerja,
-                'penilaian_kode_etik'       => $penilaian_kode_etik,
+                
                 'status_approve'            => $persetujuan_atasan,
                 'send_to_atasan'            => $capaian_tahunan->send_to_atasan,
                 'alasan_penolakan'          => $alasan_penolakan,
                 'skp_tahunan_id'            => $capaian_tahunan->skp_tahunan_id,
-                'bulan'                     => "",
                 'tgl_dibuat'                => Pustaka::balik2($capaian_tahunan->created_at),
                 'p_nama'                    => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
                 'u_nama'                    => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
-                'santun'                    => $capaian_tahunan->santun*20,
-                'amanah'                    => $capaian_tahunan->amanah*20,
-                'harmonis'                  => $capaian_tahunan->harmonis*20,
-                'adaptif'                   => $capaian_tahunan->adaptif*20,
-                'terbuka'                   => $capaian_tahunan->terbuka*20,
-                'efektif'                   => $capaian_tahunan->efektif*20,
+                
 
 
 

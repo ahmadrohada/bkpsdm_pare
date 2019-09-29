@@ -10,14 +10,16 @@
             <div class="modal-body">
 			<form class="penilaian_perilaku_kerja_form">
 			<input type="hidden" class="capaian_tahunan_id" name="capaian_tahunan_id" >
+			<input type="hidden" class="perilaku_kerja_id" name="perilaku_kerja_id" >
+			
 
-					<table class="table">
+					<table class="table penilaian">
 						<thead>
 						<tr class='bg-primary'>
-							<th data-halign="center"  data-valign="middle" data-align="center" data-valign="middle" width="20%">Indikator</th>
-							<th data-halign="center" data-valign="middle" width="30%">Sub.Indikator</th>
-							<th data-halign="center" data-valign="middle" data-align="center" width="40%">Skor</th>
-							<th data-halign="center" data-valign="middle" data-align="center" data-valign="middle">Jm Skor</th>
+							<th data-halign="center"  data-valign="middle" data-align="center" data-valign="middle" width="17%">Indikator</th>
+							<th data-halign="center" data-valign="middle" width="40%">Sub.Indikator</th>
+							<th data-halign="center" data-valign="middle" data-align="center" width="35%">Skor</th>
+							<th data-halign="center" data-valign="middle" data-align="center" data-valign="middle">Skor</th>
 						
 						</tr>
 						</thead>
@@ -155,11 +157,9 @@
 							</td>
 						</tr>
 						
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
 						
+						@if ( $capaian->PejabatYangDinilai->Jabatan->Eselon->id_jenis_jabatan  < 4 )
+					
 						
 						<tr>
 							<td rowspan="6" >Kepemimpinan</td>
@@ -201,6 +201,7 @@
 						</tr>
 						
 						
+						@endif
 						
 						<tr>
 							<td colspan="3">Rata - rata skor</td>
@@ -224,6 +225,11 @@
 
 <link rel="stylesheet" href="{{asset('assets/css/star-rating.css')}}" />
 <script src="{{asset('assets/js/star-rating.js')}}"></script>
+<style>
+table.penilaian tbody td {
+  vertical-align: middle;
+}
+</style>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -419,7 +425,7 @@ $(document).ready(function() {
 		
 		
 		
-		if ( (u_eselon == '') | (u_eselon == 'JFU') | (u_eselon == 'JFT') ){
+		if (  {!! $capaian->PejabatYangDinilai->Jabatan->Eselon->id_jenis_jabatan!!}  >= 4 ){
 			g =( a+b+c+d+e+f )/5;
 		}else{
 			g =( a+b+c+d+e+f )/6;
@@ -449,6 +455,7 @@ $(document).ready(function() {
 			success	: function(data) {
 
 					$('.modal-penilaian_perilaku_kerja').find('[name=capaian_tahunan_id]').val({!! $capaian->id !!});
+					$('.modal-penilaian_perilaku_kerja').find('[name=perilaku_kerja_id]').val(data['id']);
 					
 					$('.pelayanan_01').rating('update',data['pelayanan_01']);
 					$('.pelayanan_02').rating('update',data['pelayanan_02']);
@@ -491,8 +498,16 @@ $(document).ready(function() {
 					hitung_ave_kerjasama();
 					hitung_ave_kepemimpinan();
 
-					$('.modal-penilaian_perilaku_kerja').find('h4').html('Edit Penilaian Perilaku');
-					$('.modal-penilaian_perilaku_kerja').find('.btn-submit').attr('id', 'simpan_penilaian_perilaku_kerja');
+					if ( data['id'] == 0 ){
+						$('.modal-penilaian_perilaku_kerja').find('h4').html('Add Penilaian Perilaku');
+						$('.modal-penilaian_perilaku_kerja').find('.btn-submit').attr('id', 'simpan_penilaian_perilaku_kerja');
+					}else{
+						$('.modal-penilaian_perilaku_kerja').find('h4').html('Edit Penilaian Perilaku');
+						$('.modal-penilaian_perilaku_kerja').find('.btn-submit').attr('id', 'update_penilaian_perilaku_kerja');
+					}
+
+					
+					
 					$('.modal-penilaian_perilaku_kerja').modal('show');
 
 				},
@@ -511,9 +526,6 @@ $(document).ready(function() {
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
-				
-				//$('#indikator_sasaran_table').DataTable().ajax.reload(null,false);
-
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -524,13 +536,13 @@ $(document).ready(function() {
 					timer: 1500
 				}).then(function () {
 					status_pengisian();
-					$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
+					//$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
 					$('.modal-penilaian_perilaku_kerja').modal('hide');
 
 				},
 					function (dismiss) {
 						if (dismiss === 'timer') {
-							$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
+							//$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
 						}
 					}
 			)	
@@ -540,7 +552,52 @@ $(document).ready(function() {
 				var test = $.parseJSON(jqXHR.responseText);
 				
 				var data= test.errors;
-				alert(data);
+				alert("Berikan minimal 1 bintang pada setiap poin penilaian");
+
+				
+
+				
+			}
+			
+		  });
+		
+    });
+
+	$(document).on('click', '#update_penilaian_perilaku_kerja', function(){
+		
+        var data = $('.penilaian_perilaku_kerja_form').serialize();
+		$.ajax({
+			url		: '{{ url("api_resource/update_penilaian_perilaku_kerja") }}',
+			type	: 'POST',
+			data	:  data,
+			success	: function(data , textStatus, jqXHR) {
+				Swal.fire({
+					title: "",
+					text: "Sukses",
+					type: "success",
+					width: "200px",
+					showConfirmButton: false,
+					allowOutsideClick : false,
+					timer: 1500
+				}).then(function () {
+					status_pengisian();
+					//$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
+					$('.modal-penilaian_perilaku_kerja').modal('hide');
+
+				},
+					function (dismiss) {
+						if (dismiss === 'timer') {
+							//$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
+						}
+					}
+			)	
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
+
+				var test = $.parseJSON(jqXHR.responseText);
+				
+				var data= test.errors;
+				alert("Berikan minimal 1 bintang pada setiap poin penilaian");
 
 				
 

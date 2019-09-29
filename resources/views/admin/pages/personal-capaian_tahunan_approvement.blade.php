@@ -19,8 +19,8 @@
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="status"><a href="#status" data-toggle="tab">Status </a></li>
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
-				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
-				<li class="unsur_penunjang_tab"><a href="#unsur_penunjang_tab" data-toggle="tab">Unsur Penunjang</a></li>
+				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">A. Kegiatan Tahunan Eselon {!! $capaian->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="unsur_penunjang_tab"><a href="#unsur_penunjang_tab" data-toggle="tab">B. Unsur Penunjang</a></li>
 			
 			</ul>
 
@@ -67,11 +67,13 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
+
+
 	$('#myTab a').click(function(e) {
 		
 		e.preventDefault();
 		$(this).tab('show');
-		//$('html, body').animate({scrollTop:0}, 0);
+		
 		
 	}); 
 

@@ -34,6 +34,8 @@ class HistoryJabatan extends Model
         return $this->hasOne('App\Models\UnitKerja','id','id_unit_kerja');
     }
 
+
+    //ini katanya gk digunakan by pa basyir , 28 09 2019
     public function Eselon()
     {
         return $this->hasOne('App\Models\Eselon','id','id_eselon');
@@ -53,6 +55,6 @@ class HistoryJabatan extends Model
     //field SKPD untu dapetin jabatannya ye
     public function Jabatan()
     {
-        return $this->hasOne('App\Models\Skpd','id','id_jabatan');
+        return $this->hasOne('App\Models\Jabatan','id','id_jabatan');
     }
 }

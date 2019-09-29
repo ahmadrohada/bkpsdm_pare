@@ -482,7 +482,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('ganti_atasan_capaian_tahunan','API\PegawaiAPIController@selectAtasanCapaianTahunan');
 	Route::post('set_pejabat_penilai_capaian_tahunan','API\CapaianTahunanAPIController@PejabatPenilaiUpdate');
 
-	Route::get('capaian_tahunan_status_pengisian','API\CapaianTahunanAPIController@CapaianTahunanStatusPengisian');
+	Route::get('capaian_tahunan_status','API\CapaianTahunanAPIController@CapaianTahunanStatus');
 	
 	Route::get('capaian_tahunan_detail','API\CapaianTahunanAPIController@CapaianTahunanDetail');
 
@@ -580,8 +580,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	
 	Route::get('detail_penilaian_perilaku_kerja','API\PerilakuKerjaAPIController@PenilaianPerilakuKerjaDetail');
+	Route::get('penilaian_perilaku_kerja','API\PerilakuKerjaAPIController@PenilaianPerilakuKerja');
 	Route::post('simpan_penilaian_perilaku_kerja','API\PerilakuKerjaAPIController@Store');
-	
+	Route::post('update_penilaian_perilaku_kerja','API\PerilakuKerjaAPIController@Update');
+	Route::post('hapus_penilaian_perilaku_kerja','API\PerilakuKerjaAPIController@Hapus');
 	
 
 	//=================================         TUGAS TAMBAHAN     = =====================================//

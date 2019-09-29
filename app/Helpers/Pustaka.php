@@ -269,11 +269,17 @@ class Pustaka {
 		if ( $data > 0 ){
 			$x	= explode('.',$data);
 
-			if ( $x[1] == '00' ){
-				$hasil = number_format(($data) , 0);
+			if ( isset($x[1])){
+				if (  $x[1] == '00' ){
+					$hasil = number_format(($data) , 0);
+				}else{
+					$hasil = number_format(($data) , 2);
+				}
 			}else{
-				$hasil = number_format(($data) , 2);
+				$hasil = number_format(($data) , 0);
 			}
+
+			
 
 		}else{
 			$hasil = 0 ;
@@ -284,6 +290,26 @@ class Pustaka {
 		return $hasil;
 
 	}
+
+	public static function perilaku($data){
+		if ($data == 0 ){
+			$keterangan = "Buruk";
+		}else if ($data <= 50 ){
+			$keterangan = "Buruk";
+		}else if ($data <= 60) {
+			$keterangan = "Kurang";
+		}else if ($data <= 75) {
+			$keterangan = "Cukup";
+		}else if ($data <= 90) {
+			$keterangan = "Baik";
+		}else if ($data >=90.001) {
+			$keterangan = "Sangat Baik";
+		}
+
+		return $keterangan;
+
+	}
+
 
 
 	public static function tgl_form($data){

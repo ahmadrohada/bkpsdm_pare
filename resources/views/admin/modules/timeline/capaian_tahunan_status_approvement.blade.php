@@ -5,35 +5,47 @@
 			<div class="box-body box-profile">
 			
 				<h1 class="profile-username text-center text-success" style="font-size:16px;">
-				Capaian SKP Periode {!! Pustaka::tahun($capaian->tgl_mulai) !!}
+				Capaian Tahunan Periode {!! Pustaka::tahun($capaian->tgl_mulai) !!} 
+				
 				</h1>
-
+				
 				<ul class="list-group list-group-unbordered">
 					<li class="list-group-item ">
 						Tanggal dibuat<a class="pull-right st_created_at">-</a>
 					</li>
-					<li class="list-group-item ">
+					<li class="list-group-item hidden">
 						Pejabat Penilai <a class="pull-right st_pejabat_penilai">-</a>
 					</li>
-					<li class="list-group-item hidden">
-						Jumlah Kegiatan <a class="pull-right st_jm_kegiatan_tahunan" >-</a>
+					<li class="list-group-item">
+						Jumlah Kegiatan / Realisasi<a class="pull-right st_jumlah_kegiatan_tahunan">-</a>
+					</li>
+					<li class="list-group-item">
+						A. Nilai Capaian Kegiatan Tahunan
+						<a class="pull-right st_capaian_kegiatan_tahunan" >-</a>
+					</li>
+					<li class="list-group-item">
+						B. Nilai Unsur Penunjang
+						<a class="pull-right st_nilai_unsur_penunjang" >-</a>
 					</li>
 		
 					
 
 					<li class="list-group-item">
-						Capaian SKP <span class="text-muted"> (bobot 60%)</span><a class="pull-right st_capaian_kinerja_tahunan" >-</a>
+						C. Capaian SKP<span class="text-muted"> (A+B)
+						</span><a class="pull-right st_capaian_skp" >-</a>
 					</li>
 
-					<li class="list-group-item st_pke" >
+					<li class="list-group-item" >
 						<input type="hidden" class="penilaian_kode_etik_id">
-						Penilaian Perilaku Kerja <span class="text-muted"> (bobot 40%)</span>
+						D. Penilaian Perilaku Kerja
 						<a class="btn btn-success btn-xs edit_penilaian_perilaku" style="margin-top:-1px;">Edit Penilaian <i class="fa fa-pencil" ></i></a>
-						<a class="pull-right st_penilaian_kode_etik" >-</a>
+						<a class="pull-right st_penilaian_perilaku_kerja" >-</a>
 					</li>
 
-					<li class="list-group-item st_pke " style=" border-top: solid #615e68 !important; border-top-width: 2px;">
-						<strong>Nilai Prestasi Kerja</strong> <a class="pull-right st_capaian_skp_tahunan" style="font-weight: bold;" >-</a>
+					<li class="list-group-item" style=" border-top: solid #615e68 !important; border-top-width: 2px;">
+						<strong>Nilai Prestasi Kerja</strong> 
+						<span class="text-muted st_formula_perhitungan"> ( C x 60% ) + ( D x 40% )</span>
+						<a class="pull-right st_nilai_prestasi_kerja" style="font-weight: bold;" >-</a>
 					</li>
 					
 				</ul>
@@ -49,13 +61,14 @@
 	<div class="col-md-5 col-md-offset-1">
 		
 		<div class="box">
-            <!-- /.box-header -->
+			<!-- /.box-header -->
+			
             <div class="box-body no-padding">
 				<table class="table">
 					<thead>
 						<tr class='bg-primary'>
 							<th data-halign="center"  data-align="center" data-valign="middle" width="10px">No</th>
-							<th data-halign="center"  data-align="center" data-valign="middle" width="220px">Penilaian Perilaku Kerja</th>
+							<th data-halign="center"  data-align="center" data-valign="middle" width="220px">Penilaian Perilaku Kerja [{!! $capaian->PejabatYangDinilai->Jabatan->Eselon->id_jenis_jabatan !!}]</th>
 							<th data-halign="center" data-align="center" data-width="270">Nilai</th>
 							<th data-halign="center" data-align="center" data-width="270">Keterangan</th>
 						
@@ -71,44 +84,46 @@
 						<tr>	
 							<td>2</td>
 							<td>Integritas</td>
-							<td><span class="nilai_orientasi_pelayanan"></span></td>
-							<td><span class="ket_orientasi_pelayanan"></span></td>
+							<td><span class="nilai_integritas"></span></td>
+							<td><span class="ket_integritas"></span></td>
 						</tr>
 						<tr>	
 							<td>3</td>
 							<td>Komitmen</td>
-							<td><span class="nilai_orientasi_pelayanan"></span></td>
-							<td><span class="ket_orientasi_pelayanan"></span></td>
+							<td><span class="nilai_komitmen"></span></td>
+							<td><span class="ket_komitmen"></span></td>
 						</tr>
 						<tr>	
 							<td>4</td>
 							<td>Disiplin</td>
-							<td><span class="nilai_orientasi_pelayanan"></span></td>
-							<td><span class="ket_orientasi_pelayanan"></span></td>
+							<td><span class="nilai_disiplin"></span></td>
+							<td><span class="ket_disiplin"></span></td>
 						</tr>
 						<tr>	
 							<td>5</td>
 							<td>Kerjasama</td>
-							<td><span class="nilai_orientasi_pelayanan"></span></td>
-							<td><span class="ket_orientasi_pelayanan"></span></td>
+							<td><span class="nilai_kerjasama"></span></td>
+							<td><span class="ket_kerjasama"></span></td>
 						</tr>
+						@if ( $capaian->PejabatYangDinilai->Jabatan->Eselon->id_jenis_jabatan  < 4 )
 						<tr>	
 							<td>6</td>
 							<td>Kepemimpinan</td>
-							<td><span class="nilai_orientasi_pelayanan"></span></td>
-							<td><span class="ket_orientasi_pelayanan"></span></td>
+							<td><span class="nilai_kepemimpinan"></span></td>
+							<td><span class="ket_kepemimpinan"></span></td>
 						</tr>
-						<tr>	
+						@endif
+						<tr class="success">	
 							<td></td>
 							<td>Jumlah</td>
-							<td><span class="nilai_orientasi_pelayanan"></span></td>
-							<td><span class="ket_orientasi_pelayanan"></span></td>
-						</tr>
-						<tr>	
+							<td><span class="jumlah"></span></td>
 							<td></td>
-							<td>Rata-rata</td>
-							<td><span class="nilai_orientasi_pelayanan"></span></td>
-							<td><span class="ket_orientasi_pelayanan"></span></td>
+						</tr>
+						<tr class='bg-primary'>	
+							<td></td>
+							<td>Penilaian Perilaku Kerja </td>
+							<td><span class="rata_rata"></span></td>
+							<td><span class="ket_rata_rata"></span></td>
 						</tr>
 
 
@@ -116,7 +131,7 @@
 				</table>
 
             </div>
-            <!-- /.box-body -->
+            <!-- /.box-body -->  
           </div>
 	</div>
 
@@ -133,39 +148,70 @@
 	
 	function status_pengisian(){
 		$.ajax({
-				url			: '{{ url("api_resource/capaian_tahunan_status_pengisian") }}',
+				url			: '{{ url("api_resource/capaian_tahunan_status") }}',
 				data 		: { capaian_tahunan_id : {!! $capaian->id !!} },
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
-					//alert(data);
-					if (data['button_kirim'] == 1 ){
-						$('.close_capaian_tahunan').removeAttr('disabled');
-					}else{
-						$('.close_capaian_tahunan').attr('disabled','disabled');
-					}
-
+					
 					$('.st_created_at').html(data['tgl_dibuat']);
 					$('.st_pejabat_penilai').html(data['p_nama']);
-					$('.st_jm_kegiatan_tahunan').html(data['jm_kegiatan_tahunan']);
-					$('.st_capaian_kinerja_tahunan').html(data['capaian_kinerja_tahunan']);
-					$('.st_status_approve').html(data['status_approve']);
-					$('.st_alasan_penolakan').html(data['alasan_penolakan']);
 
-					$('.st_capaian_skp_tahunan').html(data['capaian_skp_tahunan']);
+					$('.st_jumlah_kegiatan_tahunan').html(data['jm_kegiatan_tahunan']+" / "+data['jm_realisasi_kegiatan_tahunan']);
+
+					$('.st_capaian_kegiatan_tahunan').html('87.89');
+					$('.st_nilai_unsur_penunjang').html('12');
+					$('.st_capaian_skp').html('99.89');
+					$('.st_penilaian_perilaku_kerja').html(data['penilaian_perilaku_kerja']);
+					$('.st_nilai_prestasi_kerja').html('94.18');
+					$('.st_formula_hitung').html(data['tgl_dibuat']);
 					
 
-
-					if (data['alasan_penolakan'] != ""){
-						
-						$('.st_alasan_penolakan_div').removeClass('hidden');
-					} 
 					
 				},
 				error: function(data){
 					
 				}						
 		});
+
+
+
+		$.ajax({
+			url			: '{{ url("api_resource/penilaian_perilaku_kerja") }}',
+			data 		: {capaian_tahunan_id : {{ $capaian->id}} },
+			method		: "GET",
+			dataType	: "json",
+			success	: function(data) {
+
+					$('.nilai_orientasi_pelayanan').html(data['pelayanan']);
+					$('.nilai_integritas').html(data['integritas']);
+					$('.nilai_komitmen').html(data['komitmen']);
+					$('.nilai_disiplin').html(data['disiplin']);
+					$('.nilai_kerjasama').html(data['kerjasama']);
+					$('.nilai_kepemimpinan').html(data['kepemimpinan']); 
+
+					$('.ket_orientasi_pelayanan').html(data['ket_pelayanan']);
+					$('.ket_integritas').html(data['ket_integritas']);
+					$('.ket_komitmen').html(data['ket_komitmen']);
+					$('.ket_disiplin').html(data['ket_disiplin']);
+					$('.ket_kerjasama').html(data['ket_kerjasama']);
+					$('.ket_kepemimpinan').html(data['ket_kepemimpinan']); 
+
+					$('.jumlah').html(data['jumlah']); 
+					$('.rata_rata').html(data['rata_rata']); 
+
+					$('.ket_rata_rata').html(data['ket_rata_rata']);
+					
+
+				},
+				error: function(data){
+					
+				}						
+		});	 
+
+
+
+
 	}
 
 
