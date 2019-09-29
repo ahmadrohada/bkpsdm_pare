@@ -16,17 +16,16 @@ class SKPD extends Model
         return $this->hasMany('App\Models\Skpd','parent_id','id');
     }
 
-    public function bidang()
+    public function Bidang()
     {
         return $this->hasOne('App\Models\UnitKerja','id','id');
     }
 
-    public function pejabat()
+   /*  public function Pejabat()
     {
         return $this->hasOne('App\Models\HistoryJabatan','id_jabatan')->where('status','active');
-    }
+    } */
 
-   
-
+  
    
 }

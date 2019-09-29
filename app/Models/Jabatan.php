@@ -22,6 +22,11 @@ class Jabatan extends Model
     {
         return $this->belongsTo('App\Models\HistoryJabatan','id_skpd');
     }
+    
+    public function Eselon()
+    {
+        return $this->hasOne('App\Models\Eselon','id','id_eselon');
+    }
 
   
 
