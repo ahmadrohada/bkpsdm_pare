@@ -57,6 +57,7 @@
 				<thead>
 					<tr>
 						<th>No</th>
+						<th>INDIKATOR KEGIATAN</th>
 						<th>RENCANA AKSI</th>
 						<th>PELAKSANA</th>
 						<th>WAKTU</th>
@@ -69,7 +70,11 @@
 	</div>
 </div>
 
-
+<style>
+table.dataTable tbody td {
+  vertical-align: middle;
+}
+</style>
 
 <script type="text/javascript">
 

@@ -74,6 +74,7 @@
 
 <link rel="stylesheet" href="{{asset('assets/jstree/themes/default/style.css')}}" />
 <script src="{{asset('assets/jstree/jstree.min.js')}}"></script>
+<script src="{{asset('assets/js/dataTables.rowsGroup.js')}}"></script>
 
 <script type="text/javascript">
 	
@@ -265,21 +266,26 @@
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				targets			: 'no-sort',
+				bSort			: false,
 				order 			    : [ 2 , 'asc' ],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3,4,5 ] },
+									{ className: "text-center", targets: [ 0,2,3,4,5,6 ] },
 								  { 'orderable': false , targets: [2]  } 
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/skp_tahunan_rencana_aksi") }}',
 									data: { kegiatan_tahunan_id: kegiatan_tahunan_id },
 								},
+								rowsGroup		: [ 1 ],
 								columns			: [
-									{ data: 'rencana_aksi_id' , width:"10%",
+									{ data: 'rencana_aksi_id' , width:"6%",
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 										}
 									},
+									
+									{ data: "indikator_kegiatan_label", name:"laindikator_kegiatan_labelbel"},
 									{ data: "label", name:"label"},
 									{ data: "pelaksana", name:"pelaksana",
 										"render": function ( data, type, row ) {
@@ -293,7 +299,7 @@
 									{ data: "waktu_pelaksanaan", name:"waktu_pelaksanaan"},
 									{ data: "target", name:"target"},
 									
-									{  data: 'action',width:"15%",
+									{  data: 'action',width:"6%",
 											"render": function ( data, type, row ) {
 												if (row.kegiatan_bulanan >= 1){
 													return  '<span  data-toggle="tooltip" title="" style="margin:1px;" ><a class="btn btn-default btn-xs "  ><i class="fa fa-pencil" ></i></a></span>'+

@@ -7,6 +7,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\Pegawai;
+use App\Models\Renja;
 use App\Models\SKPTahunan;
 use App\Models\CapaianBulanan;
 use App\Models\CapaianTriwulan;
@@ -85,7 +86,7 @@ class PegawaiAPIController extends Controller {
             }
             
         
-
+ 
 
         }else{
             
@@ -135,6 +136,37 @@ class PegawaiAPIController extends Controller {
         $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
                         ->where('id','!=',$skp_tahunan->pegawai_id )
                         ->where('id','!=',$atasan_id )
+                        ->get();
+
+
+        $no = 0;
+        $pegawai_list = [];
+        foreach  ( $pegawai as $x){
+            $no++;
+            $pegawai_list[] = array(
+                            'id'		=> $x->id,
+                            'nama'		=> Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk),
+                            );
+            } 
+        
+        return $pegawai_list;
+        
+        
+    }
+
+    public function select_ka_skpd_list(Request $request)
+    {
+
+        //cari kepals skpd renja
+        $renja    = Renja::where('id', $request->get('renja_id'))->first();
+        if ( $renja->KepalaSKPD != null ){
+            $kepala_skpd_id = $renja->KepalaSKPD->id_pegawai;
+        }else{
+            $kepala_skpd_id = "0";
+        }
+
+        $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
+                        ->where('id','!=',$kepala_skpd_id )
                         ->get();
 
 

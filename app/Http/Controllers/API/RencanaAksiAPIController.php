@@ -235,26 +235,30 @@ class RencanaAksiAPIController extends Controller {
     {
             
        
-        $dt = RencanaAksi::WHERE('kegiatan_tahunan_id','=', $request->kegiatan_tahunan_id )
-
-                            ->select([   
-                                'id AS rencana_aksi_id',
-                                'label',
-                                'target',
-                                'satuan',
-                                'waktu_pelaksanaan',
-                                'jabatan_id'
+        $dt = RencanaAksi::
+                            join('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
+                                $join   ->on('indikator_kegiatan.id','=','skp_tahunan_rencana_aksi.indikator_kegiatan_id');
+                            })
+                            ->SELECT([   
+                                'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                                'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                'skp_tahunan_rencana_aksi.target',
+                                'skp_tahunan_rencana_aksi.satuan',
+                                'skp_tahunan_rencana_aksi.waktu_pelaksanaan',
+                                'skp_tahunan_rencana_aksi.jabatan_id',
+                                'indikator_kegiatan.label AS indikator_kegiatan_label'
                                 
                                 ])
-                            ->orderBy('waktu_pelaksanaan','ASC')
-                            ->orderBy('id','DESC')
+                            ->WHERE('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=', $request->kegiatan_tahunan_id )
+                            ->orderBy('skp_tahunan_rencana_aksi.waktu_pelaksanaan','ASC')
+                            ->orderBy('skp_tahunan_rencana_aksi.id','DESC')
                             ->get();
 
                  
                 
         $datatables = Datatables::of($dt)
         ->addColumn('label', function ($x) {
-            return $x->label;
+            return $x->rencana_aksi_label;
         })
         ->addColumn('kegiatan_bulanan', function ($x) {
             $kb =  KegiatanSKPBulanan::WHERE('rencana_aksi_id',$x->rencana_aksi_id)->SELECT('id')->count();
