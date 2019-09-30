@@ -64,7 +64,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('administrator_pohon_kinerja_list','API\RenjaAPIController@AdministratorPohonKinerjaList');
 
 	Route::get('create_renja_confirm','API\RenjaAPIController@ConfirmRenja');
-	
+	Route::post('set_kepala_skpd_renja','API\RenjaAPIController@KepalaSKPDUpdate');
 	
 	Route::get('renja_timeline_status','API\RenjaAPIController@RenjaTimelineStatus');
 	Route::get('renja_status_pengisian','API\RenjaAPIController@RenjaStatusPengisian');
@@ -651,6 +651,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	
 	Route::get('select_pegawai_list','API\PegawaiAPIController@select_pejabat_penilai_list');
+	Route::get('select_ka_skpd_list','API\PegawaiAPIController@select_ka_skpd_list');
 
 	Route::get('pegawai_list','API\PegawaiAPIController@select_pegawai_list');
 

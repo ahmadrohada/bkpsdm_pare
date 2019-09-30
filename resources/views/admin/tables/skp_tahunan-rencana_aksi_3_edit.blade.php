@@ -43,7 +43,7 @@
 
 	<div class="box box-primary">
 		<div class="box-header with-border">
-			<h1 class="box-title">
+			<h1 class="box-title"> 
 				List Rencana Aksi
 			</h1>
 
@@ -53,10 +53,11 @@
 				<span  data-toggle="tooltip" title="Create Rencana Aksi"><a class="btn btn-info btn-xs create_rencana_aksi "><i class="fa fa-plus" ></i></a></span>
 			</div>
 
-			<table id="rencana_aksi_table" class="table table-striped table-hover" >
+			<table id="rencana_aksi_table" class="table table-striped table-hover" style="width:100%">
 				<thead>
 					<tr>
 						<th>No</th>
+						<th>INDIKATOR KEGIATAN</th>
 						<th>RENCANA AKSI</th>
 						<th>PELAKSANA</th>
 						<th>WAKTU</th>
@@ -70,6 +71,11 @@
 	</div>
 </div>
 
+<style>
+table.dataTable tbody td {
+  vertical-align: middle;
+}
+</style>
 
 
 <script type="text/javascript">
@@ -86,7 +92,7 @@
 		$('.modal-rencana_aksi').modal('show');
 	});
 
-
+ 
 //============================ RENCANA AKSI ========================================//
 
 	$(document).on('click','.edit_rencana_aksi',function(e){

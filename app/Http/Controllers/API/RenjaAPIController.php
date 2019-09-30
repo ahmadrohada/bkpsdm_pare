@@ -60,7 +60,7 @@ class RenjaAPIController extends Controller {
             if ( $kaban->pejabat != null ){
                 $pegawai            = $kaban->pejabat->pegawai;
                 $kaban_jabatan_id   = $pegawai->JabatanAktif->id;
-                $kaban_nip          = $pegawsai_nip;
+                $kaban_nip          = $pegawai->nip;
                 $kaban_nama         = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
                 $kaban_pangkat      = $pegawai->JabatanAktif->golongan->pangkat;
                 $kaban_golongan     = $pegawai->JabatanAktif->golongan->pangkat;
@@ -715,6 +715,72 @@ class RenjaAPIController extends Controller {
             
             
     }   
+
+
+    public function KepalaSKPDUpdate(Request $request)
+	{
+        $messages = [
+            'ka_skpd_id.required'           => 'Harus set Pegawai ID',
+            'renja_id.required'             => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+            Input::all(),
+            array(
+                'ka_skpd_id'    => 'required',
+                'renja_id'      => 'required',
+            ),
+            $messages
+        );
+
+        if ( $validator->fails() ){
+                return response()->json(['errors'=>$validator->messages()],422);
+        }
+
+
+        //Cari nama dan id pejabatan penilai
+        $pegawai     = Pegawai::SELECT('*')->where('id',$request->ka_skpd_id )->first();
+
+        //$jabatan_x     = $pegawai->JabatanAktif;
+
+        if ( $pegawai->JabatanAktif ){
+
+            $kepala_skpd_id  =  $pegawai->JabatanAktif->id;
+        }else{
+            return \Response::make('Jabatan tidak ditemukan', 500);
+        }
+
+
+        
+       
+
+        $renja    = Renja::find($request->get('renja_id'));
+        if (is_null($renja)) {
+            return $this->sendError('Capaian Bulanan tidak ditemukan tidak ditemukan.');
+        }
+
+        
+        $renja->kepala_skpd_id          = $kepala_skpd_id;
+        $renja->nama_kepala_skpd        = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+   
+        
+        $item = array(
+           
+            "nama_kepala_skpd"		=> Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+              );
+
+
+        
+        if (  $renja->save() ){
+            return \Response::make(  $item , 200);
+
+
+        }else{
+            return \Response::make('error', 500);
+        } 
+
+    }
 
     public function SendToKaban(Request $request)
     {
