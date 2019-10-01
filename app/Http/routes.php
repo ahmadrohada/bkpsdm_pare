@@ -490,7 +490,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::post('kirim_capaian_tahunan','API\CapaianTahunanAPIController@SendToAtasan');
 	Route::post('tolak_capaian_tahunan','API\CapaianTahunanAPIController@TolakByAtasan');
-	Route::post('terima_capaian_bulanan','API\CapaianTahunanAPIController@TerimaByAtasan');
+	Route::post('terima_capaian_tahunan','API\CapaianTahunanAPIController@TerimaByAtasan');
 
 	Route::post('simpan_capaian_tahunan','API\CapaianTahunanAPIController@Store');
 	Route::post('hapus_capaian_tahunan','API\CapaianTahunanAPIController@Destroy');
