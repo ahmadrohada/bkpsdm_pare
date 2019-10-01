@@ -279,7 +279,7 @@
 
 
 					}
-
+ 
 
 
 
@@ -294,10 +294,13 @@
 				
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
+					var test = $.parseJSON(jqXHR.responseText);
+					
+					var data= test.errors;
 
 					Swal.fire({
 						title: 'Error!',
-						text: 'SKP Tahunan belum bisa dibuat',
+						text: 'SKP Tahunan belum bisa dibuat, '+ data,
 						type: 'error',
 						confirmButtonText: 'Tutup'
 					})
