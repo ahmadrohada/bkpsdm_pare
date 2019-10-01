@@ -66,7 +66,7 @@
 								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true},
 								{ data: "golongan" ,  name:"golongan.golongan", orderable: true, searchable: true},
 								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true},
-								{ data: "nama_unit_kerja" , name:"unit_kerja.unit_kerja", orderable: true, searchable: true},
+								{ data: "nama_unit_kerja" , name:"unit_kerja.unit_kerja", orderable: true, searchable: false},
 								{ data: "action" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
 

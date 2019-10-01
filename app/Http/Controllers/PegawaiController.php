@@ -55,7 +55,13 @@ class PegawaiController extends Controller {
                             ->WHERE('tb_history_golongan.status','=','active')
                             ->SELECT(['golongan.golongan'])
                             ->first();
-        return $gol->golongan;
+        if ($gol != null ){
+            return $gol->golongan;
+        }else{
+            return "";
+        }
+                            
+        
     }
 
     //=======================================================================================//
@@ -67,7 +73,13 @@ class PegawaiController extends Controller {
                             ->WHERE('tb_history_golongan.status','=','active')
                             ->SELECT(['tb_history_golongan.tmt_golongan'])
                             ->first();
-        return $gol->tmt_golongan;
+        
+        if ($gol != null ){
+            return $gol->tmt_golongan;
+        }else{
+            return "";
+        }
+        
     }
 
     //=======================================================================================//
