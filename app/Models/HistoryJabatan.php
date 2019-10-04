@@ -41,10 +41,10 @@ class HistoryJabatan extends Model
         return $this->hasOne('App\Models\Eselon','id','id_eselon');
     }
 
-    public function golongan()
+    /* public function golongan()
     {
         return $this->hasOne('App\Models\Golongan','id','id_golongan');
-    }
+    } */
 
     public function child_jabatan()
     {
