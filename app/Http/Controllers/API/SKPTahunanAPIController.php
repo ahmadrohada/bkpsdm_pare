@@ -972,7 +972,7 @@ class SKPTahunanAPIController extends Controller {
                                     ->WHERE('status','active')
                                     ->first();
 
-        if ( ( $gol_pribadi!=null )&&($gol_atasan!=null)){
+        if ( $gol_pribadi!=null ){
 
             if ($gol_atasan!=null){
                 $p_jabatan_id	       = $jab_atasan->id;
