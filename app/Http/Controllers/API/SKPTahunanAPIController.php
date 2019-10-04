@@ -952,62 +952,79 @@ class SKPTahunanAPIController extends Controller {
 
 
     protected function new_skp_componen($jabatan_id,$renja_id,$periode_id){
-        //return $jabatan_id.'|'.$renja_id.'|'.$periode_id;
-
-
-        //peridoe masa penilaian 
+        //Periode
         $periode    = Periode::WHERE('id',$periode_id)->first();
-
-        //return Pustaka::tgl_form($periode->awal);
-    
         //DETAIL data pribadi dan atasan
-        $u_detail = HistoryJabatan::WHERE('id',$jabatan_id)->first();
-
-
+        $jab_pribadi = HistoryJabatan::WHERE('id',$jabatan_id)->first();
         //Golongan Aktif
-        $u_gol = HistoryGolongan::WHERE('id_pegawai', $u_detail->id_pegawai)
+        $gol_pribadi = HistoryGolongan::WHERE('id_pegawai', $jab_pribadi->id_pegawai)
                                     ->WHERE('status','active')
                                     ->first();
 
-
         //detail atasan
-        $id_jab_atasan = SKPD::WHERE('id',$u_detail->id_jabatan)->first()->parent_id;
-        $p_detail = HistoryJabatan::WHERE('id_jabatan', $id_jab_atasan)
+        $jabatan_id_atasan = SKPD::WHERE('id',$jab_pribadi->id_jabatan)->first()->parent_id;
+        $jab_atasan = HistoryJabatan::WHERE('id_jabatan', $jabatan_id_atasan)
                                     ->WHERE('status','active')
                                     ->first();
 
          //Golongan Aktif
-        $p_gol = HistoryGolongan::WHERE('id_pegawai', $p_detail->id_pegawai)
+        $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $jab_atasan->id_pegawai)
                                     ->WHERE('status','active')
                                     ->first();
 
-        if ( ( $u_gol!=null )&&($p_gol!=null)){
+        if ( ( $gol_pribadi!=null )&&($gol_atasan!=null)){
+
+            if ($gol_atasan!=null){
+                $p_jabatan_id	       = $jab_atasan->id;
+                $p_golongan_id         = $gol_atasan->id;
+                $p_nip	               = $jab_atasan->nip;
+                $p_nama                = Pustaka::nama_pegawai($jab_atasan->Pegawai->gelardpn , $jab_atasan->Pegawai->nama , $jab_atasan->Pegawai->gelarblk);
+                $p_pangkat	           = $jab_atasan->Golongan ? $jab_atasan->Golongan->pangkat : '';
+                $p_golongan	           = $gol_atasan->Golongan ? $gol_atasan->Golongan->golongan : '';
+                $p_eselon	           = $jab_atasan->Eselon ? $jab_atasan->Eselon->eselon : '';
+                $p_jabatan	           = Pustaka::capital_string($jab_atasan->Jabatan ? $jab_atasan->Jabatan->skpd : '');
+                $p_unit_kerja	       = Pustaka::capital_string($jab_atasan->UnitKerja ? $jab_atasan->UnitKerja->unit_kerja : '');
+                $p_skpd	               = Pustaka::capital_string($jab_atasan->Skpd ? $jab_atasan->Skpd->skpd : '');
+            }else{
+                $p_jabatan_id	       = $jab_atasan->id;
+                $p_golongan_id         = "";
+                $p_nip	               = $jab_atasan->nip;
+                $p_nama                = Pustaka::nama_pegawai($jab_atasan->Pegawai->gelardpn , $jab_atasan->Pegawai->nama , $jab_atasan->Pegawai->gelarblk);
+                $p_pangkat	           = $jab_atasan->Golongan ? $jab_atasan->Golongan->pangkat : '';
+                $p_golongan	           = "";
+                $p_eselon	           = $jab_atasan->Eselon ? $jab_atasan->Eselon->eselon : '';
+                $p_jabatan	           = Pustaka::capital_string($jab_atasan->Jabatan ? $jab_atasan->Jabatan->skpd : '');
+                $p_unit_kerja	       = Pustaka::capital_string($jab_atasan->UnitKerja ? $jab_atasan->UnitKerja->unit_kerja : '');
+                $p_skpd	               = Pustaka::capital_string($jab_atasan->Skpd ? $jab_atasan->Skpd->skpd : '');
+            }
+
             $data = array(
                         'status'			    => 'pass',
-                        'pegawai_id'			=> $u_detail->id_pegawai,
+                        'pegawai_id'			=> $jab_pribadi->id_pegawai,
                         'periode_label'	        => $periode->label,
                         'renja_id'	            => $renja_id,
-                        'u_jabatan_id'	        => $u_detail->id,
-                        'u_golongan_id'         => $u_gol->id,
-                        'u_nip'	                => $u_detail->nip,
-                        'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
-                        'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
-                        'u_golongan'	        => $u_gol->Golongan ? $u_gol->Golongan->golongan : '',
-                        'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
-                        'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
-                        'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
-                        'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
 
-                        'p_jabatan_id'	        => $p_detail->id,
-                        'p_golongan_id'         => $p_gol->id,
-                        'p_nip'	                => $p_detail->nip,
-                        'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
-                        'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
-                        'p_golongan'	        => $p_gol->Golongan ? $p_gol->Golongan->golongan : '',
-                        'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
-                        'p_jabatan'	            => Pustaka::capital_string($p_detail->Jabatan ? $p_detail->Jabatan->skpd : ''),
-                        'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
-                        'p_skpd'	            => Pustaka::capital_string($p_detail->Skpd ? $p_detail->Skpd->skpd : ''),
+                        'u_jabatan_id'	        => $jab_pribadi->id,
+                        'u_golongan_id'         => $gol_pribadi->id,
+                        'u_nip'	                => $jab_pribadi->nip,
+                        'u_nama'                => Pustaka::nama_pegawai($jab_pribadi->Pegawai->gelardpn , $jab_pribadi->Pegawai->nama , $jab_pribadi->Pegawai->gelarblk),
+                        'u_pangkat'	            => $jab_pribadi->Golongan ? $jab_pribadi->Golongan->pangkat : '',
+                        'u_golongan'	        => $gol_pribadi->Golongan ? $gol_pribadi->Golongan->golongan : '',
+                        'u_eselon'	            => $jab_pribadi->Eselon ? $jab_pribadi->Eselon->eselon : '',
+                        'u_jabatan'	            => Pustaka::capital_string($jab_pribadi->Jabatan ? $jab_pribadi->Jabatan->skpd : ''),
+                        'u_unit_kerja'	        => Pustaka::capital_string($jab_pribadi->UnitKerja ? $jab_pribadi->UnitKerja->unit_kerja : ''),
+                        'u_skpd'	            => Pustaka::capital_string($jab_pribadi->Skpd ? $jab_pribadi->Skpd->skpd : ''),
+
+                        'p_jabatan_id'	        => $p_jabatan_id,
+                        'p_golongan_id'         => $p_golongan_id,
+                        'p_nip'	                => $p_nip,
+                        'p_nama'                => $p_nama,
+                        'p_pangkat'	            => $p_pangkat,
+                        'p_golongan'	        => $p_golongan,
+                        'p_eselon'	            => $p_eselon,
+                        'p_jabatan'	            => $p_jabatan,
+                        'p_unit_kerja'	        => $p_unit_kerja,
+                        'p_skpd'	            => $p_skpd,
  
             );
 
@@ -1025,30 +1042,16 @@ class SKPTahunanAPIController extends Controller {
     }
 
     protected function new_skp_componen_kaban($jabatan_id,$renja_id,$periode_id){
-        //return $jabatan_id.'|'.$renja_id.'|'.$periode_id;
-
-
-        //peridoe masa penilaian 
+       
         $periode    = Periode::WHERE('id',$periode_id)->first();
 
-        //return Pustaka::tgl_form($periode->awal);
-        
-
-        //DETAIL data pribadi dan atasan
         $u_detail = HistoryJabatan::WHERE('id',$jabatan_id)->first();
 
-        //Golongan Aktif
         $u_gol = HistoryGolongan::WHERE('id_pegawai', $u_detail->id_pegawai)
                                 ->WHERE('status','active')
                                 ->first();
 
 
-
-        //detail atasan
-       /*  $id_jab_atasan = SKPD::WHERE('id',$u_detail->id_jabatan)->first()->parent_id;
-        $p_detail = HistoryJabatan::WHERE('id_jabatan', $id_jab_atasan)
-                                    ->WHERE('status','active')
-                                    ->first(); */
 
         $data = array(
                     'status'			    => 'pass',
