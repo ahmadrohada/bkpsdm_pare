@@ -1,5 +1,5 @@
-
-
+.gitignore
+/vendor
 /config
 /database
 /bootstrap/compiled.php
