@@ -10,10 +10,6 @@ class HistoryGolongan extends Model
     protected $connection = 'mysql2';
     protected $table = 'tb_history_golongan';
 
-    protected $fillable = [
-        'id_pegawai', 'golongan','status'
-    ];  
- 
     /**
      * Untuk mendapatkan data pegawai yang berelasi dengan history jabatan.
      */
