@@ -1,0 +1,12 @@
+
+
+/config
+/database
+/bootstrap/compiled.php
+/public/assets/bower_components
+/storage
+composer.phar
+composer.lock  # Remove this one after you create a project
+.env
+.DS_Store
+Thumbs.db
