@@ -239,7 +239,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	//======================================  I N D I K A T O R    K E G I A T A N    ========================//
 	//========================================================================================================//
-
+ 
 	Route::get('skpd-renja_ind_kegiatan_list','API\IndikatorKegiatanAPIController@IndikatorKegiatanList');
 	Route::get('ind_kegiatan_detail','API\IndikatorKegiatanAPIController@IndikatorKegiatanDetail');
 	
@@ -526,6 +526,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	Route::get('realisasi_rencana_aksi_detail_3','API\RealisasiRencanaAksiKasubidAPIController@RealisasiRencanaAksiDetail');
 
+	
 
 	Route::post('hapus_realisasi_rencana_aksi_3','API\RealisasiRencanaAksiKasubidAPIController@Destroy');
 	Route::post('simpan_realisasi_rencana_aksi_3','API\RealisasiRencanaAksiKasubidAPIController@Store');
@@ -611,6 +612,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skp_tahunan_rencana_aksi','API\RencanaAksiAPIController@RencanaAksiList');
 	Route::get('skp_tahunan_rencana_aksi_4','API\RencanaAksiAPIController@RencanaAksiList4');
 	
+	Route::get('rencana_aksi_time_table_3','API\RencanaAksiAPIController@RencanaAksiTimeTable3');
+	Route::get('rencana_aksi_time_table_4','API\RencanaAksiAPIController@RencanaAksiTimeTable4');
+
 	Route::get('rencana_aksi_detail','API\RencanaAksiAPIController@RencanaAksiDetail3');
 
 	Route::get('rencana_aksi_detail_1','API\RencanaAksiAPIController@RencanaAksiDetail1');

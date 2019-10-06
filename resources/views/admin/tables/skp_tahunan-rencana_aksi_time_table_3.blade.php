@@ -1,103 +1,54 @@
-<div id='rencana_aksi' hidden>
-	<div class="box box-primary">
-		<div class="box-header with-border">
-			<h1 class="box-title">
-				Detail Indikator Kegiatan
-			</h1>
+<div class="box box-primary " style="min-height:340px;">
+	<div class="box-header with-border">
+		<h1 class="box-title"> 
+			List Pelaksanaan Rencana Aksi
+		</h1>
 
-			<div class="box-tools pull-right">
-				{!! Form::button('<i class="fa fa-remove "></i>', array('class' => 'btn btn-box-tool tutup','title' => 'Tutup', 'data-toggle' => 'tooltip')) !!}
-
-				{!! Form::button('<i class="fa fa-question-circle "></i>', array('class' => 'btn btn-box-tool bantuan','data-id' => '3', 'title' => 'Bantuan', 'data-toggle' => 'tooltip')) !!}
-			</div>
-		</div>
-		<div class="box-body table-responsive">
-			<input type="hidden" class="indikator_kegiatan_id">
-			<input type="hidden" class="kegiatan_tahunan_id">
-			
-			<strong>Indikator Kegiatan</strong>
-			<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-				<span class="indikator_kegiatan_label"></span>
-			</p>
-			<i class="fa fa-industry"></i> <span class="txt_output_indikator_kegiatan" style="margin-right:10px;"></span>
-					
-		</div>
 	</div>
-
-	<div class="box box-primary list_rencana_aksi_div" style="min-height:100px;">
-		<div class="box-header with-border">
-			<h1 class="box-title"> 
-				List Rencana Aksi
-			</h1>
-
-		</div>
-		<div class="box-body table-responsive">
-			<div class="toolbar">
-				<span  data-toggle="tooltip" title="Create Rencana Aksi"><a class="btn btn-info btn-xs create_rencana_aksi "><i class="fa fa-plus" ></i></a></span>
-			</div>
-
-			<table id="rencana_aksi_table" class="table table-striped table-hover" style="width:100%">
-				<thead>
-					<tr>
-						<th>No</th>
-						<th>RENCANA AKSI</th>
-						<th>PELAKSANA</th>
-						<th>WAKTU</th>
-						<th>TARGET</th>
-						<th><i class="fa fa-cog"></i></th>
-					</tr>
-				</thead>
-			</table>
-
-		</div>
+	<div class="box-body table-responsive">
+		<table id="rencana_aksi_time_table" class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th rowspan="2">No</th>
+					<th rowspan="2">RENCANA AKSI</th>
+					<th colspan="12">BULAN</th>
+				</tr>
+				<tr>
+					<th>1</th>
+					<th>2</th>
+					<th>3</th>
+					<th>4</th>
+					<th>5</th>
+					<th>6</th>
+					<th>7</th>
+					<th>8</th>
+					<th>9</th>
+					<th>10</th>
+					<th>11</th>
+					<th>12</th>
+				</tr>
+			</thead>
+		</table>
 	</div>
 </div>
 
 <script type="text/javascript">
 
-
-
-
-
-	function load_rencana_aksi(indikator_kegiatan_id){
-		$.ajax({
-				url			: '{{ url("api_resource/ind_kegiatan_detail") }}',
-				data 		: {ind_kegiatan_id : indikator_kegiatan_id},
-				method		: "GET",
-				dataType	: "json",
-				success	: function(data) {
-						
-						$('.indikator_kegiatan_id').val(data['ind_kegiatan_id']);
-						$('.kegiatan_tahunan_id').val(data['kegiatan_tahunan_id']);
-
-						$('.indikator_kegiatan_label').html(data['label']);
-						$('.txt_output_indikator_kegiatan').html(data['target']+" "+data['satuan']);
-						
-				},
-				error: function(data){
-					
-				}						
-		});
-	}
-
-	
-	
-	function rencana_aksi_list(indikator_kegiatan_id){
-		var table_rencana_aksi = $('#rencana_aksi_table').DataTable({
+	function rencana_aksi_time_table(){
+		var table_rencana_aksi = $('#rencana_aksi_time_table').DataTable({
 			destroy			: true,
-			processing      : false,
+			processing      : true,
 			serverSide      : true,
-			searching      	: false,
-			paging          : false,
-			bInfo			: false,
-			bSort			: false,
+			searching      	: true,
+			paging          : true,
+			bInfo			: true,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,2,3,4,5 ] },
+								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,8,9,10,11 ] },
 							
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/skp_tahunan_rencana_aksi") }}',
-								data: { indikator_kegiatan_id: indikator_kegiatan_id },
+								url	: '{{ url("api_resource/rencana_aksi_time_table_3") }}',
+								data: { skp_tahunan_id: {!! $skp->id !!} },
 							},
 							
 			columns			: [
@@ -106,35 +57,71 @@
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "label", name:"label"},
-								{ data: "pelaksana", name:"pelaksana",
-									"render": function ( data, type, row ) {
-										if (row.kegiatan_bulanan >= 1){
-											return "<p class='text-info'>"+row.pelaksana+"</p>";
-										}else{
-											return "<p class='text-warning'>"+row.pelaksana+"</p>";
-										}
-									}
-								},
-								{ data: "waktu_pelaksanaan", name:"waktu_pelaksanaan"},
-								{ data: "target", name:"target"},
+								{ data: "label", name:"rencana_aksi_label" , width:"55%", orderable: true, },
 								
-								{  data: 'action',width:"6%",
-										"render": function ( data, type, row ) {
-											if (row.kegiatan_bulanan >= 1){
-												return  '<span  data-toggle="tooltip" title="" style="margin:1px;" ><a class="btn btn-default btn-xs "  ><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="" style="margin:1px;" ><a class="btn btn-default btn-xs " ><i class="fa fa-close " ></i></a></span>';
-										
-											}else{
-												return  '<span  data-toggle="tooltip" title="Edit" style="margin:1px;" ><a class="btn btn-success btn-xs edit_rencana_aksi"  data-id="'+row.rencana_aksi_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="Hapus" style="margin:1px;" ><a class="btn btn-danger btn-xs hapus_rencana_aksi"  data-id="'+row.rencana_aksi_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
-										
-											}
-											
-												
-									
+								{ data: "jan", width:"20px;", orderable: false,
+									"render": function ( data, type, row ) {
+										return  '<i class="fa '+row.jan+' text-success" ></i>';
 									}
 								},
+								{ data: "feb", width:"20px;", orderable: false,
+									"render": function ( data, type, row ) {
+										return  '<i class="fa '+row.feb+' text-success" ></i>';
+									}
+								},
+								{ data: "mar", width:"20px;", orderable: false,
+									"render": function ( data, type, row ) {
+										return  '<i class="fa '+row.mar+' text-success" ></i>';
+									}
+								},
+								{ data: "apr", width:"20px;", orderable: false,
+									"render": function ( data, type, row ) {
+										return  '<i class="fa '+row.apr+' text-success" ></i>';
+									}
+								},
+								{ data: "mei", width:"20px;", orderable: false,
+									"render": function ( data, type, row ) {
+										return  '<i class="fa '+row.mei+' text-success" ></i>';
+									}
+								},
+								{ data: "jun", width:"20px;", orderable: false,
+									"render": function ( data, type, row ) {
+										return  '<i class="fa '+row.jun+' text-success" ></i>';
+									}
+								},
+								{ data: "jul", width:"20px;", orderable: false,
+									"render": function ( data, type, row ) {
+										return  '<i class="fa '+row.jul+' text-success" ></i>';
+									}
+								},
+								{ data: "agu", width:"20px;", orderable: false,
+									"render": function ( data, type, row ) {
+										return  '<i class="fa '+row.agu+' text-success" ></i>';
+									}
+								},
+								{ data: "sep", width:"20px;", orderable: false,
+									"render": function ( data, type, row ) {
+										return  '<i class="fa '+row.sep+' text-success" ></i>';
+									}
+								},
+								{ data: "okt", width:"20px;", orderable: false,
+									"render": function ( data, type, row ) {
+										return  '<i class="fa '+row.okt+' text-success" ></i>';
+									}
+								},
+								{ data: "nov", width:"20px;", orderable: false,
+									"render": function ( data, type, row ) {
+										return  '<i class="fa '+row.nov+' text-success" ></i>';
+									}
+								},
+								{ data: "des", width:"20px;", orderable: false,
+									"render": function ( data, type, row ) {
+										return  '<i class="fa '+row.des+' text-success" ></i>';
+									}
+								},
+
+
+								
 							
 							],
 							initComplete: function(settings, json) {
@@ -236,14 +223,12 @@
 										$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
 										jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
 										jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
-										$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
 											jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
 											jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
-											$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
 											
 										}
 									}

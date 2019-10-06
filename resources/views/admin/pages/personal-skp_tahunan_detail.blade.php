@@ -9,17 +9,18 @@
 	 <div class="content-wrapper" >
 	    <section class="content-header">
 			<h1>
-				SKP Tahunan
+				SKP Tahunan  {!! $skp->PejabatYangDinilai->Eselon->eselon !!}
 			</h1>
-				{!! Breadcrumbs::render('personal_edit_skp_tahunan') !!}
+				{!! Breadcrumbs::render('personal_detail_skp_tahunan') !!}
       </section>
 	  
 	    <section class="content">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
-				<li class="status"><a href="#status" data-toggle="tab">Status </a></li>
+				<li class="status"><a href="#status" data-toggle="tab">Timeline </a></li>
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
-				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $skp->PejabatYangDinilai->Eselon->eselon !!} / {!! $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan</a></li>
+				<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>
 				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan Bulanan</a></li>
 			</ul>
 
@@ -54,10 +55,13 @@
 
 					<!-- 4. PELAKSANA -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
-						@include('admin.tables.skp_kegiatan_tahunan_4_detail')
+						@include('admin.modules.tab.kegiatan_tahunan_4_detail')
 					@endif
 				
 					
+				</div>
+				<div class=" tab-pane" id="rencana_aksi_tab">
+					@include('admin.modules.tab.rencana_aksi_time_table')
 				</div>
 				<div class="tab-pane" id="kegiatan_bulanan_tab">
 
@@ -94,7 +98,7 @@
 			
 	    </section>
 	</div>
-<script type="text/javascript">
+	<script type="text/javascript">
 $(document).ready(function() {
 	
 	$('#myTab a').click(function(e) {
@@ -122,6 +126,8 @@ $(document).ready(function() {
 		}else if ( id == 'detail'){
 			$('html, body').animate({scrollTop:0}, 0);
 			detail_show();
+		}else if ( id == 'rencana_aksi_tab'){
+			rencana_aksi_time_table();
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});
@@ -143,4 +149,3 @@ $(document).ready(function() {
 
 
 @stop
-

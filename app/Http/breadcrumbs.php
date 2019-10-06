@@ -210,6 +210,12 @@ Breadcrumbs::register('personal_edit_skp_tahunan', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_edit_skp_tahunan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_edit_skp_tahunan')]);
 });
 
+Breadcrumbs::register('personal_detail_skp_tahunan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('personal_skp_tahunan');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_detail_skp_tahunan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_detail_skp_tahunan')]);
+});
+
 // DASHBOARD >SKP BULANAN
 Breadcrumbs::register('personal_skp_bulanan', function($breadcrumbs)
 {
