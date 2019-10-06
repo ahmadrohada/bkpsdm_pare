@@ -64,11 +64,7 @@
 					
 				</div>
 				<div class=" tab-pane" id="rencana_aksi_tab">
-					
-					
 					@include('admin.modules.tab.rencana_aksi_time_table')
-				
-					
 					
 				</div>
 				<div class="tab-pane" id="kegiatan_bulanan_tab">
