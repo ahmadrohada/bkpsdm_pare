@@ -35,7 +35,7 @@
 		$.ajax({
 				url			: '{{ url("api_resource/skp_tahunan_general_timeline") }}',
 				data 		: { 
-								renja_id : {!! $skp->Renja->id !!}
+								u_jabatan_id : {!! $skp->u_jabatan_id !!}
 								},
 				method		: "GET",
 				dataType	: "json",

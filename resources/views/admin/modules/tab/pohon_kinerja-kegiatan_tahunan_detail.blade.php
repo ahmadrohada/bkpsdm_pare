@@ -16,7 +16,7 @@
 					<h1 class="box-title">
 						Detail Kegiatan Tahunan 
 					</h1>
-
+ 
 					<div class="box-tools pull-right">
 						{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
 						{!! Form::button('<i class="fa fa-remove "></i>', array('class' => 'btn btn-box-tool tutup_detail_pk','title' => 'Tutup', 'data-toggle' => 'tooltip')) !!}

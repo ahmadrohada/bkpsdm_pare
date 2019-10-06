@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    Kegiatan Tahunan
+                    Kegiatan Tahunan 
                 </h4>
             </div>
 
@@ -61,24 +61,7 @@
 						</div>
 						</div>
 					</div>
-
-
-					<table class="table table-hover table-condensed">
-						<tr class="success">
-							<th>No</th>
-							<th>Indikator</th>
-							<th>Output</th>
-						</tr>
-					</table>
-					<table class="table table-hover table-condensed" id="list_indikator_modal" style="margin-top:-20px;">
-					
-					</table>
-
-
-					
-
-
-
+		
 			</div>
 			<div class="modal-footer">
                 {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> Batal', array('class' => 'btn btn-sm btn-default pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}

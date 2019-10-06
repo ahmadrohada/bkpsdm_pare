@@ -10,26 +10,40 @@
 
             <form  id="rencana_aksi_form" method="POST" action="">
 			<input type="hidden" required name="kegiatan_tahunan_id" class="kegiatan_tahunan_id">
+			<input type="hidden" required name="indikator_kegiatan_id" class="indikator_kegiatan_id">
 			<input type="hidden" required name="rencana_aksi_id" class="rencana_aksi_id">
 			<input type="hidden" required name="renja_id" class="renja_id" value="{!! $skp->renja_id !!}">
 			<div class="modal-body">
 					
 					<br>
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-md-12 form-group label_kegiatan_tahunan ">
 							<label class="control-label">Kegiatan Tahunan</label>
 							<p class="kegiatan_tahunan_label"></p>
 						</div>
-					</div>
+					</div> -->
 
 					<div class="row">
+						<div class="col-md-12 form-group label_indikator_kegiatan ">
+							<label class="control-label">Indikator Kegiatan</label>
+							<p class="indikator_kegiatan_label"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 form-group target_indikator_kegiatan ">
+							<label class="control-label">Target</label>
+							<p class="txt_output_indikator_kegiatan"></p>
+						</div>
+					</div>
+
+					<!-- <div class="row">
 						<div class="col-md-12 form-group form-group-sm label_indikator_kegiatan">
 							<label>Indikator Kegiatan</label>
 							<select id= "ind_kegiatan" class="form-control" name="indikator_kegiatan_id" style="width: 100%;">
 								<option value = '0' > pilih Indikator Kegiatan </option>
 							</select>
 						</div>
-					</div>
+					</div> -->
 
 					<div class="row">
 						<div class="col-md-12 form-group label_rencana_aksi ">
@@ -114,7 +128,7 @@
 
 
 
-	$('#ind_kegiatan').select2({
+	/* $('#ind_kegiatan').select2({
 		ajax: {
 			url				: '{{ url("api_resource/select2_indikator_kegiatan_list") }}',
 			dataType		: 'json',
@@ -139,9 +153,9 @@
 				};		
 			}
 		},
-	});
+	}); */
 
-
+/* 
 	$('#ind_kegiatan').on('select2:select', function (e) {
 		var data = e.params.data;
 		//alert(data['target']);
@@ -149,13 +163,9 @@
 		$('.modal-rencana_aksi').find('[id=satuan]').val(data['satuan']);
 
 
-	});
-
-
+	}); */
 
 	$('.waktu_pelaksanaan,.waktu_pelaksanaan_edit').select2();
-
-
 	
 	$('#pelaksana').select2({
 		ajax: {
@@ -188,7 +198,7 @@
 
 	$('.modal-rencana_aksi').on('hidden.bs.modal', function(){
 		$('.label_indikator_kegiatan,.label_rencana_aksi,.label_waktu_pelaksanaan,.target,.satuan,.label_pelaksana').removeClass('has-error');
-		$('.modal-rencana_aksi').find('[name=rencana_aksi_id],[name=label],[name=target],[name=satuan]').val('');
+		$('.modal-rencana_aksi').find('[name=kegiatan_tahunan_id],[name=indikator_kegiatan_id],[name=rencana_aksi_id],[name=label],[name=target],[name=satuan]').val('');
 		$('.waktu_pelaksanaan').select2('val','');
 		$('#ind_kegiatan').select2('val','');
 	});
@@ -250,7 +260,7 @@
 				}).then(function () {
 					$('.modal-rencana_aksi').modal('hide');
 					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-					//jQuery('#keg_tahunan_3').jstree(true).refresh(true);
+					$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
 					jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
 					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 					
@@ -323,8 +333,7 @@
 				}).then(function () {
 					$('.modal-rencana_aksi').modal('hide');
 					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-					//jQuery('#keg_tahunan_3').jstree(true).refresh(true);
-					
+					$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
 					jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
 					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 				},

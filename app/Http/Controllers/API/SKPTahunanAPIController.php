@@ -400,28 +400,37 @@ class SKPTahunanAPIController extends Controller {
         $response = array();
         $body = array();
 
-        //cari SKP tahunan dengan renja ID sesuai request
-        $skp_tahunan = SKPTahunan::WHERE('renja_id',$request->renja_id)->SELECT('id')->get();
+        $u_jabatan_id = $request->u_jabatan_id;
+        //Tampilkan SKP pada unit kerja tsb  nya
+        $uk_peg = HistoryJabatan::SELECT('id_unit_kerja')
+                                ->WHERE('id',$u_jabatan_id)
+                                ->WHERE('status','active')
+                                ->first();
 
-        $timeline = SKPTahunanTimeline::
-                                WHEREIN('skp_tahunan_id',$skp_tahunan)
-                                ->get();
+        $uk = HistoryJabatan::SELECT('id')
+                                ->WHERE('id_unit_kerja',$uk_peg->id_unit_kerja)
+                                ->WHERE('status','active')
+                                ->get()                        
+                                ->toArray();
+    
+
+
+        $skp_tahunan = SKPTahunan::WHEREIN('u_jabatan_id',$uk)->SELECT('id','created_at','u_nama','u_jabatan_id')->get();
+
+
+
+       /*  $timeline = SKPTahunanTimeline::
+                                WHEREIN('id',$skp_tahunan->id )
+                                ->get(); */
 
         
         
-        foreach($timeline as $tm) {
+        foreach($skp_tahunan as $tm) {
 
-            //Jabatan
-            /* if ( $tm->SKPTahunan->PejabatYangDinilai->jabatan != '' ){
-                $jabatan = Pustaka::capital_string($tm->SKPTahunan->PejabatYangDinilai->Jabatan->skpd);
-
-            }else{
-                $jabatan = "";
-            } */
-            $jabatan = Pustaka::capital_string($tm->SKPTahunan->PejabatYangDinilai?$tm->SKPTahunan->PejabatYangDinilai->jabatan:'');
+            $jabatan = Pustaka::capital_string($tm->PejabatYangDinilai?$tm->PejabatYangDinilai->jabatan:'');
 
             $h['time']	    = $tm->created_at->format('Y-m-d H:i:s');
-            $h['body']	    = [ ['tag'=>'p','content'=>'<b class="text-success">'.$tm->SKPTahunan->u_nama.'</b>'] , 
+            $h['body']	    = [ ['tag'=>'p','content'=>'<b class="text-success">'.$tm->u_nama.'</b>'] , 
                                 ['tag'=>'p','content'=>'<p class="text-success">'.$jabatan.'</p>'],
                                 
                               
@@ -1295,8 +1304,8 @@ class SKPTahunanAPIController extends Controller {
            
             "p_nip"			=> $pegawai->nip,
             "p_nama"		=> Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
-            "p_pangkat"	    => $pegawai->JabatanAktif->golongan?$pegawai->JabatanAktif->golongan->pangkat:'',
-            "p_golongan"	=> $pegawai->JabatanAktif->golongan?$pegawai->JabatanAktif->golongan->golongan:'',
+            "p_pangkat"	    => $pegawai->GolonganAktif->golongan?$pegawai->GolonganAktif->golongan->pangkat:'',
+            "p_golongan"	=> $pegawai->GolonganAktif->golongan?$pegawai->GolonganAktif->golongan->golongan:'',
             "p_eselon"		=> $pegawai->JabatanAktif->Eselon?$pegawai->JabatanAktif->Eselon->eselon:'',
             "p_jabatan"		=> Pustaka::capital_string($pegawai->JabatanAktif->Jabatan?$pegawai->JabatanAktif->Jabatan->skpd:''),
             "p_unit_kerja"	=> Pustaka::capital_string($pegawai->JabatanAktif->Skpd?$pegawai->JabatanAktif->Skpd->skpd:''),

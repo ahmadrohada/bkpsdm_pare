@@ -127,6 +127,9 @@ return [
 	'link_title_edit_skp_tahunan'    => 'Edit',
 	'link_icon_edit_skp_tahunan'     => 'fa-pencil',
 
+	'link_title_detail_skp_tahunan'    => 'Detail',
+	'link_icon_detail_skp_tahunan'     => 'fa-eye',
+
 
 	// SKP BULANAN LINKS
 

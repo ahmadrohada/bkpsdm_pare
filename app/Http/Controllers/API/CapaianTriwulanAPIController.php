@@ -509,6 +509,16 @@ class CapaianTriwulanAPIController extends Controller {
             return \Response::make('Jabatan tidak ditemukan', 500);
         }
 
+        //Golongan Aktif
+        $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $request->pejabat_penilai_id)
+                    ->WHERE('status','active')
+                    ->first();
+        if ($gol_atasan!=null){
+            $p_golongan_id = $gol_atasan->id;
+        }else{
+            $p_golongan_id = 0 ;
+        }
+
 
         
        
@@ -520,6 +530,7 @@ class CapaianTriwulanAPIController extends Controller {
 
         
         $capaian_triwulan->p_jabatan_id    = $p_jabatan_id;
+        $capaian_triwulan->p_golongan_id   = $p_golongan_id;
         $capaian_triwulan->p_nama          = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
    
         

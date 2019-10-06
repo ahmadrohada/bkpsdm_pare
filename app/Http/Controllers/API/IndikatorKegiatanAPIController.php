@@ -129,11 +129,16 @@ class IndikatorKegiatanAPIController extends Controller {
                 leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
                     $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
                 })
+                ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) {
+                    $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                })
                 ->SELECT(       'renja_indikator_kegiatan.id AS ind_kegiatan_id',
                                 'renja_indikator_kegiatan.label',
                                 'renja_indikator_kegiatan.target',
                                 'renja_indikator_kegiatan.satuan',
-                                'renja_kegiatan.cost'
+                                'kegiatan_tahunan.cost AS cost',
+                                'kegiatan_tahunan.id AS kegiatan_tahunan_id'
+
                         ) 
                             ->WHERE('renja_indikator_kegiatan.id', $request->ind_kegiatan_id)
                             ->first();
@@ -141,6 +146,7 @@ class IndikatorKegiatanAPIController extends Controller {
         $ind_kegiatan = array(
             'id'            => $x->ind_kegiatan_id,
             'ind_kegiatan_id'=> $x->ind_kegiatan_id,
+            'kegiatan_tahunan_id'=> $x->kegiatan_tahunan_id,
             'label'         => $x->label,
             'target'        => $x->target,
             'satuan'        => $x->satuan,

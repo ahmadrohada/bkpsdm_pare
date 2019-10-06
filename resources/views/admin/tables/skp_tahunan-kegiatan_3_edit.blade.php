@@ -6,9 +6,10 @@
 
 		<div class="box-tools pull-right">
 			{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
+			{!! Form::button('<i class="fa fa-question-circle "></i>', array('class' => 'btn btn-box-tool bantuan','data-id' => '1', 'title' => 'Bantuan', 'data-toggle' => 'tooltip')) !!}
 		</div>
 	</div>
-	<div class="box-body table-responsive">
+	<div class="box-body table-responsive" style="min-height:330px;">
 		<div class="toolbar"> 
 
 		</div>
@@ -45,6 +46,8 @@
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				paging          : false,
+				bInfo			: false,
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2,3,4,6 ] },
 									{ className: "text-right", targets: [ 5 ] },
@@ -115,7 +118,7 @@
 												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
 											}else{
-												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_kegiatan_tahunan"  data-id="'+row.kegiatan_id+'" data-label="'+row.kegiatan_label+'"><i class="fa fa-plus" ></i></a></span>'+
+												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-warning btn-xs create_kegiatan_tahunan"  data-id="'+row.kegiatan_id+'" data-label="'+row.kegiatan_label+'"><i class="fa fa-plus faa-tada animated" ></i></a></span>'+
 																'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
 											
 											}
@@ -151,14 +154,7 @@
 					$('.modal-kegiatan_tahunan').find('[name=cost]').val(data['cost']);
 
 					$('.modal-kegiatan_tahunan').find('[name=quality]').val(100);
-
-					document.getElementById('list_indikator_modal').innerHTML = "";
-					var bawahan = document.getElementById('list_indikator_modal');
-					for(var i = 0 ; i < data['list_indikator'].length; i++ ){
-						$("<tr><td>"+ (i+1) +"</td><td>"+data['list_indikator'][i].label+"</td><td>"+data['list_indikator'][i].target+" "+data['list_indikator'][i].satuan+"</td></tr>").appendTo(bawahan);
-					}
-
-					$('.modal-kegiatan_tahunan').find('h4').html('Create Kegiatan Tahunan');
+					$('.modal-kegiatan_tahunan').find('h4').html('Add Kegiatan Tahunan');
 					$('.modal-kegiatan_tahunan').find('.btn-submit').attr('id', 'submit-save');
 					$('.modal-kegiatan_tahunan').find('[name=text_button_submit]').html('Simpan Data');
 					$('.modal-kegiatan_tahunan').modal('show');
