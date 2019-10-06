@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 
 		<!-- 4 KAUBID -->
-		@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+		@if ( ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')  |  ( ($skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')&($skp->PejabatYangDinilai->id_skpd == 5) ))
 			@include('admin.tables.skp_tahunan-rencana_aksi_time_table_3')
 		@endif
 

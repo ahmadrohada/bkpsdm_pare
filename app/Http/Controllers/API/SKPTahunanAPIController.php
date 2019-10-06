@@ -1112,6 +1112,8 @@ class SKPTahunanAPIController extends Controller {
         //======== PERSONAL JABATAN ID dan PERJANJIAN KINERTJA ID 
         // ======= yang sama untuk satu pegawai id
 
+        //Untuk isnpetorat mah pengecualian, eselon 3  [2] bisa bikin skp langsung
+
         //cari SKPD ID from jabatan_id
         $skpd_id = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))->SELECT('id','id_skpd')->first()->id_skpd;
        
@@ -1139,8 +1141,10 @@ class SKPTahunanAPIController extends Controller {
         //if 1 nunggu 2 , if 2 nunggu 3 . jadi kalo 3 mah bisa langsung bikin SKP tahunan , 
         //if 4, nunggu 3
 
-        $jenis_jabatan = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))
-                            ->SELECT('id','id_eselon')->first()->Eselon->id_jenis_jabatan;
+        $data_x = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))
+                            ->SELECT('id','id_eselon','id_skpd')->first();
+                            
+        $jenis_jabatan =     $data_x->Eselon->id_jenis_jabatan;
 
         if ($skp_count === 0 ){
             if (  $jenis_jabatan == 1 ){
@@ -1151,7 +1155,7 @@ class SKPTahunanAPIController extends Controller {
                 return $data;
 
 
-            }else if ( $jenis_jabatan == 2 ){
+            }else if ( ($jenis_jabatan == 2  ) & ( $data_x->id_skpd != 5 ) ){
 //Jabatan Administrator KABID =====================================================================================//
                //cek SKP TAHUNAN bawahan  jabatan 3 nya
                 $data = HistoryJabatan::WHERE('id', $request->jabatan_id )->first();
@@ -1221,7 +1225,7 @@ class SKPTahunanAPIController extends Controller {
 
 
 
-            }else if ( $jenis_jabatan == 3 ){
+            }else if ( ( $jenis_jabatan == 3 ) | ( $data_x->id_skpd == 5 )){ //pengecualian untuk inspektorat
 //Jabatan PENGAWAS KASUBID =======================================================================================//
  
                 //ready to SKP
