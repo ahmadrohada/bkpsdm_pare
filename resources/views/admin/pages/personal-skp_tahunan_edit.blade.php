@@ -21,7 +21,7 @@
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan</a></li>
 				<!-- 3. KASUBID -->
-				@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')	
+				@if ( ($skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3') | ( ($skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')&($skp->PejabatYangDinilai->id_skpd == 5) ) )	
 				<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>
 				@endif
 				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan Bulanan</a></li>
@@ -47,12 +47,12 @@
 					@endif
 
 					<!-- 2. KABID -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
+					@if ( ($skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2') & ($skp->PejabatYangDinilai->id_skpd != 5) )
 						@include('admin.tables.skp_kegiatan_tahunan_2_detail')
 					@endif
 
 					<!-- 3. KASUBID -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+					@if ( ($skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3') |  ( ($skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')&($skp->PejabatYangDinilai->id_skpd == 5) ))
 						@include('admin.modules.tab.kegiatan_tahunan_3_edit')
 					@endif
 
