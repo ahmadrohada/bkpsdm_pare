@@ -97,6 +97,10 @@
 							$('.create-perjanjian_kinerja_confirm').modal('hide');
 							$('#perjanjian_kinerja').DataTable().ajax.reload(null,false);
 
+							$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
+							$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
+							
+
 								
 							Swal.fire({
 									title: "",
@@ -111,6 +115,10 @@
 
 								
 								$('#ditribusi_renja').jstree('refresh');
+								$('#perjanjian_kinerja').DataTable().ajax.reload(null,false);
+								$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
+								$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
+							
 									
 							},
 								// handling the promise rejection
