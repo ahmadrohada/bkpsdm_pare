@@ -140,23 +140,23 @@
 		switch ( tx[0] ){
                 case 'KegiatanTahunan':
                   	//SHOW DETAIL KEGIATAN TAHUNAN DAN RENCANA AKSI LIST
-                  	$(".div_kegiatan_list_pk").hide();
+                  /* 	$(".div_kegiatan_list_pk").hide();
 					$("#rencana_aksi").show();
-					load_rencana_aksi_pk(tx[1]);
+					load_rencana_aksi_pk(tx[1]); */
                        
 				break; 
 				case 'RencanaAksi':
-					$(".div_kegiatan_list_pk").hide();
-					$("#rencana_aksi").hide();
+					/* $(".div_kegiatan_list_pk").hide();
+					$("#rencana_aksi").hide(); */
 				break;
 				case 'IndikatorKegiatan':
-					$(".div_kegiatan_list_pk").hide();
+					/* $(".div_kegiatan_list_pk").hide();
 					$("#rencana_aksi").hide();
-
+ */
 				break;
 				case 'KegiatanBulanan':
-					$(".div_kegiatan_list_pk").hide();
-					$("#rencana_aksi").hide();
+					/* $(".div_kegiatan_list_pk").hide();
+					$("#rencana_aksi").show(); */
 
 				break;
 				default:

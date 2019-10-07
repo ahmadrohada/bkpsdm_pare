@@ -222,13 +222,21 @@ function load_kegiatan_kasubid(jabatan_id){
 										$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
 										jQuery('#ditribusi_renja').jstree(true).refresh(true);
 										$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
+
+										$('.distribusi_kegiatan_add').modal('hide');
+
+								
+										$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
+										$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
+
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
 											jQuery('#ditribusi_renja').jstree(true).refresh(true);
 											$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
-											
+											$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
+											$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
 										}
 									}
 								)
@@ -287,12 +295,16 @@ function load_kegiatan_kasubid(jabatan_id){
 										$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
 										jQuery('#ditribusi_renja').jstree(true).refresh(true);
 										$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
+										$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
+										$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
 											jQuery('#ditribusi_renja').jstree(true).refresh(true);
 											$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
+											$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
+											$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
 											
 										}
 									}
