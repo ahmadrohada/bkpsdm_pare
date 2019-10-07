@@ -27,13 +27,6 @@ class StrukturOrganisasiAPIController extends Controller {
     public function skpd_struktur_organisasi(Request $request)
     {
        
-        
-       	/* 	$id_skpd_admin      = \Auth::user()->pegawai->history_jabatan
-                                    ->where('status','active')
-                                    ->first()
-                                    ->id_skpd;
-		 */
-		 
 		$skpd_id     = $request->skpd_id;
         
 		$renja 		= PetaJabatan::join('demo_asn.tb_history_jabatan AS a', function($join){
@@ -69,7 +62,7 @@ class StrukturOrganisasiAPIController extends Controller {
 	
 
 								
-
+									->where('pegawai.status', '=', 'active')
 									->where('m_skpd.id_skpd','=',$skpd_id)
 									->where('m_skpd.id','!=',$skpd_id)
 

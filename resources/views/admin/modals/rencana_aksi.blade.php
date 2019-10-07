@@ -56,7 +56,13 @@
 						<div class="col-md-12 form-group form-group-sm label_pelaksana">
 							<label>Pelaksana</label>
 							<select id= "pelaksana" class="form-control" name="pelaksana" style="width: 100%;">
-								<option value = '0' > pilih pejabat pelaksana </option>
+								<?php
+								if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
+									echo '<option value = '.$skp->PejabatYangDinilai->id_jabatan.' > Dilaksanakan Sendiri </option>';
+								}else{
+									echo '<option value = "0" > pilih pejabat pelaksana </option>';
+								}
+								?>
 							</select>
 						</div>
 					</div>

@@ -406,9 +406,13 @@ class SKPTahunanAPIController extends Controller {
                                 ->WHERE('id',$u_jabatan_id)
                                 ->WHERE('status','active')
                                 ->first();
-
+        if ($uk_peg){
+            $id_unit_kerja = $uk_peg->id_unit_kerja;
+        }else{
+            $id_unit_kerja = 0 ;
+        }
         $uk = HistoryJabatan::SELECT('id')
-                                ->WHERE('id_unit_kerja',$uk_peg->id_unit_kerja)
+                                ->WHERE('id_unit_kerja',$id_unit_kerja)
                                 ->WHERE('status','active')
                                 ->get()                        
                                 ->toArray();
@@ -1106,31 +1110,17 @@ class SKPTahunanAPIController extends Controller {
     public function CreateConfirm(Request $request)
 	{
 
-        //data yang harus diterima yaitu periode ID, jabatan ID, 
-        //karena kita butuh periode dan jenis jabatan nya untuk confirm dan mengetahui atasan nya
-        //======= tidak boleh ada yang membuat SKP tahunan dengan 
-        //======== PERSONAL JABATAN ID dan PERJANJIAN KINERTJA ID 
-        // ======= yang sama untuk satu pegawai id
+        //Untuk IRBAN pada SKPD Inspektorat mah pengecualian, eselon 3 bisa bikin skp langsung
+        //untuk id jabatan irban yaitu [143,144,145,146]
+        $id_jabatan_irban = ['143','144','145','146'];
 
-        //Untuk isnpetorat mah pengecualian, eselon 3  [2] bisa bikin skp langsung
-
-        //cari SKPD ID from jabatan_id
         $skpd_id = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))->SELECT('id','id_skpd')->first()->id_skpd;
-       
-        //cari perjanjian kinerja dari periode ID
         $renja_id   = Renja::WHERE('renja.periode_id',$request->get('periode_id'))
                         ->WHERE('renja.skpd_id',$skpd_id)
-                        //->WHERE('renja.send_to_kaban','1')
-                        //->WHERE('renja.status_approve','1')
-                        /* ->leftjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
-                            $join   ->on('renja.id','=','pk.renja_id');
-                        }) */
                         ->SELECT('renja.id AS renja_id')
                         ->first()
                         ->renja_id;
-
-        
-
+                        
         // COUNT SKP TAHUNAN DENWGAN DATA DIATAS
         $skp_count      = SKPTahunan::WHERE('pegawai_id', $request->get('pegawai_id'))
                                 ->WHERE('renja_id',$renja_id)
@@ -1138,109 +1128,100 @@ class SKPTahunanAPIController extends Controller {
                                 ->count();
 
         //ready to create SKP, but check the jabatan type id , if he is 
-        //if 1 nunggu 2 , if 2 nunggu 3 . jadi kalo 3 mah bisa langsung bikin SKP tahunan , 
-        //if 4, nunggu 3
-
-        $data_x = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))
-                            ->SELECT('id','id_eselon','id_skpd')->first();
-                            
-        $jenis_jabatan =     $data_x->Eselon->id_jenis_jabatan;
-
+        //yang bisa langsung bikin SKP tahunan yaitu eselon IV , IRBAN / Inspektorat
+       
+        //JIKA BELUM PUNYA SKP TAHUNAN pada jabatan ini
         if ($skp_count === 0 ){
-            if (  $jenis_jabatan == 1 ){
-                //cek SKP bawahan jabatn 2 nya
-//Jabatan Pimpinan Tinggi Pratama KA SKPD=====================================================================================//
-                $data = $this->new_skp_componen_kaban($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
+            $data_x = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))
+                                        ->SELECT('id','id_eselon','id_skpd','id_jabatan')
+                                        ->first();
+            $jenis_jabatan =     $data_x->Eselon->id_jenis_jabatan;
 
-                return $data;
+            //CARI JENIS JABATAN
+            switch($jenis_jabatan){
+                case "1":
+                        //cek SKP bawahan jabatn 2 nya
+                        //Jabatan Pimpinan Tinggi Pratama KA SKPD=====================================================================================//
+                        $data = $this->new_skp_componen_kaban($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
 
+                        return $data;
 
-            }else if ( ($jenis_jabatan == 2  ) & ( $data_x->id_skpd != 5 ) ){
-//Jabatan Administrator KABID =====================================================================================//
-               //cek SKP TAHUNAN bawahan  jabatan 3 nya
-                $data = HistoryJabatan::WHERE('id', $request->jabatan_id )->first();
-                $jabatan_id = $data->id_jabatan;
-                $skpd_id    = $data->id_skpd;
+                break;
+                case "2":
 
-                $renja = Renja::WHERE('skpd_id',$skpd_id)
-                                ->WHERE('periode_id',$request->periode_id)
-                                //->WHERE('send_to_kaban','1')
-                                //->WHERE('status_approve','1')
-                                /* ->rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
-                                    $join   ->on('pk.renja_id','=','renja.id');
-                                    $join   ->where('pk.status_approve','=','1');
-                                })  */
-                                ->SELECT(
-                                            'renja.id AS renja_id'
-                                        )
-                                ->first();
-                $renja_id = $renja->renja_id;
+                        //JIKA ESELON 3 namun yang dikecualikan
+                        if (in_array( $data_x->id_jabatan, $id_jabatan_irban)){
+                            //perlakuan disamakan sebagai eselon4
+                            $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
+                            return $data;
 
-               
-                $bawahan_aktif = SKPD::WHERE('parent_id', $jabatan_id )
-                                        ->rightjoin('demo_asn.tb_history_jabatan AS bawahan', function($join){
-                                            $join   ->on('bawahan.id_jabatan','=','m_skpd.id');
-                                            $join   ->where('bawahan.status','=','active');
-                                        }) 
-                                        ->SELECT('bawahan.id AS bawahan_id')
-                                        ->get(); 
+                        }else{
+                            //Jabatan Administrator KABID =====================================================================================//
+                            //cek SKP TAHUNAN bawahan  jabatan 3 nya
+                            $data = HistoryJabatan::WHERE('id', $request->jabatan_id )->first();
+                            $jabatan_id = $data->id_jabatan;
+                            $skpd_id    = $data->id_skpd;
 
-                //$bawahan_aktif = ['35342','35245'];
+                            $renja = Renja::WHERE('skpd_id',$skpd_id)
+                                            ->WHERE('periode_id',$request->periode_id)
+                                            ->SELECT(
+                                                        'renja.id AS renja_id'
+                                                    )
+                                            ->first();
+                            $renja_id = $renja->renja_id;
+                            $bawahan_aktif = SKPD::WHERE('parent_id', $jabatan_id )
+                                                    ->rightjoin('demo_asn.tb_history_jabatan AS bawahan', function($join){
+                                                        $join   ->on('bawahan.id_jabatan','=','m_skpd.id');
+                                                        $join   ->where('bawahan.status','=','active');
+                                                    }) 
+                                                    ->SELECT('bawahan.id AS bawahan_id')
+                                                    ->get(); 
+                            $skp_bawahan = SKPTahunan::WHERE('renja_id',$renja_id)
+                                                        //->WHERE('send_to_atasan','1')
+                                                        //->WHERE('status_approve','1')
+                                                        ->WHEREIN('u_jabatan_id',$bawahan_aktif)
+                                                        ->count();
 
-
-                $skp_bawahan = SKPTahunan::WHERE('renja_id',$renja_id)
-                                            //->WHERE('send_to_atasan','1')
-                                            //->WHERE('status_approve','1')
-                                            ->WHEREIN('u_jabatan_id',$bawahan_aktif)
-                                            ->count();
-
-               if ( COUNT($bawahan_aktif) == $skp_bawahan ){
-                    $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
-
-                    return $data;
-               }else{
-                    $data = array(
-                                    'status'			    => 'fail',
-                                    'jenis_jabatan'			=> $jenis_jabatan,
-                                    'renja_id'              => $renja_id,
-                                    'jabatan_id'            => $jabatan_id
-                                );
-
-                    return $data;
-                   
-               } 
-
-
-
-
-            }else if ( $jenis_jabatan == 4 ){
-//Jabatan PELAKSANA JFU =======================================================================================//
-                //cek SKP atasan  jabatan 3 nya
-                $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
-
-                return $data;
+                                if ( COUNT($bawahan_aktif) == $skp_bawahan ){
+                                        $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
+                                        return $data;
+                                }else{
+                                        $data = array(
+                                                        'status'			    => 'fail',
+                                                        'jenis_jabatan'			=> $jenis_jabatan,
+                                                        'renja_id'              => $renja_id,
+                                                        'jabatan_id'            => $jabatan_id
+                                                    );
+                                        return $data;
+                                } 
+                        }
+                        
 
 
 
+                break;
+                case "3":
+                        //Jabatan  KASUBID =======================================================================================//
+                        //ready to SKP
+                        $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
+                        return $data;
 
+                break;
+                case "4":
+                        //Jabatan PELAKSANA JFU =======================================================================================//
+                        //cek SKP atasan  jabatan 3 nya
+                        $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
+                        return $data;
 
-
-            }else if ( ( $jenis_jabatan == 3 ) | ( $data_x->id_skpd == 5 )){ //pengecualian untuk inspektorat
-//Jabatan PENGAWAS KASUBID =======================================================================================//
- 
-                //ready to SKP
-                $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
-
-                return $data;
-            }else{
-                return \Response::make( 'error', 400);
-
+                break;
+                default;
+                    return \Response::make( 'error', 400);
+                break;
             }
-        }
-        
-       
-       
-         
+
+
+
+        } 
     }
 
 

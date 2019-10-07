@@ -20,7 +20,27 @@
 				<li class="status"><a href="#status" data-toggle="tab">Timeline </a></li>
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan</a></li>
-				<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>
+				<?php
+				 	$id_jabatan_irban = ['143','144','145','146'];
+					switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						case '1': 
+								
+								break;
+						case '2':
+
+								if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
+									echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
+								}
+								
+							  	break;
+						case '3': 
+								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
+								break;
+						case '4':   
+								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Kegiatan Tahunan</a></li>';
+								break;
+					}
+				?>
 				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan Bulanan</a></li>
 			</ul>
 
@@ -38,53 +58,57 @@
 				</div>
 								
 				<div class=" tab-pane" id="kegiatan_tahunan_tab">
-					<!-- 1. KABAN -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
-						@include('admin.tables.skp_kegiatan_tahunan_1_detail')
-					@endif
-
-					<!-- 2. KABID -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('admin.tables.skp_kegiatan_tahunan_2_detail')
-					@endif
-
-					<!-- 3. KASUBID -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.modules.tab.kegiatan_tahunan_3_detail')
-					@endif
-
-					<!-- 4. PELAKSANA -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
-						@include('admin.modules.tab.kegiatan_tahunan_4_detail')
-					@endif
 				
+					<?php
+						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+							case '1': 
+									?>@include('admin.tables.skp_kegiatan_tahunan_1_detail')<?php
+									break;
+							case '2':
+	
+									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
+										?>@include('admin.modules.tab.kegiatan_tahunan_3_detail')<?php
+									}else{
+										?>@include('admin.tables.skp_kegiatan_tahunan_2_detail')<?php
+									}
+									
+									break;
+							case '3': 
+									?>@include('admin.modules.tab.kegiatan_tahunan_3_detail')<?php
+									break;
+							case '4':   
+									?>@include('admin.modules.tab.kegiatan_tahunan_4_detail')<?php
+									break;
+						}
+					?>
 					
 				</div>
 				<div class=" tab-pane" id="rencana_aksi_tab">
 					@include('admin.modules.tab.rencana_aksi_time_table')
 				</div>
 				<div class="tab-pane" id="kegiatan_bulanan_tab">
-
-					<!-- 1. KABAN -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
-						@include('admin.tables.skp_kegiatan_bulanan_1_edit')
-					@endif
-
-					<!-- 2. KASUBID -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('admin.tables.skp_kegiatan_bulanan_2_edit')
-					@endif
-
-
-					<!-- 3. KASUBID -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.modules.tab.kegiatan_bulanan_3_detail')
-					@endif
-
-					<!-- 4. PELAKSANA -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
-						@include('admin.tables.skp_kegiatan_bulanan_4_edit')		
-					@endif
+					<?php
+						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+							case '1': //KABAN
+									?>@include('admin.tables.skp_kegiatan_bulanan_1_edit')<?php
+									break;
+							case '2': //KABID
+	
+									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
+										?>@include('admin.modules.tab.kegiatan_bulanan_3_detail')<?php
+									}else{
+										?>@include('admin.tables.skp_kegiatan_bulanan_2_edit')<?php
+									}
+									
+									break;
+							case '3': //KASUBID
+									?>@include('admin.modules.tab.kegiatan_bulanan_3_detail')<?php
+									break;
+							case '4': //PELAKSANA
+									?>@include('admin.tables.skp_kegiatan_bulanan_4_edit')<?php
+									break;
+						}
+					?>
 					
 				</div>
 
