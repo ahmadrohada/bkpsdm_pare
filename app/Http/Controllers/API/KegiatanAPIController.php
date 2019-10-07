@@ -133,11 +133,15 @@ class KegiatanAPIController extends Controller {
         } 
         
     }
-
+ 
 
     public function RenjaDistribusiKegiatanTree(Request $request)
     {
        
+        //Pengecualian untuk iban
+        $id_jabatan_irban = ['143','144','145','146'];
+
+
         //Distibusi kegiatan 
         $ka_skpd = SKPD::where('parent_id','=', $request->skpd_id)->select('id','skpd')->get();
 		foreach ($ka_skpd as $x) {
@@ -148,14 +152,27 @@ class KegiatanAPIController extends Controller {
             
 
             $kabid = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
+
             foreach ($kabid as $y) {
-                $data_kabid['id']	        = "kabid|".$y->id;
+
+                if (in_array( $y->id, $id_jabatan_irban)){
+                    $data_kabid['id']	        = "kasubid|".$y->id;
+                    $data_kabid['type']         = "kasubid";
+                    $kasubid = [] ;
+                }else{
+                    $data_kabid['id']	        = "kabid|".$y->id;
+                    $data_kabid['type']         = "kabid";
+                    $kasubid = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
+                }
+
+               
                 $data_kabid['text']			= Pustaka::capital_string($y->skpd);
                 $data_kabid['icon']         = "jstree-people";
-                $data_kabid['type']         = "kabid";
+                
 
-
-                $kasubid = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
+              
+                //$kasubid = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
+                
                 foreach ($kasubid as $z) {
                     $data_kasubid['id']	            = "kasubid|".$z->id;
                     $data_kasubid['text']			= Pustaka::capital_string($z->skpd);
