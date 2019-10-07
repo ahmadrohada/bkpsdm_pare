@@ -104,6 +104,7 @@ class PegawaiAPIController extends Controller {
     {
         $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
                         ->where('id','!=',$request->get('pegawai_id'))
+                        ->where('status','active')
                         ->get();
 
 
@@ -136,6 +137,7 @@ class PegawaiAPIController extends Controller {
         $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
                         ->where('id','!=',$skp_tahunan->pegawai_id )
                         ->where('id','!=',$atasan_id )
+                        ->where('status','active')
                         ->get();
 
 
@@ -167,6 +169,7 @@ class PegawaiAPIController extends Controller {
 
         $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
                         ->where('id','!=',$kepala_skpd_id )
+                        ->where('status','active')
                         ->get();
 
 
@@ -199,6 +202,7 @@ class PegawaiAPIController extends Controller {
         $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
                         ->where('id','!=',$capaian->PejabatYangDinilai->id )
                         ->where('id','!=',$atasan_id )
+                        ->where('status','active')
                         ->get();
 
 
@@ -232,6 +236,7 @@ class PegawaiAPIController extends Controller {
         $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
                         ->where('id','!=',$capaian->PejabatYangDinilai->id )
                         ->where('id','!=',$atasan_id )
+                        ->where('status','active')
                         ->get();
 
 
@@ -264,6 +269,7 @@ class PegawaiAPIController extends Controller {
         $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
                         ->where('id','!=',$capaian->PejabatYangDinilai->id )
                         ->where('id','!=',$atasan_id )
+                        ->where('status','active')
                         ->get();
 
 
@@ -318,6 +324,7 @@ class PegawaiAPIController extends Controller {
                                 
                         ])
                 //->where('a.id_skpd','=', $id_skpd)
+                ->where('pegawai.status', '=', 'active')
                 ->where('a.status', '=', 'active');
         
 
@@ -396,7 +403,7 @@ class PegawaiAPIController extends Controller {
                             'role.id AS admin_role_user'
                 
                         ])
-                       
+                ->where('pegawai.status', '=', 'active')
                 ->where('a.id_skpd','=', $id_skpd)
                 ->where('a.status', '=', 'active');
                

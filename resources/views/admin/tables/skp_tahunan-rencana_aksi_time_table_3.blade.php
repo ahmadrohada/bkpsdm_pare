@@ -33,15 +33,15 @@
 </div>
 
 <script type="text/javascript">
-
+ 
 	function rencana_aksi_time_table(){
 		var table_rencana_aksi = $('#rencana_aksi_time_table').DataTable({
 			destroy			: true,
-			processing      : true,
+			processing      : false,
 			serverSide      : true,
 			searching      	: true,
 			paging          : true,
-			bInfo			: true,
+			bInfo			: false,
 			columnDefs		: [
 								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,8,9,10,11 ] },
 							
@@ -52,12 +52,12 @@
 							},
 							
 			columns			: [
-								{ data: 'rencana_aksi_id' , width:"6%",
+								{ data: 'rencana_aksi_id' , width:"6%",orderable: false,
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "label", name:"rencana_aksi_label" , width:"55%", orderable: true, },
+								{ data: "label", name:"rencana_aksi_label" , width:"55%", orderable: false, },
 								
 								{ data: "jan", width:"20px;", orderable: false,
 									"render": function ( data, type, row ) {
