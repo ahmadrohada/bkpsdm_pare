@@ -1174,11 +1174,13 @@ class SKPTahunanAPIController extends Controller {
                                                         $join   ->on('bawahan.id_jabatan','=','m_skpd.id');
                                                         $join   ->where('bawahan.status','=','active');
                                                     }) 
+                                                    ->join('demo_asn.tb_pegawai AS pegawai', function($join){
+                                                        $join   ->on('bawahan.id_pegawai','=','pegawai.id');
+                                                        $join   ->where('pegawai.status','=','active');
+                                                    }) 
                                                     ->SELECT('bawahan.id AS bawahan_id')
                                                     ->get(); 
                             $skp_bawahan = SKPTahunan::WHERE('renja_id',$renja_id)
-                                                        //->WHERE('send_to_atasan','1')
-                                                        //->WHERE('status_approve','1')
                                                         ->WHEREIN('u_jabatan_id',$bawahan_aktif)
                                                         ->count();
 
