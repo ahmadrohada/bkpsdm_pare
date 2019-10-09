@@ -142,7 +142,7 @@
 
 		var tx = id.split('|');
 
-		alert(tx[0]);
+		//alert(tx[1]);
 
 		switch ( tx[0] ){
 			case 'ka_skpd':
