@@ -142,7 +142,7 @@ class KegiatanAPIController extends Controller {
         $id_jabatan_irban = ['143','144','145','146'];
 
 
-        if ( $request->skpd_id == 3 ){
+        if ( $request->skpd_id == 5 ){
             //SEKDA 
             $ka_skpd = SKPD::
                             leftjoin('demo_asn.m_skpd AS data', function($join){
@@ -279,10 +279,6 @@ class KegiatanAPIController extends Controller {
             
             }
                
-               
-
-        }	
-
             if(!empty($kabid_list)) {
                 $data_ka_skpd['children']     = $kabid_list;
             }
@@ -290,6 +286,10 @@ class KegiatanAPIController extends Controller {
             $kabid_list = "";
             unset($data_ka_skpd['children']);
 		
+
+        }	
+
+           
 		return $data;
         
     }
