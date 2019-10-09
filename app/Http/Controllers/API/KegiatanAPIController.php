@@ -142,8 +142,23 @@ class KegiatanAPIController extends Controller {
         $id_jabatan_irban = ['143','144','145','146'];
 
 
-        //Distibusi kegiatan 
-        $ka_skpd = SKPD::where('parent_id','=', $request->skpd_id)->select('id','skpd')->get();
+        if ( $request->skpd_id == 3 ){
+            //SEKDA 
+            $ka_skpd = SKPD::
+                            leftjoin('demo_asn.m_skpd AS data', function($join){
+                                $join   ->on('data.parent_id','=','m_skpd.id');
+                            })
+                            ->select('data.id','data.skpd')
+                            ->where('m_skpd.parent_id','=', $request->skpd_id)
+                            ->get();
+
+            
+        }else{
+            //Distibusi kegiatan 
+            $ka_skpd = SKPD::where('parent_id','=', $request->skpd_id)->select('id','skpd')->get();
+        }
+       
+
 		foreach ($ka_skpd as $x) {
             $data_ka_skpd['id']	            = "ka_skpd|".$x->id;
 			$data_ka_skpd['text']			= Pustaka::capital_string($x->skpd);
@@ -154,7 +169,7 @@ class KegiatanAPIController extends Controller {
             $kabid = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
 
             foreach ($kabid as $y) {
-
+                //JIKA IRBAN
                 if (in_array( $y->id, $id_jabatan_irban)){
                     $data_kabid['id']	        = "kasubid|".$y->id;
                     $data_kabid['type']         = "kasubid";
