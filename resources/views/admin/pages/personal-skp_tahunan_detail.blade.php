@@ -37,11 +37,11 @@
 								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
 								break;
 						case '4':   
-								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Kegiatan Tahunan</a></li>';
+								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Kegiatan Bulanan</a></li>';
 								break;
 					}
 				?>
-				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan Bulanan</a></li>
+				<li class="skp_bulanan_tab"><a href="#skp_bulanan_tab" data-toggle="tab">SKP Bulanan</a></li>
 			</ul>
 
  
@@ -86,7 +86,7 @@
 				<div class=" tab-pane" id="rencana_aksi_tab">
 					@include('admin.modules.tab.rencana_aksi_time_table')
 				</div>
-				<div class="tab-pane" id="kegiatan_bulanan_tab">
+				<div class="tab-pane" id="skp_bulanan_tab">
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': //KABAN
@@ -142,7 +142,7 @@ $(document).ready(function() {
 		if ( id == 'kegiatan_tahunan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
 			initTreeKegTahunan();
-		}else if ( id == 'kegiatan_bulanan_tab'){
+		}else if ( id == 'skp_bulanan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
 			initTreeKegBulanan();
 		}else if ( id == 'status'){

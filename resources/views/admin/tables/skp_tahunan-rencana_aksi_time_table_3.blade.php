@@ -11,6 +11,7 @@
 				<tr>
 					<th rowspan="2">No</th>
 					<th rowspan="2">RENCANA AKSI</th>
+					<th rowspan="2">PELAKSANA</th>
 					<th colspan="12">BULAN</th>
 				</tr>
 				<tr>
@@ -41,9 +42,10 @@
 			serverSide      : true,
 			searching      	: true,
 			paging          : true,
+			lengthMenu		: [15,30],
 			bInfo			: false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,8,9,10,11 ] },
+								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,8,9,10,11,12,13,14 ] },
 							
 							],
 			ajax			: {
@@ -57,64 +59,65 @@
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "label", name:"rencana_aksi_label" , width:"55%", orderable: false, },
+								{ data: "label", name:"rencana_aksi_label" , width:"42%", orderable: true, },
+								{ data: "pelaksana", name:"pelaksana" , width:"16%", orderable: true, },
 								
-								{ data: "jan", width:"20px;", orderable: false,
+								{ data: "jan", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
 										return  '<i class="fa '+row.jan+' text-success" ></i>';
 									}
 								},
-								{ data: "feb", width:"20px;", orderable: false,
+								{ data: "feb", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
 										return  '<i class="fa '+row.feb+' text-success" ></i>';
 									}
 								},
-								{ data: "mar", width:"20px;", orderable: false,
+								{ data: "mar", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
 										return  '<i class="fa '+row.mar+' text-success" ></i>';
 									}
 								},
-								{ data: "apr", width:"20px;", orderable: false,
+								{ data: "apr", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
 										return  '<i class="fa '+row.apr+' text-success" ></i>';
 									}
 								},
-								{ data: "mei", width:"20px;", orderable: false,
+								{ data: "mei", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
 										return  '<i class="fa '+row.mei+' text-success" ></i>';
 									}
 								},
-								{ data: "jun", width:"20px;", orderable: false,
+								{ data: "jun", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
 										return  '<i class="fa '+row.jun+' text-success" ></i>';
 									}
 								},
-								{ data: "jul", width:"20px;", orderable: false,
+								{ data: "jul", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
 										return  '<i class="fa '+row.jul+' text-success" ></i>';
 									}
 								},
-								{ data: "agu", width:"20px;", orderable: false,
+								{ data: "agu", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
 										return  '<i class="fa '+row.agu+' text-success" ></i>';
 									}
 								},
-								{ data: "sep", width:"20px;", orderable: false,
+								{ data: "sep", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
 										return  '<i class="fa '+row.sep+' text-success" ></i>';
 									}
 								},
-								{ data: "okt", width:"20px;", orderable: false,
+								{ data: "okt", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
 										return  '<i class="fa '+row.okt+' text-success" ></i>';
 									}
 								},
-								{ data: "nov", width:"20px;", orderable: false,
+								{ data: "nov", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
 										return  '<i class="fa '+row.nov+' text-success" ></i>';
 									}
 								},
-								{ data: "des", width:"20px;", orderable: false,
+								{ data: "des", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
 										return  '<i class="fa '+row.des+' text-success" ></i>';
 									}

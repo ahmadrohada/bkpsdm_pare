@@ -81,7 +81,7 @@
 			<div class="box box-primary">
 				<div class="box-header with-border">
 					<h1 class="box-title">
-						List Rencana Aksi
+						List Rencana Aksi d
 					</h1>
 
 				</div>

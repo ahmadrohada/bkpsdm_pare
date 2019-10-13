@@ -1,7 +1,7 @@
 <div class="box box-primary " style="min-height:340px;">
 	<div class="box-header with-border">
 		<h1 class="box-title"> 
-			List Kegiatan Bulanan
+			List Pelaksanaan Rencana Aksi
 		</h1>
 
 	</div>
@@ -10,7 +10,8 @@
 			<thead>
 				<tr>
 					<th rowspan="2">No</th>
-					<th rowspan="2">KEGIATAN BULANAN</th>
+					<th rowspan="2">RENCANA AKSI</th>
+					<th rowspan="2">PELAKSANA</th>
 					<th colspan="12">BULAN</th>
 				</tr>
 				<tr>
@@ -33,7 +34,7 @@
 </div>
 
 <script type="text/javascript">
-
+ 
 	function rencana_aksi_time_table(){
 		var table_rencana_aksi = $('#rencana_aksi_time_table').DataTable({
 			destroy			: true,
@@ -44,14 +45,14 @@
 			lengthMenu		: [15,30],
 			bInfo			: false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,8,9,10,11,12,13 ] },
+								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,8,9,10,11,12,13,14 ] },
 							
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/rencana_aksi_time_table_4") }}',
-								data: { skp_tahunan_id: {!! $skp->id !!},
-										jabatan_id: {!! $skp->PejabatYangDinilai->id_jabatan !!}
-								 },
+								url	: '{{ url("api_resource/rencana_aksi_time_table_2") }}',
+								data: { skp_tahunan_id: {!! $skp->id !!} ,
+										jabatan_id    : {!! $skp->PejabatYangDinilai->id_jabatan !!}
+									 },
 							},
 							
 			columns			: [
@@ -60,7 +61,8 @@
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "label", name:"rencana_aksi_label" , width:"55%", orderable: true, },
+								{ data: "label", name:"rencana_aksi_label" , width:"42%", orderable: true, },
+								{ data: "pelaksana", name:"pelaksana" , width:"16%", orderable: true, },
 								
 								{ data: "jan", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {
