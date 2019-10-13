@@ -158,8 +158,12 @@ class KegiatanSKPTahunanAPIController extends Controller {
         $kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
-                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
+                            ->join('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                
+                            })
+                            ->join('demo_asn.m_skpd AS penanggung_jawab', function($join) use ( $skp_tahunan_id ){
+                                $join   ->on('penanggung_jawab.id','=','renja_kegiatan.jabatan_id');
                                 
                             })
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
@@ -170,8 +174,9 @@ class KegiatanSKPTahunanAPIController extends Controller {
                                         'kegiatan_tahunan.satuan',
                                         'kegiatan_tahunan.angka_kredit',
                                         'kegiatan_tahunan.quality',
-                                        'kegiatan_tahunan.cost',
-                                        'kegiatan_tahunan.target_waktu'
+                                        'kegiatan_tahunan.cost AS biaya',
+                                        'kegiatan_tahunan.target_waktu',
+                                        'penanggung_jawab.skpd AS penanggung_jawab'
                                     ) 
                             ->get();
 
@@ -180,6 +185,8 @@ class KegiatanSKPTahunanAPIController extends Controller {
         $datatables = Datatables::of($kegiatan)
         ->addColumn('label', function ($x) {
             return $x->kegiatan_tahunan_label;
+        })->addColumn('penanggung_jawab', function ($x) {
+            return Pustaka::capital_string($x->penanggung_jawab);
         })->addColumn('ak', function ($x) {
             return $x->ak;
         })->addColumn('output', function ($x) {
@@ -189,7 +196,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
         })->addColumn('waktu', function ($x) {
             return $x->target_waktu;
         })->addColumn('biaya', function ($x) {
-            return number_format($x->cost,'0',',','.');
+            return number_format($x->biaya,'0',',','.');
         });
 
         if ($keyword = $request->get('search')['value']) {
