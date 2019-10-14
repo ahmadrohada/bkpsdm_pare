@@ -234,31 +234,50 @@ class RencanaAksiAPIController extends Controller {
 
     public function RencanaAksiTimeTable2(Request $request)
     {
-        //LIST rencana aksi eselon 3 
-        
-        $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray();
+       
+        //bawahan bawahan nya lagi
+        $pelaksana_id = Jabatan::
+                        leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
+                            $join   ->on('pelaksana.parent_id','=','m_skpd.id');
+                        })
+                        ->SELECT('pelaksana.id')
+                        ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                        ->get()
+                        ->toArray(); 
 
-        $dt = KegiatanSKPTahunan::
+        $renja_id = SKPTahunan::find($request->skp_tahunan_id)->renja_id;
+               
         
-                            leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+
+        $dt = RencanaAksi::
+        
+                            /* join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join) use($pelaksana_id){
                                 $join   ->on('rencana_aksi.kegiatan_tahunan_id','=','skp_tahunan_kegiatan.id');
+                                //$join   ->WHEREIN('rencana_aksi.jabatan_id',$pelaksana_id);
+                            }) */
+                            leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
+                                $join   ->on('pelaksana.id','=','skp_tahunan_rencana_aksi.jabatan_id');
                             })
-                            ->leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
-                                $join   ->on('pelaksana.id','=','rencana_aksi.jabatan_id');
+                            ->leftjoin('demo_asn.m_skpd AS pengawas', function($join){
+                                $join   ->on('pelaksana.parent_id','=','pengawas.id');
                             })
                             ->SELECT([  
-                                    'rencana_aksi.label AS rencana_aksi_label',
-                                    'rencana_aksi.id AS rencana_aksi_id',
-                                    'rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
-                                    'rencana_aksi.waktu_pelaksanaan AS wapel',
-                                    'pelaksana.skpd AS pelaksana'
+                                    'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                    'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                                    'skp_tahunan_rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
+                                    'skp_tahunan_rencana_aksi.waktu_pelaksanaan AS wapel',
+                                    'pelaksana.skpd AS pelaksana',
+                                    'pengawas.skpd AS pengawas'
+
 
                                 
                                 
                                 ])
-                            ->WHERE('skp_tahunan_kegiatan.skp_tahunan_id','=', $request->skp_tahunan_id )
-                            ->orderBy('rencana_aksi.indikator_kegiatan_id','ASC')
-                            ->groupBy('rencana_aksi.label','rencana_aksi.jabatan_id')
+                            
+                            ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id)
+                            ->WHERE('skp_tahunan_rencana_aksi.renja_id','=', $renja_id )
+                            ->orderBy('skp_tahunan_rencana_aksi.indikator_kegiatan_id','ASC')
+                            ->groupBy('skp_tahunan_rencana_aksi.label','skp_tahunan_rencana_aksi.jabatan_id')
                             ->get();
 
                  
@@ -274,6 +293,11 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('pelaksana', function ($x) {
 
             return Pustaka::capital_string($x->pelaksana);
+            
+        })
+        ->addColumn('pengawas', function ($x) {
+
+            return Pustaka::capital_string($x->pengawas);
             
         })
         ->addColumn('jan', function ($x) {
@@ -414,7 +438,7 @@ class RencanaAksiAPIController extends Controller {
         } 
 
         return $datatables->make(true); 
-        
+       
     }
 
     public function RencanaAksiTimeTable3(Request $request)
@@ -423,7 +447,7 @@ class RencanaAksiAPIController extends Controller {
        
         $dt = KegiatanSKPTahunan::
         
-                            leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                            join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                                 $join   ->on('rencana_aksi.kegiatan_tahunan_id','=','skp_tahunan_kegiatan.id');
                             })
                             ->leftjoin('demo_asn.m_skpd AS pelaksana', function($join){

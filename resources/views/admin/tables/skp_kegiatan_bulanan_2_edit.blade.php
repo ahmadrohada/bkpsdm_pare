@@ -64,7 +64,7 @@
 							<th>No</th>
 							<th>KEGIATAN BULANAN</th>
 							<th>TARGET</th>
-							<th>PENANGGUNG JAWAB</th>
+							<th>PENGAWAS</th>
 							<th>PELAKSANA</th>
 							
 							<!-- <th><i class="fa fa-cog"></i></th> -->

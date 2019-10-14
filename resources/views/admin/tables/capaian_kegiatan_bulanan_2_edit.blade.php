@@ -23,7 +23,7 @@
 						<tr>
 							<th rowspan="2">NO</th>
 							<th rowspan="2">RENCANA AKSI</th>
-							<th rowspan="2">PENANGGUNG JAWAB</th>
+							<th rowspan="2">PENGAWAS</th>
 							<th rowspan="2">PELAKSANA</th>
 							<th colspan="3">OUTPUT</th>
 							<th rowspan="2"><i class="fa fa-cog"></i></th>

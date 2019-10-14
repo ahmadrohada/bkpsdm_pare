@@ -36,6 +36,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
     public function RealisasiKegiatanTriwulan2(Request $request) 
     {
             
+
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
 
         $capaian_triwulan_id = $request->capaian_triwulan_id;
@@ -43,41 +44,63 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
        //KEGIATAN KABID
         $skp_tahunan_id = $request->skp_tahunan_id;
         $kegiatan = Kegiatan::WHERE('renja_kegiatan.renja_id', $request->renja_id )
-                            ->WHEREIN('renja_kegiatan.jabatan_id',$child )
-
+                            ->WHEREIN('renja_kegiatan.jabatan_id',  $child  )
                             //LEFT JOIN ke Kegiatan SKP TAHUNAN
-                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->join('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 
                             })
-                            //LEFT JOIN TERHADAP REALISASI TRIWULAN NYA
+                            //LEFT JOIN ke INDIKATOR KEGIATAN
+                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
+                                $join   ->on('indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
+                                
+                            })
+                            //LEFT JOIN TERHADAP REALISASI TRIWULAN NYA QTY
                             ->leftjoin('db_pare_2018.realisasi_triwulan_kegiatan_tahunan AS realisasi_triwulan', function($join) use ( $capaian_triwulan_id ){
-                                $join   ->on('realisasi_triwulan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
-                                //$join   ->WHERE('realisasi_triwulan.capaian_id','=',  $capaian_triwulan_id);
+                                $join   ->on('realisasi_triwulan.indikator_kegiatan_id','=','indikator_kegiatan.id');
+                                $join   ->WHERE('realisasi_triwulan.capaian_id','=',  $capaian_triwulan_id );
                                 
                             })
 
+                            //LEFT JOIN TERHADAP REALISASI TRIWULAN COST
+                            ->leftjoin('db_pare_2018.realisasi_triwulan_anggaran_kegiatan AS realisasi_anggaran', function($join) use ( $capaian_triwulan_id ){
+                                $join   ->on('realisasi_anggaran.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
+                                $join   ->WHERE('realisasi_anggaran.capaian_id','=',  $capaian_triwulan_id );
+                                
+                            })
+                            
+                            //LEFT JOIN KE CAPAIAN TRIWULAN
+                            ->leftjoin('db_pare_2018.capaian_triwulan AS capaian_triwulan', function($join){
+                                $join   ->on('capaian_triwulan.id','=','realisasi_triwulan.capaian_id');
+                            })
+
                             ->SELECT(   
-                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label',
-                                        'kegiatan_tahunan.id AS kegiatan_tahunan_id',
+                                        'renja_kegiatan.id AS kegiatan_id',
                                         'renja_kegiatan.jabatan_id',
-                                        'kegiatan_tahunan.target AS qty_target',
+                                        'renja_kegiatan.label AS kegiatan_label',
+
+                                        'indikator_kegiatan.id AS indikator_id',
+                                        'indikator_kegiatan.label AS indikator_label',
+                                        'indikator_kegiatan.target AS qty_target',
+                                        'indikator_kegiatan.satuan',
+
+                                        'kegiatan_tahunan.id AS kegiatan_tahunan_id',
                                         'kegiatan_tahunan.cost AS cost_target',
-                                        'kegiatan_tahunan.satuan',
+                                        'kegiatan_tahunan.target_waktu AS waktu_target',
                                         'realisasi_triwulan.id AS realisasi_kegiatan_id',
                                         'realisasi_triwulan.quantity AS qty_realisasi',
-                                        'realisasi_triwulan.cost AS cost_realisasi'
-                                    ) 
-                            ->get();
+                                        
+                                        'realisasi_anggaran.cost AS cost_realisasi',
 
+                                        'capaian_triwulan.status'
+                                       
+                                    ) 
+                            
+                            ->get();
                 
         $datatables = Datatables::of($kegiatan)
         ->addColumn('id', function ($x) {
             return $x->kegiatan_tahunan_id;
-        })->addColumn('label', function ($x) {
-            return $x->kegiatan_tahunan_label;
-        })->addColumn('penanggung_jawab', function ($x) {
-            return Pustaka::capital_string($x->PenanggungJawab->jabatan);
         })->addColumn('qty_target', function ($x) {
             return $x->qty_target.' '.$x->satuan;
         })->addColumn('cost_target', function ($x) {
@@ -103,8 +126,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
        
         $capaian_triwulan_id = $request->capaian_triwulan_id;
 
-        //KEGIATAN KABID
-       
+        //KASUBID
         $kegiatan = Kegiatan::WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHERE('renja_kegiatan.jabatan_id','=',  $request->jabatan_id  )
                             //LEFT JOIN ke Kegiatan SKP TAHUNAN

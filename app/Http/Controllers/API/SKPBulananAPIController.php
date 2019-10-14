@@ -770,10 +770,11 @@ class SKPBulananAPIController extends Controller {
                          )
                         ->orderBy('bulan')
                         ->get();
-
+                        
+            $renja_id = SKPTahunan::find($request->skp_tahunan_id)->renja_id;
        
-           $datatables = Datatables::of($skp)
-           ->addColumn('periode', function ($x) {
+            $datatables = Datatables::of($skp)
+            ->addColumn('periode', function ($x) {
                 return Pustaka::bulan($x->bulan) . ' '.Pustaka::tahun($x->tgl_mulai);
             }) 
             ->addColumn('masa_penilaian', function ($x) {
@@ -792,11 +793,12 @@ class SKPBulananAPIController extends Controller {
                     return "<font style='color:red'>Belum Ada</font>";
                 }
                 
-            })->addColumn('jm_kegiatan', function ($x) use($pelaksana_id) {
+            })->addColumn('jm_kegiatan', function ($x) use($pelaksana_id,$renja_id) {
                 
               
                 return  RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id )
                                     ->WHERE('waktu_pelaksanaan','=',$x->bulan)
+                                    ->WHERE('renja_id',$renja_id)
                                     ->select('id')
                                     ->count();
 
