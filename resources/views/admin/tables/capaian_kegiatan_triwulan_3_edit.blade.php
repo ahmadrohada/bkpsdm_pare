@@ -80,13 +80,13 @@
 								},
 				targets			: 'no-sort',
 				bSort			: false,
-				rowsGroup		: [ 0,1,4,6 ],
+				rowsGroup		: [ 1,4,6 ],
 				columns			: [
 									{ data: 'kegiatan_id' ,width:"10px",
 										"render": function ( data, type, row ,meta) {
-											//return meta.row + meta.settings._iDisplayStart + 1 ;
+											return meta.row + meta.settings._iDisplayStart + 1 ;
 											//return numCols = $('#realisasi_kegiatan_triwulan_table').length ;
-											return numCols = $('#realisasi_kegiatan_triwulan_table').DataTable().rows(1).nodes().length + 1;
+											//return numCols = $('#realisasi_kegiatan_triwulan_table').DataTable().rows(1).nodes().length + 1;
 									}
 									},
 									{ data: "kegiatan_label", name:"kegiatan_label",
@@ -170,7 +170,7 @@
 
 	function show_modal_create(ind_kegiatan_id){
 		$.ajax({
-				url			  	: '{{ url("api_resource/ind_kegiatan_for_realisasi") }}',
+				url			  	: '{{ url("api_resource/ind_kegiatan_detail") }}',
 				data 		  	: { ind_kegiatan_id : ind_kegiatan_id , capaian_triwulan_id : {!! $capaian_triwulan->id !!} },
 				method			: "GET",
 				dataType		: "json",

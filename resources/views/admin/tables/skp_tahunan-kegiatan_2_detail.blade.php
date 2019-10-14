@@ -19,7 +19,7 @@
 				<tr>
 					<th rowspan="2">No</th>
 					<th rowspan="2">KEGIATAN TAHUNAN</th>
-					<th rowspan="2">PENANGGUNG JAWAB</th>
+					<th rowspan="2">PENGAWAS</th>
 					<th rowspan="2">AK</th>
 					<th colspan="3">TARGET</th>
 				</tr>

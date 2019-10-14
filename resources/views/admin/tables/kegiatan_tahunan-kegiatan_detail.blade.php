@@ -13,7 +13,7 @@
 				<tr class="success">
 					<th>NO</th>
 					<th >LABEL</th>
-					<th >PENANGGUNG JAWAB</th>
+					<th >PENGAWAS</th>
 					<th >ANGGARAN</th>
 				</tr>
 			</thead>
@@ -24,7 +24,7 @@
 				<tr class="success">
 					<th>NO</th>
 					<th >LABEL / KEGIATAN NON ANGGARAN</th>
-					<th >PENANGGUNG JAWAB</th>
+					<th >PENGAWAS</th>
 					<!-- <th><i class="fa fa-cog"></i></th> -->
 				</tr>
 			</thead>

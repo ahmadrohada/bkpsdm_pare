@@ -108,3 +108,15 @@ li.user-header, .widget-user-username{
  .jstree-container-ul {
 	min-height: 300px;
 }
+
+
+
+.small-box h3{
+	
+	text-shadow: rgb(110, 110, 110) 0.02em 0.02em 0.05em;
+}
+
+.small-box strong{
+	
+	text-shadow: rgb(110, 110, 110) 0.08em 0.08em 0.1em;
+}

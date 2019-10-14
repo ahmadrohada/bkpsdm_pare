@@ -67,7 +67,7 @@
 						<input type="hidden" class="kegiatan_tahunan_id">
 					</p>
 
-					<strong>Penanggung Jawab</strong>
+					<strong>Pengawas</strong>
 					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 						<span class="jabatan_pelaksana"></span>
 					</p>
@@ -127,7 +127,7 @@
 						<input type="hidden" class="kegiatan_tahunan_id">
 					</p>
 
-					<strong>Penanggung Jawab</strong>
+					<strong>Pengawas</strong>
 					<p class="text-danger " style="margin-top:8px;padding-bottom:10px;">
 						<span class="jabatan_pelaksana"></span>
 					</p>

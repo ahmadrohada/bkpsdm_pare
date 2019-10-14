@@ -11,6 +11,7 @@
 				<tr>
 					<th rowspan="2">No</th>
 					<th rowspan="2">RENCANA AKSI</th>
+					<th rowspan="2">PENGAWAS</th>
 					<th rowspan="2">PELAKSANA</th>
 					<th colspan="12">BULAN</th>
 				</tr>
@@ -45,7 +46,7 @@
 			lengthMenu		: [15,30],
 			bInfo			: false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,8,9,10,11,12,13,14 ] },
+								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,8,9,10,11,12,13,14,15 ] },
 							
 							],
 			ajax			: {
@@ -62,6 +63,7 @@
 									}
 								},
 								{ data: "label", name:"rencana_aksi_label" , width:"42%", orderable: true, },
+								{ data: "pengawas", name:"pengawas" , width:"16%", orderable: true, },
 								{ data: "pelaksana", name:"pelaksana" , width:"16%", orderable: true, },
 								
 								{ data: "jan", width:"3%", orderable: false,
