@@ -201,7 +201,7 @@ class KegiatanAPIController extends Controller {
                     $data_kasubid['text']			= Pustaka::capital_string($z->skpd);
                     $data_kasubid['icon']           = "jstree-people";
 
-                    if (in_array( $z->id, $yang_gk_add)){
+                    if (in_array( $z->id, $yang_gak_add)){
                         $data_kasubid['type']           = "";
                     }else{
                         $data_kasubid['type']           = "kasubid";
