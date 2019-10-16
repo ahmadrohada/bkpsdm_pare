@@ -138,8 +138,16 @@ class KegiatanAPIController extends Controller {
     public function RenjaDistribusiKegiatanTree(Request $request)
     {
        
-        //Pengecualian untuk iban
-        $id_jabatan_irban = ['143','144','145','146'];
+        //BEBERAPA jabatan yang dikecualikan agar tetap bisa di tambahkan kegiatan
+        //Pengecualian untuk irban
+        $a = ['143','144','145','146'];
+
+        //pengecualian untuk KEC Telukjambetimur
+        $b = ['1236','1237','1238','1239'];
+
+
+
+        $pengecualian = array_merge($a,$b);
 
 
         if ( $request->skpd_id == 3 ){
@@ -170,7 +178,7 @@ class KegiatanAPIController extends Controller {
 
             foreach ($kabid as $y) {
                 //JIKA IRBAN
-                if (in_array( $y->id, $id_jabatan_irban)){
+                if (in_array( $y->id, $pengecualian)){
                     $data_kabid['id']	        = "kasubid|".$y->id;
                     $data_kabid['type']         = "kasubid";
                     $kasubid = [] ;
