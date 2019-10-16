@@ -143,9 +143,9 @@ class KegiatanAPIController extends Controller {
         $a = ['143','144','145','146'];
 
         //pengecualian untuk KEC Telukjambetimur
-        $b = ['1236','1237','1238','1239'];
+        $b = ['1235','1236','1237','1238','1239'];
 
-
+        $yang_gak_add = ['10828','23670'];
 
         $pengecualian = array_merge($a,$b);
 
@@ -177,7 +177,7 @@ class KegiatanAPIController extends Controller {
             $kabid = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
 
             foreach ($kabid as $y) {
-                //JIKA IRBAN
+                //JIKA YANG DIKECUALIKAN,MALAH BISA ADD KEGIATAN
                 if (in_array( $y->id, $pengecualian)){
                     $data_kabid['id']	        = "kasubid|".$y->id;
                     $data_kabid['type']         = "kasubid";
@@ -200,8 +200,12 @@ class KegiatanAPIController extends Controller {
                     $data_kasubid['id']	            = "kasubid|".$z->id;
                     $data_kasubid['text']			= Pustaka::capital_string($z->skpd);
                     $data_kasubid['icon']           = "jstree-people";
-                    $data_kasubid['type']           = "kasubid";
-                    
+
+                    if (in_array( $z->id, $yang_gk_add)){
+                        $data_kasubid['type']           = "";
+                    }else{
+                        $data_kasubid['type']           = "kasubid";
+                    }
 
                     $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label','cost')->get();
                     foreach ($kegiatan as $a) {
