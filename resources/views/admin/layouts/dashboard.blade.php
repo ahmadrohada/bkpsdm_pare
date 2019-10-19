@@ -24,7 +24,6 @@
 
 {{-- Load Layout CONTENT --}}
 @section('layout-content')
-	@include('sweetalert::alert')
 	@yield('content')
 @stop
 
