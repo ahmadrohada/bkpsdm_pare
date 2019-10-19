@@ -142,10 +142,9 @@ class KegiatanAPIController extends Controller {
         //Pengecualian untuk irban
         $a = ['143','144','145','146'];
 
-        //pengecualian untuk KEC Telukjambetimur
+        //pengecualian untuk KEC Telukjambe Barat
         $b = ['1235','1236','1237','1238','1239'];
 
-        $yang_gak_add = ['10828','23670'];
 
         $pengecualian = array_merge($a,$b);
 
@@ -201,11 +200,7 @@ class KegiatanAPIController extends Controller {
                     $data_kasubid['text']			= Pustaka::capital_string($z->skpd);
                     $data_kasubid['icon']           = "jstree-people";
 
-                    if (in_array( $z->id, $yang_gak_add)){
-                        $data_kasubid['type']           = "";
-                    }else{
-                        $data_kasubid['type']           = "kasubid";
-                    }
+                  
 
                     $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label','cost')->get();
                     foreach ($kegiatan as $a) {

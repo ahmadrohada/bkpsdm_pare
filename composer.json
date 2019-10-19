@@ -24,7 +24,8 @@
         "thujohn/twitter": "~2.0",
         "j7mbo/twitter-api-php": "dev-master",
 		"realrashid/sweet-alert": "^1.1",
-		"yajra/laravel-datatables-oracle": "~6.0"
+		"yajra/laravel-datatables-oracle": "~6.0",
+		"carlos-meneses/laravel-mpdf": "^1.1"
 
 	},
 	"require-dev": {

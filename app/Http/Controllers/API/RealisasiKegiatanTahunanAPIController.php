@@ -107,9 +107,9 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
 
 
     protected function kegiatan_tahunan_kasubid($renja_id,$jabatan_id,$capaian_id,$search){
-
+ 
     
-
+    \DB::statement(\DB::raw('set @rownum=0'));
     $kegiatan = Kegiatan::WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHERE('renja_kegiatan.jabatan_id','=',  $jabatan_id  )
                             //LEFT JOIN ke Kegiatan SKP TAHUNAN
@@ -139,7 +139,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                                 $join   ->on('capaian_tahunan.id','=','realisasi_kegiatan.capaian_id');
                             })
 
-                            ->SELECT(   
+                            ->SELECT(   \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
                                         'renja_kegiatan.id AS kegiatan_id',
                                         'renja_kegiatan.id AS no',
                                         'renja_kegiatan.jabatan_id',
@@ -192,9 +192,8 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             ->get();
                 
         $datatables = Datatables::of($kegiatan)
-        ->addColumn('no', function ($x) {
-            return $x->no -$x->no + 1;
-        })->addColumn('id', function ($x) {
+       
+        ->addColumn('id', function ($x) {
             return $x->kegiatan_tahunan_id;
         })->addColumn('capaian_tahunan_id', function ($x) use ($capaian_id) {
             return $capaian_id;
@@ -375,6 +374,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
 
 
     }
+    
     
     public function AddRealisasiKegiatanTahunan(Request $request)
     {
@@ -635,7 +635,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                 $rkt_save->target_waktu             = Input::get('target_waktu');
 
                 //$rkt_save->realisasi_angka_kredit   = Input::get('realisasi_angka_kredit');
-                $rkt_save->jumlah_indikator         = Input::get('jumlah_indikator');
+                //$rkt_save->jumlah_indikator         = Input::get('jumlah_indikator');
                 //$rkt_save->realisasi_quality        = Input::get('realisasi_quality');
                 $rkt_save->realisasi_cost           = preg_replace('/[^0-9]/', '', Input::get('realisasi_cost'));
                 $rkt_save->realisasi_waktu          = Input::get('realisasi_waktu');

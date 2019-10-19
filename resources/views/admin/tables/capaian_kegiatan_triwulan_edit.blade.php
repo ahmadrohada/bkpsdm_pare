@@ -2,10 +2,10 @@
 	<div class="col-md-12">
 
 <!--====================== KEGIATAN BULANAN LIST =========================================== -->
-		<div class="box box-primary" id='kegiatan_tahunan'>
+		<div class="box box-primary" id='kegiatan_triwulan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					List Realisasi Kegiatan Tahunan  / {!! $capaian->PejabatYangDinilai->Eselon->eselon !!}
+					List Realisasi Kegiatan Tahunan Trimester {!! $capaian_triwulan->trimester !!} [ Eselon {!! $capaian_triwulan->PejabatYangDinilai->Eselon->eselon !!}  ]
 				</h1>
 
 				<div class="box-tools pull-right">
@@ -14,28 +14,25 @@
 			</div>
 			<div class="box-body table-responsive">
 
-				<div class="toolbar"> 
-
+				<div class="toolbar">  
+ 
 				</div>
 
-				<table id="realisasi_kegiatan_tahunan_table" class="table table-striped table-hover display" style="width:100%">
+				<table id="realisasi_kegiatan_triwulan_table" class="table table-striped table-hover" >
 					<thead>
 						<tr>
 							<th rowspan="2">ID</th>
 							<th rowspan="2">KEGIATAN TAHUNAN</th>
 							<th rowspan="2">INDIKATOR</th>
-							<th colspan="4" >TARGET</th>
-							<th colspan="3">REALISASI</th>
+							<th colspan="2">TARGET</th>
+							<th colspan="2">REALISASI</th>
 							<th rowspan="2"><i class="fa fa-cog"></i></th>
 						</tr>
 						<tr>
-							<th>QUANTITY</th>
-							<th>QUALITY</th>
-							<th>WAKTU</th>
-							<th>ANGGARAN</th>
-							<th>QUANTITY</th>
-							<th>WAKTU</th>
-							<th>ANGGARAN</th>
+							<th>QTY</th>
+							<th>COST</th>
+							<th>QTY</th>
+							<th>COST</th>
 						</tr>
 					</thead>
 							
@@ -46,6 +43,8 @@
 
 	</div>
 
+
+
 	
 </div>
 <style>
@@ -54,45 +53,41 @@ table.dataTable tbody td {
 }
 </style>
 
-@include('admin.modals.realisasi_kegiatan_tahunan')
 
+@include('admin.modals.realisasi_kegiatan_tahunan_triwulan')
 
 <script src="{{asset('assets/js/dataTables.rowsGroup.js')}}"></script>
 
-
 <script type="text/javascript">
 
-		
 	
-  	function load_kegiatan_tahunan(){
+	
+  	function load_kegiatan_triwulan(){
 		
-		var table_kegiatan_tahunan = $('#realisasi_kegiatan_tahunan_table').DataTable({
+		var table_kegiatan_triwulan = $('#realisasi_kegiatan_triwulan_table').DataTable({
 				destroy			: true,
 				processing      : false,
 				serverSide      : true,
-				searching      	: false,
+				searching      	: true,
 				paging          : false,
-				bInfo			: false,
-				//fixedColumns	: true,
 				//order 			: [0 , 'asc' ],
 				columnDefs		: [
-									{ "orderable": false, className: "text-center", targets: [ 0,3,4,5,7,8,10 ] },
-									{ className: "text-right", targets: [ 6,9] },
-									{ },
+									{ "orderable": false, className: "text-center", targets: [ 0,3,5,7 ] },
+									{ className: "text-right", targets: [ 4,6] },
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_kegiatan_tahunan") }}',
+									url	: '{{ url("api_resource/realisasi_kegiatan_triwulan") }}',
 									data: { 
 										
-											"renja_id" 				: {!! $capaian->SKPTahunan->Renja->id !!} , 
-											"jabatan_id" 			: {!! $capaian->PejabatYangDinilai->Jabatan->id !!},
-											"capaian_id" 			: {!! $capaian->id !!},
-											"jenis_jabatan"			: {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan !!},
+											"renja_id" 				: {!! $capaian_triwulan->SKPTahunan->Renja->id !!} , 
+											"jabatan_id" 			: {!! $capaian_triwulan->PejabatYangDinilai->Jabatan->id !!},
+											"capaian_triwulan_id" 	: {!! $capaian_triwulan->id !!},
+											"jenis_jabatan"			: {!! $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan !!},
 									 },
 								},
 				targets			: 'no-sort',
 				bSort			: false,
-				rowsGroup		: [ 0,1,4,5,6,8,9 ],
+				rowsGroup		: [ 0,1,4,6 ],
 				columns			: [
 									{ data: 'id' ,width:"10px",
 										"render": function ( data, type, row ) {
@@ -102,33 +97,22 @@ table.dataTable tbody td {
 											
 										}
 									},
-									{ data: "kegiatan_label", name:"kegiatan_label",width:"20%",
+									{ data: "kegiatan_label", name:"kegiatan_label",
 										"render": function ( data, type, row ) {
 											return row.kegiatan_label;
 											
 										}
 									}, 
-									{ data: "indikator_label", name:"indikator_label",width:"20%",
+									{ data: "indikator_label", name:"indikator_label",
 										"render": function ( data, type, row ) {
 											return row.indikator_label;
 											
 										}
 									}, 
 									
-								
 									{ data: "target_quantity", name:"target_quantity", width:"100px",
 										"render": function ( data, type, row ) {
 											return row.target_quantity ;
-										}
-									},
-									{ data: "target_quality", name:"target_quality", width:"100px",
-										"render": function ( data, type, row ) {
-											return row.target_quality ;
-										}
-									},
-									{ data: "target_waktu", name:"target_waktu", width:"100px",
-										"render": function ( data, type, row ) {
-											return row.target_waktu ;
 										}
 									},
 									{ data: "target_cost", name:"target_cost", width:"100px",
@@ -138,30 +122,38 @@ table.dataTable tbody td {
 									},
 									{ data: "realisasi_quantity", name:"realisasi_quantity", width:"100px",
 										"render": function ( data, type, row ) {
-											return  row.realisasi_quantity;
+											if ( (row.realisasi_indikator_id) >= 1 ){
+												return row.realisasi_quantity ;
+											}else{
+												return  '-';
+											
+											} 
+
+											
 										}
-									},
-									{ data: "realisasi_waktu", name:"realisasi_waktu", width:"50px",
+									},{ data: "realisasi_cost", name:"realisasi_cost", width:"100px",
 										"render": function ( data, type, row ) {
-											return row.realisasi_waktu ;
+											if ( (row.realisasi_indikator_id) >= 1 ){
+												return row.realisasi_cost ;
+											}else{
+												return  '-';
+											
+											} 
+
+											
 										}
 									},
-									{ data: "realisasi_cost", name:"realisasi_cost", width:"50px",
-										"render": function ( data, type, row ) {
-											return row.realisasi_cost ;
-										}
-									},
-									{  data: 'action',width:"6%",
+									{  data: 'action',width:"60px",
 											"render": function ( data, type, row ) {
-											if ( {!! $capaian->status !!} == 1 ){
+											if ( {!! $capaian_triwulan->status !!} == 1 ){
 												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs "  "><i class="fa fa-pencil" ></i></a></span>'+
 														'<span style="margin:2px;" ><a class="btn btn-default btn-xs "  "><i class="fa fa-close " ></i></a></span>';
 											}else{
 												if ( (row.realisasi_indikator_id) >= 1 ){
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_tahunan"  data-indikator_id="'+row.indikator_kegiatan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_tahunan"  data-realisasi_kegiatan_id ="'+row.realisasi_kegiatan_id+'"  data-realisasi_indikator_kegiatan_id="'+row.realisasi_indikator_id+'"  data-kegiatan_id="'+row.kegiatan_id+'"  data-label="'+row.indikator_label+'" ><i class="fa fa-close " ></i></a></span>';
+													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_triwulan"  data-indikator_id="'+row.indikator_kegiatan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_triwulan"  data-realisasi_kegiatan_id ="'+row.realisasi_kegiatan_id+'"  data-realisasi_indikator_kegiatan_id="'+row.realisasi_indikator_id+'"  data-kegiatan_id="'+row.kegiatan_id+'"  data-label="'+row.indikator_label+'" ><i class="fa fa-close " ></i></a></span>';
 												}else{
-													return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_realisasi_tahunan"  data-indikator_id="'+row.indikator_kegiatan_id+'" data-kegiatan_tahunan_id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-plus" ></i></a></span>'+
+													return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_realisasi_triwulan"  data-indikator_id="'+row.indikator_kegiatan_id+'" data-kegiatan_tahunan_id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-plus" ></i></a></span>'+
 															'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
 												
 												} 
@@ -175,19 +167,13 @@ table.dataTable tbody td {
 								
 							}
 		});	
-
-
-		
-		
 	}
 
-	
-
-	$(document).on('click','.create_realisasi_tahunan',function(e){
+	$(document).on('click','.create_realisasi_triwulan',function(e){
 	
 		
 		var indikator_kegiatan_id = $(this).data('indikator_id');
-		$('.modal-realisasi_tahunan').find('h4').html('Add Realisasi Kegiatan Tahunan');
+		$('.modal-realisasi_tahunan').find('h4').html('Add Realisasi Kegiatan Tahunan Trimester '+ {!! $capaian_triwulan->trimester !!});
 		$('.modal-realisasi_tahunan').find('.btn-submit').attr('id', 'submit-save');
 		$('.modal-realisasi_tahunan').find('[name=text_button_submit]').html('Simpan Data');
 		show_modal_create(indikator_kegiatan_id);
@@ -196,19 +182,19 @@ table.dataTable tbody td {
 
 	function show_modal_create(indikator_kegiatan_id){
 		$.ajax({
-				url			  	: '{{ url("api_resource/add_realisasi_kegiatan_tahunan") }}',
+				url			  	: '{{ url("api_resource/add_realisasi_kegiatan_triwulan") }}',
 				data 		  	: { 
 									indikator_kegiatan_id : indikator_kegiatan_id ,
-									capaian_id : {!! $capaian->id !!} },
+									capaian_id : {!! $capaian_triwulan->id !!} },
 				method			: "GET",
 				dataType		: "json",
 				success	: function(data) {
 					
-					$('.modal-realisasi_tahunan').find('[name=capaian_id]').val({!! $capaian->id !!});
+					$('.modal-realisasi_tahunan').find('[name=capaian_triwulan_id]').val({!! $capaian_triwulan->id !!});
 					$('.modal-realisasi_tahunan').find('[name=ind_kegiatan_id]').val(data['ind_kegiatan_id']);
 					$('.modal-realisasi_tahunan').find('[name=kegiatan_tahunan_id]').val(data['kegiatan_tahunan_id']);
-					$('.modal-realisasi_tahunan').find('[name=realisasi_indikator_kegiatan_tahunan_id]').val(data['realisasi_indikator_id']);
-					$('.modal-realisasi_tahunan').find('[name=realisasi_kegiatan_tahunan_id]').val(data['realisasi_kegiatan_id']);
+					$('.modal-realisasi_tahunan').find('[name=realisasi_indikator_kegiatan_triwulan_id]').val(data['realisasi_indikator_id']);
+					$('.modal-realisasi_tahunan').find('[name=realisasi_kegiatan_triwulan_id]').val(data['realisasi_kegiatan_id']);
 					$('.modal-realisasi_tahunan').find('[name=jumlah_indikator]').val(data['jumlah_indikator']);
 					
 					$('.modal-realisasi_tahunan').find('[name=target_quantity]').val(data['target_quantity']);
@@ -246,22 +232,23 @@ table.dataTable tbody td {
 		
 	}
 
-	$(document).on('click','.edit_realisasi_tahunan',function(e){
-	
+	$(document).on('click','.edit_realisasi_triwulan',function(e){
+
 		
 		var indikator_kegiatan_id = $(this).data('indikator_id');
-		$('.modal-realisasi_tahunan').find('h4').html('Edit Realisasi Kegiatan Tahunan');
+		$('.modal-realisasi_tahunan').find('h4').html('Edit Realisasi Kegiatan Tahunan Trimester '+ {!! $capaian_triwulan->trimester !!});
 		$('.modal-realisasi_tahunan').find('.btn-submit').attr('id', 'submit-update');
 		$('.modal-realisasi_tahunan').find('[name=text_button_submit]').html('Update Data');
 		show_modal_create(indikator_kegiatan_id);
 		
 	});
 
-	$(document).on('click','.hapus_realisasi_tahunan',function(e){
+	$(document).on('click','.hapus_realisasi_triwulan',function(e){
 		var realisasi_indikator_kegiatan_id = $(this).data('realisasi_indikator_kegiatan_id') ;
 		var kegiatan_id = $(this).data('kegiatan_id') ;
 		var realisasi_kegiatan_id = $(this).data('realisasi_kegiatan_id') ;
 
+		//alert(realisasi_kegiatan_id);
 		Swal.fire({
 			title: "Hapus  realisasi Kegiatan",
 			text:$(this).data('label'),
@@ -278,7 +265,7 @@ table.dataTable tbody td {
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_kegiatan_tahunan") }}',
+					url		: '{{ url("api_resource/hapus_realisasi_kegiatan_triwulan") }}',
 					type	: 'POST',
 					data    : { kegiatan_id:kegiatan_id,
 								realisasi_indikator_kegiatan_id:realisasi_indikator_kegiatan_id,
@@ -295,12 +282,12 @@ table.dataTable tbody td {
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
+										$('#realisasi_kegiatan_triwulan_table').DataTable().ajax.reload(null,false);
 										
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
-											$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
+											$('#realisasi_kegiatan_triwulan_table').DataTable().ajax.reload(null,false);
 											
 											
 										}
@@ -322,7 +309,5 @@ table.dataTable tbody td {
 			}
 		});
 	});
-
-	
 
 </script>

@@ -55,13 +55,18 @@
 				<span class="text-primary"> PEJABAT PENILAI</span>
 			</div>
 
-						
-			<div class="col-xs-6 col-md-6 no-padding" align="right" style="cursor:pointer;">
-				<span class="btn btn-xs btn-success btn_edit_pejabat " data-toggle="tooltip" data-placement="top" title="Edit Pejabat Penilai"> 
-				<i class="fa fa-pencil" ></i>EDIT</span>
-				<span class="btn btn-xs btn-danger btn_batal_pejabat hidden" data-toggle="tooltip" data-placement="top" title="Batal"> 
-				<i class="fa fa-refresh" ></i>BATAL</span>
-			</div>
+				
+			@if ( $capaian_triwulan->status   === '0')
+				<div class="col-xs-6 col-md-6 no-padding" align="right" style="cursor:pointer;">
+					<span class="btn btn-xs btn-success btn_edit_pejabat " data-toggle="tooltip" data-placement="top" title="Edit Pejabat Penilai"> 
+					<i class="fa fa-pencil" ></i>EDIT</span>
+					<span class="btn btn-xs btn-danger btn_batal_pejabat hidden" data-toggle="tooltip" data-placement="top" title="Batal"> 
+					<i class="fa fa-refresh" ></i>BATAL</span>
+				</div>		
+			@endif
+			
+
+
 			<br>
 		</div>
 							

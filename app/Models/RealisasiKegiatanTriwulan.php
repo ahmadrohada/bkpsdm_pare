@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RealisasiKegiatanTriwulan extends Model
 {
-    protected $table = 'realisasi_triwulan_kegiatan_tahunan';
+    protected $table = 'realisasi_kegiatan_triwulan';
 
     //tes
 

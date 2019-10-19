@@ -43,19 +43,8 @@
 								
 				<div class=" tab-pane" id="kegiatan_triwulan_tab">
 
-
-					<!-- 2. KABID -->
-					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('admin.tables.capaian_kegiatan_triwulan_2_edit')
-					@endif
-
-					<!-- 3. KASUBID -->
-					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.tables.capaian_kegiatan_triwulan_3_edit')
-					@endif
-
+					@include('admin.tables.capaian_kegiatan_triwulan_edit')
 				
-					
 				</div>
 				
 
