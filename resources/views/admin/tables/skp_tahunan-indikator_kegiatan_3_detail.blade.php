@@ -64,7 +64,7 @@
 		//=== DETAIL KEGIATAN TAHUNAN
 		$.ajax({
 			url			: '{{ url("api_resource/kegiatan_tahunan_detail") }}',
-			data 		: {kegiatan_tahunan_id : kegiatan_tahunan_id},
+			data 		: { kegiatan_tahunan_id : kegiatan_tahunan_id },
 			method		: "GET",
 			dataType	: "json",
 			success	: function(data) {

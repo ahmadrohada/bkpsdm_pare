@@ -124,19 +124,22 @@ class IndikatorKegiatanAPIController extends Controller {
     public function IndikatorKegiatanDetail(Request $request)
     {
        
+        $skp_tahunan_id = $request->skp_tahunan_id;
         
         $x = IndikatorKegiatan::
                 leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
                     $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
                 })
-                ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) {
+                ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use($skp_tahunan_id) {
                     $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                    $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id);
                 })
                 ->SELECT(       'renja_indikator_kegiatan.id AS ind_kegiatan_id',
                                 'renja_indikator_kegiatan.label',
                                 'renja_indikator_kegiatan.target',
                                 'renja_indikator_kegiatan.satuan',
                                 'kegiatan_tahunan.cost AS cost',
+                                'renja_kegiatan.id AS kegiatan_id',
                                 'kegiatan_tahunan.id AS kegiatan_tahunan_id'
 
                         ) 
@@ -144,13 +147,14 @@ class IndikatorKegiatanAPIController extends Controller {
                             ->first();
 
         $ind_kegiatan = array(
-            'id'            => $x->ind_kegiatan_id,
-            'ind_kegiatan_id'=> $x->ind_kegiatan_id,
-            'kegiatan_tahunan_id'=> $x->kegiatan_tahunan_id,
-            'label'         => $x->label,
-            'target'        => $x->target,
-            'satuan'        => $x->satuan,
-            'cost'          => $x->cost
+            'id'                    => $x->ind_kegiatan_id,
+            'kegiatan_id'           => $x->kegiatan_id,
+            'ind_kegiatan_id'       => $x->ind_kegiatan_id,
+            'kegiatan_tahunan_id'   => $x->kegiatan_tahunan_id,
+            'label'                 => $x->label,
+            'target'                => $x->target,
+            'satuan'                => $x->satuan,
+            'cost'                  => $x->cost
 
         );
         return $ind_kegiatan;
