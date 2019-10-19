@@ -443,31 +443,35 @@ class RencanaAksiAPIController extends Controller {
 
     public function RencanaAksiTimeTable3(Request $request)
     {
-        //LIST rencana aksi eselon IV  
        
-        $dt = KegiatanSKPTahunan::
-        
-                            join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
-                                $join   ->on('rencana_aksi.kegiatan_tahunan_id','=','skp_tahunan_kegiatan.id');
+            $dt = KegiatanSKPTahunan::
+                            leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
+                                $join   ->on('kegiatan.id','=','skp_tahunan_kegiatan.kegiatan_id');
+                            })
+                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
+                                $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan.id');
+                            })
+                            ->join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                                $join   ->on('rencana_aksi.indikator_kegiatan_id','=','indikator_kegiatan.id');
                             })
                             ->leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
                                 $join   ->on('pelaksana.id','=','rencana_aksi.jabatan_id');
                             })
                             ->SELECT([  
-                                    'rencana_aksi.label AS rencana_aksi_label',
-                                    'rencana_aksi.id AS rencana_aksi_id',
-                                    'rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
-                                    'rencana_aksi.waktu_pelaksanaan AS wapel',
-                                    'pelaksana.skpd AS pelaksana'
+                                'rencana_aksi.label AS rencana_aksi_label',
+                                'rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
+                                'pelaksana.skpd AS pelaksana'
+
 
                                 
                                 
                                 ])
-                            ->WHERE('skp_tahunan_kegiatan.skp_tahunan_id','=', $request->skp_tahunan_id )
+                            
                             ->orderBy('rencana_aksi.indikator_kegiatan_id','ASC')
                             ->groupBy('rencana_aksi.label','rencana_aksi.jabatan_id')
+                            ->WHERE('skp_tahunan_kegiatan.skp_tahunan_id','=', $request->skp_tahunan_id )
                             ->get();
-
+        //return $dt;
                  
                 
         $datatables = Datatables::of($dt)
@@ -620,7 +624,7 @@ class RencanaAksiAPIController extends Controller {
             $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
 
-        return $datatables->make(true); 
+        return $datatables->make(true);  
         
     }
 
