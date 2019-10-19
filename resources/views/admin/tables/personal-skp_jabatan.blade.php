@@ -62,7 +62,19 @@
 								
 								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
 								{ data: "tmt_jabatan" ,  name:"tmt_jabatan", orderable: true, searchable: true},
-								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true},
+								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true,
+									"render": function ( data, type, row ) {
+										if (row.jabatan_status == 'active' ){
+											return  '<span class="btn btn-sm label-success">'+row.jabatan+'</span>';
+										}else{
+											return  row.jabatan;
+											
+										}
+										
+									}
+								
+								
+								},
 								{ data: "skpd" ,  name:"skpd", orderable: true, searchable: true},
 								{ data: "renja" , orderable: false,searchable:false,width:"40px",
 										"render": function ( data, type, row ) {

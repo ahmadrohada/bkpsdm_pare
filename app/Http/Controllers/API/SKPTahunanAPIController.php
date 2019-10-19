@@ -696,10 +696,7 @@ class SKPTahunanAPIController extends Controller {
 
     protected function skp_tahunan_id($skpd_id,$periode_id,$pegawai_id,$jabatan_id){
         $pk = Renja::
-              /*   rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
-                    $join   ->on('pk.renja_id','=','renja.id');
-                    $join   ->where('pk.status_approve','=','1');
-                }) */
+             
                 rightjoin('db_pare_2018.skp_tahunan AS skp', function($join){
                     $join   ->on('skp.renja_id','=','renja.id');
                 })
@@ -832,7 +829,7 @@ class SKPTahunanAPIController extends Controller {
                 $xt = HistoryJabatan::
                                 WHERE('id_pegawai','=', $id_pegawai)
                                 ->whereRAW('YEAR(tmt_jabatan) = ' .$thn )
-                                ->SELECT('id AS jabatan_id','id_jabatan','id_skpd','tmt_jabatan')
+                                ->SELECT('id AS jabatan_id','id_jabatan','id_skpd','tmt_jabatan','status')
                                 ->ORDERBY('tmt_jabatan','ASC')
                                 ->get(); 
 
@@ -844,6 +841,7 @@ class SKPTahunanAPIController extends Controller {
                     $h['periode_id']	        = $x->id;
                     $h['jabatan']			    = Pustaka::capital_string($y->Jabatan ? $y->Jabatan->skpd : '');
                     $h['jabatan_id']			= $y->jabatan_id;
+                    $h['jabatan_status']	    = $y->status;
                     $h['skpd']			        = Pustaka::capital_string($y->Skpd ? $y->Skpd->skpd : '');
                     $h['skpd_id']			    = $y->Skpd ? $y->Skpd->id : '';
                     $h['tmt_jabatan']			= $y->tmt_jabatan;
@@ -867,6 +865,7 @@ class SKPTahunanAPIController extends Controller {
                     $h['periode_id']	    = $x->id;
                     $h['jabatan']			= $last_jabatan;
                     $h['jabatan_id']		= $last_jabatan_id;
+                    $h['jabatan_status']	= $y->status;
                     $h['skpd']			    = $last_skpd;
                     $h['skpd_id']			= $last_skpd_id;
                     $h['tmt_jabatan']	    = $last_tmt_jabatan;
@@ -892,6 +891,11 @@ class SKPTahunanAPIController extends Controller {
             ->addColumn('jabatan', function ($x) {
             
                 return  $x['jabatan'];
+                
+            }) 
+            ->addColumn('jabatan_status', function ($x) {
+            
+                return  $x['jabatan_status'];
                 
             }) 
             ->addColumn('tmt_jabatan', function ($x) {
