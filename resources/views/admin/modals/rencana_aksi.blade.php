@@ -266,7 +266,7 @@
 				}).then(function () {
 					$('.modal-rencana_aksi').modal('hide');
 					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-					$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
+					//$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
 					jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
 					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 					
@@ -339,7 +339,7 @@
 				}).then(function () {
 					$('.modal-rencana_aksi').modal('hide');
 					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-					$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
+					//$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
 					jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
 					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 				},
