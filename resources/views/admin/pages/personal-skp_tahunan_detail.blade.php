@@ -69,7 +69,7 @@
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
 										?>@include('admin.modules.tab.kegiatan_tahunan_3_detail')<?php
 									}else{
-										?>@include('admin.tables.skp_kegiatan_tahunan_2_detail')<?php
+										?>@include('admin.modules.tab.kegiatan_tahunan_2_detail')<?php
 									}
 									
 									break;

@@ -18,6 +18,7 @@ use App\Models\Golongan;
 use App\Models\Eselon; 
 
 use App\Models\KegiatanSKPTahunan;
+use App\Models\Kegiatan;
 use App\Models\RealisasiKegiatanTahunan;
 use App\Models\PerilakuKerja;
 use App\Models\RencanaAksi;
@@ -258,7 +259,8 @@ class CapaianTahunanAPIController extends Controller {
                                  'skp_tahunan.renja_id',
                                  'skp_tahunan.u_jabatan_id',
                                  'skp_tahunan.p_jabatan_id',
-                                 'skp_tahunan.pegawai_id'
+                                 'skp_tahunan.pegawai_id',
+                                 'skp_tahunan.renja_id'
 
                                  
                                 )
@@ -283,7 +285,18 @@ class CapaianTahunanAPIController extends Controller {
 
         //================================= KABID     / ESELON 3 ===========================================//
         }else if ( $jenis_jabatan == 2 ){
-
+            //CARI BAWAHAN
+            
+            $child = Jabatan::SELECT('id')->WHERE('parent_id', $skp_tahunan->PejabatYangDinilai->id_jabatan )->get()->toArray();
+            $jm_kegiatan = Kegiatan::SELECT('id','label')
+                            ->WHERE('renja_kegiatan.renja_id', $skp_tahunan->renja_id )
+                            ->WHEREIN('renja_kegiatan.jabatan_id',$child )
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                
+                            })
+                            ->count();
+         
         //================================= KABAN     / ESELON 2 ===========================================//
         }else if ( $jenis_jabatan == 1 ){
 

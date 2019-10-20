@@ -420,7 +420,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                             'ind_kegiatan_id'       => 'required',
                             'kegiatan_tahunan_id'   => 'required',
                             'target_quantity'       => 'required',
-                            'realisasi_quantity'    => 'required',
+                            'realisasi_quantity'    => 'required|numeric|min:1',
                             'satuan'                => 'required',
                             'target_cost'           => 'required',
                             'realisasi_cost'        => 'required',
@@ -510,7 +510,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                             'ind_kegiatan_id'       => 'required',
                             'jumlah_indikator'      => 'required|numeric|min:1',
 
-                            'target_quantity'       => 'required|numeric|min:1',
+                            'target_quantity'       => 'required|numeric|min:0',
                             'target_cost'           => 'required',
 
                             'realisasi_quantity'    => 'required|numeric|min:1',

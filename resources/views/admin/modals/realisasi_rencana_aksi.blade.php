@@ -8,7 +8,7 @@
                 </h4>
             </div>
 
-            <form  id="realisasi_rencana_aksi_form" method="POST" action="">
+            <form  id="realisasi_rencana_aksi_form" onsubmit="return false;">
 			<input type="hidden"  name="rencana_aksi_id" class="rencana_aksi_id">
 			<input type="hidden"  name="skp_bulanan_id" class="skp_bulanan_id">
 			<input type="hidden"  name="capaian_id" class="realisasi_id">
@@ -69,7 +69,7 @@
 							<input type="hidden"  name="alasan_tidak_tercapai" class="alasan_tidak_tercapai">
 						</div>
 
-						<div class="col-md-6 form-group bukti" style="margin-top:8px;">
+						<div class="col-md-6 form-group bukti hidden" style="margin-top:8px;">
 							<div class="form-group">
 								<label for="file_bukti">Bukti</label>
 								<input type="file" id="file_bukti" name="file_bukti">

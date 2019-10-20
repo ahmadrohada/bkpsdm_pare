@@ -65,11 +65,13 @@
 	function initTreeKegTahunan() {
 		$('#keg_tahunan_3_tree')
 		.on("loaded.jstree", function(){
-			$('#keg_tahunan_3_tree').jstree('open_all');
+			//$('#keg_tahunan_3_tree').jstree('open_all');
 		})
 		.on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
+
 				detail_table(data.instance.get_node(data.selected[0]).id);
+
 			}
 		})
 		.jstree({
@@ -77,9 +79,9 @@
 						'data' : {
 						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_3") }}", //Eselon 4
 						"data" 	: function (node) {
-							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
-                                        "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
-										"skp_tahunan_id" : {!! $skp->id !!}
+							return  {   "renja_id" 			: {!! $skp->Renja->id !!} , 
+                                        "jabatan_id" 		: {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+										"skp_tahunan_id" 	: {!! $skp->id !!}
                                     };
 						},
 						"dataType" : "json"
@@ -122,7 +124,7 @@
 
                   	load_indikator_kegiatan( tx[1]);
 				break; 
-				case '':
+				case 'KegiatanRenja':
 					show_modal_create(tx[1]);
 				break;
 				case 'IndikatorKegiatan':
