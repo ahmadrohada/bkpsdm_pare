@@ -53,11 +53,11 @@ $(document).ready(function() {
                         timer: 1500
 				}).then(function () {
 						$('.add-pegawai').modal('hide');
-						//window.location.reload();
+						window.location.reload();
 				},
 					function (dismiss) {
 						if (dismiss === 'timer') {
-							//window.location.reload();
+							window.location.reload();
 							
 						}
 					}
