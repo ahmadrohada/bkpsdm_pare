@@ -31,7 +31,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12 form-group target_indikator_kegiatan ">
-							<label class="control-label">Target</label>
+							<label class="control-label">Target  Quantity</label>
 							<p class="txt_output_indikator_kegiatan"></p>
 						</div>
 					</div>

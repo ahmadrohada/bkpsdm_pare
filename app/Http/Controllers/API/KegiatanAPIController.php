@@ -499,7 +499,7 @@ class KegiatanAPIController extends Controller {
                 $kegiatan_label                 = $x->kegiatan_tahunan_label;
                 $data_kegiatan['icon']	        = 'jstree-kegiatan_tahunan';
             }else{
-                $kegiatan_id                    = "KegiatanRenja|".$x->kegiatan_id."|".$x->kegiatan_label;
+                $kegiatan_id                    = "KegiatanRenja|".$x->kegiatan_id;
                 $kegiatan_label                 = $x->kegiatan_label;
                 $data_kegiatan['icon']	        = 'jstree-kegiatan';
             }
@@ -519,7 +519,9 @@ class KegiatanAPIController extends Controller {
               
 
                     //Rencana aksi
-                    $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$y->id)->get();
+                    $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$y->id)
+                                        ->WHERE('kegiatan_tahunan_id',$x->kegiatan_tahunan_id)
+                                        ->get();
 
                     foreach ($ra as $z) {
                         $data_rencana_aksi['id']	        = "RencanaAksi|".$z->id;

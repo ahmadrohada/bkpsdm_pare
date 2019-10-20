@@ -453,6 +453,7 @@ class RencanaAksiAPIController extends Controller {
                             })
                             ->join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                                 $join   ->on('rencana_aksi.indikator_kegiatan_id','=','indikator_kegiatan.id');
+                                
                             })
                             ->leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
                                 $join   ->on('pelaksana.id','=','rencana_aksi.jabatan_id');
@@ -469,6 +470,7 @@ class RencanaAksiAPIController extends Controller {
                             
                             ->orderBy('rencana_aksi.indikator_kegiatan_id','ASC')
                             ->groupBy('rencana_aksi.label','rencana_aksi.jabatan_id')
+                            
                             ->WHERE('skp_tahunan_kegiatan.skp_tahunan_id','=', $request->skp_tahunan_id )
                             ->get();
         //return $dt;
@@ -478,9 +480,6 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('label', function ($x) {
             //return $x->rencana_aksi_label.'/'.$x->indikator_kegiatan_id.'/'.$x->wapel;
             return $x->rencana_aksi_label;
-        })
-        ->addColumn('rencana_aksi_id', function ($x) {
-            return $x->rencana_aksi_id;
         })
         ->addColumn('pelaksana', function ($x) {
 
@@ -813,23 +812,41 @@ class RencanaAksiAPIController extends Controller {
     {
             
        
-        $dt = RencanaAksi::
-                            SELECT([   
-                                'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
-                                'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
-                                'skp_tahunan_rencana_aksi.target',
-                                'skp_tahunan_rencana_aksi.satuan',
-                                'skp_tahunan_rencana_aksi.waktu_pelaksanaan',
-                                'skp_tahunan_rencana_aksi.jabatan_id',
-                                
-                                ])
-                            ->WHERE('skp_tahunan_rencana_aksi.indikator_kegiatan_id','=', $request->indikator_kegiatan_id )
-                            ->orderBy('skp_tahunan_rencana_aksi.waktu_pelaksanaan','ASC')
-                            ->orderBy('skp_tahunan_rencana_aksi.id','DESC')
-                            ->get();
+        //CARI kegiatan _tahunan nya
+        $keg_tahunan = IndikatorKegiatan::
+                                        leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
+                                            $join   ->on('kegiatan.id','=','renja_indikator_kegiatan.kegiatan_id');
+                                        })
+                                        ->join('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                            $join   ->on('kegiatan_tahunan.kegiatan_id','=','kegiatan.id');
+                                        })
+                                        ->SELECT('kegiatan_tahunan.id AS kegiatan_tahunan_id')
+                                        ->WHERE('renja_indikator_kegiatan.id',$request->indikator_kegiatan_id)
+                                        ->first();
+        if ($keg_tahunan){
+            $kegiatan_tahunan_id = $keg_tahunan->kegiatan_tahunan_id;
+            
 
-                 
-                
+        }else{
+            $kegiatan_tahunan_id = 0 ;
+        }
+        
+        $dt = RencanaAksi::
+                        SELECT([   
+                            'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                            'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                            'skp_tahunan_rencana_aksi.target',
+                            'skp_tahunan_rencana_aksi.satuan',
+                            'skp_tahunan_rencana_aksi.waktu_pelaksanaan',
+                            'skp_tahunan_rencana_aksi.jabatan_id',
+                            
+                            ])
+                        ->WHERE('skp_tahunan_rencana_aksi.indikator_kegiatan_id','=', $request->indikator_kegiatan_id )
+                        ->WHERE('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=', $kegiatan_tahunan_id )
+                        ->orderBy('skp_tahunan_rencana_aksi.waktu_pelaksanaan','ASC')
+                        ->orderBy('skp_tahunan_rencana_aksi.id','DESC')
+                        ->get();
+
         $datatables = Datatables::of($dt)
         ->addColumn('label', function ($x) {
             return $x->rencana_aksi_label;
@@ -865,7 +882,7 @@ class RencanaAksiAPIController extends Controller {
             $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
 
-        return $datatables->make(true); 
+        return $datatables->make(true);  
         
     }
 

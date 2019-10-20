@@ -8,7 +8,7 @@
                 </h4>
             </div>
 
-            <form  id="realisasi_rencana_aksi_form" method="POST" action="self">
+            <form  id="realisasi_rencana_aksi_form" onsubmit="return false;">
 
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<input type="hidden"  name="rencana_aksi_id" class="rencana_aksi_id">
@@ -23,7 +23,7 @@
 					<br>
 					<div class="row">
 						<div class="col-md-12 form-group label_kegiatan_tahunan">
-							<strong>Kegiatan Tahunan  </strong>
+							<strong>Kegiatan Tahunan </strong>
 							<p class="text-info " style="margin-top:8px;">
 								<span class="kegiatan_tahunan_label"></span>
 							</p>
@@ -60,7 +60,7 @@
 					<div class="row"> 
 
 						<div class="col-md-6 col-xs-6 form-group" style="margin-top:8px;">	
-							<label class="control-label">Target </label>
+							<label class="control-label">Target Quantity </label>
 							<div class="input-group">
 							<span type="text" class="form-control input-sm rencana_aksi_target"></span>
 								<div class="input-group-addon">
@@ -71,7 +71,7 @@
 							<input type="hidden"  name="alasan_tidak_tercapai" class="alasan_tidak_tercapai">
 						</div>
 						<div class="col-md-6 col-xs-6 form-group realisasi" style="margin-top:8px;">	
-							<label class="control-label">Realisasi </label>
+							<label class="control-label">Realisasi Quantity </label>
 							<div class="input-group">
 								<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi">
 								<div class="input-group-addon">
@@ -80,7 +80,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-6 form-group bukti" style="margin-top:8px;">
+						<div class="col-md-6 form-group bukti hidden" style="margin-top:8px;">
 							<div class="form-group">
 								<label for="file_bukti">Bukti</label>
 								<input type="file" id="file_bukti" name="file_bukti">

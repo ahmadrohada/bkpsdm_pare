@@ -41,10 +41,24 @@
 								
 				<div class=" tab-pane" id="kegiatan_tahunan_tab">
 
-					<!-- 3. KASUBID -->
-					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.tables.capaian_kegiatan_tahunan_edit')
-					@endif
+
+					<?php
+						switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+							case '1': 
+									?><?php
+									break;
+							case '2':
+									?>@include('admin.tables.capaian_kegiatan_tahunan_edit')<?php
+									break;
+							case '3': 
+									?>@include('admin.tables.capaian_kegiatan_tahunan_edit')<?php
+									break;
+							case '4':   
+									?><?php
+									break;
+						}
+					?>
+					
 				
 				</div>
 				<div class=" tab-pane" id="unsur_penunjang_tab">
