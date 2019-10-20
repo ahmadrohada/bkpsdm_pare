@@ -278,7 +278,13 @@ class PegawaiController extends Controller {
         	    ]
             );   
         }else{
-            return redirect('/admin/pegawai/'.$pegawai_id)->with('status', 'Pegawai sudah terdaftar');
+
+            if ($admin_skpdRole) {
+                return redirect('/skpd/pegawai/'.$pegawai_id)->with('status', 'Pegawai sudah terdaftar');
+            } elseif ($adminRole) {
+                return redirect('/admin/pegawai/'.$pegawai_id)->with('status', 'Pegawai sudah terdaftar');
+            }
+            
 
         }
 

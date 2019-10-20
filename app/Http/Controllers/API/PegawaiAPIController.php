@@ -63,7 +63,6 @@ class PegawaiAPIController extends Controller {
             $user->active       = '1';
             $user->resent       = '1';
 
-            
 
  
             if ( $user->save() ){
@@ -79,8 +78,7 @@ class PegawaiAPIController extends Controller {
 
 
                 return \Response::make('Berhasil', 200);
-                
-                //return redirect('/admin/pegawai/'.Input::get('pegawai_id'))->with('status', 'Pegawai berhasil didaftarkan');
+               
             }else{
                 return \Response::make('Gagal add pegawai', 500);
             }
@@ -89,8 +87,7 @@ class PegawaiAPIController extends Controller {
  
 
         }else{
-            
-            return redirect('/admin/pegawai/'.Input::get('pegawai_id'))->with('status', 'Pegawai sudaah didaftarkan');
+
         }
 
 
