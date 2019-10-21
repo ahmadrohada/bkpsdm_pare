@@ -12014,12 +12014,11 @@ input[type=checkbox].icheckbox_square-blue:checked {
 }
 ::-ms-reveal,
 ::-ms-clear {
-  display: none !important;
+  display: none !important; 
 }
 .hideShowPassword-toggle {
-  background: transparent url('/assets/css/hideShowPassword/images/wink.png') -4px center no-repeat;
-  background: transparent url('/assets/css/hideShowPassword/images/wink.svg') -4px center no-repeat;
-  border: none;
+  background: transparent url('assets/css/hideShowPassword/images/wink.png') -4px center no-repeat;
+  border: 1px solid red;
   height: 32px;
   width: 35px;
   margin: 1px 3px 0 !important;
