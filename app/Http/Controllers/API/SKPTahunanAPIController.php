@@ -865,7 +865,7 @@ class SKPTahunanAPIController extends Controller {
                     $h['periode_id']	    = $x->id;
                     $h['jabatan']			= $last_jabatan;
                     $h['jabatan_id']		= $last_jabatan_id;
-                    $h['jabatan_status']	= $y->status;
+                    $h['jabatan_status']	= "";
                     $h['skpd']			    = $last_skpd;
                     $h['skpd_id']			= $last_skpd_id;
                     $h['tmt_jabatan']	    = $last_tmt_jabatan;
