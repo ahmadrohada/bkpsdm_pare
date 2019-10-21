@@ -1,7 +1,7 @@
 {!! Form::open(array('url' => 'auth/login', 'method' => 'POST', 'class' => 'login-form', 'role' => 'form')) !!}
 	{!! csrf_field() !!}
 
-	
+	 
 
 	<div class="form-group has-feedback">
 		{!! Form::label('username', Lang::get('auth.username'), array('class' => 'sr-only')); !!}
@@ -18,5 +18,8 @@
 			{!! Form::button('<i class="fa fa-sign-in" aria-hidden="true"></i> '.Lang::get('auth.login-button'), array('class' => 'btn btn-primary btn-block btn-flat','type' => 'submit')) !!}
 		</div>
 	</div>
+
+
+
 
 {!! Form::close() !!}
