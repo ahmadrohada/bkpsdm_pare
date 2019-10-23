@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-5">
+	<div class="col-md-6">
 
 		<div class="table-responsive">
 			<input type='text' id = 'cari' class="form-control" placeholder="cari">
@@ -7,7 +7,7 @@
 		</div>
 		
 	</div>
-	<div class="col-md-7">
+	<div class="col-md-6">
 		@include('admin.tables.pohon_kinerja-tujuan_edit')
 		@include('admin.tables.pohon_kinerja-ind_tujuan_edit')
 		@include('admin.tables.pohon_kinerja-sasaran_edit')
@@ -22,16 +22,9 @@
 	</div>
 </div>
 
-
-
-     
-
-
-
-
-
-
 <script type="text/javascript">
+
+
 
 		
 	function renja_list_kegiatan_tree() {

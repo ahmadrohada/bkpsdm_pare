@@ -1,4 +1,4 @@
-<div class="box box-primary div_misi_detail">
+<div class="box box-primary div_misi_detail" >
 	<div class="box-header with-border">
 		<h1 class="box-title">
 			Detail Rencana Kerja SKPD
@@ -9,7 +9,7 @@
 			
 		</div>
 	</div>
-	<div class="box-body table-responsive">
+	<div class="box-body table-responsive" >
 
 		<strong>Periode</strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
