@@ -70,6 +70,45 @@ class Pustaka {
 	return $nilai;
 
 	}
+
+	public static function eselon($data){
+		
+		if ( ($data === NULL ) | ( $data == 0  ) ){
+			return "";
+		}else{
+			switch($data)
+						{
+					case "1" : $jenis_jabatan= "";
+							break;
+					case "2"  : $jenis_jabatan= "JPT";
+							break;
+					case "3" :  $jenis_jabatan= "JPT";
+							break;
+					case "4"  : $jenis_jabatan= "administrator";
+							break;
+					case "5" :  $jenis_jabatan= "administrator";
+							break;
+					case "6"  : $jenis_jabatan= "pengawas";
+							break;
+					case "7"  : $jenis_jabatan= "pengawas";
+							break;
+					case "8"  : $jenis_jabatan= "";
+							break;
+					case "9"  : $jenis_jabatan= "pelaksana";
+							break;
+					case "10"  : $jenis_jabatan= "";
+							break;
+					case "11"  : $jenis_jabatan= "";
+							break;
+						}
+
+			return $jenis_jabatan;
+		}
+		
+
+	
+
+	}
 	
 	public static function balik($data){
 		$tanggal = substr($data,8,2); 
