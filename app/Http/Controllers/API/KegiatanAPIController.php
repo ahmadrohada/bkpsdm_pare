@@ -114,7 +114,10 @@ class KegiatanAPIController extends Controller {
     public function RenjaDistribusiKegiatanTree(Request $request)
     {
        
-        //BEBERAPA jabatan yang dikecualikan agar tetap bisa di tambahkan kegiatan
+        //23-10-2019  distribusi berdasarkan jenis jabatan , 
+        //Pimpinan tertinggi / Kaban /eselon II 
+        //---- Administrator // KABID // eselon III
+        //--------Pengawas // KASUBID // eselonIV  ------- jabatan inilah yang akan diberikan kegiatan
         //Pengecualian untuk irban
         $a = ['143','144','145','146'];
         //pengecualian untuk KEC Telukjambe Barat
@@ -122,7 +125,7 @@ class KegiatanAPIController extends Controller {
         $pengecualian = array_merge($a,$b);
         if ( $request->skpd_id == 3 ){
             //SEKDA 
-            $ka_skpd = SKPD::
+            $level1 = SKPD::
                             leftjoin('demo_asn.m_skpd AS data', function($join){
                                 $join   ->on('data.parent_id','=','m_skpd.id');
                             })
@@ -130,44 +133,54 @@ class KegiatanAPIController extends Controller {
                             ->where('m_skpd.parent_id','=', $request->skpd_id)
                             ->get();
             
+           
+        }else if ( $request->skpd_id == 11 ){
+            //JIKA KANTOR KESBANGPOL, level satunya adalah atasan nya
+            $level1 = SKPD::where('id','=', 11)->select('id','skpd','id_eselon')->get();
+
+            
         }else{
-            //Distibusi kegiatan 
-            $ka_skpd = SKPD::where('parent_id','=', $request->skpd_id)->select('id','skpd')->get();
+            //Distibusi kegiatan dengan level normal
+            $level1 = SKPD::where('parent_id','=', $request->skpd_id)->select('id','skpd','id_eselon')->get();
         }
        
-		foreach ($ka_skpd as $x) {
-            $data_ka_skpd['id']	            = "ka_skpd|".$x->id;
-			$data_ka_skpd['text']			= Pustaka::capital_string($x->skpd);
-            $data_ka_skpd['icon']           = "jstree-people";
-            $data_ka_skpd['type']           = "ka_skpd";
+		foreach ($level1 as $x) {
+            $data_level1['id']	            = $x->id;
+			$data_level1['text']		    = Pustaka::capital_string($x->skpd);
+            $data_level1['icon']            = "jstree-people";
+            $data_level1['type']            = "JPT";
             
-            $kabid = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
-            foreach ($kabid as $y) {
+            $level2 = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
+            foreach ($level2 as $y) {
                 //JIKA YANG DIKECUALIKAN,MALAH BISA ADD KEGIATAN
                 if (in_array( $y->id, $pengecualian)){
-                    $data_kabid['id']	        = "kasubid|".$y->id;
-                    $data_kabid['type']         = "kasubid";
-                    $kasubid = [] ;
+                    $data_level2['id']	        = $y->id;
+                    $data_level2['text']		= Pustaka::capital_string($y->skpd);
+                    $data_level2['icon']        = "jstree-people";
+                    $data_level2['type']        = "pengawas";
+                    $level3 = [] ;
                 }else{
-                    $data_kabid['id']	        = "kabid|".$y->id;
-                    $data_kabid['type']         = "kabid";
-                    $kasubid = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
+                    $data_level2['id']	        = $y->id;
+                    $data_level2['type']        = "administrator";
+                    $data_level2['text']		= Pustaka::capital_string($y->skpd);
+                    $data_level2['icon']        = "jstree-people";
+                    $level3 = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
                 }
                
-                $data_kabid['text']			= Pustaka::capital_string($y->skpd);
-                $data_kabid['icon']         = "jstree-people";
+                    
                 
               
-                //$kasubid = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
+                //$level3 = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
                 
-                foreach ($kasubid as $z) {
-                    $data_kasubid['id']	            = "kasubid|".$z->id;
-                    $data_kasubid['text']			= Pustaka::capital_string($z->skpd);
-                    $data_kasubid['icon']           = "jstree-people";
+                foreach ($level3 as $z) {
+                    $data_level3['id']	            = $z->id;
+                    $data_level3['text']			= Pustaka::capital_string($z->skpd);
+                    $data_level3['icon']            = "jstree-people";
+                    $data_level3['type']            = "pengawas";
                   
                     $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label','cost')->get();
                     foreach ($kegiatan as $a) {
-                        $data_kegiatan['id']	        = "kegiatan|".$a->id;
+                        $data_kegiatan['id']	        = $a->id;
                         $data_kegiatan['text']			= Pustaka::capital_string($a->label);
                         $data_kegiatan['type']          = "kegiatan";
                         if ( $a->cost > 0 ){
@@ -179,7 +192,7 @@ class KegiatanAPIController extends Controller {
          
                             $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$a->id)->select('id','label')->get();
                             foreach ($ind_kegiatan as $g) {
-                                $data_ind_kegiatan['id']	        = "ind_kegiatan|".$g->id;
+                                $data_ind_kegiatan['id']	        = $g->id;
                                 $data_ind_kegiatan['text']			= Pustaka::capital_string($g->label);
                                 $data_ind_kegiatan['icon']          = "jstree-ind_kegiatan";
                                 $data_ind_kegiatan['type']          = "ind_kegiatan";
@@ -221,28 +234,28 @@ class KegiatanAPIController extends Controller {
                                     unset($data_kegiatan['children']);
                                 }
                     if(!empty($kegiatan_list)) {
-                        $data_kasubid['children']     = $kegiatan_list;
+                        $data_level3['children']     = $kegiatan_list;
                     }
-                    $kasubid_list[] = $data_kasubid ;
+                    $level3_list[] = $data_level3 ;
                     $kegiatan_list = "";
-                    unset($data_kasubid['children']);
+                    unset($data_level3['children']);
                 
                 }
-                if(!empty($kasubid_list)) {
-                    $data_kabid['children']     = $kasubid_list;
+                if(!empty($level3_list)) {
+                    $data_level2['children']     = $level3_list;
                 }
-                $kabid_list[] = $data_kabid ;
-                $kasubid_list = "";
-                unset($data_kabid['children']);
+                $level2_list[] = $data_level2 ;
+                $level3_list = "";
+                unset($data_level2['children']);
             
             }
                
-            if(!empty($kabid_list)) {
-                $data_ka_skpd['children']     = $kabid_list;
+            if(!empty($level2_list)) {
+                $data_level1['children']     = $level2_list;
             }
-            $data[] = $data_ka_skpd ;	
-            $kabid_list = "";
-            unset($data_ka_skpd['children']);
+            $data[] = $data_level1 ;	
+            $level2_list = "";
+            unset($data_level1['children']);
 		
         }	
            

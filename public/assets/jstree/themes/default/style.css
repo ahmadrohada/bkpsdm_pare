@@ -117,12 +117,18 @@
 }
 .vakata-context,
 .vakata-context ul {
+  font-family:mainandra;
   margin: 0;
-  padding: 2px;
   position: absolute;
-  background: #f5f5f5;
-  border: 1px solid #979797;
-  box-shadow: 2px 2px 2px #999999;
+  padding: 0;
+  background: #dddddd;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  -webkit-transform: translate(0, 2px) scale(0.95);
+  
+  box-shadow: 0 0 2px #0a6aa1;
+
+  
 }
 .vakata-context ul {
   list-style: none;
