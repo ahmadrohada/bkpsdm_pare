@@ -74,6 +74,7 @@
 
 		var id 		= id;
 		var type 	= type;
+		var tx = id.split('|');
 
 		switch ( type ){
 			case 'JPT':
@@ -82,7 +83,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
-						load_kegiatan_ka_skpd(id);
+						load_kegiatan_ka_skpd(tx[1]);
 				
 			break;
 			case 'administrator':
@@ -91,7 +92,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
-						load_kegiatan_kabid(id);
+						load_kegiatan_kabid(tx[1]);
 				
 			break;
 			case 'pengawas':
@@ -100,7 +101,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").show();
 						$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
-						load_kegiatan_kasubid(id);
+						load_kegiatan_kasubid(tx[1]);
 				
 			break;
 			case 'kegiatan':
@@ -109,7 +110,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_rencana_aksi_list").show();
 						$(".div_ind_kegiatan_detail").hide();
-						load_rencana_aksi2(id);
+						load_rencana_aksi2(tx[1]);
 				
 			break;
 			case 'ind_kegiatan':
@@ -118,7 +119,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_rencana_aksi_list").hide();
 						$(".div_ind_kegiatan_detail").show();
-						load_ind_kegiatan_end2( id);
+						load_ind_kegiatan_end2( tx[1]);
 				
 				break;
 				case 'rencana_aksi':

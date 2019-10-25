@@ -122,6 +122,10 @@ class KegiatanAPIController extends Controller {
         $a = ['143','144','145','146'];
         //pengecualian untuk KEC Telukjambe Barat
         $b = ['1235','1236','1237','1238','1239'];
+
+        // m_skpd ID 168 : UPTD kesehatan
+        $pengelompokan = ['168'];
+
         $pengecualian = array_merge($a,$b);
         if ( $request->skpd_id == 3 ){
             //SEKDA 
@@ -150,15 +154,35 @@ class KegiatanAPIController extends Controller {
             $data_level1['icon']            = "jstree-people";
             $data_level1['type']            = "JPT";
             
-            $level2 = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
+        
+            //JIKA DINKES maka array level 2 nya di merge dengan uptd puskesmas
+            if ( $x->id == '147'){
+               
+                $level2 = SKPD::where('parent_id','=',$x->id)
+                                ->where('id','!=','168')
+                                ->orwhere('parent_id','=', '168')
+                                ->select('id','skpd')
+                                ->get();
+            }else{
+                $level2 = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
+            }
+
+           
+
+
             foreach ($level2 as $y) {
-                //JIKA YANG DIKECUALIKAN,MALAH BISA ADD KEGIATAN
+
+                
+
+                
                 if (in_array( $y->id, $pengecualian)){
+                //JIKA YANG DIKECUALIKAN,MALAH BISA ADD KEGIATAN
                     $data_level2['id']	        = "lv2|".$y->id;
                     $data_level2['text']		= Pustaka::capital_string($y->skpd);
                     $data_level2['icon']        = "jstree-people";
                     $data_level2['type']        = "pengawas";
                     $level3 = [] ;
+
                 }else{
                     $data_level2['id']	        = "lv2|".$y->id;
                     $data_level2['type']        = "administrator";
