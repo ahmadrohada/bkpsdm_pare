@@ -77,8 +77,13 @@
 				"label" 	: "Tambah Kegiatan",
 				"icon"    	: "faa-ring fa fa-plus animated",
 				"action" 	:function(obj){
+
+						var text = node.id;
+						var tx = text.split('|');
+						//alert('id_jabatan = '+tx[1]);
+					
 						if ( node.type === 'pengawas'){
-							$('.distribusi_kegiatan_add, #tes').val(node.id);
+							$('.distribusi_kegiatan_add, #tes').val(tx[1]);
 							//SHOW MODAL UNTUK ADD KEGIATAN
 							$('.distribusi_kegiatan_add').modal('show');
 						} 	
@@ -87,7 +92,10 @@
 			"delete": {
 				"label": "Hapus Kegiatan",
 				"action": function (obj) {
-					unlink_kegiatan_kasubid(node.id);
+
+					var text = node.id;
+					var tx = text.split('|');
+					unlink_kegiatan_kasubid(tx[1]);
 					
 					/* if(confirm('Anda Akan menghapus kegiatan jabatan ?')){
 						var text = node.id;
@@ -123,6 +131,8 @@
 		
 		var id 		= id;
 		var type 	= type;
+		
+		var tx = id.split('|');
 
 		switch ( type ){
 			case 'JPT':
@@ -131,7 +141,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
-						load_kegiatan_ka_skpd(id);
+						load_kegiatan_ka_skpd(tx[1]);
 				
 			break;
 			case 'administrator':
@@ -140,7 +150,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
-						load_kegiatan_kabid(id);
+						load_kegiatan_kabid(tx[1]);
 				
 			break;
 			case 'pengawas':
@@ -149,7 +159,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").show();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
-						load_kegiatan_kasubid(id);
+						load_kegiatan_kasubid(tx[1]);
 				
 			break;
 			case 'kegiatan':
@@ -158,7 +168,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").show();
 						$(".div_ind_kegiatan_detail").hide();
-						load_ind_kegiatan2(id);
+						load_ind_kegiatan2(tx[1]);
 				
 			break;
 			case 'ind_kegiatan':
@@ -167,7 +177,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 						$(".div_ind_kegiatan_detail").show();
-						load_ind_kegiatan_end2(id);
+						load_ind_kegiatan_end2(tx[1]);
 				
 			break;
 			case 'rencana_aksi':

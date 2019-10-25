@@ -145,7 +145,7 @@ class KegiatanAPIController extends Controller {
         }
        
 		foreach ($level1 as $x) {
-            $data_level1['id']	            = $x->id;
+            $data_level1['id']	            = "lv1|".$x->id;
 			$data_level1['text']		    = Pustaka::capital_string($x->skpd);
             $data_level1['icon']            = "jstree-people";
             $data_level1['type']            = "JPT";
@@ -154,13 +154,13 @@ class KegiatanAPIController extends Controller {
             foreach ($level2 as $y) {
                 //JIKA YANG DIKECUALIKAN,MALAH BISA ADD KEGIATAN
                 if (in_array( $y->id, $pengecualian)){
-                    $data_level2['id']	        = $y->id;
+                    $data_level2['id']	        = "lv2|".$y->id;
                     $data_level2['text']		= Pustaka::capital_string($y->skpd);
                     $data_level2['icon']        = "jstree-people";
                     $data_level2['type']        = "pengawas";
                     $level3 = [] ;
                 }else{
-                    $data_level2['id']	        = $y->id;
+                    $data_level2['id']	        = "lv2|".$y->id;
                     $data_level2['type']        = "administrator";
                     $data_level2['text']		= Pustaka::capital_string($y->skpd);
                     $data_level2['icon']        = "jstree-people";
@@ -173,14 +173,14 @@ class KegiatanAPIController extends Controller {
                 //$level3 = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
                 
                 foreach ($level3 as $z) {
-                    $data_level3['id']	            = $z->id;
+                    $data_level3['id']	            = "lv3|".$z->id;
                     $data_level3['text']			= Pustaka::capital_string($z->skpd);
                     $data_level3['icon']            = "jstree-people";
                     $data_level3['type']            = "pengawas";
                   
                     $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label','cost')->get();
                     foreach ($kegiatan as $a) {
-                        $data_kegiatan['id']	        = $a->id;
+                        $data_kegiatan['id']	        = "kegiatan|".$a->id;
                         $data_kegiatan['text']			= Pustaka::capital_string($a->label);
                         $data_kegiatan['type']          = "kegiatan";
                         if ( $a->cost > 0 ){
@@ -192,7 +192,7 @@ class KegiatanAPIController extends Controller {
          
                             $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$a->id)->select('id','label')->get();
                             foreach ($ind_kegiatan as $g) {
-                                $data_ind_kegiatan['id']	        = $g->id;
+                                $data_ind_kegiatan['id']	        = "ind_kegiatan|".$g->id;
                                 $data_ind_kegiatan['text']			= Pustaka::capital_string($g->label);
                                 $data_ind_kegiatan['icon']          = "jstree-ind_kegiatan";
                                 $data_ind_kegiatan['type']          = "ind_kegiatan";
