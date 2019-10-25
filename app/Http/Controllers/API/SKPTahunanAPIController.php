@@ -984,14 +984,12 @@ class SKPTahunanAPIController extends Controller {
                                     ->WHERE('status','active')
                                     ->first();
 
-        //Golongan Aktif
-       /*  $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $jab_atasan->id_pegawai)
+         //Golongan Aktif
+        $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $jab_atasan->id_pegawai)
                                     ->WHERE('status','active')
-                                    ->first(); */
+                                    ->first();
 
-        return $jabatan_id_atasan;
-
-        /* if ( $gol_pribadi!=null ){
+        if ( $gol_pribadi!=null ){
 
             if ($gol_atasan!=null){
                 $p_jabatan_id	       = $jab_atasan->id;
@@ -1052,7 +1050,7 @@ class SKPTahunanAPIController extends Controller {
         }else{
             return response()->json(['errors'=> "Golongan Pejabat penilai/yang dinilai tidak aktif" ],422);
         }
- */
+
        
 
 
