@@ -201,12 +201,14 @@ class KegiatanAPIController extends Controller {
                                             $data_rencana_aksi['id']	= "rencana_aksi|".$za->id;
                                             $data_rencana_aksi['text']	= Pustaka::capital_string($za->label).' ['. Pustaka::bulan($za->waktu_pelaksanaan).']';
                                             $data_rencana_aksi['icon']  = 'jstree-rencana_aksi';
+                                            $data_rencana_aksi['type']  = "rencana_aksi";
  //TARGET PADA KEGIATAN BULANAN
                                         $kb = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$za->id)->get();
                                             foreach ($kb as $az) {
                                                 $data_keg_bulanan['id']	    = "kegiatan_bulanan|".$az->id;
                                                 $data_keg_bulanan['text']	=  'Target : '. $az->target.' '.$az->satuan.' / Pelaksana : '.Pustaka::capital_string($az->RencanaAksi->pelaksana->jabatan);
                                                 $data_keg_bulanan['icon']	= 'jstree-target';
+                                                $data_keg_bulanan['type']   = "kegiatan_bulanan";
                                             
                                                 $keg_bulanan_list[] = $data_keg_bulanan ;
                                             }	
