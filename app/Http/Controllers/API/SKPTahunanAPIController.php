@@ -984,12 +984,17 @@ class SKPTahunanAPIController extends Controller {
                                     ->WHERE('status','active')
                                     ->first();
 
-         //Golongan Aktif
-        $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $jab_atasan->id_pegawai)
-                                    ->WHERE('status','active')
-                                    ->first();
+        if ( $jab_atasan != null ){
+            //Golongan Aktif
+            $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $jab_atasan->id_pegawai)
+                                        ->WHERE('status','active')
+                                        ->first();
+        }else{
+            $gol_atasan = null ;
+        }
+       
 
-        if ( $gol_pribadi!=null ){
+        if ( $gol_pribadi != null ){
 
             if ($gol_atasan!=null){
                 $p_jabatan_id	       = $jab_atasan->id;
