@@ -124,7 +124,7 @@ class JabatanAPIController extends Controller {
 
           //PEGAWAI TIDAK AKTIF
           $nip      = "-";
-          $nama     = "Tidak ditemukan pejabat aktif pada jabatan ini";
+          $nama     = "Pensiun";
           $tmt      = "";
           $golongan = "-";
           $pangkat  = "-";
@@ -156,7 +156,7 @@ class JabatanAPIController extends Controller {
           'id_eselon'     => $jabatan->id_eselon,
           'jenis_jabatan' => $jabatan->Eselon ? $jabatan->Eselon->JenisJabatan->label : "",
           'nip'           => "",
-          'nama'          => "",
+          'nama'          => "Tidak ditemukan pejabat aktif pada jabatan ini",
           'tmt'           => "",
           'foto'          => asset('assets/images/form/default_icon.png'),
           'golongan'      => "",
