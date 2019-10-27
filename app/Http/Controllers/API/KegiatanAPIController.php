@@ -123,16 +123,36 @@ class KegiatanAPIController extends Controller {
         $a = ['143','144','145','146'];
         //pengecualian untuk KEC Telukjambe Barat
         $b = ['1235','1236','1237','1238','1239'];
-        //pengecualian untuk KEC Cikampek
+        //KEC Cikampek
         $c = ['1090','1091','1092','1093'];
+        //KEC JAtisari
+        $d = ['1098','1099','1100','1101','1102'];
+        //KEC Ciampel
+        $e = ['1335','1336','1337','1338','1339'];
+        //KEC teluk jambe timur
+        $f = ['1008','1009','1010','1011','1012'];
+        //KEC Klari
+        $g = ['1017','1018','1019','1020','1021'];
+        //KEC karawang barat
+        $h = ['1271','1272','1273','1274','1275'];
+        //KEC Tegal waru
+        $i = ['1244','1245','1246','1247','1248'];
+        //KEC pangkalan
+        $j = ['999','1000','1001','1002','1003'];
+        //KEC Kutawaluya
+        $k = ['1035','1036','1037','1038','1039'];
+        //KEC lemahabang
+        $l = ['1143','1144','1145','1146','1147'];
+        //KEC purwasari
+        $m = ['1253','1254','1255','1256','1257'];
 
 
-        
+
 
         // m_skpd ID 168 : UPTD kesehatan
         $pengelompokan = ['168'];
 
-        $pengecualian = array_merge($a,$b,$c);
+        $pengecualian = array_merge($a,$b,$c,$d,$e,$f,$g,$h,$i,$j,$k,$l,$m);
 
         if ( $request->skpd_id == 3 ){
             //SEKDA 
