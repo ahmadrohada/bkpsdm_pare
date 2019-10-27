@@ -94,7 +94,7 @@
 					width: "200px", 
 					showConfirmButton: false,
 					allowOutsideClick : false,
-					timer:1500
+					timer:200
 				}).then(function () {
 					$('.modal-kegiatan_kasubid').modal('hide');
 					$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
@@ -104,7 +104,9 @@
 					
 					function (dismiss) {
 						if (dismiss === 'timer') {
-							
+							$('.modal-kegiatan_kasubid').modal('hide');
+							$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
+							jQuery('#ditribusi_renja').jstree(true).refresh(true);
 						}
 					}
 			)	
