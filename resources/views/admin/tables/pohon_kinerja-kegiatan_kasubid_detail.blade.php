@@ -22,7 +22,7 @@
 			<span class="jj_kasubid"></span>
 		</p>
 
-		<strong>Nama</strong>
+		<strong>Nama Pejabat </strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 			<span class="nama_kasubid"></span>
 		</p>
@@ -83,7 +83,7 @@ function load_kegiatan_kasubid(jabatan_id){
 		dataType	: "json",
 		success	: function(data) {
 				$('.jabatan_kasubid').html(data['jabatan']);
-				$('.jj_kasubid').html(data['jenis_jabatan']+' ( eselon '+data['eselon']+' )');
+				$('.jj_kasubid').html(data['jenis_jabatan']+' / '+data['eselon']);
 				$('.nama_kasubid').html(data['nama']);
 				$('.nip_kasubid').html(data['nip']);
 		},

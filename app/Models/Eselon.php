@@ -14,5 +14,10 @@ class Eselon extends Model
     {
         return $this->hasOne('App\Models\JenisJabatan','id','id_jenis_jabatan');
     } 
+
+    public function JenisJabatan()
+    {
+        return $this->hasOne('App\Models\JenisJabatan','id','id_jenis_jabatan')->select('jenis_jabatan','jenis_jabatan as label');
+    } 
    
 }

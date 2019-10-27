@@ -26,6 +26,7 @@ class Pegawai extends Model
     {
     return $this->hasOne('App\Models\HistoryJabatan', 'id_pegawai')->where('status','active');
     }
+    
 
     public function GolonganAktif()
     {
@@ -33,7 +34,7 @@ class Pegawai extends Model
     }
 
 
-    public function foto()
+    public function Foto()
     {
        return $this->hasOne('App\Models\Foto', 'nipbaru','nip');
     }

@@ -1,35 +1,49 @@
-<div class="box box-primary div_ka_skpd_detail">
-	<div class="box-header with-border">
-		<h1 class="box-title">
-			Detail Jabatan
-		</h1>
-
-
-		<div class="box-tools pull-right">
-			
-		</div>
+<div class="box box-warning div_ka_skpd_detail " >
+	<div class="box-header with-border bg-yellow" >
+		<p class="jabatan-label jabatan_ka_skpd text-center"  style="margin-top:7px;">-</p>
+		<p class="text-center" style="margin-top:10px; color:#edecee; text-shadow: #897e5d 0.02em 0.02em 0.05em;">
+			<span class="jj_ka_skpd">-</span>
+		</p>
 	</div>
-	<div class="box-body table-responsive">
+	<div class="box-body table-responsive" style="border:solid 1px #dbdbdb">
 
 		
-		<strong>Jabatan</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="jabatan_ka_skpd"></span>
-		</p>
-
-		<strong>Jenis Jabatan / Eselon</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="jj_ka_skpd"></span>
-		</p>
-
-		<strong>Nama</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="nama_ka_skpd"></span>
-		</p>
-		<strong>NIP</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="nip_ka_skpd"></span>
-		</p>
+		<div class="col-md-3 col-xs-3" style="padding-left:5px;">
+			<img style="width: 100px; height: 125px;" class="img pasphpoto photo_ka_skpd" src="{{asset('assets/images/form/default_icon.png')}}">
+		</div>
+		<div class="col-md-9  col-xs-9" style="padding-left:0px;">
+			<!-- <strong>Nama Pejabat </strong>
+			<p class="text-muted " style="margin-top:7px;padding-bottom:5px;">
+				<span class="nama_ka_skpd">-</span>
+			</p>
+			<strong>NIP</strong>
+			<p class="text-muted " style="margin-top:7px;padding-bottom:5px;">
+				<span class="nip_ka_skpd">-</span>
+			</p>
+			<strong>GOL / Pangkat</strong>
+			<p class="text-muted " style="margin-top:7px;">
+				<span class="gol_ka_skpd">-</span>
+			</p>
+			<strong>TMT Jabatan</strong>
+			<p class="text-muted " style="margin-top:7px;">
+				<span class="tmt_ka_skpd">-</span>
+			</p> -->
+			<ul class="list-group list-group-unbordered">
+				<li class="list-group-item ">
+					<b>Pejabat</b> <a class="pull-right nama_ka_skpd">-</a>
+				</li>
+				<li class="list-group-item">
+					<b>NIP</b> <a class="pull-right nip_ka_skpd">-</a>
+				</li>
+				<li class="list-group-item">
+					<b>GOL / Pangkat</b> <a class="pull-right gol_ka_skpd" >-</a>
+				</li>
+				<li class="list-group-item">
+					<b>TMT Jabatan</b> <a class="pull-right tmt_ka_skpd">-</a>
+				</li>
+			</ul>
+		</div>
+		
 					
 	</div>
 </div>
@@ -80,9 +94,13 @@ function load_kegiatan_ka_skpd(jabatan_id){
 		dataType	: "json",
 		success	: function(data) {
 				$('.jabatan_ka_skpd').html(data['jabatan']);
-				$('.jj_ka_skpd').html(data['jenis_jabatan']+' ( eselon '+data['eselon']+' )');
+				$('.jj_ka_skpd').html(data['jenis_jabatan']+' / '+data['eselon']);
+
+				$(".photo_ka_skpd").prop("src",data['foto']);
 				$('.nama_ka_skpd').html(data['nama']);
 				$('.nip_ka_skpd').html(data['nip']);
+				$('.tmt_ka_skpd').html(data['tmt']);
+				$('.gol_ka_skpd').html(data['golongan']+" / "+data['pangkat']);
 				
 		},
 		error: function(data){

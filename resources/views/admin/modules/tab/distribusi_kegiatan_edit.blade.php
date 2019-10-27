@@ -90,7 +90,8 @@
 				}
 			},                  
 			"delete": {
-				"label": "Hapus Kegiatan",
+				"label"	: "Hapus Kegiatan",
+				"icon" 	: "faa-ring fa fa-remove animated",
 				"action": function (obj) {
 
 					var text = node.id;
@@ -108,12 +109,12 @@
 		};
 
 
-		if (node.type != "pengawas") {
+		if (node.type == "pengawas") {
+			delete items.delete;
+		}else if (node.type == "kegiatan") {
 			delete items.tambah;
+		}else{
 			delete items.delete;
-		}if (node.type == "pengawas") {
-			delete items.delete;
-		}if (node.type == "kegiatan") {
 			delete items.tambah;
 		}
 		return items;

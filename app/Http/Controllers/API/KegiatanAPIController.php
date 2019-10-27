@@ -171,9 +171,6 @@ class KegiatanAPIController extends Controller {
 
 
             foreach ($level2 as $y) {
-
-                
-
                 
                 if (in_array( $y->id, $pengecualian)){
                 //JIKA YANG DIKECUALIKAN,MALAH BISA ADD KEGIATAN
@@ -187,8 +184,17 @@ class KegiatanAPIController extends Controller {
                     $data_level2['id']	        = "lv2|".$y->id;
                     $data_level2['type']        = "administrator";
                     $data_level2['text']		= Pustaka::capital_string($y->skpd);
-                    $data_level2['icon']        = "jstree-people";
-                    $level3 = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
+                    $data_level2['icon']        = "jstree-people ";
+
+
+                    
+
+                    $level3 = SKPD::where('parent_id','=',$y->id)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
                 }
                
                     
@@ -197,12 +203,15 @@ class KegiatanAPIController extends Controller {
                 //$level3 = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
                 
                 foreach ($level3 as $z) {
-                    $data_level3['id']	            = "lv3|".$z->id;
-                    $data_level3['text']			= Pustaka::capital_string($z->skpd);
-                    $data_level3['icon']            = "jstree-people";
-                    $data_level3['type']            = "pengawas";
-                  
-                    $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label','cost')->get();
+
+                        $data_level3['id']	            = "lv3|".$z->id;
+                        $data_level3['text']			= Pustaka::capital_string($z->skpd);
+                        $data_level3['icon']            = "jstree-people   faa-pulse animated-hover ";
+                        $data_level3['type']            = "pengawas";
+                      
+                        $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label','cost')->get();
+    
+
                     foreach ($kegiatan as $a) {
                         $data_kegiatan['id']	        = "kegiatan|".$a->id;
                         $data_kegiatan['text']			= Pustaka::capital_string($a->label);

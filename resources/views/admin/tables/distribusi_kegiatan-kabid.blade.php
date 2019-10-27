@@ -1,35 +1,31 @@
-<div class="box box-primary div_kabid_detail " hidden>
-	<div class="box-header with-border">
-		<h1 class="box-title">
-			Detail Jabatan
-		</h1>
-
-
-		<div class="box-tools pull-right">
-			
-		</div>
+<div class="box box-warning div_kabid_detail " hidden>
+	<div class="box-header with-border bg-yellow">
+		<p class="jabatan-label jabatan_kabid text-center"  style="margin-top:7px;">-</p>
+		<p class="text-center" style="margin-top:10px; color:#edecee; text-shadow: #897e5d 0.02em 0.02em 0.05em;">
+			<span class="jj_kabid">-</span>
+		</p>
 	</div>
-	<div class="box-body table-responsive">
-
+	<div class="box-body table-responsive" style="border:solid 1px #dbdbdb">
+		<div class="col-md-3 col-xs-3" style="padding-left:5px;">
+			<img style="width: 100px; height: 125px;" class="img pasphpoto photo_kabid" src="{{asset('assets/images/form/default_icon.png')}}">
+		</div>
+		<div class="col-md-9  col-xs-9" style="padding-left:0px;">
+			<ul class="list-group list-group-unbordered">
+				<li class="list-group-item ">
+					<b>Pejabat</b> <a class="pull-right nama_kabid">-</a>
+				</li>
+				<li class="list-group-item">
+					<b>NIP</b> <a class="pull-right nip_kabid">-</a>
+				</li>
+				<li class="list-group-item">
+					<b>GOL / Pangkat</b> <a class="pull-right gol_kabid" >-</a>
+				</li>
+				<li class="list-group-item">
+					<b>TMT Jabatan</b> <a class="pull-right tmt_kabid">-</a>
+				</li>
+			</ul>
+		</div>
 		
-		<strong>Jabatan</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="jabatan_kabid"></span>
-		</p>
-
-		<strong>Jenis Jabatan / Eselon</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="jj_kabid"></span>
-		</p>
-
-		<strong>Nama</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="nama_kabid"></span>
-		</p>
-		<strong>NIP</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="nip_kabid"></span>
-		</p>
 					
 	</div>
 </div>
@@ -80,9 +76,13 @@ function load_kegiatan_kabid(jabatan_id){
 		dataType	: "json",
 		success	: function(data) {
 				$('.jabatan_kabid').html(data['jabatan']);
-				$('.jj_kabid').html(data['jenis_jabatan']+' ( eselon '+data['eselon']+' )');
+				$('.jj_kabid').html(data['jenis_jabatan']+'/ '+data['eselon']);
+				
+				$(".photo_kabid").prop("src",data['foto']);
 				$('.nama_kabid').html(data['nama']);
 				$('.nip_kabid').html(data['nip']);
+				$('.tmt_kabid').html(data['tmt']);
+				$('.gol_kabid').html(data['golongan']+" / "+data['pangkat']);
 				
 		},
 		error: function(data){
