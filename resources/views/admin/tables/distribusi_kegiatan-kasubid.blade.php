@@ -4,6 +4,7 @@
 		<p class="text-center" style="margin-top:10px; color:#edecee; text-shadow: #897e5d 0.02em 0.02em 0.05em;">
 			<span class="jj_kasubid">-</span>
 		</p>
+		<input type="hidden" class="jj_jabatan_id">
 	</div>
 	<div class="box-body table-responsive" style="border:solid 1px #dbdbdb">
 		<div class="col-md-3 col-xs-3" style="padding-left:5px;">
@@ -85,6 +86,7 @@ function load_kegiatan_kasubid(jabatan_id){
 		method		: "GET",
 		dataType	: "json",
 		success	: function(data) {
+				$('.jj_jabatan_id').val(jabatan_id);
 				$('.jabatan_kasubid').html(data['jabatan']);
 				$('.jj_kasubid').html(data['jenis_jabatan']+'/ '+data['eselon']);
 				
@@ -222,11 +224,10 @@ function load_kegiatan_kasubid(jabatan_id){
 										$(".div_kegiatan_detail").hide();
 
 										$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
-										jQuery('#ditribusi_renja').jstree(true).refresh(true);
 										$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
-
+										
 										$('.distribusi_kegiatan_add').modal('hide');
-
+										jQuery('#ditribusi_renja').jstree(true).refresh(true);
 								
 										$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
 										$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
@@ -235,10 +236,11 @@ function load_kegiatan_kasubid(jabatan_id){
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
-											jQuery('#ditribusi_renja').jstree(true).refresh(true);
+											
 											$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
 											$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
 											$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
+											jQuery('#ditribusi_renja').jstree(true).refresh(true);
 										}
 									}
 								)
@@ -295,19 +297,20 @@ function load_kegiatan_kasubid(jabatan_id){
 									timer: 900
 									}).then(function () {
 										$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
-										jQuery('#ditribusi_renja').jstree(true).refresh(true);
+										
 										$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
 										$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
 										$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
+										jQuery('#ditribusi_renja').jstree(true).refresh(true);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#kegiatan_kasubid_table').DataTable().ajax.reload(null,false);
-											jQuery('#ditribusi_renja').jstree(true).refresh(true);
+											
 											$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
 											$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
 											$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
-											
+											jQuery('#ditribusi_renja').jstree(true).refresh(true);
 										}
 									}
 								)
