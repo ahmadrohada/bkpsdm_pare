@@ -83,9 +83,9 @@ class StrukturOrganisasiAPIController extends Controller {
 				//FOTO
 				$foto = Pegawai::find($x->id_pegawai);
 
-				if ( $foto->Foto ){
+				/* if ( $foto->Foto ){
 					$sub_data['image'] = 'data:image/jpeg;base64,'.base64_encode($foto->Foto->isi) ;
-				  }else{
+				}else{
 		
 					if ( $x->jenis_kelamin == 'Perempuan'){
 						$sub_data['image']   = asset('assets/images/form/female_icon.png');
@@ -93,14 +93,14 @@ class StrukturOrganisasiAPIController extends Controller {
 						$sub_data['image']  = asset('assets/images/form/male_icon.png');
 					}
 		
-				  }
+				} */
 
-				/* //Foto pagawai
+				//Foto pagawai
 				if ( $x->jk == 'Perempuan'){
 					$sub_data['image']   = asset('assets/images/form/female_icon.png');
 				}else{
 					$sub_data['image']   = asset('assets/images/form/male_icon.png');
-				} */
+				} 
 
 				$sub_data['itemTitleColor']		= "#4b0082";
 
