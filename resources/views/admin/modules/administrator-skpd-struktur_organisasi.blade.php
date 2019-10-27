@@ -9,9 +9,9 @@
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
     </div>
-	<div class="box-body">
+	<div class="box-body table-responsive">
 
-		<div id="strukturorganisasi" style="width: 100%; min-height: 480px; " />
+		<div id="strukturorganisasi" style="width: 100%; min-height: 480px; "></div>
 
 	</div>
 </div>
@@ -21,12 +21,6 @@
 @include('admin.structure.dashboard-scripts')
 
 	
-
-<!-- <link rel="stylesheet" href="../assets/org_diagram/js/jquery/ui-lightness/jquery-ui-1.10.2.custom.css" /> 
-<script src="../assets/org_diagram/js/jquery/jquery-1.9.1.js"></script>
-<script src="../assets/org_diagram/js/jquery/jquery-ui-1.10.2.custom.min.js"></script>
--->
-
 <link   href="{{asset('assets/org_diagram/css/primitives.latest.css')}}" media="screen" rel="stylesheet" type="text/css" />
 
 
@@ -47,7 +41,7 @@ $(document).ready(function() {
                 
             jQuery("#strukturorganisasi").orgDiagram({
                 items: data,
-                cursorItem : 0 
+                cursorItem : 4 
             });
       
 						

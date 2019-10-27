@@ -68,7 +68,7 @@
 //load_kegiatan_kabid({!!$renja->KepalaSKPD->id_jabatan!!});
 
 function load_kegiatan_kabid(jabatan_id){
-
+	$(".photo_kabid").prop("src","{{asset('assets/images/form/default_icon.png')}}");
 	$.ajax({
 		url			: '{{ url("api_resource/detail_pejabat_aktif") }}',
 		data 		: {jabatan_id : jabatan_id},

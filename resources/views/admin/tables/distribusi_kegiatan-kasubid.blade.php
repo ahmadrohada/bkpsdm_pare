@@ -78,6 +78,7 @@
 
 function load_kegiatan_kasubid(jabatan_id){
 
+	$(".photo_kasubid).prop("src","{{asset('assets/images/form/default_icon.png')}}");
 	$.ajax({
 		url			: '{{ url("api_resource/detail_pejabat_aktif") }}',
 		data 		: {jabatan_id : jabatan_id},
