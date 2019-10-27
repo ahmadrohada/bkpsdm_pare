@@ -3,21 +3,14 @@
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 
 use App\Models\Jabatan;
-use App\Models\SKPTahunan;
 use App\Models\HistoryJabatan;
-use App\Models\Pegawai;
 use App\Models\Skpd;
 
 use App\Helpers\Pustaka;
 
 use Datatables;
-use Validator;
-use Gravatar;
-use Input;
-Use Alert;
 
 class JabatanAPIController extends Controller {
 
@@ -98,51 +91,85 @@ class JabatanAPIController extends Controller {
 
     public function PejabatAktifDetail(Request $request)
     {
-       
-        
-        $x = Jabatan::
-                            leftjoin('demo_asn.tb_history_jabatan AS pejabat', function($join){
-                                $join   ->on('pejabat.id_jabatan','=','m_skpd.id');
-                                $join   ->WHERE('pejabat.status','=', 'active' );
-                            })
-                            ->leftjoin('demo_asn.tb_pegawai AS asn', function($join){
-                                $join   ->on('asn.id','=','pejabat.id_pegawai');
-                                
-                            })
-                            ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
-                              $join   ->on('pejabat.id_eselon','=','eselon.id');
-                            })
-                            ->leftjoin('demo_asn.m_jenis_jabatan AS jenis_jabatan', function($join){
-                              $join   ->on('eselon.id_jenis_jabatan','=','jenis_jabatan.id');
-                            })
-                            
-                            ->WHERE('m_skpd.id', $request->jabatan_id)
-                            ->WHERE('asn.status','=','active')
-                            ->SELECT('m_skpd.skpd AS jabatan',
-                                     'pejabat.id_pegawai',
-                                     'pejabat.id AS jabatan_id',
-                                     'pejabat.id_pegawai',
-                                     'asn.nip',
-                                     'asn.nama',
-                                     'asn.gelardpn',
-                                     'asn.gelarblk',
-                                     'eselon.eselon',
-                                     'jenis_jabatan.jenis_jabatan'
+      $jabatan = Jabatan::find($request->jabatan_id);
 
-                                    )
-                            ->first();
+      $pejabat_aktif =  $jabatan->PejabatAktif;
 
-		
-		//return  $kegiatan_tahunan;
-        $pejabat = array(
-            'nip'           => $x->nip,
-            'nama'          => Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk),
-            'jenis_jabatan' => $x->jenis_jabatan,
-            'eselon'        => $x->eselon,
-            'jabatan'       => Pustaka::capital_string($x->jabatan)
+      if ( $pejabat_aktif ){
+        $pegawai_aktif = $jabatan->PejabatAktif->PegawaiAktif;
+        //JIKA Pensiun / ID pegaiai not valid
+        if ( $pegawai_aktif ){
+          $nip      = $pegawai_aktif->nip;
+          $nama     = Pustaka::nama_pegawai($pegawai_aktif->gelardpn , $pegawai_aktif->nama , $pegawai_aktif->gelarblk);
+          $tmt      = Pustaka::tgl_form($pejabat_aktif->tmt_jabatan);
+
+          $golongan = $jabatan->PejabatAktif->Golongan->label;
+          $pangkat  = $jabatan->PejabatAktif->Golongan->pangkat;
+
+          if ( $pegawai_aktif->Foto ){
+            $foto = 'data:image/jpeg;base64,'.base64_encode($pegawai_aktif->Foto->isi) ;
+          }else{
+
+            if ( $pegawai_aktif->jenis_kelamin == 'Perempuan'){
+                $foto   = asset('assets/images/form/female_icon.png');
+            }else{
+                $foto   = asset('assets/images/form/male_icon.png');
+            }
+
+          }
+          
+
+        }else{
+
+          //PEGAWAI TIDAK AKTIF
+          $nip      = "-";
+          $nama     = "Tidak ditemukan pejabat aktif pada jabatan ini";
+          $tmt      = "";
+          $golongan = "-";
+          $pangkat  = "-";
+          $foto  = asset('assets/images/form/default_icon.png');
+        }
+
+
+        $data = array(
+          
+              'jabatan'       => Pustaka::capital_string($jabatan->skpd),
+              'eselon'        => $jabatan->Eselon ? $jabatan->Eselon->label : "",
+              'id_eselon'     => $jabatan->id_eselon,
+              'jenis_jabatan' => $jabatan->Eselon ? $jabatan->Eselon->JenisJabatan->label : "",
+              'nip'           => $nip,
+              'nama'          => $nama,
+              'foto'          => $foto,
+              'tmt'           => $tmt,
+              'golongan'      => $golongan,
+              'pangkat'       => $pangkat,
+              
 
         ); 
-        return $pejabat;
+        return $data;
+      }else{
+        $data = array(
+          
+          'jabatan'       => Pustaka::capital_string($jabatan->skpd),
+          'eselon'        => $jabatan->Eselon ? $jabatan->Eselon->label : "",
+          'id_eselon'     => $jabatan->id_eselon,
+          'jenis_jabatan' => $jabatan->Eselon ? $jabatan->Eselon->JenisJabatan->label : "",
+          'nip'           => "",
+          'nama'          => "",
+          'tmt'           => "",
+          'foto'          => $foto,
+          'golongan'      => "",
+          'pangkat'       => "",
+          
+
+        ); 
+        return $data;
+
+
+      }
+      
+       
+
     }
 
 

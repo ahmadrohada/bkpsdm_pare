@@ -1,41 +1,39 @@
-<div class="box box-primary div_kasubid_detail" hidden>
-	<div class="box-header with-border">
-		<h1 class="box-title">
-			Detail Jabatan
-		</h1>
-
-
-		<div class="box-tools pull-right">
-			
-		</div>
+<div class="box box-warning div_kasubid_detail" hidden>
+	<div class="box-header with-border bg-yellow">
+		<p class="jabatan-label jabatan_kasubid text-center"  style="margin-top:7px;">-</p>
+		<p class="text-center" style="margin-top:10px; color:#edecee; text-shadow: #897e5d 0.02em 0.02em 0.05em;">
+			<span class="jj_kasubid">-</span>
+		</p>
 	</div>
-	<div class="box-body table-responsive">
+	<div class="box-body table-responsive" style="border:solid 1px #dbdbdb">
+		<div class="col-md-3 col-xs-3" style="padding-left:5px;">
+			<img style="width: 100px; height: 125px;" class="img pasphpoto photo_kasubid" src="{{asset('assets/images/form/default_icon.png')}}">
+		</div>
+		<div class="col-md-9  col-xs-9" style="padding-left:0px;">
+			<ul class="list-group list-group-unbordered">
+				<li class="list-group-item ">
+					<b>Pejabat</b> <a class="pull-right nama_kasubid">-</a>
+				</li>
+				<li class="list-group-item">
+					<b>NIP</b> <a class="pull-right nip_kasubid">-</a>
+				</li>
+				<li class="list-group-item">
+					<b>GOL / Pangkat</b> <a class="pull-right gol_kasubid" >-</a>
+				</li>
+				<li class="list-group-item">
+					<b>TMT Jabatan</b> <a class="pull-right tmt_kasubid">-</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col-md-12  col-xs-12 no-padding">
+			<span  data-toggle="tooltip" title="Add Kegiatan"><a class="btn btn-info btn-sm btn-block add_kegiatan"><i class="fa fa-plus" ></i> Add Kegiatan</a></span>	
+		</div>	
+		
+	</div>
+	
 
 		
-		<strong>Jabatan</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="jabatan_kasubid"></span>
-			<input type="hidden" class="jj_jabatan_id">
-		</p>
-
-		<strong>Jenis Jabatan / Eselon</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="jj_kasubid"></span>
-		</p>
-
-		<strong>Nama</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="nama_kasubid"></span>
-		</p>
-		<strong>NIP</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="nip_kasubid"></span>
-		</p>
-
-		<span  data-toggle="tooltip" title="Add Kegiatan"><a class="btn btn-info btn-sm btn-block add_kegiatan"><i class="fa fa-plus" ></i> Add Kegiatan</a></span>
-			
-					
-	</div>
+	
 </div>
 <div class="box box-primary div_kegiatan_kasubid_list" hidden>
     <div class="box-header with-border">
@@ -86,11 +84,14 @@ function load_kegiatan_kasubid(jabatan_id){
 		method		: "GET",
 		dataType	: "json",
 		success	: function(data) {
-				$('.jj_jabatan_id').val(jabatan_id);
 				$('.jabatan_kasubid').html(data['jabatan']);
-				$('.jj_kasubid').html(data['jenis_jabatan']+' ( eselon '+data['eselon']+' )');
+				$('.jj_kasubid').html(data['jenis_jabatan']+'/ '+data['eselon']);
+				
+				$(".photo_kasubid").prop("src",data['foto']);
 				$('.nama_kasubid').html(data['nama']);
 				$('.nip_kasubid').html(data['nip']);
+				$('.tmt_kasubid').html(data['tmt']);
+				$('.gol_kasubid').html(data['golongan']+" / "+data['pangkat']);
 				
 		},
 		error: function(data){

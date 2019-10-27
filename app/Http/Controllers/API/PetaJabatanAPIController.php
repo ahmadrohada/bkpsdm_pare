@@ -46,7 +46,7 @@ class PetaJabatanAPIController extends Controller {
 			
             $no++;
             
-            
+             
 				
 			$sub_data['id']				= $x->id;
 			$sub_data['text']			= Pustaka::capital_string($x->skpd);

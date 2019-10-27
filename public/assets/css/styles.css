@@ -50,6 +50,12 @@ h5.modal-title,.header-title,h4.modal-title{
 	color:#3b4f3b;
 	
 }
+.jabatan-label{
+	font-family: mainandra;
+	font-size:13pt;
+	color:#ffffff;
+	text-shadow: rgb(110, 110, 110) 0.02em 0.02em 0.05em;
+}
 
 h1{
 	font-family: mainandra !important;
@@ -144,4 +150,11 @@ li.user-header, .widget-user-username{
   }
   .login-box .form-group .hideShowPassword-toggle {
 	margin: -16px 35px 0 0 !important;
+  }
+
+  .pasphpoto{
+	border:3px groove rgb(155, 155, 155);
+	-webkit-box-shadow: 6px 6px 5px -1px rgba(0,0,0,0.5);
+	-moz-box-shadow: 6px 6px 5px -1px rgba(0,0,0,0.5);
+	box-shadow: 6px 6px 5px -1px rgba(0,0,0,0.5);
   }

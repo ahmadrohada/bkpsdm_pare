@@ -4,22 +4,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\PeriodeTahunan;
-use App\Models\PerjanjianKinerja;
-use App\Models\SasaranPerjanjianKinerja;
-use App\Models\IndikatorSasaran;
-use App\Models\Program;
-use App\Models\IndikatorProgram;
-use App\Models\Kegiatan;
-use App\Models\IndikatorKegiatan;
+use App\Models\Pegawai;
 use App\Models\PetaJabatan;
 use App\Helpers\Pustaka;
 
-use Datatables;
-use Validator;
-use Gravatar;
 use Input;
-Use Alert;
 
 class StrukturOrganisasiAPIController extends Controller {
 
@@ -46,11 +35,13 @@ class StrukturOrganisasiAPIController extends Controller {
 										'm_skpd.skpd',
 										'm_skpd.parent_id',
 										'a.nip',
+										'pegawai.id AS id_pegawai',
 										'pegawai.nama',
 										'pegawai.gelardpn',
 										'pegawai.gelarblk',
 										'pegawai.jenis_kelamin AS jk',
 										'pegawai.status AS status_pegawai',
+										'pegawai.nip',
 										'eselon.eselon',
 										'c.jenis_jabatan'
 									)
@@ -78,7 +69,7 @@ class StrukturOrganisasiAPIController extends Controller {
 			}else{
 				$parent = $x->parent_id;
 			}
-
+ 
 			
 			
 			//jika pejabat nya sudah pensiun maka tampilin aja jabatan nya mah
@@ -89,12 +80,28 @@ class StrukturOrganisasiAPIController extends Controller {
 				$eselon			= $x->eselon;
 				$jenis_jabatan	= $x->jenis_jabatan . $x->id;
 
-				//Foto pagawai
+				//FOTO
+				$foto = Pegawai::find($x->id_pegawai);
+
+				if ( $foto->Foto ){
+					$sub_data['image'] = 'data:image/jpeg;base64,'.base64_encode($foto->Foto->isi) ;
+				  }else{
+		
+					if ( $x->jenis_kelamin == 'Perempuan'){
+						$sub_data['image']   = asset('assets/images/form/female_icon.png');
+					}else{
+						$sub_data['image']  = asset('assets/images/form/male_icon.png');
+					}
+		
+				  }
+
+				/* //Foto pagawai
 				if ( $x->jk == 'Perempuan'){
 					$sub_data['image']   = asset('assets/images/form/female_icon.png');
 				}else{
 					$sub_data['image']   = asset('assets/images/form/male_icon.png');
-				}
+				} */
+
 				$sub_data['itemTitleColor']		= "#4b0082";
 
 			}else{

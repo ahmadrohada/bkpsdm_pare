@@ -21,10 +21,7 @@ class SKPD extends Model
         return $this->hasOne('App\Models\UnitKerja','id','id');
     }
 
-   /*  public function Pejabat()
-    {
-        return $this->hasOne('App\Models\HistoryJabatan','id_jabatan')->where('status','active');
-    } */
+  
 
   
    

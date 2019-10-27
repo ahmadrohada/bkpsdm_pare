@@ -23,6 +23,12 @@ class HistoryJabatan extends Model
         return $this->belongsTo('App\Models\Pegawai','id_pegawai');
     }
 
+    //Untuk mendapatkan pegawai Akif
+    public function PegawaiAktif()
+    {
+        return $this->hasOne('App\Models\Pegawai','id','id_pegawai')->where('status','active');
+    }
+
 
     public function Skpd()
     {
@@ -41,10 +47,10 @@ class HistoryJabatan extends Model
         return $this->hasOne('App\Models\Eselon','id','id_eselon');
     }
 
-    /* public function golongan()
+    public function Golongan()
     {
-        return $this->hasOne('App\Models\Golongan','id','id_golongan');
-    } */
+        return $this->hasOne('App\Models\Golongan','id','id_golongan')->select('golongan','pangkat','golongan AS label');
+    }
 
     public function child_jabatan()
     {

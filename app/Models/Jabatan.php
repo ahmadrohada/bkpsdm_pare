@@ -25,7 +25,12 @@ class Jabatan extends Model
     
     public function Eselon()
     {
-        return $this->hasOne('App\Models\Eselon','id','id_eselon');
+        return $this->hasOne('App\Models\Eselon','id','id_eselon')->Select('id_jenis_jabatan','eselon','eselon AS label');
+    }
+
+    public function PejabatAktif()
+    {
+        return $this->hasOne('App\Models\HistoryJabatan','id_jabatan')->where('status','active');
     }
 
   
