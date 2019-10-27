@@ -48,7 +48,8 @@ class KegiatanAPIController extends Controller {
                 $kegiatan_label                 = $x->kegiatan_tahunan_label;
                 $data_kegiatan['icon']	        = 'jstree-kegiatan_tahunan';
             }else{
-                $kegiatan_id                    = "KegiatanRenja|".$x->kegiatan_id."|".$x->kegiatan_label;
+                //$kegiatan_id                    = "KegiatanRenja|".$x->kegiatan_id."|".$x->kegiatan_label;
+                $kegiatan_id                    = "KegiatanRenja|".$x->kegiatan_id;
                 $kegiatan_label                 = $x->kegiatan_label;
                 $data_kegiatan['icon']	        = 'jstree-kegiatan';
             }
