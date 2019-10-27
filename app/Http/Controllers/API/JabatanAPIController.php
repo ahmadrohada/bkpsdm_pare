@@ -95,6 +95,7 @@ class JabatanAPIController extends Controller {
 
       $pejabat_aktif =  $jabatan->PejabatAktif;
 
+      //cari jabatan aktif pada history jabatan
       if ( $pejabat_aktif ){
         $pegawai_aktif = $jabatan->PejabatAktif->PegawaiAktif;
         //JIKA Pensiun / ID pegaiai not valid
@@ -157,7 +158,7 @@ class JabatanAPIController extends Controller {
           'nip'           => "",
           'nama'          => "",
           'tmt'           => "",
-          'foto'          => $foto,
+          'foto'          => asset('assets/images/form/default_icon.png'),
           'golongan'      => "",
           'pangkat'       => "",
           
