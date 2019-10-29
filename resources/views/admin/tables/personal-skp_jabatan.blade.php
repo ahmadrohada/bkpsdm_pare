@@ -2,7 +2,7 @@
     <div class="box-header with-border">
         <h1 class="box-title">
            History Jabatan
-        </h1>
+        </h1> 
 
         <div class="box-tools pull-right">
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
@@ -60,11 +60,34 @@
 									}
 								},
 								
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "tmt_jabatan" ,  name:"tmt_jabatan", orderable: true, searchable: true},
+								{ data: "periode" ,  name:"periode", orderable: true, searchable: true,
+									"render": function ( data, type, row ) {
+										if ( row.jabatan_status == 'active' ){
+											return  '<p class="text-success">'+row.periode+'</p>';
+										}else{
+											return  row.periode;
+											
+										}
+										
+									}
+								},
+								{ data: "tmt_jabatan" ,  name:"tmt_jabatan", orderable: true, searchable: true,
+									"render": function ( data, type, row ) {
+										if ( row.jabatan_status == 'active' ){
+											return  '<p class="text-success">'+row.tmt_jabatan+'</p>';
+										}else{
+											return  row.tmt_jabatan;
+											
+										}
+										
+									}
+								},
+
+
+
 								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true,
 									"render": function ( data, type, row ) {
-										if (row.jabatan_status == 'active' ){
+										if ( ( row.jabatan_status == 'active') & ( row.tahun_now == 1 ) ){
 											return  '<span class="btn btn-sm label-success">'+row.jabatan+'</span>';
 										}else{
 											return  row.jabatan;
@@ -89,12 +112,12 @@
 								},
 								{ data: "skp_tahunan" , orderable: false,searchable:false,width:"120px",
 										"render": function ( data, type, row ) {
-										if (row.skp_tahunan == 0 ){ 
+										if ( ( row.skp_tahunan == 0 ) & (row.jabatan_status == 'active') ){ 
 											return  '<span  data-toggle="tooltip" title="Create SKP Tahunan" style="margin:1px;" ><a class="btn btn-warning btn-xs create_skp_tahunan"  data-jabatan_id="'+row.jabatan_id+'" data-periode_id="'+row.periode_id+'" data-pegawai_id="'+row.pegawai_id+'">Create SKP</a></span>';
 										}else if (row.skp_tahunan == 1 ){
+											return  '<span class="btn btn-success btn-xs" style="width:68px;"><i class="fa fa-check"></i></i></span>';
 
-
-											if ( row.status == 0 ){
+											/* if ( row.status == 0 ){
 												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs" disabled><i class="fa fa-eye" ></i></a></span>'
 														+'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'
 														+'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_skp_tahunan"  data-id="'+row.skp_tahunan_id+'" data-periode="'+row.periode+'" ><i class="fa fa-close " ></i></a></span>';
@@ -104,11 +127,13 @@
 														+'<span style="margin:1px;" ><a class="btn btn-default btn-xs "  disabled><i class="fa fa-pencil" ></i></a></span>'
 														+'<span style="margin:1px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-close " ></i></a></span>';
 											
-											}
+											} */
 										
 										
 										
 										}else if (row.skp_tahunan == 2 ){
+											return  '<span class="btn btn-default btn-xs" disabled>Create SKP</i></span>';
+										}else{
 											return  '<span class="btn btn-default btn-xs" disabled>Create SKP</i></span>';
 										}
 									}
