@@ -692,25 +692,46 @@ class SKPTahunanAPIController extends Controller {
         return $renja;
     }
 
-
-
-    protected function skp_tahunan_id($skpd_id,$periode_id,$pegawai_id,$jabatan_id){
-        $pk = Renja::
-             
-                rightjoin('db_pare_2018.skp_tahunan AS skp', function($join){
-                    $join   ->on('skp.renja_id','=','renja.id');
-                })
-                ->where('skp.pegawai_id',$pegawai_id)
-                ->where('skp.u_jabatan_id',$jabatan_id)
-                ->where('renja.skpd_id',$skpd_id)
+    protected function renja_id($skpd_id,$periode_id){
+        $renja = Renja::
+            
+                where('renja.skpd_id',$skpd_id)
                 ->where('renja.periode_id',$periode_id)
                 ->first();
 
-        if ( $pk ){
-            return $pk->id;
+        if ( $renja ){
+            return $renja->id;
         }else{
             return null ;
         }
+    }
+
+
+
+    protected function skp_tahunan_id($skpd_id,$periode_id,$pegawai_id,$jabatan_id){
+        //CAri renja id nya
+        
+        //return $skpd_id."|".$periode_id."|".$pegawai_id."|".$jabatan_id;
+        if ( ($skpd_id != "") | ($periode_id != "" ) | ( $pegawai_id != "") | ( $jabatan_id != "" ) ){
+            $renja_id = $this->renja_id($skpd_id,$periode_id);
+            
+            if ( $renja_id ){
+                $skp_id = SKPTahunan::where('pegawai_id',$pegawai_id)
+                                        ->where('u_jabatan_id',$jabatan_id)
+                                        ->where('renja_id',$renja_id)
+                                        ->first();
+                if ( $skp_id ){
+                    return $skp_id->id;
+                }else{
+                    return null ;
+                } 
+            }else{
+                return null ;
+            } 
+        }else{
+            return null ;
+        } 
+        
         
     }
 
@@ -812,12 +833,19 @@ class SKPTahunanAPIController extends Controller {
         $last_skpd          = '-';
         $last_skpd_id       = '-';
         $last_tmt_jabatan   = '-';
+        $last_jabatan_status= '-';
         $no                 = 1;
 
         foreach ( $periode AS $x ){
             
 
             $thn = substr($x->awal,0,4);
+
+            if ( $thn == date('Y')){
+                $tahun_now = 1 ;
+            }else{
+                $tahun_now = 0 ;
+            }
             
             $dt = HistoryJabatan::
                         WHERE('id_pegawai','=', $id_pegawai)
@@ -826,6 +854,8 @@ class SKPTahunanAPIController extends Controller {
                         ->count(); 
 
             if ( $dt >= 1 ){    //adakah jabatan id yang tmt nya sesuai tah
+
+                
                 $xt = HistoryJabatan::
                                 WHERE('id_pegawai','=', $id_pegawai)
                                 ->whereRAW('YEAR(tmt_jabatan) = ' .$thn )
@@ -842,6 +872,7 @@ class SKPTahunanAPIController extends Controller {
                     $h['jabatan']			    = Pustaka::capital_string($y->Jabatan ? $y->Jabatan->skpd : '');
                     $h['jabatan_id']			= $y->jabatan_id;
                     $h['jabatan_status']	    = $y->status;
+                    $h['tahun_now']             = $tahun_now;
                     $h['skpd']			        = Pustaka::capital_string($y->Skpd ? $y->Skpd->skpd : '');
                     $h['skpd_id']			    = $y->Skpd ? $y->Skpd->id : '';
                     $h['tmt_jabatan']			= $y->tmt_jabatan;
@@ -855,9 +886,10 @@ class SKPTahunanAPIController extends Controller {
                     $last_skpd          = Pustaka::capital_string($y->Skpd ? $y->Skpd->skpd : '');
                     $last_skpd_id       = $y->Skpd ? $y->Skpd->id : '';
                     $last_tmt_jabatan   = $y->tmt_jabatan;
+                    $last_jabatan_status= $y->status;
                     $no = $no+1;
                 } 
-
+ 
             }else{
                     $h['id']			    = $no;
                     $h['pegawai_id']		= $id_pegawai;
@@ -865,12 +897,13 @@ class SKPTahunanAPIController extends Controller {
                     $h['periode_id']	    = $x->id;
                     $h['jabatan']			= $last_jabatan;
                     $h['jabatan_id']		= $last_jabatan_id;
-                    $h['jabatan_status']	= "";
+                    $h['jabatan_status']	= $last_jabatan_status;
+                    $h['tahun_now']         = $tahun_now;
                     $h['skpd']			    = $last_skpd;
                     $h['skpd_id']			= $last_skpd_id;
                     $h['tmt_jabatan']	    = $last_tmt_jabatan;
                     $h['renja_status']      = $this->status_renja($last_skpd_id,$x->id);
-                    $h['skp_tahunan_id']    = $this->skp_tahunan_id( $pegawai->JabatanAktif->id_skpd ,$x->id , $id_pegawai , $pegawai->JabatanAktif->id );
+                    $h['skp_tahunan_id']    = $this->skp_tahunan_id( $last_skpd_id ,$x->id , $id_pegawai , $last_jabatan_id);
                     array_push($response, $h);
                     $no = $no+1;
             }
@@ -929,14 +962,14 @@ class SKPTahunanAPIController extends Controller {
                 
             })
             ->addColumn('skp_tahunan_status', function ($x) {
-                if ( $x['skp_tahunan_id'] >= 1 ){
+               if ( $x['skp_tahunan_id'] >= 1 ){
                     $skp_status = SKPTahunan::WHERE('id', $x['skp_tahunan_id'] )
                                     ->SELECT('send_to_atasan')
                                     ->first();
                     return $skp_status->send_to_atasan;
                 }else{
                     return 0 ;
-                }
+                } 
 
             })
             ->addColumn('status', function ($x) {
@@ -947,7 +980,7 @@ class SKPTahunanAPIController extends Controller {
                     return $skp_status->status;
                 }else{
                     return 0 ;
-                }
+                } 
 
             })
             ->addColumn('skp_tahunan_id', function ($x) {

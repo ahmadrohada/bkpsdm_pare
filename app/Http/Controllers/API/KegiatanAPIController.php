@@ -145,6 +145,11 @@ class KegiatanAPIController extends Controller {
         $l = ['1143','1144','1145','1146','1147'];
         //KEC purwasari
         $m = ['1253','1254','1255','1256','1257'];
+        //KEC KAwarang Timur
+        $n = ['1206','1207','1208','1209','1210'];
+        //KEC Kota BAru
+        $o = ['1197','1198','1199','1200','1201'];
+
 
 
 
@@ -152,7 +157,7 @@ class KegiatanAPIController extends Controller {
         // m_skpd ID 168 : UPTD kesehatan
         $pengelompokan = ['168'];
 
-        $pengecualian = array_merge($a,$b,$c,$d,$e,$f,$g,$h,$i,$j,$k,$l,$m);
+        $pengecualian = array_merge($a,$b,$c,$d,$e,$f,$g,$h,$i,$j,$k,$l,$m,$n,$o);
 
         if ( $request->skpd_id == 3 ){
             //SEKDA 
