@@ -181,10 +181,6 @@ class KegiatanAPIController extends Controller {
 
 
 
-
-        // m_skpd ID 168 : UPTD kesehatan
-        $pengelompokan = ['168'];
-
         $pengecualian = array_merge($a,$b,$c,$d,$e,$f,$g,$h,$i,$j,$k,$l,$m,$n,$o,$p,$q,$r,$s,$t,$u,$v,$w,$x,$y,$z,$aa,$ab,$ac);
 
         if ( $request->skpd_id == 3 ){
