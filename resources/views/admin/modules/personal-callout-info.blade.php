@@ -12,7 +12,7 @@
 	</p>
 </div>
 
-@if (  \Auth::user()->pegawai->JabatanAktif == null )				
+@if (  \Auth::user()->pegawai->JabatanAktif->Jabatan == null )				
 	<div class="callout callout-danger skp_tahunan_status" style="height:60px;">
 		<p style="font-family:mainandra; font-size:12pt; color:#ebecf5; font-weight:bold; ">
 			Anda tidak memiliki Jabatan yang Aktif, Silakan buka <a href="http://silk.bkpsdm.karawangkab.go.id/simpeg_asn/" target="_blank">SIMPEG</a>
