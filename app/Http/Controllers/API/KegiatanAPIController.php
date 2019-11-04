@@ -234,7 +234,9 @@ class KegiatanAPIController extends Controller {
                     $data_level2['text']		= Pustaka::capital_string($y->skpd);
                     $data_level2['icon']        = "jstree-people";
                     $data_level2['type']        = "pengawas";
-                    $level3 = [] ;
+                    
+                    //LEVEL 3 nya adalah kegiatan
+                    $level3 = Kegiatan::WHERE('jabatan_id','=',$y->id)->select('id','label','cost')->get();
 
                 }else{
                     $data_level2['id']	        = "lv2|".$y->id;
@@ -244,21 +246,91 @@ class KegiatanAPIController extends Controller {
 
 
                     
-
+                    
                     $level3 = SKPD::where('parent_id','=',$y->id)
                                     ->where(function ($query) {
                                         $query->where('id_eselon', '=' , null )
                                             ->orWhere('id_eselon', '<=', 8 );
                                     })
                                     ->select('id','skpd','id_eselon')->get();
+
+
+                    
+                    
                 }
                
                     
-                
-              
-                //$level3 = SKPD::where('parent_id','=',$y->id)->select('id','skpd')->get();
-                
-                foreach ($level3 as $z) {
+                //menentukan apakah mau nampilin bawahan atau langsung ke kegiatan untuk jabatan2 tertentu
+                if (in_array( $y->id, $pengecualian)){
+                    
+
+                    foreach ($level3 as $a) {
+                        $data_kegiatan['id']	        = "kegiatan|".$a->id;
+                        $data_kegiatan['text']			= Pustaka::capital_string($a->label);
+                        $data_kegiatan['type']          = "kegiatan";
+                        if ( $a->cost > 0 ){
+                            $data_kegiatan['icon']      = "jstree-kegiatan";
+                        }else{
+                            $data_kegiatan['icon']      = "jstree-kegiatan_non_anggaran";
+                        }
+                        
+         
+                            $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$a->id)->select('id','label')->get();
+                            foreach ($ind_kegiatan as $g) {
+                                $data_ind_kegiatan['id']	        = "ind_kegiatan|".$g->id;
+                                $data_ind_kegiatan['text']			= Pustaka::capital_string($g->label);
+                                $data_ind_kegiatan['icon']          = "jstree-ind_kegiatan";
+                                $data_ind_kegiatan['type']          = "ind_kegiatan";
+                                $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$g->id)->get();
+                                        foreach ($ra as $za) {
+                                            $data_rencana_aksi['id']	= "rencana_aksi|".$za->id;
+                                            $data_rencana_aksi['text']	= Pustaka::capital_string($za->label).' ['. Pustaka::bulan($za->waktu_pelaksanaan).']';
+                                            $data_rencana_aksi['icon']  = 'jstree-rencana_aksi';
+                                            $data_rencana_aksi['type']  = "rencana_aksi";
+ //TARGET PADA KEGIATAN BULANAN
+                                        $kb = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$za->id)->get();
+                                            foreach ($kb as $az) {
+                                                $data_keg_bulanan['id']	    = "kegiatan_bulanan|".$az->id;
+                                                $data_keg_bulanan['text']	=  'Target : '. $az->target.' '.$az->satuan.' / Pelaksana : '.Pustaka::capital_string($az->RencanaAksi->pelaksana->jabatan);
+                                                $data_keg_bulanan['icon']	= 'jstree-target';
+                                                $data_keg_bulanan['type']   = "kegiatan_bulanan";
+                                            
+                                                $keg_bulanan_list[] = $data_keg_bulanan ;
+                                            }	
+                                                if(!empty($keg_bulanan_list)) {
+                                                    $data_rencana_aksi['children']     = $keg_bulanan_list;
+                                                }
+                                                $rencana_aksi_list[] = $data_rencana_aksi ;
+                                                $keg_bulanan_list = "";
+                                                unset($data_rencana_aksi['children']);
+                                            }
+                                            if(!empty($rencana_aksi_list)) {
+                                                $data_ind_kegiatan['children']     = $rencana_aksi_list;
+                                            }
+                                            
+                                        $ind_kegiatan_list[] = $data_ind_kegiatan ;
+                                        $rencana_aksi_list = "";
+                                        unset($data_ind_kegiatan['children']);
+                                        
+                                    }
+                                    if(!empty($ind_kegiatan_list)) {
+                                        $data_kegiatan['children']     = $ind_kegiatan_list;
+                                    }
+                                    $kegiatan_list[] = $data_kegiatan ;
+                                    $ind_kegiatan_list = "";
+                                    unset($data_kegiatan['children']);
+                                }
+                    if(!empty($kegiatan_list)) {
+                        $data_level2['children']     = $kegiatan_list;
+                    }
+                   
+                    $level2_list[] = $data_level2 ;
+                    $kegiatan_list = "";
+                    unset($data_level2['children']);
+                   
+               
+                }else{
+                    foreach ($level3 as $z) {
 
                         $data_level3['id']	            = "lv3|".$z->id;
                         $data_level3['text']			= Pustaka::capital_string($z->skpd);
@@ -332,12 +404,17 @@ class KegiatanAPIController extends Controller {
                     unset($data_level3['children']);
                 
                 }
+               
+
+                
                 if(!empty($level3_list)) {
                     $data_level2['children']     = $level3_list;
                 }
                 $level2_list[] = $data_level2 ;
                 $level3_list = "";
                 unset($data_level2['children']);
+
+                }
             
             }
                

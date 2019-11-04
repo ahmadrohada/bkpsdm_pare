@@ -280,7 +280,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
         
                 return $datatables->make(true); 
         
-        
+         
         }
 
     public function RealisasiKegiatanTriwulan(Request $request) 
@@ -300,7 +300,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
 						break;
 				case 3 : return $this->kegiatan_triwulan_eselon4($renja_id,$jabatan_id,$capaian_id,$search);
 						break;
-				case 4 : "";
+				case 4 : return $this->kegiatan_triwulan_eselon4($renja_id,$jabatan_id,$capaian_id,$search);
 						break;
 				case 5 : "";
 						break;
