@@ -1081,7 +1081,7 @@ class SKPTahunanAPIController extends Controller {
             return $data;
 
         }else{
-            return response()->json(['errors'=> "Golongan Pejabat penilai/yang dinilai tidak aktif" ],422);
+            return response()->json(['errors'=> "Golongan Pejabat penilai/yang dinilai tidak aktif" ,'golongan atasan'=>$gol_atasan,'ID jabatan atasan'=>$jabatan_id_atasan],422);
         }
 
        
@@ -1138,13 +1138,6 @@ class SKPTahunanAPIController extends Controller {
         );
 
         return $data;
-
-
-
-
-
-        //nama lengkap pribdai dan atasan
-
 
 
 
@@ -1260,8 +1253,15 @@ class SKPTahunanAPIController extends Controller {
                         return $data;
 
                 break;
+                case "5":
+                        //Jabatan PELAKSANA JFT =======================================================================================//
+                        
+                        $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
+                        return $data;
+
+                break;
                 default;
-                    return \Response::make( 'error', 400);
+                    return \Response::make( 'error'.$jenis_jabatan, 400);
                 break;
             }
 
