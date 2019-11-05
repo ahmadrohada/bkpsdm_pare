@@ -274,6 +274,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//KEgiatan PELAKSANA
 	Route::get('skp_tahunan_kegiatan_4','API\KegiatanAPIController@SKPTahunanKegiatanTree4');
 
+	//KEgiatan JFT
+	//Route::get('skpd-renja_kegiatan_list_jft','API\KegiatanAPIController@RenjaKegiatanJFT');
+	Route::get('skp_tahunan_kegiatan_5','API\KegiatanAPIController@SKPTahunanKegiatanTree5');
 
 	//UNLINK KEGFIATAN
 	
