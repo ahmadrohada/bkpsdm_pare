@@ -87,6 +87,9 @@
 							case '4':   
 									?>@include('admin.modules.tab.kegiatan_tahunan_4_detail')<?php
 									break;
+							case '5':   
+									?>@include('admin.modules.tab.kegiatan_tahunan_5_edit')<?php
+									break;
 						}
 					?>
 
