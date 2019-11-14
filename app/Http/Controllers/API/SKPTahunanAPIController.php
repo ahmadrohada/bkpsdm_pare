@@ -1029,7 +1029,7 @@ class SKPTahunanAPIController extends Controller {
 
         if ( $gol_pribadi!=null ){
 
-            if ($gol_atasan!=null){
+            if ( ($gol_atasan!=null) & ($jab_atasan !=null )){
                 $p_jabatan_id	       = $jab_atasan->id;
                 $p_golongan_id         = $gol_atasan->id;
                 $p_nip	               = $jab_atasan->nip;
@@ -1040,7 +1040,7 @@ class SKPTahunanAPIController extends Controller {
                 $p_jabatan	           = Pustaka::capital_string($jab_atasan->Jabatan ? $jab_atasan->Jabatan->skpd : '');
                 $p_unit_kerja	       = Pustaka::capital_string($jab_atasan->UnitKerja ? $jab_atasan->UnitKerja->unit_kerja : '');
                 $p_skpd	               = Pustaka::capital_string($jab_atasan->Skpd ? $jab_atasan->Skpd->skpd : '');
-            }else{
+            }else if ( ($gol_atasan == null) & ($jab_atasan !=null )){
                 $p_jabatan_id	       = $jab_atasan->id;
                 $p_golongan_id         = "";
                 $p_nip	               = $jab_atasan->nip;
@@ -1051,6 +1051,17 @@ class SKPTahunanAPIController extends Controller {
                 $p_jabatan	           = Pustaka::capital_string($jab_atasan->Jabatan ? $jab_atasan->Jabatan->skpd : '');
                 $p_unit_kerja	       = Pustaka::capital_string($jab_atasan->UnitKerja ? $jab_atasan->UnitKerja->unit_kerja : '');
                 $p_skpd	               = Pustaka::capital_string($jab_atasan->Skpd ? $jab_atasan->Skpd->skpd : '');
+            }else{
+                $p_jabatan_id	       = "";
+                $p_golongan_id         = "";
+                $p_nip	               = "";
+                $p_nama                = "";
+                $p_pangkat	           = "";
+                $p_golongan	           = "";
+                $p_eselon	           = "";
+                $p_jabatan	           = "";
+                $p_unit_kerja	       = "";
+                $p_skpd	               = "";
             }
 
             $data = array(
