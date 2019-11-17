@@ -378,6 +378,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//kegiatan PELAKSANA
 	Route::get('kegiatan_tahunan_4','API\KegiatanSKPTahunanAPIController@KegiatanTahunan4');
 
+	//kegiatan JFT
+	Route::get('kegiatan_tahunan_5','API\KegiatanSKPTahunanJFTAPIController@KegiatanTahunan5');
 	
 
 	Route::post('simpan_kegiatan_tahunan','API\KegiatanSKPTahunanAPIController@Store');
@@ -389,6 +391,14 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::get('skp_tahunan_kegiatan_tugas_jabatan','API\KegiatanSKPTahunanAPIController@KegiatanTugasJabatanList');
 
+
+	//========================================================================================================//
+	//====================================== KEGIATAN THAUNAN JFT ================================================//
+	//========================================================================================================//
+
+	Route::post('simpan_kegiatan_tahunan_jft','API\KegiatanSKPTahunanJFTAPIController@Store');
+	
+	
 
 	//========================================================================================================//
 	//============================== =======       SKP BULANAN ================================================//

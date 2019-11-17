@@ -71,6 +71,7 @@
 			}
 		});
 	}
+	
 	function context_add_kegiatan(node){
 		var items = {
 			"tambah": {
