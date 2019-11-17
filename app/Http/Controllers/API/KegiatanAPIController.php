@@ -9,6 +9,7 @@ use App\Models\IndikatorSasaran;
 use App\Models\Tujuan;
 use App\Models\Kegiatan;
 use App\Models\KegiatanSKPTahunan;
+use App\Models\KegiatanSKPTahunanJFT;
 use App\Models\Skpd;
 use App\Models\Jabatan;
 use App\Models\RencanaAksi;
@@ -764,14 +765,15 @@ class KegiatanAPIController extends Controller {
             $data_sasaran['id']            = "SasaranRenja|".$x->sasaran_id;
             $data_sasaran['text']          = $x->sasaran_label;
             $data_sasaran['icon']	       = 'jstree-sasaran';
+            $data_sasaran['type']	       = 'sasaran';
            
             
             //Kegiatan TAhunan JFT
-            $ktj = IndikatorKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->get();
-            foreach ($ktj as $y) {
-                $data_ind_kegiatan['id']	        = "IndikatorKegiatan|".$y->id;
-                $data_ind_kegiatan['text']			= Pustaka::capital_string($y->label);
-                $data_ind_kegiatan['icon']	        = 'jstree-ind_kegiatan';
+            $kst = KegiatanSKPTahunanJFT::WHERE('sasaran_id',$x->sasaran_id)->get();
+            foreach ($kst as $y) {
+                $data_keg_tahunan['id']	        = "IndikatorKegiatan|".$y->id;
+                $data_keg_tahunan['text']			= Pustaka::capital_string($y->label);
+                $data_keg_tahunan['icon']	        = 'jstree-kegiatan_tahunan';
               
                     //Rencana aksi
                     $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$y->id)
@@ -802,11 +804,11 @@ class KegiatanAPIController extends Controller {
                     }	
                     
                 if(!empty($rencana_aksi_list)) {
-                    $data_ind_kegiatan['children']     = $rencana_aksi_list;
+                    $data_keg_tahunan['children']     = $rencana_aksi_list;
                 }
-                $ind_kegiatan_list[] = $data_ind_kegiatan ;
+                $ind_kegiatan_list[] = $data_keg_tahunan ;
                 $rencana_aksi_list = "";
-                unset($data_ind_kegiatan['children']); 
+                unset($data_keg_tahunan['children']); 
                 //$ind_kegiatan_list[] = $data_ind_kegiatan ;
                
             }	

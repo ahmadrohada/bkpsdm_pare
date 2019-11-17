@@ -368,7 +368,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
     {
        
         
-        $x = KegiatanSKPtahunan::
+        $x = KegiatanSKPTahunan::
                             SELECT(     'skp_tahunan_kegiatan.id AS kegiatan_tahunan_id',
                                         'skp_tahunan_kegiatan.label',
                                         'skp_tahunan_kegiatan.target',
@@ -445,7 +445,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
         }
 
 
-        $st_kt    = new KegiatanSKPtahunan;
+        $st_kt    = new KegiatanSKPTahunan;
 
         $st_kt->kegiatan_id             = Input::get('kegiatan_id');
         $st_kt->skp_tahunan_id          = Input::get('skp_tahunan_id');
@@ -501,7 +501,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
         }
 
         
-        $st_kt    = KegiatanSKPtahunan::find(Input::get('kegiatan_tahunan_id'));
+        $st_kt    = KegiatanSKPTahunan::find(Input::get('kegiatan_tahunan_id'));
         if (is_null($st_kt)) {
             return $this->sendError('Kegiatan Tahunan tidak ditemukan.');
         }
@@ -549,7 +549,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
         }
 
         
-        $st_kt    = KegiatanSKPtahunan::find(Input::get('kegiatan_tahunan_id'));
+        $st_kt    = KegiatanSKPTahunan::find(Input::get('kegiatan_tahunan_id'));
         if (is_null($st_kt)) {
             return $this->sendError('Kegiatan Tahunan tidak ditemukan.');
         }

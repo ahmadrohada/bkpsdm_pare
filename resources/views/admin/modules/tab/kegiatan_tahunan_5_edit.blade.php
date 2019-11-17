@@ -10,48 +10,14 @@
 	</div>
 	<div class="col-md-7">
 		@include('admin.tables.skp_tahunan-kegiatan_5_edit')
-		@include('admin.tables.skp_tahunan-indikator_kegiatan_3_edit')
-		@include('admin.tables.skp_tahunan-rencana_aksi_3_edit')
 
-		<!-- ========================== DETAIL RENVANA AKSI ====================================== -->
-		<div id='rencana_aksi_detail' hidden>
-			<div class="box box-primary">
-				<div class="box-header with-border">
-					<h1 class="box-title">
-						Detail Rencana Aksi
-					</h1>
-
-					<div class="box-tools pull-right">
-						{!! Form::button('<i class="fa fa-remove "></i>', array('class' => 'btn btn-box-tool tutup','title' => 'Tutup', 'data-toggle' => 'tooltip')) !!}
-					</div>
-				</div>
-				<div class="box-body table-responsive">
-					
-					<strong>Rencana Aksi</strong>
-					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-						<span class="rencana_aksi_label"></span>
-					</p>
-
-					<strong>Pelaksana</strong>
-					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-						<span class="pelaksana"></span>
-					</p>
-
-					<i class="fa fa-industry"></i> <span class="txt_output" style="margin-right:10px;"></span>
-					<i class="fa fa-hourglass-start"></i> <span class="txt_waktu" style="margin-right:10px;"></span>
-					
-				</div>
-			</div>
-		</div>
-		<!-- ============================================================================================== -->
-
-		
+	
 
 		
 	</div>
 </div>
 
-@include('admin.modals.rencana_aksi')
+@include('admin.modals.kegiatan_tahunan_jft')
      
 
 
@@ -64,16 +30,7 @@
 	
 	function initTreeKegTahunan() {
 		$('#keg_tahunan_5_tree')
-		.on("loaded.jstree", function(){
-			//$('#keg_tahunan_5_tree').jstree('open_all');
-		})
-		.on("changed.jstree", function (e, data) {
-			if(data.selected.length) {
-
-				detail_table(data.instance.get_node(data.selected[0]).id);
-
-			}
-		})
+		
 		.jstree({
             'core' : {
 						'data' : {
@@ -84,20 +41,90 @@
 										"skp_tahunan_id" 	: {!! $skp->id !!}
                                     };
 						},
-						"dataType" : "json"
+						"dataType" : "json" 
 				}
 				,'check_callback' : true,
 						'themes' : {
 							'responsive' : false
 						}
 			}
-			,"plugins" : [ "search"/* ,"state","contextmenu","wholerow" */ ]
+			,'contextmenu' : {
+					'items' : context_add_kegiatan_tahunan
+				
+			}
+			,"plugins" : [ "search","state","contextmenu","types"/* ,"wholerow" */ ],
+			'types' : {
+					'JPT' 				: { "disabled" : true },
+					'sasaran' 			: { },
+					'kegiatan' 			: { }
+				}
 			
 		
-	    });
+	    })
+		.on("loaded.jstree", function(){
+			//$('#keg_tahunan_5_tree').jstree('open_all');
+		})
+		.on("changed.jstree", function (e, data) {
+			if(data.selected.length) {
+
+				detail_table(data.instance.get_node(data.selected[0]).id);
+
+			}
+		});
 	}
 
-	
+	function context_add_kegiatan_tahunan(node){
+
+		//alert(node.type);
+
+		var items = {
+			"tambah": {
+				"label" 	: "Tambah Kegiatan",
+				"icon"    	: "faa-ring fa fa-plus animated",
+				"action" 	:function(obj){
+
+						var text = node.id;
+						var tx = text.split('|');
+						//alert('id_jabatan = '+tx[1]);
+					
+						if ( node.type === 'sasaran'){
+							//$('.modal-kegiatan_tahunan_jft, .sasaran_id').val(tx[1]);
+							//SHOW MODAL UNTUK ADD KEGIATAN TAHUNAN
+							//$('.modal-kegiatan_tahunan_jft').modal('show');
+							show_modal_kegiatan(tx[1]);
+						} 	
+				}
+			},                  
+			"delete": {
+				"label"	: "Hapus Kegiatan",
+				"icon" 	: "faa-ring fa fa-remove animated",
+				"action": function (obj) {
+
+					var text = node.id;
+					var tx = text.split('|');
+					unlink_kegiatan_kasubid(tx[1]);
+					
+					/* if(confirm('Anda Akan menghapus kegiatan jabatan ?')){
+						var text = node.id;
+						var tx = text.split('|');
+						alert(tx[1]);
+						//tree.delete_node(node);
+					} */
+				}
+			}
+		};
+
+
+		if (node.type == "sasaran") {
+			delete items.delete;
+		}else if (node.type == "kegiatan_tahunan") {
+			delete items.tambah;
+		}else{
+			//delete items.delete;
+			//delete items.tambah;
+		}
+		return items;
+	}
 	
 	var to = false;
 	$('#cari').keyup(function () {

@@ -14,7 +14,7 @@
 
 		</div>
 
-		<table id="kegiatan_tahunan_3_table" class="table table-striped table-hover" >
+		<table id="kegiatan_tahunan_5_table" class="table table-striped table-hover" >
 			<thead>
 				<tr>
 					<th rowspan="2">No</th>
@@ -36,11 +36,10 @@
 </div>
 
 
-@include('admin.modals.kegiatan_tahunan')
 
 <script type="text/javascript">
 
-	$('#kegiatan_tahunan_3_table').DataTable({
+	$('#kegiatan_tahunan_5_table').DataTable({
 				destroy					: true,
 				processing      : false,
 				serverSide      : true,
@@ -54,7 +53,7 @@
 									{ "orderable": false, targets: [ 0,1,2,3,4,5,6 ]  }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_tahunan_3") }}',
+									url	: '{{ url("api_resource/kegiatan_tahunan_5") }}',
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 
@@ -63,65 +62,23 @@
 									 },
 								},
 				columns			: [
-									{ data: 'kegiatan_tahunan_id' ,
-										"render": function ( data, type, row ,meta) {
-											if ( (row.kegiatan_tahunan_id) <= 0 ){
-												return "<p class='text-danger'>"+(meta.row + meta.settings._iDisplayStart + 1 )+"</p>" ;
-											}else{
-												return meta.row + meta.settings._iDisplayStart + 1 ;
-											}
-											
-									}
-									},
-									{ data: "label", name:"label", width:"220px",
-										"render": function ( data, type, row ) {
-											if ( (row.kegiatan_tahunan_id) <= 0 ){
-												return "<p class='text-danger'>"+row.kegiatan_label+"</p>";
-											}else{
-												return row.kegiatan_tahunan_label;
-											}
-										}
-									},
+									{ data: 'kegiatan_tahunan_id'},
+									{ data: "label", name:"label", width:"220px"},
 									{ data: "angka_kredit", name:"angka_kredit" },
-									{ data: "mutu", name:"mutu",
-										"render": function ( data, type, row ) {
-											if ( (row.kegiatan_tahunan_id) <= 0 ){
-												return "<p class='text-danger'>-</p>";									
-											}else{
-												return row.mutu+" %";									
-											}
-										}
-									},
-									{ data: "waktu", name:"waktu",
-										"render": function ( data, type, row ) {
-											if ( (row.kegiatan_tahunan_id) <= 0 ){
-												return "<p class='text-danger'>-</p>";									
-											}else{
-												return row.waktu+" bln";									
-											}
-										}
-									},
-									{ data: "biaya", name:"biaya",
-										"render": function ( data, type, row ) {
-											if ( (row.kegiatan_tahunan_id) <= 0 ){
-												return "<p class='text-danger'>Rp. "+row.renja_biaya+"</p>";									
-											}else{
-
-												return "Rp. "+row.biaya;									
-											}
-										}
-									},
+									{ data: "mutu", name:"mutu"},
+									{ data: "waktu", name:"waktu"},
+									{ data: "biaya", name:"biaya"},
 									{  data: 'action',width:"60px",
 											"render": function ( data, type, row ) {
-
-											if ( (row.kegiatan_tahunan_id) >= 1 ){
+											return "";
+											/* if ( (row.kegiatan_tahunan_id) >= 1 ){
 												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
 											}else{
 												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-warning btn-xs create_kegiatan_tahunan"  data-id="'+row.kegiatan_id+'" data-label="'+row.kegiatan_label+'"><i class="fa fa-plus faa-tada animated" ></i></a></span>'+
 																'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
 											
-											}
+											} */
 													
 										
 										}
@@ -140,24 +97,21 @@
 
 	});
 
-	function show_modal_create(kegiatan_id){
+	function show_modal_kegiatan(sasaran_id){
 		$.ajax({
-				url			: '{{ url("api_resource/kegiatan_detail") }}',
-				data 		: {kegiatan_id : kegiatan_id},
+				url			: '{{ url("api_resource/sasaran_detail") }}',
+				data 		: {sasaran_id : sasaran_id},
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
-					$('.modal-kegiatan_tahunan').find('[name=kegiatan_id]').val(data['kegiatan_id']);
-					$('.modal-kegiatan_tahunan').find('[name=label]').val(data['label']);
-					$('.modal-kegiatan_tahunan').find('[name=target]').val(data['target']);
-					$('.modal-kegiatan_tahunan').find('[name=satuan]').val(data['satuan']);
-					$('.modal-kegiatan_tahunan').find('[name=cost]').val(data['cost']);
+					$('.modal-kegiatan_tahunan_jft').find('[name=sasaran_id]').val(data['id']);
+					$('.modal-kegiatan_tahunan_jft').find('[name=sasaran_label]').html(data['label']);
+					$('.modal-kegiatan_tahunan_jft').find('[name=label],[name=angka_kredit],[name=target],[name=satuan],[name=quality],[name=target_waktu],[name=cost]').val("");
 
-					$('.modal-kegiatan_tahunan').find('[name=quality]').val(100);
-					$('.modal-kegiatan_tahunan').find('h4').html('Add Kegiatan Tahunan');
-					$('.modal-kegiatan_tahunan').find('.btn-submit').attr('id', 'submit-save');
-					$('.modal-kegiatan_tahunan').find('[name=text_button_submit]').html('Simpan Data');
-					$('.modal-kegiatan_tahunan').modal('show');
+					$('.modal-kegiatan_tahunan_jft').find('h4').html('Add Kegiatan Tahunan');
+					$('.modal-kegiatan_tahunan_jft').find('.btn-submit').attr('id', 'submit-save');
+					$('.modal-kegiatan_tahunan_jft').find('[name=text_button_submit]').html('Simpan Data');
+					$('.modal-kegiatan_tahunan_jft').modal('show');
 				},
 				error: function(data){
 					
@@ -173,21 +127,21 @@
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
-					$('.modal-kegiatan_tahunan').find('[name=label]').val(data['label']);
-					$('.modal-kegiatan_tahunan').find('[name=angka_kredit]').val(data['ak']);
-					$('.modal-kegiatan_tahunan').find('[name=target]').val(data['target']);
-					$('.modal-kegiatan_tahunan').find('[name=quality]').val(data['quality']);
-					$('.modal-kegiatan_tahunan').find('[name=satuan]').val(data['satuan']);
-					$('.modal-kegiatan_tahunan').find('[name=target_waktu]').val(data['target_waktu']);
-					$('.modal-kegiatan_tahunan').find('[name=cost]').val(data['cost']);
+					$('.modal-kegiatan_tahunan_jft').find('[name=label]').val(data['label']);
+					$('.modal-kegiatan_tahunan_jft').find('[name=angka_kredit]').val(data['ak']);
+					$('.modal-kegiatan_tahunan_jft').find('[name=target]').val(data['target']);
+					$('.modal-kegiatan_tahunan_jft').find('[name=quality]').val(data['quality']);
+					$('.modal-kegiatan_tahunan_jft').find('[name=satuan]').val(data['satuan']);
+					$('.modal-kegiatan_tahunan_jft').find('[name=target_waktu]').val(data['target_waktu']);
+					$('.modal-kegiatan_tahunan_jft').find('[name=cost]').val(data['cost']);
 
 				
 
-					$('.modal-kegiatan_tahunan').find('[name=kegiatan_tahunan_id]').val(data['id']);
-					$('.modal-kegiatan_tahunan').find('h4').html('Edit Kegiatan Tahunan');
-					$('.modal-kegiatan_tahunan').find('.btn-submit').attr('id', 'submit-update');
-					$('.modal-kegiatan_tahunan').find('[name=text_button_submit]').html('Update Data');
-					$('.modal-kegiatan_tahunan').modal('show');
+					$('.modal-kegiatan_tahunan_jft').find('[name=kegiatan_tahunan_jft_id]').val(data['id']);
+					$('.modal-kegiatan_tahunan_jft').find('h4').html('Edit Kegiatan Tahunan');
+					$('.modal-kegiatan_tahunan_jft').find('.btn-submit').attr('id', 'submit-update');
+					$('.modal-kegiatan_tahunan_jft').find('[name=text_button_submit]').html('Update Data');
+					$('.modal-kegiatan_tahunan_jft').modal('show');
 				},
 				error: function(data){
 					
@@ -231,13 +185,13 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
-										jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
+										$('#kegiatan_tahunan_5_table').DataTable().ajax.reload(null,false);
+										jQuery('#keg_tahunan_5_tree').jstree(true).refresh(true);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
-											$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
-											jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
+											$('#kegiatan_tahunan_5_table').DataTable().ajax.reload(null,false);
+											jQuery('#keg_tahunan_5_tree').jstree(true).refresh(true);
 											
 										}
 									}
