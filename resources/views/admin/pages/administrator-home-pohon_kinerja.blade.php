@@ -15,7 +15,7 @@
 				Administrator
 			</h1>
 
-			{!! Breadcrumbs::render('masa_pemerintahan') !!}
+			{!! Breadcrumbs::render('pohon_kinerja') !!}
 
 	    </section>
 	    <section class="content">

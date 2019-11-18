@@ -103,6 +103,22 @@
 				</div>
 			</div>
 
+			<div class="col-md-3 col-xs-6">
+				<div class="small-box bg-yellow tpp_report" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							<strong>TPP Report</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa  fa-money"></i>
+					</div>
+				</div>
+			</div>
+
 
 		</div>
 	</div>
@@ -134,6 +150,10 @@ $(document).ready(function(){
 
 	$(".skp_tahunan").click(function(){
 		window.location.assign("skp_tahunan");
+    });
+
+	$(".tpp_report").click(function(){
+		window.location.assign("tpp_report");
     });
 
 
