@@ -15,7 +15,7 @@
 				Administrator
 			</h1>
 
-			{!! Breadcrumbs::render('skp_tahunan') !!}
+			{!! Breadcrumbs::render('masa_pemerintahan') !!}
 
 	    </section>
 	    <section class="content">
@@ -23,7 +23,7 @@
 			
 				@include('admin.modules.snapshots-boxes.administrator-home')
 
- 				@include('admin.tables.administrator-SKP_tahunan')
+ 				@include('admin.tables.administrator-TPP_report')
 		
 	    </section>
 	</div>

@@ -418,6 +418,45 @@ class HomeAdminController extends Controller {
 
         
     }
+
+    public function showTPPReport(Request $request)
+    {
+            
+        $user                   = \Auth::user();
+        $users 			        = \DB::table('users')->get();
+        $attemptsAllowed        = 4;
+        $total_users_confirmed  = $this->total_users();
+        $total_users_locked 	= 67;
+        $total_users_new        = 78;
+        $userRole               = $user->hasRole('personal');
+        $admin_skpdRole         = $user->hasRole('admin_skpd');
+        $adminRole              = $user->hasRole('administrator');
+
+        if($userRole)
+        {
+            $access = 'User';
+        } elseif ($admin_skpdRole) {
+            $access = 'Admin Skpd';
+        } elseif ($adminRole) {
+            $access = 'Administrator';
+        }
+
+        return view('admin.pages.administrator-home-TPP_report', [
+                'users' 		          => $users,
+                'total_pegawai' 	      => $this->total_pegawai(),
+                'total_users' 	          => $this->total_users(),
+                'total_skpd'              => $this->total_skpd(),
+        		'user' 			          => $user,
+        		'access' 	              => $access,
+                'total_users_confirmed'   => $total_users_confirmed,
+                'total_users_locked'      => $total_users_locked,
+                'total_users_new'         => $total_users_new,
+                'h_box'                   => 'box-warning',
+        	]
+        );   
+
+        
+    }
    
     
     public function AdministratorSKPDPegawai(Request $request)

@@ -460,6 +460,11 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('hapus_capaian_bulanan','API\CapaianBulananAPIController@Destroy');
 
 
+	//================================== T P P    REPORT =====================================================//
+	Route::get('administrator_tpp_report_list','API\TPPApiController@AdminTPPList');
+
+
+	
 
 	//========================================================================================================//
 	//============================== =======    CAPAIAN TRIWULAN ================================================//
@@ -865,6 +870,11 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'HomeAdminController@showSKPTahunan'
 	]);
 
+	Route::get('admin/tpp_report', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeAdminController@showTPPReport'
+	]);
+
 
 	//----------------------------------------------------------------------------------------//
 	//============================ MASA PEMERINTAHAN ======== ================================//
@@ -963,6 +973,11 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'SKPDController@showSKPDPetaJabatan'
 	]);
 	
+
+	Route::get('admin/capaian_bulanan/{capaian_bulanan_id}',[
+		'as' 			=> '',
+		'uses' 			=> 'CapaianBulananController@PersonalCapaianBulananDetail'
+	]);
 	
 
 	// AJAX REQUEST TEST
