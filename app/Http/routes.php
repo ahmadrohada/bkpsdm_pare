@@ -461,7 +461,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 
 	//================================== T P P    REPORT =====================================================//
-	Route::get('administrator_tpp_report_list','API\TPPApiController@AdministratorTPPList');
+	Route::get('administrator_tpp_report_list','API\TPPAPIController@AdministratorTPPList');
 
 
 	
