@@ -37,56 +37,9 @@ class TPPAPIController extends Controller {
         return Pustaka::capital_string($jabatan->jabatan);
     }
 
-    public function SKPBulanan_timeline_status( Request $request )
-    {
-        $response = array();
-        $body = array();
-        $body_2 = array();
-
-
-        $skp_bulanan = SKPBulanan::where('id','=', $request->skp_bulanan_id )
-                                ->select('*')
-                                ->firstOrFail();
-
-        
-        //CREATED AT - Dibuat
-        $x['tag']	    = 'p';
-        $x['content']	= 'Dibuat';
-        array_push($body, $x);
-        $x['tag']	    = 'p';
-        $x['content']	= $skp_bulanan->u_nama;
-        array_push($body, $x);
-
-        $h['time']	    = $skp_bulanan->created_at->format('Y-m-d H:i:s');
-        $h['body']	    = $body;
-        array_push($response, $h);
-        //=====================================================================//
-
-        //UPDATED AT - Dikirim
-        $y['tag']	    = 'p';
-        $y['content']	= 'Dikirim';
-        array_push($body_2, $y);
-        $y['tag']	    = 'p';
-        $y['content']	= $skp_bulanan->u_nama;
-        array_push($body_2, $y);
-
-        $i['time']	    = $skp_bulanan->updated_at->format('Y-m-d H:i:s');
-        $i['body']	    = $body_2;
-
-        if ( $skp_bulanan->updated_at->format('Y') > 1 )
-        {
-            array_push($response, $i);
-        }
-        
-
-
-        return $response;
-
-
-    }
+  
    
-   
-    public function AdminTPPList(Request $request)
+    public function AdministratorTPPList(Request $request)
     {
             
         $dt = CapaianBulanan::
