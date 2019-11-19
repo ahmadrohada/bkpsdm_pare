@@ -153,7 +153,7 @@ $(document).ready(function(){
     });
 
 	$(".tpp_report").click(function(){
-		window.location.assign("tpp_report");
+		window.location.assign("tpp/report");
     });
 
 

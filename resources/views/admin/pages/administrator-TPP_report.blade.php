@@ -1,7 +1,7 @@
 @extends('admin.layouts.dashboard')
 
 @section('template_title')
-		Administrator
+		Administrator - TPP Report
 @endsection
 
 @section('template_fastload_css')
@@ -15,15 +15,13 @@
 				Administrator
 			</h1>
 
-			{!! Breadcrumbs::render('masa_pemerintahan') !!}
+			{!! Breadcrumbs::render('TPP_report') !!}
 
 	    </section>
 	    <section class="content">
 
-			
-				@include('admin.modules.snapshots-boxes.administrator-home')
-
- 				@include('admin.tables.administrator-TPP_report')
+			@include('admin.modules.filter_TPP_report')
+ 			@include('admin.tables.administrator-TPP_report')
 		
 	    </section>
 	</div>

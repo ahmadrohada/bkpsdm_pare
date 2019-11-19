@@ -38,6 +38,21 @@ class TPPAPIController extends Controller {
     }
 
   
+    public function Select2PeriodeList(Request $request)
+    {
+
+        $data       = Periode::get();
+
+        $periode_list = [];
+        foreach  ( $data as $x){
+            $periode_list[] = array(
+                'text'		=> $x->label,
+                'id'		=> $x->id,
+             );
+
+        }     
+        return $periode_list;
+    }
    
     public function AdministratorTPPList(Request $request)
     {
