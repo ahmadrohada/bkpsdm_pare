@@ -69,7 +69,7 @@
 
 
 <script type="text/javascript">
-
+ 
 	$('.modal-kegiatan_bulanan').on('shown.bs.modal', function(){
 		reset_submitx();
 	});
@@ -136,6 +136,8 @@
 				}).then(function () {
 					$('.modal-kegiatan_bulanan').modal('hide');
 					$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+					$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+					
 					jQuery('#ktj').jstree(true).refresh(true);
 					
 					
@@ -207,6 +209,7 @@
 				}).then(function () {
 					$('.modal-kegiatan_bulanan').modal('hide');
 					$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+					$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
 					jQuery('#ktj').jstree(true).refresh(true);
 					
 				},

@@ -15,7 +15,7 @@
 		<div class="box box-primary" id='skp_bulanan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					List SKP Bulanan
+					List SKP Bulanan 
 				</h1>
 
 				<div class="box-tools pull-right">

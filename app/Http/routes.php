@@ -462,9 +462,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	//================================== T P P    REPORT =====================================================//
 	Route::get('administrator_tpp_report_list','API\TPPAPIController@AdministratorTPPList');
+	Route::get('administrator_tpp_report','API\TPPAPIController@AdministratorTPPList');
 
-
-	
+	Route::get('periode_tahunan_list','API\TPPAPIController@Select2PeriodeList');
 
 	//========================================================================================================//
 	//============================== =======    CAPAIAN TRIWULAN ================================================//
@@ -870,9 +870,14 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'HomeAdminController@showSKPTahunan'
 	]);
 
-	Route::get('admin/tpp_report', [
+
+	//========================================================================================//
+	//================================ T P P    REPORT              ===========================//
+	//========================================================================================//
+
+	Route::get('admin/tpp/report', [
 		'as' 			=> '',
-		'uses' 			=> 'HomeAdminController@showTPPReport'
+		'uses' 			=> 'TPPController@AdministratorTPPReport'
 	]);
 
 

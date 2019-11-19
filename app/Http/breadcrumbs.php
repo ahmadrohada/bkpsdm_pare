@@ -133,6 +133,13 @@ Breadcrumbs::register('pohon_kinerja', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_renja'), '/pohon kinerja', ['icon' => Lang::get('sidebar-nav.link_icon_renja')]);
 });
 
+// DASHBOARD > TPP > Report
+Breadcrumbs::register('TPP_report', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_tahunan'), '/skp tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_tahunan')]);
+});
+
 // DASHBOARD > USERS > SHOW PETA JABATAN
 Breadcrumbs::register('skp_bulanan', function($breadcrumbs)
 {

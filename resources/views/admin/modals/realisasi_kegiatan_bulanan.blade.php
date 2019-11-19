@@ -76,7 +76,7 @@
 						</div>
 
 
-						<div class="col-md-6 form-group bukti" style="margin-top:8px;" >
+						<div class="col-md-6 form-group bukti hidden" style="margin-top:8px;" >
 							<div class="form-group">
 								<label for="file_bukti">Bukti</label>
 								<input type="file" id="file_bukti" name="file_bukti">
