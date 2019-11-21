@@ -37,16 +37,18 @@
 				</div>
 				<div class="form-group margin">
 					<label>SKPD</label>
-					<div class="input-group input-group-sm">
-						<input type="text" class="form-control input-sm">
-						<span class="input-group-btn">
+					<!-- <div class="input-group input-group-sm"> -->
+					<select class="form-control input-sm skpd" name="skpd" style="width: 100%;"></select>
+					<!-- <span class="input-group-btn">
 							<button type="button" class="btn btn-info btn-flat">Go!</button>
-						</span>
-					</div>
+						</span> -->
+					<!-- </div> -->
 				</div>
 				<div class="form-group margin">
 					<label>Unit Kerja</label>
-					<select class="form-control input-sm unit_kerja" name="unit_kerja" style="width: 100%;"></select>
+					<select class="form-control input-sm unit_kerja" name="unit_kerja" style="width: 100%;">
+						
+					</select>
 
 				</div>
 				<div class="form-group margin">
@@ -68,10 +70,11 @@
 
 <script type="text/javascript">
 	$('.periode_bulan,.unit_kerja').select2();
+	$('.unit_kerja').attr("disabled", true);
 
 	$('.periode_tahun').select2({
 		ajax: {
-			url: '{{ url("api_resource/periode_tahunan_list") }}',
+			url: '{{ url("api_resource/tpp_report_periode_tahunan_list") }}',
 			dataType: 'json',
 			quietMillis: 500,
 			data: function(params) {
@@ -91,5 +94,65 @@
 				};
 			}
 		},
+	});
+
+	$('.skpd').select2({
+		ajax: {
+			url: '{{ url("api_resource/tpp_report_skpd_list") }}',
+			dataType: 'json',
+			quietMillis: 500,
+			data: function(params) {
+				var queryParameters = {
+					nama_skpd: params.term
+				}
+				return queryParameters;
+			},
+			processResults: function(data) {
+				return {
+					results: $.map(data, function(item) {
+						return {
+							text: item.text,
+							id: item.id,
+						}
+					})
+				};
+			}
+		},
+	});
+
+	$('.skpd').change(function() {
+		skpd_id = $(this).val();
+		//alert(skpd_id);
+
+
+		$('.unit_kerja').attr("disabled", false);
+		$('.unit_kerja').val("all");
+
+		$('.unit_kerja').select2({
+			ajax: {
+				url: '{{ url("api_resource/tpp_report_unit_kerja_list") }}',
+				dataType: 'json',
+				quietMillis: 500,
+				data: function(params) {
+					var queryParameters = {
+						skpd_id: skpd_id,
+						nama_unit_kerja:params.term
+					}
+					return queryParameters;
+				},
+				processResults: function(data) {
+					return {
+						results: $.map(data, function(item) {
+							return {
+								text: item.text,
+								id: item.id,
+							}
+						})
+					};
+				}
+			},
+		});
+
+
 	});
 </script>

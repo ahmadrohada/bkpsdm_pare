@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Periode;
-use App\Models\PerjanjianKinerja;
+use App\Models\SKPD;
 use App\Models\SKPTahunan;
 use App\Models\SKPBulanan;
 use App\Models\CapaianBulanan;
@@ -52,6 +52,80 @@ class TPPAPIController extends Controller {
 
         }     
         return $periode_list;
+    }
+
+
+
+
+    public function Select2SKPDList(Request $request)
+    {
+
+        $nama_skpd = $request->nama_skpd;
+
+        $data = \DB::table('demo_asn.m_skpd AS skpd')
+
+                ->whereRaw('id = id_skpd AND id != 1 AND id != 6 AND id != 8 AND id != 10 AND id != 12 ')
+                ->where('skpd.skpd','LIKE','%'.$nama_skpd.'%')
+                ->select([  'skpd.id_skpd AS skpd_id',
+                            'skpd.id_unit_kerja AS unit_kerja_id',
+                            'skpd.skpd AS skpd'
+                ])
+                
+                ->get();
+        
+
+        $skpd_list = [];
+        foreach  ( $data as $x){
+            $skpd_list[] = array(
+                'text'		=> $x->skpd,
+                'id'		=> $x->skpd_id,
+             );
+
+        }     
+        return $skpd_list;
+    }
+
+    public function Select2UnitKerjaList(Request $request)
+    {
+
+        $nama_unit_kerja = $request->nama_unit_kerja;
+
+        $id_skpd = $request->skpd_id ;
+
+        
+        $data = \DB::table('demo_asn.m_skpd AS skpd')
+                ->rightjoin('demo_asn.m_skpd AS a', function($join){
+                    $join   ->on('a.parent_id','=','skpd.id');
+                    
+                })
+                ->join('demo_asn.m_unit_kerja AS unit_kerja', function($join){
+                    $join   ->on('a.id','=','unit_kerja.id');
+                    
+                })
+                ->WHERE('skpd.parent_id',$id_skpd)
+                ->where('skpd.skpd','LIKE','%'.$nama_unit_kerja.'%')
+                ->select([  'unit_kerja.id AS unit_kerja_id',
+                            'unit_kerja.unit_kerja AS unit_kerja'
+                
+                ])
+                
+                ->get();
+        
+
+        $unit_kerja_list = [];
+        foreach  ( $data as $x){
+            $unit_kerja_list[] = array(
+                'text'		=> $x->unit_kerja,
+                'id'		=> $x->unit_kerja_id,
+             );
+
+        }     
+
+        $a1[] = array(
+            'text'		=> "SEMUA UNIT KERJA",
+            'id'		=> "all",
+         );
+        return array_merge($a1,$unit_kerja_list);
     }
    
     public function AdministratorTPPList(Request $request)
