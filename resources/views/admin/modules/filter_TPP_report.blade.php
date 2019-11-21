@@ -10,7 +10,7 @@
 	<div class="box-body">
 		<div class="row">
 			<div class="col-md-5">
-				<div class="form-group margin">
+				<div class="form-group margin periode_capaian_f">
 					<label>Periode capaian</label>
 					<div class="row">
 						<div class="col-xs-4">
@@ -35,7 +35,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group margin">
+				<div class="form-group margin skpd_f">
 					<label>SKPD</label>
 					<!-- <div class="input-group input-group-sm"> -->
 					<select class="form-control input-sm skpd" name="skpd" style="width: 100%;"></select>
@@ -44,15 +44,15 @@
 						</span> -->
 					<!-- </div> -->
 				</div>
-				<div class="form-group margin">
+				<div class="form-group margin unit_kerja_f">
 					<label>Unit Kerja</label>
 					<select class="form-control input-sm unit_kerja" name="unit_kerja" style="width: 100%;">
-						
+						<option value="all">SEMUA UNIT KERJA</option>
 					</select>
 
 				</div>
 				<div class="form-group margin">
-					<button type="button" class="btn btn-info btn-block">Lihat <i class="fa fa-eye"></i></button>
+					<button type="button" class="btn btn-info btn-block lihat">Lihat <i class="fa fa-eye"></i></button>
 
 				</div>
 
@@ -69,6 +69,17 @@
 
 
 <script type="text/javascript">
+	$('.periode_capaian_f').on('click', function() {
+		$('.periode_capaian_f').removeClass('has-error');
+	});
+	$('.skpd_f').on('click', function() {
+		$('.skpd_f').removeClass('has-error');
+	});
+	$('.unit_kerja_f').on('click', function() {
+		$('.unit_kerja_f').removeClass('has-error');
+	});
+
+
 	$('.periode_bulan,.unit_kerja').select2();
 	$('.unit_kerja').attr("disabled", true);
 
@@ -126,7 +137,8 @@
 
 
 		$('.unit_kerja').attr("disabled", false);
-		$('.unit_kerja').val("all");
+		$('.unit_kerja').val('all').trigger('change');
+
 
 		$('.unit_kerja').select2({
 			ajax: {
@@ -136,7 +148,7 @@
 				data: function(params) {
 					var queryParameters = {
 						skpd_id: skpd_id,
-						nama_unit_kerja:params.term
+						nama_unit_kerja: params.term
 					}
 					return queryParameters;
 				},
@@ -154,5 +166,39 @@
 		});
 
 
+
 	});
+
+	$(document).on('click', '.lihat', function() {
+
+		periode_tahun = $(".periode_tahun").val();
+		periode_bulan = $(".periode_bulan").val();
+		skpd = $(".skpd").val();
+		unit_kerja = $('.unit_kerja').val();
+		var data = [periode_tahun, periode_bulan, skpd, unit_kerja];
+		$.each(data, function(index, value) {
+			if (index == 0) {
+				((value == null) ? $('.periode_capaian_f').addClass('has-error') : '');
+			}
+			if (index == 1) {
+				((value == null) ? $('.periode_capaian_f').addClass('has-error') : '');
+			}
+			if (index == 2) {
+				((value == null) ? $('.skpd_f').addClass('has-error') : '');
+			}
+			if (index == 3) {
+				((value == null) ? $('.unit_kerja_f').addClass('has-error') : '');
+			}
+		});
+
+		if ( (periode_tahun != null) & (periode_bulan != null) & (skpd != null) & (unit_kerja != null) ) {
+			load_table_tpp(periode_tahun, periode_bulan, skpd, unit_kerja);
+			//alert();
+		}
+		
+
+
+	});
+
+	
 </script>

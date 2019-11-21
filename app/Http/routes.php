@@ -41,7 +41,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('administrator_skpd_list','API\SKPDAPIController@administrator_skpd_list');
 
 	
-
+ 
 	Route::get('administrator_unit_kerja_skpd_list','API\SKPDAPIController@administrator_unit_kerja_skpd_list');
 	
 	//========================================================================================================//
@@ -468,7 +468,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::get('tpp_report_skpd_list','API\TPPAPIController@Select2SKPDList');
 	Route::get('tpp_report_unit_kerja_list','API\TPPAPIController@Select2UnitKerjaList');
-	
+
+
+	Route::get('administrator_tpp_bulanan_list','API\TPPAPIController@AdministratorTPPBulananList');
 
 	//========================================================================================================//
 	//============================== =======    CAPAIAN TRIWULAN ================================================//
