@@ -103,7 +103,8 @@
 					data: "tunjangan",
 					name: "tunjangan",
 					orderable: false,
-					searchable: false
+					searchable: false,
+					width: "230px"
 				},
 				{
 					data: "e",
@@ -165,6 +166,7 @@
 					orderable: false,
 					searchable: false
 				},
+				
 				/* {
 					data: "status",
 					orderable: false,

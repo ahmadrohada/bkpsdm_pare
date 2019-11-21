@@ -163,10 +163,46 @@ class TPPAPIController extends Controller
         })
         ->addColumn('tunjangan', function ($x) {
             return "Rp. ".number_format($x->tunjangan,'0',',','.');
+        })
+        ->addColumn('e', function ($x) {
+            return "Rp. ".number_format($x->tunjangan*(60/100),'0',',','.');
+        })
+        ->addColumn('f', function ($x) {
+            return "";
+        })
+        ->addColumn('g', function ($x) {
+            return "";
+        })
+        ->addColumn('h', function ($x) {
+            return "";
+        })
+        ->addColumn('i', function ($x) {
+            return "";
+        })
+        ->addColumn('j', function ($x) {
+            return "Rp. ".number_format($x->tunjangan*(40/100),'0',',','.');
+        })
+        ->addColumn('k', function ($x) {
+            return "";
+        })
+        ->addColumn('l', function ($x) {
+            return "";
+        })
+        ->addColumn('m', function ($x) {
+            return "";
+        })
+        ->addColumn('n', function ($x) {
+            return "";
         });
         if ($keyword = $request->get('search')['value']) {
             $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         }
         return $datatables->make(true);
     }
+
+
+
+
+
+
 }

@@ -459,7 +459,12 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('simpan_capaian_bulanan','API\CapaianBulananAPIController@Store');
 	Route::post('hapus_capaian_bulanan','API\CapaianBulananAPIController@Destroy');
 
+	//================================== T P P    REPORT =====================================================//
 
+
+	Route::post('simpan_tpp_report','API\TPPReportAPIController@Store');
+
+	
 	//================================== T P P    REPORT =====================================================//
 	Route::get('administrator_tpp_report_list','API\TPPAPIController@AdministratorTPPList');
 	Route::get('administrator_tpp_report','API\TPPAPIController@AdministratorTPPList');
@@ -469,6 +474,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('tpp_report_skpd_list','API\TPPAPIController@Select2SKPDList');
 	Route::get('tpp_report_unit_kerja_list','API\TPPAPIController@Select2UnitKerjaList');
 
+
+	Route::post('simpan_tpp_report','API\TPPAPIController@Store');
 
 	Route::get('administrator_tpp_bulanan_list','API\TPPAPIController@AdministratorTPPBulananList');
 
@@ -1078,6 +1085,19 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'HomeSKPDController@showSKPBulanan'
 	]);
 
+
+	//=======================   R E P O R T   ==================================//
+	Route::get('report', [
+		'as' 			=> '',
+		'uses' 			=> 'ReportController@showTPPReport'
+	]);
+
+
+	Route::get('report/tpp', [
+		'as' 			=> '',
+		'uses' 			=> 'ReportController@showTPPReport'
+	]);
+	
 
 	//=========================== P E G A W A I  =============================================//
 	Route::get('pegawai/{pegawai_id}', [
