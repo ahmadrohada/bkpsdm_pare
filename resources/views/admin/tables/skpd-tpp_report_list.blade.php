@@ -15,7 +15,7 @@
 			<span data-toggle="tooltip" title="Create Report"><a class="btn btn-info btn-xs create_tpp_report " data-toggle="modal" data-target=".create-tpp_report_modal"><i class="fa fa-plus"></i> Create TPP Report</a></span>
 		</div>
 
-		<table id="skp_bulanan_table" class="table table-striped table-hover table-condensed">
+		<table id="skpd_tpp_report_list_table" class="table table-striped table-hover table-condensed">
 			<thead>
 				<tr class="success">
 					<th>NO</th>
@@ -47,7 +47,7 @@
 
 
 
-	$('#skp_bulanan_table').DataTable({
+	$('#skpd_tpp_report_list_table').DataTable({
 		processing: true,
 		serverSide: true,
 		searching: false,
@@ -59,19 +59,18 @@
 				className: "text-center",
 				targets: [0, 1, 2, 3]
 			}
-			/* ,
-												//{ 	className: "hidden-xs", targets: [ 5 ] } */
 		],
 		ajax: {
-			url: '{{ url("api_resource/personal_capaian_bulanan_list") }}',
+			url		: '{{ url("api_resource/skpd_tpp_report_list") }}',
+			data	: { skpd_id : {{$skpd->id}} },
 
-			delay: 3000
+			delay	: 3000
 
 		},
 
 
 		columns: [{
-				data: 'capaian_id',
+				data: 'tpp_report_id',
 				orderable: true,
 				searchable: false,
 				"render": function(data, type, row, meta) {
@@ -83,15 +82,7 @@
 				data: "periode",
 				name: "periode",
 				orderable: true,
-				searchable: true,
-				"render": function(data, type, row) {
-					if (row.capaian_status_approve == 2) {
-						return "<span class='text-danger'>" + row.periode + "</span>";
-					} else {
-						return row.periode;
-					}
-
-				}
+				searchable: true
 			},
 			{
 				data: "bulan",
@@ -310,12 +301,12 @@
 							allowOutsideClick: false,
 							timer: 900
 						}).then(function() {
-								$('#skp_bulanan_table').DataTable().ajax.reload(null, false);
+								$('#skpd_tpp_report_list_table').DataTable().ajax.reload(null, false);
 
 							},
 							function(dismiss) {
 								if (dismiss === 'timer') {
-									$('#skp_bulanan_table').DataTable().ajax.reload(null, false);
+									$('#skpd_tpp_report_list_table').DataTable().ajax.reload(null, false);
 
 
 								}

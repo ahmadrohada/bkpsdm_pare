@@ -464,8 +464,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::post('simpan_tpp_report','API\TPPReportAPIController@Store');
 
-	
-	//================================== T P P    REPORT =====================================================//
+	Route::get('skpd_tpp_report_list','API\TPPReportAPIController@SKPDTTPReportList');
+
+
+
 	Route::get('administrator_tpp_report_list','API\TPPAPIController@AdministratorTPPList');
 	Route::get('administrator_tpp_report','API\TPPAPIController@AdministratorTPPList');
 
@@ -473,8 +475,6 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::get('tpp_report_skpd_list','API\TPPAPIController@Select2SKPDList');
 	Route::get('tpp_report_unit_kerja_list','API\TPPAPIController@Select2UnitKerjaList');
-
-
 	Route::post('simpan_tpp_report','API\TPPAPIController@Store');
 
 	Route::get('administrator_tpp_bulanan_list','API\TPPAPIController@AdministratorTPPBulananList');
