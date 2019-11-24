@@ -216,35 +216,105 @@ class TPPReportAPIController extends Controller
         }
         return $datatables->make(true);
     }
+
+    public function TPPBulananList(Request $request)
+    {
+
+        $tpp_report_id = $request->tpp_report_id;
+
+        $dt = TPPReportData::WHERE('tpp_report_data.id', $tpp_report_id)
+            ->rightjoin('demo_asn.tb_pegawai AS pegawai', function ($join) {
+                $join->on('pegawai.id', '=', 'tpp_report_data.pegawai_id');
+            })
+            ->rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
+                $join->on('a.id_pegawai', '=', 'pegawai.id');
+            })
+            //eselon
+            ->leftjoin('demo_asn.m_skpd AS skpd ', function ($join) {
+                $join->on('a.id_jabatan', '=', 'skpd.id');
+            })
+
+
+            ->select([
+                'pegawai.nama',
+                'pegawai.id AS pegawai_id',
+                'pegawai.nip',
+                'pegawai.gelardpn',
+                'pegawai.gelarblk',
+                'skpd.tunjangan AS tunjangan'
+
+
+            ])
+            ->where('pegawai.status', '=', 'active')
+            ->where('a.status', '=', 'active');
+
+
+
+        $datatables = Datatables::of($dt)
+            ->addColumn('nama_pegawai', function ($x) {
+                return Pustaka::nama_pegawai($x->gelardpn, $x->nama, $x->gelarblk);
+            })
+            ->addColumn('nip_pegawai', function ($x) {
+                return $x->nip;
+            })
+            ->addColumn('tunjangan', function ($x) {
+                return "Rp. " . number_format($x->tunjangan, '0', ',', '.');
+            })
+            ->addColumn('e', function ($x) {
+                return "Rp. " . number_format($x->tunjangan * (60 / 100), '0', ',', '.');
+            })
+            ->addColumn('f', function ($x) {
+                return "";
+            })
+            ->addColumn('g', function ($x) {
+                return "";
+            })
+            ->addColumn('h', function ($x) {
+                return "";
+            })
+            ->addColumn('i', function ($x) {
+                return "";
+            })
+            ->addColumn('j', function ($x) {
+                return "Rp. " . number_format($x->tunjangan * (40 / 100), '0', ',', '.');
+            })
+            ->addColumn('k', function ($x) {
+                return "";
+            })
+            ->addColumn('l', function ($x) {
+                return "";
+            })
+            ->addColumn('m', function ($x) {
+                return "";
+            })
+            ->addColumn('n', function ($x) {
+                return "";
+            });
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        }
+        return $datatables->make(true);
+    }
+
+
     protected function TPPReportDetail(Request $request)
     {
         $x = TPPReport::WHERE('tpp_report.id', $request->tpp_report_id)
             ->join('db_pare_2018.periode AS periode', function ($join) {
                 $join->on('periode.id', '=', 'tpp_report.periode_id');
             })
-            ->join('demo_asn.tb_pegawai AS ka_skpd', function ($join) {
-                $join->on('ka_skpd.id', '=', 'tpp_report.ka_skpd_id');
-            })
-            ->join('demo_asn.tb_pegawai AS admin_skpd', function ($join) {
-                $join->on('admin_skpd.id', '=', 'tpp_report.admin_skpd_id');
-            })
             ->select([
                 'tpp_report.id AS tpp_report_id',
                 'tpp_report.periode_id',
                 'tpp_report.bulan',
                 'tpp_report.skpd_id',
-                'tpp_report.ka_skpd_id',
-                'tpp_report.admin_skpd_id',
+                'tpp_report.ka_skpd',
+                'tpp_report.admin_skpd',
                 'tpp_report.status',
                 'tpp_report.created_at',
                 'periode.label AS periode_label',
-                'periode.awal AS tahun_periode',
-                'admin_skpd.nama AS nama_admin_skpd',
-                'admin_skpd.gelardpn AS gelardpn_admin_skpd',
-                'admin_skpd.gelarblk AS gelarblk_admin_skpd',
-                'ka_skpd.nama AS nama_ka_skpd',
-                'ka_skpd.gelardpn AS gelardpn_ka_skpd',
-                'ka_skpd.gelarblk AS gelarblk_ka_skpd'
+                'periode.awal AS tahun_periode'
+
 
             ])
             ->first();
@@ -254,9 +324,9 @@ class TPPReportAPIController extends Controller
             'tpp_report_id'     => $x->tpp_report_id,
             'periode'           => Pustaka::bulan($x->bulan) . "  " . Pustaka::tahun($x->tahun_periode),
             'created_at'        => Pustaka::tgl_jam($x->created_at),
-            'ka_skpd'           => "",
-            'admin_skpd'        => Pustaka::nama_pegawai($x->gelardpn_admin_skpd, $x->nama_admin_skpd, $x->gelarblk_admin_skpd),
-            'ka_skpd'           => Pustaka::nama_pegawai($x->gelardpn_ka_skpd, $x->nama_ka_skpd, $x->gelarblk_ka_skpd),
+            'ka_skpd'           => $x->ka_skpd,
+            'admin_skpd'        => $x->admin_skpd,
+
 
             'jm_data_pegawai'   => TPPReportData::WHERE('tpp_report_id', $x->tpp_report_id)->count(),
             'jm_data_capaian'   => TPPReportData::WHERE('tpp_report_id', $x->tpp_report_id)->count(),
@@ -289,8 +359,7 @@ class TPPReportAPIController extends Controller
                 'periode.awal AS tahun_periode'
 
             ])
-            /*  ->orderBy('rencana_aksi.waktu_pelaksanaan', 'ASC')
-            ->orderBy('rencana_aksi.id', 'DESC') */
+            ->orderBy('tpp_report.id', 'DESC')
             ->get();
 
         $datatables = Datatables::of($tpp_report)
@@ -361,95 +430,26 @@ class TPPReportAPIController extends Controller
             $data = array('status'    =>  '1');
             return $data;
         }
-
-
-        /* 
-        $skp_bulanan   = SKPBulanan::WHERE('skp_bulanan.id',$request->get('skp_bulanan_id'))
-                        
-                        ->SELECT('skp_bulanan.id AS skp_bulanan_id',
-                                 'skp_bulanan.tgl_mulai',
-                                 'skp_bulanan.tgl_selesai',
-                                 'skp_bulanan.skp_tahunan_id',
-                                 'skp_bulanan.bulan',
-                                 'skp_bulanan.u_jabatan_id',
-                                 'skp_bulanan.p_jabatan_id',
-                                 'skp_bulanan.pegawai_id'
-
-                                 
-                                )
-                        ->first();
-
-        $jenis_jabatan = $skp_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
-
-       
-        //DETAIL data pribadi dan atasan
-        $u_detail = HistoryJabatan::WHERE('id',$skp_bulanan->u_jabatan_id)->first();
-        $p_detail = HistoryJabatan::WHERE('id',$skp_bulanan->p_jabatan_id)->first();
-
-        if ( $skp_bulanan->p_jabatan_id >= 1 ){
-            $data = array(
-                'status'			    =>  'pass',
-                'renja_id'              =>  $renja_id,
-                'list_bawahan'          =>  $list_bawahan,
-                'jabatan_id'            => $skp_bulanan->PejabatYangDinilai->id_jabatan,
-                'pegawai_id'            =>  $skp_bulanan->pegawai_id,
-                'skp_bulanan_id'        =>  $skp_bulanan->skp_bulanan_id,
-                'periode_label'			=>  Pustaka::bulan($skp_bulanan->bulan),
-                'tgl_mulai'			    =>  Pustaka::tgl_form($skp_bulanan->tgl_mulai),
-                'tgl_selesai'			=>  Pustaka::tgl_form($skp_bulanan->tgl_selesai),
-                'jm_kegiatan_bulanan'	=>  $jm_kegiatan,
-
-                'renja_id'	            =>  $skp_bulanan->SKPTahunan->Renja->id,
-                'waktu_pelaksanaan'	    =>  $skp_bulanan->bulan,
-
-               
-                'u_jabatan_id'	        => $u_detail->id,
-                'u_nip'	                => $u_detail->nip,
-                'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
-                'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
-                'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
-                'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
-                'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
-                'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
-                'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
-                'u_jenis_jabatan'	    => $u_detail->Eselon->Jenis_jabatan->id,
-
-                'p_jabatan_id'	        => $p_detail->id,
-                'p_nip'	                => $p_detail->nip,
-                'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
-                'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
-                'p_golongan'	        => $p_detail->Golongan ? $p_detail->Golongan->golongan : '',
-                'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
-                'p_jabatan'	            => Pustaka::capital_string($p_detail->Jabatan ? $p_detail->Jabatan->skpd : ''),
-                'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
-                'p_skpd'	            => Pustaka::capital_string($p_detail->Skpd ? $p_detail->Skpd->skpd : ''),
-                
-                );
-       
-        }
-
-        return $data;
-
-
- */
     }
 
     public function Store(Request $request)
     {
 
         $messages = [
-            'skpd_id.required'           => 'Harus diisi',
-            'periode_tahun.required'     => 'Harus diisi',
-            'periode_bulan.required'     => 'Harus diisi',
+            'skpd_id.required'                  => 'Harus diisi',
+            'periode_id.required'               => 'Harus diisi',
+            'bulan.required'                    => 'Harus diisi',
+            'formula_perhitungan_id.required'   => 'Harus diisi',
 
         ];
 
         $validator = Validator::make(
             Input::all(),
             array(
-                'skpd_id'           => 'required',
-                'periode_tahun'     => 'required|numeric',
-                'periode_bulan'     => 'required|numeric',
+                'skpd_id'               => 'required',
+                'periode_id'            => 'required|numeric',
+                'bulan'                 => 'required|numeric',
+                'formula_perhitungan_id' => 'required|numeric',
             ),
             $messages
         );
@@ -462,11 +462,46 @@ class TPPReportAPIController extends Controller
 
         $st_kt    = new TPPReport;
 
-        $st_kt->skpd_id             = Input::get('kegiatan_id');
-        $st_kt->periode_tahun       = Input::get('periode_tahun');
-        $st_kt->periode_bulan       = Input::get('periode_bulan');
+        $st_kt->periode_id          = Input::get('periode_id');
+        $st_kt->bulan               = Input::get('bulan');
+        $st_kt->formula_perhitungan_id = Input::get('formula_perhitungan_id');
+        $st_kt->skpd_id             = Input::get('skpd_id');
+        $st_kt->ka_skpd             = Input::get('ka_skpd');
+        $st_kt->admin_skpd          = Input::get('admin_skpd');
 
         if ($st_kt->save()) {
+
+            //jika berhasil
+            $tpp_report_id = $st_kt->id;
+
+
+            //insert data pegawai to  tpp-report_data
+            $pegawai = Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
+                $join->on('a.id_pegawai', '=', 'tb_pegawai.id');
+                $join->where('a.status', '=', 'active');
+            })
+                ->SELECT('tb_pegawai.id AS pegawai_id')
+                ->WHERE('a.id_skpd', '=', Input::get('skpd_id'))
+                ->WHERE('tb_pegawai.nip', '!=', 'admin')
+                ->WHERE('tb_pegawai.status', 'active')
+                ->get();
+
+
+            foreach ($pegawai as $x) {
+                $report_data    = new TPPReportData;
+
+                $report_data->tpp_report_id    = $tpp_report_id;
+                $report_data->pegawai_id       = $x->pegawai_id;
+
+
+                $report_data->save();
+            }
+
+
+
+
+
+
             return \Response::make('sukses', 200);
         } else {
             return \Response::make('error', 500);

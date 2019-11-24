@@ -481,6 +481,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('simpan_tpp_report','API\TPPReportAPIController@Store');
 
 	Route::get('administrator_tpp_bulanan_list','API\TPPReportAPIController@AdministratorTPPBulananList');
+	Route::get('tpp_bulanan_list','API\TPPReportAPIController@TPPBulananList');
 
 	//========================================================================================================//
 	//============================== =======    CAPAIAN TRIWULAN ================================================//

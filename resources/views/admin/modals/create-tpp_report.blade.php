@@ -13,12 +13,12 @@
 
 				<div class="modal-body">
 
-					<input type="text" name="skpd_id" class="form-control skpd_id">
-					<input type="text" name="periode_id" class="form-control periode_id">
-					<input type="text" name="bulan" class="form-control bulan">
-					<input type="text" name="formula_perhitungan_id" class="form-control formula_perhitungan_id" value="1">
-					<input type="text" name="ka_skpd" class="form-control ka_skpd">
-					<input type="text" name="admin_skpd" class="form-control admin_skpd">
+					<input type="hidden" name="skpd_id" class="form-control skpd_id">
+					<input type="hidden" name="periode_id" class="form-control periode_id">
+					<input type="hidden" name="bulan" class="form-control bulan">
+					<input type="hidden" name="formula_perhitungan_id" class="form-control formula_perhitungan_id" value="1">
+					<input type="hidden" name="ka_skpd" class="form-control ka_skpd">
+					<input type="hidden" name="admin_skpd" class="form-control admin_skpd">
 
 
 					<div class="form-group">

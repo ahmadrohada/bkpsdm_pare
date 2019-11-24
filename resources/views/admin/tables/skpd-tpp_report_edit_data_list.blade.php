@@ -39,7 +39,7 @@
 	});
 
 
-	function load_table_tpp(periode_tahun, periode_bulan, skpd, unit_kerja) {
+	function load_table_tpp() {
 		$('#tpp_report_table').DataTable({
 			destroy: true,
 			processing: true,
@@ -58,9 +58,9 @@
 
 			],
 			ajax: {
-				url: '{{ url("api_resource/administrator_tpp_bulanan_list") }}',
+				url: '{{ url("api_resource/tpp_bulanan_list") }}',
 				data: {
-					skpd_id: skpd
+					tpp_report_id: {{ $tpp_report->id }}
 				},
 
 			},

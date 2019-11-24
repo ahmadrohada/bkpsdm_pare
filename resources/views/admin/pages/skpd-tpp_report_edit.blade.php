@@ -43,7 +43,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		$('#myTab a').click(function(e) {
+		$('#myTab a').click(function(e) { 
 
 			e.preventDefault();
 			$(this).tab('show');
@@ -61,7 +61,7 @@
 				$('html, body').animate({
 					scrollTop: 0
 				}, 0);
-				initTreeKegTahunan();
+				load_table_tpp();
 			} else if (id == 'status') {
 				status_pengisian();
 			}
