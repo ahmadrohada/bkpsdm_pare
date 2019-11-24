@@ -171,22 +171,32 @@ return [
 	'link_title_capaian_tahunan'    		=> 'Capaian Tahunan',
 	'link_icon_capaian_tahunan'     		=> 'fa-bar-chart',
 
-	// TPP REPORT
-	'link_title_report'    		=> 'Report',
-	'link_icon_report'     		=> 'fa-server',
-
-
-	// TPP REPORT
-	'link_title_tpp_report'    		=> 'TPP Report',
-	'link_icon_tpp_report'     		=> 'fa-clipboard',
-
+	
 
 	'link_title_edit_capaian_tahunan'    		=> 'Edit',
 	'link_icon_edit_capaian_tahunan'     		=> 'fa-pencil',
 
 	'link_title_detail_capaian_tahunan'    		=> 'Detail',
 	'link_icon_detail_capaian_tahunan'     		=> 'fa-eye',
+
+	// REPORT
+	'link_title_report'    		=> 'Report',
+	'link_icon_report'     		=> 'fa-server',
+
+	//TPP REPORT
+
+	'link_title_tpp_report'    		=> 'TPP Report',
+	'link_icon_tpp_report'     		=> 'fa-pencil',
+
+	'link_title_edit_tpp_report'    		=> 'Edit',
+	'link_icon_edit_tpp_report'     		=> 'fa-pencil',
+
+	'link_title_detail_tpp_report'    		=> 'Detail',
+	'link_icon_detail_tpp_report'     		=> 'fa-eye',
+
 	
+
+
 	// PETA JABATAN LINKS
 	
 	'link_title_peta_jabatan'   => 'Peta Jabatan',

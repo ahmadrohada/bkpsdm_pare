@@ -461,6 +461,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	//================================== T P P    REPORT =====================================================//
 
+	Route::get('create_tpp_report_confirm','API\TPPReportAPIController@CreateConfirm');
+
+	Route::get('tpp_report_detail','API\TPPReportAPIController@TPPReportDetail');
 
 	Route::post('simpan_tpp_report','API\TPPReportAPIController@Store');
 
@@ -468,16 +471,16 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 
 
-	Route::get('administrator_tpp_report_list','API\TPPAPIController@AdministratorTPPList');
-	Route::get('administrator_tpp_report','API\TPPAPIController@AdministratorTPPList');
+	Route::get('administrator_tpp_report_list','API\TPPReportAPIController@AdministratorTPPList');
+	Route::get('administrator_tpp_report','API\TPPReportAPIController@AdministratorTPPList');
 
-	Route::get('tpp_report_periode_tahunan_list','API\TPPAPIController@Select2PeriodeList');
+	Route::get('tpp_report_periode_tahunan_list','API\TPPReportAPIController@Select2PeriodeList');
 
-	Route::get('tpp_report_skpd_list','API\TPPAPIController@Select2SKPDList');
-	Route::get('tpp_report_unit_kerja_list','API\TPPAPIController@Select2UnitKerjaList');
-	Route::post('simpan_tpp_report','API\TPPAPIController@Store');
+	Route::get('tpp_report_skpd_list','API\TPPReportAPIController@Select2SKPDList');
+	Route::get('tpp_report_unit_kerja_list','API\TPPReportAPIController@Select2UnitKerjaList');
+	Route::post('simpan_tpp_report','API\TPPReportAPIController@Store');
 
-	Route::get('administrator_tpp_bulanan_list','API\TPPAPIController@AdministratorTPPBulananList');
+	Route::get('administrator_tpp_bulanan_list','API\TPPReportAPIController@AdministratorTPPBulananList');
 
 	//========================================================================================================//
 	//============================== =======    CAPAIAN TRIWULAN ================================================//
@@ -1031,10 +1034,11 @@ Route::group(['middleware' => 'administrator'], function () {
 
 });
 
+//========================================================================================//
+//====================================   S K P D       ===================================//
+//========================================================================================//
 
 
-
-// SKPD ACCESS LEVEL PAGE ROUTES - RUNNING THROUGH SKPD MIDDLEWARE
 Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		
 	
@@ -1089,13 +1093,23 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	//=======================   R E P O R T   ==================================//
 	Route::get('report', [
 		'as' 			=> '',
-		'uses' 			=> 'ReportController@showTPPReport'
+		'uses' 			=> 'TPPReportController@showSKPDTPPReport'
 	]);
 
-
+	//=======================   TPP R E P O R T   ==================================//
 	Route::get('report/tpp', [
 		'as' 			=> '',
-		'uses' 			=> 'ReportController@showTPPReport'
+		'uses' 			=> 'TPPReportController@showSKPDTPPReport'
+	]);
+
+	Route::get('report/tpp/{tpp_report_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'TPPReportController@editSKPDTPPReport'
+	]);
+
+	Route::get('report/tpp/{tpp_report_id}/edit', [
+		'as' 			=> '',
+		'uses' 			=> 'TPPReportController@editSKPDTPPReport'
 	]);
 	
 

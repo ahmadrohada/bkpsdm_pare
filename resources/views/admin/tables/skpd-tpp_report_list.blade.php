@@ -12,7 +12,7 @@
 	<div class="box-body table-responsive">
 
 		<div class="toolbar">
-			<span data-toggle="tooltip" title="Create Report"><a class="btn btn-info btn-xs create_tpp_report " data-toggle="modal" data-target=".create-tpp_report_modal"><i class="fa fa-plus"></i> Create TPP Report</a></span>
+			<span data-toggle="tooltip" title="Create Report"><a class="btn btn-info btn-xs create_tpp_report "><i class="fa fa-plus"></i> Create TPP Report</a></span>
 		</div>
 
 		<table id="skpd_tpp_report_list_table" class="table table-striped table-hover table-condensed">
@@ -20,8 +20,7 @@
 				<tr class="success">
 					<th>NO</th>
 					<th>PERIODE</th>
-					<th>JUMLAH PEGAWAI</th>
-					<th>JUMLAH CAPAIAN BULANAN</th>
+					<th>JUMLAH DATA</th>
 					<th>REPORT</th>
 				</tr>
 			</thead>
@@ -36,13 +35,89 @@
 <script type="text/javascript">
 
 
-	$(document).on('click', '.create_tpp_report', function(e) {
+	/* $(document).on('click', '.create_tpp_report', function(e) {
+
+
+
+    
+
+
+
 		
 		$('.nama_skpd').html('{!! $skpd->skpd !!}');
 		$('.skpd_id').val('{!! $skpd->id !!}');
-		$('.create-tpp_report_modal').find('[name=periode_tahun],[name=periode_bulan]').val('');
+		$('.create-tpp_report_modal').find('[name=periode_tahun],[name=periode_bulan]').val(''); 
 
 
+	}); */
+
+
+	$(document).on('click','.create_tpp_report',function(e){
+		
+		$.ajax({
+			url		: '{{ url("api_resource/create_tpp_report_confirm") }}',
+			type	: 'GET',
+			data	:  	{ 
+							skpd_id : {{ $skpd->id }},
+							admin_id : {{ $pegawai_id }}
+						},
+			success	: function(data) {
+
+				if ( data['status']==='0' ){
+					$('.skpd_id').val(data['skpd_id']); 
+					$('.periode_id').val(data['periode_id']); 
+					$('.bulan').val(data['bulan']); 
+					$('.ka_skpd').val(data['ka_skpd']); 
+					$('.admin_skpd').val(data['admin_skpd']); 
+
+
+					$('.nama_skpd').html(data['nama_skpd']); 
+					$('.jumlah_pegawai').html(data['jumlah_pegawai']);
+					
+					$('.create-tpp_report_modal').modal('show'); 
+				}else if ( data['status'] === '1'){
+
+					Swal.fire({
+						title: "Create TPP Report",
+						text:"TPP Report untuk bulan ini sudah dibuat",
+						type: "warning",
+						showCancelButton: true,
+						cancelButtonText: "Batal",
+						confirmButtonText: "Ya",
+						confirmButtonClass: "btn btn-success",
+						cancelButtonColor: "btn btn-danger",
+						cancelButtonColor: "#d33",
+						closeOnConfirm: false,
+						closeOnCancel:false
+					}).then ((result) => {
+						if (result.value){
+
+						}
+					});
+
+					
+				}else{
+					Swal.fire({
+						title: 'Error!',
+						text: '',
+						type: 'error',
+						confirmButtonText: 'Tutup'
+					})
+				}
+				
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
+
+					Swal.fire({
+						title: 'Error!',
+						text: '',
+						type: 'error',
+						confirmButtonText: 'Tutup'
+					})
+			}
+			
+		});
+		
 	});
 
 
@@ -85,74 +160,23 @@
 				searchable: true
 			},
 			{
-				data: "bulan",
-				name: "bulan",
-				orderable: true,
-				searchable: true,
-				"render": function(data, type, row) {
-					if (row.capaian_status_approve == 2) {
-						return "<span class='text-danger'>" + row.bulan + "</span>";
-					} else {
-						return row.bulan;
-					}
-
-				}
+				data: "jumlah_data",
+				name: "jumlah_data"
 			},
-
 			{
-				data: "jabatan",
-				name: "jabatan",
-				orderable: true,
-				searchable: true,
-				"render": function(data, type, row) {
-					if (row.capaian_status_approve == 2) {
-						return "<span class='text-danger'>" + row.jabatan + "</span>";
-					} else {
-						return row.jabatan;
-					}
-
-				}
-			},
-
-			{
-				data: "capaian",
+				data: "status",
 				orderable: false,
 				searchable: false,
 				width: "120px",
 				"render": function(data, type, row) {
-					if (row.remaining_time >= 0) {
-						if (row.capaian >= 1) {
-
-
-							if (row.capaian_send_to_atasan == 1) {
-								if (row.capaian_status_approve == 2) {
-									//ditolak
-									return '<span  data-toggle="tooltip" title="Ralat" style="margin:2px;" ><a class="btn btn-warning btn-xs ralat_capaian_bulanan"  data-id="' + row.capaian_id + '"><i class="fa fa-pencil" ></i></a></span>' +
-										'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_bulanan"  data-id="' + row.capaian_id + '"><i class="fa fa-eye" ></i></a></span>' +
-										'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-close " ></i></a></span>';
-								} else {
-									//diterima
-									return '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>' +
-										'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_bulanan"  data-id="' + row.capaian_id + '"><i class="fa fa-eye" ></i></a></span>' +
-										'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-close " ></i></a></span>';
-								}
-							} else {
-								//blm dikirim
-								return '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_bulanan" data-id="' + row.capaian_id + '"><i class="fa fa-pencil" ></i></a></span>' +
-									'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>' +
-									'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_bulanan" data-id="' + row.capaian_id + '"><i class="fa fa-close " ></i></a></span>';
-							}
-						} else {
-							return '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_bulanan"  data-skp_bulanan_id="' + row.skp_bulanan_id + '" style="width:75px;">Capaian</a></span>';
-						}
-
-
-
+					if (row.status == '1' ) {
+						//close
+						return '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_tpp_report_data"  data-id="' + row.tpp_report_id + '"><i class="fa fa-eye" ></i></a></span>' +
+							'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-close " ></i></a></span>';
 					} else {
-
-						return row.remaining_time;
-
-
+						//open
+						return '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_tpp_report_data" data-id="' + row.tpp_report_id + '"><i class="fa fa-pencil" ></i></a></span>' +
+							'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_tpp_report_data" data-id="' + row.tpp_report_id + '"><i class="fa fa-close " ></i></a></span>';
 					}
 				}
 			},
@@ -162,19 +186,16 @@
 	});
 
 
-	$(document).on('click', '.edit_capaian_bulanan', function(e) {
-		var capaian_id = $(this).data('id');
-		window.location.assign("capaian-bulanan/" + capaian_id + "/edit");
+	$(document).on('click', '.edit_tpp_report_data', function(e) {
+		var tpp_report_id = $(this).data('id');
+		window.location.assign("report/tpp/" + tpp_report_id + "/edit");
 	});
 
-	$(document).on('click', '.ralat_capaian_bulanan', function(e) {
-		var capaian_id = $(this).data('id');
-		window.location.assign("capaian-bulanan/" + capaian_id + "/ralat");
-	});
+	
 
-	$(document).on('click', '.lihat_capaian_bulanan', function(e) {
-		var capaian_id = $(this).data('id');
-		window.location.assign("capaian-bulanan/" + capaian_id);
+	$(document).on('click', '.lihat_tpp_report_data', function(e) {
+		var tpp_report_id = $(this).data('id');
+		window.location.assign("tpp/" + tpp_report_id);
 	});
 
 	$(document).on('click', '.create_capaian_bulanan', function(e) {

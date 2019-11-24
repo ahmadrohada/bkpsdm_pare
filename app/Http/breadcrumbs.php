@@ -134,10 +134,22 @@ Breadcrumbs::register('pohon_kinerja', function($breadcrumbs)
 });
 
 // DASHBOARD > TPP > Report
-Breadcrumbs::register('TPP_report', function($breadcrumbs)
+Breadcrumbs::register('tpp_report', function($breadcrumbs)
 {
     $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_tahunan'), '/skp tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_tahunan')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_tpp_report'), '/tpp report', ['icon' => Lang::get('sidebar-nav.link_icon_tpp_report')]);
+});
+
+Breadcrumbs::register('edit_tpp_report', function($breadcrumbs)
+{
+    $breadcrumbs->parent('tpp_report');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_edit_tpp_report'), '/tpp report edit', ['icon' => Lang::get('sidebar-nav.link_icon_edit_tpp_report')]);
+});
+
+Breadcrumbs::register('detail_tpp_report', function($breadcrumbs)
+{
+    $breadcrumbs->parent('tpp_report');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_detail_tpp_report'), '/tpp report detail', ['icon' => Lang::get('sidebar-nav.link_icon_detail_tpp_report')]);
 });
 
 // DASHBOARD > USERS > SHOW PETA JABATAN

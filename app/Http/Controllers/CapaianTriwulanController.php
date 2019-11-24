@@ -46,7 +46,7 @@ class CapaianTriwulanController extends Controller {
     public function PersonalCapaianTriwulanEdit(Request $request)
 	{
         
-        $capaian_triwulan   = CapaianTriwulan::WHERE('id', $request->capaian_triwulan_id)->first();
+            $capaian_triwulan   = CapaianTriwulan::WHERE('id', $request->capaian_triwulan_id)->first();
 
        /*  if ( $capaian_bulanan->send_to_atasan != '0' ){
             return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'terkirim');
