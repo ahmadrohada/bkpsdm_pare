@@ -27,40 +27,40 @@ class DashboardController extends Controller
      */
 
 
-      //=======================================================================================//
-      protected function golongan_aktif($pegawai_id){
+    //=======================================================================================//
+    protected function golongan_aktif($pegawai_id)
+    {
         //GOLONGAN 
         $gol       = \DB::table('demo_asn.tb_history_golongan')
-                            ->leftjoin('demo_asn.m_golongan AS golongan', function($join){
-                                $join   ->on('tb_history_golongan.id_golongan','=','golongan.id');
-                            })
-                            ->WHERE('tb_history_golongan.id_pegawai',$pegawai_id)
-                            ->WHERE('tb_history_golongan.status','=','active')
-                            ->SELECT(['golongan.golongan'])
-                            ->first();
-        if ( $gol != null ){
+            ->leftjoin('demo_asn.m_golongan AS golongan', function ($join) {
+                $join->on('tb_history_golongan.id_golongan', '=', 'golongan.id');
+            })
+            ->WHERE('tb_history_golongan.id_pegawai', $pegawai_id)
+            ->WHERE('tb_history_golongan.status', '=', 'active')
+            ->SELECT(['golongan.golongan'])
+            ->first();
+        if ($gol != null) {
             return $gol->golongan;
-        }else{
+        } else {
             return "";
         }
-        
     }
 
     //=======================================================================================//
-      protected function tmt_golongan_aktif($pegawai_id){
+    protected function tmt_golongan_aktif($pegawai_id)
+    {
         //GOLONGAN 
         $gol       = \DB::table('demo_asn.tb_history_golongan')
-                           
-                            ->WHERE('tb_history_golongan.id_pegawai',$pegawai_id)
-                            ->WHERE('tb_history_golongan.status','=','active')
-                            ->SELECT(['tb_history_golongan.tmt_golongan'])
-                            ->first();
-        if ( $gol != null ){
+
+            ->WHERE('tb_history_golongan.id_pegawai', $pegawai_id)
+            ->WHERE('tb_history_golongan.status', '=', 'active')
+            ->SELECT(['tb_history_golongan.tmt_golongan'])
+            ->first();
+        if ($gol != null) {
             return $gol->tmt_golongan;
-        }else{
+        } else {
             return "";
         }
-        
     }
 
 
@@ -72,10 +72,9 @@ class DashboardController extends Controller
         $admin_skpdRole = $user->hasRole('admin_skpd');
         $adminRole      = $user->hasRole('administrator');
 
-        if($userRole)
-        {
+        if ($userRole) {
             $access = 'Personal';
-			$dashboard = 'personal';
+            $dashboard = 'personal';
         } elseif ($admin_skpdRole) {
             $access = 'Admin SKPD';
             //$dashboard = 'admin-skpd';
@@ -89,52 +88,53 @@ class DashboardController extends Controller
 
 
 
-        $profil = Pegawai::WHERE('tb_pegawai.id',  $user->id_pegawai) 
-                            ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
-                                        $join   ->on('a.id_pegawai','=','tb_pegawai.id');
-                                        $join   ->where('a.status','=', 'active');
-                            })
+        $profil = Pegawai::WHERE('tb_pegawai.id',  $user->id_pegawai)
+            ->leftjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
+                $join->on('a.id_pegawai', '=', 'tb_pegawai.id');
+                $join->where('a.status', '=', 'active');
+            })
 
-                            //unit_kerja
-                            ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
-                            ->leftjoin('demo_asn.m_unit_kerja AS b', 's_skpd.parent_id','=','b.id')
-                    
-                            //skpd
-                            ->leftjoin('demo_asn.m_skpd AS c', 'a.id_skpd','=','c.id')
+            //unit_kerja
+            ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id', '=', 'a.id_unit_kerja')
+            ->leftjoin('demo_asn.m_unit_kerja AS b', 's_skpd.parent_id', '=', 'b.id')
+
+            //skpd
+            ->leftjoin('demo_asn.m_skpd AS c', 'a.id_skpd', '=', 'c.id')
 
 
-                            //eselon
-                            ->leftjoin('demo_asn.m_eselon AS d', 'a.id_eselon','=','d.id')
-    
-                            //jenis_jabatan
-                            ->leftjoin('demo_asn.m_jenis_jabatan AS e ', function($join){
-                                $join   ->on('d.id_jenis_jabatan','=','e.id');
-                            })
+            //eselon
+            ->leftjoin('demo_asn.m_eselon AS d', 'a.id_eselon', '=', 'd.id')
 
-                            //FOTO
-                            ->leftjoin('demo_asn.foto AS y ', function($join){
-                                $join   ->on('tb_pegawai.nip','=','y.nipbaru');
-                            }) 
-                          
-                           
-                            ->SELECT(   'tb_pegawai.*',
-                                        'a.*',
-                                        'b.unit_kerja AS unit_kerja',
-                                        'c.skpd AS skpd',
-                                        'd.eselon AS eselon',
-                                        'e.jenis_jabatan AS jenis_jabatan',
-                                        'y.isi AS foto'
-                                       
-                                       
-                                     
-                                     
-                                     
-                                     )
-                            ->first();
+            //jenis_jabatan
+            ->leftjoin('demo_asn.m_jenis_jabatan AS e ', function ($join) {
+                $join->on('d.id_jenis_jabatan', '=', 'e.id');
+            })
 
-        $nama           = Pustaka::nama_pegawai($profil->gelardpn , $profil->nama , $profil->gelarblk);
+            //FOTO
+            ->leftjoin('demo_asn.foto AS y ', function ($join) {
+                $join->on('tb_pegawai.nip', '=', 'y.nipbaru');
+            })
+
+
+            ->SELECT(
+                'tb_pegawai.*',
+                'a.*',
+                'b.unit_kerja AS unit_kerja',
+                'c.skpd AS skpd',
+                'd.eselon AS eselon',
+                'e.jenis_jabatan AS jenis_jabatan',
+                'y.isi AS foto'
+
+
+
+
+
+            )
+            ->first();
+
+        $nama           = Pustaka::nama_pegawai($profil->gelardpn, $profil->nama, $profil->gelarblk);
         $nip            = $profil->nip;
-        
+
         $skpd           = Pustaka::capital_string($profil->skpd);
         $unit_kerja     = Pustaka::capital_string($profil->unit_kerja);
 
@@ -150,75 +150,67 @@ class DashboardController extends Controller
         $email          = $profil->email;
         $alamat         = $profil->alamat;
 
-        
 
-        if ( $profil->foto != null  ){
-            
 
-            $foto   = 'data:image/jpeg;base64,'.base64_encode( $profil->foto );
+        if ($profil->foto != null) {
 
-        }else{
-            if ( $profil->jenis_kelamin == 'Perempuan'){
+
+            $foto   = 'data:image/jpeg;base64,' . base64_encode($profil->foto);
+        } else {
+            if ($profil->jenis_kelamin == 'Perempuan') {
                 $foto   = asset('assets/images/form/female_icon.png');
-            }else{
+            } else {
                 $foto   = asset('assets/images/form/male_icon.png');
             }
-            
-
         }
 
 
-        $d_info 	        =  $dt = \DB::table('db_pare_2018.dashboard_info AS info')
-                            ->WHERE('status','1')
-                            ->first();
+        $d_info             =  $dt = \DB::table('db_pare_2018.dashboard_info AS info')
+            ->WHERE('status', '1')
+            ->first();
 
-        if ($d_info){
+        if ($d_info) {
             $info    = $d_info->text_info;
             $author  = $d_info->author;
             $waktu   = Pustaka::balik($d_info->created_at);
-        }else{
+        } else {
             $info    = "";
             $author  = "";
             $waktu   = "";
         }
 
 
-        if(isset($dashboard))
-        {
-            return view('admin.pages.home-'.$dashboard ,[
-               
-                        'nama'                  => $nama,
-                        'nip'                   => $nip,
-                        'skpd'                  => $skpd,
-                        'unit_kerja'            => $unit_kerja,
+        if (isset($dashboard)) {
+            return view('admin.pages.home-' . $dashboard, [
 
-                        'jabatan'               => $jabatan,
-                        'eselon'                => $eselon,
-                        'jenis_jabatan'         => $jenis_jabatan,
-                        'golongan'              => $golongan,
-                        'tmt_golongan'          => $tmt_golongan,
-                        'tmt_jabatan'           => $tmt_jabatan,
-                        'no_hp'                 => $no_hp,
-                        'email'                 => $email,
-                        'alamat'                => $alamat,
+                'nama'                  => $nama,
+                'nip'                   => $nip,
+                'skpd'                  => $skpd,
+                'unit_kerja'            => $unit_kerja,
 
-                        'user' 			        => $user,
-                        'access' 	            => $access,
-                        'foto'                  => $foto,  
+                'jabatan'               => $jabatan,
+                'eselon'                => $eselon,
+                'jenis_jabatan'         => $jenis_jabatan,
+                'golongan'              => $golongan,
+                'tmt_golongan'          => $tmt_golongan,
+                'tmt_jabatan'           => $tmt_jabatan,
+                'no_hp'                 => $no_hp,
+                'email'                 => $email,
+                'alamat'                => $alamat,
+
+                'user'                     => $user,
+                'access'                 => $access,
+                'foto'                  => $foto,
 
 
-                        'info'                  => $info,
-                        'author'                => $author,
-                        'waktu'                 => $waktu,
+                'info'                  => $info,
+                'author'                => $author,
+                'waktu'                 => $waktu,
             ])->withUser($user)->withAccess($access);
-        }else{
+        } else {
             \Auth::logout();
             return redirect('auth/login')->with('status', 'Roles is Unidentified');
         }
-       
-      
-        
-        
     }
 
     public function getHome()
@@ -228,38 +220,37 @@ class DashboardController extends Controller
         $admin_skpdRole = $user->hasRole('admin_skpd');
         $adminRole      = $user->hasRole('administrator');
 
-        if($userRole)
-        {
+        if ($userRole) {
             $access = 'Pegawai';
-			$dashboard = 'pegawai';
+            $dashboard = 'pegawai';
         } elseif ($admin_skpdRole) {
             $access = 'admin-skpd';
-			$dashboard = 'skpd';
+            $dashboard = 'skpd';
         } elseif ($adminRole) {
             $access = 'Administrator';
-			$dashboard = 'administrator';
+            $dashboard = 'administrator';
         }
 
-        return view('admin.pages.home-'.$dashboard);
+        return view('admin.pages.home-' . $dashboard);
     }
 
-//OLD LTE
+    //OLD LTE
 
     /**
-    * Show the User DASHBOARD Page
-    *
-    * @return View
-    */
+     * Show the User DASHBOARD Page
+     *
+     * @return View
+     */
     public function showUserDashboard()
     {
         return view('admin.layouts.dashboard');
     }
 
     /**
-    * Show the User PROFILE Page
-    *
-    * @return View
-    */
+     * Show the User PROFILE Page
+     *
+     * @return View
+     */
     public function showUserProfile()
     {
         return view('admin.layouts.user-profile');
@@ -269,5 +260,4 @@ class DashboardController extends Controller
     {
         //
     }
-
 }

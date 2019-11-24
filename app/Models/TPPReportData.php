@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TPP extends Model
+class TPPReportData extends Model
 {
-    protected $table = 'tpp';
+    protected $table = 'tpp_report_data';
 
 
     

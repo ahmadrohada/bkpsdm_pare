@@ -48,34 +48,11 @@ class ReportController extends Controller {
     
     
 
-    //=======================================================================================//
-    protected function nama_skpd($skpd_id){
-            //nama SKPD 
-            $nama_skpd       = \DB::table('demo_asn.m_skpd AS skpd')
-                            ->WHERE('id',$skpd_id)
-                            ->SELECT(['skpd.skpd AS skpd'])
-                            ->first();
-            return $nama_skpd->skpd;
-    }
+    
 
     
     
 
-    public function showTPPReport(Request $request)
-    {
-        $user      = \Auth::user();
-        $pegawai   = $user->pegawai;     
-        
-
-        return view('admin.pages.skpd-tpp_report', [
-               'skpd' 		            => $pegawai->JabatanAktif->SKPD,
-               'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
-               'h_box'                  => 'box-danger',
-               
-           ]
-        );   
-
-        
-    }
+   
 
 }

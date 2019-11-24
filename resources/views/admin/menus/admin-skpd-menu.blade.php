@@ -4,9 +4,9 @@
     {!! HTML::icon_link( "skpd/pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_home'), "<span>".Lang::get('sidebar-nav.link_title_home')."</span>", array('title' => Lang::get('sidebar-nav.link_title_home') , 'data-toggle' => 'tooltip')) !!}
 </li>
 
-<!-- <li>
+<li>
     {!! HTML::icon_link( "skpd/report", 'fa '.Lang::get('sidebar-nav.link_icon_report'), "<span>".Lang::get('sidebar-nav.link_title_report')."</span>", array('title' => Lang::get('sidebar-nav.link_title_report'))) !!}
-</li> -->
+</li>
 
 
 
