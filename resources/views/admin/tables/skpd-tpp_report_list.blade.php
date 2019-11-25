@@ -81,18 +81,8 @@
 						title: "Create TPP Report",
 						text:"TPP Report untuk bulan ini sudah dibuat",
 						type: "warning",
-						showCancelButton: true,
-						cancelButtonText: "Batal",
-						confirmButtonText: "Ya",
-						confirmButtonClass: "btn btn-success",
-						cancelButtonColor: "btn btn-danger",
-						cancelButtonColor: "#d33",
-						closeOnConfirm: false,
-						closeOnCancel:false
-					}).then ((result) => {
-						if (result.value){
-
-						}
+						confirmButtonText: "Close",
+						confirmButtonColor: "btn btn-success",
 					});
 
 					
@@ -198,101 +188,14 @@
 		window.location.assign("tpp/" + tpp_report_id);
 	});
 
-	$(document).on('click', '.create_capaian_bulanan', function(e) {
-		//alert();
-		var skp_bulanan_id = $(this).data('skp_bulanan_id');
+	
 
-
-		$.ajax({
-			url: '{{ url("api_resource/create_capaian_bulanan_confirm") }}',
-			type: 'GET',
-			data: {
-				skp_bulanan_id: skp_bulanan_id
-			},
-			success: function(data) {
-
-				if (data['status'] === 'pass') {
-
-
-					$('#periode_label').html(data['periode_label']);
-					$('.mulai').val(data['tgl_mulai']);
-					$('.selesai').val(data['tgl_selesai']);
-					//$('#jm_kegiatan_bulanan').html(data['jm_kegiatan_bulanan']);
-
-					var bawahan = document.getElementById('list_bawahan');
-					for (var i = 0; i < data['list_bawahan'].length; i++) {
-						$('.header_list').show();
-						$("<li class='list-group-item' style='padding:3px 4px 3px 4px;;'>" + data['list_bawahan'][i].jabatan + " <a class='pull-right'>" + data['list_bawahan'][i].jm_keg + "/" + data['list_bawahan'][i].jm_realisasi + "</a> </li>").appendTo(bawahan);
-					}
-					$("<li class='list-group-item' style='background:#ededed; border-top:solid #3d3d3d 2px; padding:5px 4px 5px 4px;'><b>Total Kegiatan </b><a class='pull-right'>" + data['jm_kegiatan_bulanan'] + "</a> </li>").appendTo(bawahan);
-
-
-					$('#u_nip').html(data['u_nip']);
-					$('#u_nama').html(data['u_nama']);
-					$('#u_golongan').html(data['u_pangkat'] + ' / ' + data['u_golongan']);
-					$('#u_eselon').html(data['u_eselon']);
-					$('#u_jabatan').html(data['u_jabatan']);
-					$('#u_unit_kerja').html(data['u_unit_kerja']);
-					$('#txt_u_jabatan').html(data['u_jabatan']);
-					$('#txt_u_skpd').html(data['u_skpd']);
-
-
-					$('#p_nip').html(data['p_nip']);
-					$('#p_nama').html(data['p_nama']);
-					$('#p_golongan').html(data['p_pangkat'] + ' / ' + data['p_golongan']);
-					$('#p_eselon').html(data['p_eselon']);
-					$('#p_jabatan').html(data['p_jabatan']);
-					$('#p_unit_kerja').html(data['p_unit_kerja']);
-
-					$('.pegawai_id').val(data['pegawai_id']);
-					$('.skp_bulanan_id').val(data['skp_bulanan_id']);
-					$('.jm_kegiatan_bulanan').val(data['jm_kegiatan_bulanan']);
-					$('.u_nama').val(data['u_nama']);
-					$('.u_jabatan_id').val(data['u_jabatan_id']);
-					$('.p_nama').val(data['p_nama']);
-					$('.p_jabatan_id').val(data['p_jabatan_id']);
-
-					$('.jenis_jabatan').val(data['u_jenis_jabatan']);
-					$('.jabatan_id').val(data['jabatan_id']);
-					$('.renja_id').val(data['renja_id']);
-					$('.waktu_pelaksanaan').val(data['waktu_pelaksanaan']);
-
-					$('.modal-create_capaian_bulanan_confirm').modal('show');
-				} else if (data['status'] === 'fail') {
-
-
-
-
-
-				} else {
-					Swal.fire({
-						title: 'Error!',
-						text: 'Capaian Bulanan belum bisa dibuat',
-						type: 'error',
-						confirmButtonText: 'Tutup'
-					})
-				}
-
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-
-				Swal.fire({
-					title: 'Error!',
-					text: 'Capaian Bulanan  belum bisa dibuat',
-					type: 'error',
-					confirmButtonText: 'Tutup'
-				})
-			}
-
-		})
-	});
-
-	$(document).on('click', '.hapus_capaian_bulanan', function(e) {
-		var capaian_bulanan_id = $(this).data('id');
+	$(document).on('click', '.hapus_tpp_report_data', function(e) {
+		var tpp_report_id = $(this).data('id');
 
 		Swal.fire({
-			title: "Hapus  Capaian Bulanan",
-			text: $(this).data('label'),
+			title: "Hapus TPP Report",
+			text: "",
 			type: "warning",
 			//type: "question",
 			showCancelButton: true,
@@ -306,10 +209,10 @@
 		}).then((result) => {
 			if (result.value) {
 				$.ajax({
-					url: '{{ url("api_resource/hapus_capaian_bulanan") }}',
+					url: '{{ url("api_resource/hapus_tpp_report") }}',
 					type: 'POST',
 					data: {
-						capaian_bulanan_id: capaian_bulanan_id
+						tpp_report_id: tpp_report_id
 					},
 					cache: false,
 					success: function(data) {

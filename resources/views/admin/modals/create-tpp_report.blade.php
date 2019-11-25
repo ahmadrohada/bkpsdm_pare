@@ -52,19 +52,6 @@
 
 
 <script type="text/javascript">
-	
-	$('.create-tpp_report_modal').on('hidden.bs.modal', function() {
-		$('.txt-kegiatan').html('');
-		$('.kegiatan').removeClass('has-error');
-		$("#jabatan").select2("val", "");
-	});
-
-	$(document).on('click', '.kegiatan', function() {
-		$('.kegiatan').removeClass('has-error');
-	});
-
-
-
 	$(document).on('click', '#simpan_tpp_report', function() {
 
 		var data = $('#create-tpp_report-form').serialize();
@@ -74,7 +61,7 @@
 			data: data,
 			success: function(data, textStatus, jqXHR) {
 
-				$('#kegiatan_table').DataTable().ajax.reload(null, false);
+				$('#skpd_tpp_report_list_table').DataTable().ajax.reload(null, false);
 
 				Swal.fire({
 					title: "",
