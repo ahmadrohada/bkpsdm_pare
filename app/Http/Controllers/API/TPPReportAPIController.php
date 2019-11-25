@@ -10,7 +10,7 @@ use App\Models\TPPReport;
 use App\Models\TPPReportData;
 use App\Models\Periode;
 use App\Models\Pegawai;
-use App\Models\SKPD;
+use App\Models\Skpd;
 
 use App\Helpers\Pustaka;
 
