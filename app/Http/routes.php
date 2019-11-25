@@ -466,6 +466,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('tpp_report_detail','API\TPPReportAPIController@TPPReportDetail');
 
 	Route::post('simpan_tpp_report','API\TPPReportAPIController@Store');
+	
+	Route::post('hapus_tpp_report','API\TPPReportAPIController@Destroy');
 
 	Route::get('skpd_tpp_report_list','API\TPPReportAPIController@SKPDTTPReportList');
 

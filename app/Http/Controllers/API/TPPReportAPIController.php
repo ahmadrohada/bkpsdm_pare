@@ -222,7 +222,7 @@ class TPPReportAPIController extends Controller
 
         $tpp_report_id = $request->tpp_report_id;
 
-        $dt = TPPReportData::WHERE('tpp_report_data.id', $tpp_report_id)
+        $dt = TPPReportData::WHERE('tpp_report_data.tpp_report_id', $tpp_report_id)
             ->rightjoin('demo_asn.tb_pegawai AS pegawai', function ($join) {
                 $join->on('pegawai.id', '=', 'tpp_report_data.pegawai_id');
             })
@@ -507,4 +507,51 @@ class TPPReportAPIController extends Controller
             return \Response::make('error', 500);
         }
     }
+
+    public function Destroy(Request $request)
+    {
+
+        $messages = [
+                'tpp_report_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'tpp_report_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $del    = TPPReport::find(Input::get('tpp_report_id'));
+        if (is_null($del)) {
+            return $this->sendError('TPP Report tidak ditemukan.');
+        }
+
+
+        if ( $del->delete()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+    
+    }
+
+
+
+
+
+
+
+
+
 }
