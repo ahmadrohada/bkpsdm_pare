@@ -505,7 +505,7 @@ class TPPReportAPIController extends Controller
                 'skp.id AS skp_bulanan_id',
                 'skp.bulan AS skp_bulanan_bulan',
                 'capaian.id AS capaian_id',
-                'a.id AS skpd_id',
+                'a.id_skpd AS skpd_id',
                 'unit_kerja.unit_kerja AS unit_kerja',
                 'skpd.id AS jabatan_id',
                 'skpd.tunjangan AS tpp_rupiah',
@@ -532,6 +532,7 @@ class TPPReportAPIController extends Controller
                 $report_data->skpd_id               = $x->skpd_id;
                 $report_data->unit_kerja            = $x->unit_kerja;
                 $report_data->eselon_id             = $x->eselon_id;
+                $report_data->jabatan_id             = $x->jabatan_id;
                 $report_data->tpp_rupiah            = $x->tpp_rupiah;
 
 
