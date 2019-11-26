@@ -475,23 +475,64 @@ class TPPReportAPIController extends Controller
             $tpp_report_id = $st_kt->id;
 
 
-            //insert data pegawai to  tpp-report_data
-            $pegawai = Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
-                $join->on('a.id_pegawai', '=', 'tb_pegawai.id');
-                $join->where('a.status', '=', 'active');
+        //insert data pegawai to  tpp-report_data
+        $pegawai = Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
+            $join->on('a.id_pegawai', '=', 'tb_pegawai.id');
+            $join->where('a.status', '=', 'active');
+        })
+        ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', function ($join) {
+            $join->on('unit_kerja.id', '=', 'a.id_unit_kerja');
+        })
+            ->leftjoin('demo_asn.m_skpd AS skpd', function ($join) {
+                $join->on('skpd.id', '=', 'a.id_jabatan');
             })
-                ->SELECT('tb_pegawai.id AS pegawai_id')
-                ->WHERE('a.id_skpd', '=', Input::get('skpd_id'))
-                ->WHERE('tb_pegawai.nip', '!=', 'admin')
-                ->WHERE('tb_pegawai.status', 'active')
-                ->get();
+            ->leftjoin('db_pare_2018.skp_bulanan AS skp', function ($join) {
+                $join->on('skp.pegawai_id', '=', 'tb_pegawai.id');
+                $join->where('skp.bulan', '=', Pustaka::bulan_lalu(Input::get('bulan'))  );
+            })
+            ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
+                $join->on('capaian.skp_bulanan_id', '=', 'skp.id');
+                $join->where('capaian.status_approve', '=', 1   );
+            })
+
+
+
+            ->SELECT(
+                'tb_pegawai.id AS pegawai_id',
+                'tb_pegawai.nama AS nama',
+                'tb_pegawai.gelardpn AS gelardpn',
+                'tb_pegawai.gelarblk AS gelarblk',
+                'skp.id AS skp_bulanan_id',
+                'skp.bulan AS skp_bulanan_bulan',
+                'capaian.id AS capaian_id',
+                'a.id AS skpd_id',
+                'unit_kerja.unit_kerja AS unit_kerja',
+                'skpd.id AS jabatan_id',
+                'skpd.tunjangan AS tpp_rupiah',
+                'skpd.id_eselon AS eselon_id'
+
+
+            )
+
+
+
+            ->WHERE('a.id_skpd', '=', Input::get('skpd_id'))
+            ->WHERE('tb_pegawai.nip', '!=', 'admin')
+            ->WHERE('tb_pegawai.status', 'active')
+            ->get();
 
 
             foreach ($pegawai as $x) {
                 $report_data    = new TPPReportData;
 
-                $report_data->tpp_report_id    = $tpp_report_id;
-                $report_data->pegawai_id       = $x->pegawai_id;
+                $report_data->nama_pegawai          = Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
+                $report_data->tpp_report_id         = $tpp_report_id;
+                $report_data->pegawai_id            = $x->pegawai_id;
+                $report_data->capaian_bulanan_id    = $x->capaian_bulanan_id;
+                $report_data->skpd_id               = $x->skpd_id;
+                $report_data->unit_kerja            = $x->unit_kerja;
+                $report_data->eselon_id             = $x->eselon_id;
+                $report_data->tpp_rupiah            = $x->tpp_rupiah;
 
 
                 $report_data->save();
@@ -512,46 +553,33 @@ class TPPReportAPIController extends Controller
     {
 
         $messages = [
-                'tpp_report_id.required'   => 'Harus diisi',
+            'tpp_report_id.required'   => 'Harus diisi',
         ];
 
         $validator = Validator::make(
-                        Input::all(),
-                        array(
-                            'tpp_report_id'   => 'required',
-                        ),
-                        $messages
+            Input::all(),
+            array(
+                'tpp_report_id'   => 'required',
+            ),
+            $messages
         );
 
-        if ( $validator->fails() ){
+        if ($validator->fails()) {
             //$messages = $validator->messages();
-            return response()->json(['errors'=>$validator->messages()],422);
-            
+            return response()->json(['errors' => $validator->messages()], 422);
         }
 
-        
+
         $del    = TPPReport::find(Input::get('tpp_report_id'));
         if (is_null($del)) {
             return $this->sendError('TPP Report tidak ditemukan.');
         }
 
 
-        if ( $del->delete()){
+        if ($del->delete()) {
             return \Response::make('sukses', 200);
-        }else{
+        } else {
             return \Response::make('error', 500);
-        } 
-            
-            
-    
+        }
     }
-
-
-
-
-
-
-
-
-
 }

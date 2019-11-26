@@ -461,6 +461,41 @@ class Pustaka {
 
 	}
 
+	public static function bulan_lalu($bulan){
+		
+				switch($bulan)
+					{
+				case 01 : $nm_bulan=12;
+						break;
+				case 02 : $nm_bulan=01;
+						break;
+				case 03 : $nm_bulan=02;
+						break;
+				case 04 : $nm_bulan=03;
+						break;
+				case 05 : $nm_bulan=04;
+						break;
+				case 06 : $nm_bulan=05;
+						break;
+				case 07 : $nm_bulan=06;
+						break;
+				case 8 : $nm_bulan=07;
+						break;
+				case 9 : $nm_bulan=08;
+						break;
+				case 10 : $nm_bulan=09;
+						break;
+				case 11 : $nm_bulan=10;
+						break;
+				case 12 : $nm_bulan=11;
+						break;
+					}
+
+	return $nm_bulan;
+
+	}
+
+
 	public static function tahun($data){
 		$tanggal = substr($data,8,2); 
 		$bulan = substr($data,5,2); 
