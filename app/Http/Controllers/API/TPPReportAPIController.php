@@ -486,7 +486,7 @@ class TPPReportAPIController extends Controller
                 if ( $x->capaian < 1 ){
                     return 0 ;
                 }else{
-                    return $x->capaian;
+                    return Pustaka::persen_bulat($x->capaian);
                 }
                 
             })
@@ -494,7 +494,7 @@ class TPPReportAPIController extends Controller
                 if ( $x->skor < 1 ){
                     return 0 ;
                 }else{
-                    return $x->skor." %";
+                    return Pustaka::persen_bulat($x->skor)." %";
                 }
                 
             })
@@ -502,7 +502,8 @@ class TPPReportAPIController extends Controller
                 return "";
             })
             ->addColumn('i', function ($x) {
-                return "";
+
+                return "Rp. " . number_format( ($x->tpp_kinerja)*($x->skor/100), '0', ',', '.');
             })
             ->addColumn('j', function ($x) {
                 return "Rp. " . number_format($x->tunjangan * (40 / 100), '0', ',', '.');
