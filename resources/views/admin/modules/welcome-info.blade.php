@@ -22,14 +22,14 @@
     <div class="box-footer">
         <div id="myCarousel" class="carousel slide"> <!-- slider -->
 			<div class="carousel-inner">
-							<div class="active item"> <!-- item 2 -->
-								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/01/WhatsApp-Image-2019-01-25-at-1.14.36-PM.jpeg" class="img-slide" alt="">
+							<div class="active item"><!-- item 2 -->
+								<img src="{{asset('assets/images/pare_a.jpg')}}" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
-								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/08/WhatsApp-Image-2019-08-30-at-13.45.36-768x432.jpeg" class="img-slide" alt="">
+								<img src="{{asset('assets/images/pare_b.jpg')}}" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
-								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/08/WhatsApp-Image-2019-08-30-at-13.45.12-1024x576.jpeg" class="img-slide" alt="">
+								<img src="{{asset('assets/images/pare_c.jpg')}}" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
 								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/08/WhatsApp-Image-2019-08-30-at-14.01.55-1024x576.jpeg" class="img-slide" alt="">
