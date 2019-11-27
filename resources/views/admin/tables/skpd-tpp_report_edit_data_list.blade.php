@@ -73,7 +73,7 @@
 					"render": function(data, type, row, meta) {
 						return meta.row + meta.settings._iDisplayStart + 1;
 					}
-				},
+				}, 
 				{
 					data: "nama_pegawai",
 					name: "nama_pegawai",
@@ -95,20 +95,20 @@
 					width: "230px"
 				},
 				{
-					data: "e",
-					name: "e",
+					data: "tpp_kinerja",
+					name: "tpp_kinerja",
 					orderable: false,
 					searchable: false
 				},
 				{
-					data: "f",
-					name: "f",
+					data: "capaian",
+					name: "capaian",
 					orderable: false,
 					searchable: false
 				},
 				{
-					data: "g",
-					name: "g",
+					data: "skor",
+					name: "skor",
 					orderable: false,
 					searchable: false
 				},
