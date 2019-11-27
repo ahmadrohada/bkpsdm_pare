@@ -718,8 +718,8 @@ class TPPReportAPIController extends Controller
             })
             ->leftjoin('db_pare_2018.skp_bulanan AS skp', function ($join) {
                 $join->on('skp.pegawai_id', '=', 'tb_pegawai.id');
-                //$join->where('skp.bulan', '=', Pustaka::bulan_lalu(Input::get('bulan'))  );
-                $join->where('skp.bulan', '=', '02'  );
+                $join->where('skp.bulan', '=', Pustaka::bulan_lalu(Input::get('bulan'))  );
+                //$join->where('skp.bulan', '=', '02'  );
             })
             ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
                 $join->on('capaian.skp_bulanan_id', '=', 'skp.id');
