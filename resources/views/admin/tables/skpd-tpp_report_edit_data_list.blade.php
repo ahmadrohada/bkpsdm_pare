@@ -97,7 +97,7 @@ td.dt-nowrap { white-space: nowrap }
 					name: "tunjangan",
 					orderable: false,
 					searchable: false,
-					width: "140px"
+					width: "230px"
 				},
 				{
 					data: "tpp_kinerja",

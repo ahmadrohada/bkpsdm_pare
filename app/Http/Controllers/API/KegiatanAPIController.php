@@ -125,7 +125,7 @@ class KegiatanAPIController extends Controller {
         //pengecualian untuk KEC Telukjambe Barat
         $b = ['1235','1236','1237','1238','1239'];
         //KEC Cikampek
-        $c = ['1090','1091','1092','1093'];
+        $c = ['1089','1090','1091','1092','1093'];
         //KEC JAtisari
         $d = ['1098','1099','1100','1101','1102'];
         //KEC Ciampel
