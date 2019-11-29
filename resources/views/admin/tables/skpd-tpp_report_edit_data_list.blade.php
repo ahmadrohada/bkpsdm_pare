@@ -11,10 +11,12 @@ td.dt-nowrap { white-space: nowrap }
 				<th rowspan="2">No</th>
 				<th rowspan="2">NAMA</th>
 				<th rowspan="2">NIP</th>
+				<th rowspan="2">ESELON</th>
 				<th rowspan="2" >TPP</th>
 				<th colspan="5">KINERJA ( 60 % )</th>
 				<th colspan="4">KEHADIRAN ( 40 % )</th>
 				<th rowspan="2">TOTAL</th>
+				<th rowspan="2"><i class="faa fa-cog"></i></th>
 			</tr>
 			<tr>
 				<th>TPP x 60%</th>
@@ -48,18 +50,18 @@ td.dt-nowrap { white-space: nowrap }
 			destroy: true,
 			processing: true,
 			serverSide: true,
-			searching: false,
+			searching: true,
 			paging: true,
 			lengthMenu: [50, 100],
 			columnDefs: [{
 					className: "text-center",
-					targets: [0, 2,5,6,7]
+					targets: [0, 2,3,6,7,8,15]
 				},
 				{
 					className: "text-right",
-					targets: [3,4,8,9,13]
+					targets: [4,5,8,9,10,13,14]
 				},
-				{ className: "dt-nowrap", "targets": [ 3,4,8,9,13 ] }
+				{ className: "dt-nowrap", "targets": [ 4,5,8,9,13 ] }
 
 			],
 			ajax: {
@@ -83,12 +85,18 @@ td.dt-nowrap { white-space: nowrap }
 					data: "nama_pegawai",
 					name: "nama_pegawai",
 					orderable: false,
-					searchable: false,
+					searchable: true,
 					width: "400px"
 				},
 				{
 					data: "nip_pegawai",
 					name: "nip_pegawai",
+					orderable: false,
+					searchable: false
+				},
+				{
+					data: "eselon",
+					name: "eselon",
 					orderable: false,
 					searchable: false
 				},
@@ -121,52 +129,52 @@ td.dt-nowrap { white-space: nowrap }
 					width: "120px"
 				},
 				{
-					data: "h",
-					name: "h",
+					data: "potongan_kinerja",
+					name: "potongan_kinerja",
 					orderable: false,
 					searchable: false,
 					width: "120px"
 				},
 				{
-					data: "i",
-					name: "i",
+					data: "jm_tpp_kinerja",
+					name: "jm_tpp_kinerja",
 					orderable: false,
 					searchable: false,
 					width: "140px"
 				},
 				{
-					data: "j",
-					name: "j",
+					data: "tpp_kehadiran",
+					name: "tpp_kehadiran",
 					orderable: false,
 					searchable: false,
 					width: "140px"
 				},
 				{
-					data: "k",
-					name: "k",
+					data: "skor_kehadiran",
+					name: "skor_kehadiran",
 					orderable: false,
 					searchable: false
 				},
 				{
-					data: "l",
-					name: "l",
+					data: "potongan_kehadiran",
+					name: "potongan_kehadiran",
 					orderable: false,
 					searchable: false
 				},
 				{
-					data: "m",
-					name: "m",
+					data: "jm_tpp_kehadiran",
+					name: "jm_tpp_kehadiran",
 					orderable: false,
 					searchable: false
 				},
 				{
-					data: "n",
-					name: "n",
+					data: "total_tpp",
+					name: "total_tpp",
 					orderable: false,
 					searchable: false
 				},
 
-				/* {
+				{
 					data: "status",
 					orderable: false,
 					searchable: false,
@@ -176,7 +184,7 @@ td.dt-nowrap { white-space: nowrap }
 						return '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_capaian_bulanan"  data-id="' + row.capaian_bulanan_id + '"><i class="fa fa-eye" ></i></a></span>';
 
 					}
-				}, */
+				}
 
 			]
 
