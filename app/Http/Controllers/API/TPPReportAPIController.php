@@ -444,9 +444,13 @@ class TPPReportAPIController extends Controller
             ->rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
                 $join->on('a.id_pegawai', '=', 'pegawai.id');
             })
-            //eselon
+            
             ->leftjoin('demo_asn.m_skpd AS skpd ', function ($join) {
                 $join->on('a.id_jabatan', '=', 'skpd.id');
+            })
+            //eselon
+            ->leftjoin('demo_asn.m_eselon AS eselon ', function ($join) {
+                $join->on('tpp_report_data.eselon_id', '=', 'eselon.id');
             })
 
 
@@ -456,14 +460,21 @@ class TPPReportAPIController extends Controller
                 'pegawai.nip',
                 'pegawai.gelardpn',
                 'pegawai.gelarblk',
+                'tpp_report_data.capaian_bulanan_id AS capaian_id',
                 'tpp_report_data.tpp_rupiah AS tunjangan',
                 'tpp_report_data.tpp_kinerja AS tpp_kinerja',
                 'tpp_report_data.cap_skp AS capaian',
-                'tpp_report_data.skor_cap AS skor'
+                'tpp_report_data.skor_cap AS skor',
+                'tpp_report_data.pot_kinerja AS pot_kinerja',
+                'tpp_report_data.tpp_kehadiran AS tpp_kehadiran',
+                'tpp_report_data.skor_kehadiran AS skor_kehadiran',
+                'tpp_report_data.pot_kehadiran AS pot_kehadiran',
+                'eselon.eselon AS eselon'
                 
 
 
             ])
+            ->ORDERBY('tpp_report_data.eselon_id','ASC')
             ->where('pegawai.status', '=', 'active')
             ->where('a.status', '=', 'active');
 
@@ -476,6 +487,9 @@ class TPPReportAPIController extends Controller
             ->addColumn('nip_pegawai', function ($x) {
                 return $x->nip;
             })
+            ->addColumn('eselon', function ($x) {
+                return $x->eselon;
+            })
             ->addColumn('tunjangan', function ($x) {
                 return "Rp. " . number_format($x->tunjangan, '0', ',', '.');
             })
@@ -483,42 +497,59 @@ class TPPReportAPIController extends Controller
                 return "Rp. " . number_format($x->tpp_kinerja, '0', ',', '.');
             })
             ->addColumn('capaian', function ($x) {
-                if ( $x->capaian < 1 ){
-                    return 0 ;
+                if ( $x->capaian_id == null  ){
+                    return "-" ;
                 }else{
                     return Pustaka::persen_bulat($x->capaian);
                 }
                 
             })
             ->addColumn('skor', function ($x) {
-                if ( $x->skor < 1 ){
-                    return 0 ;
+                if ( $x->capaian_id == null  ){
+                    return "-" ;
                 }else{
                     return Pustaka::persen_bulat($x->skor)." %";
                 }
                 
             })
-            ->addColumn('h', function ($x) {
-                return "";
+            ->addColumn('potongan_kinerja', function ($x) {
+                if ( $x->pot_kinerja <= 0  ){
+                    return "-" ;
+                }else{
+                    return Pustaka::persen_bulat($x->pot_kinerja)." %";
+                }
             })
-            ->addColumn('i', function ($x) {
+            ->addColumn('jm_tpp_kinerja', function ($x) {
 
-                return "Rp. " . number_format( ($x->tpp_kinerja)*($x->skor/100), '0', ',', '.');
+                return "Rp. " . number_format( (($x->tpp_kinerja)*($x->skor/100) ) - ( ($x->pot_kinerja/100 )*$x->tpp_kinerja), '0', ',', '.');
+
+
             })
-            ->addColumn('j', function ($x) {
-                return "Rp. " . number_format($x->tunjangan * (40 / 100), '0', ',', '.');
+            ->addColumn('tpp_kehadiran', function ($x) {
+                return "Rp. " . number_format($x->tpp_kehadiran , '0', ',', '.');
             })
-            ->addColumn('k', function ($x) {
-                return "";
+            ->addColumn('skor_kehadiran', function ($x) {
+                if ( $x->skor_kehadiran > 0  ){
+                    return "-" ;
+                }else{
+                    return Pustaka::persen_bulat($x->skor)." %";
+                }
             })
-            ->addColumn('l', function ($x) {
-                return "";
+            ->addColumn('potongan_kehadiran', function ($x) {
+                if ( $x->pot_kehadiran<= 0  ){
+                    return "-" ;
+                }else{
+                    return Pustaka::persen_bulat($x->pot_kehadiran)." %";
+                }
             })
-            ->addColumn('m', function ($x) {
-                return "";
+            ->addColumn('jm_tpp_kehadiran', function ($x) {
+                return "Rp. " . number_format( (($x->tpp_kehadiran)*($x->skor_kehadiran/100) ) - ( ($x->pot_kehadiran/100 )*$x->tpp_kehadiran), '0', ',', '.');
             })
-            ->addColumn('n', function ($x) {
-                return "";
+            ->addColumn('total_tpp', function ($x) {
+                $tpp_a = (($x->tpp_kinerja)*($x->skor/100) ) - ( ($x->pot_kinerja/100 )*$x->tpp_kinerja);
+                $tpp_b = (($x->tpp_kehadiran)*($x->skor_kehadiran/100) ) - ( ($x->pot_kehadiran/100 )*$x->tpp_kehadiran);
+
+                return "Rp. " . number_format( ($tpp_a + $tpp_b) , '0', ',', '.');
             });
         if ($keyword = $request->get('search')['value']) {
             $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
@@ -711,17 +742,25 @@ class TPPReportAPIController extends Controller
             $join->on('a.id_pegawai', '=', 'tb_pegawai.id');
             $join->where('a.status', '=', 'active');
         })
+
+
             ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', function ($join) {
                 $join->on('unit_kerja.id', '=', 'a.id_unit_kerja');
             })
-            ->leftjoin('demo_asn.m_skpd AS skpd', function ($join) {
-                $join->on('skpd.id', '=', 'a.id_jabatan');
-            })
+            ->leftjoin('demo_asn.m_skpd AS skpd_now', function ($join) {
+                $join->on('skpd_now.id', '=', 'a.id_jabatan');
+            }) 
             ->leftjoin('db_pare_2018.skp_bulanan AS skp', function ($join) {
                 $join->on('skp.pegawai_id', '=', 'tb_pegawai.id');
                 $join->where('skp.bulan', '=', Pustaka::bulan_lalu(Input::get('bulan'))  );
                 //$join->where('skp.bulan', '=', '02'  );
             })
+
+            //TPP FROM SKP BULANAN -> JABATAN ->SKPD
+            ->leftjoin('demo_asn.m_skpd AS skpd', function ($join) {
+                $join->on('skpd.id', '=', 'skp.u_jabatan_id');
+            })
+
             ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
                 $join->on('capaian.skp_bulanan_id', '=', 'skp.id');
                 $join->where('capaian.status_approve', '=', 1   );
@@ -741,7 +780,10 @@ class TPPReportAPIController extends Controller
                 'unit_kerja.unit_kerja AS unit_kerja',
                 'skpd.id AS jabatan_id',
                 'skpd.tunjangan AS tpp_rupiah',
-                'skpd.id_eselon AS eselon_id'
+                'skpd.id_eselon AS eselon_id',
+                'skpd_now.id AS jabatan_id_now',
+                'skpd_now.tunjangan AS tpp_rupiah_now',
+                'skpd_now.id_eselon AS eselon_id_now'
 
 
             )
@@ -756,15 +798,20 @@ class TPPReportAPIController extends Controller
 
             foreach ($tpp_data as $x) {
 
+
                 //nilai capaian ..capaian_skp
                 if (  $x->capaian_id != null ){
                     $cap_skp  = $this->capaian_skp($x->capaian_id);
 
 
-                    if ( $cap_skp > 90 ){
+
+                    if ( $cap_skp >= 85 ){
                         $skor_cap = 100 ;
+                    }else if ( $cap_skp < 50 ){
+                        $skor_cap = 0 ;
                     }else{
-                        $skor_cap = $cap_skp;
+                        $skor_cap	= number_format( (50 + (1.43*($cap_skp-50))),2 );
+                        
                     }
 
                 }else{
@@ -780,12 +827,22 @@ class TPPReportAPIController extends Controller
                 $report_data->capaian_bulanan_id    = $x->capaian_id;
                 $report_data->skpd_id               = $x->skpd_id;
                 $report_data->unit_kerja            = $x->unit_kerja;
-                $report_data->eselon_id             = $x->eselon_id;
-                $report_data->jabatan_id            = $x->jabatan_id;
-                $report_data->tpp_rupiah            = $x->tpp_rupiah;
-                $report_data->tpp_kinerja           = $x->tpp_rupiah * 60/100 ;
+                $report_data->eselon_id             = ( $x->eselon_id != null ) ? $x->eselon_id : $x->eselon_id_now ;
+                $report_data->jabatan_id            = ( $x->jabatan_id != null ) ? $x->jabatan_id : $x->jabatan_id_now;
+                $report_data->tpp_rupiah            = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah : $x->tpp_rupiah_now ;
+                
+                //KINERJA
+                $report_data->tpp_kinerja           = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah * 60/100 : $x->tpp_rupiah_now * 60/100 ;
                 $report_data->cap_skp               = $cap_skp;
                 $report_data->skor_cap              = $skor_cap;
+                $report_data->pot_kinerja           = 0 ;
+
+                //KEHADIRAN
+                $report_data->tpp_kehadiran         = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah * 40/100 : $x->tpp_rupiah_now * 40/100 ;
+                $report_data->skor_kehadiran        = 100;
+                $report_data->pot_kehadiran         = 0;
+
+
 
 
                 $report_data->save();
