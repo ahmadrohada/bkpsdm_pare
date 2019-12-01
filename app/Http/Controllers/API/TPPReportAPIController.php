@@ -617,7 +617,7 @@ class TPPReportAPIController extends Controller
 
     protected function TPPReportDataDetail(Request $request)
     {
-
+/* 
 
 
 
@@ -677,21 +677,56 @@ class TPPReportAPIController extends Controller
             ->WHERE('tb_pegawai.nip', '!=', 'admin')
             ->WHERE('tb_pegawai.status', 'active')
             ->get(); 
+ */
 
 
 
-
-        $x = TPPReportData::WHERE('tpp_report_data.id', $request->tpp_report_data_id)
+        $x = TPPReportData::
+            //JABATAN
+            leftjoin('demo_asn.m_skpd AS jabatan', function ($join) {
+                $join->on('jabatan.id', '=', 'tpp_report_data.jabatan_id');
+            }) 
+            //ESELON
+            ->leftjoin('demo_asn.m_eselon AS eselon', function ($join) {
+                $join->on('eselon.id', '=', 'tpp_report_data.eselon_id');
+            }) 
+            //UNIT KERJA 
+            ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', function ($join) {
+                $join->on('unit_kerja.id', '=', 'tpp_report_data.unit_kerja_id');
+            })
+            //Golongan
+            ->leftjoin('demo_asn.m_golongan AS golongan', function ($join) {
+                $join->on('golongan.id', '=', 'tpp_report_data.golongan_id');
+            })
+            //CAPAIAN SKP
+            ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
+                $join->on('capaian.id', '=', 'tpp_report_data.capaian_bulanan_id');
+            })
             ->select([
-                'tpp_report_data.id AS tpp_report_data_id'
+                'tpp_report_data.id AS tpp_report_data_id',
+                'jabatan.skpd AS jabatan',
+                'eselon.eselon AS eselon',
+                'unit_kerja.unit_kerja AS unit_kerja',
+                'golongan.golongan AS golongan',
+                'capaian.id AS capaian_id'
 
 
             ])
+            ->WHERE('tpp_report_data.id', $request->tpp_report_data_id)
+
+
+                
+            
             ->first();
 
 
         $tpp = array(
-            'tpp_report_data_id'     => $x->tpp_report_data_id,
+            'tpp_report_data_id'    => $x->tpp_report_data_id,
+            'jabatan'               => Pustaka::capital_string($x->jabatan),
+            'eselon'                => $x->eselon,
+            'unit_kerja'            => Pustaka::capital_string($x->unit_kerja),
+            'golongan'              => $x->golongan,
+            'capaian_id'            => $x->capaian_id,
 
 
 
