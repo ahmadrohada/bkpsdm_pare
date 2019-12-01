@@ -263,6 +263,8 @@ class TPPReportAPIController extends Controller
             ->count();
     }
 
+   
+
     //=======================================================================================//
     protected function jabatan($id_jabatan)
     {
@@ -739,16 +741,18 @@ class TPPReportAPIController extends Controller
     {
 
         //data yang harus diterima yaitu SKPD ID
-        //periode dan bulan di generate disini
-
-        //periode aktif
-        $d_periode = Periode::WHERE('status', '1')->first();
-        $periode_id         = $d_periode->id;
-        $periode_tahun      = Pustaka::tahun($d_periode->awal);
-
-        //bulan capaian
-        $bulan              = date('m');
+        //cari TPP report nya, kemudian kirim select data untuk memilih periode nya, yang kurang dari bulan ini
         $skpd_id            = $request->get('skpd_id');
+
+        //cari data bulan lalu
+        $prevN          = mktime(0, 0, 0, date("m") - 1, date("d"), date("Y")); 
+        //$bulan_lalu     = date("m", $prevN);
+        $tahun          = date("Y", $prevN);
+        $periode        = 'Periode '.$tahun;
+        $d_periode = Periode::WHERE('label', $periode)->first();
+
+        //Cari tpp report yang sudah pernah dibuat oleh SKPD ini
+        $data_report = TPPReport::WHERE('skpd_id', '=', $skpd_id)->SELECT('bulan')->get();
 
         //aDMIN skpd
         $admin = Pegawai::WHERE('id', $request->admin_id)->first();
@@ -763,19 +767,10 @@ class TPPReportAPIController extends Controller
             $nama_ka_skpd = "";
         }
 
-
-        $data_tpp = TPPReport::WHERE('skpd_id', '=', $skpd_id)
-            ->WHERE('periode_id', '=', $periode_id)
-            ->WHERE('bulan', '=', $bulan)
-            ->count();
-
-        if ($data_tpp == 0) {
-
             $data = array(
                 'status'            =>  '0',
-                'periode_id'        =>  $periode_id,
-                'bulan'             =>  $bulan,
-                'periode_label'     =>  Pustaka::bulan($bulan) . " " . Pustaka::tahun($d_periode->awal),
+                'periode_id'        =>  $d_periode->id,
+                'tahun'             =>  $tahun,
                 'skpd_id'           =>  $skpd_id,
                 'nama_skpd'         =>  Pustaka::capital_string($this->nama_skpd($skpd_id)),
                 'jumlah_pegawai'    =>  $this->total_pegawai_skpd($skpd_id),
@@ -784,10 +779,7 @@ class TPPReportAPIController extends Controller
 
             );
             return $data;
-        } else {
-            $data = array('status'    =>  '1');
-            return $data;
-        }
+       
     }
 
     public function Store(Request $request)
@@ -817,6 +809,15 @@ class TPPReportAPIController extends Controller
             return response()->json(['errors' => $validator->messages()], 422);
         }
 
+
+        //CARI DATA NYA ,APAKAH SUDAH ADA BELUM
+        $cek_data = TPPReport::WHERE('periode_id',Input::get('periode_id'))
+                                ->WHERE('bulan',Input::get('bulan'))
+                                ->WHERE('skpd_id',Input::get('skpd_id'))
+                                ->first();
+        if ( $cek_data == null ){
+
+        
 
         $st_kt    = new TPPReport;
 
@@ -851,11 +852,16 @@ class TPPReportAPIController extends Controller
                 $join->where('gol_now.status', '=', 'active');
             })
             
-
+            //SKP Bulanan 
             ->leftjoin('db_pare_2018.skp_bulanan AS skp', function ($join) {
                 $join->on('skp.pegawai_id', '=', 'tb_pegawai.id');
                 $join->where('skp.bulan', '=', Pustaka::bulan_lalu(Input::get('bulan'))  );
-                //$join->where('skp.bulan', '=', '02'  );
+                
+            })
+            //CAPAIAN
+            ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
+                $join->on('capaian.skp_bulanan_id', '=', 'skp.id');
+                $join->where('capaian.status_approve', '=', 1   );
             })
 
             //JABATN FROM SKP BULANAN -> JABATAN ->SKPD
@@ -870,18 +876,6 @@ class TPPReportAPIController extends Controller
             ->leftjoin('demo_asn.tb_history_golongan AS gol', function ($join) {
                 $join->on('gol.id', '=', 'skp.u_golongan_id');
             })
-
-
-            
-
-           
-
-            ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
-                $join->on('capaian.skp_bulanan_id', '=', 'skp.id');
-                $join->where('capaian.status_approve', '=', 1   );
-            })
-
-
 
             ->SELECT(
                 'tb_pegawai.id AS pegawai_id',
@@ -913,6 +907,7 @@ class TPPReportAPIController extends Controller
             ->WHERE('a.id_skpd', '=', Input::get('skpd_id'))
             ->WHERE('tb_pegawai.nip', '!=', 'admin')
             ->WHERE('tb_pegawai.status', 'active')
+            ->ORDERBY('skp.id','ASC')
             ->get(); 
 
 
@@ -978,6 +973,11 @@ class TPPReportAPIController extends Controller
         } else {
             return \Response::make('error', 500);
         } 
+
+        }else{
+            //JIKA DATA SUDAH ADA
+            return response()->json(['errors' => "Data TPP Report sudah ada"], 500);
+        }
     }
 
     public function Destroy(Request $request)
