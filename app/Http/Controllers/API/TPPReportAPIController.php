@@ -858,8 +858,11 @@ class TPPReportAPIController extends Controller
             })
 
             //JABATN FROM SKP BULANAN -> JABATAN ->SKPD
+            ->leftjoin('demo_asn.tb_history_jabatan AS jab', function ($join) {
+                $join->on('jab.id', '=', 'skp.u_jabatan_id');
+            })
             ->leftjoin('demo_asn.m_skpd AS skpd', function ($join) {
-                $join->on('skpd.id', '=', 'skp.u_jabatan_id');
+                $join->on('skpd.id', '=', 'jab.id_jabatan');
             })
 
             //GOLONGAN FROM SKP BULANAN -> JABATAN ->GOLONGAN
