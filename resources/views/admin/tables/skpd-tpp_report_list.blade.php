@@ -63,37 +63,31 @@
 						},
 			success	: function(data) {
 
-				if ( data['status']==='0' ){
+				
 					$('.skpd_id').val(data['skpd_id']); 
 					$('.periode_id').val(data['periode_id']); 
-					$('.bulan').val(data['bulan']); 
 					$('.ka_skpd').val(data['ka_skpd']); 
 					$('.admin_skpd').val(data['admin_skpd']); 
+					$('.formula_perhitungan_id').val("1"); 
+					
 
 
 					$('.nama_skpd').html(data['nama_skpd']); 
 					$('.jumlah_pegawai').html(data['jumlah_pegawai']);
+					$('.tahun').html(data['tahun']); 
+					
+
 					
 					$('.create-tpp_report_modal').modal('show'); 
-				}else if ( data['status'] === '1'){
-
-					Swal.fire({
+				
+					/* Swal.fire({
 						title: "Create TPP Report",
 						text:"TPP Report untuk bulan ini sudah dibuat",
 						type: "warning",
 						confirmButtonText: "Close",
 						confirmButtonColor: "btn btn-success",
-					});
+					}); */
 
-					
-				}else{
-					Swal.fire({
-						title: 'Error!',
-						text: '',
-						type: 'error',
-						confirmButtonText: 'Tutup'
-					})
-				}
 				
 			},
 			error: function(jqXHR , textStatus, errorThrown) {

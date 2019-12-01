@@ -15,8 +15,7 @@
 
 					<input type="hidden" name="skpd_id" class="form-control skpd_id">
 					<input type="hidden" name="periode_id" class="form-control periode_id">
-					<input type="hidden" name="bulan" class="form-control bulan">
-					<input type="hidden" name="formula_perhitungan_id" class="form-control formula_perhitungan_id" value="1">
+					<input type="hidden" name="formula_perhitungan_id" class="form-control formula_perhitungan_id">
 					<input type="hidden" name="ka_skpd" class="form-control ka_skpd">
 					<input type="hidden" name="admin_skpd" class="form-control admin_skpd">
 
@@ -33,6 +32,34 @@
 							<span class="jumlah_pegawai"></span>
 						</p>
 					</div>
+					<div class="form-group">
+						<label>Periode</label>
+						<p class="label-perjanjian-kinerja">
+							<span class="tahun"></span> 
+						</p>
+					</div>
+
+					<div class="form-group jabatan ">
+						<label>Bulan Kinerja</label> 
+						<select class="form-control input-sm bulan" id="bulan" name="bulan" style="width:100%">
+							<option value="01">Januari</option>
+							<option value="02">Februari</option>
+							<option value="03">Maret</option>
+							<option value="04">April</option>
+							<option value="05">Mei</option>
+							<option value="06">Juni</option>
+							<option value="07">Juli</option>
+							<option value="08">Agustus</option>
+							<option value="09">September</option>
+							<option value="10">Oktober</option>
+							<option value="11">November</option>
+							<option value="12">Desember</option>
+						</select>
+						
+					</div>
+
+
+
 
 				</div>
 				<div class="modal-footer">
@@ -52,6 +79,9 @@
 
 
 <script type="text/javascript">
+
+	$('.bulan').select2();
+
 	$(document).on('click', '#simpan_tpp_report', function() {
 
 		var data = $('#create-tpp_report-form').serialize();
@@ -86,16 +116,15 @@
 			error: function(jqXHR, textStatus, errorThrown) {
 
 				var test = $.parseJSON(jqXHR.responseText);
-
 				var data = test.errors;
 
-				$.each(data, function(index, value) {
-					//alert (index+":"+value);
-
-
-
-
-				});
+				Swal.fire({
+						title: "Create TPP Report",
+						text: data,
+						type: "warning",
+						confirmButtonText: "Close",
+						confirmButtonColor: "btn btn-success",
+					});
 
 
 			}
