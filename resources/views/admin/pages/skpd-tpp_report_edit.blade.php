@@ -10,7 +10,7 @@
 <div class="content-wrapper">
 	<section class="content-header">
 		<h1>
-			TPP Report {{ Pustaka::capital_string($skpd->skpd) }} Periode xxx
+			TPP Report {{ Pustaka::capital_string($skpd->skpd) }}
 
 		</h1>
 		{!! Breadcrumbs::render('edit_tpp_report') !!}

@@ -461,6 +461,7 @@ class TPPReportAPIController extends Controller
                 'pegawai.gelardpn',
                 'pegawai.gelarblk',
                 'tpp_report_data.capaian_bulanan_id AS capaian_id',
+                'tpp_report_data.id AS tpp_report_data_id',
                 'tpp_report_data.tpp_rupiah AS tunjangan',
                 'tpp_report_data.tpp_kinerja AS tpp_kinerja',
                 'tpp_report_data.cap_skp AS capaian',
@@ -469,7 +470,8 @@ class TPPReportAPIController extends Controller
                 'tpp_report_data.tpp_kehadiran AS tpp_kehadiran',
                 'tpp_report_data.skor_kehadiran AS skor_kehadiran',
                 'tpp_report_data.pot_kehadiran AS pot_kehadiran',
-                'eselon.eselon AS eselon'
+                'eselon.eselon AS eselon',
+                'skpd.skpd AS jabatan'
                 
 
 
@@ -487,8 +489,14 @@ class TPPReportAPIController extends Controller
             ->addColumn('nip_pegawai', function ($x) {
                 return $x->nip;
             })
+            ->addColumn('gol', function ($x) {
+                return "";
+            })
             ->addColumn('eselon', function ($x) {
                 return $x->eselon;
+            })
+            ->addColumn('jabatan', function ($x) {
+                return Pustaka::capital_string($x->jabatan);
             })
             ->addColumn('tunjangan', function ($x) {
                 return "Rp. " . number_format($x->tunjangan, '0', ',', '.');
@@ -593,6 +601,90 @@ class TPPReportAPIController extends Controller
             'jm_data_capaian'   => TPPReportData::WHERE('tpp_report_id', $x->tpp_report_id)->count(),
 
             'status'            => $x->status,
+
+
+
+        );
+        return $tpp;
+    }
+
+    protected function TPPReportDataDetail(Request $request)
+    {
+
+
+
+
+        $tpp_data = Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
+            $join->on('a.id_pegawai', '=', 'tb_pegawai.id');
+            $join->where('a.status', '=', 'active');
+        })
+
+
+            ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', function ($join) {
+                $join->on('unit_kerja.id', '=', 'a.id_unit_kerja');
+            })
+            ->leftjoin('demo_asn.m_skpd AS skpd_now', function ($join) {
+                $join->on('skpd_now.id', '=', 'a.id_jabatan');
+            }) 
+            ->leftjoin('db_pare_2018.skp_bulanan AS skp', function ($join) {
+                $join->on('skp.pegawai_id', '=', 'tb_pegawai.id');
+                $join->where('skp.bulan', '=', Pustaka::bulan_lalu(Input::get('bulan'))  );
+                //$join->where('skp.bulan', '=', '02'  );
+            })
+
+            //TPP FROM SKP BULANAN -> JABATAN ->SKPD
+            ->leftjoin('demo_asn.m_skpd AS skpd', function ($join) {
+                $join->on('skpd.id', '=', 'skp.u_jabatan_id');
+            })
+
+            ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
+                $join->on('capaian.skp_bulanan_id', '=', 'skp.id');
+                $join->where('capaian.status_approve', '=', 1   );
+            })
+
+
+
+            ->SELECT(
+                'tb_pegawai.id AS pegawai_id',
+                'tb_pegawai.nama AS nama',
+                'tb_pegawai.gelardpn AS gelardpn',
+                'tb_pegawai.gelarblk AS gelarblk',
+                'skp.id AS skp_bulanan_id',
+                'skp.bulan AS skp_bulanan_bulan',
+                'capaian.id AS capaian_id',
+                'a.id_skpd AS skpd_id',
+                'unit_kerja.unit_kerja AS unit_kerja',
+                'skpd.id AS jabatan_id',
+                'skpd.tunjangan AS tpp_rupiah',
+                'skpd.id_eselon AS eselon_id',
+                'skpd_now.id AS jabatan_id_now',
+                'skpd_now.tunjangan AS tpp_rupiah_now',
+                'skpd_now.id_eselon AS eselon_id_now'
+
+
+            )
+
+
+
+            ->WHERE('a.id_skpd', '=', Input::get('skpd_id'))
+            ->WHERE('tb_pegawai.nip', '!=', 'admin')
+            ->WHERE('tb_pegawai.status', 'active')
+            ->get(); 
+
+
+
+
+        $x = TPPReportData::WHERE('tpp_report_data.id', $request->tpp_report_data_id)
+            ->select([
+                'tpp_report_data.id AS tpp_report_data_id'
+
+
+            ])
+            ->first();
+
+
+        $tpp = array(
+            'tpp_report_data_id'     => $x->tpp_report_data_id,
 
 
 

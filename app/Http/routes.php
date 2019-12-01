@@ -480,10 +480,14 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::get('tpp_report_skpd_list','API\TPPReportAPIController@Select2SKPDList');
 	Route::get('tpp_report_unit_kerja_list','API\TPPReportAPIController@Select2UnitKerjaList');
-	Route::post('simpan_tpp_report','API\TPPReportAPIController@Store');
-
+	
 	Route::get('administrator_tpp_bulanan_list','API\TPPReportAPIController@AdministratorTPPBulananList');
 	Route::get('tpp_bulanan_list','API\TPPReportAPIController@TPPBulananList');
+
+
+	//============================= TPP REPORT DATA =====================================================//
+	
+	Route::get('tpp_report_data_detail','API\TPPReportAPIController@TPPReportDataDetail');
 
 	//========================================================================================================//
 	//============================== =======    CAPAIAN TRIWULAN ================================================//
