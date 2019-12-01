@@ -453,8 +453,8 @@ class TPPReportAPIController extends Controller
                 $join->on('tpp_report_data.eselon_id', '=', 'eselon.id');
             })
             //golongan
-            ->leftjoin('demo_asn.m_golongan AS eselon ', function ($join) {
-                $join->on('tpp_report_data.eselon_id', '=', 'eselon.id');
+            ->leftjoin('demo_asn.m_golongan AS golongan ', function ($join) {
+                $join->on('tpp_report_data.golongan_id', '=', 'golongan.id');
             })
 
 
@@ -475,6 +475,7 @@ class TPPReportAPIController extends Controller
                 'tpp_report_data.skor_kehadiran AS skor_kehadiran',
                 'tpp_report_data.pot_kehadiran AS pot_kehadiran',
                 'eselon.eselon AS eselon',
+                'golongan.golongan AS golongan',
                 'skpd.skpd AS jabatan'
                 
 
