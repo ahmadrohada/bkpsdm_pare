@@ -222,7 +222,12 @@ td.dt-nowrap { white-space: nowrap }
 			success	: function(data) {
 
 					
-					$('.create-tpp_report_modal').modal('show'); 
+					$('.jabatan').html(data['jabatan']); 
+					$('.eselon').html(data['eselon']); 
+					$('.unit_kerja').html(data['unit_kerja']); 
+					$('.golongan').html(data['golongan']);
+
+					$('.modal-tpp_report_data').modal('show'); 
 			
 				
 			},
