@@ -835,23 +835,37 @@ class TPPReportAPIController extends Controller
             $join->where('a.status', '=', 'active');
         })
 
-
-            ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', function ($join) {
-                $join->on('unit_kerja.id', '=', 'a.id_unit_kerja');
-            })
             ->leftjoin('demo_asn.m_skpd AS skpd_now', function ($join) {
                 $join->on('skpd_now.id', '=', 'a.id_jabatan');
             }) 
+
+
+            //golongan saat ini
+            ->leftjoin('demo_asn.tb_history_golongan AS gol_now', function ($join) {
+                $join->on('gol_now.id_pegawai', '=', 'tb_pegawai.id');
+                $join->where('gol_now.status', '=', 'active');
+            })
+
             ->leftjoin('db_pare_2018.skp_bulanan AS skp', function ($join) {
                 $join->on('skp.pegawai_id', '=', 'tb_pegawai.id');
                 $join->where('skp.bulan', '=', Pustaka::bulan_lalu(Input::get('bulan'))  );
                 //$join->where('skp.bulan', '=', '02'  );
             })
 
-            //TPP FROM SKP BULANAN -> JABATAN ->SKPD
+            //JABATN FROM SKP BULANAN -> JABATAN ->SKPD
             ->leftjoin('demo_asn.m_skpd AS skpd', function ($join) {
                 $join->on('skpd.id', '=', 'skp.u_jabatan_id');
             })
+
+            //GOLONGAN FROM SKP BULANAN -> JABATAN ->GOLONGAN
+            ->leftjoin('demo_asn.tb_history_golongan AS gol', function ($join) {
+                $join->on('gol.id', '=', 'skp.u_golongan_id');
+            })
+
+
+            
+
+           
 
             ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
                 $join->on('capaian.skp_bulanan_id', '=', 'skp.id');
@@ -869,13 +883,18 @@ class TPPReportAPIController extends Controller
                 'skp.bulan AS skp_bulanan_bulan',
                 'capaian.id AS capaian_id',
                 'a.id_skpd AS skpd_id',
-                'unit_kerja.unit_kerja AS unit_kerja',
+                
                 'skpd.id AS jabatan_id',
+                'skpd.id_unit_kerja AS unit_kerja_id',
+                'gol.id_golongan AS golongan_id',
                 'skpd.tunjangan AS tpp_rupiah',
                 'skpd.id_eselon AS eselon_id',
+
                 'skpd_now.id AS jabatan_id_now',
+                'skpd_now.id_unit_kerja AS id_unit_kerja_now',
                 'skpd_now.tunjangan AS tpp_rupiah_now',
-                'skpd_now.id_eselon AS eselon_id_now'
+                'skpd_now.id_eselon AS eselon_id_now',
+                'gol_now.id AS golongan_id_now'
 
 
             )
@@ -918,9 +937,10 @@ class TPPReportAPIController extends Controller
                 $report_data->pegawai_id            = $x->pegawai_id;
                 $report_data->capaian_bulanan_id    = $x->capaian_id;
                 $report_data->skpd_id               = $x->skpd_id;
-                $report_data->unit_kerja            = $x->unit_kerja;
+                $report_data->unit_kerja_id         = ( $x->unit_kerja_id != null ) ? $x->unit_kerja_id : $x->unit_kerja_id_now;
                 $report_data->eselon_id             = ( $x->eselon_id != null ) ? $x->eselon_id : $x->eselon_id_now ;
                 $report_data->jabatan_id            = ( $x->jabatan_id != null ) ? $x->jabatan_id : $x->jabatan_id_now;
+                $report_data->golongan_id           = ( $x->golongan_id != null ) ? $x->golongan_id : $x->golongan_id_now;
                 $report_data->tpp_rupiah            = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah : $x->tpp_rupiah_now ;
                 
                 //KINERJA
