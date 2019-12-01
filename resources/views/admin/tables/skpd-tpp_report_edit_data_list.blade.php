@@ -11,12 +11,14 @@ td.dt-nowrap { white-space: nowrap }
 				<th rowspan="2">No</th>
 				<th rowspan="2">NAMA</th>
 				<th rowspan="2">NIP</th>
+				<th rowspan="2">GOL</th>
 				<th rowspan="2">ESELON</th>
+				<th rowspan="2">JABATAN</th>
 				<th rowspan="2" >TPP</th>
 				<th colspan="5">KINERJA ( 60 % )</th>
 				<th colspan="4">KEHADIRAN ( 40 % )</th>
 				<th rowspan="2">TOTAL</th>
-				<th rowspan="2"><i class="faa fa-cog"></i></th>
+				<th rowspan="2"><i class="fa fa-cog"></i></th>
 			</tr>
 			<tr>
 				<th>TPP x 60%</th>
@@ -39,6 +41,9 @@ td.dt-nowrap { white-space: nowrap }
 
 
 
+@include('admin.modals.tpp_report_data')
+
+
 <script type="text/javascript">
 	$('#tpp_report_table').DataTable({
 		destroy: true,
@@ -55,13 +60,13 @@ td.dt-nowrap { white-space: nowrap }
 			lengthMenu: [50, 100],
 			columnDefs: [{
 					className: "text-center",
-					targets: [0, 2,3,6,7,8,15]
+					targets: [0, 2,3,4,8,9,10,13,14,17]
 				},
 				{
 					className: "text-right",
-					targets: [4,5,8,9,10,13,14]
+					targets: [6,7,11,12,15,16]
 				},
-				{ className: "dt-nowrap", "targets": [ 4,5,8,9,13 ] }
+				{ className: "dt-nowrap", "targets": [6,7,11,12,15,16 ] }
 
 			],
 			ajax: {
@@ -95,8 +100,20 @@ td.dt-nowrap { white-space: nowrap }
 					searchable: false
 				},
 				{
+					data: "gol",
+					name: "gol",
+					orderable: false,
+					searchable: false
+				},
+				{
 					data: "eselon",
 					name: "eselon",
+					orderable: false,
+					searchable: false
+				},
+				{
+					data: "jabatan",
+					name: "jabatan",
 					orderable: false,
 					searchable: false
 				},
@@ -180,8 +197,9 @@ td.dt-nowrap { white-space: nowrap }
 					searchable: false,
 					width: "50px",
 					"render": function(data, type, row) {
-
-						return '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_capaian_bulanan"  data-id="' + row.capaian_bulanan_id + '"><i class="fa fa-eye" ></i></a></span>';
+					
+							return '<span  data-toggle="tooltip" title="Ubah Data" style="margin:1px;" ><a class="btn btn-info btn-xs ubah_tpp_report_data_id"  data-id="' + row.tpp_report_data_id + '"><i class="fa fa-edit" ></i></a></span>';
+						
 
 					}
 				}
@@ -191,12 +209,35 @@ td.dt-nowrap { white-space: nowrap }
 		});
 	};
 
-	$(document).on('click', '.lihat_capaian_bulanan', function(e) {
-		var capaian_bulanan_id = $(this).data('id');
-		//alert(skp_tahunan_id);
 
 
+	$(document).on('click','.ubah_tpp_report_data_id',function(e){
+		var tpp_report_data_id = $(this).data('id');
+		$.ajax({
+			url		: '{{ url("api_resource/tpp_report_data_detail") }}',
+			type	: 'GET',
+			data	:  	{ 
+							tpp_report_data_id : tpp_report_data_id
+						},
+			success	: function(data) {
 
-		window.location.assign("capaian_bulanan/" + capaian_bulanan_id);
+					
+					$('.create-tpp_report_modal').modal('show'); 
+			
+				
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
+
+					Swal.fire({
+						title: 'Error!',
+						text: '',
+						type: 'error',
+						confirmButtonText: 'Tutup'
+					})
+			}
+			
+		});
+		
 	});
+	
 </script>
