@@ -452,6 +452,10 @@ class TPPReportAPIController extends Controller
             ->leftjoin('demo_asn.m_eselon AS eselon ', function ($join) {
                 $join->on('tpp_report_data.eselon_id', '=', 'eselon.id');
             })
+            //golongan
+            ->leftjoin('demo_asn.m_golongan AS eselon ', function ($join) {
+                $join->on('tpp_report_data.eselon_id', '=', 'eselon.id');
+            })
 
 
             ->select([
@@ -490,7 +494,7 @@ class TPPReportAPIController extends Controller
                 return $x->nip;
             })
             ->addColumn('gol', function ($x) {
-                return "";
+                return $x->golongan;
             })
             ->addColumn('eselon', function ($x) {
                 return $x->eselon;
@@ -845,6 +849,7 @@ class TPPReportAPIController extends Controller
                 $join->on('gol_now.id_pegawai', '=', 'tb_pegawai.id');
                 $join->where('gol_now.status', '=', 'active');
             })
+            
 
             ->leftjoin('db_pare_2018.skp_bulanan AS skp', function ($join) {
                 $join->on('skp.pegawai_id', '=', 'tb_pegawai.id');
@@ -894,7 +899,7 @@ class TPPReportAPIController extends Controller
                 'skpd_now.id_unit_kerja AS id_unit_kerja_now',
                 'skpd_now.tunjangan AS tpp_rupiah_now',
                 'skpd_now.id_eselon AS eselon_id_now',
-                'gol_now.id AS golongan_id_now'
+                'gol_now.id_golongan AS golongan_id_now'
 
 
             )
