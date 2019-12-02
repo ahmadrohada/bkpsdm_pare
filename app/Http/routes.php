@@ -1114,7 +1114,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 
 	Route::get('report/tpp/{tpp_report_id}', [
 		'as' 			=> '',
-		'uses' 			=> 'TPPReportController@editSKPDTPPReport'
+		'uses' 			=> 'TPPReportController@SKPDTPPReport'
 	]);
 
 	Route::get('report/tpp/{tpp_report_id}/edit', [
