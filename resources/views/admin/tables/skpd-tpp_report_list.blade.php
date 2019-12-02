@@ -179,7 +179,7 @@
 
 	$(document).on('click', '.lihat_tpp_report_data', function(e) {
 		var tpp_report_id = $(this).data('id');
-		window.location.assign("tpp/" + tpp_report_id);
+		window.location.assign("report/tpp/" + tpp_report_id);
 	});
 
 	

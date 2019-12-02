@@ -104,4 +104,22 @@ class TPPReportController extends Controller
             ]
         );
     }
+
+    public function SKPDTPPReport(Request $request)
+    {
+        $user      = \Auth::user();
+        $pegawai   = $user->pegawai;
+        $tpp_report = TPPreport::where('id', $request->tpp_report_id)->first();
+
+        return view(
+            'admin.pages.skpd-tpp_report_detail',
+            [
+                'skpd'                => $pegawai->JabatanAktif->SKPD,
+                'tpp_report'          => $tpp_report,
+                'nama_pegawai'        => Pustaka::nama_pegawai($pegawai->gelardpn, $pegawai->nama, $pegawai->gelarblk),
+                'h_box'               => 'box-danger',
+
+            ]
+        );
+    }
 }
