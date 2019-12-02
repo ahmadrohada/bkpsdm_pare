@@ -1015,6 +1015,48 @@ class TPPReportAPIController extends Controller
         }
     }
 
+
+
+    public function TPPClose(Request $request)
+    {
+        $messages = [
+                'tpp_report_id.required'   => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'tpp_report_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $tpp_report    = TPPReport::find(Input::get('tpp_report_id'));
+        if (is_null($tpp_report)) {
+            return $this->sendError('TPP Report tidak ditemukan.');
+        }
+
+
+        $tpp_report->status    = '1';
+
+        if ( $tpp_report->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+    }
+
     public function Destroy(Request $request)
     {
 
