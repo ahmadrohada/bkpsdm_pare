@@ -339,6 +339,7 @@ class TPPReportAPIController extends Controller
                             ->SELECT('tpp_report.id AS tpp_report_id','skpd.skpd AS nama_skpd')
                             ->WHERE('tpp_report.periode_id',$request->periode_id)
                             ->WHERE('tpp_report.bulan',$request->bulan)
+                            ->WHERE('tpp_report.status','1')
                             ->where('skpd.skpd', 'LIKE', '%' . $nama_skpd . '%')
                             //->OrderBy('tpp_report.bulan', 'ASC')
                             //->Distinct('tpp_report.bulan')
@@ -453,7 +454,6 @@ class TPPReportAPIController extends Controller
 
             ])
             ->WHERE('tpp_report_data.tpp_report_id', $tpp_report_id)
-            ->WHERE('tpp_report_data.status', '1')
             ->ORDERBY('tpp_report_data.eselon_id','ASC')
             ->where('pegawai.status', '=', 'active')
             ->where('a.status', '=', 'active');
