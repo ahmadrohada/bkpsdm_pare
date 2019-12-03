@@ -130,6 +130,8 @@
 		bulan = $(this).val();
 		periode_id = $('.periode_tahun').val();
 
+		$('.skpd').val('').trigger('change');
+
 		$('.skpd').select2({
 			ajax: {
 				url: '{{ url("api_resource/cetak_tpp_skpd_list") }}',
@@ -163,13 +165,9 @@
 
 	$('.skpd').change(function() {
 		tpp_report_id = $(this).val();
-		//alert(skpd_id);
+		
 
-
-		//$('.unit_kerja').attr("disabled", false);
-		//$('.unit_kerja').val('all').trigger('change');
-
-
+		$('.unit_kerja').val('').trigger('change');
 		$('.unit_kerja').select2({
 			ajax: {
 				url: '{{ url("api_resource/cetak_tpp_unit_kerja_list") }}',
