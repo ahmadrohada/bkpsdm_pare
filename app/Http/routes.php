@@ -479,12 +479,14 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('administrator_tpp_report_list','API\TPPReportAPIController@AdministratorTPPList');
 	Route::get('administrator_tpp_report','API\TPPReportAPIController@AdministratorTPPList');
 
-	Route::get('tpp_report_periode_tahunan_list','API\TPPReportAPIController@Select2PeriodeList');
-
-	Route::get('tpp_report_skpd_list','API\TPPReportAPIController@Select2SKPDList');
-	Route::get('tpp_report_unit_kerja_list','API\TPPReportAPIController@Select2UnitKerjaList');
+	Route::get('cetak_tpp_periode_list','API\TPPReportAPIController@Select2CetakPeriodeList');
+	Route::get('cetak_tpp_periode_bulan_list','API\TPPReportAPIController@Select2CetakPeriodeBulanList');
+	Route::get('cetak_tpp_skpd_list','API\TPPReportAPIController@Select2CetakSKPDList');
+	Route::get('cetak_tpp_unit_kerja_list','API\TPPReportAPIController@Select2CetakUnitKerjaList');
 	
-	Route::get('administrator_tpp_bulanan_list','API\TPPReportAPIController@AdministratorTPPBulananList');
+	Route::get('administrator_cetak_tpp_data_list','API\TPPReportAPIController@AdministratorCetakTPPDataList');
+	
+	
 	Route::get('tpp_bulanan_list','API\TPPReportAPIController@TPPBulananList');
 
 
@@ -901,9 +903,9 @@ Route::group(['middleware' => 'administrator'], function () {
 	//================================ T P P    REPORT              ===========================//
 	//========================================================================================//
 
-	Route::get('admin/tpp/report', [
+	Route::get('admin/cetak_tpp_report', [
 		'as' 			=> '',
-		'uses' 			=> 'TPPController@AdministratorTPPReport'
+		'uses' 			=> 'TPPReportController@AdministratorReport'
 	]);
 
 

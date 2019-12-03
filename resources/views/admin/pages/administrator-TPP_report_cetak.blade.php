@@ -15,12 +15,12 @@
 				Administrator
 			</h1>
 
-			{!! Breadcrumbs::render('TPP_report') !!}
+			{!! Breadcrumbs::render('tpp_report') !!}
 
 	    </section>
 	    <section class="content">
 
-			@include('admin.modules.filter_TPP_report')
+			@include('admin.modules.filter_cetak_TPP_report')
  			@include('admin.tables.administrator-TPP_report')
 		
 	    </section>

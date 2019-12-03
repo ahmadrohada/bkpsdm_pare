@@ -153,7 +153,7 @@ $(document).ready(function(){
     });
 
 	$(".tpp_report").click(function(){
-		window.location.assign("tpp/report");
+		window.location.assign("cetak_tpp_report");
     });
 
 
