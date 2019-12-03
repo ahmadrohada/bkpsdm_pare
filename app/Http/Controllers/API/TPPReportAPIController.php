@@ -305,6 +305,7 @@ class TPPReportAPIController extends Controller
         $data       = TPPReport::
                         SELECT('tpp_report.bulan')
                         ->WHERE('tpp_report.periode_id',$request->periode_id)
+                        ->WHERE('tpp_report.status','1')
                         ->OrderBy('tpp_report.bulan', 'ASC')
                         ->Distinct('tpp_report.bulan')
                         ->get();
