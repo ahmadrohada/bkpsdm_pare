@@ -19,18 +19,6 @@
 						<div class="col-xs-8">
 							<select class="form-control input-sm periode_bulan" name="periode_bulan" style="width: 100%;">
 								<option value="">Pilih Bulan</option>
-								<option value="01">Januari</option>
-								<option value="02">Februari</option>
-								<option value="03">Maret</option>
-								<option value="04">April</option>
-								<option value="05">Mei</option>
-								<option value="06">Juni</option>
-								<option value="07">Juli</option>
-								<option value="08">Agustus</option>
-								<option value="09">September</option>
-								<option value="10">Oktober</option>
-								<option value="11">November</option>
-								<option value="12">Desember</option>
 							</select>
 						</div>
 					</div>
@@ -80,17 +68,17 @@
 	});
 
 
-	$('.periode_bulan,.unit_kerja').select2();
-	$('.unit_kerja').attr("disabled", true);
+	$('.periode_bulan,.skpd,.unit_kerja').select2();
+	//$('.unit_kerja').attr("disabled", true);
 
 	$('.periode_tahun').select2({
 		ajax: {
-			url: '{{ url("api_resource/tpp_report_periode_tahunan_list") }}',
+			url: '{{ url("api_resource/cetak_tpp_periode_list") }}',
 			dataType: 'json',
 			quietMillis: 500,
 			data: function(params) {
 				var queryParameters = {
-					jabatan: params.term
+					tahun: params.term
 				}
 				return queryParameters;
 			},
@@ -107,47 +95,89 @@
 		},
 	});
 
-	$('.skpd').select2({
-		ajax: {
-			url: '{{ url("api_resource/tpp_report_skpd_list") }}',
-			dataType: 'json',
-			quietMillis: 500,
-			data: function(params) {
-				var queryParameters = {
-					nama_skpd: params.term
-				}
-				return queryParameters;
-			},
-			processResults: function(data) {
-				return {
-					results: $.map(data, function(item) {
-						return {
-							text: item.text,
-							id: item.id,
-						}
-					})
-				};
-			}
-		},
-	});
 
-	$('.skpd').change(function() {
-		skpd_id = $(this).val();
-		//alert(skpd_id);
+	$('.periode_tahun').change(function() {
 
-
-		$('.unit_kerja').attr("disabled", false);
-		$('.unit_kerja').val('all').trigger('change');
-
-
-		$('.unit_kerja').select2({
+		periode_id = $(this).val();
+		$('.periode_bulan').select2({
 			ajax: {
-				url: '{{ url("api_resource/tpp_report_unit_kerja_list") }}',
+				url: '{{ url("api_resource/cetak_tpp_periode_bulan_list") }}',
 				dataType: 'json',
 				quietMillis: 500,
 				data: function(params) {
 					var queryParameters = {
-						skpd_id: skpd_id,
+						bulan: params.term,
+						periode_id:periode_id
+					}
+					return queryParameters;
+				},
+				processResults: function(data) {
+					return {
+						results: $.map(data, function(item) {
+							return {
+								text: item.text,
+								id: item.id,
+							}
+						})
+					};
+				}
+			},
+		});
+	});
+
+
+	$('.periode_bulan').change(function() {
+		bulan = $(this).val();
+		periode_id = $('.periode_tahun').val();
+
+		$('.skpd').select2({
+			ajax: {
+				url: '{{ url("api_resource/cetak_tpp_skpd_list") }}',
+				dataType: 'json',
+				quietMillis: 500,
+				data: function(params) {
+					var queryParameters = {
+						nama_skpd: params.term,
+						periode_id:periode_id,
+						bulan:bulan
+					}
+					return queryParameters;
+				},
+				processResults: function(data) {
+					return {
+						results: $.map(data, function(item) {
+							return {
+								text: item.text,
+								id: item.id,
+							}
+						})
+					};
+				}
+			},
+		});
+
+
+	});
+
+	
+
+	$('.skpd').change(function() {
+		tpp_report_id = $(this).val();
+		//alert(skpd_id);
+
+
+		//$('.unit_kerja').attr("disabled", false);
+		//$('.unit_kerja').val('all').trigger('change');
+
+
+		$('.unit_kerja').select2({
+			ajax: {
+				url: '{{ url("api_resource/cetak_tpp_unit_kerja_list") }}',
+				dataType: 'json',
+				quietMillis: 500,
+				data: function(params) {
+					var queryParameters = {
+						tpp_report_id: tpp_report_id,
 						nama_unit_kerja: params.term
 					}
 					return queryParameters;
@@ -171,11 +201,12 @@
 
 	$(document).on('click', '.lihat', function() {
 
-		periode_tahun = $(".periode_tahun").val();
-		periode_bulan = $(".periode_bulan").val();
-		skpd = $(".skpd").val();
-		unit_kerja = $('.unit_kerja').val();
-		var data = [periode_tahun, periode_bulan, skpd, unit_kerja];
+		periode_id 		= $(".periode_tahun").val();
+		bulan 			= $(".periode_bulan").val();
+		tpp_report_id 	= $(".skpd").val();
+		unit_kerja_id 	= $(".unit_kerja").val();
+
+		var data = [periode_id, bulan, tpp_report_id, unit_kerja_id];
 		$.each(data, function(index, value) {
 			if (index == 0) {
 				((value == null) ? $('.periode_capaian_f').addClass('has-error') : '');
@@ -191,8 +222,8 @@
 			}
 		});
 
-		if ( (periode_tahun != null) & (periode_bulan != null) & (skpd != null) & (unit_kerja != null) ) {
-			load_table_tpp(periode_tahun, periode_bulan, skpd, unit_kerja);
+		if ( (periode_id != null) & (bulan != null) & (tpp_report_id != null) & (unit_kerja_id != null) ) {
+			load_table_tpp(tpp_report_id, unit_kerja_id);
 			//alert();
 		}
 		

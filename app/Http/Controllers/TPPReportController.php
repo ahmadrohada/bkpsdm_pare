@@ -41,6 +41,37 @@ class TPPReportController extends Controller
         return $nama_skpd->skpd;
     }
 
+    public function AdministratorReport(Request $request)
+    {
+
+        $user                   = \Auth::user();
+        $users                     = \DB::table('users')->get();
+        $userRole               = $user->hasRole('personal');
+        $admin_skpdRole         = $user->hasRole('admin_skpd');
+        $adminRole              = $user->hasRole('administrator');
+
+        if ($userRole) {
+            $access = 'User';
+        } elseif ($admin_skpdRole) {
+            $access = 'Admin Skpd';
+        } elseif ($adminRole) {
+            $access = 'Administrator';
+        }
+
+        return view(
+            'admin.pages.administrator-TPP_report_cetak',
+            [
+                'users'                   => $users,
+                'user'                       => $user,
+                'access'                   => $access,
+                'h_box'                   => 'box-warning',
+            ]
+        );
+
+        
+    }
+
+
     public function AdministratorTPPReport(Request $request)
     {
 
