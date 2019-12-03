@@ -408,8 +408,8 @@ class TPPReportAPIController extends Controller
         $tpp_report_id = $request->tpp_report_id;
         $unit_kerja_id = $request->unit_kerja_id;
 
-        $dt = TPPReportData::WHERE('tpp_report_data.tpp_report_id', $tpp_report_id)
-            ->rightjoin('demo_asn.tb_pegawai AS pegawai', function ($join) {
+        $dt = TPPReportData::
+            rightjoin('demo_asn.tb_pegawai AS pegawai', function ($join) {
                 $join->on('pegawai.id', '=', 'tpp_report_data.pegawai_id');
             })
             ->rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
@@ -452,6 +452,8 @@ class TPPReportAPIController extends Controller
 
 
             ])
+            ->WHERE('tpp_report_data.tpp_report_id', $tpp_report_id)
+            ->WHERE('tpp_report_data.status', '1')
             ->ORDERBY('tpp_report_data.eselon_id','ASC')
             ->where('pegawai.status', '=', 'active')
             ->where('a.status', '=', 'active');
