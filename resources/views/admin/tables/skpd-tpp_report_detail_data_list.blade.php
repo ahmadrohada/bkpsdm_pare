@@ -1,27 +1,41 @@
 <style>
 td.dt-nowrap { white-space: nowrap }
+.no-sort::after { display: none!important; }
+.no-sort { pointer-events: none!important; cursor: default!important; }
+table{
+  margin: 0 auto;
+ 
+  clear: both;
+  border-collapse: collapse;
+  table-layout: fixed; // ***********add this
+  word-wrap:break-word; // ***********and this
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 </style>
 
 <div class="table-responsive" style="margin:20px 10px 10px 10px; ">
 
-	<table id="tpp_report_table" class="table table-striped table-hover display nowrap">
+	<table id="tpp_report_table" class="table table-striped table-hover">
 
 		<thead>
 			<tr>
-				<th rowspan="2">No</th>
-				<th rowspan="2">NAMA</th>
-				<th rowspan="2">NIP</th>
-				<th rowspan="2">GOL</th>
-				<th rowspan="2">ESELON</th>
-				<th rowspan="2">JABATAN</th>
-				<th rowspan="2" >TPP</th>
-				<th colspan="5">KINERJA ( 60 % )</th>
-				<th colspan="4">KEHADIRAN ( 40 % )</th>
-				<th rowspan="2">TOTAL</th>
+				<th rowspan="2" class="no-sort" width="20px;">NO</th>
+				<th rowspan="2" width="200px;">NAMA</th>
+				<th rowspan="2" width="140px;">NIP</th>
+				<th rowspan="2" width="60px;">GOL</th>
+				<th rowspan="2" width="250px;">JABATAN</th>
+				<th rowspan="2" width="60px;">ESELON</th>
+				<th rowspan="2" width="105px;">TPP</th>
+				<th colspan="5" width="550px;">KINERJA ( 60 % )</th>
+				<th colspan="4" width="450px;">KEHADIRAN ( 40 % )</th>
+				<th rowspan="2" width="105px;">TOTAL</th>
 			</tr>
 			<tr>
 				<th>TPP x 60%</th>
-				<th >CAPAIAN</th>
+				<th>CAPAIAN</th>
 				<th>SKOR (%)</th>
 				<th>POT (%)</th>
 				<th>JM TPP ( Rp. )</th>
@@ -59,14 +73,14 @@ td.dt-nowrap { white-space: nowrap }
 			lengthMenu: [50, 100],
 			columnDefs: [{
 					className: "text-center",
-					targets: [0, 2,3,4,8,9,10,13,14]
+					targets: [0, 2,3,5,8,9,10,13,14]
 				},
+				
 				{
 					className: "text-right",
 					targets: [6,7,11,12,15,16]
 				},
-				{ className: "dt-nowrap", "targets": [6,7,11,12,15,16 ] }
-
+				{ targets: 'no-sort', orderable: false },
 			],
 			ajax: {
 				url: '{{ url("api_resource/tpp_bulanan_list") }}',
@@ -78,92 +92,86 @@ td.dt-nowrap { white-space: nowrap }
 
 
 			columns: [{
-					data: '',
+					data: 'tpp_report_data_id',
 					orderable: false,
-					searchable: false,
+					searchable: true,
 					"render": function(data, type, row, meta) {
 						return meta.row + meta.settings._iDisplayStart + 1;
-					}
+					},
+					width:"15px"
 				}, 
 				{
 					data: "nama_pegawai",
 					name: "nama_pegawai",
 					orderable: false,
 					searchable: true,
-					width: "400px"
 				},
 				{
 					data: "nip_pegawai",
 					name: "nip_pegawai",
 					orderable: false,
-					searchable: false
+					searchable: false,
 				},
 				{
 					data: "gol",
 					name: "gol",
 					orderable: false,
-					searchable: false
+					searchable: false,
+				},
+				
+				{
+					data: "jabatan",
+					name: "jabatan",
+					orderable: false,
+					searchable: false,
 				},
 				{
 					data: "eselon",
 					name: "eselon",
 					orderable: false,
-					searchable: false
-				},
-				{
-					data: "jabatan",
-					name: "jabatan",
-					orderable: false,
-					searchable: false
+					searchable: false,
 				},
 				{
 					data: "tunjangan",
 					name: "tunjangan",
 					orderable: false,
 					searchable: false,
-					width: "230px"
 				},
 				{
 					data: "tpp_kinerja",
 					name: "tpp_kinerja",
 					orderable: false,
 					searchable: false,
-					width: "140px"
 				},
 				{
 					data: "capaian",
 					name: "capaian",
 					orderable: false,
 					searchable: false,
-					width: "120px"
 				},
 				{
 					data: "skor",
 					name: "skor",
 					orderable: false,
 					searchable: false,
-					width: "120px"
 				},
 				{
 					data: "potongan_kinerja",
 					name: "potongan_kinerja",
 					orderable: false,
 					searchable: false,
-					width: "120px"
 				},
 				{
 					data: "jm_tpp_kinerja",
 					name: "jm_tpp_kinerja",
 					orderable: false,
 					searchable: false,
-					width: "140px"
 				},
 				{
 					data: "tpp_kehadiran",
 					name: "tpp_kehadiran",
 					orderable: false,
 					searchable: false,
-					width: "140px"
 				},
 				{
 					data: "skor_kehadiran",
