@@ -23,6 +23,7 @@ use Validator;
 use Gravatar;
 use Input;
 use Alert;
+use PDF;
 
 class TPPReportAPIController extends Controller
 {
@@ -684,6 +685,84 @@ class TPPReportAPIController extends Controller
     }
 
 
+    
+    
+    public function cetakTPPReportData(Request $request)
+    {
+
+        $tpp_report_id = $request->skpd;
+
+        $data = TPPReportData::WHERE('tpp_report_data.tpp_report_id', $tpp_report_id)
+            ->rightjoin('demo_asn.tb_pegawai AS pegawai', function ($join) {
+                $join->on('pegawai.id', '=', 'tpp_report_data.pegawai_id');
+            })
+            ->rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
+                $join->on('a.id_pegawai', '=', 'pegawai.id');
+            })
+            
+            ->leftjoin('demo_asn.m_skpd AS skpd ', function ($join) {
+                $join->on('a.id_jabatan', '=', 'skpd.id');
+            })
+            //eselon
+            ->leftjoin('demo_asn.m_eselon AS eselon ', function ($join) {
+                $join->on('tpp_report_data.eselon_id', '=', 'eselon.id');
+            })
+            //golongan
+            ->leftjoin('demo_asn.m_golongan AS golongan ', function ($join) {
+                $join->on('tpp_report_data.golongan_id', '=', 'golongan.id');
+            })
+
+
+            ->select([
+                'pegawai.nama',
+                'pegawai.id AS pegawai_id',
+                'pegawai.nip',
+                'pegawai.gelardpn',
+                'pegawai.gelarblk',
+                'tpp_report_data.capaian_bulanan_id AS capaian_id',
+                'tpp_report_data.id AS tpp_report_data_id',
+                'tpp_report_data.tpp_rupiah AS tunjangan',
+                'tpp_report_data.tpp_kinerja AS tpp_kinerja',
+                'tpp_report_data.cap_skp AS capaian',
+                'tpp_report_data.skor_cap AS skor',
+                'tpp_report_data.pot_kinerja AS pot_kinerja',
+                'tpp_report_data.tpp_kehadiran AS tpp_kehadiran',
+                'tpp_report_data.skor_kehadiran AS skor_kehadiran',
+                'tpp_report_data.pot_kehadiran AS pot_kehadiran',
+                'eselon.eselon AS eselon',
+                'golongan.golongan AS golongan',
+                'skpd.skpd AS jabatan'
+                
+
+
+            ])
+            ->ORDERBY('tpp_report_data.eselon_id','ASC')
+            ->where('pegawai.status', '=', 'active')
+            ->where('a.status', '=', 'active')
+            ->get();
+
+
+        $pdf = PDF::loadView('admin.printouts.cetak', ['data'=>$data], [], [
+            'format' => 'A4-L'
+          ]);
+       
+        $pdf->getMpdf()->shrink_tables_to_fit = 1;
+        $pdf->getMpdf()->setWatermarkImage('assets/images/form/watermark.png');
+        $pdf->getMpdf()->showWatermarkImage = true;
+
+        $pdf->getMpdf()->SetHTMLFooter('
+		<table width="100%">
+			<tr>
+				<td width="33%"></td>
+				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
+				<td width="33%" style="text-align: right;"></td>
+			</tr>
+		</table>');
+        return $pdf->stream('document.pdf');
+        //return $pdf->download('document.pdf');
+    }
+
+
     protected function TPPReportDetail(Request $request)
     {
         $x = TPPReport::WHERE('tpp_report.id', $request->tpp_report_id)
@@ -728,69 +807,6 @@ class TPPReportAPIController extends Controller
 
     protected function TPPReportDataDetail(Request $request)
     {
-/* 
-
-
-
-        $tpp_data = Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
-            $join->on('a.id_pegawai', '=', 'tb_pegawai.id');
-            $join->where('a.status', '=', 'active');
-        })
-
-
-            ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', function ($join) {
-                $join->on('unit_kerja.id', '=', 'a.id_unit_kerja');
-            })
-            ->leftjoin('demo_asn.m_skpd AS skpd_now', function ($join) {
-                $join->on('skpd_now.id', '=', 'a.id_jabatan');
-            }) 
-            ->leftjoin('db_pare_2018.skp_bulanan AS skp', function ($join) {
-                $join->on('skp.pegawai_id', '=', 'tb_pegawai.id');
-                $join->where('skp.bulan', '=', Pustaka::bulan_lalu(Input::get('bulan'))  );
-                //$join->where('skp.bulan', '=', '02'  );
-            })
-
-            //TPP FROM SKP BULANAN -> JABATAN ->SKPD
-            ->leftjoin('demo_asn.m_skpd AS skpd', function ($join) {
-                $join->on('skpd.id', '=', 'skp.u_jabatan_id');
-            })
-
-            ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
-                $join->on('capaian.skp_bulanan_id', '=', 'skp.id');
-                $join->where('capaian.status_approve', '=', 1   );
-            })
-
-
-
-            ->SELECT(
-                'tb_pegawai.id AS pegawai_id',
-                'tb_pegawai.nama AS nama',
-                'tb_pegawai.gelardpn AS gelardpn',
-                'tb_pegawai.gelarblk AS gelarblk',
-                'skp.id AS skp_bulanan_id',
-                'skp.bulan AS skp_bulanan_bulan',
-                'capaian.id AS capaian_id',
-                'a.id_skpd AS skpd_id',
-                'unit_kerja.unit_kerja AS unit_kerja',
-                'skpd.id AS jabatan_id',
-                'skpd.tunjangan AS tpp_rupiah',
-                'skpd.id_eselon AS eselon_id',
-                'skpd_now.id AS jabatan_id_now',
-                'skpd_now.tunjangan AS tpp_rupiah_now',
-                'skpd_now.id_eselon AS eselon_id_now'
-
-
-            )
-
-
-
-            ->WHERE('a.id_skpd', '=', Input::get('skpd_id'))
-            ->WHERE('tb_pegawai.nip', '!=', 'admin')
-            ->WHERE('tb_pegawai.status', 'active')
-            ->get(); 
- */
-
-
 
         $x = TPPReportData::
             //JABATAN

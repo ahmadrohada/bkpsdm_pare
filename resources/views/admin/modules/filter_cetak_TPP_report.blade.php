@@ -9,6 +9,11 @@
 	</div>
 	<div class="box-body">
 		<div class="row">
+
+			<form method="post" 
+				target="_blank" 
+				action="tpp_report/cetak">
+			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<div class="col-md-5">
 				<div class="form-group margin periode_capaian_f">
 					<label>Periode capaian</label>
@@ -39,15 +44,28 @@
 					</select>
 
 				</div>
-				<div class="form-group margin">
+				<div class="form-group margin div_lihat">
 					<button type="button" class="btn btn-info btn-block lihat">Lihat <i class="fa fa-eye"></i></button>
-
+				</div>
+				<div class="form-group margin div_cetak hidden" >
+					<button type="submit" class="btn btn-success btn-block cetak">Cetak <i class="fa fa-print"></i></button>
 				</div>
 
+				{{-- <button class="lihat form-control btn-primary btn-sm" >
+					Lihat
+					<i class="lihat_table glyphicon glyphicon-eye-open"></i>
+					<i class="load_table fa fa-spinner faa-spin animated"></i>
+				</button>
+				<button class="cetak form-control btn-success btn-sm" >
+					Cetak
+					<i class=" glyphicon glyphicon-print"></i>
+				</button> --}}
 
+				
 
 
 			</div>
+			</form>
 		</div>
 	</div>
 </div>
@@ -57,6 +75,12 @@
 
 
 <script type="text/javascript">
+
+	function reset_div(){
+		$('.div_cetak').addClass('hidden');
+		$('.div_lihat').removeClass('hidden');
+	}
+
 	$('.periode_capaian_f').on('click', function() {
 		$('.periode_capaian_f').removeClass('has-error');
 	});
@@ -98,6 +122,7 @@
 
 	$('.periode_tahun').change(function() {
 
+		reset_div();
 		periode_id = $(this).val();
 		$('.periode_bulan').select2({
 			ajax: {
@@ -131,6 +156,7 @@
 		periode_id = $('.periode_tahun').val();
 
 		$('.skpd').val('').trigger('change');
+		reset_div();
 
 		$('.skpd').select2({
 			ajax: {
@@ -165,6 +191,7 @@
 
 	$('.skpd').change(function() {
 		tpp_report_id = $(this).val();
+		reset_div();
 		
 
 		$('.unit_kerja').val('').trigger('change');
@@ -196,6 +223,28 @@
 
 
 	});
+
+
+	$('.unit_kerja').change(function() {
+		
+		reset_div();
+	});
+
+
+	/* $(document).on('click', '.lihat', function() {
+
+		periode_id 		= $(".periode_tahun").val();
+		bulan 			= $(".periode_bulan").val();
+		tpp_report_id 	= $(".skpd").val();
+		unit_kerja_id 	= $(".unit_kerja").val();
+
+		window.open('tpp_report/cetak');
+	
+
+
+	}); */
+
+
 
 	$(document).on('click', '.lihat', function() {
 

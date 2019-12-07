@@ -468,6 +468,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('simpan_tpp_report','API\TPPReportAPIController@Store');
 	Route::post('close_tpp_report','API\TPPReportAPIController@TPPClose');
 	
+	//Route::post('cetak_tpp_report','API\TPPReportAPIController@cetakTPPReportData');
+
+	
+
 
 	
 	Route::post('hapus_tpp_report','API\TPPReportAPIController@Destroy');
@@ -903,11 +907,16 @@ Route::group(['middleware' => 'administrator'], function () {
 	//================================ T P P    REPORT              ===========================//
 	//========================================================================================//
 
-	Route::get('admin/cetak_tpp_report', [
+	Route::get('admin/tpp_report', [
 		'as' 			=> '',
 		'uses' 			=> 'TPPReportController@AdministratorReport'
 	]);
 
+	Route::post('admin/tpp_report/cetak', [
+		'as' 			=> '',
+		'uses' 			=> 'API\TPPReportAPIController@cetakTPPReportData'
+	]);
+ 
 
 	//----------------------------------------------------------------------------------------//
 	//============================ MASA PEMERINTAHAN ======== ================================//
