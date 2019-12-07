@@ -20,7 +20,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades;
 use Illuminate\Http\Request;
 
-
+use PDF;
 use Datatables;
 use Validator;
 use Gravatar;
@@ -115,8 +115,9 @@ class TPPReportController extends Controller
                 'h_box'                  => 'box-danger',
 
             ]
-        );
+        ); 
     }
+     
 
     public function editSKPDTPPReport(Request $request)
     {

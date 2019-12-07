@@ -100,6 +100,15 @@
 				},
 
 			},
+			initComplete:function( settings, json){
+				console.log(json);
+				// call your function here
+
+
+				$('.div_cetak').removeClass('hidden');
+				$('.div_lihat').addClass('hidden');
+
+			},
 
 			columns: [{
 					data: '',
