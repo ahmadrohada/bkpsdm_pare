@@ -174,6 +174,8 @@ class KegiatanAPIController extends Controller {
         $z = ['1026','1027','1028','1029','1030'];
         //KEC RCilamaya kulon
         $aa = ['1179','1180','1181','1182','1183'];
+        //KEC RCilamaya Wetan
+        $aa = ['1107','1108','1109','1110','1111'];
         //KEC Tempuran
         $ab = ['1152','1153','1154','1155','1156'];
         //KEC telagasari
