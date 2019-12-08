@@ -44,14 +44,14 @@
 				<tr>
 					<td colspan="2"  valign="top" align="center">
 						<FONT style=" font-size:11pt;  font-weight:bold; font-family:Times New Roman,Cambria;">
-						TPP REPORT PARE PERIODE  XXXX
+						TPP REPORT PARE PERIODE  {{ $periode}}
 						</font>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2"  valign="top" align="center">
 						<FONT style=" font-size:11pt;  font-family:Times New Roman,Cambria;">
-						NAMA SKPD
+						{{ $nama_skpd }}
 						</font>
 					</td>
 				</tr>
@@ -60,8 +60,8 @@
 
 
 				<font style=" font-size:8pt;  font-family:Trebuchet MS,Calibri;">
-						Tanggal Cetak xxxx
-						 &nbsp;Dicetak oleh &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp; xxxx
+						Tanggal Cetak &nbsp;&nbsp;: {{ $waktu_cetak }} <br>
+						Dicetak oleh &nbsp;&nbsp;&nbsp;&nbsp; :&nbsp; {{ $pic }}
 					</font>
 
 
@@ -139,40 +139,40 @@
 	</td>
 </tr>
 <tr height="90px">
-	<td>
-		Kepala Bidang Pengembangan Pegawai ASN
-	</td>
-	<td>
-		
-	</td>
-	<td>
-		Kasubid Kinerja dan Kompetensi ASN
-	</td>
-</tr>
-<tr height="150px">
-	<td height="60px">
-		
-	</td>
-	<td>
-		
-	</td>
-	<td>
-		
-	</td>
-</tr>
-<tr>
-	<td>
-	<u>Jajang Jaenudin, S.STP, MM</u><br>
-	<font style="font-size:10pt;">NIP. 198006062000121001</font>
-	</td>
-	<td>
-		
-	</td>
-	<td>
-	<u>Marsidik Ari Kustijo, S.Sos</u><br>
-	<font style="font-size:10pt;">NIP. 197403222005011005</font>
-	</td>
-</tr>
+		<td>
+			Kepala Bidang Pengembangan Pegawai ASN
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			Kasubid Kinerja dan Kompetensi ASN
+		</td>
+	</tr>
+	<tr height="150px">
+		<td height="60px">
+			
+		</td>
+		<td>
+			
+		</td>
+		<td>
+			
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<u>Suhendar, S.Sos</u><br>
+		<font style="font-size:10pt;">NIP. 196207171990071001</font>
+		</td>
+		<td>
+			
+		</td>
+		<td>
+		<u>Marsidik Ari Kustijo, S.Sos</u><br>
+		<font style="font-size:10pt;">NIP. 197403222005011005</font>
+		</td>
+	</tr>
 
 </table>
 

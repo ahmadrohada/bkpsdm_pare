@@ -622,16 +622,51 @@ class TPPReportAPIController extends Controller
         }
 
         $data = $dt->get();
+
+
+
+        //TPP report detail
+        $p = TPPReport::WHERE('tpp_report.id', $tpp_report_id)
+            ->join('db_pare_2018.periode AS periode', function ($join) {
+                $join->on('periode.id', '=', 'tpp_report.periode_id');
+            })
+            ->select([
+                'tpp_report.id AS tpp_report_id',
+                'tpp_report.periode_id',
+                'tpp_report.bulan',
+                'tpp_report.skpd_id',
+                'tpp_report.ka_skpd',
+                'tpp_report.admin_skpd',
+                'tpp_report.status',
+                'tpp_report.created_at',
+                'periode.label AS periode_label',
+                'periode.awal AS tahun_periode'
+
+
+            ])
+            ->first();
+
+        //NAMA ADMIN
+    
+        $user_x    = \Auth::user();
+        $profil  = Pegawai::WHERE('tb_pegawai.id',  $user_x->id_pegawai)->first();
         
 
-       $pdf = PDF::loadView('admin.printouts.cetak', ['data'=>$data], [], [
-            'format' => 'A4-L'
+       $pdf = PDF::loadView('admin.printouts.cetak', [  'data'          =>  $data , 
+                                                        'periode'       =>  strtoupper(Pustaka::bulan($p->bulan)) . "  " . Pustaka::tahun($p->tahun_periode), 
+                                                        'nama_skpd'     =>  $this::nama_skpd($p->skpd_id),
+                                                        'waktu_cetak'   =>  Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
+                                                        'pic'           =>  Pustaka::nama_pegawai($profil->gelardpn, $profil->nama, $profil->gelarblk),
+
+
+                                                     ], [], [
+                                                     'format' => 'A4-L'
           ]);
        
         $pdf->getMpdf()->shrink_tables_to_fit = 1;
         $pdf->getMpdf()->setWatermarkImage('assets/images/form/watermark.png');
         $pdf->getMpdf()->showWatermarkImage = true;
-
+        
         $pdf->getMpdf()->SetHTMLFooter('
 		<table width="100%">
 			<tr>
@@ -639,9 +674,10 @@ class TPPReportAPIController extends Controller
 				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
 				<td width="33%" style="text-align: right;"></td>
 			</tr>
-		</table>');
-        return $pdf->stream('document.pdf');
-        //return $pdf->download('document.pdf');
+        </table>');
+        //"tpp".$bulan_depan."_".$skpd."
+        //return $pdf->stream('document.pdf');
+        return $pdf->download('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
     }
 
 
