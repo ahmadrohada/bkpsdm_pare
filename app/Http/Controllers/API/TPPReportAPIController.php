@@ -405,7 +405,7 @@ class TPPReportAPIController extends Controller
         return array_merge($all,$unit_kerja_list);
     }
 
-    public function AdministratorCetakTPPDataList(Request $request)
+    public function TPPReportDataList(Request $request)
     {
 
         $tpp_report_id = $request->tpp_report_id;
@@ -439,6 +439,7 @@ class TPPReportAPIController extends Controller
                 'pegawai.gelardpn',
                 'pegawai.gelarblk',
                 'tpp_report_data.capaian_bulanan_id AS capaian_id',
+                'tpp_report_data.unit_kerja_id',
                 'tpp_report_data.id AS tpp_report_data_id',
                 'tpp_report_data.tpp_rupiah AS tunjangan',
                 'tpp_report_data.tpp_kinerja AS tpp_kinerja',
@@ -461,6 +462,12 @@ class TPPReportAPIController extends Controller
             ->where('a.status', '=', 'active');
 
 
+        //JIKA UNIT KERJA BUKAN ALL
+        if ( $unit_kerja_id != 0 ){
+            $dt->WHERE('tpp_report_data.unit_kerja_id',$unit_kerja_id);
+        }
+        
+
 
         $datatables = Datatables::of($dt)
             ->addColumn('nama_pegawai', function ($x) {
@@ -520,7 +527,7 @@ class TPPReportAPIController extends Controller
                 if ( $x->skor_kehadiran > 0  ){
                     return "-" ;
                 }else{
-                    return Pustaka::persen_bulat($x->skor)." %";
+                    return Pustaka::persen_bulat($x->skor_kehadiran)." %";
                 }
             })
             ->addColumn('potongan_kehadiran', function ($x) {
@@ -539,20 +546,27 @@ class TPPReportAPIController extends Controller
 
                 return "Rp. " . number_format( ($tpp_a + $tpp_b) , '0', ',', '.');
             });
+
+
         if ($keyword = $request->get('search')['value']) {
             $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         }
+
+        
+        
         return $datatables->make(true);
         
     }
 
-    public function TPPBulananList(Request $request)
+    
+    public function cetakTPPReportData(Request $request)
     {
 
         $tpp_report_id = $request->tpp_report_id;
+        $unit_kerja_id = $request->unit_kerja_id;
 
-        $dt = TPPReportData::WHERE('tpp_report_data.tpp_report_id', $tpp_report_id)
-            ->rightjoin('demo_asn.tb_pegawai AS pegawai', function ($join) {
+        $dt = TPPReportData::
+            rightjoin('demo_asn.tb_pegawai AS pegawai', function ($join) {
                 $join->on('pegawai.id', '=', 'tpp_report_data.pegawai_id');
             })
             ->rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
@@ -579,6 +593,7 @@ class TPPReportAPIController extends Controller
                 'pegawai.gelardpn',
                 'pegawai.gelarblk',
                 'tpp_report_data.capaian_bulanan_id AS capaian_id',
+                'tpp_report_data.unit_kerja_id',
                 'tpp_report_data.id AS tpp_report_data_id',
                 'tpp_report_data.tpp_rupiah AS tunjangan',
                 'tpp_report_data.tpp_kinerja AS tpp_kinerja',
@@ -595,154 +610,21 @@ class TPPReportAPIController extends Controller
 
 
             ])
+            ->WHERE('tpp_report_data.tpp_report_id', $tpp_report_id)
             ->ORDERBY('tpp_report_data.eselon_id','ASC')
             ->where('pegawai.status', '=', 'active')
             ->where('a.status', '=', 'active');
 
 
-
-        $datatables = Datatables::of($dt)
-            ->addColumn('nama_pegawai', function ($x) {
-                return Pustaka::nama_pegawai($x->gelardpn, $x->nama, $x->gelarblk);
-            })
-            ->addColumn('nip_pegawai', function ($x) {
-                return $x->nip;
-            })
-            ->addColumn('gol', function ($x) {
-                return $x->golongan;
-            })
-            ->addColumn('eselon', function ($x) {
-                return $x->eselon;
-            })
-            ->addColumn('jabatan', function ($x) {
-                return Pustaka::capital_string($x->jabatan);
-            })
-            ->addColumn('tunjangan', function ($x) {
-                return "Rp. " . number_format($x->tunjangan, '0', ',', '.');
-            })
-            ->addColumn('tpp_kinerja', function ($x) {
-                return "Rp. " . number_format($x->tpp_kinerja, '0', ',', '.');
-            })
-            ->addColumn('capaian', function ($x) {
-                if ( $x->capaian_id == null  ){
-                    return "-" ;
-                }else{
-                    return Pustaka::persen_bulat($x->capaian);
-                }
-                
-            })
-            ->addColumn('skor', function ($x) {
-                if ( $x->capaian_id == null  ){
-                    return "-" ;
-                }else{
-                    return Pustaka::persen_bulat($x->skor)." %";
-                }
-                
-            })
-            ->addColumn('potongan_kinerja', function ($x) {
-                if ( $x->pot_kinerja <= 0  ){
-                    return "-" ;
-                }else{
-                    return Pustaka::persen_bulat($x->pot_kinerja)." %";
-                }
-            })
-            ->addColumn('jm_tpp_kinerja', function ($x) {
-
-                return "Rp. " . number_format( (($x->tpp_kinerja)*($x->skor/100) ) - ( ($x->pot_kinerja/100 )*$x->tpp_kinerja), '0', ',', '.');
-
-
-            })
-            ->addColumn('tpp_kehadiran', function ($x) {
-                return "Rp. " . number_format($x->tpp_kehadiran , '0', ',', '.');
-            })
-            ->addColumn('skor_kehadiran', function ($x) {
-                if ( $x->skor_kehadiran > 0  ){
-                    return "-" ;
-                }else{
-                    return Pustaka::persen_bulat($x->skor)." %";
-                }
-            })
-            ->addColumn('potongan_kehadiran', function ($x) {
-                if ( $x->pot_kehadiran<= 0  ){
-                    return "-" ;
-                }else{
-                    return Pustaka::persen_bulat($x->pot_kehadiran)." %";
-                }
-            })
-            ->addColumn('jm_tpp_kehadiran', function ($x) {
-                return "Rp. " . number_format( (($x->tpp_kehadiran)*($x->skor_kehadiran/100) ) - ( ($x->pot_kehadiran/100 )*$x->tpp_kehadiran), '0', ',', '.');
-            })
-            ->addColumn('total_tpp', function ($x) {
-                $tpp_a = (($x->tpp_kinerja)*($x->skor/100) ) - ( ($x->pot_kinerja/100 )*$x->tpp_kinerja);
-                $tpp_b = (($x->tpp_kehadiran)*($x->skor_kehadiran/100) ) - ( ($x->pot_kehadiran/100 )*$x->tpp_kehadiran);
-
-                return "Rp. " . number_format( ($tpp_a + $tpp_b) , '0', ',', '.');
-            });
-        if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        //JIKA UNIT KERJA BUKAN ALL
+        if ( $unit_kerja_id != 0 ){
+            $dt->WHERE('tpp_report_data.unit_kerja_id',$unit_kerja_id);
         }
-        return $datatables->make(true);
-    }
 
+        $data = $dt->get();
+        
 
-    
-    
-    public function cetakTPPReportData(Request $request)
-    {
-
-        $tpp_report_id = $request->skpd;
-
-        $data = TPPReportData::WHERE('tpp_report_data.tpp_report_id', $tpp_report_id)
-            ->rightjoin('demo_asn.tb_pegawai AS pegawai', function ($join) {
-                $join->on('pegawai.id', '=', 'tpp_report_data.pegawai_id');
-            })
-            ->rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
-                $join->on('a.id_pegawai', '=', 'pegawai.id');
-            })
-            
-            ->leftjoin('demo_asn.m_skpd AS skpd ', function ($join) {
-                $join->on('a.id_jabatan', '=', 'skpd.id');
-            })
-            //eselon
-            ->leftjoin('demo_asn.m_eselon AS eselon ', function ($join) {
-                $join->on('tpp_report_data.eselon_id', '=', 'eselon.id');
-            })
-            //golongan
-            ->leftjoin('demo_asn.m_golongan AS golongan ', function ($join) {
-                $join->on('tpp_report_data.golongan_id', '=', 'golongan.id');
-            })
-
-
-            ->select([
-                'pegawai.nama',
-                'pegawai.id AS pegawai_id',
-                'pegawai.nip',
-                'pegawai.gelardpn',
-                'pegawai.gelarblk',
-                'tpp_report_data.capaian_bulanan_id AS capaian_id',
-                'tpp_report_data.id AS tpp_report_data_id',
-                'tpp_report_data.tpp_rupiah AS tunjangan',
-                'tpp_report_data.tpp_kinerja AS tpp_kinerja',
-                'tpp_report_data.cap_skp AS capaian',
-                'tpp_report_data.skor_cap AS skor',
-                'tpp_report_data.pot_kinerja AS pot_kinerja',
-                'tpp_report_data.tpp_kehadiran AS tpp_kehadiran',
-                'tpp_report_data.skor_kehadiran AS skor_kehadiran',
-                'tpp_report_data.pot_kehadiran AS pot_kehadiran',
-                'eselon.eselon AS eselon',
-                'golongan.golongan AS golongan',
-                'skpd.skpd AS jabatan'
-                
-
-
-            ])
-            ->ORDERBY('tpp_report_data.eselon_id','ASC')
-            ->where('pegawai.status', '=', 'active')
-            ->where('a.status', '=', 'active')
-            ->get();
-
-
-        $pdf = PDF::loadView('admin.printouts.cetak', ['data'=>$data], [], [
+       $pdf = PDF::loadView('admin.printouts.cetak', ['data'=>$data], [], [
             'format' => 'A4-L'
           ]);
        
