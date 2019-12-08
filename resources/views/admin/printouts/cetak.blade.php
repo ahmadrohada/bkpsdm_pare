@@ -1,6 +1,9 @@
 <html>
 <head>
 		@include('admin.printouts.style')
+
+
+		<title>Cetak TPP Report</title>
 </head>
 <body>
 	
@@ -100,19 +103,19 @@
 
 			<tr>
                     <td align='right'>{{ $i++ }}</td>
-                    <td>{{$p->nama}}</td>
+                    <td>{{  Pustaka::nama_pegawai($p->gelardpn, $p->nama, $p->gelarblk) }}</td>
 					<td align='center'>{{$p->nip}}</td>
-					<td align='right'>{{$p->tunjangan}}</td>
-					<td align='right'>{{$p->tpp_kinerja}}</td>
-					<td align='center'></td>
-					<td align='center'></td>
-					<td align='center'></td>
-                    <td align='right'></td>
-					<td align='right'></td>
-					<td align='center'></td>
-					<td align='center'></td>
-					<td align='right'></td>
-					<td align='right'></td>
+					<td align='right'>Rp. {{number_format($p->tunjangan, '0', ',', '.')}}</td>
+					<td align='right'>Rp. {{number_format($p->tpp_kinerja, '0', ',', '.')}}</td>
+					<td align='center'>{{ ( $p->capaian_id != null ) ? Pustaka::persen_bulat($p->capaian) : "-" }}</td>
+					<td align='center'>{{ ( $p->capaian_id != null ) ? Pustaka::persen_bulat($p->skor).' %' : "-" }}</td>
+					<td align='center'>{{ ( $p->pot_kinerja <= 0 ) ? Pustaka::persen_bulat($p->pot_kinerja).' %' : "-" }}</td>
+					<td align='right'>Rp. {{ number_format( (($p->tpp_kinerja)*($p->skor/100) ) - ( ($p->pot_kinerja/100 )*$p->tpp_kinerja), '0', ',', '.') }}</td>
+					<td align='right'>Rp. {{number_format($p->tpp_kehadiran, '0', ',', '.')}}</td>
+					<td align='center'>{{ ( $p->skor_kehadiran > 0 ) ? Pustaka::persen_bulat($p->skor_kehadiran).' %' : "-" }}</td>
+					<td align='center'>{{ ( $p->pot_kehadiran > 0 ) ? Pustaka::persen_bulat($p->pot_kehadiran).' %' : "-" }}</td>
+					<td align='right'>Rp. {{ number_format( (($p->tpp_kehadiran)*($p->skor_kehadiran/100) ) - ( ($p->pot_kehadiran/100 )*$p->tpp_kehadiran), '0', ',', '.')}}</td>
+					<td align='right'>Rp. {{ number_format(   (($p->tpp_kinerja)*($p->skor/100) ) - ( ($p->pot_kinerja/100 )*$p->tpp_kinerja) + (($p->tpp_kehadiran)*($p->skor_kehadiran/100) ) - ( ($p->pot_kehadiran/100 )*$p->tpp_kehadiran), '0', ',', '.') }}</td>
                 </tr>
 			
 			@endforeach

@@ -31,7 +31,7 @@
 				<div class="form-group margin skpd_f">
 					<label>SKPD</label>
 					<!-- <div class="input-group input-group-sm"> -->
-					<select class="form-control input-sm skpd" name="skpd" style="width: 100%;"></select>
+					<select class="form-control input-sm skpd" name="tpp_report_id" style="width: 100%;"></select>
 					<!-- <span class="input-group-btn">
 							<button type="button" class="btn btn-info btn-flat">Go!</button>
 						</span> -->
@@ -39,8 +39,8 @@
 				</div>
 				<div class="form-group margin unit_kerja_f">
 					<label>Unit Kerja</label>
-					<select class="form-control input-sm unit_kerja" name="unit_kerja" style="width: 100%;">
-						<option value="all">SEMUA UNIT KERJA</option>
+					<select class="form-control input-sm unit_kerja" name="unit_kerja_id" style="width: 100%;">
+						<option value="all">-</option>
 					</select>
 
 				</div>
@@ -79,6 +79,8 @@
 	function reset_div(){
 		$('.div_cetak').addClass('hidden');
 		$('.div_lihat').removeClass('hidden');
+
+		//$('#tpp_report_table').DataTable().clear().draw();
 	}
 
 	$('.periode_capaian_f').on('click', function() {
@@ -228,23 +230,8 @@
 	$('.unit_kerja').change(function() {
 		
 		reset_div();
+
 	});
-
-
-	/* $(document).on('click', '.lihat', function() {
-
-		periode_id 		= $(".periode_tahun").val();
-		bulan 			= $(".periode_bulan").val();
-		tpp_report_id 	= $(".skpd").val();
-		unit_kerja_id 	= $(".unit_kerja").val();
-
-		window.open('tpp_report/cetak');
-	
-
-
-	}); */
-
-
 
 	$(document).on('click', '.lihat', function() {
 

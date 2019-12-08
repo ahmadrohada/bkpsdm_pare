@@ -488,10 +488,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('cetak_tpp_skpd_list','API\TPPReportAPIController@Select2CetakSKPDList');
 	Route::get('cetak_tpp_unit_kerja_list','API\TPPReportAPIController@Select2CetakUnitKerjaList');
 	
-	Route::get('administrator_cetak_tpp_data_list','API\TPPReportAPIController@AdministratorCetakTPPDataList');
+	Route::get('administrator_tpp_report_data_list','API\TPPReportAPIController@TPPReportDataList');
 	
 	
-	Route::get('tpp_bulanan_list','API\TPPReportAPIController@TPPBulananList');
+	Route::get('skpd_tpp_report_data_list','API\TPPReportAPIController@TPPReportDataList');
 
 
 	//============================= TPP REPORT DATA =====================================================//

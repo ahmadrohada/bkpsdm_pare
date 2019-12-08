@@ -83,7 +83,7 @@ table{
 				{ targets: 'no-sort', orderable: false },
 			],
 			ajax: {
-				url: '{{ url("api_resource/tpp_bulanan_list") }}',
+				url: '{{ url("api_resource/skpd_tpp_report_data_list") }}',
 				data: {
 					tpp_report_id: {{ $tpp_report->id }}
 				},
