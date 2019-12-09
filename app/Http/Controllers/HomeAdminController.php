@@ -14,6 +14,9 @@ use App\Models\HistoryJabatan;
 use App\Models\Skpd;
 use App\Models\PeriodeTahunan;
 
+use App\Models\TPPReport;
+use App\Models\TPPReportData;
+
 use App\Models\PerjanjianKinerja;
 use App\Models\Sasaran;
 use App\Models\SasaranPerjanjianKinerja;
@@ -110,6 +113,11 @@ class HomeAdminController extends Controller {
             
     }
 
+    protected function total_TPP_report()
+    {
+        return TPPReport::count();         
+    }
+
 
     public function showPegawai(Request $request)
     {
@@ -148,6 +156,7 @@ class HomeAdminController extends Controller {
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
+                'total_TPP_report'        => $this->total_TPP_report(),
 				'nama_skpd' 	          => $skpd,
         		'user' 			          => $user,
         		'access' 	              => $access,
@@ -204,6 +213,7 @@ class HomeAdminController extends Controller {
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
+                'total_TPP_report'        => $this->total_TPP_report(),
 				'nama_skpd' 	          => $skpd,
         		'user' 			          => $user,
         		'access' 	              => $access,
@@ -256,7 +266,8 @@ class HomeAdminController extends Controller {
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-				'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+                'total_TPP_report'        => $this->total_TPP_report(),
         		'user' 			          => $user,
         		'access' 	              => $access,
                 'total_users_confirmed'   => $total_users_confirmed,
@@ -308,7 +319,8 @@ class HomeAdminController extends Controller {
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-				'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+                'total_TPP_report'        => $this->total_TPP_report(),
         		'user' 			          => $user,
         		'access' 	              => $access,
                 'total_users_confirmed'   => $total_users_confirmed,
@@ -362,7 +374,8 @@ class HomeAdminController extends Controller {
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-				'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+                'total_TPP_report'        => $this->total_TPP_report(),
         		'user' 			          => $user,
         		'access' 	              => $access,
                 'total_users_confirmed'   => $total_users_confirmed,
@@ -406,7 +419,8 @@ class HomeAdminController extends Controller {
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-				'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+                'total_TPP_report'        => $this->total_TPP_report(),
         		'user' 			          => $user,
         		'access' 	              => $access,
                 'total_users_confirmed'   => $total_users_confirmed,
@@ -450,7 +464,8 @@ class HomeAdminController extends Controller {
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-				'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+                'total_TPP_report'        => $this->total_TPP_report(),
         		'user' 			          => $user,
         		'access' 	              => $access,
                 'total_users_confirmed'   => $total_users_confirmed,
@@ -478,6 +493,7 @@ class HomeAdminController extends Controller {
                 'nama_skpd'     	      => $this->nama_skpd($skpd_id),
                 'total_pegawai' 	      => $this->total_pegawai_skpd($skpd_id),
                 'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
+                'total_TPP_report'        => $this->total_TPP_report(),
                 'total_jabatan'           => 'x',
                 'total_renja'             => 'x',
                 'h_box'                   => 'box-info',
@@ -503,6 +519,7 @@ class HomeAdminController extends Controller {
                'nama_skpd'     	        => $this->nama_skpd($skpd_id),
                'total_pegawai' 	        => $this->total_pegawai_skpd($skpd_id),
                'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
+               'total_TPP_report'        => $this->total_TPP_report(),
                'total_jabatan'          => 'x',
                'total_renja'            => 'x',
                'h_box'                  => 'box-success',

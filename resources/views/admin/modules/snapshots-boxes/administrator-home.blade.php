@@ -107,7 +107,7 @@
 				<div class="small-box bg-green tpp_report" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							{{$total_TPP_report}}
 						</h3>
 						<p>
 							<strong>TPP Report</strong>
