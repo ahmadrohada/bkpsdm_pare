@@ -29,19 +29,19 @@
 				<th rowspan="2" width="250px;">JABATAN</th>
 				<th rowspan="2" width="60px;">ESELON</th>
 				<th rowspan="2" width="105px;">TPP</th>
-				<th colspan="5" width="550px;">KINERJA ( 60 % )</th>
-				<th colspan="4" width="450px;">KEHADIRAN ( 40 % )</th>
+				<th colspan="5" width="550px;">KINERJA ( {{ $kinerja }} % )</th>
+				<th colspan="4" width="450px;">KEHADIRAN ( {{ $kehadiran }} % )</th>
 				<th rowspan="2" width="105px;">TOTAL</th>
 				<th rowspan="2" width="40px;"><i class="fa fa-cog"></i></th>
 			</tr>
 			<tr>
-				<th>TPP x 60%</th>
+				<th>TPP x {{ $kinerja }} %</th>
 				<th >CAPAIAN</th>
 				<th>SKOR (%)</th>
 				<th>POT (%)</th>
 				<th>JM TPP ( Rp. )</th>
 
-				<th>TPP x 40%</th>
+				<th>TPP x {{ $kehadiran }} %</th>
 				<th>SKOR (%)</th>
 				<th>POT (%)</th>
 				<th>JM TPP ( Rp. )</th>

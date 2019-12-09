@@ -68,7 +68,7 @@
 					$('.periode_id').val(data['periode_id']); 
 					$('.ka_skpd').val(data['ka_skpd']); 
 					$('.admin_skpd').val(data['admin_skpd']); 
-					$('.formula_perhitungan_id').val("1"); 
+					$('.formula_hitung_id').val("1"); 
 					
 
 

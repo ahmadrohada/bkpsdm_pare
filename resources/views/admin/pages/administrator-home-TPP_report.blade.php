@@ -1,7 +1,7 @@
 @extends('admin.layouts.dashboard')
 
 @section('template_title')
-		Administrator - Cetak TPP Report
+		Administrator
 @endsection
 
 @section('template_fastload_css')
@@ -12,7 +12,7 @@
 	    <section class="content-header">
 
 			<h1>
-				Cetak TPP Report
+				Administrator
 			</h1>
 
 			{!! Breadcrumbs::render('tpp_report') !!}
@@ -20,8 +20,10 @@
 	    </section>
 	    <section class="content">
 
-			@include('admin.modules.filter_cetak_TPP_report')
- 			@include('admin.tables.administrator-Cetak_TPP_report')
+			
+				@include('admin.modules.snapshots-boxes.administrator-home')
+
+ 				@include('admin.tables.administrator-TPP_report_data')
 		
 	    </section>
 	</div>

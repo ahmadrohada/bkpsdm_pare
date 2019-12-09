@@ -17,9 +17,9 @@
 					<th>NO</th>
 					<th>NIP</th>
 					<th>NAMA LENGKAP</th>
-					<th>ESL</th>
 					<th>GOL</th>
 					<th>JABATAN</th>
+					<th>ESL</th>
 					<th>UNIT KERJA</th>
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
@@ -49,7 +49,7 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,3,4,7] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,3,5,7] }/* ,
 									{	className: "hidden", targets: [5] } */
 								],
 				ajax			: {
@@ -60,18 +60,18 @@
 			
 
 				columns	:[
-								{ data: 'pegawai_id' , orderable: true,searchable:false,width:"50px",
+								{ data: 'pegawai_id' , orderable: true,searchable:false,width:"40px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: true,width:"140px"},
-								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true},
-								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true,width:"40px"},
+								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: true,width:"120px"},
+								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true,width:"180px"},
 								{ data: "golongan" ,  name:"golongan.golongan", orderable: true, searchable: true,width:"40px"},
-								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true},
+								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true,width:"240px"},
+								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true,width:"60px"},
 								{ data: "unit_kerja" ,  name:"unit_kerja.unit_kerja", orderable: true, searchable: true},
-								{ data: "action" , orderable: false,searchable:false,width:"50px",
+								{ data: "action" , orderable: false,searchable:false,width:"40px",
 										"render": function ( data, type, row ) {
 											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="../admin/users/'+row.user_id+'" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';
 										

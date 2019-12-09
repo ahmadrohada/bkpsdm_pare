@@ -1,7 +1,7 @@
 <div class="box {{ $h_box }}">
     <div class="box-header with-border">
         <h1 class="box-title">
-            Data SKP Tahunan
+            Data TPP Report
         </h1>
 
         <div class="box-tools pull-right">
@@ -11,15 +11,14 @@
     </div>
 	<div class="box-body table-responsive">
 
-		<table id="rkpd_table" class="table table-striped table-hover table-condensed">
+		<table id="tpp_data_table" class="table table-striped table-hover table-condensed">
 			<thead>
 				<tr class="success">
 					<th>NO</th>
 					<th>PERIODE</th>
-					<th>NIP</th>
-					<th>NAMA</th>
-					<th>JABATAN</th>
-					<th>ESELON</th>
+					<th>BULAN</th>
+					<th>SKPD</th>
+					<th>CREATED AT</th>
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
 			</thead>
@@ -34,20 +33,20 @@
 
 <script type="text/javascript">
 
-	$('#rkpd_table').DataTable({
+	$('#tpp_data_table').DataTable({
 				processing      : true,
 				serverSide      : true,
-				searching      	: false,
+				searching      	: true,
 				paging          : true,
 				//order 			: [ 3 , 'asc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,2,5,6 ] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,2,4,5 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_skp_tahunan_list") }}',
+									url	: '{{ url("api_resource/administrator_tpp_report_list") }}',
 									
 									delay:3000
 								},
@@ -61,15 +60,18 @@
 								},
 								
 								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "nip_pegawai" ,  name:"nip_pegawai", orderable: true, searchable: true},
-								{ data: "nama_pegawai" ,  name:"u_nama", orderable: true, searchable: true},
-								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true},
-								{ data: "eselon" ,  name:"eselon", orderable: true, searchable: true},
-							{ data: "status" , orderable: false,searchable:false,width:"50px",
+								{ data: "bulan" ,  name:"bulan", orderable: true, searchable: true},
+								{ data: "skpd" ,  name:"skpd", orderable: true, searchable: true},
+								{ data: "created_at" ,  name:"created_at", orderable: true, searchable: true},
+								{ data: "status" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
 
-											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-eye" ></i></a></span>';
-										
+											//return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-eye" ></i></a></span>';
+											if ( row.status == 1 ){
+												return "close";
+											}else{
+												return "open";
+											}
 									}
 								},
 								

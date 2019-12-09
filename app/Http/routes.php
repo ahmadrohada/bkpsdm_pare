@@ -469,9 +469,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('close_tpp_report','API\TPPReportAPIController@TPPClose');
 	
 	//Route::post('cetak_tpp_report','API\TPPReportAPIController@cetakTPPReportData');
-
 	
-
 
 	
 	Route::post('hapus_tpp_report','API\TPPReportAPIController@Destroy');
@@ -902,14 +900,22 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'HomeAdminController@showSKPTahunan'
 	]);
 
+	Route::get('admin/tpp_report', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeAdminController@showTPPReport'
+	]);
+
 
 	//========================================================================================//
 	//================================ T P P    REPORT              ===========================//
 	//========================================================================================//
 
-	Route::get('admin/tpp_report', [
+	
+
+
+	Route::get('admin/cetak_tpp_report', [
 		'as' 			=> '',
-		'uses' 			=> 'TPPReportController@AdministratorReport'
+		'uses' 			=> 'TPPReportController@AdministratorCetakTPPReport'
 	]);
 
 	Route::post('admin/tpp_report/cetak', [

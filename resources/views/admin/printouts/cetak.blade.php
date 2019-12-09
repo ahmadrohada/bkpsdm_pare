@@ -75,8 +75,8 @@
 															
 									<th rowspan="2" width="80px" >TPP</th>
 															
-									<th colspan="5">KINERJA  ( 40 % )</th>
-									<th colspan="4">KEHADIRAN  ( 60 % )</th>
+									<th colspan="5">KINERJA  ( {{ $kinerja }} % )</th>
+									<th colspan="4">KEHADIRAN  ( {{ $kehadiran }} % )</th>
 															
 															
 															
@@ -84,13 +84,13 @@
 															
 								</tr>
 								<tr>
-									<th width="80px"> TPP x 40%</th>
+									<th width="80px"> TPP x {{ $kinerja }}%</th>
 									<th width="50px"> CAP</th>
 									<th width="50px"> SKOR</th>
 									<th width="50px"> POT</th>
 									<th width="80px"> JM TPP</th>
 														
-									<th width="80px"> TPP x 60%</th>
+									<th width="80px"> TPP x {{ $kehadiran }}%</th>
 									<th width="50px"> SKOR</th>
 									<th width="50px"> POT </th>
 									<th width="80px"> JM TPP</th>

@@ -17,9 +17,9 @@
 					<th>NO</th>
 					<th>NIP</th>
 					<th>NAMA LENGKAP</th>
-					<th>ESL</th>
 					<th>GOL</th>
 					<th>JABATAN</th>
+					<th>ESL</th>
 					<th>SKPD</th>
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
@@ -46,7 +46,7 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,3,4,7] }
+									{ 	className: "text-center", targets: [ 0,1,3,5,7] }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/administrator_pegawai_list") }}',
@@ -56,18 +56,18 @@
 				
 
 				columns	:[
-								{ data: 'pegawai_id' , orderable: true,searchable:false,width:"50px",
+								{ data: 'pegawai_id' , orderable: true,searchable:false,width:"40px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: true,width:"140px"},
-								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true},
-								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true,width:"40px"},
+								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: true,width:"120px"},
+								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true,width:"180px"},
 								{ data: "golongan" ,  name:"golongan.golongan", orderable: true, searchable: true,width:"40px"},
-								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true},
+								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true,width:"240px"},
+								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true,width:"60px"},
 								{ data: "skpd" ,  name:"skpd.skpd", orderable: true, searchable: true},
-								{ data: "action" , orderable: false,searchable:false,width:"50px",
+								{ data: "action" , orderable: false,searchable:false,width:"35px",
 										"render": function ( data, type, row ) {
 
 										if ( row.action == '1'){
