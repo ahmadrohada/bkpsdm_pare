@@ -41,11 +41,11 @@ class TPPReportController extends Controller
         return $nama_skpd->skpd;
     }
 
-    public function AdministratorReport(Request $request)
+    public function AdministratorCetakTPPReport(Request $request)
     {
 
         $user                   = \Auth::user();
-        $users                     = \DB::table('users')->get();
+        $users                  = \DB::table('users')->get();
         $userRole               = $user->hasRole('personal');
         $admin_skpdRole         = $user->hasRole('admin_skpd');
         $adminRole              = $user->hasRole('administrator');
@@ -58,12 +58,14 @@ class TPPReportController extends Controller
             $access = 'Administrator';
         }
 
+        
+
         return view(
             'admin.pages.administrator-TPP_report_cetak',
             [
                 'users'                   => $users,
-                'user'                       => $user,
-                'access'                   => $access,
+                'user'                    => $user,
+                'access'                  => $access,
                 'h_box'                   => 'box-warning',
             ]
         );
@@ -72,33 +74,7 @@ class TPPReportController extends Controller
     }
 
 
-    public function AdministratorTPPReport(Request $request)
-    {
-
-        $user                   = \Auth::user();
-        $users                     = \DB::table('users')->get();
-        $userRole               = $user->hasRole('personal');
-        $admin_skpdRole         = $user->hasRole('admin_skpd');
-        $adminRole              = $user->hasRole('administrator');
-
-        if ($userRole) {
-            $access = 'User';
-        } elseif ($admin_skpdRole) {
-            $access = 'Admin Skpd';
-        } elseif ($adminRole) {
-            $access = 'Administrator';
-        }
-
-        return view(
-            'admin.pages.administrator-TPP_report',
-            [
-                'users'                   => $users,
-                'user'                       => $user,
-                'access'                   => $access,
-                'h_box'                   => 'box-warning',
-            ]
-        );
-    }
+    
 
     public function showSKPDTPPReport(Request $request)
     {
@@ -130,6 +106,8 @@ class TPPReportController extends Controller
             [
                 'skpd'                => $pegawai->JabatanAktif->SKPD,
                 'tpp_report'          => $tpp_report,
+                'kinerja'             => $tpp_report->FormulaHitung->kinerja,
+                'kehadiran'           => $tpp_report->FormulaHitung->kehadiran,
                 'nama_pegawai'        => Pustaka::nama_pegawai($pegawai->gelardpn, $pegawai->nama, $pegawai->gelarblk),
                 'h_box'               => 'box-danger',
 
@@ -148,6 +126,8 @@ class TPPReportController extends Controller
             [
                 'skpd'                => $pegawai->JabatanAktif->SKPD,
                 'tpp_report'          => $tpp_report,
+                'kinerja'             => $tpp_report->FormulaHitung->kinerja,
+                'kehadiran'           => $tpp_report->FormulaHitung->kehadiran,
                 'nama_pegawai'        => Pustaka::nama_pegawai($pegawai->gelardpn, $pegawai->nama, $pegawai->gelarblk),
                 'h_box'               => 'box-danger',
 

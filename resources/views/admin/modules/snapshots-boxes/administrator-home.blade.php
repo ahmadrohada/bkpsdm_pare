@@ -104,7 +104,7 @@
 			</div>
 
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-yellow tpp_report" style="cursor:pointer;">
+				<div class="small-box bg-green tpp_report" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							*

@@ -15,7 +15,7 @@
 
 					<input type="hidden" name="skpd_id" class="form-control skpd_id">
 					<input type="hidden" name="periode_id" class="form-control periode_id">
-					<input type="hidden" name="formula_perhitungan_id" class="form-control formula_perhitungan_id">
+					<input type="hidden" name="formula_hitung_id" class="form-control formula_hitung_id">
 					<input type="hidden" name="ka_skpd" class="form-control ka_skpd">
 					<input type="hidden" name="admin_skpd" class="form-control admin_skpd">
 

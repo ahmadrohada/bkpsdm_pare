@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Models\TPPReport;
 use App\Models\TPPReportData;
+use App\Models\FormulaHitungTPP;
 use App\Models\CapaianBulanan;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\Jabatan;
@@ -630,6 +631,9 @@ class TPPReportAPIController extends Controller
             ->join('db_pare_2018.periode AS periode', function ($join) {
                 $join->on('periode.id', '=', 'tpp_report.periode_id');
             })
+            ->join('db_pare_2018.formula_hitung_tpp AS frm', function ($join) {
+                $join->on('frm.id', '=', 'tpp_report.formula_hitung_id');
+            })
             ->select([
                 'tpp_report.id AS tpp_report_id',
                 'tpp_report.periode_id',
@@ -640,7 +644,9 @@ class TPPReportAPIController extends Controller
                 'tpp_report.status',
                 'tpp_report.created_at',
                 'periode.label AS periode_label',
-                'periode.awal AS tahun_periode'
+                'periode.awal AS tahun_periode',
+                'frm.kinerja AS kinerja',
+                'frm.kehadiran AS kehadiran'
 
 
             ])
@@ -654,6 +660,8 @@ class TPPReportAPIController extends Controller
 
        $pdf = PDF::loadView('admin.printouts.cetak', [  'data'          =>  $data , 
                                                         'periode'       =>  strtoupper(Pustaka::bulan($p->bulan)) . "  " . Pustaka::tahun($p->tahun_periode), 
+                                                        'kinerja'       =>  $p->kinerja,
+                                                        'kehadiran'     =>  $p->kehadiran,
                                                         'nama_skpd'     =>  $this::nama_skpd($p->skpd_id),
                                                         'waktu_cetak'   =>  Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
                                                         'pic'           =>  Pustaka::nama_pegawai($profil->gelardpn, $profil->nama, $profil->gelarblk),
@@ -676,8 +684,8 @@ class TPPReportAPIController extends Controller
 			</tr>
         </table>');
         //"tpp".$bulan_depan."_".$skpd."
-        //return $pdf->stream('document.pdf');
-        return $pdf->download('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
+        //return $pdf->download('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
+        return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
     }
 
 
@@ -779,6 +787,56 @@ class TPPReportAPIController extends Controller
         return $tpp;
     }
 
+
+    
+    public function AdministratorTPPList(Request $request)
+    {
+
+
+
+        $tpp_report = TPPReport::
+            join('db_pare_2018.periode AS periode', function ($join) {
+                $join->on('periode.id', '=', 'tpp_report.periode_id');
+            })
+            ->join('demo_asn.m_skpd AS skpd', function ($join) {
+                $join->on('tpp_report.skpd_id', '=', 'skpd.id');
+            })
+            ->select([
+                'tpp_report.id AS tpp_report_id',
+                'tpp_report.periode_id',
+                'tpp_report.bulan',
+                'tpp_report.skpd_id',
+                'tpp_report.status',
+                'tpp_report.created_at',
+                'periode.label AS periode_label',
+                'periode.awal AS tahun_periode',
+                'skpd.skpd'
+
+            ])
+            ->orderBy('tpp_report.id', 'DESC')
+            ->get();
+
+        $datatables = Datatables::of($tpp_report)
+            ->addColumn('periode', function ($x) {
+                return Pustaka::tahun($x->tahun_periode);
+            })
+            ->addColumn('bulan', function ($x) {
+                return Pustaka::bulan($x->bulan);
+            })
+            ->addColumn('skpd', function ($x) {
+                return Pustaka::capital_string($x->skpd);
+            })
+            ->addColumn('created_at', function ($x) {
+                return Pustaka::tgl_jam($x->created_at);
+            });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        }
+
+        return $datatables->make(true);
+    }
+
     public function SKPDTTPReportList(Request $request)
     {
 
@@ -869,7 +927,7 @@ class TPPReportAPIController extends Controller
             'skpd_id.required'                  => 'Harus diisi',
             'periode_id.required'               => 'Harus diisi',
             'bulan.required'                    => 'Harus diisi',
-            'formula_perhitungan_id.required'   => 'Harus diisi',
+            'formula_hitung_id.required'   => 'Harus diisi',
 
         ];
 
@@ -879,7 +937,7 @@ class TPPReportAPIController extends Controller
                 'skpd_id'               => 'required',
                 'periode_id'            => 'required|numeric',
                 'bulan'                 => 'required|numeric',
-                'formula_perhitungan_id' => 'required|numeric',
+                'formula_hitung_id' => 'required|numeric',
             ),
             $messages
         );
@@ -903,7 +961,7 @@ class TPPReportAPIController extends Controller
 
         $st_kt->periode_id          = Input::get('periode_id');
         $st_kt->bulan               = Input::get('bulan');
-        $st_kt->formula_perhitungan_id = Input::get('formula_perhitungan_id');
+        $st_kt->formula_hitung_id = Input::get('formula_hitung_id');
         $st_kt->skpd_id             = Input::get('skpd_id');
         $st_kt->ka_skpd             = Input::get('ka_skpd');
         $st_kt->admin_skpd          = Input::get('admin_skpd');
@@ -993,6 +1051,10 @@ class TPPReportAPIController extends Controller
 
             foreach ($tpp_data as $x) {
 
+                //CAri formulasi perhitungan nya
+                $formula    = FormulaHitungTPP::WHERE('id',Input::get('formula_hitung_id'))->first();
+                $kinerja    = $formula->kinerja;
+                $kehadiran  = $formula->kehadiran;
 
                 //nilai capaian ..capaian_skp
                 if (  $x->capaian_id != null ){
@@ -1028,13 +1090,13 @@ class TPPReportAPIController extends Controller
                 $report_data->tpp_rupiah            = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah : $x->tpp_rupiah_now ;
                 
                 //KINERJA
-                $report_data->tpp_kinerja           = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah * 60/100 : $x->tpp_rupiah_now * 60/100 ;
+                $report_data->tpp_kinerja           = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah * $kinerja/100 : $x->tpp_rupiah_now * $kinerja/100 ;
                 $report_data->cap_skp               = $cap_skp;
                 $report_data->skor_cap              = $skor_cap;
                 $report_data->pot_kinerja           = 0 ;
 
                 //KEHADIRAN
-                $report_data->tpp_kehadiran         = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah * 40/100 : $x->tpp_rupiah_now * 40/100 ;
+                $report_data->tpp_kehadiran         = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah * $kehadiran/100 : $x->tpp_rupiah_now * $kehadiran/100 ;
                 $report_data->skor_kehadiran        = 100;
                 $report_data->pot_kehadiran         = 0;
 

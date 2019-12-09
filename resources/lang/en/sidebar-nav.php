@@ -194,7 +194,8 @@ return [
 	'link_title_detail_tpp_report'    		=> 'Detail',
 	'link_icon_detail_tpp_report'     		=> 'fa-eye',
 
-	
+	'link_title_tpp_report_cetak'    		=> 'Cetak TPP Report',
+	'link_icon_tpp_report_cetak'     		=> 'fa-print',
 
 
 	// PETA JABATAN LINKS
