@@ -684,8 +684,8 @@ class TPPReportAPIController extends Controller
 			</tr>
         </table>');
         //"tpp".$bulan_depan."_".$skpd."
-        //return $pdf->download('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
-        return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
+        return $pdf->download('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
+        //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
     }
 
 
