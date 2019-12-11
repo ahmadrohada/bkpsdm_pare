@@ -20,7 +20,7 @@ class UpdateAPIController extends Controller {
 
     public function Sasaran(Request $request)
     {
-            
+        //ini ada    
         $dt = Sasaran::
                         leftjoin('db_pare_2018.renja_indikator_tujuan AS ind_tujuan', function($join){
                             $join   ->on('ind_tujuan.id','=','renja_sasaran.indikator_tujuan_id');
