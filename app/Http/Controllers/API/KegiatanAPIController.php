@@ -222,6 +222,13 @@ class KegiatanAPIController extends Controller {
                                 ->orwhere('parent_id','=', '168')
                                 ->select('id','skpd')
                                 ->get();
+            }else if ( $x->id == '527'){
+               
+                $level2 = SKPD::where('parent_id','=',$x->id)
+                                ->where('id','!=','544')
+                                ->orwhere('parent_id','=', '544')
+                                ->select('id','skpd')
+                                ->get();
             }else{
                 $level2 = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
             }
