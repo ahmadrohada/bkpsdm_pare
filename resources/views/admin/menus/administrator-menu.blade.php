@@ -9,9 +9,9 @@
 
 
 
-<li>
+{{-- <li>
     {!! HTML::icon_link( "admin/update_table", 'fa '.Lang::get('sidebar-nav.link_icon_renja'), "<span>Update</span>", array('title' => Lang::get('sidebar-nav.link_title_renja'))) !!}
-</li>
+</li> --}}
 
 <!--
 <li>
