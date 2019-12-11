@@ -130,9 +130,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 
 	//UPDATE KEBUTUHAN UNTUK MENGHILANGKAN INDIKATOR
-	Route::get('new_update_sasaran','API\UpdateApiController@Sasaran');
-	Route::get('new_update_program','API\UpdateApiController@Program');
-	Route::get('new_update_kegiatan','API\UpdateApiController@Kegiatan');
+	Route::get('new_update_sasaran','API\UpdateAPIController@Sasaran');
+	Route::get('new_update_program','API\UpdateAPIController@Program');
+	Route::get('new_update_kegiatan','API\UpdateAPIController@Kegiatan');
 
 	//========================================================================================================//
 	//======================================      T U J U A N   =======================================//
