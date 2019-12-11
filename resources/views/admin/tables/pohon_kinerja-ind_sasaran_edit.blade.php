@@ -1,7 +1,7 @@
-<div class="box box-primary div_sasaran_detail" hidden>
+<div class="box box-sasaran div_sasaran_detail" hidden>
 	<div class="box-header with-border">
 		<h1 class="box-title">
-			Detail Sasaran
+			Sasaran
 		</h1>
 
 		<div class="box-tools pull-right">
@@ -9,22 +9,12 @@
 		</div>
 	</div>
 	<div class="box-body table-responsive">
-
-		<strong>Sasaran</strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 			<span class="txt_sasaran_label"></span>
 		</p>
-
-		
-
-		<!-- <i class="fa  fa-gg"></i> <span class="txt_ak" style="margin-right:10px;"></span>
-		<i class="fa fa-industry"></i> <span class="txt_output" style="margin-right:10px;"></span>
-		<i class="fa fa-hourglass-start"></i> <span class="txt_waktu" style="margin-right:10px;"></span>
-		<i class="fa fa-money"></i> <span class="txt_cost" style="margin-right:10px;"></span> -->
-					
 	</div>
 </div>
-<div class="box box-primary div_ind_sasaran_list" hidden>
+<div class="box box-sasaran div_ind_sasaran_list" hidden>
     <div class="box-header with-border">
 		<h1 class="box-title">
             List Indikator Sasaran
@@ -41,7 +31,7 @@
 
 		<div class="toolbar">
 			
-			<span  data-toggle="tooltip" title="Create Indikator Sasaran"><a class="btn btn-info btn-sm create_ind_sasaran" ><i class="fa fa-plus" ></i> Indikator Sasaran</a></span>
+			<span  data-toggle="tooltip" title="Create Indikator Sasaran"><a class="btn btn-info btn-xs create_ind_sasaran" ><i class="fa fa-plus" ></i> Indikator Sasaran</a></span>
 		
 		</div>
 		<table id="ind_sasaran_table" class="table table-striped table-hover table-condensed" >

@@ -27,7 +27,7 @@ class ProgramAPIController extends Controller {
     public function ProgramList(Request $request)
     {
             
-        $dt = Program::where('indikator_sasaran_id', '=' ,$request->get('ind_sasaran_id'))
+        $dt = Program::where('sasaran_id', '=' ,$request->get('sasaran_id'))
                                 ->select([   
                                     'id AS program_id',
                                     'label AS label_program',
@@ -74,7 +74,7 @@ class ProgramAPIController extends Controller {
     {
 
         $messages = [
-                'ind_sasaran_id.required'     => 'Harus diisi',
+                'sasaran_id.required'     => 'Harus diisi',
                 'label_program.required'             => 'Harus diisi',
 
         ];
@@ -82,7 +82,7 @@ class ProgramAPIController extends Controller {
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'ind_sasaran_id' => 'required',
+                            'sasaran_id' => 'required',
                             'label_program' => 'required',
                         ),
                         $messages
@@ -97,7 +97,7 @@ class ProgramAPIController extends Controller {
 
         $sr    = new Program;
 
-        $sr->indikator_sasaran_id        = Input::get('ind_sasaran_id');
+        $sr->sasaran_id        = Input::get('sasaran_id');
         $sr->label                      = Input::get('label_program');
 
         if ( $sr->save()){

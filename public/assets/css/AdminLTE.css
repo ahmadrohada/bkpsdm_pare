@@ -1535,6 +1535,34 @@ a:focus {
   width: 100%;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
+
+.box.box-tujuan {
+  border-top-color: rgb(178, 12, 211);
+}
+
+.box.box-sasaran {
+  border-top-color: #f18d1a;
+}
+
+.box.box-program {
+  border-top-color: #195cb4;
+}
+
+.box.box-kegiatan {
+  border-top-color: #26ce34;
+}
+
+.box.box-indikator_kegiatan {
+  border-top-color: #5dc46e;
+}
+
+.box.box-rencana_aksi {
+  border-top-color: #c7219e;
+}
+
+
+
+
 .box.box-primary {
   border-top-color: #3c8dbc;
 }

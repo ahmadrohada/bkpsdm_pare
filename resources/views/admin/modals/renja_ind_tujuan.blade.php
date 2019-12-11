@@ -98,7 +98,7 @@
 				}).then(function () {
 					$('.modal-ind_tujuan').modal('hide');
 					$('#ind_tujuan_table').DataTable().ajax.reload(null,false);
-					jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
+					//jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 					
 				},
 					
@@ -160,7 +160,7 @@
 				}).then(function () {
 					$('.modal-ind_tujuan').modal('hide');
 					$('#ind_tujuan_table').DataTable().ajax.reload(null,false);
-					jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
+					//jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 					
 				},
 					

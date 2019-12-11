@@ -905,7 +905,7 @@ class KegiatanAPIController extends Controller {
     }
     public function KegiatanList(Request $request)
     {
-        $dt = Kegiatan::where('indikator_program_id', '=' ,$request->get('ind_program_id'))
+        $dt = Kegiatan::where('program_id', '=' ,$request->get('program_id'))
                         ->WHERE('renja_id',$request->get('renja_id'))
                         ->WHERE('cost','>', 0 )
                         ->select([   
@@ -943,11 +943,11 @@ class KegiatanAPIController extends Controller {
     public function KegiatanNonAnggaranList(Request $request)
     {
         //JUMLAH kegiatan anggaran
-        $jm_data = Kegiatan::where('indikator_program_id', '=' ,$request->get('ind_program_id'))
+        $jm_data = Kegiatan::where('program_id', '=' ,$request->get('program_id'))
                 ->WHERE('renja_id',$request->get('renja_id'))
                 ->WHERE('cost','>', 0 )
                 ->count();
-        $dt = Kegiatan::where('indikator_program_id', '=' ,$request->get('ind_program_id'))
+        $dt = Kegiatan::where('program_id', '=' ,$request->get('program_id'))
                         ->WHERE('renja_id',$request->get('renja_id'))
                         ->WHERE('cost','<=', 0 )
                         ->select([   
@@ -1243,7 +1243,7 @@ class KegiatanAPIController extends Controller {
     public function Store(Request $request)
     {
         $messages = [
-                'ind_program_id.required'       => 'Harus diisi',
+                'program_id.required'           => 'Harus diisi',
                 'renja_id.required'             => 'Harus diisi',
                 'label_kegiatan.required'       => 'Harus diisi',
                 //'cost_kegiatan'                 => 'Harus diisi',
@@ -1254,7 +1254,7 @@ class KegiatanAPIController extends Controller {
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'ind_program_id'        => 'required',
+                            'program_id'            => 'required',
                             'renja_id'              => 'required',
                             'label_kegiatan'        => 'required',
                             //'cost_kegiatan'         => 'required',
@@ -1269,7 +1269,7 @@ class KegiatanAPIController extends Controller {
             
         }
         $sr    = new Kegiatan;
-        $sr->indikator_program_id       = Input::get('ind_program_id');
+        $sr->program_id                 = Input::get('program_id');
         $sr->renja_id                   = Input::get('renja_id');
         $sr->label                      = Input::get('label_kegiatan');
         //$sr->indikator                  = Input::get('label_ind_kegiatan');

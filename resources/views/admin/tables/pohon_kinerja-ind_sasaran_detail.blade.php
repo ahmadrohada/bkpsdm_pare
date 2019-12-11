@@ -1,7 +1,7 @@
-<div class="box box-primary div_sasaran_detail" hidden>
+<div class="box box-sasaran div_sasaran_detail" hidden>
 	<div class="box-header with-border">
 		<h1 class="box-title">
-			Detail Sasaran
+			Sasaran
 		</h1>
 
 		<div class="box-tools pull-right">
@@ -9,15 +9,12 @@
 		</div>
 	</div>
 	<div class="box-body table-responsive">
-
-		<strong>Sasaran</strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 			<span class="txt_sasaran_label"></span>
 		</p>
-			
 	</div>
 </div>
-<div class="box box-primary div_ind_sasaran_list" hidden>
+<div class="box box-sasaran div_ind_sasaran_list" hidden>
     <div class="box-header with-border">
 		<h1 class="box-title">
             List Indikator Sasaran

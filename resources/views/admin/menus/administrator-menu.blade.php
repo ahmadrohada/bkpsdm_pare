@@ -8,11 +8,12 @@
 </li>
 
 
-<!--
+
 <li>
-    {!! HTML::icon_link( "admin/rencana-kerja", 'fa '.Lang::get('sidebar-nav.link_icon_renja'), "<span>".Lang::get('sidebar-nav.link_title_renja')."</span>", array('title' => Lang::get('sidebar-nav.link_title_renja'))) !!}
+    {!! HTML::icon_link( "admin/update_table", 'fa '.Lang::get('sidebar-nav.link_icon_renja'), "<span>Update</span>", array('title' => Lang::get('sidebar-nav.link_title_renja'))) !!}
 </li>
 
+<!--
 <li>
     {!! HTML::icon_link( "admin/peta-jabatan", 'fa '.Lang::get('sidebar-nav.link_icon_peta_jabatan'), "<span>".Lang::get('sidebar-nav.link_title_peta_jabatan')."</span>", array('title' => Lang::get('sidebar-nav.link_title_peta_jabatan'))) !!}
 </li>
