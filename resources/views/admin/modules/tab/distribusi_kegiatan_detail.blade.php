@@ -1,11 +1,27 @@
 <div class="row">
-	<div class="col-md-5">
-		<div class="table-responsive">
-			<input type='text' id = 'cari_keg' class="form-control" placeholder="cari">
-			<div id="ditribusi_renja"></div>
-		</div>
+	<div class="col-md-6">
+			<div class="box box-primary ">
+					<div class="box-header with-border">
+						<h1 class="box-title">
+							Distibusi Kegiatan
+						</h1>
+				
+						<div class="box-tools pull-right">
+							{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
+		
+						</div>
+					</div>
+					<div class="box-body" style="padding-left:0px; padding-right:0px;">
+							<input type='text' id = 'cari_keg' class="form-control" placeholder="cari">
+						
+						<div class="table-responsive auto">
+								
+							<div id="ditribusi_renja" class="demo"></div>
+						</div>
+					</div>
+				</div>
 	</div>
-	<div class="col-md-7">
+	<div class="col-md-6">
 			@include('admin.tables.distribusi_kegiatan-ka_skpd')
 			@include('admin.tables.distribusi_kegiatan-kabid')
 			@include('admin.tables.distribusi_kegiatan-kasubid_detail')
