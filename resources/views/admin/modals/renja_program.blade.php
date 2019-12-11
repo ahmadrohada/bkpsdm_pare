@@ -9,7 +9,7 @@
             </div>
 
             <form  id="program_form" method="POST" action="">
-			<input type="hidden"  name="ind_sasaran_id" class="ind_sasaran_id">
+			<input type="hidden"  name="sasaran_id" class="sasaran_id">
 			<input type="hidden"  name="program_id" class="program_id">
 			<div class="modal-body">
 					

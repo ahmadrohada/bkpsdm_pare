@@ -52,14 +52,16 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('administrator_masa_pemerintahan_tree','API\MasaPemerintahanAPIController@AdministratorMasaPemerintahanTree');
 	
 
+
+
+	//=============================== POHON KINERJA ==========================================================//
+	Route::get('skpd_pohon_kinerja','API\PohonKinerjaAPIController@PohonKinerjaTree');
 	
 
 	//========================================================================================================//
 	//==============================      RENCANA  KERJA  PERANGKAT  DAERAH      =============================//
 	//========================================================================================================//
 	
-
-	Route::get('skpd_renja_aktivity','API\RenjaAPIController@SKPDRenjaActivity');
 	Route::get('skpd_renja_list','API\RenjaAPIController@SKPDRenjaList');
 	Route::get('administrator_pohon_kinerja_list','API\RenjaAPIController@AdministratorPohonKinerjaList');
 
@@ -121,6 +123,16 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('misi_select2','API\MisiAPIController@MisiSelect2');
 
 
+
+
+
+
+
+
+	//UPDATE KEBUTUHAN UNTUK MENGHILANGKAN INDIKATOR
+	Route::get('new_update_sasaran','API\UpdateApiController@Sasaran');
+	Route::get('new_update_program','API\UpdateApiController@Program');
+	Route::get('new_update_kegiatan','API\UpdateApiController@Kegiatan');
 
 	//========================================================================================================//
 	//======================================      T U J U A N   =======================================//
@@ -903,6 +915,12 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/tpp_report', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeAdminController@showTPPReport'
+	]);
+
+
+	Route::get('admin/update_table', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeAdminController@UpdateTable'
 	]);
 
 

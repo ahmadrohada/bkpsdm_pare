@@ -1,7 +1,7 @@
 <div class="box box-primary div_kegiatan_list_pk" >
     <div class="box-header with-border">
 		<h1 class="box-title">
-            List Kegiatan
+            List Kegiatan 
         </h1>
     </div>
 	<div class="box-body table-responsive">

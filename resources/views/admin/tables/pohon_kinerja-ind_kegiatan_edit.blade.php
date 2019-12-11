@@ -1,4 +1,4 @@
-<div class="box box-primary div_kegiatan_detail" hidden>
+<div class="box box-kegiatan div_kegiatan_detail" hidden>
 	<div class="box-header with-border">
 		<h1 class="box-title">
 			Detail kegiatan
@@ -22,7 +22,7 @@
 					
 	</div>
 </div>
-<div class="box box-primary div_ind_kegiatan_list" hidden>
+<div class="box box-indikator_kegiatan div_ind_kegiatan_list" hidden>
     <div class="box-header with-border">
 		<h1 class="box-title">
             List Indikator kegiatan

@@ -1,7 +1,7 @@
-<div class="box box-primary div_program_detail" hidden>
+<div class="box box-program div_program_detail" hidden>
 	<div class="box-header with-border">
 		<h1 class="box-title">
-			Detail Program
+			Program
 		</h1>
 
 		<div class="box-tools pull-right">
@@ -9,22 +9,12 @@
 		</div>
 	</div>
 	<div class="box-body table-responsive">
-
-		<strong>Program</strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 			<span class="txt_program_label"></span>
 		</p>
-
-		
-
-		<!-- <i class="fa  fa-gg"></i> <span class="txt_ak" style="margin-right:10px;"></span>
-		<i class="fa fa-industry"></i> <span class="txt_output" style="margin-right:10px;"></span>
-		<i class="fa fa-hourglass-start"></i> <span class="txt_waktu" style="margin-right:10px;"></span>
-		<i class="fa fa-money"></i> <span class="txt_cost" style="margin-right:10px;"></span> -->
-					
 	</div>
 </div>
-<div class="box box-primary div_ind_program_list" hidden>
+<div class="box box-program div_ind_program_list" hidden>
     <div class="box-header with-border">
 		<h1 class="box-title">
             List Indikator Program
@@ -41,7 +31,7 @@
 
 		<div class="toolbar">
 			
-			<span  data-toggle="tooltip" title="Create Indikator Program"><a class="btn btn-info btn-sm create_ind_program" ><i class="fa fa-plus" ></i> Indikator Program</a></span>
+			<span  data-toggle="tooltip" title="Create Indikator Program"><a class="btn btn-info btn-xs create_ind_program" ><i class="fa fa-plus" ></i> Indikator Program</a></span>
 			
 		
 		</div>

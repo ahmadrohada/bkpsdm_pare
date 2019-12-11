@@ -1,7 +1,7 @@
-<div class="box box-primary div_tujuan_detail" hidden>
+<div class="box box-tujuan div_tujuan_detail" hidden>
 	<div class="box-header with-border">
 		<h1 class="box-title">
-			Detail Tujuan
+			Tujuan
 		</h1>
 		<div class="box-tools pull-right">
 			{!! Form::button('<i class="fa fa-remove "></i>', array('class' => 'btn btn-box-tool tutup_detail','title' => 'Tutup', 'data-toggle' => 'tooltip')) !!}
@@ -15,7 +15,7 @@
 					
 	</div>
 </div>
-<div class="box box-primary div_ind_tujuan_list" hidden>
+<div class="box box-tujuan div_ind_tujuan_list" hidden>
     <div class="box-header with-border">
 		<h1 class="box-title">
             List Indikator Tujuan

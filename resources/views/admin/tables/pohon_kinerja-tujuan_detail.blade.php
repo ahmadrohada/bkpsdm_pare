@@ -1,41 +1,12 @@
-<div class="box box-primary div_misi_detail">
-	<div class="box-header with-border">
-		<h1 class="box-title">
-			Detail Pohon Kinerja SKPD
-		</h1>
-
-
-		<div class="box-tools pull-right">
-			
-		</div>
-	</div>
-	<div class="box-body table-responsive">
-
-		<strong>Periode</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="periode_label">
-				{{ $renja->Periode->label}}
-			</span>
-		</p>
-
-		<strong>SKPD</strong>
-		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
-			<span class="skpd_label">
-				{{ Pustaka::capital_string($renja->SKPD->skpd) }}
-			</span>
-		</p>
-	
-	</div>
-</div>
-<div class="box box-primary div_tujuan_list">
+<div class="box box-tujuan div_tujuan_list">
     <div class="box-header with-border">
 		<h1 class="box-title">
-            List Tujuan
-        </h1>
-
-        <div class="box-tools pull-right">
-            {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
-        </div>
+			Tujuan ( {{ $renja->Periode->label}} )
+		</h1>
+		
+		<div class="box-tools pull-right">
+			{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
+		</div>
     </div>
 
 

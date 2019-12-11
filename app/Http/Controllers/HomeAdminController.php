@@ -530,4 +530,19 @@ class HomeAdminController extends Controller {
     }
 
 
+    public function UpdateTable(Request $request)
+    {
+            
+
+       
+
+        return view('admin.pages.administrator-update_table', [
+               'h_box'                  => 'box-success',
+               
+           ]
+        ); 
+        
+    }
+
+
 }

@@ -21,7 +21,7 @@ class SasaranAPIController extends Controller {
     public function SasaranList(Request $request)
     {
             
-        $dt = Sasaran::where('indikator_tujuan_id', '=' ,$request->get('ind_tujuan_id'))
+        $dt = Sasaran::where('tujuan_id', '=' ,$request->get('tujuan_id'))
                                 ->select([   
                                     'id AS sasaran_id',
                                     'label AS label_sasaran',
@@ -68,15 +68,15 @@ class SasaranAPIController extends Controller {
     {
 
         $messages = [
-                'ind_tujuan_id.required'     => 'Harus diisi',
-                'label_sasaran.required'             => 'Harus diisi',
+                'tujuan_id.required'        => 'Harus diisi',
+                'label_sasaran.required'    => 'Harus diisi',
 
         ];
 
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'ind_tujuan_id' => 'required',
+                            'tujuan_id'     => 'required',
                             'label_sasaran' => 'required',
                         ),
                         $messages
@@ -91,8 +91,8 @@ class SasaranAPIController extends Controller {
 
         $sr    = new Sasaran;
 
-        $sr->indikator_tujuan_id        = Input::get('ind_tujuan_id');
-        $sr->label                      = Input::get('label_sasaran');
+        $sr->tujuan_id        = Input::get('tujuan_id');
+        $sr->label            = Input::get('label_sasaran');
 
         if ( $sr->save()){
             return \Response::make('sukses', 200);
@@ -108,8 +108,8 @@ class SasaranAPIController extends Controller {
     {
 
         $messages = [
-                'sasaran_id.required'   => 'Harus diisi',
-                'label_sasaran.required'       => 'Harus diisi',
+                'sasaran_id.required'       => 'Harus diisi',
+                'label_sasaran.required'    => 'Harus diisi',
                 
 
         ];
@@ -117,8 +117,8 @@ class SasaranAPIController extends Controller {
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'sasaran_id'   => 'required',
-                            'label_sasaran'     => 'required',
+                            'sasaran_id'    => 'required',
+                            'label_sasaran' => 'required',
                             
                         ),
                         $messages

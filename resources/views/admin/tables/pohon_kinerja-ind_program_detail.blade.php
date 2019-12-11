@@ -1,7 +1,7 @@
-<div class="box box-primary div_program_detail" hidden>
+<div class="box box-program div_program_detail" hidden>
 	<div class="box-header with-border">
 		<h1 class="box-title">
-			Detail Program
+			Program
 		</h1>
 
 		<div class="box-tools pull-right">
@@ -9,8 +9,6 @@
 		</div>
 	</div>
 	<div class="box-body table-responsive">
-
-		<strong>Program</strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 			<span class="txt_program_label"></span>
 		</p>

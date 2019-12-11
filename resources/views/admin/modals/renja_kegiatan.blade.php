@@ -9,7 +9,7 @@
             </div>
 
             <form  id="kegiatan_form" method="POST" action="">
-			<input type="hidden"  name="ind_program_id" class="ind_program_id">
+			<input type="hidden"  name="program_id" class="program_id">
 			<input type="hidden"  name="kegiatan_id" class="kegiatan_id">
 			<input type="hidden"  name="renja_id" class="renja_id" value="{!! $renja->id !!}">
 			<div class="modal-body">
