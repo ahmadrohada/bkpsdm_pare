@@ -36,7 +36,7 @@
 						<i class="btn btn-box-tool fa fa-arrow-left buka_right_div "></i>
 					</div>
 				</div>
-				<div class="box-body">
+				<div class="box-body" style="padding-left:0px; padding-right:0px;">
 					<input type='text' id = 'cari_pk' class="form-control" placeholder="cari">
 					
 					<div class="table-responsive auto">
