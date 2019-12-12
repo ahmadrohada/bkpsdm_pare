@@ -1,10 +1,47 @@
+<style>
+	::-webkit-scrollbar {
+		width: 10px ;
+	}
+	 
+	::-webkit-scrollbar-track {      
+		background: #666;    
+	}
+	 
+	::-webkit-scrollbar-thumb {
+		background: #232323;
+	}
+	
+	.auto{
+		 display:block;
+		 width:auto;
+		 height:600px;
+		 overflow:auto;
+		 
+		 
+	}
+</style>
+
 <div class="row">
 	<div class="col-md-5">
-		<div class="table-responsive">
-			<input type='text' id = 'cari_skp_bulanan' class="form-control" placeholder="cari">
-			<div id="skp_bulanan_tree" class="demo"></div>
-			
-		</div>
+
+			<div class="box box-primary ">
+				<div class="box-header with-border">
+					<h1 class="box-title">
+						&nbsp;
+					</h1>
+					<div class="box-tools pull-right">
+						{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
+						
+					</div>
+				</div>
+				<div class="box-body" style="padding-left:0px; padding-right:0px;">
+					<input type='text' id = 'cari_skp_bulanan' class="form-control" placeholder="cari">
+						
+					<div class="table-responsive auto">
+						<div id="skp_bulanan_tree" class="demo"></div>
+					</div>
+				</div>
+			</div>
 
 	
 
