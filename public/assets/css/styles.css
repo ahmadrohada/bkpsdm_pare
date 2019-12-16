@@ -158,3 +158,25 @@ li.user-header, .widget-user-username{
 	-moz-box-shadow: 6px 6px 5px -1px rgba(0,0,0,0.5);
 	box-shadow: 6px 6px 5px -1px rgba(0,0,0,0.5);
   }
+
+
+::-webkit-scrollbar {
+	width: 10px ;
+}
+ 
+::-webkit-scrollbar-track {      
+	background: #666;    
+}
+ 
+::-webkit-scrollbar-thumb {
+	background: #232323;
+}
+
+.auto{
+	 display:block;
+	 width:auto;
+	 height:600px;
+	 overflow:auto;
+	 
+	 
+}

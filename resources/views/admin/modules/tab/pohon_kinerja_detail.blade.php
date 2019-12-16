@@ -1,25 +1,4 @@
-<style>
-		::-webkit-scrollbar {
-			width: 10px ;
-		}
-		 
-		::-webkit-scrollbar-track {      
-			background: #666;    
-		}
-		 
-		::-webkit-scrollbar-thumb {
-			background: #232323;
-		}
-		
-		.auto{
-			 display:block;
-			 width:auto;
-			 height:600px;
-			 overflow:auto;
-			 
-			 
-		}
-</style>
+
 
 <div class="row">
 	<div class="left_div col-md-6">

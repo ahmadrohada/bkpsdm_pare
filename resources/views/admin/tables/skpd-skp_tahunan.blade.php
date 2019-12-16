@@ -18,8 +18,9 @@
 					<th>PERIODE</th>
 					<th>NIP</th>
 					<th>NAMA</th>
-					<th>ESELON</th>
+					
 					<th>JABATAN</th>
+					<th>ESELON</th>
 					<th>NAMA ATASAN</th>
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
@@ -44,7 +45,7 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,2,4,7 ] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,2,5,7 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
@@ -64,10 +65,11 @@
 								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
 								{ data: "nip_pegawai" ,  name:"nip_pegawai", orderable: true, searchable: true},
 								{ data: "nama_pegawai" ,  name:"u_nama", orderable: true, searchable: true},
-								{ data: "eselon" ,  name:"eselon", orderable: true, searchable: true},
+								
 								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true},
+								{ data: "eselon" ,  name:"eselon", orderable: true, searchable: true,width:"40px"},
 								{ data: "nama_atasan" ,  name:"p_nama", orderable: true, searchable: true},
-								{ data: "status" , orderable: false,searchable:false,width:"50px",
+								{ data: "status" , orderable: false,searchable:false,width:"35px",
 										"render": function ( data, type, row ) {
 
 											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-eye" ></i></a></span>';
