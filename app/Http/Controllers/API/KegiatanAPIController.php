@@ -229,6 +229,11 @@ class KegiatanAPIController extends Controller {
                                 ->orwhere('parent_id','=', '544')
                                 ->select('id','skpd')
                                 ->get();
+            }else if ( $x->id == '620'){  //perikanan
+               
+                $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(620,637,637))
+                                ->select('id','skpd')
+                                ->get();
             }else if ( $x->id == '788'){  //disdik , korwil
                
                 //korwil dan SMP

@@ -8,7 +8,6 @@
 		</div>
 	</div>
 	<div class="box-body table-responsive">
-		<strong>Label</strong>
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 			<span class="txt_label_tujuan"></span>
 		</p>
