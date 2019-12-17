@@ -94,7 +94,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('perjanjian_kinerja_timeline_status','API\PerjanjianKinerjaAPIController@PerjanjianKinerjaTimelineStatus');
 
 
-
+	Route::get('skpd-pk_sasaran_list','API\SasaranAPIController@SasaranPKList');
+	Route::get('skpd-pk_program_list','API\SasaranAPIController@ProgramPKList');
 	//========================================================================================================//
 	//====================== SKP TAHUNAN SKPD =========================================================//
 	//========================================================================================================//
