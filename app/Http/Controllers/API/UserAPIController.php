@@ -43,7 +43,7 @@ class UserAPIController extends Controller {
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'new_username'    => 'required|min:3|max:18|regex:/^[A-Za-z][A-Za-z0-9]*$/',
+                            'new_username'    => 'required|min:3|max:18|regex:/^[A-Za-z0-9]*$/',
                         ),
                         $messages
         );
