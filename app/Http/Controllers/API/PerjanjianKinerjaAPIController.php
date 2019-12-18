@@ -4,14 +4,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Periode;
-use App\Models\PerjanjianKinerja;
-use App\Models\SasaranPerjanjianKinerja;
-use App\Models\IndikatorSasaran;
-use App\Models\Program;
-use App\Models\IndikatorProgram;
+
 use App\Models\Kegiatan;
-use App\Models\IndikatorKegiatan;
+use App\Models\Tujuan;
+use App\Models\Sasaran;
 use App\Helpers\Pustaka;
 
 use Datatables;
@@ -23,7 +19,207 @@ Use Alert;
 class PerjanjianKinerjaAPIController extends Controller {
 
 
-    public function PerjanjianKinerjaTimelineStatus( Request $request )
+
+
+
+
+    public function SasaranStrategisSKPD(Request $request)
+    {
+            
+        $dt = Tujuan::
+                    rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
+                        $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
+                    })
+                    ->leftjoin('db_pare_2018.renja_indikator_sasaran AS ind_sasaran', function ($join) {
+                        $join->on('ind_sasaran.sasaran_id', '=', 'sasaran.id');
+                    })
+                    ->where('renja_tujuan.renja_id', '=' ,$request->get('renja_id'))
+                    ->select([   
+                                'sasaran.id AS sasaran_id',
+                                'sasaran.label AS sasaran_label',
+                                'sasaran.pk_status AS pk_status',
+                                'ind_sasaran.label AS ind_sasaran_label',
+                                'ind_sasaran.target AS target',
+                                'ind_sasaran.satuan AS satuan'
+                            ])
+
+                    ->ORDERBY('renja_tujuan.id','DESC')
+                    ->ORDERBY('sasaran.id','DESC')
+                    ->get();
+
+        $datatables = Datatables::of($dt)
+                    ->addColumn('id', function ($x) {
+                        return $x->sasaran_id;
+                    })
+                    ->addColumn('sasaran', function ($x) {
+                        return Pustaka::capital_string($x->sasaran_label);
+                    })
+                    ->addColumn('indikator', function ($x) {
+                        return Pustaka::capital_string($x->ind_sasaran_label);
+                    })
+                    ->addColumn('target', function ($x) {
+                        return $x->target." ".$x->satuan;
+                    })
+                    ->addColumn('pk_status', function ($x) {
+                        return $x->pk_status;
+                    });
+
+                    if ($keyword = $request->get('search')['value']) {
+                        $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+                    } 
+        return $datatables->make(true);
+    }
+
+
+    public function ProgramSKPD(Request $request)
+    {
+            
+        $dt = Tujuan::
+                    rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
+                        $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
+                        $join->WHERE('sasaran.pk_status', '=', '1');
+                    })
+                    ->rightjoin('db_pare_2018.renja_program AS program', function ($join) {
+                        $join->on('program.sasaran_id', '=', 'sasaran.id');
+                    })
+                    ->where('renja_tujuan.renja_id', '=' ,$request->get('renja_id'))
+                    ->select([   
+                                'program.id AS program_id',
+                                'program.label AS program_label'
+                            ])
+
+                    ->get();
+
+        $datatables = Datatables::of($dt)
+                    ->addColumn('id', function ($x) {
+                        return $x->program_id;
+                    })
+                    ->addColumn('program', function ($x) {
+                        return $x->program_label;
+                    })
+                    ->addColumn('anggaran', function ($x) {
+
+                        $dt = Kegiatan::WHERE('program_id',$x->program_id)->select( \DB::raw('SUM(cost) as anggaran'))->get();
+                        //return $dt[0]['anggaran'];
+                        return "Rp.   " . number_format( $dt[0]['anggaran'], '0', ',', '.');
+                    })
+                    ->addColumn('keterangan', function ($x) {
+                        return "";
+                    });
+
+                    if ($keyword = $request->get('search')['value']) {
+                        $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+                    } 
+        return $datatables->make(true);
+    }
+
+
+
+
+    
+    
+    public function AddSasaranToPK(Request $request)
+    {
+
+            $messages = [
+                'sasaran_id.required'=> 'Harus diisi'
+            ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'sasaran_id' => 'required|numeric|min:1',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+
+        $st_update  = Sasaran::find(Input::get('sasaran_id'));
+
+        $st_update->pk_status         = '1';
+    
+        if ( $st_update->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+    } 
+
+
+    public function RemoveSasaranFromPK(Request $request)
+    {
+
+            $messages = [
+                'sasaran_id.required'=> 'Harus diisi'
+            ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'sasaran_id' => 'required|numeric|min:1',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+
+        $st_update  = Sasaran::find(Input::get('sasaran_id'));
+
+        $st_update->pk_status         = '0';
+    
+        if ( $st_update->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+    } 
+
+    
+    public function TotalAnggaranSKPD(Request $request)
+    {
+        $dt = Tujuan::
+                    rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
+                        $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
+                        $join->WHERE('sasaran.pk_status', '=', '1');
+                    })
+                    ->rightjoin('db_pare_2018.renja_program AS program', function ($join) {
+                        $join->on('program.sasaran_id', '=', 'sasaran.id');
+                    })
+                    ->where('renja_tujuan.renja_id', '=' ,$request->get('renja_id'))
+                    ->select([   
+                                'program.id AS program_id',
+                                'program.label AS program_label'
+                            ])
+
+                    ->get();
+
+        $total_anggaran = 0 ;
+        foreach ($dt as $x) {
+            $dt = Kegiatan::WHERE('program_id',$x->program_id)->select( \DB::raw('SUM(cost) as anggaran'))->get();
+            $total_anggaran = $total_anggaran+$dt[0]['anggaran'];
+            //return "Rp.   " . number_format( $dt[0]['anggaran'], '0', ',', '.');
+
+        }
+
+		
+		//return  $kegiatan_tahunan;
+        $ta = array(
+            'total_anggaran'    => "Rp.   " . number_format( $total_anggaran, '0', ',', '.'),
+
+        );
+        return $ta;
+    }
+
+    /* public function PerjanjianKinerjaTimelineStatus( Request $request )
     {
         $response = array();
         $body = array();
@@ -243,7 +439,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         }
         
        
-    }
+    } */
 
 
 

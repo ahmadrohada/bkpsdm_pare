@@ -46,7 +46,7 @@
 							@include('admin.modules.tab.distribusi_kegiatan_edit') 
 						</div>
 						<div class=" tab-pane" id="perjanjian_kinerja">
-							@include('admin.modules.tab.perjanjian_kinerja_edit') 
+							@include('admin.modules.tab.perjanjian_kinerja_skpd_edit') 
 						</div>
 
 						<div class=" tab-pane" id="kegiatan_tahunan">
