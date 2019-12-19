@@ -7,7 +7,7 @@
 						<h1 class="box-title">
 							Distibusi Kegiatan
 						</h1>
-				
+				 
 						<div class="box-tools pull-right">
 							{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
 		
@@ -217,6 +217,15 @@
 						$(".div_ind_kegiatan_detail").hide();
 					
 			break;
+			case 'default':
+							$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
+							$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
+							$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+							$(".div_kegiatan_detail, .div_rencana_aksi_list,.div_ind_kegiatan_list").hide();
+							$(".div_ind_kegiatan_detail").hide();
+							//load_ind_kegiatan_end2(id);
+					
+				break;
 			default: 
 			$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
 			$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();

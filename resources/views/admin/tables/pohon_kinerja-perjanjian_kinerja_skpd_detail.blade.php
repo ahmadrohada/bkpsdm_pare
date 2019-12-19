@@ -27,7 +27,6 @@
 							<th >SASARAN STRATEGIS/SASARAN</th>
 							<th >INDIKATOR KINERJA</th>
 							<th >TARGET</th>
-							<th><i class="fa fa-cog"></i></th>
 						</tr>
 					</thead>
 					
@@ -90,7 +89,7 @@ function load_perjanjian_kinerja(){
 				searching      	: false,
 				paging          : false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,3,4 ] }
+								{ className: "text-center", targets: [ 0,3 ] }
 							  ],
 			ajax			: {
 								url	: '{{ url("api_resource/skpd-pk_sasaran_strategis") }}',
@@ -129,17 +128,6 @@ function load_perjanjian_kinerja(){
 									}		
 								}
 							},
-							{  data: 'action',width:"30px",orderable: false,
-								"render": function ( data, type, row ) {
-									if ( row.pk_status == 1 ){
-										return  '<span  data-toggle="tooltip" title="Remove Sasaran" style="margin:1px;" ><a class="btn btn-warning btn-xs remove_sasaran"  data-id="'+row.sasaran_id+'"><i class="fa fa-remove" ></i></a></span>';
-									}else{
-										return  '<span  data-toggle="tooltip" title="Add Sasaran" style="margin:1px;" ><a class="btn btn-success btn-xs add_sasaran"  data-id="'+row.sasaran_id+'"><i class="fa fa-plus" ></i></a></span>';
-									}
-									
-										
-								}
-						},
 							
 							
 						],

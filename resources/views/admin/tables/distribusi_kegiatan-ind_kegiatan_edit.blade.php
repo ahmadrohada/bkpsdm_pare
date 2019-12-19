@@ -6,7 +6,7 @@
 
 		<div class="box-tools pull-right">
 			{!! Form::button('<i class="fa fa-remove "></i>', array('class' => 'btn btn-box-tool tutup_detail','title' => 'Tutup', 'data-toggle' => 'tooltip')) !!}
-		</div>
+		</div> 
 	</div>
 	<div class="box-body table-responsive">
 
