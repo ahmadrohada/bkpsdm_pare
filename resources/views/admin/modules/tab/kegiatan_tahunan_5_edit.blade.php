@@ -1,12 +1,20 @@
 <div class="row">
 	<div class="col-md-5">
-
-		<div class="table-responsive">
-			<input type='text' id = 'cari' class="form-control" placeholder="cari">
-			<div id="keg_tahunan_5_tree"></div>
-			
-		</div>
-		
+		<div class="box box-primary ">
+			<div class="box-header with-border">
+				<h1 class="box-title">
+				</h1>
+				<div class="box-tools pull-right">
+					{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
+				</div>
+			</div>
+			<div class="box-body" style="padding-left:0px; padding-right:0px;">
+				<input type='text' id = 'cari' class="form-control" placeholder="cari">
+				<div class="table-responsive auto">
+					<div id="keg_tahunan_5_tree"></div>
+				</div>
+			</div>
+		</div>	
 	</div>
 	<div class="col-md-7">
 		@include('admin.tables.skp_tahunan-kegiatan_5_edit')

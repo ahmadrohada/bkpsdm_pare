@@ -12,7 +12,7 @@
 			<h1>
 				Pohon Kinerja {{ Pustaka::capital_string($renja->SKPD->skpd) }}
 			</h1>
-
+   
 				{!! Breadcrumbs::render('skpd-renja') !!}
         
 	    </section>
@@ -24,6 +24,7 @@
 						<li class="detail"><a href="#detail" data-toggle="tab">Detail</a></li>
 						<li class="rencana_kerja_tab"><a href="#rencana_kerja_tab" data-toggle="tab">Pohon Kinerja</a></li>
 						<li class="distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
+						<li class="perjanjian_kinerja"><a href="#perjanjian_kinerja" data-toggle="tab">Perjanjian Kinerja</a></li>
 						<li class="kegiatan_tahunan"><a href="#kegiatan_tahunan" data-toggle="tab">Kegiatan Tahunan</a></li>
 					
 					</ul>
@@ -43,6 +44,9 @@
   
 						<div class=" tab-pane" id="distribusi_kegiatan">
 							@include('admin.modules.tab.distribusi_kegiatan_detail') 
+						</div>
+						<div class=" tab-pane" id="perjanjian_kinerja">
+							@include('admin.modules.tab.perjanjian_kinerja_skpd_detail') 
 						</div>
 
 						
@@ -95,6 +99,9 @@ $(document).ready(function() {
 		}else if ( id == 'kegiatan_tahunan'){
 			$('html, body').animate({scrollTop:0}, 0);
 			initTreeKegTahunanPK();
+		}else if ( id == 'perjanjian_kinerja'){
+			$('html, body').animate({scrollTop:0}, 0);
+			load_perjanjian_kinerja();
 		}
 
 		$('html, body').animate({scrollTop:0}, 0);
