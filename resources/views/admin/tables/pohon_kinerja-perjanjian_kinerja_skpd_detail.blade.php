@@ -18,7 +18,12 @@
 			</div>
 			<div class="box-body table-responsive">
 				<div class="box-tools pull-right">
-					<span class="btn btn-info btn-xs"><i class="fa fa-print"></i> Cetak</span>
+					<form method="post" target="_blank" action="./cetak_perjanjian_kinerja">
+						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<input type="hidden" name="renja_id" value="{{ $renja->id }}">
+							
+						<button type="submit" class="btn btn-info btn-xs"><i class="fa fa-print"></i> Cetak</button>
+					</form>
 				</div>
 				<table id="perjanjian_kinerja_sasaran_table" class="table table-striped table-hover" >
 					<thead>
