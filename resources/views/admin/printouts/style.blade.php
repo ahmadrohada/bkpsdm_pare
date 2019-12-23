@@ -44,8 +44,7 @@ table.cetak_report th{
 		vertical-align:middle;
 		padding:8px 3px 8px 3px;
 		border:1px solid black;
-		font-weight:bold;
-		font-size:10pt;
+		font:bold 10pt Arial,Sans-Serif;
 		background:#e8e7e9;
 		
 }
@@ -53,7 +52,7 @@ table.cetak_report th{
 
 table.cetak_report td {
 	font:normal 9pt Arial,Sans-Serif;
-	padding:5px 6px 5px 6px;
+	padding:4px 6px 4px 6px;
 	vertical-align:center;
 	border:1px solid black;
 	color:#383c43;
