@@ -946,6 +946,8 @@ Route::group(['middleware' => 'administrator'], function () {
 		'as' 			=> '',
 		'uses' 			=> 'API\TPPReportAPIController@cetakTPPReportData'
 	]);
+
+	
  
 
 	//----------------------------------------------------------------------------------------//
@@ -1163,6 +1165,14 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'TPPReportController@editSKPDTPPReport'
 	]);
 	
+
+	//========================================================================================//
+	//=============================       PERJANJIAN KINERJA       ===========================//
+	//========================================================================================//
+	Route::post('renja/{renja_id}/cetak_perjanjian_kinerja', [
+		'as' 			=> '',
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
+	]);
 
 	//=========================== P E G A W A I  =============================================//
 	Route::get('pegawai/{pegawai_id}', [
