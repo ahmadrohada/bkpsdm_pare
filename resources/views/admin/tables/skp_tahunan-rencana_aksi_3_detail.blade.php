@@ -1,5 +1,5 @@
 <div id='rencana_aksi' hidden>
-	<div class="box box-primary">
+	<div class="box box-indikator_kegiatan_tahunan">
 		<div class="box-header with-border">
 			<h1 class="box-title">
 				Detail Indikator Kegiatan
@@ -24,7 +24,7 @@
 		</div>
 	</div>
 
-	<div class="box box-primary list_rencana_aksi_div" style="min-height:100px;">
+	<div class="box box-rencana_aksi list_rencana_aksi_div" style="min-height:100px;">
 		<div class="box-header with-border">
 			<h1 class="box-title"> 
 				List Rencana Aksi

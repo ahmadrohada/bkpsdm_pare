@@ -98,6 +98,11 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skpd-pk_program','API\PerjanjianKinerjaAPIController@ProgramSKPD');
 	Route::get('skpd-total_anggaran_pk','API\PerjanjianKinerjaAPIController@TotalAnggaranSKPD');
 
+	//ESELON 2 KA SKPD
+	Route::get('eselon2-pk_sasaran_strategis','API\PerjanjianKinerjaAPIController@SasaranStrategisSKPD');
+	Route::get('eselon2-pk_program','API\PerjanjianKinerjaAPIController@ProgramSKPD');
+	Route::get('eselon2-total_anggaran_pk','API\PerjanjianKinerjaAPIController@TotalAnggaranSKPD');
+
 
 	//ESELON 3 , KABID
 	Route::get('eselon3-pk_sasaran_strategis','API\PerjanjianKinerjaAPIController@SasaranStrategisEselon3');
@@ -982,6 +987,18 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
 	]);
 
+	Route::post('admin/skp_tahunan/cetak_perjanjian_kinerja-Eselon2', [
+		'as' 			=> '',
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
+	]);
+
+	Route::post('admin/skp_tahunan/cetak_perjanjian_kinerja-Eselon3', [
+		'as' 			=> '',
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl3'
+	]);
+
+
+
 	//----------------------------------------------------------------------------------------//
 	//========================      SKP TAHUNAN SKPD       ================================//
 	//----------------------------------------------------------------------------------------//
@@ -1345,6 +1362,30 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'as' 			=> '',
 		'uses' 			=> 'CapaianTahunanController@CapaianTahunanApprovalRequest'
 	]); 
+
+	
+	//========================================================================================//
+	//=============================       PERJANJIAN KINERJA       ===========================//
+	//========================================================================================//
+	Route::post('skp-tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon3', [
+		'as' 			=> '',
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl3'
+	]);
+	Route::post('skp-tahunan/cetak_perjanjian_kinerja-Eselon3', [
+		'as' 			=> '',
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl3'
+	]);
+
+
+	Route::post('skp-tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon2', [
+		'as' 			=> '',
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
+	]);
+
+	Route::post('skp-tahunan/cetak_perjanjian_kinerja-Eselon2', [
+		'as' 			=> '',
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
+	]);
 
 	//=========================================================================================//
 	//================================= SKP TAHUNAN      =====================================//
