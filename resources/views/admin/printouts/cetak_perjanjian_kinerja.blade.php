@@ -146,7 +146,7 @@
 		
 	</td>
 	<td width="40%">
-		Karawang, xx-xx-xxxx
+		Karawang, {{ Pustaka::balik2($tgl_dibuat) }}
 	</td>
 </tr>
 <tr height="90px">
@@ -171,17 +171,19 @@
 			
 		</td>
 	</tr>
+	
 	<tr>
 		<td>
-		<u>Nama Bupati</u><br>
-		<font style="font-size:10pt;">NIP. </font>
+		{{ $nama_bupati }}
+		
 		</td>
 		<td>
 			
 		</td>
 		<td>
 		<u>{{ $nama_ka_skpd }}</u><br>
-		<font style="font-size:10pt;">NIP. </font>
+		{{ $jenis_jabatan_ka_skpd }}<br>
+		<font style="font-size:10pt;">NIP. {{ $nip_ka_skpd }}</font>
 		</td>
 	</tr>
 

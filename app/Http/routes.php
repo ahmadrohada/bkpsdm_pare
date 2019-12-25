@@ -93,10 +93,18 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//Route::get('skpd_perjanjian_kinerja_list','API\PerjanjianKinerjaAPIController@SKPDPerjanjianKinerja_list');
 	//Route::get('perjanjian_kinerja_timeline_status','API\PerjanjianKinerjaAPIController@PerjanjianKinerjaTimelineStatus');
 
-
+	//ESELON 2 KA SKPD
 	Route::get('skpd-pk_sasaran_strategis','API\PerjanjianKinerjaAPIController@SasaranStrategisSKPD');
 	Route::get('skpd-pk_program','API\PerjanjianKinerjaAPIController@ProgramSKPD');
 	Route::get('skpd-total_anggaran_pk','API\PerjanjianKinerjaAPIController@TotalAnggaranSKPD');
+
+
+	//ESELON 3 , KABID
+	Route::get('eselon3-pk_sasaran_strategis','API\PerjanjianKinerjaAPIController@SasaranStrategisEselon3');
+	Route::get('eselon3-pk_program','API\PerjanjianKinerjaAPIController@ProgramEselon3');
+	Route::get('eselon3-total_anggaran_pk','API\PerjanjianKinerjaAPIController@TotalAnggaranEselon3');
+
+
 
 	Route::post('add_sasaran_to_pk','API\PerjanjianKinerjaAPIController@AddSasaranToPK');
 	Route::post('remove_sasaran_from_pk','API\PerjanjianKinerjaAPIController@RemoveSasaranFromPK');

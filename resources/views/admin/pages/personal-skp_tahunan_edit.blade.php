@@ -20,6 +20,7 @@
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="status"><a href="#status" data-toggle="tab">Timeline </a></li>
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
+				<li class="perjanjian_kinerja_tab"><a href="#perjanjian_kinerja_tab" data-toggle="tab" >Perjanjian Kinerja</a></li>
 				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan</a></li>
 				
 				<?php
@@ -59,6 +60,29 @@
 				</div>
 				<div class="tab-pane" id="detail">
 					@include('admin.modules.edit_forms.skp_tahunan_detail')			
+				</div>
+
+				<div class="tab-pane" id="perjanjian_kinerja_tab">
+					<?php
+						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+							case '1':  //eselon 2
+									?><?php
+									break;
+							case '2': //Eselon 3
+									?>@include('admin.modules.tab.perjanjian_kinerja_2')<?php
+									
+									break;
+							case '3':  //Eselon 4
+									?><?php
+									break;
+							case '4':   //JFU
+									?><?php
+									break;
+							case '5':   //JFT
+									?><?php
+									break;
+						}
+					?>		
 				</div>
 								
 				<div class=" tab-pane" id="kegiatan_tahunan_tab">
@@ -163,6 +187,8 @@ $(document).ready(function() {
 			detail_show();
 		}else if ( id == 'rencana_aksi_tab'){
 			rencana_aksi_time_table();
+		}else if ( id == 'perjanjian_kinerja_tab'){
+			load_perjanjian_kinerja();
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});
