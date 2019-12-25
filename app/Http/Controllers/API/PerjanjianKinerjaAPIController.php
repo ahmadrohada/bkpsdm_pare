@@ -256,7 +256,7 @@ class PerjanjianKinerjaAPIController extends Controller {
 
                     ->ORDERBY('renja_tujuan.id','DESC')
                     ->ORDERBY('sasaran.id','DESC')
-                    ->get();
+                    ->get(); 
 
         $data_2 = Tujuan:: 
                     rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
@@ -578,7 +578,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         $jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
         
 
-       $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon2', [   
+       $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon3', [   
                                                     'data'          => $data_1 , 
                                                     'data_2'        => $data_2 ,
                                                     'total_anggaran'=> $data_3->total_anggaran,
@@ -617,6 +617,226 @@ class PerjanjianKinerjaAPIController extends Controller {
         return $pdf->download('PerjanjianKinerja'.$jabatan->PejabatYangDinilai->nip.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
     }
 
+
+    
+    public function SasaranStrategisEselon4(Request $request)
+    {
+        $jabatan_id     = $request->get('jabatan_id');
+        $renja_id       = $request->get('renja_id');
+        $skp_tahunan_id = $request->get('skp_tahunan_id');
+       
+        $dt = Kegiatan::
+                            
+                            join('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
+                                $join   ->on('indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
+                            })
+                            ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
+                                        'renja_kegiatan.label AS kegiatan_label',
+                                        'indikator_kegiatan.label AS indikator_kegiatan_label',
+                                        'indikator_kegiatan.target AS target',
+                                        'indikator_kegiatan.satuan AS satuan'
+                                    ) 
+                            ->WHERE('renja_kegiatan.renja_id', $renja_id )
+                            ->WHERE('renja_kegiatan.jabatan_id',$jabatan_id )
+                            ->get();
+
+        $datatables = Datatables::of($dt)
+                            ->addColumn('id', function ($x) {
+                                return $x->kegiatan_id;
+                            })
+                            ->addColumn('kegiatan', function ($x) {
+                                return Pustaka::capital_string($x->kegiatan_label);
+                            })
+                            ->addColumn('indikator', function ($x) {
+                                return Pustaka::capital_string($x->indikator_kegiatan_label);
+                            })
+                            ->addColumn('target', function ($x) {
+                                return $x->target." ".$x->satuan;
+                            });
+                            
+        
+                            if ($keyword = $request->get('search')['value']) {
+                                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+                            } 
+        return $datatables->make(true);
+
+
+    }
+
+    public function ProgramEselon4(Request $request)
+    {
+            
+        $jabatan_id     = $request->get('jabatan_id');
+        $renja_id       = $request->get('renja_id');
+        $skp_tahunan_id = $request->get('skp_tahunan_id');
+       
+        $dt = Kegiatan::
+                            SELECT(     'renja_kegiatan.id AS kegiatan_id',
+                                        'renja_kegiatan.label AS kegiatan_label',
+                                        'renja_kegiatan.cost AS anggaran'
+                                    ) 
+                            ->WHERE('renja_kegiatan.renja_id', $renja_id )
+                            ->WHERE('renja_kegiatan.jabatan_id',$jabatan_id )
+                            ->WHERE('renja_kegiatan.cost','>', 0 )
+                            ->get();
+
+        
+        $datatables = Datatables::of($dt)
+                            ->addColumn('id', function ($x) {
+                                return $x->kegiatan_id;
+                            })
+                            ->addColumn('kegiatan', function ($x) {
+                                return Pustaka::capital_string($x->kegiatan_label);
+                            })
+                            ->addColumn('anggaran', function ($x) {
+                                return "Rp.   " . number_format( $x->anggaran, '0', ',', '.');
+                            })
+                            ->addColumn('keterangan', function ($x) {
+                                return "";
+                            });
+                            
+        
+                            if ($keyword = $request->get('search')['value']) {
+                                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+                            } 
+        return $datatables->make(true); 
+
+    }
+
+    public function TotalAnggaranEselon4(Request $request)
+    {
+        $jabatan_id     = $request->get('jabatan_id');
+        $renja_id       = $request->get('renja_id');
+        $skp_tahunan_id = $request->get('skp_tahunan_id');
+       
+
+        $dt = Kegiatan::
+                            SELECT(     \DB::raw("SUM(renja_kegiatan.cost) as total_anggaran")
+                                    ) 
+                            ->WHERE('renja_kegiatan.renja_id', $renja_id )
+                            ->WHERE('renja_kegiatan.jabatan_id',$jabatan_id )
+                            ->first();
+
+
+        $ta = array(
+                'total_anggaran'    => "Rp.   " . number_format( $dt->total_anggaran, '0', ',', '.'),
+                );
+        return $ta;
+    }
+
+    public function cetakPerjanjianKinerjaEsl4(Request $request)
+    {
+        $jabatan_id     = $request->get('jabatan_id');
+        $renja_id       = $request->get('renja_id');
+        $skp_tahunan_id = $request->get('skp_tahunan_id');
+       
+
+        $data_1 = Kegiatan::
+                            
+                            join('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
+                                $join   ->on('indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
+                            })
+                            ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
+                                        'renja_kegiatan.label AS kegiatan_label',
+                                        'indikator_kegiatan.label AS indikator_kegiatan_label',
+                                        'indikator_kegiatan.target AS target',
+                                        'indikator_kegiatan.satuan AS satuan'
+                                    ) 
+                            ->WHERE('renja_kegiatan.renja_id', $renja_id )
+                            ->WHERE('renja_kegiatan.jabatan_id',$jabatan_id )
+                            ->get();
+        $data_2 = Kegiatan::
+                            SELECT(     'renja_kegiatan.id AS kegiatan_id',
+                                        'renja_kegiatan.label AS kegiatan_label',
+                                        'renja_kegiatan.cost AS anggaran'
+                                    ) 
+                            ->WHERE('renja_kegiatan.renja_id', $renja_id )
+                            ->WHERE('renja_kegiatan.jabatan_id',$jabatan_id )
+                            ->WHERE('renja_kegiatan.cost','>', 0 )
+                            ->get();
+
+        $data_3 = Kegiatan::
+                            SELECT(     \DB::raw("SUM(renja_kegiatan.cost) as total_anggaran")
+                                    ) 
+                            ->WHERE('renja_kegiatan.renja_id', $renja_id )
+                            ->WHERE('renja_kegiatan.jabatan_id',$jabatan_id )
+                            ->first();
+       
+
+        //NAMA SKPD
+        $Renja = Renja::WHERE('renja.id',$renja_id )
+                ->leftjoin('demo_asn.tb_history_jabatan AS jabatan', function ($join) {
+                    $join->on('jabatan.id', '=', 'renja.kepala_skpd_id');
+                })
+                ->leftjoin('demo_asn.m_eselon AS eselon', function ($join) {
+                    $join->on('eselon.id', '=', 'jabatan.id_eselon');
+                })
+                ->leftjoin('demo_asn.m_jenis_jabatan AS j_jabatan', function ($join) {
+                    $join->on('j_jabatan.id', '=', 'eselon.id_jenis_jabatan');
+                })
+                ->leftjoin('db_pare_2018.periode AS periode', function ($join) {
+                    $join->on('periode.id', '=', 'renja.periode_id');
+                })
+                ->leftjoin('db_pare_2018.masa_pemerintahan AS masa_pemerintahan', function ($join) {
+                    $join->on('masa_pemerintahan.id', '=', 'periode.masa_pemerintahan_id');
+                })
+                ->SELECT(   'renja.periode_id',
+                            'renja.skpd_id',
+                            'renja.kepala_skpd_id',
+                            'renja.nama_kepala_skpd',
+                            'renja.created_at AS tgl_dibuat',
+                            'jabatan.nip AS nip_ka_skpd',
+                            'j_jabatan.jenis_jabatan AS jenis_jabatan_ka_skpd',
+                            'masa_pemerintahan.kepala_daerah AS nama_bupati'
+                        )
+                ->first();
+
+        //NAMA ADMIN
+        $user_x  = \Auth::user();
+        $profil  = Pegawai::WHERE('tb_pegawai.id',  $user_x->id_pegawai)->first();
+
+        //JAbatan
+        $jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
+        
+
+       $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon4', [   
+                                                    'data'          => $data_1 , 
+                                                    'data_2'        => $data_2 ,
+                                                    'total_anggaran'=> $data_3->total_anggaran,
+                                                    'tgl_dibuat'    => $Renja->tgl_dibuat,
+                                                    'periode'       => Pustaka::tahun($Renja->periode->awal),
+                                                    'nama_pejabat'  => $jabatan->u_nama,
+                                                    'nip_pejabat'   => $jabatan->PejabatYangDinilai->nip,
+                                                    'jenis_jabatan' => $jabatan->PejabatYangDinilai->Eselon->JenisJabatan->jenis_jabatan,
+                                                    'nama_ka_skpd'  => $Renja->nama_kepala_skpd,
+                                                    'nip_ka_skpd'   => $Renja->nip_ka_skpd,
+                                                    'jabatan'       => $jabatan->PejabatYangDinilai->jabatan,
+                                                    'jenis_jabatan_ka_skpd'=> $Renja->jenis_jabatan_ka_skpd,
+                                                    'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
+                                                    'nama_bupati'   => $Renja->nama_bupati,
+                                                    'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
+
+
+                                                     ], [], [
+                                                     'format' => 'A4-P'
+          ]);
+       
+        $pdf->getMpdf()->shrink_tables_to_fit = 1;
+        $pdf->getMpdf()->setWatermarkImage('assets/images/form/watermark.png');
+        $pdf->getMpdf()->showWatermarkImage = true;
+        
+        $pdf->getMpdf()->SetHTMLFooter('
+		<table width="100%">
+			<tr>
+				<td width="33%"></td>
+				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
+				<td width="33%" style="text-align: right;"></td>
+			</tr>
+        </table>');
+        //"tpp".$bulan_depan."_".$skpd."
+        //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
+        return $pdf->download('PerjanjianKinerja'.$jabatan->PejabatYangDinilai->nip.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
+    }
 
     /* public function PerjanjianKinerjaTimelineStatus( Request $request )
     {
