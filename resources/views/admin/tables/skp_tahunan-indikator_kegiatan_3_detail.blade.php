@@ -1,5 +1,5 @@
 <div id='indikator_kegiatan' hidden>
-	<div class="box box-primary">
+	<div class="box box-kegiatan_tahunan">
 		<div class="box-header with-border">
 			<h1 class="box-title">
 				Detail Kegiatan Tahunan 
@@ -30,7 +30,7 @@
 		</div>
 	</div>
 
-	<div class="box box-primary list_indikator_kegiatan_div" style="min-height:100px;" hidden>
+	<div class="box box-indikator_kegiatan_tahunan list_indikator_kegiatan_div" style="min-height:100px;" hidden>
 		<div class="box-header with-border">
 			<h1 class="box-title"> 
 				List Indikator Kegiatan

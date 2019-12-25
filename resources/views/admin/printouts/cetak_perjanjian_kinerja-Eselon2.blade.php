@@ -3,7 +3,7 @@
 		@include('admin.printouts.style')
 
 
-		<title>Cetak TPP Report</title>
+		<title>Cetak TPP Report - Eselon II</title>
 </head>
 <body>
 	
@@ -65,7 +65,7 @@
 				<tr>
 					<td colspan="2"  valign="top" align="center">
 						<FONT style=" font-size:11pt;  font-family:Times New Roman,Cambria;">
-							KEPALA {{ $nama_skpd }}
+							{{ $jabatan }}
 						</font>
 					</td>
 				</tr>
@@ -81,8 +81,8 @@
 		<thead>
 			<tr>
 				<th width="5%" >NO</th>
-				<th width="">SASARAN STRATEGIS/SASARAN</th>
-				<th width="35%">INDIKATOR KINERJA</th>
+				<th width="">SASARAN STRATEGIS/PROGRAM</th>
+				<th width="35%">INDIKATOR PROGRAM</th>
 				<th width="15%" >TARGET</th>
 															
 			</tr>
@@ -94,8 +94,8 @@
 
 				<tr>
                     <td align='right'>{{ $i++ }}</td>
-					<td>{{ $p->sasaran_label }}</td>
-					<td>{{ $p->ind_sasaran_label }}</td>
+					<td>{{ $p->sasaran_label ." / ". $p->program_label }}</td>
+					<td>{{ $p->ind_program_label }}</td>
 					<td align='center'>{{ $p->target." ".$p->satuan  }}</td>
                 </tr>
 			
@@ -107,7 +107,7 @@
 		<thead>
 			<tr>
 				<th width="5%" >NO</th>
-				<th width="">PROGRAM / KEGIATAN</th>
+				<th width="">KEGIATAN</th>
 				<th width="18%">ANGGARAN</th>
 				<th width="20%" > KETERANGAN </th>
 															
@@ -120,7 +120,7 @@
 
 				<tr>
                     <td align='right'>{{ $i++ }}</td>
-					<td>{{ $x->program_label }}</td>
+					<td>{{ $x->kegiatan_label }}</td>
 					<td align='right'>Rp. {{ number_format( $x->anggaran, '0', ',', '.') }}</td>
 					<td></td>
                 </tr>
@@ -157,7 +157,7 @@
 			
 		</td>
 		<td>
-			Kepala {{ Pustaka::capital_string($nama_skpd) }}
+			{{ Pustaka::capital_string($jabatan) }}
 		</td>
 	</tr>
 	<tr height="150px">
@@ -181,9 +181,9 @@
 			
 		</td>
 		<td>
-		<u>{{ $nama_ka_skpd }}</u><br>
-		{{ $jenis_jabatan_ka_skpd }}<br>
-		<font style="font-size:10pt;">NIP. {{ $nip_ka_skpd }}</font>
+		<u>{{ $nama_pejabat }}</u><br>
+		{{ $jenis_jabatan }}<br>
+		<font style="font-size:10pt;">NIP. {{ $nip_pejabat }}</font>
 		</td>
 	</tr>
 

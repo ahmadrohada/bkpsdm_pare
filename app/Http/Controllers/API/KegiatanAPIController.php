@@ -657,17 +657,21 @@ class KegiatanAPIController extends Controller {
                 $kegiatan_id                    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
                 $kegiatan_label                 = $x->kegiatan_tahunan_label;
                 $data_kegiatan['icon']	        = 'jstree-kegiatan_tahunan';
+
+                $ik = IndikatorKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->get();
             }else{
                 $kegiatan_id                    = "KegiatanRenja|".$x->kegiatan_id;
                 $kegiatan_label                 = $x->kegiatan_label;
                 $data_kegiatan['icon']	        = 'jstree-kegiatan';
+
+                $ik = [];
             }
             $data_kegiatan['id']	            = $kegiatan_id;
             $data_kegiatan['text']			    = Pustaka::capital_string($kegiatan_label);
             
           
             //Indikator Kegiatan
-            $ik = IndikatorKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->get();
+            //$ik = IndikatorKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->get();
             foreach ($ik as $y) {
                 $data_ind_kegiatan['id']	        = "IndikatorKegiatan|".$y->id;
                 $data_ind_kegiatan['text']			= Pustaka::capital_string($y->label);

@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-5">
+	<div class="col-md-6">
 
 		<div class="box box-primary ">
 			<div class="box-header with-border">
@@ -17,10 +17,10 @@
 			</div>
 		</div>	
 	</div>
-	<div class="col-md-7">
+	<div class="col-md-6">
 
 
-		<div class="box box-primary" id='skp_bulanan'>
+		<div class="box box-skp_bulanan" id='skp_bulanan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
 					List SKP Bulanan
@@ -53,7 +53,7 @@
 			</div>
 		</div>
 <!--====================== KEGIATAN BULANAN LIST =========================================== -->
-		<div class="box box-primary" id='kegiatan_bulanan' hidden>
+		<div class="box box-kegiatan" id='kegiatan_bulanan' hidden>
 			<div class="box-header with-border">
 				<h1 class="box-title">
 					List Kegiatan Bulanan
@@ -219,7 +219,7 @@
 										}
 									},
 									
-									{ data: "output", name:"output", width:"140px",
+									{ data: "output", name:"output", width:"110px",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
 												return "<span class='text-danger'>"+row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan+"</span>";

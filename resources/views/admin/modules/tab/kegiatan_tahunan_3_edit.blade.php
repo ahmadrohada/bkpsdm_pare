@@ -21,7 +21,7 @@
 		</div>
 		
 		
-	</div>
+	</div> 
 	<div class="col-md-7">
 		@include('admin.tables.skp_tahunan-kegiatan_3_edit')
 		@include('admin.tables.skp_tahunan-indikator_kegiatan_3_edit')
