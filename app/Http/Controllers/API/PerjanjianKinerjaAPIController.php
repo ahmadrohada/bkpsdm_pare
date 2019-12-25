@@ -10,6 +10,7 @@ use App\Models\Kegiatan;
 use App\Models\Tujuan;
 use App\Models\Sasaran;
 use App\Models\Pegawai;
+use App\Models\Jabatan;
 
 use App\Helpers\Pustaka;
 
@@ -256,7 +257,7 @@ class PerjanjianKinerjaAPIController extends Controller {
                     ->ORDERBY('sasaran.id','DESC')
                     ->get();
 
-        $data_2 = Tujuan::
+        $data_2 = Tujuan:: 
                     rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
                         $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
                         $join->WHERE('sasaran.pk_status', '=', '1');
@@ -295,11 +296,30 @@ class PerjanjianKinerjaAPIController extends Controller {
        
 
         //NAMA SKPD
-        $Renja = Renja::WHERE('id',$request->get('renja_id'))
-                ->SELECT(   'periode_id',
-                            'skpd_id',
-                            'kepala_skpd_id',
-                            'nama_kepala_skpd'
+        $Renja = Renja::WHERE('renja.id',$request->get('renja_id'))
+                ->leftjoin('demo_asn.tb_history_jabatan AS jabatan', function ($join) {
+                    $join->on('jabatan.id', '=', 'renja.kepala_skpd_id');
+                })
+                ->leftjoin('demo_asn.m_eselon AS eselon', function ($join) {
+                    $join->on('eselon.id', '=', 'jabatan.id_eselon');
+                })
+                ->leftjoin('demo_asn.m_jenis_jabatan AS j_jabatan', function ($join) {
+                    $join->on('j_jabatan.id', '=', 'eselon.id_jenis_jabatan');
+                })
+                ->leftjoin('db_pare_2018.periode AS periode', function ($join) {
+                    $join->on('periode.id', '=', 'renja.periode_id');
+                })
+                ->leftjoin('db_pare_2018.masa_pemerintahan AS masa_pemerintahan', function ($join) {
+                    $join->on('masa_pemerintahan.id', '=', 'periode.masa_pemerintahan_id');
+                })
+                ->SELECT(   'renja.periode_id',
+                            'renja.skpd_id',
+                            'renja.kepala_skpd_id',
+                            'renja.nama_kepala_skpd',
+                            'renja.created_at AS tgl_dibuat',
+                            'jabatan.nip AS nip_ka_skpd',
+                            'j_jabatan.jenis_jabatan AS jenis_jabatan_ka_skpd',
+                            'masa_pemerintahan.kepala_daerah AS nama_bupati'
                         )
                 ->first();
 
@@ -312,8 +332,12 @@ class PerjanjianKinerjaAPIController extends Controller {
                                                     'data'          => $data , 
                                                     'data_2'        => $data_2 ,
                                                     'total_anggaran'=> $dt_3->total_anggaran,
+                                                    'tgl_dibuat'    => $Renja->tgl_dibuat,
                                                     'nama_ka_skpd'  => $Renja->nama_kepala_skpd,
+                                                    'nip_ka_skpd'   => $Renja->nip_ka_skpd,
+                                                    'jenis_jabatan_ka_skpd'=> $Renja->jenis_jabatan_ka_skpd,
                                                     'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
+                                                    'nama_bupati'   => $Renja->nama_bupati,
                                                     'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
 
 
@@ -336,6 +360,125 @@ class PerjanjianKinerjaAPIController extends Controller {
         //"tpp".$bulan_depan."_".$skpd."
         //return $pdf->download('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
         return $pdf->stream('PerjanjianKinerja.pdf');
+    }
+
+
+    public function SasaranStrategisEselon3(Request $request)
+    {
+        $jabatan_id     = 901;
+        $renja_id       = 2;
+       
+
+        //cari bawahan nya, karena eselon 3 tidak punya kegiatan tahunan,yang punya nya adalah  bawahan nya
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
+        $dt = Kegiatan::
+                            
+                            /* join('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                            }) */
+                            join('db_pare_2018.renja_program AS program', function($join){
+                                $join   ->on('renja_kegiatan.program_id','=','program.id');
+                            })
+                            ->join('db_pare_2018.renja_indikator_program AS ind_program', function($join){
+                                $join   ->on('ind_program.program_id','=','program.id');
+                            })
+                            ->SELECT(   'program.label AS program_label',
+                                        'program.id AS program_id',
+                                        'ind_program.label AS ind_program_label',
+                                        'ind_program.target AS target',
+                                        'ind_program.satuan AS satuan'
+                                    ) 
+                            ->WHERE('renja_kegiatan.renja_id', $renja_id )
+                            ->WHEREIN('renja_kegiatan.jabatan_id',$child )
+                            ->GroupBy('ind_program.id')
+                            ->OrderBY('program.id','ASC')
+                            ->OrderBY('ind_program.id','ASC')
+                            ->get();
+
+        $datatables = Datatables::of($dt)
+                            ->addColumn('id', function ($x) {
+                                return $x->sasaran_id;
+                            })
+                            ->addColumn('program', function ($x) {
+                                return Pustaka::capital_string($x->program_label);
+                            })
+                            ->addColumn('indikator', function ($x) {
+                                return Pustaka::capital_string($x->ind_program_label);
+                            })
+                            ->addColumn('target', function ($x) {
+                                return $x->target." ".$x->satuan;
+                            });
+                            
+        
+                            if ($keyword = $request->get('search')['value']) {
+                                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+                            } 
+        return $datatables->make(true);
+
+
+    }
+
+    public function ProgramEselon3(Request $request)
+    {
+            
+        $jabatan_id     = 901;
+        $renja_id       = 2;
+       
+
+        //cari bawahan nya, karena eselon 3 tidak punya kegiatan tahunan,yang punya nya adalah  bawahan nya
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
+        $dt = Kegiatan::
+                            SELECT(     'renja_kegiatan.id AS kegiatan_id',
+                                        'renja_kegiatan.label AS kegiatan_label',
+                                        'renja_kegiatan.cost AS anggaran'
+                                    ) 
+                            ->WHERE('renja_kegiatan.renja_id', $renja_id )
+                            ->WHEREIN('renja_kegiatan.jabatan_id',$child )
+                            ->get();
+
+        
+        $datatables = Datatables::of($dt)
+                            ->addColumn('id', function ($x) {
+                                return $x->kegiatan_id;
+                            })
+                            ->addColumn('kegiatan', function ($x) {
+                                return Pustaka::capital_string($x->kegiatan_label);
+                            })
+                            ->addColumn('anggaran', function ($x) {
+                                return "Rp.   " . number_format( $x->anggaran, '0', ',', '.');
+                            })
+                            ->addColumn('keterangan', function ($x) {
+                                return "";
+                            });
+                            
+        
+                            if ($keyword = $request->get('search')['value']) {
+                                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+                            } 
+        return $datatables->make(true); 
+
+    }
+
+    public function TotalAnggaranEselon3(Request $request)
+    {
+        $jabatan_id     = 901;
+        $renja_id       = 2;
+       
+
+        //cari bawahan nya, karena eselon 3 tidak punya kegiatan tahunan,yang punya nya adalah  bawahan nya
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
+        $dt = Kegiatan::
+                            SELECT(     \DB::raw("SUM(renja_kegiatan.cost) as total_anggaran")
+                                    ) 
+                            ->WHERE('renja_kegiatan.renja_id', $renja_id )
+                            ->WHEREIN('renja_kegiatan.jabatan_id',$child )
+                            ->first();
+
+
+        $ta = array(
+                'total_anggaran'    => "Rp.   " . number_format( $dt->total_anggaran, '0', ',', '.'),
+                );
+        return $ta;
     }
 
     /* public function PerjanjianKinerjaTimelineStatus( Request $request )
