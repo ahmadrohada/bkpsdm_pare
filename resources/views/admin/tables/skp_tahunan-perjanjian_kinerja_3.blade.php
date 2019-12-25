@@ -18,7 +18,7 @@
 			</div>
 			<div class="box-body table-responsive">
 				<div class="box-tools pull-right">
-					<form method="post" target="_blank" action="./cetak_perjanjian_kinerja-Eselon3">
+					<form method="post" target="_blank" action="./cetak_perjanjian_kinerja-Eselon4">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="renja_id" value="{{ $skp->Renja->id }}">
 						<input type="hidden" name="jabatan_id" value="{{$skp->PejabatYangDinilai->Jabatan->id}}">
@@ -30,8 +30,8 @@
 					<thead>
 						<tr class="success">
 							<th class="no-sort"  style="padding-right:8px;">NO</th>
-							<th >SASARAN STRATEGIS/PROGRAM</th>
-							<th >INDIKATOR PROGRAM</th>
+							<th >SASARAN STRATEGIS/KEGIATAN</th>
+							<th >INDIKATOR KEGIATAN</th>
 							<th >TARGET</th>
 						</tr>
 					</thead>
@@ -98,7 +98,7 @@ function load_perjanjian_kinerja(){
 								{ className: "text-center", targets: [ 0,3 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/eselon3-pk_sasaran_strategis") }}',
+								url	: '{{ url("api_resource/eselon4-pk_sasaran_strategis") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
 										"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
@@ -112,8 +112,8 @@ function load_perjanjian_kinerja(){
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-							{ data: "program", name:"program_label", orderable: false, searchable: false },
-							{ data: "indikator", name:"ind_program_label", orderable: false, searchable: false },
+							{ data: "kegiatan", name:"kegiatan_label", orderable: false, searchable: false },
+							{ data: "indikator", name:"indikator_kegiatan_label", orderable: false, searchable: false },
 							{ data: "target", name:"target", orderable: false, searchable: false , width:"80px"},
 							
 							
@@ -136,7 +136,7 @@ function load_perjanjian_kinerja(){
 								{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/eselon3-pk_program") }}',
+								url	: '{{ url("api_resource/eselon4-pk_program") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
 										"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
@@ -171,7 +171,7 @@ function load_perjanjian_kinerja(){
 
 	function hitung_total_anggaran(){
 		$.ajax({
-				url			: '{{ url("api_resource/eselon3-total_anggaran_pk") }}',
+				url			: '{{ url("api_resource/eselon4-total_anggaran_pk") }}',
 				data		: { 
 									"renja_id" : {!! $skp->Renja->id !!} , 
 									"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},

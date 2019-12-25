@@ -72,7 +72,7 @@
 									?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_2')<?php
 									break;
 							case '3':  //Eselon 4
-									?><?php
+									?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_3')<?php
 									break;
 							case '4':   //JFU
 									?><?php

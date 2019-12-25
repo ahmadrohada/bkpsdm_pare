@@ -109,6 +109,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('eselon3-pk_program','API\PerjanjianKinerjaAPIController@ProgramEselon3');
 	Route::get('eselon3-total_anggaran_pk','API\PerjanjianKinerjaAPIController@TotalAnggaranEselon3');
 
+	//ESELON 4 , KASUBID
+	Route::get('eselon4-pk_sasaran_strategis','API\PerjanjianKinerjaAPIController@SasaranStrategisEselon4');
+	Route::get('eselon4-pk_program','API\PerjanjianKinerjaAPIController@ProgramEselon4');
+	Route::get('eselon4-total_anggaran_pk','API\PerjanjianKinerjaAPIController@TotalAnggaranEselon4');
 
 
 	Route::post('add_sasaran_to_pk','API\PerjanjianKinerjaAPIController@AddSasaranToPK');
@@ -998,6 +1002,10 @@ Route::group(['middleware' => 'administrator'], function () {
 	]);
 
 
+	Route::post('admin/skp_tahunan/cetak_perjanjian_kinerja-Eselon4', [
+		'as' 			=> '',
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl4'
+	]);
 
 	//----------------------------------------------------------------------------------------//
 	//========================      SKP TAHUNAN SKPD       ================================//
@@ -1367,6 +1375,16 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	//========================================================================================//
 	//=============================       PERJANJIAN KINERJA       ===========================//
 	//========================================================================================//
+	Route::post('skp-tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon2', [
+		'as' 			=> '',
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
+	]);
+
+	Route::post('skp-tahunan/cetak_perjanjian_kinerja-Eselon2', [
+		'as' 			=> '',
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
+	]);
+
 	Route::post('skp-tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon3', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl3'
@@ -1376,15 +1394,13 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl3'
 	]);
 
-
-	Route::post('skp-tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon2', [
+	Route::post('skp-tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon4', [
 		'as' 			=> '',
-		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl4'
 	]);
-
-	Route::post('skp-tahunan/cetak_perjanjian_kinerja-Eselon2', [
+	Route::post('skp-tahunan/cetak_perjanjian_kinerja-Eselon4', [
 		'as' 			=> '',
-		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl4'
 	]);
 
 	//=========================================================================================//
