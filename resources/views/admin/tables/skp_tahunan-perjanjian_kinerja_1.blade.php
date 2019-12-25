@@ -30,8 +30,8 @@
 					<thead>
 						<tr class="success">
 							<th class="no-sort"  style="padding-right:8px;">NO</th>
-							<th >SASARAN STRATEGIS/PROGRAM</th>
-							<th >INDIKATOR PROGRAM</th>
+							<th >SASARAN STRATEGIS/SASARAN</th>
+							<th >INDIKATOR KINERJA</th>
 							<th >TARGET</th>
 							<th><i class="fa fa-cog"></i></th>
 						</tr>
@@ -59,7 +59,7 @@
 					<thead>
 						<tr class="success">
 							<th class="no-sort" style="padding-right:8px;">NO</th>
-							<th >KEGIATAN</th>
+							<th >PROGRAM / KEGIATAN</th>
 							<th >AGGARAN</th>
 							<th >KETERANGAN</th>
 						</tr>
