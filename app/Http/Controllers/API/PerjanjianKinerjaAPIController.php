@@ -236,6 +236,11 @@ class PerjanjianKinerjaAPIController extends Controller {
 
     public function cetakPerjanjianKinerjaEsl2(Request $request)
     {
+
+        $jabatan_id     = $request->get('jabatan_id');
+        $renja_id       = $request->get('renja_id');
+        $skp_tahunan_id = $request->get('skp_tahunan_id');
+
         $data = Tujuan::
                     rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
                         $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
@@ -244,7 +249,7 @@ class PerjanjianKinerjaAPIController extends Controller {
                     ->leftjoin('db_pare_2018.renja_indikator_sasaran AS ind_sasaran', function ($join) {
                         $join->on('ind_sasaran.sasaran_id', '=', 'sasaran.id');
                     })
-                    ->where('renja_tujuan.renja_id', '=' ,$request->get('renja_id'))
+                    ->where('renja_tujuan.renja_id', '=' ,$renja_id )
                     ->select([   
                                 'sasaran.id AS sasaran_id',
                                 'sasaran.label AS sasaran_label',
@@ -269,7 +274,7 @@ class PerjanjianKinerjaAPIController extends Controller {
                     ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function ($join) {
                         $join->on('kegiatan.program_id', '=', 'program.id');
                     })
-                    ->where('renja_tujuan.renja_id', '=' ,$request->get('renja_id'))
+                    ->where('renja_tujuan.renja_id', '=' ,$renja_id )
                     ->select([   
                                 'program.id AS program_id',
                                 'program.label AS program_label',
@@ -289,7 +294,7 @@ class PerjanjianKinerjaAPIController extends Controller {
                     ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function ($join) {
                         $join->on('kegiatan.program_id', '=', 'program.id');
                     })
-                    ->where('renja_tujuan.renja_id', '=' ,$request->get('renja_id'))
+                    ->where('renja_tujuan.renja_id', '=' ,$renja_id )
                     ->select([   
                                 \DB::raw("SUM(kegiatan.cost) as total_anggaran")
                             ])
@@ -297,7 +302,7 @@ class PerjanjianKinerjaAPIController extends Controller {
        
 
         //NAMA SKPD
-        $Renja = Renja::WHERE('renja.id',$request->get('renja_id'))
+        $Renja = Renja::WHERE('renja.id',$renja_id )
                 ->leftjoin('demo_asn.tb_history_jabatan AS jabatan', function ($join) {
                     $join->on('jabatan.id', '=', 'renja.kepala_skpd_id');
                 })
@@ -327,14 +332,21 @@ class PerjanjianKinerjaAPIController extends Controller {
         //NAMA ADMIN
         $user_x  = \Auth::user();
         $profil  = Pegawai::WHERE('tb_pegawai.id',  $user_x->id_pegawai)->first();
+
+         //JAbatan
+         $jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
         
 
-       $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja', [   
+       $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon2', [   
                                                     'data'          => $data , 
                                                     'data_2'        => $data_2 ,
                                                     'total_anggaran'=> $dt_3->total_anggaran,
                                                     'tgl_dibuat'    => $Renja->tgl_dibuat,
                                                     'periode'       => Pustaka::tahun($Renja->periode->awal),
+                                                    'nama_pejabat'  => $jabatan->u_nama,
+                                                    'nip_pejabat'   => $jabatan->PejabatYangDinilai->nip,
+                                                    'jenis_jabatan' => $jabatan->PejabatYangDinilai->Eselon->JenisJabatan->jenis_jabatan,
+                                                    'jabatan'       => $jabatan->PejabatYangDinilai->jabatan,
                                                     'nama_ka_skpd'  => $Renja->nama_kepala_skpd,
                                                     'nip_ka_skpd'   => $Renja->nip_ka_skpd,
                                                     'jenis_jabatan_ka_skpd'=> $Renja->jenis_jabatan_ka_skpd,
@@ -587,9 +599,9 @@ class PerjanjianKinerjaAPIController extends Controller {
                                                     'nama_pejabat'  => $jabatan->u_nama,
                                                     'nip_pejabat'   => $jabatan->PejabatYangDinilai->nip,
                                                     'jenis_jabatan' => $jabatan->PejabatYangDinilai->Eselon->JenisJabatan->jenis_jabatan,
+                                                    'jabatan'       => $jabatan->PejabatYangDinilai->jabatan,
                                                     'nama_ka_skpd'  => $Renja->nama_kepala_skpd,
                                                     'nip_ka_skpd'   => $Renja->nip_ka_skpd,
-                                                    'jabatan'       => $jabatan->PejabatYangDinilai->jabatan,
                                                     'jenis_jabatan_ka_skpd'=> $Renja->jenis_jabatan_ka_skpd,
                                                     'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
                                                     'nama_bupati'   => $Renja->nama_bupati,

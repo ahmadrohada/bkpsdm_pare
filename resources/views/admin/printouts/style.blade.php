@@ -232,6 +232,12 @@ hr.garis_putus {
     border-width: 1px;
 } 
 
+.isi_text{
+	text-indent: 39px;
+	text-align: justify;
+	line-height: 25px;
+	/* letter-spacing: 5px; */
+}
 
 
 
