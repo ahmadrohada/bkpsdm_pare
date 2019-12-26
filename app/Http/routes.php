@@ -988,7 +988,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	//========================================================================================//
 	Route::post('admin/{renja_id}/cetak_perjanjian_kinerja', [
 		'as' 			=> '',
-		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaSKPD'
 	]);
 
 	Route::post('admin/skp_tahunan/cetak_perjanjian_kinerja-Eselon2', [
@@ -1212,7 +1212,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	//========================================================================================//
 	Route::post('renja/{renja_id}/cetak_perjanjian_kinerja', [
 		'as' 			=> '',
-		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaSKPD'
 	]);
 
 	//=========================== P E G A W A I  =============================================//
