@@ -101,7 +101,6 @@
 							$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
 							
 
-								
 							Swal.fire({
 									title: "",
 									text: "Sukses",
@@ -109,7 +108,7 @@
 									width: "200px",
 									showConfirmButton: false,
 									allowOutsideClick : false,
-									timer:1500
+									timer:500
 							}).then(function () {
 								$('.distribusi_kegiatan_add').modal('hide');
 
