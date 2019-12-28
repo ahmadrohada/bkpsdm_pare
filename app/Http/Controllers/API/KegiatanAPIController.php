@@ -281,7 +281,10 @@ class KegiatanAPIController extends Controller {
                     $data_level2['type']        = "pengawas";
                     
                     //LEVEL 3 nya adalah kegiatan
-                    $level3 = Kegiatan::WHERE('jabatan_id','=',$y->id)->select('id','label','cost')->get();
+                    $level3 = Kegiatan::WHERE('jabatan_id','=',$y->id)
+                                        ->WHERE('renja_id',$request->renja_id)
+                                        ->select('id','label','cost')
+                                        ->get();
 
                 }else{
                     $data_level2['id']	        = "lv2|".$y->id;
@@ -382,7 +385,10 @@ class KegiatanAPIController extends Controller {
                         $data_level3['icon']            = "jstree-people   faa-pulse animated-hover ";
                         $data_level3['type']            = "pengawas";
                       
-                        $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)->select('id','label','cost')->get();
+                        $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)
+                                                ->WHERE('renja_id',$request->renja_id)
+                                                ->select('id','label','cost')
+                                                ->get();
     
 
                     foreach ($kegiatan as $a) {
