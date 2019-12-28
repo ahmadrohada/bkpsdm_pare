@@ -10,11 +10,10 @@
 
 	<div style="padding:5px 50px 10px 50px;">
 
-
 	<table width="100%" style="margin-top:20px;">
 		<tr>
 			<td align="center" valign="top">
-				<img src="{{asset('assets/images/logo_jabar.png')}}" width="100px" height="120px" >
+				<img src="{{asset('assets/images/logo_karawang.png')}}" width="90px" height="120px" >
 			</td>
 		</tr>
 		<tr>
@@ -47,10 +46,10 @@
 			
 			<table  width="100%" style="margin-left:-2px; margin-top:20px;">
 				<tr>
-					<td width="15%">Nama</td><td width="2%">:</td><td width="" align="left">RIDWAN KAMIL</td>
+					<td width="15%">Nama</td><td width="2%">:</td><td width="" align="left">{{ $nama_bupati }}</td>
 				</tr>
 				<tr>
-					<td>Jabatan</td><td>:</td><td>GUBERNUR JAWA BARAT</td>
+					<td>Jabatan</td><td>:</td><td>BUPATI KARAWANG</td>
 				</tr>
 			</table>
 			<p style="margin-top:5px;">Selaku atasan PIHAK KESATU, selanjutnya disebut PIHAK KEDUA</p>
@@ -108,8 +107,7 @@
 					
 					<tr>
 						<td>
-						RIDWAN KAMIL
-						
+							{{ $nama_bupati }}
 						</td>
 						<td>
 							
