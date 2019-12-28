@@ -90,7 +90,10 @@ $(document).ready(function() {
 			renja_list_kegiatan_tree();
 		}else if ( id == 'distribusi_kegiatan'){
 			$('html, body').animate({scrollTop:0}, 0);
+
 			initTreeDistribusiKegiatan();
+			
+
 		}else if ( id == 'kegiatan_tahunan'){
 			$('html, body').animate({scrollTop:0}, 0);
 			initTreeKegTahunanPK();

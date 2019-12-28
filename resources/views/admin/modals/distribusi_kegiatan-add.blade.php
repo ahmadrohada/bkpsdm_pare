@@ -47,13 +47,13 @@
 		});
 	
 		$('.distribusi_kegiatan_add').on('shown.bs.modal', function(){
-			
+			$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
 		});
 
 	
 		$('#kegiatan_list_add').DataTable({
 					destroy			: true,
-					processing      : false,
+					processing      : true,
 					serverSide      : true,
 					searching      	: true,
 					paging          : true,
@@ -93,14 +93,15 @@
 						url		: '{!! url("api_resource/add_kegiatan_to_pejabat?id_jabatan='+tes+'") !!}',
 						type	: 'POST',
 						data	: data,
-						success	: function(e) {
-							$('.create-perjanjian_kinerja_confirm').modal('hide');
-							$('#perjanjian_kinerja').DataTable().ajax.reload(null,false);
+						success	: function(data) {
 
-							$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
-							$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
 							
+							//$('.create-perjanjian_kinerja_confirm').modal('hide');
+							//$('#perjanjian_kinerja').DataTable().ajax.reload(null,false);
 
+							//$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
+							//$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
+							
 							Swal.fire({
 									title: "",
 									text: "Sukses",
@@ -111,8 +112,6 @@
 									timer:500
 							}).then(function () {
 								$('.distribusi_kegiatan_add').modal('hide');
-
-								
 								$('#ditribusi_renja').jstree('refresh');
 								$('#perjanjian_kinerja').DataTable().ajax.reload(null,false);
 								$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
@@ -126,7 +125,7 @@
 											
 									}
 								}
-						)	
+							)	 
 						},
 						error: function(e) {
 							Swal.fire({

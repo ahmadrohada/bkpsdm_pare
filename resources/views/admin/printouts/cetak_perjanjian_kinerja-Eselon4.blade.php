@@ -13,7 +13,7 @@
 		<table width="100%" style="margin-top:20px;">
 			<tr>
 				<td align="center" valign="top">
-					<img src="{{asset('assets/images/logo_jabar.png')}}" width="100px" height="120px" >
+					<img src="{{asset('assets/images/logo_karawang.png')}}" width="90px" height="120px" >
 				</td>
 			</tr>
 			<tr>

@@ -89,6 +89,11 @@
 				detail_table_jabatan(data.instance.get_node(data.selected[0]).id , data.instance.get_node(data.selected[0]).type);
 			}
 		});
+
+
+
+
+
 	}
 	
 	function context_add_kegiatan(node){
