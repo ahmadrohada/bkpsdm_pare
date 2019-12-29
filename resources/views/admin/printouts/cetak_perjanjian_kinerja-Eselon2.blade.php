@@ -32,26 +32,26 @@
 			akuntabel serta berorientasi pada hasil, kami yang bertanda tangan dibawah ini :
 		</p>
 		
-		<table  width="100%" style="margin-left:-2px; margin-top:17px;">
-				<tr>
-					<td width="15%">Nama</td><td width="2%">:</td><td width="" align="left">{{ $nama_pejabat }}</td>
-				</tr>
-				<tr>
-					<td>Jabatan</td><td>:</td><td>{{ $jabatan }}</td>
-				</tr>
-			</table>
-			
-			<p style="margin-top:5px;">Selanjutnya disebut PIHAK KESATU</p>
+		<table  class="tb_pejabat" width="100%" style="margin-left:-2px; margin-top:17px;">
+			<tr>
+				<td width="15%">Nama</td><td width="2%">:</td><td width="" align="left">{{ $nama_pejabat }}</td>
+			</tr>
+			<tr>
+				<td>Jabatan</td><td>:</td><td>{{ Pustaka::capital_string($jabatan) }}</td>
+			</tr>
+		</table>
 		
-			
-			<table  width="100%" style="margin-left:-2px; margin-top:20px;">
-				<tr>
-					<td width="15%">Nama</td><td width="2%">:</td><td width="" align="left">{{ $nama_bupati }}</td>
-				</tr>
-				<tr>
-					<td>Jabatan</td><td>:</td><td>BUPATI KARAWANG</td>
-				</tr>
-			</table>
+		<p style="margin-top:5px;">Selanjutnya disebut PIHAK KESATU</p>
+	
+		
+		<table class="tb_pejabat"  width="100%" style="margin-left:-2px; margin-top:20px;">
+			<tr>
+				<td width="15%">Nama</td><td width="2%">:</td><td width="" align="left">{{ $nama_atasan }}</td>
+			</tr>
+			<tr>
+				<td>Jabatan</td><td>:</td><td>{{ Pustaka::capital_string($jabatan_atasan) }}</td>
+			</tr>
+		</table>
 			<p style="margin-top:5px;">Selaku atasan PIHAK KESATU, selanjutnya disebut PIHAK KEDUA</p>
 		
 			
@@ -70,19 +70,19 @@
 			</p>
 		
 		
-			<table  class="sign_report" width="100%" style="margin-top:70px;">
+			<table  class="sign_report" width="100%" style="margin-top:60px;">
 				<tr>
 					<td width="40%">
 						
 					</td>
-					<td width="20%">
+					<td width="15%">
 						
 					</td>
-					<td width="40%">
-						Bandung, {{ Pustaka::balik2($tgl_dibuat) }}
+					<td width="45%">
+						Karawang, {{ Pustaka::balik2($tgl_dibuat) }}
 					</td>
 				</tr>
-				<tr height="90px">
+				<tr>
 						<td>
 							PIHAK KEDUA,
 						</td>
@@ -93,8 +93,8 @@
 							PIHAK KESATU,
 						</td>
 					</tr>
-					<tr height="150px">
-						<td height="60px">
+					<tr>
+						<td  height="70px">
 							
 						</td>
 						<td>
@@ -107,15 +107,18 @@
 					
 					<tr>
 						<td>
-							{{ $nama_bupati }}
+							<u>{{ $nama_atasan }}</u><br>
+							{{ $jenis_jabatan_atasan }}<br>
+							<font style="font-size:10pt;">NIP. {{ $nip_atasan }}</font>
+						
 						</td>
 						<td>
 							
 						</td>
 						<td>
-						<u>{{ $nama_pejabat }}</u><br>
-						{{ $jenis_jabatan }}<br>
-						<font style="font-size:10pt;">NIP. {{ $nip_pejabat }}</font>
+							<u>{{ $nama_pejabat }}</u><br>
+							{{ $jenis_jabatan }}<br>
+							<font style="font-size:10pt;">NIP. {{ $nip_pejabat }}</font>
 						</td>
 					</tr>
 				
@@ -254,62 +257,60 @@
 			</tr>
 		</tbody>
 	</table>
- 
+	<table  class="sign_report" width="100%" style="margin-top:60px;">
+		<tr>
+			<td width="40%">
+				
+			</td>
+			<td width="15%">
+				
+			</td>
+			<td width="45%">
+				Karawang, {{ Pustaka::balik2($tgl_dibuat) }}
+			</td>
+		</tr>
+		<tr>
+				<td>
+					PEJABAT PENILAI,
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					{{ Pustaka::capital_string($jabatan) }}
+				</td>
+			</tr>
+			<tr>
+				<td  height="70px">
+					
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<u>{{ $nama_atasan }}</u><br>
+					{{ $jenis_jabatan_atasan }}<br>
+					<font style="font-size:10pt;">NIP. {{ $nip_atasan }}</font>
+				
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					<u>{{ $nama_pejabat }}</u><br>
+					{{ $jenis_jabatan }}<br>
+					<font style="font-size:10pt;">NIP. {{ $nip_pejabat }}</font>
+				</td>
+			</tr>
+		
+		</table>
 
-	<br>
-<br>
-<br>
-<table  class="sign_report" width="100%">
-<tr>
-	<td width="48%">
-		
-	</td>
-	<td width="12%">
-		
-	</td>
-	<td width="40%">
-		Karawang, {{ Pustaka::balik2($tgl_dibuat) }}
-	</td>
-</tr>
-<tr height="90px">
-		<td>
-			BUPATI KARAWANG
-		</td>
-		<td>
-			
-		</td>
-		<td>
-			Kepala {{ Pustaka::capital_string($nama_skpd) }}
-		</td>
-	</tr>
-	<tr height="150px">
-		<td height="60px">
-			
-		</td>
-		<td>
-			
-		</td>
-		<td>
-			
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-		{{ $nama_bupati }}
-		
-		</td>
-		<td>
-			
-		</td>
-		<td>
-		<u>{{ $nama_ka_skpd }}</u><br>
-		{{ $jenis_jabatan_ka_skpd }}<br>
-		<font style="font-size:10pt;">NIP. {{ $nip_ka_skpd }}</font>
-		</td>
-	</tr>
-
-</table>
 
 
 </body>

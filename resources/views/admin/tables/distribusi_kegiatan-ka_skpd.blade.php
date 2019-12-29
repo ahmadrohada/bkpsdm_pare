@@ -6,28 +6,10 @@
 		</p>
 	</div>
 	<div class="box-body table-responsive" style="border:solid 1px #dbdbdb">
-
-		
-		<div class="col-md-3 col-xs-3" style="padding-left:5px;">
+		<div class="col-md-3 col-xs-12 " style="margin-top:10px;  margin-left:-20px !important; text-align:center;">
 			<img style="width: 100px; height: 125px;" class="img pasphpoto photo_ka_skpd" src="{{asset('assets/images/form/default_icon.png')}}">
 		</div>
-		<div class="col-md-9  col-xs-9" style="padding-left:0px;">
-			<!-- <strong>Nama Pejabat </strong>
-			<p class="text-muted " style="margin-top:7px;padding-bottom:5px;">
-				<span class="nama_ka_skpd">-</span>
-			</p>
-			<strong>NIP</strong>
-			<p class="text-muted " style="margin-top:7px;padding-bottom:5px;">
-				<span class="nip_ka_skpd">-</span>
-			</p>
-			<strong>GOL / Pangkat</strong>
-			<p class="text-muted " style="margin-top:7px;">
-				<span class="gol_ka_skpd">-</span>
-			</p>
-			<strong>TMT Jabatan</strong>
-			<p class="text-muted " style="margin-top:7px;">
-				<span class="tmt_ka_skpd">-</span>
-			</p> -->
+		<div class="col-md-9  col-xs-12" style="margin-top:10px; padding-left:0px;">
 			<ul class="list-group list-group-unbordered">
 				<li class="list-group-item ">
 					<b>Pejabat</b> <a class="pull-right nama_ka_skpd">-</a>
