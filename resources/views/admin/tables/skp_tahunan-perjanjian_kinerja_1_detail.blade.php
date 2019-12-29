@@ -7,7 +7,7 @@
 
 <div class="row">
 	<div class="col-md-6">
-		<div class="box box-success">
+		<div class="box box-primary">
 			<div class="box-header with-border text-center">
 				<h1 class="box-title ">
 				
@@ -17,14 +17,15 @@
 				</div>
 			</div>
 			<div class="box-body table-responsive">
-				{{-- <div class="box-tools pull-right">
-					<form method="post" target="_blank" action="./cetak_perjanjian_kinerja">
+				<div class="box-tools pull-right">
+					<form method="post" target="_blank" action="./{{$skp->id}}/cetak_perjanjian_kinerja-Eselon2">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-						<input type="hidden" name="renja_id" value="{{ $renja->id }}">
-							
+						<input type="hidden" name="renja_id" value="{{ $skp->Renja->id }}">
+						<input type="hidden" name="jabatan_id" value="{{$skp->PejabatYangDinilai->Jabatan->id}}">
+						<input type="hidden" name="skp_tahunan_id" value="{{$skp->id}}">
 						<button type="submit" class="btn btn-info btn-xs"><i class="fa fa-print"></i> Cetak</button>
 					</form>
-				</div> --}}
+				</div>
 				<table id="perjanjian_kinerja_sasaran_table" class="table table-striped table-hover" >
 					<thead>
 						<tr class="success">
@@ -43,7 +44,7 @@
 	</div> 
 	<div class="col-md-6">
 
-		<div class="box box-success">
+		<div class="box box-primary">
 			<div class="box-header with-border text-center">
 				<h1 class="box-title ">
 				
@@ -97,11 +98,13 @@ function load_perjanjian_kinerja(){
 								{ className: "text-center", targets: [ 0,3 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-pk_sasaran_strategis") }}',
-								data: { renja_id: {!! $renja->id !!} },
+								url	: '{{ url("api_resource/eselon2-pk_sasaran_strategis") }}',
+								data: { 
+										"renja_id" : {!! $skp->Renja->id !!}
+								 	},
 							 }, 
 			columns			:[
-							{ data: 'id' , orderable: false,searchable:false,width:"30px",
+				{ data: 'id' , orderable: false,searchable:false,width:"30px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
@@ -154,8 +157,11 @@ function load_perjanjian_kinerja(){
 								{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-pk_program") }}',
-								data: { renja_id: {!! $renja->id !!} },
+								url	: '{{ url("api_resource/eselon2-pk_program") }}',
+								data: { 
+										"renja_id" : {!! $skp->Renja->id !!}
+
+								 	},
 							 }, 
 			columns			:[
 							{ data: 'id' , orderable: false,searchable:false,width:"30px",
@@ -166,6 +172,7 @@ function load_perjanjian_kinerja(){
 							{ data: "program", name:"program_label", orderable: false, searchable: false},
 							{ data: "anggaran", name:"anggaran", orderable: false, searchable: false,width:"140px"},
 							{ data: "keterangan", name:"keterangan", orderable: false, searchable: false , width:"90px"},
+							
 							
 							
 						],
@@ -184,8 +191,10 @@ function load_perjanjian_kinerja(){
 
 	function hitung_total_anggaran(){
 		$.ajax({
-				url			: '{{ url("api_resource/skpd-total_anggaran_pk") }}',
-				data 		: { renja_id: {!! $renja->id !!} },
+				url			: '{{ url("api_resource/eselon2-total_anggaran_pk") }}',
+				data		: { 
+									"renja_id" : {!! $skp->Renja->id !!}
+								},
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
@@ -198,6 +207,87 @@ function load_perjanjian_kinerja(){
 				}						
 		});
 	}
+
+
+	$(document).on('click','.add_sasaran',function(e){
+		var sasaran_id = $(this).data('id') ;
+		$.ajax({
+				url			: '{{ url("api_resource/add_sasaran_to_pk") }}',
+				data 		: {sasaran_id : sasaran_id},
+				method		: "POST",
+				success		: function(data) {
+					Swal.fire({
+							title: "",
+							text: "Berhasil ditambahkan",
+							type: "success",
+							width: "200px",
+							showConfirmButton: false,
+							allowOutsideClick : false,
+							timer: 1500
+						}).then(function () {
+                           	$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false);
+							$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
+							hitung_total_anggaran();
+						},
+						function (dismiss) {
+							if (dismiss === 'timer') {
+								//table.ajax.reload(null,false);
+							}
+					})
+
+
+				},
+				error: function(data){
+					Swal.fire({
+			        		title: "Error",
+			        		text: "",
+			        		type: "error"
+			        	}).then (function(){
+			        		
+			        	});
+				}						
+		});	
+	});
+
+	$(document).on('click','.remove_sasaran',function(e){
+		var sasaran_id = $(this).data('id') ;
+		$.ajax({
+				url			: '{{ url("api_resource/remove_sasaran_from_pk") }}',
+				data 		: {sasaran_id : sasaran_id},
+				method		: "POST",
+				success		: function(data) {
+					Swal.fire({
+							title: "",
+							text: "Berhasil dihapus",
+							type: "success",
+							width: "200px",
+							showConfirmButton: false,
+							allowOutsideClick : false,
+							timer: 1500
+						}).then(function () {
+                           	$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false);
+							$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
+							hitung_total_anggaran();
+						},
+						function (dismiss) {
+							if (dismiss === 'timer') {
+								//table.ajax.reload(null,false);
+							}
+					})
+
+
+				},
+				error: function(data){
+					Swal.fire({
+			        		title: "Error",
+			        		text: "",
+			        		type: "error"
+			        	}).then (function(){
+			        		
+			        	});
+				}						
+		});	
+	});
 
 
 	$(document).on('click','.add_sasaran',function(e){

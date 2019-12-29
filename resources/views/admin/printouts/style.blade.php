@@ -239,6 +239,9 @@ hr.garis_putus {
 	/* letter-spacing: 5px; */
 }
 
-
+table.tb_pejabat {
+	vertical-align:top;
+	text-align: left;
+}
 
 </style>

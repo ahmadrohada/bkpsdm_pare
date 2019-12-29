@@ -333,27 +333,33 @@ class PerjanjianKinerjaAPIController extends Controller {
         $user_x  = \Auth::user();
         $profil  = Pegawai::WHERE('tb_pegawai.id',  $user_x->id_pegawai)->first();
 
-         //JAbatan
-         $jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
+        //JAbatan
+        $jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
         
 
-       $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon2', [   
+        $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon2', [   
                                                     'data'          => $data , 
                                                     'data_2'        => $data_2 ,
                                                     'total_anggaran'=> $dt_3->total_anggaran,
                                                     'tgl_dibuat'    => $Renja->tgl_dibuat,
                                                     'periode'       => Pustaka::tahun($Renja->periode->awal),
+                                                    'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
+                                                    //DATA ASN YANG DINILAI
                                                     'nama_pejabat'  => $jabatan->u_nama,
                                                     'nip_pejabat'   => $jabatan->PejabatYangDinilai->nip,
                                                     'jenis_jabatan' => $jabatan->PejabatYangDinilai->Eselon->JenisJabatan->jenis_jabatan,
                                                     'jabatan'       => $jabatan->PejabatYangDinilai->jabatan,
+                                                    //DATA ASN PNILAI
+                                                    'nama_atasan'  => $jabatan->p_nama,
+                                                    'nip_atasan'   => $jabatan->PejabatPenilai?$jabatan->PejabatPenilai->nip:"",
+                                                    'jenis_jabatan_atasan' => $jabatan->PejabatPenilai?$jabatan->PejabatPenilai->Eselon->JenisJabatan->jenis_jabatan:"",
+                                                    'jabatan_atasan'       => $jabatan->PejabatPenilai?$jabatan->PejabatPenilai->jabatan:"",
+                                                    //DATA KA SKPD
                                                     'nama_ka_skpd'  => $Renja->nama_kepala_skpd,
                                                     'nip_ka_skpd'   => $Renja->nip_ka_skpd,
                                                     'jenis_jabatan_ka_skpd'=> $Renja->jenis_jabatan_ka_skpd,
-                                                    'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
                                                     'nama_bupati'   => $Renja->nama_bupati,
                                                     'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
-
 
                                                      ], [], [
                                                      'format' => 'A4-P'
@@ -474,16 +480,37 @@ class PerjanjianKinerjaAPIController extends Controller {
         $user_x  = \Auth::user();
         $profil  = Pegawai::WHERE('tb_pegawai.id',  $user_x->id_pegawai)->first();
 
-        
+        //JAbatan
+        $jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
         
 
-       $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon2', [   
+        $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon2', [   
                                                     'data'          => $data , 
                                                     'data_2'        => $data_2 ,
                                                     'total_anggaran'=> $dt_3->total_anggaran,
                                                     'tgl_dibuat'    => $Renja->tgl_dibuat,
                                                     'periode'       => Pustaka::tahun($Renja->periode->awal),
-                                                    'nama_pejabat'  => $Renja->nama_kepala_skpd,
+                                                    'periode'       => Pustaka::tahun($Renja->periode->awal),
+                                                    'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
+                                                    //DATA ASN YANG DINILAI
+                                                    'nama_pejabat'  => $jabatan->u_nama,
+                                                    'nip_pejabat'   => $jabatan->PejabatYangDinilai->nip,
+                                                    'jenis_jabatan' => $jabatan->PejabatYangDinilai->Eselon->JenisJabatan->jenis_jabatan,
+                                                    'jabatan'       => $jabatan->PejabatYangDinilai->jabatan,
+                                                    //DATA ASN PNILAI
+                                                    'nama_atasan'  => $jabatan->p_nama,
+                                                    'nip_atasan'   => $jabatan->PejabatPenilai->nip,
+                                                    'jenis_jabatan_atasan' => $jabatan->PejabatPenilai->Eselon->JenisJabatan->jenis_jabatan,
+                                                    'jabatan_atasan'       => $jabatan->PejabatPenilai->jabatan,
+                                                    //DATA KA SKPD
+                                                    'nama_ka_skpd'  => $Renja->nama_kepala_skpd,
+                                                    'nip_ka_skpd'   => $Renja->nip_ka_skpd,
+                                                    'jenis_jabatan_ka_skpd'=> $Renja->jenis_jabatan_ka_skpd,
+                                                    'nama_bupati'   => $Renja->nama_bupati,
+                                                    'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
+
+                                                   
+                                                    /* 'nama_pejabat'  => $Renja->nama_kepala_skpd,
                                                     'nip_pejabat'   => $Renja->nip_ka_skpd,
                                                     'jenis_jabatan' => $Renja->jenis_jabatan_ka_skpd,
                                                     'jabatan'       => "Kepala ".Pustaka::capital_string($this::nama_skpd($Renja->skpd_id)),
@@ -493,7 +520,7 @@ class PerjanjianKinerjaAPIController extends Controller {
                                                     'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
                                                     'nama_bupati'   => $Renja->nama_bupati,
                                                     'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
-
+ */
 
                                                      ], [], [
                                                      'format' => 'A4-P'
@@ -728,22 +755,27 @@ class PerjanjianKinerjaAPIController extends Controller {
 
         //JAbatan
         $jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
-        
-
        $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon3', [   
                                                     'data'          => $data_1 , 
                                                     'data_2'        => $data_2 ,
                                                     'total_anggaran'=> $data_3->total_anggaran,
                                                     'tgl_dibuat'    => $Renja->tgl_dibuat,
                                                     'periode'       => Pustaka::tahun($Renja->periode->awal),
+                                                    'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
+                                                    //DATA ASN YANG DINILAI
                                                     'nama_pejabat'  => $jabatan->u_nama,
                                                     'nip_pejabat'   => $jabatan->PejabatYangDinilai->nip,
                                                     'jenis_jabatan' => $jabatan->PejabatYangDinilai->Eselon->JenisJabatan->jenis_jabatan,
                                                     'jabatan'       => $jabatan->PejabatYangDinilai->jabatan,
+                                                    //DATA ASN PNILAI
+                                                    'nama_atasan'  => $jabatan->p_nama,
+                                                    'nip_atasan'   => $jabatan->PejabatPenilai->nip,
+                                                    'jenis_jabatan_atasan' => $jabatan->PejabatPenilai->Eselon->JenisJabatan->jenis_jabatan,
+                                                    'jabatan_atasan'       => $jabatan->PejabatPenilai->jabatan,
+                                                    //DATA KA SKPD
                                                     'nama_ka_skpd'  => $Renja->nama_kepala_skpd,
                                                     'nip_ka_skpd'   => $Renja->nip_ka_skpd,
                                                     'jenis_jabatan_ka_skpd'=> $Renja->jenis_jabatan_ka_skpd,
-                                                    'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
                                                     'nama_bupati'   => $Renja->nama_bupati,
                                                     'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
 
@@ -957,14 +989,21 @@ class PerjanjianKinerjaAPIController extends Controller {
                                                     'total_anggaran'=> $data_3->total_anggaran,
                                                     'tgl_dibuat'    => $Renja->tgl_dibuat,
                                                     'periode'       => Pustaka::tahun($Renja->periode->awal),
+                                                    'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
+                                                    //DATA ASN YANG DINILAI
                                                     'nama_pejabat'  => $jabatan->u_nama,
                                                     'nip_pejabat'   => $jabatan->PejabatYangDinilai->nip,
                                                     'jenis_jabatan' => $jabatan->PejabatYangDinilai->Eselon->JenisJabatan->jenis_jabatan,
+                                                    'jabatan'       => $jabatan->PejabatYangDinilai->jabatan,
+                                                    //DATA ASN PNILAI
+                                                    'nama_atasan'  => $jabatan->p_nama,
+                                                    'nip_atasan'   => $jabatan->PejabatPenilai->nip,
+                                                    'jenis_jabatan_atasan' => $jabatan->PejabatPenilai->Eselon->JenisJabatan->jenis_jabatan,
+                                                    'jabatan_atasan'       => $jabatan->PejabatPenilai->jabatan,
+                                                    //DATA KA SKPD
                                                     'nama_ka_skpd'  => $Renja->nama_kepala_skpd,
                                                     'nip_ka_skpd'   => $Renja->nip_ka_skpd,
-                                                    'jabatan'       => $jabatan->PejabatYangDinilai->jabatan,
                                                     'jenis_jabatan_ka_skpd'=> $Renja->jenis_jabatan_ka_skpd,
-                                                    'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
                                                     'nama_bupati'   => $Renja->nama_bupati,
                                                     'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
 
