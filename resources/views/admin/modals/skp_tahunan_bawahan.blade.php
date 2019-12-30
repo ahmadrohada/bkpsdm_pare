@@ -39,6 +39,8 @@
 
 function skp_list_bawahan($pk_id,$jabatan_id){
 		
+		$('.modal-skp_tahunan_bawahan').modal('show'); 
+
 		$('#skp_tahunan_table_bawahan').DataTable({
 				destroy			: true,
 				processing      : true,
@@ -54,8 +56,8 @@ function skp_list_bawahan($pk_id,$jabatan_id){
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/skp_bawahan_list_md") }}',
-									data: { 	perjanjian_kinerja_id	: $pk_id,
-												jabatan_id 				: $jabatan_id,
+									data: { 	renja_id	: $pk_id,
+												jabatan_id  : $jabatan_id,
 											}
 								},
 				
@@ -83,7 +85,7 @@ function skp_list_bawahan($pk_id,$jabatan_id){
 								
 							],
 				initComplete: function(settings, json) {
-							$('.modal-skp_tahunan_bawahan').modal('show'); 
+							//$('.modal-skp_tahunan_bawahan').modal('show'); 
 							}
 	});
 }

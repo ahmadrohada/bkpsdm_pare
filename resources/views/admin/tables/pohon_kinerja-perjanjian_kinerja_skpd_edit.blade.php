@@ -17,14 +17,14 @@
 				</div>
 			</div>
 			<div class="box-body table-responsive">
-				{{-- <div class="box-tools pull-right">
+				<div class="box-tools pull-right">
 					<form method="post" target="_blank" action="./cetak_perjanjian_kinerja">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="renja_id" value="{{ $renja->id }}">
 						
 						<button type="submit" class="btn btn-info btn-xs"><i class="fa fa-print"></i> Cetak</button>
 					</form> 
-				</div>--}}
+				</div>
 				<table id="perjanjian_kinerja_sasaran_table" class="table table-striped table-hover" >
 					<thead>
 						<tr class="success">

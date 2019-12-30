@@ -401,6 +401,8 @@ class SKPTahunanAPIController extends Controller {
         $body = array();
 
         $u_jabatan_id = $request->u_jabatan_id;
+        $renja_id = $request->renja_id;
+
         //Tampilkan SKP pada unit kerja tsb  nya
         $uk_peg = HistoryJabatan::SELECT('id_unit_kerja')
                                 ->WHERE('id',$u_jabatan_id)
@@ -419,16 +421,11 @@ class SKPTahunanAPIController extends Controller {
     
 
 
-        $skp_tahunan = SKPTahunan::WHEREIN('u_jabatan_id',$uk)->SELECT('id','created_at','u_nama','u_jabatan_id')->get();
+        $skp_tahunan = SKPTahunan::WHEREIN('u_jabatan_id',$uk)
+                                ->WHERE('renja_id', $renja_id)
+                                ->SELECT('id','created_at','u_nama','u_jabatan_id')
+                                ->get();
 
-
-
-       /*  $timeline = SKPTahunanTimeline::
-                                WHEREIN('id',$skp_tahunan->id )
-                                ->get(); */
-
-        
-        
         foreach($skp_tahunan as $tm) {
 
             $jabatan = Pustaka::capital_string($tm->PejabatYangDinilai?$tm->PejabatYangDinilai->jabatan:'');
@@ -633,6 +630,8 @@ class SKPTahunanAPIController extends Controller {
     public function SKPTahunanBawahanMd(Request $request)
     {
             
+        $renja_id = $request->renja_id;
+
         $bawahan_aktif = SKPD::WHERE('parent_id', $request->jabatan_id )
                             ->rightjoin('demo_asn.tb_history_jabatan AS bawahan', function($join){
                                 $join   ->on('bawahan.id_jabatan','=','m_skpd.id');
@@ -641,9 +640,9 @@ class SKPTahunanAPIController extends Controller {
                             ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
                                 $join   ->on('pegawai.id','=','bawahan.id_pegawai');
                             })
-                            ->leftjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function($join){
+                            ->leftjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function($join) use($renja_id){
                                 $join   ->on('skp_tahunan.u_jabatan_id','=','bawahan.id');
-                                //$join   ->where('skp_tahunan.send_to_atasan','=','1');
+                                $join   ->where('skp_tahunan.renja_id','=',$renja_id);
                                 //$join   ->where('skp_tahunan.status_approve','=','1');
                             })
                             ->SELECT(   'bawahan.id AS bawahan_id',

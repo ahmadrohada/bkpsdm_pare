@@ -225,6 +225,18 @@
 		var pegawai_id = $(this).data('pegawai_id') ;
 		
 
+
+		Swal.fire({
+                title: 'Pencarian data..!',
+                text: 'mohon tunggu..',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                onOpen: () => {
+                    swal.showLoading()
+                }
+            })
+
 		$.ajax({
 			url		: '{{ url("api_resource/create_skp_tahunan_confirm") }}',
 			type	: 'GET',
@@ -235,6 +247,7 @@
 						},
 			success	: function(data) {
 				
+				Swal.close();
 				if (data['status']==='pass'){
 					$('#periode_label').html(data['periode_label']); 
 					$('#u_nip').html(data['u_nip']); 
@@ -264,9 +277,10 @@
 					$('.p_golongan_id').val(data['p_golongan_id']); 
 
 
-
+					
 					$('.modal-create_skp_tahunan_confirm').modal('show'); 
 				}else if (data['status']==='fail'){
+					
 					switch (data['jenis_jabatan']){
 						case 1 :   ; //KA SKPD
 							break;

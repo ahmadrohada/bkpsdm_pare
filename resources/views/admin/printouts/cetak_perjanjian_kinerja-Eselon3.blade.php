@@ -72,10 +72,10 @@
 			
 				<table  class="sign_report" width="100%" style="margin-top:60px;">
 					<tr>
-						<td width="40%">
+						<td width="45%">
 							
 						</td>
-						<td width="15%">
+						<td width="10%">
 							
 						</td>
 						<td width="45%">
@@ -108,7 +108,7 @@
 						<tr>
 							<td>
 								<u>{{ $nama_atasan }}</u><br>
-								{{ $jenis_jabatan_atasan }}<br>
+								
 								<font style="font-size:10pt;">NIP. {{ $nip_atasan }}</font>
 							
 							</td>
@@ -117,7 +117,7 @@
 							</td>
 							<td>
 								<u>{{ $nama_pejabat }}</u><br>
-								{{ $jenis_jabatan }}<br>
+								
 								<font style="font-size:10pt;">NIP. {{ $nip_pejabat }}</font>
 							</td>
 						</tr>
@@ -257,10 +257,10 @@
 	</table>
 	<table  class="sign_report" width="100%" style="margin-top:60px;">
 		<tr>
-			<td width="40%">
+			<td width="45%">
 				
 			</td>
-			<td width="15%">
+			<td width="10%">
 				
 			</td>
 			<td width="45%">
@@ -293,7 +293,7 @@
 			<tr>
 				<td>
 					<u>{{ $nama_atasan }}</u><br>
-					{{ $jenis_jabatan_atasan }}<br>
+					
 					<font style="font-size:10pt;">NIP. {{ $nip_atasan }}</font>
 				
 				</td>
@@ -302,7 +302,7 @@
 				</td>
 				<td>
 					<u>{{ $nama_pejabat }}</u><br>
-					{{ $jenis_jabatan }}<br>
+					
 					<font style="font-size:10pt;">NIP. {{ $nip_pejabat }}</font>
 				</td>
 			</tr>
