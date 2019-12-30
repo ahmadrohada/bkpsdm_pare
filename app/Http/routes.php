@@ -1279,6 +1279,15 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'PerjanjianKinerjaController@showPerjanjianKinerja'
 	]);
 
+	Route::post('skp-tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon4', [
+		'as' 			=> '',
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl4'
+	]);
+	Route::post('skp-tahunan/cetak_perjanjian_kinerja-Eselon4', [
+		'as' 			=> '',
+		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl4'
+	]);
+
 
 
 

@@ -46,10 +46,10 @@
 		
 		<table class="tb_pejabat"  width="100%" style="margin-left:-2px; margin-top:20px;">
 			<tr>
-				<td width="15%">Nama</td><td width="2%">:</td><td width="" align="left">{{ $nama_atasan }}</td>
+				<td width="15%">Nama</td><td width="2%">:</td><td width="" align="left">{{ $nama_bupati }}</td>
 			</tr>
 			<tr>
-				<td>Jabatan</td><td>:</td><td>{{ Pustaka::capital_string($jabatan_atasan) }}</td>
+				<td>Jabatan</td><td>:</td><td>Bupati Karawang</td>
 			</tr>
 		</table>
 			<p style="margin-top:5px;">Selaku atasan PIHAK KESATU, selanjutnya disebut PIHAK KEDUA</p>
@@ -72,10 +72,10 @@
 		
 			<table  class="sign_report" width="100%" style="margin-top:60px;">
 				<tr>
-					<td width="40%">
+					<td width="45%">
 						
 					</td>
-					<td width="15%">
+					<td width="10%">
 						
 					</td>
 					<td width="45%">
@@ -107,10 +107,7 @@
 					
 					<tr>
 						<td>
-							<u>{{ $nama_atasan }}</u><br>
-							{{ $jenis_jabatan_atasan }}<br>
-							<font style="font-size:10pt;">NIP. {{ $nip_atasan }}</font>
-						
+							{{ $nama_bupati }}
 						</td>
 						<td>
 							
@@ -259,10 +256,10 @@
 	</table>
 	<table  class="sign_report" width="100%" style="margin-top:60px;">
 		<tr>
-			<td width="40%">
+			<td width="45%">
 				
 			</td>
-			<td width="15%">
+			<td width="10%">
 				
 			</td>
 			<td width="45%">
@@ -271,7 +268,7 @@
 		</tr>
 		<tr>
 				<td>
-					PEJABAT PENILAI,
+					BUPATI KARAWANG
 				</td>
 				<td>
 					
@@ -294,9 +291,7 @@
 			
 			<tr>
 				<td>
-					<u>{{ $nama_atasan }}</u><br>
-					{{ $jenis_jabatan_atasan }}<br>
-					<font style="font-size:10pt;">NIP. {{ $nip_atasan }}</font>
+					{{ $nama_bupati }}
 				
 				</td>
 				<td>
@@ -304,7 +299,6 @@
 				</td>
 				<td>
 					<u>{{ $nama_pejabat }}</u><br>
-					{{ $jenis_jabatan }}<br>
 					<font style="font-size:10pt;">NIP. {{ $nip_pejabat }}</font>
 				</td>
 			</tr>
