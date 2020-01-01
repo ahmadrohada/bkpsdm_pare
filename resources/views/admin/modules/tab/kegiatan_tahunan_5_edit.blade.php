@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-5">
-		<div class="box box-primary ">
+		<div class="box box-sasaran ">
 			<div class="box-header with-border">
 				<h1 class="box-title">
 				</h1>
@@ -9,6 +9,7 @@
 				</div>
 			</div>
 			<div class="box-body" style="padding-left:0px; padding-right:0px;">
+				
 				<input type='text' id = 'cari' class="form-control" placeholder="cari">
 				<div class="table-responsive auto">
 					<div id="keg_tahunan_5_tree"></div>
@@ -18,10 +19,7 @@
 	</div>
 	<div class="col-md-7">
 		@include('admin.tables.skp_tahunan-kegiatan_5_edit')
-
-	
-
-		
+		<span class="text-muted">* klik kanan pada sasaran untuk menambah kegiatan tahunan atau klik pada button Tambah Kegiatan yang berada diatas tabel Kegiatan</span>
 	</div>
 </div>
 

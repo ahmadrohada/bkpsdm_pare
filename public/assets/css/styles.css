@@ -180,3 +180,7 @@ li.user-header, .widget-user-username{
 	 
 	 
 }
+
+
+.no-sort::after { display: none!important; }
+.no-sort { pointer-events: none!important; cursor: default!important; }

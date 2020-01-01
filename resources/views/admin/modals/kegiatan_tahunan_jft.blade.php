@@ -4,22 +4,21 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    Kegiatan Tahunan JFT 
+                    Kegiatan Tahunan JFT
                 </h4>
-            </div>
+            </div> 
 
             <form  id="kegiatan_tahunan_form" method="POST" action="">
-			<input type="hidden"  name="sasaran_id" class="sasaran_id">
-			<input type="hidden"  name="skp_tahunan_id" value="{!! $skp->id !!}">
+			<input type="text"  name="skp_tahunan_id" value="{!! $skp->id !!}">
 			<div class="modal-body">
 					
-					<br>
 					<div class="row">
-						<div class="col-md-12 form-group sasaran_label ">
-							<label class="control-label">Sasaran :</label>
-							<p name="sasaran_label">Label Sasaran</p>
+						<div class="col-md-12 form-group label_sasaran">
+							<label class="control-label">Pilih Sasaran Renja:</label>
+							<select class="form-control input-sm sasaran" id="sasaran" name="sasaran_id" style="width:100%"></select>
 						</div>
 					</div>
+
 
 					<div class="row">
 						<div class="col-md-12 form-group label_kegiatan_tahunan_jft ">
@@ -47,7 +46,7 @@
 						<div class="col-md-4 form-group quality">
 						<label class="control-label">Kualitas/Mutu :</label>
 						<div class="input-group input-group-sm">
-						<input type="text" name="quality" id="quality" required class="form-control"  placeholder="kualitas/mutu" maxlength="3" onkeypress='return angka(event)'>
+						<input type="text" name="quality" id="quality" required class="form-control"  placeholder="kualitas/mutu" maxlength="3" onkeypress='return angka(event)' readonly>
 						<span class="input-group-addon">%</span>
 						</div>
 						</div>
@@ -83,6 +82,58 @@
 
 <script type="text/javascript">
 
+	$('.sasaran').select2({
+		ajax: {
+			url: '{{ url("api_resource/sasaran_list_skp_JFT") }}',
+			dataType: 'json',
+			quietMillis: 500,
+			data: function(params) {
+				var queryParameters = {
+					sasaran				: params.term,
+					"renja_id" 			: {!! $skp->Renja->id !!} , 
+                    "jabatan_id" 		: {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+					"skp_tahunan_id" 	: {!! $skp->id !!}
+				}
+				return queryParameters;
+			},
+			processResults: function(data) {
+				return {
+					results: $.map(data, function(item) {
+						return {
+							text: item.text,
+							id: item.id,
+						}
+					})
+				};
+			}
+		},
+	});
+
+	function show_modal_kegiatan(sasaran_id){
+		$.ajax({
+				url			: '{{ url("api_resource/sasaran_detail") }}',
+				data 		: {sasaran_id : sasaran_id},
+				method		: "GET",
+				dataType	: "json",
+				success	: function(data) {
+					
+					//Add data sasaran to select2
+					var option = new Option(data['label'],data['id'],true,true);
+					$('.modal-kegiatan_tahunan_jft').find('[name=sasaran_id]').append(option).trigger('change');
+
+					$('.modal-kegiatan_tahunan_jft').find('[name=label],[name=angka_kredit],[name=target],[name=satuan],[name=target_waktu],[name=cost]').val("");
+					$('.modal-kegiatan_tahunan_jft').find('[name=quality]').val("100");
+					$('.modal-kegiatan_tahunan_jft').find('h4').html('Add Kegiatan Tahunan ( JFT )');
+					$('.modal-kegiatan_tahunan_jft').find('.btn-submit').attr('id', 'submit-save');
+					$('.modal-kegiatan_tahunan_jft').find('[name=text_button_submit]').html('Simpan Data');
+					$('.modal-kegiatan_tahunan_jft').modal('show');
+				},
+				error: function(data){
+					
+				}						
+		});	 
+	}
+
 	$('.modal-kegiatan_tahunan').on('shown.bs.modal', function(){
 		reset_submitx();
 	});
@@ -91,6 +142,10 @@
 		$('.label_kegiatan, .target, .satuan, .waktu, .quality').removeClass('has-error');
 		$('.modal-kegiatan_tahunan').find('[name=kegiatan_tahunan_id],[name=label],[name=angka_kredit],[name=target],[name=quality],[name=satuan],[name=target_waktu],[name=cost]').val('');
 	}); */
+
+	$('.label_sasaran').on('click', function(){
+		$('.label_sasaran').removeClass('has-error');
+	});
 
 	$('.label_kegiatan_tahunan_jft').on('click', function(){
 		$('.label_kegiatan_tahunan_jft').removeClass('has-error');
@@ -181,6 +236,7 @@
 					//alert (index+":"+value);
 					
 					//error message
+					((index == 'sasaran_id')?$('.label_sasaran').addClass('has-error'):'');
 					((index == 'label')?$('.label_kegiatan_tahunan_jft').addClass('has-error'):'');
 					((index == 'target')?$('.target').addClass('has-error'):'');
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
@@ -253,6 +309,7 @@
 					//alert (index+":"+value);
 					
 					//error message
+					((index == 'sasaran_id')?$('.label_sasaran').addClass('has-error'):'');
 					((index == 'label')?$('.label_kegiatan_tahunan_jft').addClass('has-error'):'');
 					((index == 'target')?$('.target').addClass('has-error'):'');
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');

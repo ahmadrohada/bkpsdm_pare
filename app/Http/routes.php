@@ -189,6 +189,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skpd-renja_sasaran_list','API\SasaranAPIController@SasaranList');
 
 	Route::get('sasaran_detail','API\SasaranAPIController@SasaranDetail');
+
+	Route::get('sasaran_list_skp_JFT','API\SasaranAPIController@SasaranListJFTSelect2');
+
+	
 	
 	Route::post('simpan_sasaran','API\SasaranAPIController@Store');
 	Route::post('update_sasaran','API\SasaranAPIController@Update');
@@ -431,9 +435,13 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//====================================== KEGIATAN THAUNAN JFT ================================================//
 	//========================================================================================================//
 
+	Route::get('kegiatan_tahunan_detail_jft','API\KegiatanSKPTahunanJFTAPIController@KegiatanTahunanDetail');
+
 	Route::post('simpan_kegiatan_tahunan_jft','API\KegiatanSKPTahunanJFTAPIController@Store');
 	
-	
+	Route::post('update_kegiatan_tahunan_jft','API\KegiatanSKPTahunanJFTAPIController@Update');
+	Route::post('hapus_kegiatan_tahunan_jft','API\KegiatanSKPTahunanJFTAPIController@Hapus');
+
 
 	//========================================================================================================//
 	//============================== =======       SKP BULANAN ================================================//
@@ -1260,7 +1268,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'as' 			=> '',
 		'uses' 			=> 'RenjaController@SKPDRenjaRalat'
 	]);
-	
+	 
 	
 	//----------------------------------------------------------------------------------------//
 	//========================      SKP TAHUNAN SKPD       ================================//

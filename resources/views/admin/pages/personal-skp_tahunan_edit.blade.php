@@ -20,7 +20,22 @@
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="status"><a href="#status" data-toggle="tab">Timeline </a></li>
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
-				<li class="perjanjian_kinerja_tab"><a href="#perjanjian_kinerja_tab" data-toggle="tab" >Perjanjian Kinerja</a></li>
+				<?php 
+					switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						case '1': 
+								break;
+						case '2':
+								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
+							  	break;
+						case '3': 
+								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
+								break;
+						case '4':   
+								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Kegiatan Bulanan</a></li>';
+								break;
+					}
+
+				?>
 				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan</a></li>
 				
 				<?php

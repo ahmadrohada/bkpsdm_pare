@@ -5,7 +5,7 @@
 
 	<div class="form-group has-feedback">
 		{!! Form::label('username', Lang::get('auth.username'), array('class' => 'sr-only')); !!}
-		{!! Form::text('username', null, array('id' => 'username', 'class' => 'form-control', 'placeholder'   => Lang::get('auth.ph_username'),'value' => '','required' => 'required',)) !!}
+		{!! Form::text('username', null, array('id' => 'username', 'class' => 'form-control', 'placeholder'   => Lang::get('auth.ph_nama'),'value' => '','required' => 'required',)) !!}
 		<span class="glyphicon glyphicon-user form-control-feedback" aria-hidden="true"></span>
 	</div>
 	<div class="form-group has-feedback">
