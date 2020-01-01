@@ -43,8 +43,35 @@ class SasaranAPIController extends Controller {
         return $datatables->make(true);
     }
 
+    
+    public function SasaranListJFTSelect2(Request $request)
+    {
+            
+        $sasaran = Tujuan::
+                            leftjoin('db_pare_2018.renja_indikator_tujuan AS ind_tujuan', function($join){
+                                $join   ->on('renja_tujuan.id','=','ind_tujuan.tujuan_id');
+                                
+                            }) 
+                            ->join('db_pare_2018.renja_sasaran AS sasaran', function($join){
+                                $join   ->on('sasaran.indikator_tujuan_id','=','ind_tujuan.id');
+                                
+                            }) 
+                            ->WHERE('renja_tujuan.renja_id', $request->renja_id )
+                            ->WHERE('sasaran.label', 'LIKE', '%' . $request->sasaran . '%')
+                            ->SELECT(   'sasaran.id AS sasaran_id',
+                                        'sasaran.label AS sasaran_label'
+                                    ) 
+                            ->get(); 
 
-   
+        $sasaran_list = [];
+            foreach ($sasaran as $x) {
+                $sasaran_list[] = array(
+                        'text'          => $x->sasaran_label,
+                        'id'            => $x->sasaran_id,
+                );
+            }
+        return $sasaran_list;
+    }
 
     public function SasaranDetail(Request $request)
     {
@@ -59,12 +86,18 @@ class SasaranAPIController extends Controller {
                             ->first();
 
 		
-		//return  $kegiatan_tahunan;
-        $sasaran = array(
-            'id'            => $x->sasaran_id,
-            'label'         => $x->label
-
-        );
+        //return  $kegiatan_tahunan;
+        if ($x){
+            $sasaran = array(
+                'id'            => $x->sasaran_id,
+                'label'         => $x->label
+            );
+        }else{
+            $sasaran = array(
+                'id'            => "",
+                'label'         => ""
+            );
+        }
         return $sasaran;
     }
 

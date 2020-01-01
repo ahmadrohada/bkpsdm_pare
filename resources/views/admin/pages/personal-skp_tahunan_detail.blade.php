@@ -23,14 +23,9 @@
 				<?php 
 					switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 						case '1': 
-								
 								break;
 						case '2':
-
-								
 								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
-								
-								
 							  	break;
 						case '3': 
 								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';

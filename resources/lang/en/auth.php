@@ -36,6 +36,7 @@ return [
 	'whoops'			=> 'Whoops!',
 	'someProblems'		=> 'There were some problems with your input.',
 	'nip'				=> 'NIP Pegawai',
+	'username'			=> 'Username',
 	'password'			=> 'Password',
 	'rememberMe'		=> '&nbsp;&nbsp;Remember Me',
 	'login'				=> 'Sign in to start your session',
