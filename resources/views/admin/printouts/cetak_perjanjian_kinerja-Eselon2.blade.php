@@ -3,7 +3,7 @@
 		@include('admin.printouts.style')
 
 
-		<title>Cetak TPP Report</title>
+		<title>Cetak</title>
 </head>
 <body>
 
