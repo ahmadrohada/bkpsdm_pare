@@ -10,7 +10,8 @@
 
             <form  id="kegiatan_tahunan_form" method="POST" action="">
 			<input type="text"  name="skp_tahunan_id" value="{!! $skp->id !!}">
-			<div class="modal-body">
+			<input type="text"  name="kegiatan_tahunan_id" >
+ 			<div class="modal-body">
 					
 					<div class="row">
 						<div class="col-md-12 form-group label_sasaran">

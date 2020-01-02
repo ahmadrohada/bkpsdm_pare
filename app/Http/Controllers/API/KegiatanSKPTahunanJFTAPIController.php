@@ -28,7 +28,12 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
        
         
         $x = KegiatanSKPTahunanJFT::
-                            SELECT(     'skp_tahunan_kegiatan_jft.id AS kegiatan_tahunan_id',
+
+                            join('db_pare_2018.renja_sasaran AS sasaran', function($join){
+                                $join   ->on('sasaran.id','=','skp_tahunan_kegiatan_jft.sasaran_id');
+                                
+                            })
+                            ->SELECT(   'skp_tahunan_kegiatan_jft.id AS kegiatan_tahunan_id',
                                         'skp_tahunan_kegiatan_jft.label',
                                         'skp_tahunan_kegiatan_jft.target',
                                         'skp_tahunan_kegiatan_jft.satuan',
@@ -36,7 +41,9 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
                                         'skp_tahunan_kegiatan_jft.quality',
                                         'skp_tahunan_kegiatan_jft.cost',
                                         'skp_tahunan_kegiatan_jft.target_waktu',
-                                        'skp_tahunan_kegiatan_jft.sasaran_id'
+                                        'skp_tahunan_kegiatan_jft.sasaran_id',
+                                        'sasaran.id AS sasaran_id',
+                                        'sasaran.label AS sasaran_label'
 
                                     ) 
                             ->WHERE('skp_tahunan_kegiatan_jft.id', $request->kegiatan_tahunan_id)
@@ -45,8 +52,11 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
 		
 		//return  $kegiatan_tahunan;
         $kegiatan_tahunan = array(
+            'sasaran_id'            => $x->sasaran_id,
+            'sasaran_label'         => $x->sasaran_label, 
+
             'id'                    => $x->kegiatan_tahunan_id,
-            'label'                 => $x->label,
+            'label'                 => $x->label, 
             'ak'                    => $x->angka_kredit,
             'output'                => $x->target.' '.$x->satuan,
             'satuan'                => $x->satuan,

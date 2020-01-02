@@ -108,6 +108,11 @@
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
+
+					//Add data sasaran to select2
+					var option = new Option(data['sasaran_label'],data['sasaran_id'],true,true);
+					$('.modal-kegiatan_tahunan_jft').find('[name=sasaran_id]').append(option).trigger('change');
+
 					$('.modal-kegiatan_tahunan_jft').find('[name=label]').val(data['label']);
 					$('.modal-kegiatan_tahunan_jft').find('[name=angka_kredit]').val(data['ak']);
 					$('.modal-kegiatan_tahunan_jft').find('[name=target]').val(data['target']);
@@ -116,9 +121,7 @@
 					$('.modal-kegiatan_tahunan_jft').find('[name=target_waktu]').val(data['target_waktu']);
 					$('.modal-kegiatan_tahunan_jft').find('[name=cost]').val(data['cost']);
 
-				
-
-					$('.modal-kegiatan_tahunan_jft').find('[name=kegiatan_tahunan_jft_id]').val(data['id']);
+					$('.modal-kegiatan_tahunan_jft').find('[name=kegiatan_tahunan_id]').val(data['id']);
 					$('.modal-kegiatan_tahunan_jft').find('h4').html('Edit Kegiatan Tahunan');
 					$('.modal-kegiatan_tahunan_jft').find('.btn-submit').attr('id', 'submit-update');
 					$('.modal-kegiatan_tahunan_jft').find('[name=text_button_submit]').html('Update Data');
