@@ -254,7 +254,8 @@ class KegiatanAPIController extends Controller {
                 $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(740,761,761))
                                 ->select('id','skpd')
                                 ->get();
-            }else if ( $x->id == '788'){  //disdik , korwil
+            }
+            /* else if ( $x->id == '788'){  //disdik , korwil ,, gak jadi,,karena yang mendapat kegiatan memang korwil
                
                 //korwil dan SMP
                 $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? and id != ?) or parent_id = ? or parent_id = ?', array(788,805,9632,805,9632))
@@ -264,7 +265,8 @@ class KegiatanAPIController extends Controller {
 
                 
                
-            }else{
+            } */
+            else{
                 $level2 = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
             }
 
@@ -294,13 +296,24 @@ class KegiatanAPIController extends Controller {
 
 
                     
+                    //JIKA disdik,tampilkan korwil ( eselon 9 /Unit Kerja Teknis Korwil)
+                    if ( $y->id == 805 ){
+                        $level3 = SKPD::where('parent_id','=',$y->id)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 9 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+                    }else{
+                        $level3 = SKPD::where('parent_id','=',$y->id)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+                    }
                     
-                    $level3 = SKPD::where('parent_id','=',$y->id)
-                                    ->where(function ($query) {
-                                        $query->where('id_eselon', '=' , null )
-                                            ->orWhere('id_eselon', '<=', 8 );
-                                    })
-                                    ->select('id','skpd','id_eselon')->get();
+                    
 
 
                     
