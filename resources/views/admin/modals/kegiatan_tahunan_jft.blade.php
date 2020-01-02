@@ -9,8 +9,8 @@
             </div> 
 
             <form  id="kegiatan_tahunan_form" method="POST" action="">
-			<input type="text"  name="skp_tahunan_id" value="{!! $skp->id !!}">
-			<input type="text"  name="kegiatan_tahunan_id" >
+			<input type="hidden"  name="skp_tahunan_id" value="{!! $skp->id !!}">
+			<input type="hidden"  name="kegiatan_tahunan_id" >
  			<div class="modal-body">
 					
 					<div class="row">
