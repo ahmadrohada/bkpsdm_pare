@@ -1564,6 +1564,10 @@ a:focus {
   border-top-color: #f5c700;
 }
 
+.box.box-kegiatan_bulanan {
+  border-top-color: #5dc46e;
+}
+
 .box.box-indikator_kegiatan_tahunan {
   border-top-color: #02e35d;
 }

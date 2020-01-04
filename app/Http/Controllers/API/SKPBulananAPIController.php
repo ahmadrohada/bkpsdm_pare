@@ -18,6 +18,9 @@ use App\Models\KegiatanSKPTahunan;
 use App\Models\RencanaAksi;
 use App\Models\KegiatanSKPBulanan;
 
+use App\Models\KegiatanSKPTahunanJFT;
+use App\Models\KegiatanSKPBulananJFT;
+
 use App\Helpers\Pustaka;
 
 use Datatables;
@@ -575,6 +578,71 @@ class SKPBulananAPIController extends Controller {
                     $data_keg_skp['text']			= Pustaka::capital_string($z->label);
                     $data_keg_skp['icon']           = "jstree-kegiatan";
                     $data_keg_skp['type']           = "rencana_aksi";
+                    
+
+                    
+                    $keg_list[] = $data_keg_skp ;
+                    unset($data_keg_skp['children']);
+                
+                }
+
+                if(!empty($keg_list)) {
+                    $data_skp_bulanan['children']     = $keg_list;
+                }
+                $kabid_list[] = $data_skp_bulanan ;
+                $keg_list = "";
+                unset($data_skp_bulanan['children']);
+            
+            }
+               
+               
+
+        }	
+
+            if(!empty($kabid_list)) {
+                $data_skp['children']     = $kabid_list;
+            }
+            $data[] = $data_skp ;	
+            $kabid_list = "";
+            unset($data_skp['children']);
+		
+		return $data;
+        
+    }
+
+    public function skp_bulanan_tree5(Request $request)
+    {
+       
+
+        $skp_tahunan = SKPTahunan::where('id','=', $request->skp_tahunan_id )
+                                    ->select('id','renja_id')
+                                    ->get();
+
+
+		foreach ($skp_tahunan as $x) {
+            $data_skp['id']	            = "SKPTahunan|".$x->id;
+			$data_skp['text']			= $x->Renja->Periode->label;
+            $data_skp['icon']           = "jstree-skp_tahunan";
+            $data_skp['type']           = "skp_tahunan";
+            
+
+            $skp_bulanan = SKPBulanan::where('skp_tahunan_id','=',$x->id)->select('id','bulan')->orderBy('bulan')->get();
+            foreach ($skp_bulanan as $y) {
+                $data_skp_bulanan['id']	            = "SKPBulanan|".$y->id;
+                $data_skp_bulanan['text']		    = Pustaka::bulan($y->bulan);
+                $data_skp_bulanan['icon']           = "jstree-skp_bulanan";
+                $data_skp_bulanan['type']           = "skp_bulanan";
+
+
+                $keg_skp = KegiatanSKPBulananJFT::where('skp_bulanan_id','=',$y->id)
+                                        ->select('id','label')
+                                        ->get();
+
+                foreach ($keg_skp as $z) {
+                    $data_keg_skp['id']	           = "kegiatan_bulanan|".$z->id;
+                    $data_keg_skp['text']			= Pustaka::capital_string($z->label);
+                    $data_keg_skp['icon']           = "jstree-kegiatan";
+                    $data_keg_skp['type']           = "kegiatan_bulanan";
                     
 
                     

@@ -137,6 +137,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skp_bulanan_tree2','API\SKPBulananAPIController@skp_bulanan_tree2');
 	Route::get('skp_bulanan_tree3','API\SKPBulananAPIController@skp_bulanan_tree3');
 	Route::get('skp_bulanan_tree4','API\SKPBulananAPIController@skp_bulanan_tree4');
+	Route::get('skp_bulanan_tree5','API\SKPBulananAPIController@skp_bulanan_tree5');
 	Route::get('skp_bulanan_timeline_status','API\SKPBulananAPIController@SKPbulanan_timeline_status');
 
 	//========================================================================================================//
@@ -436,6 +437,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 
 	Route::get('kegiatan_tahunan_detail_jft','API\KegiatanSKPTahunanJFTAPIController@KegiatanTahunanDetail');
+	Route::get('kegiatan_tahunan_list_JFT','API\KegiatanSKPTahunanJFTAPIController@KegiatanTahunanListelect2');
+
+
+	
 
 	Route::post('simpan_kegiatan_tahunan_jft','API\KegiatanSKPTahunanJFTAPIController@Store');
 	
@@ -450,6 +455,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skp_bulanan_list_2','API\SKPBulananAPIController@SKPBulananList2');
 	Route::get('skp_bulanan_list_3','API\SKPBulananAPIController@SKPBulananList3');
 	Route::get('skp_bulanan_list_4','API\SKPBulananAPIController@SKPBulananList4');
+
+	
 
 	Route::get('personal_skp_bulanan_list','API\SKPBulananAPIController@PersonalSKPBulananList');
 
@@ -470,12 +477,22 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('kegiatan_bulanan_3','API\KegiatanSKPBulananAPIController@KegiatanBulanan3');
 	Route::get('kegiatan_bulanan_4','API\KegiatanSKPBulananAPIController@KegiatanBulanan4');
 
+	
+
 	Route::post('simpan_kegiatan_bulanan','API\KegiatanSKPBulananAPIController@Store');
 	Route::post('hapus_kegiatan_bulanan','API\KegiatanSKPBulananAPIController@Destroy');
 
 	Route::get('kegiatan_bulanan_detail','API\KegiatanSKPBulananAPIController@KegiatanBulananDetail');
 
-	
+	//========================================================================================================//
+	//====================================== KEGIATAN BULANAN JFT ================================================//
+	//========================================================================================================//
+	//kegiatan JFT
+	Route::get('kegiatan_bulanan_5','API\KegiatanSKPBulananJFTAPIController@KegiatanBulanan5');
+	Route::post('hapus_kegiatan_bulanan_jft','API\KegiatanSKPBulananJFTAPIController@Destroy');
+	Route::post('update_kegiatan_bulanan_jft','API\KegiatanSKPBulananJFTAPIController@Update');
+	Route::post('simpan_kegiatan_bulanan_jft','API\KegiatanSKPBulananJFTAPIController@Store');
+	Route::get('kegiatan_bulanan_detail_jft','API\KegiatanSKPBulananJFTAPIController@KegiatanBulananDetail');
 	//========================================================================================================//
 	//============================== =======    CAPAIAN BULANAN ================================================//
 	//========================================================================================================//

@@ -30,23 +30,23 @@
 				<div class=" tab-pane" id="kegiatan_bulanan_tab">
 				<!-- 1. KABAN -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
-						@include('admin.tables.skp_kegiatan_bulanan_1_detail')
+						@include('admin.tables.skp_bulanan-kegiatan_1_detail')
 					@endif
 
 					<!-- 2. KASUBID -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('admin.tables.skp_kegiatan_bulanan_2_detail')
+						@include('admin.tables.skp_bulanan-kegiatan_2_detail')
 					@endif
 
 
 					<!-- 3. KASUBID -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.tables.skp_kegiatan_bulanan_3_detail')
+						@include('admin.tables.skp_bulanan-kegiatan_3_detail')
 					@endif
 
 					<!-- 4. PELAKSANA -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
-						@include('admin.tables.skp_kegiatan_bulanan_4_detail')		
+						@include('admin.tables.skp_bulanan-kegiatan_4_detail')		
 					@endif
 				</div>
 
