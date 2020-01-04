@@ -53,7 +53,7 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
 		//return  $kegiatan_tahunan;
         $kegiatan_tahunan = array(
             'sasaran_id'            => $x->sasaran_id,
-            'sasaran_label'         => $x->sasaran_label, 
+            'sasaran_label'         => $x->sasaran_label,  
 
             'id'                    => $x->kegiatan_tahunan_id,
             'label'                 => $x->label, 
@@ -115,6 +115,25 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
         
     }
 
+    public function KegiatanTahunanListelect2(Request $request)
+    {
+            
+        $keg_tahunan = KegiatanSKPTahunanJFT::
+                            WHERE('skp_tahunan_kegiatan_jft.skp_tahunan_id', $request->skp_tahunan_id )
+                            ->SELECT(   'skp_tahunan_kegiatan_jft.id AS kegiatan_tahunan_id',
+                                        'skp_tahunan_kegiatan_jft.label AS kegiatan_tahunan_label'
+                                    ) 
+                            ->get(); 
+
+        $keg_tahunan_list = [];
+            foreach ($keg_tahunan as $x) {
+                $keg_tahunan_list[] = array(
+                        'text'          => $x->kegiatan_tahunan_label,
+                        'id'            => $x->kegiatan_tahunan_id,
+                );
+            }
+        return $keg_tahunan_list;
+    }
 
 
 

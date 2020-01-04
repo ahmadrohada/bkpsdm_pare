@@ -100,7 +100,7 @@
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': 
-									?>@include('admin.tables.skp_kegiatan_tahunan_1_detail')<?php
+									?>@include('admin.tables.skp_tahunan-kegiatan_1_detail')<?php
 									break;
 							case '2':
 	
@@ -128,14 +128,14 @@
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': //KABAN
-									?>@include('admin.tables.skp_kegiatan_bulanan_1_edit')<?php
+									?>@include('admin.tables.skp_bulanan-kegiatan_1_edit')<?php
 									break;
 							case '2': //KABID
 	
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
 										?>@include('admin.modules.tab.kegiatan_bulanan_3_detail')<?php
 									}else{
-										?>@include('admin.tables.skp_kegiatan_bulanan_2_edit')<?php
+										?>@include('admin.tables.skp_bulanan-kegiatan_2_edit')<?php
 									}
 									
 									break;
@@ -143,7 +143,7 @@
 									?>@include('admin.modules.tab.kegiatan_bulanan_3_detail')<?php
 									break;
 							case '4': //PELAKSANA
-									?>@include('admin.tables.skp_kegiatan_bulanan_4_edit')<?php
+									?>@include('admin.tables.skp_bulanan-kegiatan_4_edit')<?php
 									break;
 						}
 					?>
