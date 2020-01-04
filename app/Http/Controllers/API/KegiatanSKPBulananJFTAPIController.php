@@ -102,6 +102,7 @@ class KegiatanSKPBulananJFTAPIController extends Controller {
                 'label.required'                 => 'Harus diisi',
                 'target.required'                => 'Harus diisi',
                 'satuan.required'                => 'Harus diisi',
+                
         ];
 
         $validator = Validator::make(
@@ -128,8 +129,12 @@ class KegiatanSKPBulananJFTAPIController extends Controller {
         $st_kt->kegiatan_tahunan_id = Input::get('kegiatan_tahunan_id');
         $st_kt->skp_bulanan_id      = Input::get('skp_bulanan_id');
         $st_kt->label               = Input::get('label');
-        $st_kt->target              = Input::get('target');
+        $st_kt->target              = preg_replace('/[^0-9]/', '', Input::get('target'));
         $st_kt->satuan              = Input::get('satuan');
+        $st_kt->angka_kredit        = Input::get('angka_kredit');
+        $st_kt->quality             = preg_replace('/[^0-9]/', '', Input::get('quality'));
+        $st_kt->cost                = preg_replace('/[^0-9]/', '', Input::get('cost'));
+        $st_kt->target_waktu        = preg_replace('/[^0-9]/', '', Input::get('target_waktu'));
        
 
         if ( $st_kt->save()){
