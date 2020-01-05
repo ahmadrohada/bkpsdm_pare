@@ -31,6 +31,7 @@ Use Alert;
 
 class RealisasiKegiatanBulananAPIController extends Controller {
 
+    
     public function RealisasiKegiatanBulananDetail(Request $request)
     {
        
@@ -70,6 +71,65 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             'kegiatan_tahunan_waktu'        => $x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->target_waktu,
             'kegiatan_tahunan_cost'         => number_format($x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->cost,'0',',','.'),
             'kegiatan_tahunan_output'       => $x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->target.' '.$x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->satuan,
+
+            'realisasi'              => $x->realisasi,
+            'realisasi_kegiatan_bulanan_id' => $x->realisasi_kegiatan_bulanan_id,
+ 
+        );
+        return $rencana_aksi;
+    }
+
+    
+    public function RealisasiKegiatanBulananDetailJFT(Request $request)
+    {
+       
+        
+        $x = RealisasiKegiatanBulananJFT::
+                            leftjoin('db_pare_2018.skp_bulanan_kegiatan_jft AS kegiatan_skp_bulanan', function($join){
+                                $join   ->on('kegiatan_skp_bulanan.id','=','realisasi_kegiatan_bulanan_jft.kegiatan_bulanan_id');
+                            })
+                            ->join('db_pare_2018.skp_tahunan_kegiatan_jft AS kegiatan_tahunan', function($join){
+                                $join   ->on('kegiatan_tahunan.id','=','kegiatan_skp_bulanan.kegiatan_tahunan_id');
+                                
+                            })
+                            ->SELECT(   'realisasi_kegiatan_bulanan_jft.id AS realisasi_kegiatan_bulanan_id',
+                                        'realisasi_kegiatan_bulanan_jft.realisasi AS realisasi',
+                                        'realisasi_kegiatan_bulanan_jft.satuan',
+                                        'kegiatan_skp_bulanan.id',
+                                        'realisasi_kegiatan_bulanan_jft.kegiatan_bulanan_id',
+
+                                        'kegiatan_tahunan.id AS kegiatan_tahunan_id',
+                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label',
+                                        'kegiatan_tahunan.target AS kegiatan_tahunan_target',
+                                        'kegiatan_tahunan.satuan AS kegiatan_tahunan_satuan',
+                                        'kegiatan_tahunan.cost AS kegiatan_tahunan_cost',
+                                        'kegiatan_tahunan.target_waktu AS kegiatan_tahunan_target_waktu'
+                                    ) 
+                            ->WHERE('realisasi_kegiatan_bulanan_jft.id', $request->realisasi_kegiatan_bulanan_id)
+                            ->first();
+
+        if ( $x->jabatan_id > 0 ){
+            $pelaksana = Pustaka::capital_string($x->Pelaksana->skpd);
+        }else{
+            $pelaksana = '-';
+        }
+		
+		//return  $rencana_aksi;
+        $rencana_aksi = array( 
+            'id'                            => $x->kegiatan_bulanan_id,
+            'skp_bulanan_id'                => $x->skp_bulanan_id,
+            'label'                         => $x->KegiatanSKPBulanan->label,
+            'target'                        => $x->KegiatanSKPBulanan->target,
+            'satuan'                        => $x->KegiatanSKPBulanan->satuan,
+            'output'                        => $x->KegiatanSKPBulanan->target.' '.$x->KegiatanSKPBulanan->satuan,
+            'pelaksana'                     => "-",
+            'penanggung_jawab'              => "-",
+            'kegiatan_tahunan_label'        => $x->kegiatan_tahunan_label,
+            'kegiatan_tahunan_target'       => $x->kegiatan_tahunan_target,
+            'kegiatan_tahunan_satuan'       => $x->kegiatan_tahunan_satuan,
+            'kegiatan_tahunan_waktu'        => $x->kegiatan_tahunan_target_waktu,
+            'kegiatan_tahunan_cost'         => number_format($x->kegiatan_tahunan_cost,'0',',','.'),
+            'kegiatan_tahunan_output'       => $x->kegiatan_tahunan_target.' '.$x->kegiatan_tahunan_satuan,
 
             'realisasi'              => $x->realisasi,
             'realisasi_kegiatan_bulanan_id' => $x->realisasi_kegiatan_bulanan_id,

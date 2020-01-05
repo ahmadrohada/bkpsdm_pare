@@ -632,7 +632,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//===================== REALISASI  KEGIATAN BULANAN  JFT ======================================//
 	//========================================================================================================//
 
-	//Route::get('realisasi_kegiatan_bulanan_detail_jft','API\RealisasiKegiatanBulananJFTAPIController@RealisasiKegiatanBulananDetail');
+	Route::get('realisasi_kegiatan_bulanan_detail_jft','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulananDetailJFT');
 
 	Route::post('hapus_realisasi_kegiatan_bulanan_jft','API\RealisasiKegiatanBulananAPIController@DestroyJFT');
 	Route::post('simpan_realisasi_kegiatan_bulanan_jft','API\RealisasiKegiatanBulananAPIController@StoreJFT');

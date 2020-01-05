@@ -349,7 +349,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_realisasi_kegiatan_bulanan") }}',
+			url		: '{{ url("api_resource/update_realisasi_kegiatan_bulanan_jft") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
