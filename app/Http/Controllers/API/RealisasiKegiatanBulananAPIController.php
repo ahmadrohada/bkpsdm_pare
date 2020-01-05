@@ -10,7 +10,10 @@ use App\Models\IndikatorSasaran;
 use App\Models\PerjanjianKinerja;
 use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPBulanan;
+use App\Models\KegiatanSKPTahunanJFT;
+use App\Models\KegiatanSKPBulananJFT;
 use App\Models\RealisasiKegiatanBulanan;
+use App\Models\RealisasiKegiatanBulananJFT;
 use App\Models\IndikatorProgram;
 use App\Models\Skpd;
 use App\Models\Jabatan;
@@ -452,6 +455,54 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         
     } 
 
+    public function RealisasiKegiatanBulanan5(Request $request)
+    {
+            
+        //$skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan')->first();
+
+        $dt = KegiatanSKPBulananJFT::
+                    WHERE('skp_bulanan_kegiatan_jft.skp_bulanan_id','=', $request->skp_bulanan_id )
+                    ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan_jft', function($join){
+                        $join   ->on('realisasi_kegiatan_bulanan_jft.kegiatan_bulanan_id','=','skp_bulanan_kegiatan_jft.id');
+                    })
+                    ->SELECT(   'skp_bulanan_kegiatan_jft.id AS kegiatan_bulanan_id',
+                                'skp_bulanan_kegiatan_jft.label AS kegiatan_bulanan_label',
+                                'skp_bulanan_kegiatan_jft.target',
+                                'skp_bulanan_kegiatan_jft.satuan',
+                                'realisasi_kegiatan_bulanan_jft.id AS realisasi_kegiatan_bulanan_id',
+                                'realisasi_kegiatan_bulanan_jft.realisasi AS realisasi',
+                                'realisasi_kegiatan_bulanan_jft.satuan AS realisasi_satuan',
+                                'realisasi_kegiatan_bulanan_jft.bukti',
+                                'realisasi_kegiatan_bulanan_jft.alasan_tidak_tercapai',
+                                'skp_bulanan_kegiatan_jft.kegiatan_tahunan_id'
+                            ) 
+                    
+                    ->get();
+        
+        $skp_id = $request->skp_bulanan_id;
+
+
+        $datatables = Datatables::of($dt)
+        ->addColumn('kegiatan_bulanan_id', function ($x) use($skp_id){
+            return $x->kegiatan_bulanan_id;
+        })
+        ->addColumn('kegiatan_tahunan_label', function ($x) use($skp_id){
+            return $x->KegiatanTahunan->label;
+        })
+        ->addColumn('persentase_realisasi', function ($x) use($skp_id){
+            return   Pustaka::persen($x->realisasi,$x->target);
+
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true); 
+        
+    } 
+
+
 
     public function Store(Request $request)
     {
@@ -583,4 +634,142 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             
     
     } 
+
+
+//================================== jft  ===================================================//
+
+    public function StoreJFT(Request $request)
+    {
+
+        $messages = [
+                'kegiatan_bulanan_id.required'      => 'Harus diisi',
+                'capaian_id.required'               => 'Harus diisi',
+                'realisasi.required'           => 'Harus diisi',
+                'satuan.required'                   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'kegiatan_bulanan_id'   => 'required',
+                            'capaian_id'        => 'required',
+                            'realisasi'        => 'required',
+                            'satuan'                => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+
+        $st_kt    = new RealisasiKegiatanBulananJFT;
+
+        $st_kt->kegiatan_bulanan_id     = Input::get('kegiatan_bulanan_id');
+        $st_kt->capaian_id              = Input::get('capaian_id');
+        $st_kt->realisasi               = Input::get('realisasi');
+        $st_kt->satuan                  = Input::get('satuan');
+        $st_kt->alasan_tidak_tercapai   = Input::get('alasan_tidak_tercapai');
+        $st_kt->bukti                   = "";
+    
+
+        if ( $st_kt->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+
+    }
+
+
+    public function UpdateJFT(Request $request)
+    {
+
+        $messages = [
+                'realisasi_kegiatan_bulanan_id.required'   => 'Harus diisi',
+                'realisasi.required'                => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'realisasi_kegiatan_bulanan_id'   => 'required',
+                            'realisasi'                => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $st_kt    = RealisasiKegiatanBulananJFT::find(Input::get('realisasi_kegiatan_bulanan_id'));
+        if (is_null($st_kt)) {
+            return response()->json('Realisasi Kegiatan Bulanan tidak ditemukan.',422);
+        }
+
+
+        $st_kt->realisasi             = Input::get('realisasi');
+        if ( $st_kt->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+
+
+    }
+
+
+    public function DestroyJFT(Request $request)
+    {
+
+        $messages = [
+                'realisasi_kegiatan_bulanan_id.required'   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'realisasi_kegiatan_bulanan_id'   => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $st_kt    = RealisasiKegiatanBulananJFT::find(Input::get('realisasi_kegiatan_bulanan_id'));
+        if (is_null($st_kt)) {
+            return $this->sendError('Realisasi Kegiatan Bulanan tidak ditemukan.');
+        }
+
+
+        if ( $st_kt->delete()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+
+    } 
+
+
+
+
 }

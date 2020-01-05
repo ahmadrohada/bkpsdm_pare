@@ -21,6 +21,7 @@ use App\Models\RealisasiRencanaAksiKasubid;
 use App\Models\RealisasiRencanaAksiKabid;
 use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\KegiatanSKPBulanan;
+use App\Models\KegiatanSKPBulananJFT;
 use App\Models\RealisasiKegiatanBulanan;
 
 use App\Helpers\Pustaka;
@@ -232,9 +233,16 @@ class CapaianBulananAPIController extends Controller {
         $renja_id = $skp_bulanan->SKPTahunan->renja_id;
         //$kegiatan_tahunan = KegiatanSKPTahunan::WHERE('skp_tahunan_id',$skp_bulanan->skp_tahunan_id)->get()->toArray();
 
+        //================================= JFU ===========================================//
+        if ( $jenis_jabatan == 5 ){
+            $jm_kegiatan = KegiatanSKPBulananJFT::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
+
+            $list_bawahan = "";
+            $kegiatan_list = "";
+
 
         //================================= PELAKSANA ===========================================//
-        if ( $jenis_jabatan == 4 ){
+        }else if ( $jenis_jabatan == 4 ){
             $jm_kegiatan = KegiatanSKPBulanan::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
        
             $list_bawahan = "";
@@ -514,8 +522,33 @@ class CapaianBulananAPIController extends Controller {
         $jenis_jabatan = $capaian_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
         $bulan = $capaian_bulanan->SKPBulanan->bulan;
 
-        //jm kegiatan pelaksana
-        if ( $jenis_jabatan == 4 ){
+        //jm kegiatan JFT
+        if ( $jenis_jabatan == 5 ){
+            
+            //hitung capaian kinerja bulanan
+            $xdata = KegiatanSKPBulananJFT::
+                                        leftjoin('db_pare_2018.realisasi_kegiatan_bulanan_jft AS realisasi', function($join) use($capaian_id){
+                                            $join   ->on('realisasi.kegiatan_bulanan_id','=','skp_bulanan_kegiatan_jft.id');
+                                            $join   ->where('realisasi.capaian_id','=',$capaian_id);
+                                        })
+                                        ->SELECT('skp_bulanan_kegiatan_jft.target','realisasi.realisasi')
+                                        ->WHERE('skp_bulanan_kegiatan_jft.skp_bulanan_id','=',$capaian_bulanan->skp_bulanan_id)
+                                        ->get();
+            $capaian_kinerja_bulanan = 0 ;
+            $jm_kegiatan_bulanan = 0 ;
+
+            foreach ($xdata as $data) {
+                $jm_kegiatan_bulanan ++;
+
+                $capaian_kinerja_bulanan += Pustaka::persen($data->realisasi,$data->target);
+
+            }
+
+            $capaian_kinerja_bulanan =  Pustaka::persen2($capaian_kinerja_bulanan,$jm_kegiatan_bulanan);
+       
+       
+       
+        }else if ( $jenis_jabatan == 4 ){ //jm kegiatan pelaksana
             
             //hitung capaian kinerja bulanan
             $xdata = KegiatanSKPBulanan::

@@ -11,12 +11,10 @@
 			<h1>
 				Approval Request
 			</h1>
-				{!! Breadcrumbs::render('approval_request-capaian_tahunan') !!}
+				{!! Breadcrumbs::render('approval_request-capaian_bulanan') !!}
       </section>
 	    <section class="content">
 				@include('admin.modules.snapshots-boxes.approval_request')
-
-				@include('admin.tables.approval_request-capaian_tahunan')
 	    </section>
 	</div>
 @stop

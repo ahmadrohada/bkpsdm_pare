@@ -45,6 +45,11 @@
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
 						@include('admin.modules.timeline.capaian_bulanan_status_approvement')	
 					@endif
+
+					<!-- 2. JFT -->
+					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+						@include('admin.modules.timeline.capaian_bulanan_status_approvement')	
+					@endif
 					
 				</div>
 				<div class="tab-pane" id="detail">
@@ -70,6 +75,12 @@
 					<!-- 2. PELAKSANA -->
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
 						@include('admin.tables.capaian_kegiatan_bulanan_4_detail')
+						
+					@endif
+
+					<!-- 2. JFT -->
+					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+						@include('admin.tables.capaian_kegiatan_bulanan_5_detail')
 						
 					@endif
 				

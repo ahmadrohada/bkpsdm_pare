@@ -273,7 +273,140 @@
 
 
 
+//========================== JFT   ====================================//
+		$(document).on('click','#submit-save_jft',function(e){
 
+		on_submitx();
+		var data = $('#realisasi_kegiatan_bulanan_form').serialize();
+
+		//alert(data);
+		$.ajax({
+			url		: '{{ url("api_resource/simpan_realisasi_kegiatan_bulanan_jft") }}',
+			type	: 'POST',
+			data	:  data,
+			success	: function(data , textStatus, jqXHR) {
+				
+				//$('#program_table').DataTable().ajax.reload(null,false);
+			
+				reset_submitx();
+				Swal.fire({
+					title: "",
+					text: "Sukses",
+					type: "success",
+					width: "200px", 
+					showConfirmButton: false,
+					allowOutsideClick : false,
+					timer:1500
+				}).then(function () {
+					$('.modal-realisasi_kegiatan_bulanan').modal('hide');
+					$('#realisasi_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+					
+					
+					
+				},
+					
+					function (dismiss) {
+						if (dismiss === 'timer') {
+							
+						}
+					}
+			)	
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
+
+				var test = $.parseJSON(jqXHR.responseText);
+				
+				var data= test.errors;
+
+				$.each(data, function(index,value){
+					//alert (index+":"+value);
+					
+					//error message
+					((index == 'realisasi')?$('.realisasi').addClass('has-error'):'');
+					((index == 'bukti')?$('.bukti').addClass('has-error'):'');
+					$('#realisasi').focus();
+					reset_submitx();
+					
+				
+				});
+
+			
+			}
+			
+		});
+
+
+
+
+
+		});
+
+
+		$(document).on('click','#submit-update_jft',function(e){
+
+		on_submitx();
+		var data = $('#realisasi_kegiatan_bulanan_form').serialize();
+
+		//alert(data);
+		$.ajax({
+			url		: '{{ url("api_resource/update_realisasi_kegiatan_bulanan") }}',
+			type	: 'POST',
+			data	:  data,
+			success	: function(data , textStatus, jqXHR) {
+				
+				//$('#program_table').DataTable().ajax.reload(null,false);
+			
+				reset_submitx();
+				Swal.fire({
+					title: "",
+					text: "Sukses",
+					type: "success",
+					width: "200px", 
+					showConfirmButton: false,
+					allowOutsideClick : false,
+					timer:1500
+				}).then(function () {
+					$('.modal-realisasi_kegiatan_bulanan').modal('hide');
+					$('#realisasi_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+					
+				},
+					
+					function (dismiss) {
+						if (dismiss === 'timer') {
+							
+						}
+					}
+			)	
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
+
+				var test = $.parseJSON(jqXHR.responseText);
+				
+				var data= test.errors;
+
+				$.each(data, function(index,value){
+					//alert (index+":"+value);
+					
+					//error message
+					((index == 'realisasi')?$('.realisasi').addClass('has-error'):'');
+					((index == 'bukti')?$('.bukti').addClass('has-error'):'');
+					$('#realisasi').focus();
+					reset_submitx();
+
+					
+				
+				});
+
+			
+			}
+			
+		});
+
+
+
+
+
+		});
 
 
 

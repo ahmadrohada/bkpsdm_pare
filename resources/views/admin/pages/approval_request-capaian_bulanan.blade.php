@@ -14,7 +14,7 @@
 				{!! Breadcrumbs::render('approval_request-capaian_bulanan') !!}
       </section>
 	    <section class="content">
-				@include('admin.modules.approval_request-snapshots-boxes')
+				@include('admin.modules.snapshots-boxes.approval_request')
 
 				@include('admin.tables.approval_request-capaian_bulanan')
 	    </section>
