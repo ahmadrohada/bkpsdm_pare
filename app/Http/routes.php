@@ -620,12 +620,24 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('realisasi_kegiatan_bulanan_2','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan2');
 	Route::get('realisasi_kegiatan_bulanan_3','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan3');
 	Route::get('realisasi_kegiatan_bulanan_4','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan4');
+	Route::get('realisasi_kegiatan_bulanan_5','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulanan5');
 
 	Route::get('realisasi_kegiatan_bulanan_detail','API\RealisasiKegiatanBulananAPIController@RealisasiKegiatanBulananDetail');
 
 	Route::post('hapus_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@Destroy');
 	Route::post('simpan_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@Store');
 	Route::post('update_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@Update');
+
+
+	//===================== REALISASI  KEGIATAN BULANAN  JFT ======================================//
+	//========================================================================================================//
+
+	//Route::get('realisasi_kegiatan_bulanan_detail_jft','API\RealisasiKegiatanBulananJFTAPIController@RealisasiKegiatanBulananDetail');
+
+	Route::post('hapus_realisasi_kegiatan_bulanan_jft','API\RealisasiKegiatanBulananAPIController@DestroyJFT');
+	Route::post('simpan_realisasi_kegiatan_bulanan_jft','API\RealisasiKegiatanBulananAPIController@StoreJFT');
+	Route::post('update_realisasi_kegiatan_bulanan_jft','API\RealisasiKegiatanBulananAPIController@UpdateJFT');
+
 
 	//===================== REALISASI  RENCANA AKSI KASUBID    ======================================//
 	//========================================================================================================//
@@ -1362,17 +1374,17 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'HomePersonalController@showCapaianBulanan'
 	]);
 
-	
+
+//======================= A P P R O V A L    R E Q U E S T ==================================//
+
+
+	Route::get('approval', [
+		'as' 			=> '',
+		'uses' 			=> 'ApprovalRequestController@showDashoard'
+	]);
 
 
 	
-	
-
-
-
-
-
-	//======================= A P P R O V A L    R E Q U E S T ==================================//
 	Route::get('renja_approval-request', [
 		'as' 			=> '',
 		'uses' 			=> 'ApprovalRequestController@showRenja'

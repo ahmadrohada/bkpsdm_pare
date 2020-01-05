@@ -38,7 +38,11 @@ class KegiatanSKPBulananJFTAPIController extends Controller {
                                         'skp_bulanan_kegiatan_jft.target_waktu',
                                         'skp_bulanan_kegiatan_jft.kegiatan_tahunan_id',
                                         'kegiatan_tahunan.id AS kegiatan_tahunan_id',
-                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label'
+                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label',
+                                        'kegiatan_tahunan.target AS kegiatan_tahunan_target',
+                                        'kegiatan_tahunan.satuan AS kegiatan_tahunan_satuan',
+                                        'kegiatan_tahunan.cost AS kegiatan_tahunan_cost',
+                                        'kegiatan_tahunan.target_waktu AS kegiatan_tahunan_target_waktu'
 
                                     ) 
                             ->WHERE('skp_bulanan_kegiatan_jft.id', $request->kegiatan_bulanan_id)
@@ -47,8 +51,12 @@ class KegiatanSKPBulananJFTAPIController extends Controller {
 		
 		//return  $kegiatan_bulanan;
         $kegiatan_bulanan = array(
-            'kegiatan_tahunan_id'            => $x->kegiatan_tahunan_id,
-            'kegiatan_tahunan_label'         => $x->kegiatan_tahunan_label,  
+            'kegiatan_tahunan_id'      => $x->kegiatan_tahunan_id,
+            'kegiatan_tahunan_label'   => $x->kegiatan_tahunan_label,
+            'kegiatan_tahunan_output'  => $x->kegiatan_tahunan_target." ".$x->kegiatan_tahunan_satuan,  
+            'kegiatan_tahunan_waktu'   => $x->kegiatan_tahunan_target_waktu, 
+            'kegiatan_tahunan_cost'    => number_format($x->kegiatan_tahunan_cost,'0',',','.'),
+
             'id'                    => $x->kegiatan_bulanan_id,
             'label'                 => $x->label, 
             'ak'                    => $x->angka_kredit,
