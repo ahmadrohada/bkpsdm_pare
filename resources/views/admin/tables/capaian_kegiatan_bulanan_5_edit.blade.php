@@ -155,7 +155,7 @@
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
-					$('.modal-realisasi_kegiatan_bulanan').find('[name=id]').val(data['id']);
+					$('.modal-realisasi_kegiatan_bulanan').find('[name=kegiatan_bulanan_id]').val(data['id']);
 					$('.modal-realisasi_kegiatan_bulanan').find('[name=skp_bulanan_id]').val(data['skp_bulanan_id']);
 					$('.modal-realisasi_kegiatan_bulanan').find('[name=capaian_id]').val({!! $capaian->id !!});
 					$('.modal-realisasi_kegiatan_bulanan').find('[name=satuan]').val(data['satuan']);
@@ -215,7 +215,7 @@
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_target').html(data['target']);
 					
 					$('.modal-realisasi_kegiatan_bulanan').find('h4').html('Edit Realisasi Kegiatan Bulanan');
-					$('.modal-realisasi_kegiatan_bulanan').find('.btn-submit').attr('id', 'submit-update');
+					$('.modal-realisasi_kegiatan_bulanan').find('.btn-submit').attr('id', 'submit-update_jft');
 					$('.modal-realisasi_kegiatan_bulanan').find('[name=text_button_submit]').html('Update Data');
 					$('.modal-realisasi_kegiatan_bulanan').modal('show'); 
 				},
