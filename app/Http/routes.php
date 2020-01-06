@@ -608,6 +608,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@RealisasiKegiatanTriwulan');
 	
 	Route::get('add_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@AddRealisasiKegiatanTriwulan');
+	Route::get('add_realisasi_kegiatan_triwulan_jft','API\RealisasiKegiatanTriwulanAPIController@AddRealisasiKegiatanTriwulanJFT');
 
 	Route::post('simpan_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@Store');
 	Route::post('update_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@Update');

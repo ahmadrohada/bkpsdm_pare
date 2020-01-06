@@ -31,8 +31,13 @@
 						@include('admin.modules.timeline.capaian_triwulan_status_edit')
 					@endif
 
-					<!-- 2. KASUBID -->
+					<!-- 3. KASUBID -->
 					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+						@include('admin.modules.timeline.capaian_triwulan_status_edit')
+					@endif
+
+					<!-- 5. JFT -->
+					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
 						@include('admin.modules.timeline.capaian_triwulan_status_edit')
 					@endif
 					
@@ -43,7 +48,26 @@
 								
 				<div class=" tab-pane" id="kegiatan_triwulan_tab">
 
-					@include('admin.tables.capaian_kegiatan_triwulan_edit')
+					<!-- 2. KABID -->
+					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
+						@include('admin.tables.capaian_kegiatan_triwulan_edit')
+					@endif
+
+					<!-- 3. KASUBID -->
+					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+						@include('admin.tables.capaian_kegiatan_triwulan_edit')
+					@endif
+
+					<!-- 3. JFU -->
+					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
+						@include('admin.tables.capaian_kegiatan_triwulan_edit')
+					@endif
+
+					<!-- 5. JFT -->
+					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+						@include('admin.tables.capaian_kegiatan_triwulan_jft_edit')
+					@endif
+					
 				
 				</div>
 				

@@ -542,10 +542,6 @@ class SKPTahunanAPIController extends Controller {
     {
             
         $dt = \DB::table('db_pare_2018.renja AS renja')
-                   
-                    /* ->join('db_pare_2018.perjanjian_kinerja AS pk', function($join){
-                        $join   ->on('pk.renja_id','=','renja.id');
-                    }) */
                     ->rightjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function($join){
                         $join   ->on('renja.id','=','skp_tahunan.renja_id');
                     }) 
@@ -553,22 +549,16 @@ class SKPTahunanAPIController extends Controller {
                     ->leftjoin('db_pare_2018.periode AS periode', function($join){
                         $join   ->on('renja.periode_id','=','periode.id');
                     }) 
-
                     //PEJABAT YANG DINILAI
                     ->leftjoin('demo_asn.tb_history_jabatan AS pejabat', function($join){
                         $join   ->on('skp_tahunan.u_jabatan_id','=','pejabat.id');
                     }) 
-
                     //ESELON PEJABAT YANG DINILAI
                      ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
                         $join   ->on('eselon.id','=','pejabat.id_eselon');
                     }) 
-
-                    
                     //jabatan
                     ->leftjoin('demo_asn.m_skpd AS jabatan', 'pejabat.id_jabatan','=','jabatan.id')
-
-
                     ->select([  'skp_tahunan.id AS skp_tahunan_id',
                                 'periode.label AS periode',
                                 'skp_tahunan.pegawai_id AS pegawai_id',
@@ -582,45 +572,29 @@ class SKPTahunanAPIController extends Controller {
                                 'jabatan.skpd AS jabatan',
                                 'jabatan.id_skpd'
 
-                        ]);
+                        ])
+                    ->ORDERBY('renja.id','DESC');
 
        
-                    $datatables = Datatables::of($dt)
+        $datatables = Datatables::of($dt)
                     ->addColumn('status', function ($x) {
-            
                         return $x->send_to_atasan;
-            
                     })->addColumn('periode', function ($x) {
-                        
                         return $x->periode;
-                    
                     })->addColumn('nip_pegawai', function ($x) {
-                        
                         return $x->u_nip;
-                    
                     })->addColumn('nama_pegawai', function ($x) {
-                        
                         return $x->u_nama;
-                    
                     })
                     ->addColumn('eselon', function ($x) {
-                        
-                        
                         return  $x->eselon;
-                        
                     })->addColumn('jabatan', function ($x) {
-                        
                         return Pustaka::capital_string($x->jabatan);
-                    
                     });
-                    
-            
-                    
                     if ($keyword = $request->get('search')['value']) {
                         $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
                     } 
-            
-                    return $datatables->make(true);
+        return $datatables->make(true);
         
     }
 
