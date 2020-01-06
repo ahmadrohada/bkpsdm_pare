@@ -9,6 +9,7 @@ use App\Models\RealisasiIndikatorKegiatanTriwulan;
 use App\Models\IndikatorKegiatan;
 use App\Models\Kegiatan;
 use App\Models\Jabatan;
+use App\Models\Sasaran;
 
 use App\Helpers\Pustaka;
 
@@ -151,6 +152,111 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
     
     
         }
+
+        protected function kegiatan_triwulan_jft($renja_id,$jabatan_id,$capaian_id,$search){
+ 
+
+          
+            $kegiatan = Sasaran::
+                                    
+                                    //LEFT JOIN ke Kegiatan SKP TAHUNAN
+                                    JOIN('db_pare_2018.skp_tahunan_kegiatan_jft AS kegiatan_tahunan', function($join){
+                                        $join   ->on('kegiatan_tahunan.sasaran_id','=','renja_sasaran.id');
+                                        
+                                    })
+                                    //LEFT JOIN TERHADAP REALISASI TAHUNAN tahunan
+                                    ->leftjoin('db_pare_2018.realisasi_kegiatan_triwulan AS realisasi_kegiatan', function($join) use ( $capaian_id ){
+                                        $join   ->on('realisasi_kegiatan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
+                                        $join   ->WHERE('realisasi_kegiatan.capaian_id','=',  $capaian_id );
+                                        
+                                    })
+                                    //LEFT JOIN KE CAPAIAN TAHUNAN
+                                    ->leftjoin('db_pare_2018.capaian_triwulan AS capaian_triwulan', function($join){
+                                        $join   ->on('capaian_triwulan.id','=','realisasi_kegiatan.capaian_id');
+                                    })
+        
+                                    ->SELECT(   
+                                                'kegiatan_tahunan.id AS kegiatan_tahunan_id',
+                                                'kegiatan_tahunan.label AS kegiatan_tahunan_label',
+                                                'kegiatan_tahunan.target AS kegiatan_tahunan_target',
+                                                'kegiatan_tahunan.satuan AS kegiatan_tahunan_satuan',
+                                                'kegiatan_tahunan.quality AS kegiatan_tahunan_quality',
+                                                'kegiatan_tahunan.cost AS kegiatan_tahunan_cost',
+                                                'kegiatan_tahunan.target_waktu AS kegiatan_tahunan_target_waktu',
+                                                'kegiatan_tahunan.angka_kredit AS kegiatan_tahunan_ak',
+        
+        
+                                                'realisasi_kegiatan.id AS realisasi_kegiatan_id',
+                                                'realisasi_kegiatan.target_cost AS realisasi_kegiatan_target_cost',
+                                                'realisasi_kegiatan.realisasi_cost AS realisasi_kegiatan_realisasi_cost',
+        
+                                                'capaian_triwulan.status'
+                                               
+                                            ) 
+                                    
+                                    ->get();
+                        
+                $datatables = Datatables::of($kegiatan)
+               
+                ->addColumn('id', function ($x) {
+                    return $x->kegiatan_tahunan_id;
+                })->addColumn('kegiatan_tahunan_label', function ($x) {
+                    return $x->kegiatan_tahunan_label;
+                })->addColumn('target_quantity', function ($x) {
+                    return $x->kegiatan_tahunan_target." ".$x->kegiatan_tahunan_satuan;
+                })->addColumn('target_quality', function ($x) {
+                    return $x->kegiatan_tahunan_quality." %";
+                })->addColumn('target_waktu', function ($x) {
+                    return  ($x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_realisasi_waktu : $x->kegiatan_tahunan_target_waktu )." bln";
+                })->addColumn('target_cost', function ($x) {
+                    return "Rp. ". ($x->realisasi_kegiatan_id ? number_format($x->realisasi_kegiatan_target_cost,'0',',','.') : number_format($x->kegiatan_tahunan_cost,'0',',','.') );
+                })->addColumn('realisasi_quantity', function ($x) {
+                    return ( $x->realisasi_indikator_id ? $x->realisasi_indikator_realisasi_quantity." ".$x->realisasi_indikator_satuan : "-" );
+                })->addColumn('realisasi_quality', function ($x) {
+                    return ($x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_realisasi_quality." %" : "-" );
+                })->addColumn('realisasi_waktu', function ($x) {
+                    return  ($x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_realisasi_waktu." bln" : "-" );
+                })->addColumn('realisasi_cost', function ($x) {
+                    return ($x->realisasi_kegiatan_id ? "Rp. ". number_format($x->realisasi_kegiatan_realisasi_cost,'0',',','.') : "-" );
+                })->addColumn('jumlah', function ($x) {
+                    return  ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost );
+                })->addColumn('capaian_skp', function ($x) {
+                    if ( $x->hitung_cost <=0 ){
+                        return number_format(($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/3 ,2) ;
+                    }else{
+                        return number_format(($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/4 ,2);
+                    }
+                })->addColumn('hitung_quantity', function ($x) {
+                    return Pustaka::persen_bulat($x->hitung_quantity);
+                })->addColumn('hitung_quality', function ($x) {
+                    return Pustaka::persen_bulat($x->hitung_quality);
+                })->addColumn('hitung_waktu', function ($x) {
+                    return Pustaka::persen_bulat($x->hitung_waktu);
+                })->addColumn('hitung_cost', function ($x) {
+                    return Pustaka::persen_bulat($x->hitung_cost);
+                })->addColumn('realisasi_kegiatan_id', function ($x) {
+                
+                    return $x->realisasi_kegiatan_id;
+        
+                    
+                })->addColumn('penilaian', function ($x) {
+                    if ( ($x->akurasi + $x->ketelitian + $x->kerapihan + $x->keterampilan ) == 0) {
+                        return 0;
+                    }else{
+                        return 1;
+                    }
+        
+                    
+                });
+        
+                if ($keyword = $search ) {
+                    $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+                } 
+        
+                return $datatables->make(true); 
+        
+        
+            }
 
         protected function kegiatan_triwulan_eselon4($renja_id,$jabatan_id,$capaian_id,$search){
  
@@ -302,7 +408,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
 						break;
 				case 4 : return $this->kegiatan_triwulan_eselon4($renja_id,$jabatan_id,$capaian_id,$search);
 						break;
-				case 5 : "";
+				case 5 : return $this->kegiatan_triwulan_jft($renja_id,$jabatan_id,$capaian_id,$search);
 						break;
 					}
 
@@ -316,6 +422,94 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
        
         $capaian_id = $request->capaian_id;
         $indikator_kegiatan_id = $request->indikator_kegiatan_id;
+
+        $x = IndikatorKegiatan::
+                            leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
+                                $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
+                            })
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) {
+                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                            })
+                            //REALISASINYA
+                            ->leftjoin('db_pare_2018.realisasi_indikator_kegiatan_triwulan AS realisasi_indikator', function($join) use($capaian_id) {
+                                $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
+                                $join   ->WHERE('realisasi_indikator.capaian_id','=', $capaian_id );
+                            })
+                            ->leftjoin('db_pare_2018.realisasi_kegiatan_triwulan AS realisasi_kegiatan', function($join) use($capaian_id) {
+                                $join   ->on('realisasi_kegiatan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
+                                $join   ->WHERE('realisasi_kegiatan.capaian_id','=', $capaian_id );
+                            })
+                
+                            ->SELECT(       'renja_kegiatan.id AS kegiatan_id',
+
+
+                                            'renja_indikator_kegiatan.id AS ind_kegiatan_id',
+                                            'renja_indikator_kegiatan.label AS indikator_label',
+                                            'renja_indikator_kegiatan.target AS indikator_quantity',
+                                            'renja_indikator_kegiatan.satuan AS indikator_satuan',
+
+                                            'kegiatan_tahunan.id AS kegiatan_tahunan_id',
+                                            'kegiatan_tahunan.label AS kegiatan_tahunan_label',
+                                            'kegiatan_tahunan.quality AS kegiatan_tahunan_quality',
+                                            'kegiatan_tahunan.cost AS kegiatan_tahunan_cost',
+                                            'kegiatan_tahunan.target_waktu AS kegiatan_tahunan_target_waktu',
+                                            'kegiatan_tahunan.angka_kredit AS kegiatan_tahunan_ak',
+
+                                            'realisasi_indikator.id AS realisasi_indikator_id',
+                                            'realisasi_indikator.target_quantity AS realisasi_indikator_target_quantity',
+                                            'realisasi_indikator.realisasi_quantity AS realisasi_indikator_realisasi_quantity',
+                                            'realisasi_indikator.satuan AS realisasi_indikator_satuan',
+
+
+                                            'realisasi_kegiatan.id AS realisasi_kegiatan_id',
+                                            'realisasi_kegiatan.target_cost AS realisasi_kegiatan_target_cost',
+                                            'realisasi_kegiatan.realisasi_cost AS realisasi_kegiatan_realisasi_cost'
+                                        
+
+
+
+                                            
+                                    ) 
+                            ->WHERE('renja_indikator_kegiatan.id', $indikator_kegiatan_id)
+                            ->first();
+
+       
+        $jm_indikator = IndikatorKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->count();
+
+
+        $ind_kegiatan = array(
+            'ind_kegiatan_id'           => $x->ind_kegiatan_id,
+            'indikator_label'           => $x->indikator_label,
+            'kegiatan_tahunan_id'       => $x->kegiatan_tahunan_id,
+            'kegiatan_tahunan_label'    => $x->kegiatan_tahunan_label,
+
+           
+			'realisasi_indikator_id'    => $x->realisasi_indikator_id,
+			'realisasi_kegiatan_id'     => $x->realisasi_kegiatan_id,
+
+            'jumlah_indikator'          => $jm_indikator,
+
+            
+
+            'target_quantity'           => $x->realisasi_indikator_id ? $x->realisasi_indikator_target_quantity : $x->indikator_quantity,
+            'target_cost'               => $x->realisasi_kegiatan_id ? number_format($x->realisasi_kegiatan_target_cost,'0',',','.') : number_format($x->kegiatan_tahunan_cost,'0',',','.'),
+            'satuan'                    => $x->realisasi_indikator_id ? $x->realisasi_indikator_satuan : $x->indikator_satuan,
+
+            'realisasi_quantity'        => $x->realisasi_indikator_realisasi_quantity,
+            'realisasi_cost'            => number_format($x->realisasi_kegiatan_realisasi_cost,'0',',','.'),
+
+
+
+        ); 
+        return $ind_kegiatan;
+    }
+
+
+    public function AddRealisasiKegiatanTriwulanJFT(Request $request)
+    {
+       
+        $capaian_id             = $request->capaian_id;
+        $kegiatan_tahunan_id    = $request->kegiatan_tahunan_id;
 
         $x = IndikatorKegiatan::
                             leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
