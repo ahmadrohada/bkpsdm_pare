@@ -620,13 +620,13 @@ class Pustaka {
 		switch($data)
 					{
 						
-				case 1 : $trimester='Trimester I ( Januari - Maret )';
+				case 1 : $trimester='Triwulan I ( Januari - Maret )';
 						break;
-				case 2 : $trimester='Trimester II ( April - Juni )';
+				case 2 : $trimester='Triwulan II ( April - Juni )';
 						break;
-				case 3 : $trimester='Trimester III ( Juli - September )';
+				case 3 : $trimester='Triwulan III ( Juli - September )';
 						break;
-				case 4 : $trimester='Trimester IV ( Oktober - Desember )';
+				case 4 : $trimester='Triwulan IV ( Oktober - Desember )';
 						break;
 						
 					}

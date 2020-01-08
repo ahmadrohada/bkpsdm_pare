@@ -608,11 +608,18 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@RealisasiKegiatanTriwulan');
 	
 	Route::get('add_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@AddRealisasiKegiatanTriwulan');
-	Route::get('add_realisasi_kegiatan_triwulan_jft','API\RealisasiKegiatanTriwulanAPIController@AddRealisasiKegiatanTriwulanJFT');
-
+	
 	Route::post('simpan_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@Store');
 	Route::post('update_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@Update');
 	Route::post('hapus_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@Destroy');
+
+	//==================================== REALISASI TRIWULAN KEGIATAN TAHUNAN JFT =============================================//
+	//=============================================================================================================//
+	Route::get('add_realisasi_kegiatan_triwulan_jft','API\RealisasiKegiatanTriwulanAPIController@AddRealisasiKegiatanTriwulanJFT');
+
+	Route::post('simpan_realisasi_kegiatan_triwulan_jft','API\RealisasiKegiatanTriwulanAPIController@StoreJFT');
+	Route::post('update_realisasi_kegiatan_triwulan_jft','API\RealisasiKegiatanTriwulanAPIController@UpdateJFT');
+	Route::post('hapus_realisasi_kegiatan_triwulan_jft','API\RealisasiKegiatanTriwulanAPIController@DestroyJFT');
 
 
 	//===================== REALISASI  KEGIATAN TUGAS JABATAN SKP BULANAN ======================================//

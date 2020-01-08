@@ -5,7 +5,7 @@
 			<div class="box-body box-profile">
 			
 				<h1 class="profile-username text-center text-success" style="font-size:16px;">
-					Capaian Triwulan Trimester {!! $capaian_triwulan->trimester !!}
+					Capaian Triwulan  {!! $capaian_triwulan->trimester !!}
 				</h1>
 
 				<ul class="list-group list-group-unbordered">

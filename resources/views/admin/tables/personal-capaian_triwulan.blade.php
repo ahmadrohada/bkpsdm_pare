@@ -283,16 +283,16 @@
 
 		switch (trimester){
 			case 1:
-				trimester_text = "Trimester I ( Januari - Maret )";
+				trimester_text = "Triwulan I ( Januari - Maret )";
 				break;
 			case 2:
-				trimester_text = "Trimester II ( April - Juni )";
+				trimester_text = "Triwulan II ( April - Juni )";
 				break;
 			case 3:
-				trimester_text = "Trimester III ( Juli - September )";
+				trimester_text = "Triwulan III ( Juli - September )";
 				break;
 			case 4:
-				trimester_text = "Trimester IV ( Oktober - Desember ) ";
+				trimester_text = "Triwulan IV ( Oktober - Desember ) ";
 				break;
 			default:
 				trimester_text = "error";
