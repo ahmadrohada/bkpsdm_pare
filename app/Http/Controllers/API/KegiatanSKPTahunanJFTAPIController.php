@@ -205,7 +205,7 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
         $messages = [
                 'kegiatan_tahunan_id.required'   => 'Harus diisi',
                 'label.required'                 => 'Harus diisi',
-                //'target.required'              => 'Harus diisi',
+                'sasaran_id.required'            => 'Harus diisi',
                 //'satuan.required'                => 'Harus diisi',
                 'quality.required'               => 'Harus diisi',
                 'target_waktu.required'          => 'Harus diisi',
@@ -217,6 +217,7 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
                         array(
                             'kegiatan_tahunan_id'   => 'required',
                             'label'                 => 'required',
+                            'sasaran_id'            => 'required',
                             //'target'                => 'required|numeric',
                             //'satuan'                => 'required',
                             'quality'               => 'required|numeric|min:1|max:100',
@@ -237,9 +238,9 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
             return $this->sendError('Kegiatan Tahunan tidak ditemukan.');
         }
 
-
+        $st_kt->sasaran_id        = Input::get('sasaran_id');
         $st_kt->label             = Input::get('label');
-        $st_kt->target          = preg_replace('/[^0-9]/', '', Input::get('target'));
+        $st_kt->target            = preg_replace('/[^0-9]/', '', Input::get('target'));
         $st_kt->satuan            = Input::get('satuan');
         $st_kt->angka_kredit      = Input::get('angka_kredit');
         $st_kt->quality           = preg_replace('/[^0-9]/', '', Input::get('quality'));

@@ -110,12 +110,6 @@
 					var tx = text.split('|');
 					unlink_kegiatan_kasubid(tx[1]);
 					
-					/* if(confirm('Anda Akan menghapus kegiatan jabatan ?')){
-						var text = node.id;
-						var tx = text.split('|');
-						alert(tx[1]);
-						//tree.delete_node(node);
-					} */
 				}
 			}
 		};
@@ -123,8 +117,9 @@
 
 		if (node.type == "sasaran") {
 			delete items.delete;
-		}else if (node.type == "kegiatan_tahunan") {
+		}else if (node.type == "default") {
 			delete items.tambah;
+			delete items.delete;
 		}else{
 			//delete items.delete;
 			//delete items.tambah;

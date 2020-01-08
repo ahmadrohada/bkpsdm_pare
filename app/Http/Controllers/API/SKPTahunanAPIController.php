@@ -453,9 +453,6 @@ class SKPTahunanAPIController extends Controller {
             
         $dt = \DB::table('db_pare_2018.renja AS renja')
                    
-                    /* ->join('db_pare_2018.perjanjian_kinerja AS pk', function($join){
-                        $join   ->on('pk.renja_id','=','renja.id');
-                    }) */
                     ->rightjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function($join){
                         $join   ->on('renja.id','=','skp_tahunan.renja_id');
                     }) 
@@ -463,22 +460,16 @@ class SKPTahunanAPIController extends Controller {
                     ->leftjoin('db_pare_2018.periode AS periode', function($join){
                         $join   ->on('renja.periode_id','=','periode.id');
                     }) 
-
                     //PEJABAT YANG DINILAI
                     ->leftjoin('demo_asn.tb_history_jabatan AS pejabat', function($join){
                         $join   ->on('skp_tahunan.u_jabatan_id','=','pejabat.id');
                     }) 
-
                     //ESELON PEJABAT YANG DINILAI
                      ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
                         $join   ->on('eselon.id','=','pejabat.id_eselon');
                     }) 
-
-                    
                     //jabatan
                     ->leftjoin('demo_asn.m_skpd AS jabatan', 'pejabat.id_jabatan','=','jabatan.id')
-
-
                     ->select([  'skp_tahunan.id AS skp_tahunan_id',
                                 'periode.label AS periode',
                                 'skp_tahunan.pegawai_id AS pegawai_id',
@@ -492,6 +483,7 @@ class SKPTahunanAPIController extends Controller {
                                 'jabatan.skpd AS jabatan'
 
                         ])
+                    ->ORDERBY('skp_tahunan.id','DESC')
                     ->where('renja.skpd_id','=', $request->skpd_id);
 
        
