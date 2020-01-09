@@ -69,7 +69,7 @@
 		.on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
 
-				detail_table(data.instance.get_node(data.selected[0]).id);
+				//detail_table(data.instance.get_node(data.selected[0]).id);
 
 			}
 		});
@@ -132,71 +132,4 @@
 		}, 250);
 	});
 	
-	//========================== KEGIATAN ==================================//
-	function detail_table(id){
-
-		var tx = id.split('|');
-		//alert(tx[0])
-		
-		switch ( tx[0] ){
-                case 'KegiatanTahunan':
-                  	//SHOW DETAIL KEGIATAN TAHUNAN DAN RENCANA KERJA LIST
-                  	$("#kegiatan_tahunan").hide();
-					$("#indikator_kegiatan").show();
-					$("#rencana_aksi").hide();
-					$("#rencana_aksi_detail").hide();
-
-                  	load_indikator_kegiatan( tx[1]);
-				break; 
-				case 'KegiatanRenja':
-					show_modal_create(tx[1]);
-				break;
-				case 'IndikatorKegiatan':
-					$("#kegiatan_tahunan").hide();
-					$("#indikator_kegiatan").hide();
-					$("#rencana_aksi").show();
-					$("#rencana_aksi_detail").hide();
-					load_rencana_aksi( tx[1]);	
-					rencana_aksi_list( tx[1]);
-
-				break;
-				case 'RencanaAksi':
-					$("#kegiatan_tahunan").hide();
-					$("#indikator_kegiatan").hide();
-					$("#rencana_aksi").hide();
-					$("#rencana_aksi_detail").show();
-					load_rencana_aksi_detail( tx[1]);	
-				break;
-				case 'KegiatanBulanan':
-					$("#kegiatan_tahunan").hide();
-					$("#indikator_kegiatan").hide();
-					$("#rencana_aksi").hide();
-					$("#rencana_aksi_detail").show();
-					load_rencana_aksi_detail( tx[1]);	
-				break;
-				
-				default:
-					$("#kegiatan_tahunan").show();
-					$("#indikator_kegiatan").hide();
-					$("#rencana_aksi").hide();
-					$("#rencana_aksi_detail").hide();
-				
-			}
-		
-
-    }
-    
-
-    $(".tutup").click(function(){
-			$("#kegiatan_tahunan").show();
-			$("#indikator_kegiatan").hide();
-			$("#rencana_aksi").hide();
-			$("#rencana_aksi_detail").hide();
-			jQuery('#keg_tahunan_5_tree').jstree().deselect_all(true);
-	}); 
-	
-
-	
-	
-
 </script>

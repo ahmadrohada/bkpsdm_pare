@@ -34,6 +34,7 @@
 							
 		</table>
 	</div>
+	<span class="text-muted">* klik kanan pada sasaran untuk menambah kegiatan tahunan atau klik pada button Tambah Kegiatan yang berada diatas tabel Kegiatan</span>
 </div>
 
 

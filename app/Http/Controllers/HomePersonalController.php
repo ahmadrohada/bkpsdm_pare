@@ -14,6 +14,9 @@ use App\Models\HistoryJabatan;
 use App\Models\Skpd;
 use App\Models\PeriodeTahunan;
 
+
+use App\Models\SKPTahunan;
+use App\Models\SKPBulanan;
 use App\Models\PerjanjianKinerja;
 use App\Models\Sasaran;
 use App\Models\SasaranPerjanjianKinerja;
@@ -58,6 +61,15 @@ class HomePersonalController extends Controller {
             return $nama_skpd->skpd;
     }
 
+    protected function jm_skp_tahunan($pegawai_id){
+        $data       = SKPTahunan::WHERE('pegawai_id',$pegawai_id)->count();
+        return $data;
+    }
+    protected function jm_skp_bulanan($pegawai_id){
+        $data       = SKPBulanan::WHERE('pegawai_id',$pegawai_id)->count();
+        return $data;
+    }
+
     
     
 
@@ -70,6 +82,8 @@ class HomePersonalController extends Controller {
         return view('admin.pages.personal-home', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+               'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
+               'jm_skp_bulanan'         => $this->jm_skp_bulanan($pegawai->id),
                'h_box'                  => 'box-info',
                
            ]
@@ -88,6 +102,8 @@ class HomePersonalController extends Controller {
         return view('admin.pages.personal-home-skp', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+               'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
+               'jm_skp_bulanan'         => $this->jm_skp_bulanan($pegawai->id),
                'h_box'                  => 'box-danger',
                
            ]
@@ -105,6 +121,8 @@ class HomePersonalController extends Controller {
         return view('admin.pages.personal-home-skp_tahunan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+               'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
+               'jm_skp_bulanan'         => $this->jm_skp_bulanan($pegawai->id),
                'h_box'                  => 'box-warning',
                
            ]
@@ -123,6 +141,8 @@ class HomePersonalController extends Controller {
         return view('admin.pages.personal-home-skp_bulanan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+               'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
+               'jm_skp_bulanan'         => $this->jm_skp_bulanan($pegawai->id),
                'h_box'                  => 'box-info',
                
            ]
@@ -141,6 +161,8 @@ class HomePersonalController extends Controller {
         return view('admin.pages.personal-home-capaian_bulanan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+               'jm_capaian_tahunan'     => '',
+               'jm_capaian_bulanan'     => '',
                'h_box'                  => 'box-warning',
                
            ]
@@ -158,6 +180,8 @@ class HomePersonalController extends Controller {
         return view('admin.pages.personal-home-capaian_triwulan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+               'jm_capaian_tahunan'     => '',
+               'jm_capaian_bulanan'     => '',
                'h_box'                  => 'box-info',
                
            ]
@@ -175,6 +199,8 @@ class HomePersonalController extends Controller {
         return view('admin.pages.personal-home-capaian_tahunan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+               'jm_capaian_tahunan'     => '',
+               'jm_capaian_bulanan'     => '',
                'h_box'                  => 'box-danger',
                
            ]
