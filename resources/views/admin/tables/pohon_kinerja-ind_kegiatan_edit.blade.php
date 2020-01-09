@@ -18,9 +18,10 @@
 		<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 			<span class="cost"></span>
 		</p>
-
+		<span class="text-danger">* Setiap Kegiatan wajib memiliki minimal satu Indikator Kegiatan</span>
 					
 	</div>
+	
 </div>
 <div class="box box-indikator_kegiatan div_ind_kegiatan_list" hidden>
     <div class="box-header with-border">

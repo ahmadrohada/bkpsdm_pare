@@ -14,7 +14,7 @@
 				<div class="small-box bg-red skp" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							&nbsp;
 						</h3>
 						<p>
 							<strong>SKP</strong>
@@ -30,7 +30,7 @@
 				<div class="small-box bg-yellow capaian" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							&nbsp;
 						</h3>
 						<p>
 							<strong>Capaian</strong>

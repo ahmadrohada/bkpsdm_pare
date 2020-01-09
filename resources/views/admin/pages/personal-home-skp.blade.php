@@ -14,7 +14,7 @@
 				{!! Breadcrumbs::render('skp') !!}
       </section>
 	    <section class="content">
-				@include('admin.modules.personal-skp-snapshots-boxes')
+				@include('admin.modules.snapshots-boxes.personal-skp')
 
 				@include('admin.tables.personal-skp_jabatan')
 	    </section>

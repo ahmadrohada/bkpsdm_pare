@@ -14,7 +14,7 @@
 				<div class="small-box bg-red skp_jabatan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							&nbsp;
 						</h3>
 						<p>
 							<strong>Create SKP</strong>
@@ -30,7 +30,7 @@
 				<div class="small-box bg-yellow skp_tahunan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							{{ $jm_skp_tahunan }}
 						</h3>
 						<p>
 							<strong>SKP Tahunan</strong>
@@ -46,7 +46,7 @@
 				<div class="small-box bg-aqua skp_bulanan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							{{ $jm_skp_bulanan }}
 						</h3>
 						<p>
 							<strong>SKP Bulanan</strong>

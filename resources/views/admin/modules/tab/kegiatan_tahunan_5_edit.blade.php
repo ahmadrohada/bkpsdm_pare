@@ -19,7 +19,7 @@
 	</div>
 	<div class="col-md-7">
 		@include('admin.tables.skp_tahunan-kegiatan_5_edit')
-		<span class="text-muted">* klik kanan pada sasaran untuk menambah kegiatan tahunan atau klik pada button Tambah Kegiatan yang berada diatas tabel Kegiatan</span>
+		
 	</div>
 </div>
 
@@ -73,7 +73,7 @@
 		.on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
 
-				detail_table(data.instance.get_node(data.selected[0]).id);
+				//detail_table(data.instance.get_node(data.selected[0]).id);
 
 			}
 		});
@@ -136,87 +136,7 @@
 		}, 250);
 	});
 	
-	//========================== KEGIATAN ==================================//
-	function detail_table(id){
-
-		var tx = id.split('|');
-		//alert(tx[0])
-		
-		switch ( tx[0] ){
-                case 'KegiatanTahunan':
-                  	//SHOW DETAIL KEGIATAN TAHUNAN DAN RENCANA KERJA LIST
-                  	$("#kegiatan_tahunan").hide();
-					$("#indikator_kegiatan").show();
-					$("#rencana_aksi").hide();
-					$("#rencana_aksi_detail").hide();
-
-                  	load_indikator_kegiatan( tx[1]);
-				break; 
-				case 'KegiatanRenja':
-					show_modal_create(tx[1]);
-				break;
-				case 'IndikatorKegiatan':
-					$("#kegiatan_tahunan").hide();
-					$("#indikator_kegiatan").hide();
-					$("#rencana_aksi").show();
-					$("#rencana_aksi_detail").hide();
-					load_rencana_aksi( tx[1]);	
-					rencana_aksi_list( tx[1]);
-
-				break;
-				case 'RencanaAksi':
-					$("#kegiatan_tahunan").hide();
-					$("#indikator_kegiatan").hide();
-					$("#rencana_aksi").hide();
-					$("#rencana_aksi_detail").show();
-					load_rencana_aksi_detail( tx[1]);	
-				break;
-				case 'KegiatanBulanan':
-					$("#kegiatan_tahunan").hide();
-					$("#indikator_kegiatan").hide();
-					$("#rencana_aksi").hide();
-					$("#rencana_aksi_detail").show();
-					load_rencana_aksi_detail( tx[1]);	
-				break;
-				
-				default:
-					$("#kegiatan_tahunan").show();
-					$("#indikator_kegiatan").hide();
-					$("#rencana_aksi").hide();
-					$("#rencana_aksi_detail").hide();
-				
-			}
-		
-
-    }
-    
-
-    $(".tutup").click(function(){
-			$("#kegiatan_tahunan").show();
-			$("#indikator_kegiatan").hide();
-			$("#rencana_aksi").hide();
-			$("#rencana_aksi_detail").hide();
-			jQuery('#keg_tahunan_5_tree').jstree().deselect_all(true);
-	}); 
 	
-	function load_rencana_aksi_detail(rencana_aksi_id){
-		$.ajax({
-				url			: '{{ url("api_resource/rencana_aksi_detail") }}',
-				data 		: {rencana_aksi_id : rencana_aksi_id},
-				method		: "GET",
-				dataType	: "json",
-				success	: function(data) {
-						$('.pelaksana').html(data['pelaksana']);
-						$('.rencana_aksi_label').html(data['label']);
-						$('.txt_output').html(data['target_rencana_aksi']+" "+data['satuan_target_rencana_aksi']);
-						$('.txt_waktu').html(data['waktu_pelaksanaan']);
-						
-				},
-				error: function(data){
-					
-				}						
-		});
-	}
 
 	
 	

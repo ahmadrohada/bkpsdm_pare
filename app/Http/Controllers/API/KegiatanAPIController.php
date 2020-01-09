@@ -249,12 +249,15 @@ class KegiatanAPIController extends Controller {
                 $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(412,433,433))
                                 ->select('id','skpd')
                                 ->get();
-            }/* else if ( $x->id == '740'){  //disperindag
+            }else if ( $x->id == '740'){  //disperindag
                
-                $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(740,761,761))
+                /* $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(740,761,761))
+                                ->select('id','skpd')
+                                ->get(); */
+                $level2 = SKPD::whereRaw('parent_id = ?  or parent_id = ? ', array(740,761))
                                 ->select('id','skpd')
                                 ->get();
-            } */
+            } 
             /* else if ( $x->id == '788'){  //disdik , korwil ,, gak jadi,,karena yang mendapat kegiatan memang korwil
                
                 //korwil dan SMP
@@ -837,7 +840,7 @@ class KegiatanAPIController extends Controller {
                                             ->WHERE('skp_tahunan_id',$skp_tahunan_id)
                                             ->get();
             foreach ($kst as $y) {
-                $data_keg_tahunan['id']	        = "IndikatorKegiatan|".$y->id;
+                $data_keg_tahunan['id']	        = "KegiatanTahunan|".$y->id;
                 $data_keg_tahunan['text']			= Pustaka::capital_string($y->label);
                 $data_keg_tahunan['icon']	        = 'jstree-kegiatan_tahunan';
               
