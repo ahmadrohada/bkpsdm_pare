@@ -277,7 +277,7 @@ class CapaianTahunanAPIController extends Controller {
         //================================= PELAKSANA / JFU ================================================//
         if ( $jenis_jabatan == 4 ){
 
-
+            $jm_kegiatan = 1 ;
         //================================= KASUBID   / ESELON 4 ===========================================//
         }else if ( $jenis_jabatan == 3 ){
             $jm_kegiatan = KegiatanSKPTahunan::WHERE('skp_tahunan_id',$skp_tahunan->skp_tahunan_id)->count();

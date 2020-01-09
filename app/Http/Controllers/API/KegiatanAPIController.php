@@ -812,10 +812,7 @@ class KegiatanAPIController extends Controller {
 
         $skp_tahunan_id = $request->skp_tahunan_id;
         $sasaran = Tujuan::
-                            /* leftjoin('db_pare_2018.renja_indikator_tujuan AS ind_tujuan', function($join){
-                                $join   ->on('renja_tujuan.id','=','ind_tujuan.tujuan_id');
-                                
-                            })  */
+                           
                             join('db_pare_2018.renja_sasaran AS sasaran', function($join){
                                 $join   ->on('sasaran.tujuan_id','=','renja_tujuan.id');
                                 
@@ -836,7 +833,9 @@ class KegiatanAPIController extends Controller {
            
             
             //Kegiatan TAhunan JFT
-            $kst = KegiatanSKPTahunanJFT::WHERE('sasaran_id',$x->sasaran_id)->get();
+            $kst = KegiatanSKPTahunanJFT::WHERE('sasaran_id',$x->sasaran_id)
+                                            ->WHERE('skp_tahunan_id',$skp_tahunan_id)
+                                            ->get();
             foreach ($kst as $y) {
                 $data_keg_tahunan['id']	        = "IndikatorKegiatan|".$y->id;
                 $data_keg_tahunan['text']			= Pustaka::capital_string($y->label);
