@@ -249,12 +249,12 @@ class KegiatanAPIController extends Controller {
                 $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(412,433,433))
                                 ->select('id','skpd')
                                 ->get();
-            }else if ( $x->id == '740'){  //disperindag
+            }/* else if ( $x->id == '740'){  //disperindag
                
                 $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(740,761,761))
                                 ->select('id','skpd')
                                 ->get();
-            }
+            } */
             /* else if ( $x->id == '788'){  //disdik , korwil ,, gak jadi,,karena yang mendapat kegiatan memang korwil
                
                 //korwil dan SMP
