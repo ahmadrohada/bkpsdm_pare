@@ -117,6 +117,9 @@
 							case '4':   
 									?>@include('admin.modules.tab.kegiatan_tahunan_4_detail')<?php
 									break;
+							case '5':   
+									?>@include('admin.modules.tab.kegiatan_tahunan_5_detail')<?php
+									break;
 						}
 					?>
 					
@@ -144,6 +147,9 @@
 									break;
 							case '4': //PELAKSANA
 									?>@include('admin.tables.skp_bulanan-kegiatan_4_edit')<?php
+									break;
+							case '5': // JFT
+									?>@include('admin.tables.skp_bulanan-kegiatan_5_detail')<?php
 									break;
 						}
 					?>
