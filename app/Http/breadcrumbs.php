@@ -227,7 +227,7 @@ Breadcrumbs::register('skp', function($breadcrumbs)
 Breadcrumbs::register('personal_skp_tahunan', function($breadcrumbs)
 {
     $breadcrumbs->parent('personal-dashboard');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_tahunan'), '/bkpsdm_pare/public/personal/skp-tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_tahunan')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_tahunan'), '/public/personal/skp-tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_tahunan')]);
 });
 
 Breadcrumbs::register('personal_edit_skp_tahunan', function($breadcrumbs)
