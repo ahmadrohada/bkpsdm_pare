@@ -14,7 +14,7 @@
 				{!! Breadcrumbs::render('perjanjian_kinerja') !!}
       </section>
 	    <section class="content">
-				@include('admin.modules.skpd-home-snapshots-boxes')
+				@include('admin.modules.snapshots-boxes.skpd-home')
 
 				@include('admin.tables.skpd-perjanjian_kinerja')
 	    </section>

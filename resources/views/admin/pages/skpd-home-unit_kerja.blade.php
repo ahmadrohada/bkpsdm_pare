@@ -21,7 +21,7 @@
 	    <section class="content">
 
 			
-				@include('admin.modules.skpd-home-snapshots-boxes')
+				@include('admin.modules.snapshots-boxes.skpd-home')
 
  				@include('admin.tables.skpd-unit_kerja')
 		

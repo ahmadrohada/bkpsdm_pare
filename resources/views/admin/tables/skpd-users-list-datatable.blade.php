@@ -14,7 +14,7 @@
 		<table id="user_table" class="table table-striped table-hover table-condensed">
 			<thead>
 				<tr class="success">
-					<th>No</th>
+					<th>NO</th>
 					<th>Nama</th>
 					<th>NIP</th>
 					<th>UNIT KERJA</th>

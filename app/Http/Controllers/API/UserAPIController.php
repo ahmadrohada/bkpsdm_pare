@@ -76,68 +76,63 @@ class UserAPIController extends Controller {
     public function administrator_users_list(Request $request)
     {
       
-        $dt = \DB::table('db_pare_2018.users AS users')
-                    ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
-                        $join   ->on('users.id_pegawai','=','pegawai.id');
+        $dt = User::
+                    leftjoin('demo_asn.tb_pegawai AS tb_pegawai', function($join){
+                        $join   ->on('users.id_pegawai','=','tb_pegawai.id');
                         
                     })
                     ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
-                        $join   ->on('a.id_pegawai','=','pegawai.id');
+                        $join   ->on('a.id_pegawai','=','tb_pegawai.id');
                         $join   ->where('a.status','=', 'active');
                                         
                     })
-                    //eselon
-                    ->leftjoin('demo_asn.m_eselon AS eselon', 'a.id_eselon','=','eselon.id')
-    
-                    //golongan
-                    ->leftjoin('demo_asn.m_golongan AS golongan', 'a.id_golongan','=','golongan.id')
-                    
+                    //SKPD
+                    ->leftjoin('demo_asn.m_skpd AS skpd', function($join){
+                        $join   ->on('skpd.id','=','a.id_skpd');
+                    })  
                     //jabatan
-                    ->leftjoin('demo_asn.m_skpd AS jabatan', 'a.id_jabatan','=','jabatan.id')
-                    
-                    //skpd
-                    ->leftjoin('demo_asn.m_skpd AS skpd', 'a.id_skpd','=','skpd.id')
-    
-                    //unit_kerja
-                    ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id','=','a.id_unit_kerja')
-                    ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', 's_skpd.parent_id','=','unit_kerja.id')
-                    
-
-                    
-                     ->select([ 'users.id AS user_id',
-                                'pegawai.nama AS nama',
-                                'pegawai.id AS pegawai_id',
-                                'pegawai.nip AS nip',
-                                'pegawai.gelardpn AS gelardpn',
-                                'pegawai.gelarblk AS gelarblk',
+                    ->leftjoin('demo_asn.m_skpd AS jabatan', function($join){
+                                $join   ->on('jabatan.id','=','a.id_jabatan');
+                    })  
+                    //eselon
+                    ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
+                                $join   ->on('eselon.id','=','jabatan.id_eselon');
+                    })  
+                    //GOL
+                    ->leftjoin('demo_asn.tb_history_golongan AS b', function($join){
+                                $join   ->on('b.id_pegawai','=','tb_pegawai.id');
+                                $join   ->WHERE('b.status','=','active');
+                    })  
+                    //GOLONGAN
+                    ->leftjoin('demo_asn.m_golongan AS golongan', function($join){
+                                $join   ->on('golongan.id','=','b.id_golongan');
+                    })  
+                    ->SELECT([  'tb_pegawai.nama AS nama',
+                                'tb_pegawai.id AS pegawai_id',
+                                'tb_pegawai.nip AS nip',
+                                'tb_pegawai.gelardpn AS gelardpn',
+                                'tb_pegawai.gelarblk AS gelarblk',
+                                'jabatan.skpd AS jabatan',
                                 'eselon.eselon AS eselon',
                                 'golongan.golongan AS golongan',
-                                'jabatan.skpd AS jabatan',
-                                'unit_kerja.unit_kerja',
                                 'skpd.skpd AS skpd'
                                     
-                            ]) ;
+                            ])
+                    
+                    ->ORDERBY('golongan.golongan','IS NULL');
         
 
 
 
         $datatables = Datatables::of($dt)
         ->addColumn('action', function ($x) {
-            
             return User::WHERE('id_pegawai',$x->pegawai_id)->count();
-            
         })->addColumn('nama_pegawai', function ($x) {
-                        
             return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
-                    
         })->addColumn('jabatan', function ($x) {
-                        
             return Pustaka::capital_string($x->jabatan);
-                    
         })->addColumn('unit_kerja', function ($x) {
-                        
             return Pustaka::capital_string($x->unit_kerja);
-                    
         });
             
                     

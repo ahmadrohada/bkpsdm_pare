@@ -12,9 +12,9 @@ use App\Models\UsersRole;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
 use App\Models\Skpd;
-use App\Models\PeriodeTahunan;
+use App\Models\Renja;
 
-use App\Models\PerjanjianKinerja;
+use App\Models\SKPTahunan;
 use App\Models\Sasaran;
 use App\Models\SasaranPerjanjianKinerja;
 use App\Models\IndikatorSasaran;
@@ -99,6 +99,17 @@ class HomeSKPDController extends Controller {
     }
 
 
+    protected function total_pohon_kinerja( $skpd_id){
+        
+        return 	Renja::WHERE('renja.skpd_id','=', $skpd_id)->count();
+    }
+
+    protected function total_skp_tahunan($skpd_id){
+        return 	Renja::WHERE('renja.skpd_id',$skpd_id)
+                            ->leftjoin('db_pare_2018.skp_tahunan AS skp', function($join){
+                                $join   ->on('skp.renja_id','=','renja.id');
+                            })->count();
+    }
    
     
 
@@ -121,19 +132,20 @@ class HomeSKPDController extends Controller {
         $user                   = \Auth::user();
         
 
-        //CARI id skpd nya
+       //CARI id skpd nya
        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
 
        return view('admin.pages.skpd-home-pegawai', [
-               //'users' 		          => $users,
-               'skpd_id'                 => $skpd_id,
-               'nama_skpd'     	      => $this->nama_skpd($skpd_id),
-               'total_pegawai' 	      => $this->total_pegawai_skpd($skpd_id),
-               'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
-               'total_jabatan'           => 'x',
-               'total_renja'             => 'x',
-               'h_box'                   => 'box-info',
+               
+               'skpd_id'                => $skpd_id,
+               'nama_skpd'     	        => $this->nama_skpd($skpd_id),
+               'total_pegawai' 	        => $this->total_pegawai_skpd($skpd_id),
+               'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
+               'total_pohon_kinerja' 	=> $this->total_pohon_kinerja($skpd_id),
+               'total_skp_tahunan' 	    => $this->total_skp_tahunan($skpd_id),
+
+               'h_box'                  => 'box-info',
                
            ]
        );  
@@ -150,13 +162,13 @@ class HomeSKPDController extends Controller {
          
 
 		return view('admin.pages.skpd-home-unit_kerja', [
-                //'users' 		          => $users,
-                'skpd_id'                 => $skpd_id,
-                'nama_skpd'     	      => $this->nama_skpd($skpd_id),
-                'total_pegawai' 	      => $this->total_pegawai_skpd($skpd_id),
-                'total_unit_kerja' 	      => $this->total_unit_kerja($skpd_id),
-                'total_jabatan'           => 'x',
-                'total_renja'             => 'x',
+                'skpd_id'                => $skpd_id,
+                'nama_skpd'     	     => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
+                'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
+                'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
+                'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+
                 'h_box'                   => 'box-danger',
                 
         	]
@@ -177,14 +189,14 @@ class HomeSKPDController extends Controller {
        
 
         return view('admin.pages.skpd-home-renja', [
-               //'users' 		         => $users,
-               'skpd_id'                => $skpd_id,
-               'nama_skpd'     	        => $this->nama_skpd($skpd_id),
-               'total_pegawai' 	        => $this->total_pegawai_skpd($skpd_id),
-               'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
-               'total_jabatan'          => 'x',
-               'total_renja'            => 'x',
-               'h_box'                  => 'box-warning',
+                'skpd_id'                => $skpd_id,
+                'nama_skpd'     	     => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
+                'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
+                'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
+                'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+
+                'h_box'                  => 'box-warning',
                
            ]
         );   
@@ -204,14 +216,15 @@ class HomeSKPDController extends Controller {
        
 
         return view('admin.pages.skpd-home-peta_jabatan', [
-               //'users' 		         => $users,
-               'skpd_id'                => $skpd_id,
-               'nama_skpd'     	        => $this->nama_skpd($skpd_id),
-               'total_pegawai' 	        => $this->total_pegawai_skpd($skpd_id),
-               'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
-               'total_jabatan'          => 'x',
-               'total_renja'            => 'x',
-               'h_box'                  => 'box-success',
+                'skpd_id'                => $skpd_id,
+                'nama_skpd'     	     => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
+                'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
+                'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
+                'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+
+
+                'h_box'                  => 'box-success',
                
            ]
         ); 
@@ -230,14 +243,14 @@ class HomeSKPDController extends Controller {
        
 
         return view('admin.pages.skpd-home-struktur_organisasi', [
-               //'users' 		         => $users,
-               'skpd_id'                => $skpd_id,
-               'nama_skpd'     	        => $this->nama_skpd($skpd_id),
-               'total_pegawai' 	        => $this->total_pegawai_skpd($skpd_id),
-               'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
-               'total_jabatan'          => 'x',
-               'total_renja'            => 'x',
-               'h_box'                  => 'box-danger',
+                'skpd_id'                => $skpd_id,
+                'nama_skpd'     	     => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
+                'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
+                'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
+                'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+
+                'h_box'                  => 'box-danger',
                
            ]
         ); 
@@ -254,14 +267,14 @@ class HomeSKPDController extends Controller {
        
 
         return view('admin.pages.skpd-home-perjanjian_kinerja', [
-               //'users' 		         => $users,
-               'skpd_id'                => $skpd_id,
-               'nama_skpd'     	        => $this->nama_skpd($skpd_id),
-               'total_pegawai' 	        => $this->total_pegawai_skpd($skpd_id),
-               'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
-               'total_jabatan'          => 'x',
-               'total_renja'            => 'x',
-               'h_box'                  => 'box-info',
+                'skpd_id'                => $skpd_id,
+                'nama_skpd'     	     => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
+                'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
+                'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
+                'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+
+                'h_box'                  => 'box-info',
                
            ]
         );   
@@ -278,14 +291,14 @@ class HomeSKPDController extends Controller {
        
 
         return view('admin.pages.skpd-home-skp_tahunan', [
-               //'users' 		         => $users,
-               'skpd_id'                => $skpd_id,
-               'nama_skpd'     	        => $this->nama_skpd($skpd_id),
-               'total_pegawai' 	        => $this->total_pegawai_skpd($skpd_id),
-               'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
-               'total_jabatan'          => 'x',
-               'total_renja'            => 'x',
-               'h_box'                  => 'box-danger',
+                'skpd_id'                => $skpd_id,
+                'nama_skpd'     	     => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
+                'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
+                'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
+                'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+
+                'h_box'                  => 'box-danger',
                
            ]
         );   
@@ -302,14 +315,15 @@ class HomeSKPDController extends Controller {
        
 
         return view('admin.pages.skpd-home-skp_bulanan', [
-               //'users' 		         => $users,
-               'skpd_id'                => $skpd_id,
-               'nama_skpd'     	        => $this->nama_skpd($skpd_id),
-               'total_pegawai' 	        => $this->total_pegawai_skpd($skpd_id),
-               'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
-               'total_jabatan'          => 'x',
-               'total_renja'            => 'x',
-               'h_box'                  => 'box-success',
+                'skpd_id'                => $skpd_id,
+                'nama_skpd'     	     => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
+                'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
+                'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
+                'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+
+
+                'h_box'                  => 'box-success',
                
            ]
         );   

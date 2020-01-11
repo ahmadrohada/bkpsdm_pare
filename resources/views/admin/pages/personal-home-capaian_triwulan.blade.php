@@ -14,7 +14,7 @@
 				{!! Breadcrumbs::render('capaian_triwulan') !!}
       </section>
 	    <section class="content">
-				@include('admin.modules.personal-capaian-snapshots-boxes')
+				@include('admin.modules.snapshots-boxes.personal-capaian')
 
 				@include('admin.tables.personal-capaian_triwulan')
 	    </section>

@@ -44,7 +44,7 @@
 				<div class="small-box bg-green struktur_organisasi" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							&nbsp;
 						</h3>
 						<p>
 							<strong>Struktur Organisasi</strong>
@@ -59,7 +59,7 @@
 				<div class="small-box bg-yellow rencana_kerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							{{$total_pohon_kinerja}}
 						</h3>
 						<p>
 							<strong>Pohon Kinerja</strong>
@@ -92,7 +92,7 @@
 				<div class="small-box bg-red skp_tahunan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							{{$total_skp_tahunan}}
 						</h3>
 						<p>
 							<strong>SKP Tahunan</strong>

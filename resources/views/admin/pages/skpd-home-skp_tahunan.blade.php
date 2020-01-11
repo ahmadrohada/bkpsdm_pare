@@ -14,7 +14,7 @@
 				{!! Breadcrumbs::render('skp_tahunan') !!}
       </section>
 	    <section class="content">
-				@include('admin.modules.skpd-home-snapshots-boxes')
+				@include('admin.modules.snapshots-boxes.skpd-home')
 
 				@include('admin.tables.skpd-skp_tahunan')
 	    </section>

@@ -365,16 +365,27 @@ class PegawaiAPIController extends Controller {
                     $join   ->on('a.id_pegawai','=','pegawai.id');
                     
                 })
-                //eselon
-                ->leftjoin('demo_asn.m_eselon AS eselon', 'a.id_eselon','=','eselon.id')
-
-                 //golongan
-                 ->leftjoin('demo_asn.m_golongan AS golongan', 'a.id_golongan','=','golongan.id')
-
+                //SKPD
+                ->leftjoin('demo_asn.m_skpd AS skpd', function($join){
+                             $join   ->on('skpd.id','=','a.id_skpd');
+                })  
                 //jabatan
-                ->leftjoin('demo_asn.m_skpd AS jabatan', 'a.id_jabatan','=','jabatan.id')
-
-
+                ->leftjoin('demo_asn.m_skpd AS jabatan', function($join){
+                            $join   ->on('jabatan.id','=','a.id_jabatan');
+                })  
+                //eselon
+                ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
+                            $join   ->on('eselon.id','=','jabatan.id_eselon');
+                })  
+                //GOL
+                ->leftjoin('demo_asn.tb_history_golongan AS b', function($join){
+                            $join   ->on('b.id_pegawai','=','pegawai.id');
+                            $join   ->WHERE('b.status','=','active');
+                })  
+                //GOLONGAN
+                ->leftjoin('demo_asn.m_golongan AS golongan', function($join){
+                            $join   ->on('golongan.id','=','b.id_golongan');
+                })  
                 
                 //LEFT JOIN ke user
                 ->leftjoin('db_pare_2018.users', 'users.id_pegawai','=','pegawai.id')
