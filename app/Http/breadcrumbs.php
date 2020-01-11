@@ -16,7 +16,7 @@
 // DASHBOARD
 Breadcrumbs::register('dashboard', function($breadcrumbs)
 {
-	$breadcrumbs->push(Lang::get('sidebar-nav.link_title_dashboard'), '/bkpsdm_pare/public/dashboard', ['icon' => Lang::get('sidebar-nav.link_icon_dashboard')]);
+	$breadcrumbs->push(Lang::get('sidebar-nav.link_title_dashboard'), '/public/dashboard', ['icon' => Lang::get('sidebar-nav.link_icon_dashboard')]);
 });
 
 // DASHBOARD > PROFILE
@@ -213,14 +213,14 @@ Breadcrumbs::register('perjanjian_kinerja', function($breadcrumbs)
 // DASHBOARD PERSONAL
 Breadcrumbs::register('personal-dashboard', function($breadcrumbs)
 {
-	$breadcrumbs->push(Lang::get('sidebar-nav.link_title_dashboard'), '/bkpsdm_pare/public/personal', ['icon' => Lang::get('sidebar-nav.link_icon_dashboard')]);
+	$breadcrumbs->push(Lang::get('sidebar-nav.link_title_dashboard'), '/public/personal', ['icon' => Lang::get('sidebar-nav.link_icon_dashboard')]);
 });
 
 // DASHBOARD >SKP
 Breadcrumbs::register('skp', function($breadcrumbs)
 {
     $breadcrumbs->parent('personal-dashboard');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp'), '/bkpsdm_pare/public/personal/skp', ['icon' => Lang::get('sidebar-nav.link_icon_skp')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp'), '/public/personal/skp', ['icon' => Lang::get('sidebar-nav.link_icon_skp')]);
 });
 
 // DASHBOARD >SKP TAHUNAN
@@ -246,7 +246,7 @@ Breadcrumbs::register('personal_detail_skp_tahunan', function($breadcrumbs)
 Breadcrumbs::register('personal_skp_bulanan', function($breadcrumbs)
 {
     $breadcrumbs->parent('personal-dashboard');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_bulanan'), '/bkpsdm_pare/public/personal/skp-bulanan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_bulanan')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_bulanan'), '/public/personal/skp-bulanan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_bulanan')]);
 });
 
 Breadcrumbs::register('personal_detail_skp_bulanan', function($breadcrumbs)
@@ -260,7 +260,7 @@ Breadcrumbs::register('personal_detail_skp_bulanan', function($breadcrumbs)
 Breadcrumbs::register('capaian_bulanan', function($breadcrumbs)
 {
     $breadcrumbs->parent('personal-dashboard');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_bulanan'), '/bkpsdm_pare/public/personal/capaian-bulanan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_bulanan'), '/public/personal/capaian-bulanan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian')]);
 });
 
 Breadcrumbs::register('personal_edit_capaian_bulanan', function($breadcrumbs)
@@ -281,7 +281,7 @@ Breadcrumbs::register('personal_detail_capaian_bulanan', function($breadcrumbs)
 Breadcrumbs::register('capaian_triwulan', function($breadcrumbs)
 {
     $breadcrumbs->parent('personal-dashboard');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_triwulan'), '/bkpsdm_pare/public/personal/capaian-triwulan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_triwulan'), '/public/personal/capaian-triwulan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian')]);
 });
 
 Breadcrumbs::register('personal_edit_capaian_triwulan', function($breadcrumbs)
@@ -295,7 +295,7 @@ Breadcrumbs::register('personal_edit_capaian_triwulan', function($breadcrumbs)
 Breadcrumbs::register('capaian_tahunan', function($breadcrumbs)
 {
     $breadcrumbs->parent('personal-dashboard');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_tahunan'), '/bkpsdm_pare/public/personal/capaian-tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_tahunan'), '/public/personal/capaian-tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian')]);
 });
 
 Breadcrumbs::register('personal_edit_capaian_tahunan', function($breadcrumbs)
