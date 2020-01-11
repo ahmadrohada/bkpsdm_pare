@@ -17,9 +17,9 @@
 				<th>NO</th>
 					<th>NIP</th>
 					<th>NAMA LENGKAP</th>
-					<th>ESL</th>
 					<th>GOL</th>
 					<th>JABATAN</th>
+					<th>ESL</th>
 					<th>UNIT KERJA</th>
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
@@ -40,11 +40,11 @@
 				serverSide      : true,
 				searching      	: true,
 				paging          : true,
-				order 			: [ 3 , 'asc' ],
+				order 			: [ 5 , 'asc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,3,4,7] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,3,5,7] }/* ,
 									{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
@@ -63,9 +63,9 @@
 								
 								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: false},
 								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true},
-								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true},
 								{ data: "golongan" ,  name:"golongan.golongan", orderable: true, searchable: true},
 								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true},
+								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true},
 								{ data: "nama_unit_kerja" , name:"unit_kerja.unit_kerja", orderable: true, searchable: false},
 								{ data: "action" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {

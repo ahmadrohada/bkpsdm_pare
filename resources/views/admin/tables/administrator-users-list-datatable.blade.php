@@ -20,7 +20,7 @@
 					<th>GOL</th>
 					<th>JABATAN</th>
 					<th>ESL</th>
-					<th>UNIT KERJA</th>
+					<th>SKPD</th>
 					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 				</tr>
 			</thead>
@@ -45,7 +45,7 @@
 				serverSide      : true,
 				searching      	: true,
 				paging          : true,
-				order 			: [ 3 , 'asc' ],
+				//order 			: [ 3 , 'asc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
@@ -53,9 +53,7 @@
 									{	className: "hidden", targets: [5] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_users_list") }}',
-									
-									delay:3000
+									url	: '{{ url("api_resource/administrator_users_list") }}'
 								},
 			
 
@@ -65,13 +63,13 @@
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: true,width:"120px"},
-								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true,width:"180px"},
+								{ data: "nip" ,  name:"tb_pegawai.nip", orderable: true, searchable: true,width:"120px"},
+								{ data: "nama_pegawai", name:"tb_pegawai.nama", orderable: true, searchable: true,width:"180px"},
 								{ data: "golongan" ,  name:"golongan.golongan", orderable: true, searchable: true,width:"40px"},
 								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true,width:"240px"},
 								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true,width:"60px"},
-								{ data: "unit_kerja" ,  name:"unit_kerja.unit_kerja", orderable: true, searchable: true},
-								{ data: "action" , orderable: false,searchable:false,width:"40px",
+								{ data: "skpd" ,  name:"skpd.skpd", orderable: true, searchable: true},
+								{ data: "action" , orderable: false,searchable:false,width:"35px",
 										"render": function ( data, type, row ) {
 											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="../admin/users/'+row.user_id+'" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';
 										

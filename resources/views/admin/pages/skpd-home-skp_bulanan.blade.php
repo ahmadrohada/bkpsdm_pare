@@ -14,7 +14,7 @@
 				{!! Breadcrumbs::render('skp_bulanan') !!}
       </section>
 	    <section class="content">
-				@include('admin.modules.skpd-home-snapshots-boxes')
+				@include('admin.modules.snapshots-boxes.skpd-home')
 
 				@include('admin.tables.skpd-skp_bulanan')
 	    </section>
