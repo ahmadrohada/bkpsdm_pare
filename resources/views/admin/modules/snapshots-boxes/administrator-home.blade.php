@@ -30,7 +30,7 @@
 				<div class="small-box bg-green total_users" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							{{$total_users_confirmed}}
+							{{$total_users}}
 						</h3>
 						<p>
 							<strong>User PARE</strong>
@@ -56,11 +56,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-3 col-xs-6" hidden>
 				<div class="small-box bg-yellow masa_pemerintahan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							&nbsp;
 						</h3>
 						<p>
 							<strong>Masa Pemerintahan</strong>
@@ -75,7 +75,7 @@
 				<div class="small-box bg-yellow pohon_kinerja_skpd" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							{{$total_pohon_kinerja}}
 						</h3>
 						<p>
 							<strong>Pohon Kinerja SKPD</strong>
@@ -91,7 +91,7 @@
 				<div class="small-box bg-red skp skp_tahunan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							{{$total_skp_tahunan}}
 						</h3>
 						<p>
 							<strong>SKP Tahunan</strong>
