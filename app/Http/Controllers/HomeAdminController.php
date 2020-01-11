@@ -1,14 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Logic\User\UserRepository;
-use App\Logic\User\CaptureIp;
-use App\Http\Requests;
 
-use App\Models\Social;
-use App\Models\User;
-use App\Models\Role;
-use App\Models\UsersRole;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
 use App\Models\Skpd;
@@ -17,7 +10,8 @@ use App\Models\PeriodeTahunan;
 use App\Models\TPPReport;
 use App\Models\TPPReportData;
 
-use App\Models\PerjanjianKinerja;
+use App\Models\Renja;
+use App\Models\SKPTahunan;
 use App\Models\Sasaran;
 use App\Models\SasaranPerjanjianKinerja;
 use App\Models\IndikatorSasaran;
@@ -78,6 +72,25 @@ class HomeAdminController extends Controller {
                                 })->count();
     }
 
+    protected function total_skpd()
+    {
+        return SKPD::whereRaw('id = id_skpd AND id != 1 AND id != 6 AND id != 8 AND id != 10 AND id != 12 ')
+                    ->count();   
+    }
+    
+    protected function total_pohon_kinerja(){
+        
+        return 	Renja::count();
+    } 
+
+    protected function total_skp_tahunan(){
+        
+        return 	SKPTahunan::count();
+    } 
+
+
+
+    //SKPD DASHBOARD
 
     protected function total_pegawai_skpd( $skpd_id){
         
@@ -105,13 +118,7 @@ class HomeAdminController extends Controller {
 
 
 
-    protected function total_skpd()
-    {
-    return SKPD::whereRaw('id = id_skpd AND id != 1 AND id != 6 AND id != 8 AND id != 10 AND id != 12 ')
-                ->count();  
-    
-            
-    }
+   
 
     protected function total_TPP_report()
     {
@@ -124,14 +131,6 @@ class HomeAdminController extends Controller {
             
         $user                   = \Auth::user();
         $users 			        = \DB::table('users')->get();
-
-        $attemptsAllowed        = 4;
-
-        $total_users_confirmed  = $this->total_users();
-        $total_users_locked 	= 67;
-
-
-        $total_users_new        = 78;
 
         $userRole               = $user->hasRole('personal');
         $admin_skpdRole         = $user->hasRole('admin_skpd');
@@ -146,7 +145,7 @@ class HomeAdminController extends Controller {
             $access = 'Administrator';
         }
 
-         //CARI id skpd nya
+        //CARI id skpd nya
         $id_skpd    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
         $skpd       = Skpd::where('id_skpd', $id_skpd)->first()->unit_kerja;
        
@@ -157,12 +156,12 @@ class HomeAdminController extends Controller {
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
                 'total_TPP_report'        => $this->total_TPP_report(),
+                'total_pohon_kinerja'     => $this->total_pohon_kinerja(),
+                'total_skp_tahunan'       => $this->total_skp_tahunan(),
+
 				'nama_skpd' 	          => $skpd,
         		'user' 			          => $user,
         		'access' 	              => $access,
-                'total_users_confirmed'   => $total_users_confirmed,
-                'total_users_locked'      => $total_users_locked,
-                'total_users_new'         => $total_users_new,
                 'h_box'                   => 'box-info',
         	]
         );   
@@ -177,16 +176,6 @@ class HomeAdminController extends Controller {
         
         $user                   = \Auth::user();
         $users 			        = \DB::table('users')->get();
-
-       
-        $attemptsAllowed        = 4;
-
-        $total_users_confirmed  = $this->total_users();
-        $total_users_locked 	= 0;
-
-
-        $total_users_new        = 0;
-
 
         $userRole               = $user->hasRole('personal');
         $admin_skpdRole         = $user->hasRole('admin_skpd');
@@ -214,12 +203,12 @@ class HomeAdminController extends Controller {
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
                 'total_TPP_report'        => $this->total_TPP_report(),
+                'total_pohon_kinerja'     => $this->total_pohon_kinerja(),
+                'total_skp_tahunan'       => $this->total_skp_tahunan(),
+
 				'nama_skpd' 	          => $skpd,
         		'user' 			          => $user,
         		'access' 	              => $access,
-                'total_users_confirmed'   => $total_users_confirmed,
-                'total_users_locked'      => $total_users_locked,
-                'total_users_new'         => $total_users_new,
                 'h_box'                   => 'box-success',
         	]
         );   
@@ -233,16 +222,6 @@ class HomeAdminController extends Controller {
         
         $user                   = \Auth::user();
         $users 			        = \DB::table('users')->get();
-
-        
-        $attemptsAllowed        = 4;
-
-        $total_users_confirmed  = $this->total_users();
-        $total_users_locked 	= 67;
-
-
-        $total_users_new        = 78;
-
 
         $userRole               = $user->hasRole('personal');
         $admin_skpdRole         = $user->hasRole('admin_skpd');
@@ -266,13 +245,13 @@ class HomeAdminController extends Controller {
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
                 'total_TPP_report'        => $this->total_TPP_report(),
+                'total_pohon_kinerja'     => $this->total_pohon_kinerja(),
+                'total_skp_tahunan'       => $this->total_skp_tahunan(),
+
+                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
         		'user' 			          => $user,
         		'access' 	              => $access,
-                'total_users_confirmed'   => $total_users_confirmed,
-                'total_users_locked'      => $total_users_locked,
-                'total_users_new'         => $total_users_new,
                 'h_box'                   => 'box-danger',
         	]
         );   
@@ -286,15 +265,6 @@ class HomeAdminController extends Controller {
         
         $user                   = \Auth::user();
         $users 			        = \DB::table('users')->get();
-
-        
-        $attemptsAllowed        = 4;
-
-        $total_users_confirmed  = $this->total_users();
-        $total_users_locked 	= 67;
-
-
-        $total_users_new        = 78;
 
 
         $userRole               = $user->hasRole('personal');
@@ -319,13 +289,15 @@ class HomeAdminController extends Controller {
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
                 'total_TPP_report'        => $this->total_TPP_report(),
+                'total_pohon_kinerja'     => $this->total_pohon_kinerja(),
+                'total_skp_tahunan'       => $this->total_skp_tahunan(),
+
+
+                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
         		'user' 			          => $user,
         		'access' 	              => $access,
-                'total_users_confirmed'   => $total_users_confirmed,
-                'total_users_locked'      => $total_users_locked,
-                'total_users_new'         => $total_users_new,
+               
                 'h_box'                   => 'box-warning',
         	]
         );   
@@ -341,16 +313,6 @@ class HomeAdminController extends Controller {
         
         $user                   = \Auth::user();
         $users 			        = \DB::table('users')->get();
-
-        
-        $attemptsAllowed        = 4;
-
-        $total_users_confirmed  = $this->total_users();
-        $total_users_locked 	= 67;
-
-
-        $total_users_new        = 78;
-
 
         $userRole               = $user->hasRole('personal');
         $admin_skpdRole         = $user->hasRole('admin_skpd');
@@ -374,13 +336,13 @@ class HomeAdminController extends Controller {
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
                 'total_TPP_report'        => $this->total_TPP_report(),
+                'total_pohon_kinerja'     => $this->total_pohon_kinerja(),
+                'total_skp_tahunan'       => $this->total_skp_tahunan(),
+
+                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
         		'user' 			          => $user,
         		'access' 	              => $access,
-                'total_users_confirmed'   => $total_users_confirmed,
-                'total_users_locked'      => $total_users_locked,
-                'total_users_new'         => $total_users_new,
                 'h_box'                   => 'box-warning',
         	]
         );   
@@ -393,10 +355,7 @@ class HomeAdminController extends Controller {
             
         $user                   = \Auth::user();
         $users 			        = \DB::table('users')->get();
-        $attemptsAllowed        = 4;
-        $total_users_confirmed  = $this->total_users();
-        $total_users_locked 	= 67;
-        $total_users_new        = 78;
+
         $userRole               = $user->hasRole('personal');
         $admin_skpdRole         = $user->hasRole('admin_skpd');
         $adminRole              = $user->hasRole('administrator');
@@ -419,13 +378,13 @@ class HomeAdminController extends Controller {
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
                 'total_TPP_report'        => $this->total_TPP_report(),
+                'total_pohon_kinerja'     => $this->total_pohon_kinerja(),
+                'total_skp_tahunan'       => $this->total_skp_tahunan(),
+
+                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
         		'user' 			          => $user,
         		'access' 	              => $access,
-                'total_users_confirmed'   => $total_users_confirmed,
-                'total_users_locked'      => $total_users_locked,
-                'total_users_new'         => $total_users_new,
                 'h_box'                   => 'box-danger',
         	]
         );   
@@ -438,10 +397,7 @@ class HomeAdminController extends Controller {
             
         $user                   = \Auth::user();
         $users 			        = \DB::table('users')->get();
-        $attemptsAllowed        = 4;
-        $total_users_confirmed  = $this->total_users();
-        $total_users_locked 	= 67;
-        $total_users_new        = 78;
+
         $userRole               = $user->hasRole('personal');
         $admin_skpdRole         = $user->hasRole('admin_skpd');
         $adminRole              = $user->hasRole('administrator');
@@ -464,19 +420,22 @@ class HomeAdminController extends Controller {
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
                 'total_skpd'              => $this->total_skpd(),
-                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
                 'total_TPP_report'        => $this->total_TPP_report(),
+                'total_pohon_kinerja'     => $this->total_pohon_kinerja(),
+                'total_skp_tahunan'       => $this->total_skp_tahunan(),
+
+
+                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
         		'user' 			          => $user,
         		'access' 	              => $access,
-                'total_users_confirmed'   => $total_users_confirmed,
-                'total_users_locked'      => $total_users_locked,
-                'total_users_new'         => $total_users_new,
                 'h_box'                   => 'box-success',
         	]
         );   
 
         
     }
+
+
 
    
     

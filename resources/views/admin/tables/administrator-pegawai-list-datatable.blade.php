@@ -1,7 +1,7 @@
 <div class="box box-info">
     <div class="box-header with-border">
         <h1 class="box-title">
-            Data Pegawai
+            Data ASN Kabupaten Karawang
         </h1>
 
         <div class="box-tools pull-right">
@@ -34,7 +34,7 @@
 
 
 <script type="text/javascript">
-	$(document).ready(function() {
+	
 		//alert();
 		
 		$('#user_table').DataTable({
@@ -42,7 +42,7 @@
 				serverSide      : true,
 				searching      	: true,
 				paging          : true,
-				order 			: [ 3 , 'asc' ],
+				//order 			: [ 3 , 'asc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [20,50,100],
 				columnDefs		: [
@@ -50,8 +50,7 @@
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/administrator_pegawai_list") }}',
-									
-									delay:3000
+									//data: { page : 4 , dtpage : 13 }, //PAGINATION bawaan laravel
 								},
 				
 
@@ -61,8 +60,8 @@
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: true,width:"120px"},
-								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true,width:"180px"},
+								{ data: "nip" ,  name:"tb_pegawai.nip", orderable: true, searchable: true,width:"120px"},
+								{ data: "nama_pegawai", name:"tb_pegawai.nama", orderable: true, searchable: true,width:"180px"},
 								{ data: "golongan" ,  name:"golongan.golongan", orderable: true, searchable: true,width:"40px"},
 								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true,width:"240px"},
 								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true,width:"60px"},
@@ -92,5 +91,4 @@
 		}); */
 		
 		
-	});
 </script>
