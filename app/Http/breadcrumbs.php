@@ -194,19 +194,19 @@ Breadcrumbs::register('skpd-unit_kerja', function($breadcrumbs)
 Breadcrumbs::register('skpd-pohon_kinerja', function($breadcrumbs)
 {
     $breadcrumbs->parent('skpd');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_renja'), '/public/skpd/pohon-kinerja', ['icon' => Lang::get('sidebar-nav.link_icon_renja')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_renja'), '/public/skpd/pohon_kinerja', ['icon' => Lang::get('sidebar-nav.link_icon_renja')]);
 });
 // DASHBOARD > SKPD > POHON KINERJA > EDIT
 Breadcrumbs::register('skpd-pohon_kinerja-edit', function($breadcrumbs)
 {
     $breadcrumbs->parent('skpd-pohon_kinerja');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_edit'), '/pohon-kinerja', ['icon' => Lang::get('sidebar-nav.link_icon_edit')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_edit'), '/pohon_kinerja', ['icon' => Lang::get('sidebar-nav.link_icon_edit')]);
 });
 // DASHBOARD > SKPD > POHON KINERJA > DETAIL
 Breadcrumbs::register('skpd-pohon_kinerja-detail', function($breadcrumbs)
 {
     $breadcrumbs->parent('skpd-pohon_kinerja');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_detail'), '/pohon-kinerja', ['icon' => Lang::get('sidebar-nav.link_icon_detail')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_detail'), '/pohon_kinerja', ['icon' => Lang::get('sidebar-nav.link_icon_detail')]);
 });
 
 
