@@ -121,11 +121,11 @@ class HomeSKPDController extends Controller {
                
 	}
 
+    public function showHomeSKPD(Request $request)
+    {
+        return redirect('/skpd/pegawai');
+    }
     
-
-
-    
-
     public function showPegawai(Request $request)
     {
             

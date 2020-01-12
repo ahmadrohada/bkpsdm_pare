@@ -489,36 +489,21 @@ class SKPTahunanAPIController extends Controller {
        
                     $datatables = Datatables::of($dt)
                     ->addColumn('status', function ($x) {
-            
                         return $x->send_to_atasan;
-            
                     })->addColumn('periode', function ($x) {
-                        
                         return $x->periode;
-                    
                     })->addColumn('nip_pegawai', function ($x) {
-                        
                         return $x->u_nip;
-                    
                     })->addColumn('nama_pegawai', function ($x) {
-                        
                         return $x->u_nama;
-                    
                     })
                     ->addColumn('eselon', function ($x) {
-                        
-                        
                         return  $x->eselon;
-                        
                     })->addColumn('jabatan', function ($x) {
-                        
                         return Pustaka::capital_string($x->jabatan);
-                    
                     })
                     ->addColumn('nama_atasan', function ($x) {
-                        
                         return $x->p_nama;
-                    
                     });
             
                     

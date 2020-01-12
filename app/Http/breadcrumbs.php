@@ -69,6 +69,13 @@ Breadcrumbs::register('create_user_admin_view', function($breadcrumbs)
 });
 
 
+
+
+
+//==========================================================================================================//
+//================================== ES KA PE DE ===========================================================//
+//==========================================================================================================//
+
 // DASHBOARD > SKPD >
 Breadcrumbs::register('skpd', function($breadcrumbs)
 {
@@ -91,12 +98,37 @@ Breadcrumbs::register('skpd-unit_kerja', function($breadcrumbs)
 });
 
 
-// DASHBOARD > SKPD > Renja >
-Breadcrumbs::register('skpd-renja', function($breadcrumbs)
+// DASHBOARD > SKPD > POHON KINERJA >
+Breadcrumbs::register('skpd-pohon_kinerja', function($breadcrumbs)
 {
     $breadcrumbs->parent('skpd');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_renja'), '/renja', ['icon' => Lang::get('sidebar-nav.link_icon_renja')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_renja'), '/pohon-kinerja', ['icon' => Lang::get('sidebar-nav.link_icon_renja')]);
 });
+
+
+// DASHBOARD > SKPD > STRUKTUR ORGANISASI >
+Breadcrumbs::register('skpd-struktur_organisasi', function($breadcrumbs)
+{
+    $breadcrumbs->parent('skpd');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_struktur_organisasi'), '/struktur-organisasi', ['icon' => Lang::get('sidebar-nav.link_icon_struktur_organisasi')]);
+});
+
+// DASHBOARD > SKPD > SKP TAHUNAN >
+Breadcrumbs::register('skpd-skp_tahunan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('skpd');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_tahunan'), '/public/skpd/skp-tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_tahunan')]);
+});
+
+// DASHBOARD > SKPD > SKP TAHUNAN > DETAIL
+Breadcrumbs::register('skpd_detail_skp_tahunan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('skpd-skp_tahunan');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_tahunan'), '/public/skp tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_tahunan')]);
+});
+
+
+
 
 
 

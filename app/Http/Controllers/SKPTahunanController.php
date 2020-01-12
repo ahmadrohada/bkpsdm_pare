@@ -53,7 +53,7 @@ class SKPTahunanController extends Controller {
         $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
 
         
-        return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan]);  
+        return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan , 'base' =>'skpd']);  
        
     }
 
@@ -64,7 +64,7 @@ class SKPTahunanController extends Controller {
         if( ($skp_tahunan->status) == 0 ) {
             return redirect('/personal/skp-tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
         }else{
-            return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan]);  
+            return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan , 'base' =>'personal']);  
         }
 
         //APPROVAL MODE

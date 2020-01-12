@@ -11,7 +11,7 @@
 			<h1>
 				SKP Bulanan SKPD
 			</h1>
-				{!! Breadcrumbs::render('skp_bulanan') !!}
+				{!! Breadcrumbs::render('skpd-skp_bulanan') !!}
       </section>
 	    <section class="content">
 				@include('admin.modules.snapshots-boxes.skpd-home')

@@ -15,7 +15,7 @@
 			{{ Pustaka::capital_string($nama_skpd) }}
 			</h1>
 
-			{!! Breadcrumbs::render('skpd') !!}
+			{!! Breadcrumbs::render('skpd-pohon_kinerja') !!}
 
 	    </section>
 	    <section class="content">
