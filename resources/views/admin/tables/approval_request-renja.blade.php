@@ -97,7 +97,7 @@
 
 
 
-		window.location.assign("renja/"+renja_id);
+		window.location.assign("pohon_kinerja/"+renja_id);
 	});
 
 	

@@ -93,7 +93,7 @@
 
 
 
-		window.location.assign("skp-bulanan/"+skp_bulanan_id+"/edit");
+		window.location.assign("skp_bulanan/"+skp_bulanan_id+"/edit");
 	});
 
 	$(document).on('click','.lihat_skp_bulanan',function(e){
@@ -102,7 +102,7 @@
 
 
 
-		window.location.assign("skp-bulanan/"+skp_bulanan_id);
+		window.location.assign("skp_bulanan/"+skp_bulanan_id);
 	});
 
 	$(document).on('click','.hapus_skp_bulanan',function(e){

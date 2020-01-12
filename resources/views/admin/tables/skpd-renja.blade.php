@@ -106,19 +106,19 @@
 	$(document).on('click','.edit_renja',function(e){
 		var renja_id = $(this).data('id') ;
 		
-		window.location.assign("renja/"+renja_id+"/edit");
+		window.location.assign("pohon_kinerja/"+renja_id+"/edit");
 	});
 
 	$(document).on('click','.lihat_renja',function(e){
 		var renja_id = $(this).data('id') ;
 		
-		window.location.assign("renja/"+renja_id);
+		window.location.assign("pohon_kinerja/"+renja_id);
 	});
 
 	$(document).on('click','.ralat_renja',function(e){
 		var renja_id = $(this).data('id') ;
 		
-		window.location.assign("renja/"+renja_id+"/ralat");
+		window.location.assign("pohon_kinerja/"+renja_id+"/ralat");
 	});
 
 </script>
