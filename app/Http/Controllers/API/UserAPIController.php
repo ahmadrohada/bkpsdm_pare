@@ -107,7 +107,8 @@ class UserAPIController extends Controller {
                     ->leftjoin('demo_asn.m_golongan AS golongan', function($join){
                                 $join   ->on('golongan.id','=','b.id_golongan');
                     })  
-                    ->SELECT([  'tb_pegawai.nama AS nama',
+                    ->SELECT([  'users.id AS user_id',
+                                'tb_pegawai.nama AS nama',
                                 'tb_pegawai.id AS pegawai_id',
                                 'tb_pegawai.nip AS nip',
                                 'tb_pegawai.gelardpn AS gelardpn',
