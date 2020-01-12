@@ -11,7 +11,7 @@
 		<h1>
 			REPORT
 		</h1>
-		{!! Breadcrumbs::render('personal_skp_tahunan') !!}
+		{!! Breadcrumbs::render('skpd-tpp_report') !!}
 	</section>
 	<section class="content">
 		@include('admin.modules.snapshots-boxes.skpd-report')

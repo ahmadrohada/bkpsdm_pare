@@ -12,6 +12,7 @@
     <link rel="shortcut icon" href="{{{ asset('assets/images/favicon.png') }}}">
 
 
+
 	
     
   
@@ -22,7 +23,7 @@
 
   </head>
 
-  <body class="{{ isset($layoutBodybodyClasses) ? $layoutBodybodyClasses : '' }} {{ isset($templateBodybodyClasses) ? $templateBodybodyClasses : '' }}">
+  <body onunload="" class="{{ isset($layoutBodybodyClasses) ? $layoutBodybodyClasses : '' }} {{ isset($templateBodybodyClasses) ? $templateBodybodyClasses : '' }}">
 
    
     {{-- Load Layout HEADER --}}

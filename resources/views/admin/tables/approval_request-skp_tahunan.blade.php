@@ -93,7 +93,7 @@
 
 
 
-		window.location.assign("skp-tahunan/"+skp_tahunan_id);
+		window.location.assign("skp_tahunan/"+skp_tahunan_id);
 	});
 
 	

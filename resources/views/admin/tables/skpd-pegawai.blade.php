@@ -31,9 +31,10 @@
 	</div>
 </div>
 
-
-
 <script type="text/javascript">
+
+
+
 
 		$('#pegawai_table').DataTable({
 				processing      : true,

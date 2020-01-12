@@ -71,7 +71,22 @@ class HomePersonalController extends Controller {
     }
 
     
-    
+    public function showHomePersonal(Request $request)
+    {
+        $user      = \Auth::user();
+        $pegawai   = $user->pegawai;       
+        
+
+        return view('admin.pages.personal-home', [
+               'pegawai' 		        => $pegawai,
+               'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+               'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
+               'jm_skp_bulanan'         => $this->jm_skp_bulanan($pegawai->id),
+               'h_box'                  => 'box-info',
+               
+           ]
+        );   
+    }
 
     public function showDashboard(Request $request)
     {

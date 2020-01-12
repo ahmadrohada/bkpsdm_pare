@@ -126,6 +126,12 @@ class HomeAdminController extends Controller {
     }
 
 
+    public function showHomeAdministrator(Request $request)
+    {
+        return redirect('/admin/pegawai');
+    }
+
+
     public function showPegawai(Request $request)
     {
             
@@ -284,7 +290,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('admin.pages.administrator-home-masa_pemerintahan', [
+		return view('admin.pages.administrator-masa_pemerintahan', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
@@ -331,7 +337,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('admin.pages.administrator-home-pohon_kinerja', [
+		return view('admin.pages.administrator-pohon_kinerja', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
@@ -373,7 +379,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('admin.pages.administrator-home-SKP_tahunan', [
+		return view('admin.pages.administrator-SKP_tahunan', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
@@ -415,7 +421,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('admin.pages.administrator-home-TPP_report', [
+		return view('admin.pages.administrator-TPP_report', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),

@@ -19,7 +19,7 @@
         <div class="row" style="margin-top:15px;">
 
 
-            <div class="col-sm-4 border-right">
+            {{-- <div class="col-sm-4 border-right">
                 <div class="description-block">
                     <h5 class="description-header text-warning"></h5>
                     <span class="description-text text-success">SKP</span>
@@ -36,7 +36,7 @@
                     <h5 class="description-header text-warning"></h5>
                     <span class="description-text text-success">TPP</span>
                 </div>
-            </div>
+            </div> --}}
 
 
         </div>

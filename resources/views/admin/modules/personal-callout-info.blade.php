@@ -8,7 +8,7 @@
 		Periode : <span class="periode_aktif"></span>
 	</p>
 	<p style="font-family:mainandra;">
-		<a href="./personal/skp-tahunan" >SKP Tahunan Menu</a>
+		<a href="./personal/skp_tahunan" >SKP Tahunan Menu</a>
 	</p>
 </div>
 

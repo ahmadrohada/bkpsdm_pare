@@ -22,19 +22,19 @@
 
 					<div class="form-group">
 						<label>Nama SKPD</label>
-						<p class="label-perjanjian-kinerja">
+						<p class="label-perjanjian_kinerja">
 							<span class="nama_skpd"></span>
 						</p>
 					</div>
 					<div class="form-group">
 						<label>Jumlah Pegawai</label>
-						<p class="label-perjanjian-kinerja">
+						<p class="label-perjanjian_kinerja">
 							<span class="jumlah_pegawai"></span>
 						</p>
 					</div>
 					<div class="form-group">
 						<label>Periode</label>
-						<p class="label-perjanjian-kinerja">
+						<p class="label-perjanjian_kinerja">
 							<span class="tahun"></span> 
 						</p>
 					</div>

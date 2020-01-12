@@ -7,7 +7,7 @@
 				<span class="text-primary">INDIKATOR PROGRAM</span>
 			</small>
         </h3>
-		<p style="margin-left:15px;" class="label-perjanjian-kinerja">
+		<p style="margin-left:15px;" class="label-perjanjian_kinerja">
 			{{ $indikator_program->label}}
 		</p>
 
@@ -17,7 +17,7 @@
 				<span class="text-primary">TARGET</span>
 			</small>
         </h3>
-		<p style="margin-left:15px;" class="label-perjanjian-kinerja">
+		<p style="margin-left:15px;" class="label-perjanjian_kinerja">
 			{{ $indikator_program->target}}&nbsp;{{ $indikator_program->satuan}}
 		</p>
 

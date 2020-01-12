@@ -147,11 +147,11 @@ $(document).ready(function(){
     });
 
 	$(".perjanjian_kinerja").click(function(){
-		window.location.assign("perjanjian-kinerja");
+		window.location.assign("perjanjian_kinerja");
     });
 
 	$(".skp_tahunan").click(function(){
-		window.location.assign("skp-tahunan");
+		window.location.assign("skp_tahunan");
     });
 
 	$(".skp_bulanan").click(function(){

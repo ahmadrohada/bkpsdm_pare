@@ -13,7 +13,7 @@
 				Ralat Rencana Kerja
 			</h1>
 
-				{!! Breadcrumbs::render('skpd-renja') !!}
+				{!! Breadcrumbs::render('skpd-pohon_kinerja') !!}
         
 	    </section>
 	    <section class="content">

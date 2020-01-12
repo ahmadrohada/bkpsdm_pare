@@ -19,7 +19,7 @@
 						
 						<div class="form-group">
                             <label>Sasaran</label>
-							<p class="label-perjanjian-kinerja">
+							<p class="label-perjanjian_kinerja">
                             <span class="sasaran_perjanjian_kinerja_label"></span>
 							</p>
                         </div>

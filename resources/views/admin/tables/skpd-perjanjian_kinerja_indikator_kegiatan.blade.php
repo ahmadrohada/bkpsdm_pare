@@ -6,7 +6,7 @@
 				<span class="text-primary"> JABATAN</span>	
 			</small>
         </h3>
-		<p style="margin-left:15px;" class="label-perjanjian-kinerja">
+		<p style="margin-left:15px;" class="label-perjanjian_kinerja">
 			 {{ Pustaka::capital_string($kegiatan->jabatan->skpd) }}
 		</p>
 
@@ -16,7 +16,7 @@
 				<span class="text-primary">KEGIATAN</span>
 			</small>
         </h3>
-		<p style="margin-left:15px;" class="label-perjanjian-kinerja">
+		<p style="margin-left:15px;" class="label-perjanjian_kinerja">
 			{{ $kegiatan->label}}
 		</p>
         <div class="box-tools pull-right">

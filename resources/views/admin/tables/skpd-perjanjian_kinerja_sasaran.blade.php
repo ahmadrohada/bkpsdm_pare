@@ -8,7 +8,7 @@
 				<span class="text-primary"> SKPD</span>	
 			</small>
         </h3>
-		<p style="margin-left:15px;" class="label-perjanjian-kinerja">
+		<p style="margin-left:15px;" class="label-perjanjian_kinerja">
 			 {{ Pustaka::capital_string($perjanjian_kinerja->skpd->unit_kerja) }}
 			 [ {{ $perjanjian_kinerja->skpd->id }} ]
 		</p>
@@ -88,7 +88,7 @@ $(document).ready(function() {
 										"render": function ( data, type, row ) {
 											
 											return  '<span  data-toggle="tooltip" title="Add Indikator" style="margin:1px;" ><a class="btn btn-info btn-xs create_indikator_sasaran" data-toggle="modal" data-target=".create-indikator_sasaran_modal" data-label="'+row.label+'" data-id="'+row.sasaran_perjanjian_kinerja_id+'"><i class="fa fa-plus" ></i></a></span>'+	
-													'<span  data-toggle="tooltip" title="Lihat Indikator" style="margin:1px;" class=""><a href="./sasaran-perjanjian-kinerja/'+row.sasaran_perjanjian_kinerja_id+'" class="btn btn-xs btn-success"><i class="fa fa-eye"></i></a></span>'+
+													'<span  data-toggle="tooltip" title="Lihat Indikator" style="margin:1px;" class=""><a href="./sasaran-perjanjian_kinerja/'+row.sasaran_perjanjian_kinerja_id+'" class="btn btn-xs btn-success"><i class="fa fa-eye"></i></a></span>'+
 													'<span  data-toggle="tooltip" title="Delete Sasaran" style="margin:1px;" class="btn btn-danger btn-xs hapus_sasaran"><i class="fa fa-remove" style=""></i></span>';
 
 

@@ -101,7 +101,7 @@
 
 
 
-		window.location.assign("skp-tahunan/"+skp_tahunan_id+"/edit");
+		window.location.assign("skp_tahunan/"+skp_tahunan_id+"/edit");
 	});
 
 	$(document).on('click','.lihat_skp_tahunan',function(e){
@@ -110,7 +110,7 @@
 
 
 
-		window.location.assign("skp-tahunan/"+skp_tahunan_id);
+		window.location.assign("skp_tahunan/"+skp_tahunan_id);
 	});
 
 	$(document).on('click','.hapus_skp_tahunan',function(e){

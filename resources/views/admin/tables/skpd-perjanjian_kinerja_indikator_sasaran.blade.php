@@ -7,7 +7,7 @@
 				<span class="text-primary">SASARAN</span>
 			</small>
         </h3>
-		<p style="margin-left:15px;" class="label-perjanjian-kinerja">
+		<p style="margin-left:15px;" class="label-perjanjian_kinerja">
 			{{ $sasaran->sasaran->label}}
 		</p>
         <div class="box-tools pull-right">
