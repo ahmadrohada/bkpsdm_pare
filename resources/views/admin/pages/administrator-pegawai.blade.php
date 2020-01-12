@@ -15,7 +15,7 @@
 				Administrator
 			</h1>
 
-			{!! Breadcrumbs::render('users') !!}
+			{!! Breadcrumbs::render('admin-pegawai') !!}
 
 	    </section>
 	    <section class="content">

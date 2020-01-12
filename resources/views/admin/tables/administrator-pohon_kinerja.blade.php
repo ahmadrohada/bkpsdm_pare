@@ -39,7 +39,7 @@
 		$('#renja_table').DataTable({
 				processing      : true,
 				serverSide      : true,
-				searching      	: false,
+				searching      	: true,
 				paging          : false,
 				order 			: [ 0 , 'desc' ],
 				//dom 			: '<"toolbar">frtip',
@@ -64,7 +64,7 @@
 								
 								
 								{ data: "periode" ,  name:"periode", orderable: true, searchable: false},
-								{ data: "nama_skpd" ,  name:"nama_skpd", orderable: true, searchable: false},
+								{ data: "nama_skpd" ,  name:"skpd.skpd", orderable: true, searchable: true},
 								{ data: "ka_skpd" ,  name:"ka_skpd", orderable: true, searchable: false},
 								{ data: "jm_tujuan" ,  name:"jm_tujuan", orderable: true, searchable: false},
 								{ data: "status" , orderable: false,searchable:false,

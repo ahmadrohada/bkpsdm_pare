@@ -344,7 +344,7 @@
 				}).then(function () {
 						$('.modal-create_skp_tahunan_confirm').modal('hide');
 						$('#skp_tahunan_table').DataTable().ajax.reload(null,false);
-						window.location.assign("skp-tahunan/"+data);
+						window.location.assign("skp_tahunan/"+data);
 
 				},
 					function (dismiss) {

@@ -8,7 +8,7 @@
 				<span class="text-primary">PROGRAM</span>
 			</small>
         </h3>
-		<p style="margin-left:15px;" class="label-perjanjian-kinerja">
+		<p style="margin-left:15px;" class="label-perjanjian_kinerja">
 			{{ $program->label}}
 		</p>
         <div class="box-tools pull-right">

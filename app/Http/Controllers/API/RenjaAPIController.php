@@ -278,14 +278,20 @@ class RenjaAPIController extends Controller {
     {
        
         
-        $dt = Renja::SELECT(
+        $dt = Renja::
+                            leftjoin('demo_asn.m_skpd AS skpd', function($join) { 
+                                $join   ->on('renja.skpd_id','=','skpd.id');
+                                
+                            })                
+                            ->SELECT(
                                  'renja.id AS renja_id',
                                  'renja.periode_id',
                                  'renja.skpd_id',
                                  'renja.send_to_kaban AS send_to_kaban',
                                  'renja.kepala_skpd_id',
                                  'renja.nama_kepala_skpd AS kaban_nama',
-                                 'renja.status_approve'
+                                 'renja.status_approve',
+                                 'skpd.skpd AS skpd'
 
 
                                 );
@@ -298,11 +304,9 @@ class RenjaAPIController extends Controller {
         })->addColumn('renja_id', function ($x) {
             return $x->renja_id;
         })->addColumn('nama_skpd', function ($x) {
-           return Pustaka::capital_string($x->SKPD->skpd);
+           return Pustaka::capital_string($x->skpd);
         })->addColumn('jm_tujuan', function ($x) {
             $jm = Tujuan::WHERE('renja_id','=',$x->renja_id)->count();
-
-
             return $jm;
         })->addColumn('ka_skpd', function ($x) {
             if ( $x->KepalaSKPD != null ){

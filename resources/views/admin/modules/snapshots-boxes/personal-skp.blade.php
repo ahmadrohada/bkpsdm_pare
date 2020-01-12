@@ -74,7 +74,7 @@ $(document).ready(function(){
     });
 
 	$(".skp_tahunan").click(function(){
-		window.location.assign("skp-tahunan");
+		window.location.assign("skp_tahunan");
     });
 
 	$(".skp_bulanan").click(function(){

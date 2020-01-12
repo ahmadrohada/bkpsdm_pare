@@ -15,7 +15,7 @@
 				{!! $nama_skpd !!}
 			</h1>
 
-			{!! Breadcrumbs::render('skpd') !!}
+			{!! Breadcrumbs::render('admin-skpd-unit_kerja') !!}
 
 	    </section>
 	    <section class="content">

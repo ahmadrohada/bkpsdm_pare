@@ -15,7 +15,7 @@
 				Administrator
 			</h1>
 
-			{!! Breadcrumbs::render('masa_pemerintahan') !!}
+			{!! Breadcrumbs::render('admin-tpp_report') !!}
 
 	    </section>
 	    <section class="content">
@@ -23,7 +23,7 @@
 			
 				@include('admin.modules.snapshots-boxes.administrator-home')
 
- 				@include('admin.tables.administrator-masa_pemerintahan-list-datatable')
+ 				@include('admin.tables.administrator-TPP_report_data')
 		
 	    </section>
 	</div>

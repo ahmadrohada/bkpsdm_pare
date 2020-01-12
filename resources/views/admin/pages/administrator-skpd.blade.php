@@ -15,7 +15,7 @@
 				Administrator
 			</h1>
 
-			{!! Breadcrumbs::render('skpd') !!}
+			{!! Breadcrumbs::render('admin-skpd') !!}
 
 	    </section>
 	    <section class="content">

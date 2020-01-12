@@ -327,7 +327,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 /* 
 
 
-	Route::get('breadcrumb-perjanjian-kinerja','API\PerjanjianKinerjaAPIController@SKPDPerjanjianKinerjaBreadcrumb');
+	Route::get('breadcrumb-perjanjian_kinerja','API\PerjanjianKinerjaAPIController@SKPDPerjanjianKinerjaBreadcrumb');
 	
 	Route::get('skpd_periode_perjanjian_kinerja_list','API\PerjanjianKinerjaAPIController@SKPDPeriodePerjanjianKinerja');
 	Route::post('skpd_simpan_perjanjian_kinerja','API\PerjanjianKinerjaAPIController@Store');
@@ -950,6 +950,11 @@ Route::group(['middleware' => 'administrator'], function () {
 	//============================================================================================//
 	//============================ ADMIN HOME / ADMIN SNAPSHOTS ====================================//
 	//============================================================================================//
+	Route::get('admin/', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeAdminController@showHomeAdministrator'
+	]);
+	
 	Route::get('admin/pegawai', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeAdminController@showPegawai'
@@ -1141,7 +1146,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	
 
 	// AJAX REQUEST TEST
-	Route::get('admin/skp-tahunan', [
+	Route::get('admin/skp_tahunan', [
 		'as' 			=> '',
 		'uses' 			=> 'RencanaKerjaController@DataTes'
 	]);
@@ -1217,13 +1222,13 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]);
 
 
-	Route::get('perjanjian-kinerja', [
+	Route::get('perjanjian_kinerja', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeSKPDController@showPerjanjianKinerja'
 	]);
 
 
-	Route::get('skp-tahunan', [
+	Route::get('skp_tahunan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeSKPDController@showSKPTahunan'
 	]);
@@ -1270,12 +1275,12 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaSKPD'
 	]);
 
-	Route::post('skp-tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon2', [
+	Route::post('skp_tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon2', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
 	]);
 
-	Route::post('skp-tahunan/cetak_perjanjian_kinerja-Eselon2', [
+	Route::post('skp_tahunan/cetak_perjanjian_kinerja-Eselon2', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
 	]);
@@ -1315,7 +1320,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	//----------------------------------------------------------------------------------------//
 	//========================      SKP TAHUNAN SKPD       ================================//
 	//----------------------------------------------------------------------------------------//
-	Route::get('skp-tahunan/{skp_tahunan_id}',[
+	Route::get('skp_tahunan/{skp_tahunan_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPTahunanController@SKPDSKPTahunanDetail'
 	]);
@@ -1329,11 +1334,11 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'PerjanjianKinerjaController@showPerjanjianKinerja'
 	]);
 
-	Route::post('skp-tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon4', [
+	Route::post('skp_tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon4', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl4'
 	]);
-	Route::post('skp-tahunan/cetak_perjanjian_kinerja-Eselon4', [
+	Route::post('skp_tahunan/cetak_perjanjian_kinerja-Eselon4', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl4'
 	]);
@@ -1364,7 +1369,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
 	Route::get('', [
 		'as' 			=> '',
-		'uses' 			=> 'HomePersonalController@showDashboard'
+		'uses' 			=> 'HomePersonalController@showHomePersonal'
 	]);
 
 
@@ -1449,30 +1454,30 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	//========================================================================================//
 	//=============================       PERJANJIAN KINERJA       ===========================//
 	//========================================================================================//
-	Route::post('skp-tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon2', [
+	Route::post('skp_tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon2', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
 	]);
 
-	Route::post('skp-tahunan/cetak_perjanjian_kinerja-Eselon2', [
+	Route::post('skp_tahunan/cetak_perjanjian_kinerja-Eselon2', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
 	]);
 
-	Route::post('skp-tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon3', [
+	Route::post('skp_tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon3', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl3'
 	]);
-	Route::post('skp-tahunan/cetak_perjanjian_kinerja-Eselon3', [
+	Route::post('skp_tahunan/cetak_perjanjian_kinerja-Eselon3', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl3'
 	]);
 
-	Route::post('skp-tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon4', [
+	Route::post('skp_tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon4', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl4'
 	]);
-	Route::post('skp-tahunan/cetak_perjanjian_kinerja-Eselon4', [
+	Route::post('skp_tahunan/cetak_perjanjian_kinerja-Eselon4', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl4'
 	]);
@@ -1480,22 +1485,22 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	//=========================================================================================//
 	//================================= SKP TAHUNAN      =====================================//
 	//=========================================================================================//
-	Route::get('skp-tahunan', [
+	Route::get('skp_tahunan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showSKPTahunan'
 	]);
 
-	Route::get('skp-tahunan/{skp_tahunan_id}/edit',[
+	Route::get('skp_tahunan/{skp_tahunan_id}/edit',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPTahunanController@PersonalSKPTahunanEdit'
 	]);
 
-	Route::get('skp-tahunan/{skp_tahunan_id}',[
+	Route::get('skp_tahunan/{skp_tahunan_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPTahunanController@PersonalSKPTahunanDetail'
 	]);
 
-	Route::get('skp-tahunan/{skp_tahunan_id}/ralat',[
+	Route::get('skp_tahunan/{skp_tahunan_id}/ralat',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPTahunanController@PersonalSKPTahunanRalat'
 	]);

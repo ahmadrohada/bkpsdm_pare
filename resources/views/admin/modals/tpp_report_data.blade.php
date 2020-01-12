@@ -13,25 +13,25 @@
 			<div class="modal-body">
 				<div class="form-group">
 					<label>Golongan</label>
-					<p class="label-perjanjian-kinerja">
+					<p class="label-perjanjian_kinerja">
 						<span class="golongan"></span>
 					</p>
 				</div>
 				<div class="form-group">
 					<label>Jabatan</label>
-					<p class="label-perjanjian-kinerja">
+					<p class="label-perjanjian_kinerja">
 						<span class="jabatan"></span>
 					</p>
 				</div>
 				<div class="form-group">
 					<label>Eselon</label>
-					<p class="label-perjanjian-kinerja">
+					<p class="label-perjanjian_kinerja">
 						<span class="eselon"></span>
 					</p>
 				</div>
 				<div class="form-group">
 					<label>Unit Kerja</label>
-					<p class="label-perjanjian-kinerja">
+					<p class="label-perjanjian_kinerja">
 						<span class="unit_kerja"></span>
 					</p>
 				</div>

@@ -15,7 +15,7 @@
 				Administrator
 			</h1>
 
-			{!! Breadcrumbs::render('users') !!}
+			{!! Breadcrumbs::render('admin-users') !!}
 
 	    </section>
 	    <section class="content">

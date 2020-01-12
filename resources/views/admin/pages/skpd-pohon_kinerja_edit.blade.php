@@ -13,7 +13,7 @@
 				Edit Pohon Kinerja
 			</h1>
 
-				{!! Breadcrumbs::render('skpd-renja') !!}
+				{!! Breadcrumbs::render($role.'-pohon_kinerja-edit') !!}
         
 	    </section>
 	    <section class="content">
@@ -26,7 +26,7 @@
 						<li class="distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
 						<li class="perjanjian_kinerja"><a href="#perjanjian_kinerja" data-toggle="tab">Perjanjian Kinerja</a></li>
 						<li class="kegiatan_tahunan"><a href="#kegiatan_tahunan" data-toggle="tab">Kegiatan Tahunan</a></li>
-					
+					 
 						
 					
 					</ul>

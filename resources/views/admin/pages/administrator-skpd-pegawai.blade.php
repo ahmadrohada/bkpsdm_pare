@@ -15,7 +15,7 @@
 				Administrator - SKPD
 			</h1>
 
-			{!! Breadcrumbs::render('skpd-pegawai') !!}
+			{!! Breadcrumbs::render('admin-skpd-pegawai') !!}
 
 	    </section>
 	    <section class="content">

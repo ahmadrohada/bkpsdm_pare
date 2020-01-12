@@ -23,6 +23,7 @@ use Validator;
 use Gravatar;
 use Input;
 Use Alert;
+Use Hash;
 
 class PegawaiAPIController extends Controller {
 

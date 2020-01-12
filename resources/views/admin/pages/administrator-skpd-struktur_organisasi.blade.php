@@ -15,7 +15,7 @@
 				Administrator - SKPD
 			</h1>
 
-			{!! Breadcrumbs::render('skpd') !!}
+			{!! Breadcrumbs::render('admin-skpd-struktur_organisasi') !!}
 
 	    </section>
 	    <section class="content">

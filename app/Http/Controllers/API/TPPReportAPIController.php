@@ -972,7 +972,7 @@ class TPPReportAPIController extends Controller
             $tpp_report_id = $st_kt->id; 
 
 
-        //insert data pegawai to  tpp-report_data
+        //insert data pegawai to  tpp_report_data
 
         $tpp_data = Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
             $join->on('a.id_pegawai', '=', 'tb_pegawai.id');

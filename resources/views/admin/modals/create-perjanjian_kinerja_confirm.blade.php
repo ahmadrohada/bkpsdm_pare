@@ -8,7 +8,7 @@
                 </h4>
             </div>
             
-            <form  id="create-perjanjian-kinerja-form" method="POST" action="">
+            <form  id="create-perjanjian_kinerja-form" method="POST" action="">
                 
 
 
@@ -38,7 +38,7 @@ $(document).ready(function() {
 
     $(document).on('click', '#simpan_perjanjian_kinerja', function(){
 		
-        var data = $('#create-perjanjian-kinerja-form').serialize();
+        var data = $('#create-perjanjian_kinerja-form').serialize();
 		$.ajax({
 			url		: '{{ url("api_resource/skpd_simpan_perjanjian_kinerja") }}',
 			type	: 'POST',

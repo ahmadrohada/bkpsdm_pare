@@ -11,7 +11,7 @@
 			<h1>
 				SKP Tahunan   {!! $skp->PejabatYangDinilai->Eselon->eselon !!}
 			</h1>
-				{!! Breadcrumbs::render($base.'_detail_skp_tahunan') !!}
+				{!! Breadcrumbs::render($role.'-skp_tahunan_detail') !!}
       </section>
 	  
 	    <section class="content">

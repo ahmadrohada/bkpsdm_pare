@@ -15,7 +15,7 @@
 						
 				<div class="form-group">
                     <label>Kegiatan</label>
-					<p class="label-perjanjian-kinerja"><span class="kegiatan_label"></span></p>
+					<p class="label-perjanjian_kinerja"><span class="kegiatan_label"></span></p>
                 </div>
 
                 <div class="form-group indikator_kegiatan ">

@@ -15,7 +15,7 @@
 				Cetak TPP Report
 			</h1>
 
-			{!! Breadcrumbs::render('tpp_report') !!}
+			{!! Breadcrumbs::render('admin-tpp_report_cetak') !!}
 
 	    </section>
 	    <section class="content">

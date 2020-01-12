@@ -80,6 +80,10 @@ return [
 	'link_title_renja'    		=> 'Pohon Kinerja',
 	'link_icon_renja'     		=> 'fa-calendar-check-o',
 
+	// Pohon Kinerja LINKS
+	'link_title_pohon_kinerja'  => 'Pohon Kinerja',
+	'link_icon_pohon_kinerja'   => 'fa-calendar-check-o',
+
 	'link_title_renja-pd'    	=> 'Renja Pemerintah Daerah',
 	'link_icon_renja-pd'     	=> 'fa-tasks',
 
@@ -108,9 +112,11 @@ return [
 	'link_icon_struktur_organisasi'     => 'fa-users',
 
 
+	// Admin
+	'link_title_admin'    => 'Administrator',
+	'link_icon_admin'     => 'fa-university',
 
 	// SKPD
-	
 	'link_title_skpd'    => 'SKPD',
 	'link_icon_skpd'     => 'fa-university',
 
@@ -216,5 +222,19 @@ return [
 	// LOGOUT LINK
 	'link_title_logout'    		=> 'Logout',
 	'link_icon_logout'     		=> 'fa-sign-out text-red',
+
+
+
+	'link_title_add'    		=> 'Add',
+	'link_icon_add'    			=> 'fa-plus',
+	'link_title_edit'    		=> 'Edit',
+	'link_icon_edit'     		=> 'fa-pencil',
+
+	'link_title_detail'    		=> 'Detail',
+	'link_icon_detail'     		=> 'fa-eye',
+
+	
+	'link_title_print'    		=> 'Cetak',
+	'link_icon_print'     		=> 'fa-print',
 
 ];

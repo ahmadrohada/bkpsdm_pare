@@ -19,7 +19,7 @@
 						
 						<div class="form-group">
                             <label>Indikator Program</label>
-							<p class="label-perjanjian-kinerja">
+							<p class="label-perjanjian_kinerja">
                             <span class="indikator_program_label"></span>
 							</p>
                         </div>

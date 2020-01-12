@@ -37,7 +37,7 @@
 	$('#rkpd_table').DataTable({
 				processing      : true,
 				serverSide      : true,
-				searching      	: false,
+				searching      	: true,
 				paging          : true,
 				//order 			: [ 3 , 'asc' ],
 				//dom 			: '<"toolbar">frtip',
@@ -60,11 +60,11 @@
 									}
 								},
 								
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "nip_pegawai" ,  name:"nip_pegawai", orderable: true, searchable: true},
-								{ data: "nama_pegawai" ,  name:"u_nama", orderable: true, searchable: true},
-								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true},
-								{ data: "eselon" ,  name:"eselon", orderable: true, searchable: true},
+								{ data: "periode" ,  name:"periode", orderable: true, searchable: false},
+								{ data: "nip_pegawai" ,  name:"pejabat.nip", orderable: true, searchable: true},
+								{ data: "nama_pegawai" ,  name:"skp_tahunan.u_nama", orderable: true, searchable: true},
+								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true},
+								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true},
 							{ data: "status" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
 
