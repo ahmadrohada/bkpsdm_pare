@@ -159,7 +159,7 @@ Breadcrumbs::register('admin-tpp_report', function($breadcrumbs)
 Breadcrumbs::register('admin-tpp_report_cetak', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin-tpp_report');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_print'), '/public/admin//tpp report', ['icon' => Lang::get('sidebar-nav.link_icon_print')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_print'), '/public/admin/tpp_report', ['icon' => Lang::get('sidebar-nav.link_icon_print')]);
 });
 
 
