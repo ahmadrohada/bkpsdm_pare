@@ -9,9 +9,9 @@
 	 <div class="content-wrapper" >
 	    <section class="content-header">
 			<h1>
-				SKP Tahunan  {!! $skp->PejabatYangDinilai->Eselon->eselon !!}
+				SKP Tahunan   {!! $skp->PejabatYangDinilai->Eselon->eselon !!}
 			</h1>
-				{!! Breadcrumbs::render('personal_detail_skp_tahunan') !!}
+				{!! Breadcrumbs::render($base.'_detail_skp_tahunan') !!}
       </section>
 	  
 	    <section class="content">

@@ -11,7 +11,7 @@
 			<h1>
 				Perjanjian Kinerja SKPD
 			</h1>
-				{!! Breadcrumbs::render('perjanjian_kinerja') !!}
+				{!! Breadcrumbs::render('skpd-perjanjian_kinerja') !!}
       </section>
 	    <section class="content">
 				@include('admin.modules.snapshots-boxes.skpd-home')

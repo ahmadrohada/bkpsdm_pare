@@ -100,6 +100,15 @@ return [
 	'link_icon_add_kegiatan'     => 'fa-plus',
 	
 
+
+
+	// STRUKTUR ORGANISASI
+	
+	'link_title_struktur_organisasi'    => 'Struktur Organisasi',
+	'link_icon_struktur_organisasi'     => 'fa-users',
+
+
+
 	// SKPD
 	
 	'link_title_skpd'    => 'SKPD',
