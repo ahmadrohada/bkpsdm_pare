@@ -102,7 +102,7 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
         })->addColumn('mutu', function ($x) {
             return $x->quality." %";
         })->addColumn('waktu', function ($x) {
-            return $x->target_waktu;
+            return $x->target_waktu." bln";
         })->addColumn('biaya', function ($x) {
             return "Rp.".number_format($x->cost,'0',',','.');
         });
