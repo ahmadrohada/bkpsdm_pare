@@ -72,9 +72,9 @@ class RenjaController extends Controller {
         
 
         if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) == 2 ) ){
-            return redirect('/skpd/renja/'.$request->renja_id.'/ralat')->with('status', 'Renja ditolak kaban');
+            return redirect('/skpd/pohon_kinerja/'.$request->renja_id.'/ralat')->with('status', 'Renja ditolak kaban');
         }else if( ($renja->send_to_kaban) == 0 ) {
-            return redirect('/skpd/renja/'.$request->renja_id.'/edit')->with('status', 'Renja belum dikirm ke kaban');
+            return redirect('/skpd/pohon_kinerja/'.$request->renja_id.'/edit')->with('status', 'Renja belum dikirm ke kaban');
         }else{
             return view('admin.pages.skpd-pohon_kinerja_detail', ['renja'=> $renja , 'role' => 'skpd']);  
         }
@@ -118,7 +118,7 @@ class RenjaController extends Controller {
        
 
         if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) != 2 ) ){
-            return redirect('/skpd/renja/'.$x->renja_id)->with('status', 'Rencana Kerja dikirm ke atasan');
+            return redirect('/skpd/pohon_kinerja/'.$x->renja_id)->with('status', 'Rencana Kerja dikirm ke atasan');
         }else{
             return view('admin.pages.skpd-pohon_kinerja_edit', ['renja'=> $renja,'h_box'=> 'box-info','role' =>'skpd']);    
         }
@@ -133,9 +133,9 @@ class RenjaController extends Controller {
         if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) == 2 ) ){
             return view('admin.pages.skpd-renja_ralat', ['renja'=> $renja,'h_box'=> 'box-warning']);
         }else if( ($renja->send_to_kaban) == 0 ) {
-            return redirect('/skpd/renja/'.$renja->id.'/edit')->with('status', 'Renja belum dikirm ke kaban');
+            return redirect('/skpd/pohon_kinerja/'.$renja->id.'/edit')->with('status', 'Renja belum dikirm ke kaban');
         }else{
-            return redirect('/skpd/renja/'.$renja->id)->with('status', 'Rencana Kerja dikirm ke atasan');
+            return redirect('/skpd/pohon_kinerja/'.$renja->id)->with('status', 'Rencana Kerja dikirm ke atasan');
         }
         
     }
