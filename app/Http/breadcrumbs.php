@@ -152,7 +152,7 @@ Breadcrumbs::register('admin-skp_tahunan_detail', function($breadcrumbs)
 Breadcrumbs::register('admin-tpp_report', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_tpp_report'), '/public/admin//tpp report', ['icon' => Lang::get('sidebar-nav.link_icon_tpp_report')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_tpp_report'), '/public/admin/tpp_report', ['icon' => Lang::get('sidebar-nav.link_icon_tpp_report')]);
 });
 
 // DASHBOARD > ADMIN > TPP RPEORT > CETAK
