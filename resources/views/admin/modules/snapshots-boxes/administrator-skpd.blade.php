@@ -44,7 +44,7 @@
 				<div class="small-box bg-green struktur_organisasi" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							&nbsp;
 						</h3>
 						<p>
 							<strong>Struktur Organisasi</strong>

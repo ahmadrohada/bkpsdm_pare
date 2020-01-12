@@ -21,7 +21,7 @@
 	    <section class="content">
 
 			
-				@include('admin.modules.administrator-skpd-snapshots-boxes')
+				@include('admin.modules.snapshots-boxes.administrator-skpd')
 
  				@include('admin.modules.administrator-skpd-struktur_organisasi')
 		
