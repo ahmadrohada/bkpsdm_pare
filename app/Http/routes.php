@@ -1184,6 +1184,11 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	//========================================================================================//
 	//=======================   SKPD HOME / SKPD SNAPSHOTS ===================================//
 	//========================================================================================//
+	Route::get('', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeSKPDController@showPegawai'
+	]);
+	
 	Route::get('pegawai', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeSKPDController@showPegawai'

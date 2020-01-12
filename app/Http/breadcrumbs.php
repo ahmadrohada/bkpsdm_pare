@@ -73,7 +73,7 @@ Breadcrumbs::register('create_user_admin_view', function($breadcrumbs)
 Breadcrumbs::register('skpd', function($breadcrumbs)
 {
     $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skpd'), '/SKPD', ['icon' => Lang::get('sidebar-nav.link_icon_skpd')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skpd'), '/public/skpd', ['icon' => Lang::get('sidebar-nav.link_icon_skpd')]);
 });
 
 // DASHBOARD > SKPD > PEGAWAI >
