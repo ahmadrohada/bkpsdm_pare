@@ -70,7 +70,7 @@ $(document).ready(function(){
 
    
 	$(".skp_jabatan").click(function(){
-		window.location.assign("skp-jabatan");
+		window.location.assign("skp_jabatan");
     });
 
 	$(".skp_tahunan").click(function(){
@@ -78,7 +78,7 @@ $(document).ready(function(){
     });
 
 	$(".skp_bulanan").click(function(){
-		window.location.assign("skp-bulanan");
+		window.location.assign("skp_bulanan");
     });
 
 	

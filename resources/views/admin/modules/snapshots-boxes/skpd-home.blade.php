@@ -135,15 +135,15 @@ $(document).ready(function(){
     });
 
 	$(".unit_kerja").click(function(){
-		window.location.assign("unit-kerja");
+		window.location.assign("unit_kerja");
     });
 
 	$(".struktur_organisasi").click(function(){
-		window.location.assign("struktur-organisasi");
+		window.location.assign("struktur_organisasi");
     });
 
 	$(".rencana_kerja").click(function(){
-		window.location.assign("renja");
+		window.location.assign("pohon_kinerja");
     });
 
 	$(".perjanjian_kinerja").click(function(){
@@ -155,7 +155,7 @@ $(document).ready(function(){
     });
 
 	$(".skp_bulanan").click(function(){
-		window.location.assign("skp-bulanan");
+		window.location.assign("skp_bulanan");
     });
 
 

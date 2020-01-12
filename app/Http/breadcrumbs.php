@@ -410,7 +410,7 @@ Breadcrumbs::register('personal_edit_skp_tahunan', function($breadcrumbs)
 Breadcrumbs::register('personal_skp_bulanan', function($breadcrumbs)
 {
     $breadcrumbs->parent('personal-dashboard');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_bulanan'), '/public/personal/skp-bulanan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_bulanan')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_bulanan'), '/public/personal/skp_bulanan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_bulanan')]);
 });
 
 Breadcrumbs::register('personal_detail_skp_bulanan', function($breadcrumbs)

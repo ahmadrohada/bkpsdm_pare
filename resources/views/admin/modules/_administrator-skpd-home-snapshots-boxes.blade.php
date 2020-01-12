@@ -155,7 +155,7 @@ $(document).ready(function(){
     });
 
 	$(".skp_bulanan").click(function(){
-		window.location.assign("skp-bulanan");
+		window.location.assign("skp_bulanan");
     });
 
 

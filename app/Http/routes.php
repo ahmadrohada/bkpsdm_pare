@@ -1124,7 +1124,7 @@ Route::group(['middleware' => 'administrator'], function () {
 
 
 
-	Route::get('admin/skpd/{skpd_id}/unit-kerja', [
+	Route::get('admin/skpd/{skpd_id}/unit_kerja', [
 		'uses' 			=> 'SKPDController@showSKPDUnitKerja'
 	]);
 
@@ -1194,7 +1194,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'HomeSKPDController@showPegawai'
 	]);
 
-	Route::get('unit-kerja', [
+	Route::get('unit_kerja', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeSKPDController@showUnitKerja'
 	]);
@@ -1205,13 +1205,13 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]);
 	
 
-	Route::get('renja', [
+	Route::get('pohon_kinerja', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeSKPDController@showRenja'
 	]);
 
 
-	Route::get('struktur-organisasi', [
+	Route::get('struktur_organisasi', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeSKPDController@showStrukturOrganisasi'
 	]);
@@ -1228,7 +1228,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'HomeSKPDController@showSKPTahunan'
 	]);
 
-	Route::get('skp-bulanan', [
+	Route::get('skp_bulanan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeSKPDController@showSKPBulanan'
 	]);
@@ -1260,12 +1260,12 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	//========================================================================================//
 	//=============================       PERJANJIAN KINERJA       ===========================//
 	//========================================================================================//
-	Route::post('renja/{renja_id}/cetak_perjanjian_kinerja', [
+	Route::post('pohon_kinerja/{renja_id}/cetak_perjanjian_kinerja', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaSKPD'
 	]);
 
-	Route::post('renja/{renja_id}/cetak_perjanjian_kinerja', [
+	Route::post('pohon_kinerja/{renja_id}/cetak_perjanjian_kinerja', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaSKPD'
 	]);
@@ -1296,17 +1296,17 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	//----------------------------------------------------------------------------------------//
 	//======================== RENCANA KERJA PERANGKAT DAERAH ================================//
 	//----------------------------------------------------------------------------------------//
-	Route::get('renja/{renja_id}',[
+	Route::get('pohon_kinerja/{renja_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'RenjaController@SKPDRenjaDetail'
 	]);
 
-	Route::get('renja/{renja_id}/edit',[
+	Route::get('pohon_kinerja/{renja_id}/edit',[
 		'as' 			=> '',
 		'uses' 			=> 'RenjaController@SKPDRenjaEdit'
 	]);
 
-	Route::get('renja/{renja_id}/ralat',[
+	Route::get('pohon_kinerja/{renja_id}/ralat',[
 		'as' 			=> '',
 		'uses' 			=> 'RenjaController@SKPDRenjaRalat'
 	]);
@@ -1375,7 +1375,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'HomePersonalController@showSKPJabatan'
 	]);
 	
-	Route::get('skp-jabatan', [
+	Route::get('skp_jabatan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showSKPJabatan'
 	]);
@@ -1408,7 +1408,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'RenjaController@SKPDRenjaApproval'
 	]);
 
-	Route::get('renja/{renja_id}',[
+	Route::get('pohon_kinerja/{renja_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'RenjaController@PersonalRenjaDetail'
 	]);
@@ -1504,22 +1504,22 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	//=========================================================================================//
 	//================================= SKP BULANAN      =====================================//
 	//=========================================================================================//
-	Route::get('skp-bulanan', [
+	Route::get('skp_bulanan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showSKPBulanan'
 	]);
 
-	Route::get('skp-bulanan/{skp_bulanan_id}/edit',[
+	Route::get('skp_bulanan/{skp_bulanan_id}/edit',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPBulananController@PersonalSKPBulananEdit'
 	]);
 
-	Route::get('skp-bulanan/{skp_bulanan_id}',[
+	Route::get('skp_bulanan/{skp_bulanan_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPBulananController@PersonalSKPBulananDetail'
 	]);
 
-	Route::get('skp-bulanan/{skp_bulanan_id}/ralat',[
+	Route::get('skp_bulanan/{skp_bulanan_id}/ralat',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPBulananController@PersonalSKPBulananRalat'
 	]);
