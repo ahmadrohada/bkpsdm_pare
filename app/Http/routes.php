@@ -1145,11 +1145,6 @@ Route::group(['middleware' => 'administrator'], function () {
 	]);
 	
 
-	// AJAX REQUEST TEST
-	Route::get('admin/skp_tahunan', [
-		'as' 			=> '',
-		'uses' 			=> 'RencanaKerjaController@DataTes'
-	]);
 	//========================================================================//
 	
 	
