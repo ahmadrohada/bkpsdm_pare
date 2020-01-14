@@ -124,6 +124,7 @@ class KegiatanSKPBulananAPIController extends Controller {
 
         $dt = RencanaAksi::
                     WHERE('jabatan_id','=', $request->jabatan_id )
+                    ->WHERE('renja_id','=', $request->renja_id )
                     ->WHERE('waktu_pelaksanaan',$skp_bln->bulan)
                     ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join) use($skp_bulanan_id){
                         $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');

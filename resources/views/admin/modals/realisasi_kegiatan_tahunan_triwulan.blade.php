@@ -18,7 +18,7 @@
 			<input type="hidden"  name="jumlah_indikator">
 			<input type="hidden"  name="satuan">
 
-			<input type="hidden"  name="target_quantity">
+			{{--  <input type="text"  name="target_quantity">  --}}
 			<input type="hidden"  name="target_quality">
 			<input type="hidden"  name="target_waktu">
 			<input type="hidden"  name="target_cost">
@@ -46,7 +46,7 @@
 						<div class="col-md-6 col-xs-6 form-group">	
 							<label class="control-label">Target Quantity </label>
 							<div class="input-group">
-							<span type="text" class="form-control input-sm target_quantity"></span>
+							<input type="text" class="form-control input-sm target_quantity" name="target_quantity">
 								<div class="input-group-addon">
 									<span class="satuan"></span>
 								</div>

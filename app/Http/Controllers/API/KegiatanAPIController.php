@@ -215,15 +215,19 @@ class KegiatanAPIController extends Controller {
             
         
             //JIKA DINKES maka array level 2 nya di merge dengan uptd puskesmas
-            //tes push tes ah
-            if ( $x->id == '147'){
+          
+            /* if ( $x->id == '147'){
                
                 $level2 = SKPD::where('parent_id','=',$x->id)
                                 ->where('id','!=','168')
                                 ->orwhere('parent_id','=', '168')
                                 ->select('id','skpd')
+                                ->get(); 
+                $level2 = SKPD::whereRaw('parent_id = ?  or parent_id = ? ', array(168,168))
+                                ->select('id','skpd')
                                 ->get();
-            }else if ( $x->id == '527'){  //dishub
+
+            }else */ if ( $x->id == '527'){  //dishub
                
                 $level2 = SKPD::where('parent_id','=',$x->id)
                                 ->where('id','!=','544')
@@ -250,15 +254,12 @@ class KegiatanAPIController extends Controller {
                 $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(412,433,433))
                                 ->select('id','skpd')
                                 ->get();
-            }else if ( $x->id == '740'){  //disperindag
+            }/* else if ( $x->id == '740'){  //disperindag
                
-                /* $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(740,761,761))
-                                ->select('id','skpd')
-                                ->get(); */
                 $level2 = SKPD::whereRaw('parent_id = ?  or parent_id = ? ', array(740,761))
                                 ->select('id','skpd')
                                 ->get();
-            } 
+            }  */
             /* else if ( $x->id == '788'){  //disdik , korwil ,, gak jadi,,karena yang mendapat kegiatan memang korwil
                
                 //korwil dan SMP
@@ -308,6 +309,54 @@ class KegiatanAPIController extends Controller {
                                                 ->orWhere('id_eselon', '<=', 9 );
                                         })
                                         ->select('id','skpd','id_eselon')->get();
+                    
+                    //JIKA PUSKESMAS LEVEL  3 nya boleh eselon id 11 .. 
+                    //AGAR KASUBAG TU PUSKESMASNYA BISA SEJAJAR DENGAN DEWNGAN KEPALA PUSKESMAS
+                    }else if ( $y->id == 168 ){  //168 adalah id UPTD kesehatan
+                        $level3a = SKPD::where('parent_id','=',$y->id)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 )
+                                                ->orWhere('id_eselon', '=', 17 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+                        $kapus_list = [];
+                        foreach ($level3a as $x) {
+                             $kapus_list[] = array( 'id' => $x->id );
+                        }
+
+                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+
+                        $level3 = $level3a->merge($level3b);
+                       
+                
+                    //AGAR KASUBAG TU DISPERINDAG BISA SEJAJAR DENGAN DEWNGAN KEPALA UPTD DINAS
+                    }else if ( $y->id == 761 ){  //168 adalah id UPTD kesehatan
+                        $level3a = SKPD::where('parent_id','=',$y->id)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+                        $kapus_list = [];
+                        foreach ($level3a as $x) {
+                            $kapus_list[] = array( 'id' => $x->id );
+                        }
+
+                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+
+                        $level3 = $level3a->merge($level3b);
+                    
                     }else{
                         $level3 = SKPD::where('parent_id','=',$y->id)
                                         ->where(function ($query) {
@@ -523,6 +572,8 @@ class KegiatanAPIController extends Controller {
                                         'kegiatan_tahunan.id AS kegiatan_tahunan_id'
                                     ) 
                             ->get();
+                            
+        $kegiatan_list = [];
 		foreach ($kegiatan as $x) {
             if ( $x->kegiatan_tahunan_id >= 1 ){
                 $kegiatan_id    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
@@ -570,6 +621,8 @@ class KegiatanAPIController extends Controller {
                                         'kegiatan_tahunan.label AS kegiatan_tahunan_label'
                                     ) 
                             ->get();
+
+        $kegiatan_list = [];
         foreach ($kegiatan as $x) {
             if ( $x->kegiatan_tahunan_id >= 1 ){
                 $kegiatan_id                    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
@@ -647,12 +700,8 @@ class KegiatanAPIController extends Controller {
                     
                             }	
                     
-                    
-                            if(!empty($kegiatan_list)) {
-                                return  $kegiatan_list;
-                            }else{
-                                return "[{}]";
-                            } 
+                            return  $kegiatan_list;
+                           
     } 
 
     public function SKPTahunanKegiatanTree3(Request $request)
@@ -674,7 +723,7 @@ class KegiatanAPIController extends Controller {
                                     ) 
                             ->get(); 
         
-            
+        $kegiatan_list = [];    
 		foreach ($kegiatan as $x) {
             if ( $x->kegiatan_tahunan_id >= 1 ){
                 $kegiatan_id                    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
@@ -695,6 +744,7 @@ class KegiatanAPIController extends Controller {
           
             //Indikator Kegiatan
             //$ik = IndikatorKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->get();
+           
             foreach ($ik as $y) {
                 $data_ind_kegiatan['id']	        = "IndikatorKegiatan|".$y->id;
                 $data_ind_kegiatan['text']			= Pustaka::capital_string($y->label);
@@ -744,12 +794,9 @@ class KegiatanAPIController extends Controller {
             $ind_kegiatan_list = "";
             unset($data_kegiatan['children']);
         }	
-        if(!empty($kegiatan_list)) {
-            return  $kegiatan_list;
-        }else{
-            return "[{}]";
-        } 
         
+        return  $kegiatan_list;
+       
     }
    
     public function SKPTahunanKegiatanTree4(Request $request)
@@ -757,6 +804,7 @@ class KegiatanAPIController extends Controller {
        
        
         $rencana_aksi = RencanaAksi::WHERE('jabatan_id',$request->jabatan_id)
+                            ->WHERE('renja_id',$request->renja_id)
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                             })
@@ -775,6 +823,7 @@ class KegiatanAPIController extends Controller {
                             ->groupBy('kegiatan_tahunan.id')
                             ->distinct()
                             ->get();
+        $kegiatan_list = [];
 		foreach ($rencana_aksi as $x) {
             if ( $x->kegiatan_tahunan_id >= 1 ){
                 $kegiatan_id    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
@@ -803,7 +852,7 @@ class KegiatanAPIController extends Controller {
             $rencana_aksi_list = "";
             unset($data_kegiatan['children']);
         }	
-		return  $kegiatan_list;
+		return  $kegiatan_list; 
         
     } 
 
@@ -827,7 +876,7 @@ class KegiatanAPIController extends Controller {
                                     ) 
                             ->get(); 
 
-          
+        $kegiatan_list = [];
 		foreach ($sasaran as $x) {
            
             $data_sasaran['id']            = "SasaranRenja|".$x->sasaran_id;
@@ -889,11 +938,9 @@ class KegiatanAPIController extends Controller {
             $ind_kegiatan_list = "";
             unset($data_sasaran['children']);
         }	
-        if(!empty($kegiatan_list)) {
-            return  $kegiatan_list;
-        }else{
-            return "[{}]";
-        } 
+        
+        return  $kegiatan_list;
+       
         
     }
 

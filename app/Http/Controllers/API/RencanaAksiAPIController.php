@@ -460,6 +460,9 @@ class RencanaAksiAPIController extends Controller {
                                 $join   ->on('pelaksana.id','=','rencana_aksi.jabatan_id');
                             })
                             ->SELECT([  
+                                'kegiatan.id AS renja_kegiatan_id',
+                                'rencana_aksi.id AS rencana_aksi_id',
+                                'rencana_aksi.renja_id AS renja_id',
                                 'rencana_aksi.label AS rencana_aksi_label',
                                 'rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
                                 'pelaksana.skpd AS pelaksana'
@@ -630,19 +633,22 @@ class RencanaAksiAPIController extends Controller {
 
     public function RencanaAksiTimeTable4(Request $request)
     {
-            
+        $renja_id   = $request->renja_id;
+        $jabatan_id = $request->jabatan_id;
        
         $dt = KegiatanSKPTahunan::
         
-                            leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
-                                $join   ->on('rencana_aksi.kegiatan_tahunan_id','=','skp_tahunan_kegiatan.id');
+                            rightjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join) use($jabatan_id) {
+                                $join   ->ON('rencana_aksi.kegiatan_tahunan_id','=','skp_tahunan_kegiatan.id');
+                                //$join   ->WHERE('rencana_aksi.jabatan_id','=', $jabatan_id );
                             })
                             ->leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
-                                $join   ->on('pelaksana.id','=','rencana_aksi.jabatan_id');
+                                $join   ->ON('pelaksana.id','=','rencana_aksi.jabatan_id');
                             })
                             ->SELECT([  
                                     'rencana_aksi.label AS rencana_aksi_label',
                                     'rencana_aksi.id AS rencana_aksi_id',
+                                    'rencana_aksi.renja_id AS renja_id',
                                     'rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
                                     'rencana_aksi.waktu_pelaksanaan AS wapel',
                                     'pelaksana.skpd AS pelaksana'
@@ -650,7 +656,8 @@ class RencanaAksiAPIController extends Controller {
                                 
                                 
                                 ])
-                            ->WHERE('rencana_aksi.jabatan_id','=', $request->jabatan_id )
+                            ->WHERE('rencana_aksi.jabatan_id','=', $jabatan_id )
+                            ->WHERE('rencana_aksi.renja_id','=', $renja_id )
                             ->orderBy('rencana_aksi.indikator_kegiatan_id','ASC')
                             ->groupBy('rencana_aksi.label')
                             ->get();
@@ -670,134 +677,176 @@ class RencanaAksiAPIController extends Controller {
         })
         ->addColumn('jan', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
-            $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+            /* $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
                                 ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '01')
                                 ->first();
             if ( $kb ){
                 return 'fa-check-circle';
-            }
+            } */
+
+            if ( $x->wapel == 01 ){
+                return 'fa-check-circle';
+            } 
             
         })
         ->addColumn('feb', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
-            $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+           /*  $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
                                 ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '02')
+                                ->WHERE('renja_id','=', $x->renja_id )
                                 ->first();
             if ( $kb ){
                 return 'fa-check-circle';
-            }
+            } */
+
+            if ( $x->wapel == 02 ){
+                return 'fa-check-circle';
+            } 
             
         })
         ->addColumn('mar', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
-            $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+            /* $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
                                 ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '03')
                                 ->first();
             if ( $kb ){
                 return 'fa-check-circle';
-            }
+            } */
+
+            if ( $x->wapel == 03 ){
+                return 'fa-check-circle';
+            } 
             
         })
         ->addColumn('apr', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
-            $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+           /*  $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
                                 ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '04')
                                 ->first();
             if ( $kb ){
                 return 'fa-check-circle';
-            }
+            } */
+
+            if ( $x->wapel == 04 ){
+                return 'fa-check-circle';
+            } 
             
         })
         ->addColumn('mei', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
-            $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+            /* $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
                                 ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '05')
                                 ->first();
             if ( $kb ){
                 return 'fa-check-circle';
-            }
+            } */
+
+            if ( $x->wapel == 05 ){
+                return 'fa-check-circle';
+            } 
             
         })
         ->addColumn('jun', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
-            $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+            /* $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
                                 ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '06')
                                 ->first();
             if ( $kb ){
                 return 'fa-check-circle';
-            }
+            } */
+            if ( $x->wapel == 06 ){
+                return 'fa-check-circle';
+            } 
             
         })
         ->addColumn('jul', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
-            $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+            /* $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
                                 ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '07')
                                 ->first();
             if ( $kb ){
                 return 'fa-check-circle';
-            }
+            } */
+            if ( $x->wapel == 07 ){
+                return 'fa-check-circle';
+            } 
             
         })
         ->addColumn('agu', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
-            $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+            /* $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
                                 ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '08')
                                 ->first();
             if ( $kb ){
                 return 'fa-check-circle';
-            }
+            } */
+            if ( $x->wapel == 08 ){
+                return 'fa-check-circle';
+            } 
             
         })
         ->addColumn('sep', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
-            $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+           /*  $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
                                 ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '09')
                                 ->first();
             if ( $kb ){
                 return 'fa-check-circle';
-            }
+            } */
+            if ( $x->wapel == 09 ){
+                return 'fa-check-circle';
+            } 
             
         })
         ->addColumn('okt', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
-            $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+            /* $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
                                 ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '10')
                                 ->first();
             if ( $kb ){
                 return 'fa-check-circle';
-            }
+            } */
+            if ( $x->wapel == 10 ){
+                return 'fa-check-circle';
+            } 
             
         })
         ->addColumn('nov', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
-            $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+            /* $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
                                 ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '11')
                                 ->first();
             if ( $kb ){
                 return 'fa-check-circle';
-            }
+            } */
+            if ( $x->wapel == 11 ){
+                return 'fa-check-circle';
+            } 
             
         })
         ->addColumn('des', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
-            $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+           /*  $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
                                 ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '12')
                                 ->first();
             if ( $kb ){
                 return 'fa-check-circle';
-            }
+            } */
+            if ( $x->wapel == 12 ){
+                return 'fa-check-circle';
+            } 
             
         });
 

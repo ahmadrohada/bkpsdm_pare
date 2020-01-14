@@ -576,8 +576,8 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                             'capaian_triwulan_id'   => 'required',
                             'ind_kegiatan_id'       => 'required',
                             'kegiatan_tahunan_id'   => 'required',
-                            'target_quantity'       => 'required',
-                            'realisasi_quantity'    => 'required|numeric|min:1',
+                            'target_quantity'       => 'required|numeric|min:0',
+                            'realisasi_quantity'    => 'required|numeric|min:0',
                             'satuan'                => 'required',
                             'target_cost'           => 'required',
                             'realisasi_cost'        => 'required',
@@ -670,7 +670,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                             'target_quantity'       => 'required|numeric|min:0',
                             'target_cost'           => 'required',
 
-                            'realisasi_quantity'    => 'required|numeric|min:1',
+                            'realisasi_quantity'    => 'required|numeric|min:0',
                             'realisasi_cost'        => 'required',
                             'satuan'                => 'required',
 
@@ -808,8 +808,8 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                             'capaian_triwulan_id'   => 'required',
                             
                             'kegiatan_tahunan_id'   => 'required',
-                            'target_quantity'       => 'required',
-                            'realisasi_quantity'    => 'required|numeric|min:1',
+                            'target_quantity'       => 'required|numeric|min:0',
+                            'realisasi_quantity'    => 'required|numeric|min:0',
                             'satuan'                => 'required',
                             'target_cost'           => 'required',
                             'realisasi_cost'        => 'required',

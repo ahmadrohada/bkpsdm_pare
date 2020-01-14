@@ -568,7 +568,8 @@ class SKPBulananAPIController extends Controller {
                 $data_skp_bulanan['type']           = "skp_bulanan";
 
 
-                $keg_skp = RencanaAksi::where('jabatan_id','=',$request->jabatan_id)
+                $keg_skp = RencanaAksi::where('renja_id','=',$request->renja_id)
+                                        ->where('jabatan_id','=',$request->jabatan_id)
                                         ->WHERE('waktu_pelaksanaan','=',$y->bulan)
                                         ->select('id','label')
                                         ->get();

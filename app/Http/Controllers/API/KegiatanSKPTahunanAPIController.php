@@ -312,6 +312,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
        //KEGIATAN pelaksana
 
         $rencana_aksi = RencanaAksi::WHERE('jabatan_id',$request->jabatan_id)
+                            ->WHERE('renja_id',$request->renja_id)
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                             })

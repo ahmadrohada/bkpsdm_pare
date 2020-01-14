@@ -188,7 +188,7 @@ $(document).ready(function() {
 
 		if ( id == 'kegiatan_tahunan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
-			initTreeKegTahunan();
+			
 		}else if ( id == 'skp_bulanan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
 			initTreeKegBulanan();

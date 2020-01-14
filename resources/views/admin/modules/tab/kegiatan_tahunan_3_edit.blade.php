@@ -74,7 +74,7 @@
 
 <script type="text/javascript">
 	
-
+	initTreeKegTahunan();
 	
 	function initTreeKegTahunan() {
 		$('#keg_tahunan_3_tree')
