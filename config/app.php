@@ -171,7 +171,7 @@ return [
 		
         App\Providers\UserServiceProvider::class,
 		
-		RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
 
 

@@ -18,6 +18,7 @@
 */
 
 
+
 //===================== AJAX REQUEST WITH API CONTROLLER =================//
 Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], function () {
 
