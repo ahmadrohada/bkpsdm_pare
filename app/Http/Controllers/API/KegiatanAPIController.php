@@ -215,6 +215,7 @@ class KegiatanAPIController extends Controller {
             
         
             //JIKA DINKES maka array level 2 nya di merge dengan uptd puskesmas
+            //tes push
             if ( $x->id == '147'){
                
                 $level2 = SKPD::where('parent_id','=',$x->id)
