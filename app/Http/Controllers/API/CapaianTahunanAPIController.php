@@ -356,7 +356,7 @@ class CapaianTahunanAPIController extends Controller {
                 'u_jenis_jabatan'	    => $pegawai->JabatanAktif->Eselon->Jenis_jabatan->id,
 
                 'p_jabatan_id'	        => $atasan->JabatanAktif->id,
-                'p_golongan_id'	        => $atasan->GolonganAktif->id,
+                'p_golongan_id'	        => $atasan->GolonganAktif ? $atasan->GolonganAktif->id : "",
                 'p_nip'	                => $atasan->nip,
                 'p_nama'                => Pustaka::nama_pegawai($atasan->gelardpn , $atasan->nama , $atasan->gelarblk),
                 'p_pangkat'	            => $atasan->GolonganAktif ? $atasan->GolonganAktif->Golongan->pangkat : '',
