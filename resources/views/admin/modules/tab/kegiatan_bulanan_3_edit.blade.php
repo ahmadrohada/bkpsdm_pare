@@ -333,7 +333,7 @@
 				ajax			: {
 									url	: '{{ url("api_resource/skp_bulanan_list_3") }}',
 									data: { 
-										
+											"renja_id" : {!! $skp->Renja->id !!},
 											"skp_tahunan_id" : {!! $skp->id !!},
 											"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!}
 									 },

@@ -50,8 +50,8 @@
 					
 				</ul>
 				<div class="pull-right">
-					<a href="#" class="btn btn-sm btn-danger tolak_capaian_bulanan">TOLAK</a>
-					<a href="#" id="btn_terima" class="btn btn-sm btn-primary  penilaian_kode_etik">TERIMA</a>
+					<a href="#" class="btn btn-sm btn-danger tolak_capaian_tahunan">TOLAK</a>
+					<a href="#" id="btn_terima" class="btn btn-sm btn-primary  penilaian_perilaku_kerja">TERIMA</a>
 				</div>
 
 
@@ -214,7 +214,76 @@
 
 	}
 
+	$(document).on('click','.terima_capaian_tahunan',function(e){
+		Swal.fire({
+				title: "Terima",
+				text: "Anda akan menerima dan menyetujui Laporan Capaian Bulanan",
+				type: "question",
+				showCancelButton: true,
+				cancelButtonText: "Batal",
+				confirmButtonText: "Terima",
+				cancelButtonColor: "#7a7a7a",
+				closeOnConfirm: false,
+				showLoaderOnConfirm	: true,
+		}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/terima_capaian_bulanan") }}',
+					type	: 'POST',
+					data    : { capaian_bulanan_id:{!! $capaian->id !!}
+							   },
+					cache   : false,
+					success:function(data){
+						Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										location.reload();
 
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+						Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+
+								/* const Toast = Swal.mixin({
+								toast: true,
+								position: 'top-end',
+								showConfirmButton: false,
+								timer: 3000
+								});
+
+								Toast.fire({
+								type: 'success',
+								title: 'Signed in successfully'
+								}) */
+							}
+					});	
+				
+
+					
+			}
+		});
+	});
 	
 
 	

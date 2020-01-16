@@ -478,6 +478,7 @@ class SKPBulananAPIController extends Controller {
 
     public function skp_bulanan_tree3(Request $request)
     {
+        $renja_id = $request->renja_id;
         //bawahan
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
 
@@ -503,6 +504,7 @@ class SKPBulananAPIController extends Controller {
 
                 $keg_skp = RencanaAksi::WHEREIN('jabatan_id',$child)
                                         ->WHERE('waktu_pelaksanaan','=',$y->bulan)
+                                        ->WHERE('renja_id','=',$renja_id)
                                         ->select('id','label')
                                         ->get();
 
@@ -887,7 +889,7 @@ class SKPBulananAPIController extends Controller {
     public function SKPBulananList3(Request $request)
     {
 
-
+        $renja_id = $request->renja_id;
         //BAWAHA
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
 
@@ -927,11 +929,12 @@ class SKPBulananAPIController extends Controller {
                     return "<font style='color:red'>Belum Ada</font>";
                 }
                 
-            })->addColumn('jm_kegiatan', function ($x) use($child) {
+            })->addColumn('jm_kegiatan', function ($x) use($child,$renja_id) {
                 
               
                 return  RencanaAksi::WHEREIN('jabatan_id',$child )
                                     ->WHERE('waktu_pelaksanaan','=',$x->bulan)
+                                    ->WHERE('renja_id','=',$renja_id)
                                     ->select('id')
                                     ->count();
 
