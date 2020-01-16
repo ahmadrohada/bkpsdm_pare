@@ -14,7 +14,7 @@
 
 	<div class="box-body">
 		<div class="row">
-			@if ( $pegawai->JabatanAktif->Jabatan->Eselon->id_jenis_jabatan == '1' )
+			{{-- @if ( $pegawai->JabatanAktif->Jabatan->Eselon->id_jenis_jabatan == '1' )
 				<div class="col-md-3 col-xs-6">
 					<div class="small-box bg-blue renja" style="cursor:pointer;" >
 						<div class="inner">
@@ -31,7 +31,7 @@
 						</div>
 					</div>
 				</div>
-			@endif
+			@endif --}}
 			
 			<div class="col-md-3 col-xs-6">
 				<div class="small-box bg-orange capaian_bulanan" style="cursor:pointer;">
