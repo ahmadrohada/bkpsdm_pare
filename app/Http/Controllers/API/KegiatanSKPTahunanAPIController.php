@@ -210,44 +210,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
     public function KegiatanTahunan3(Request $request)
     {
-             
-       
-        /* 
-        $kegiatan = IndikatorKegiatan::SELECT('id','label')
-                            //RIGHT ke Kegiatan
-                            ->join('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) use ( $renja_id,$jabatan_id ){
-                                $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
-                                $join   ->WHERE('renja_kegiatan.renja_id','=', $renja_id );
-                                $join   ->WHERE('renja_kegiatan.jabatan_id', '=' ,$jabatan_id );
-                            })
-                            
-                            //LEFT ke kegiatan tahunan
-                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
-                                $join   ->on('kegiatan_tahunan.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
-                                $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
-                            })
-                            ->SELECT(   'renja_indikator_kegiatan.id AS ind_kegiatan_id',
-                                        'renja_indikator_kegiatan.label AS ind_kegiatan_label',
-                                        'renja_indikator_kegiatan.target AS renja_target',
-                                        'renja_indikator_kegiatan.satuan AS renja_satuan',
-
-                                        'renja_kegiatan.cost AS renja_biaya',
-
-                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label',
-                                        'kegiatan_tahunan.id AS kegiatan_tahunan_id',
-                                        'kegiatan_tahunan.target',
-                                        'kegiatan_tahunan.satuan',
-                                        'kegiatan_tahunan.angka_kredit',
-                                        'kegiatan_tahunan.quality',
-                                        'kegiatan_tahunan.cost',
-                                        'kegiatan_tahunan.target_waktu'
-
-                                       
-
-                                        
-                                        
-                                    ) 
-                            ->get(); */
+           
         //KEGIATAN KASUBID
         $renja_id       = $request->renja_id;
         $jabatan_id     = $request->jabatan_id;

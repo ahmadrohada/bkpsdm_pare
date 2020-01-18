@@ -861,18 +861,28 @@ class RencanaAksiAPIController extends Controller {
     public function RencanaAksiList(Request $request)
     {
             
-       
+        $skp_tahunan_id = $request->skp_tahunan_id;
         //CARI kegiatan _tahunan nya
         $keg_tahunan = IndikatorKegiatan::
-                                        leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
-                                            $join   ->on('kegiatan.id','=','renja_indikator_kegiatan.kegiatan_id');
-                                        })
-                                        ->join('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                            $join   ->on('kegiatan_tahunan.kegiatan_id','=','kegiatan.id');
-                                        })
-                                        ->SELECT('kegiatan_tahunan.id AS kegiatan_tahunan_id')
-                                        ->WHERE('renja_indikator_kegiatan.id',$request->indikator_kegiatan_id)
-                                        ->first();
+                                    leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
+                                        $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
+                                    })
+                                    ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use($skp_tahunan_id) {
+                                        $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                        $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id);
+                                    })
+                                    ->SELECT(       /* 'renja_indikator_kegiatan.id AS ind_kegiatan_id',
+                                                    'renja_indikator_kegiatan.label',
+                                                    'renja_indikator_kegiatan.target',
+                                                    'renja_indikator_kegiatan.satuan',
+                                                    'kegiatan_tahunan.cost AS cost',
+                                                    'renja_kegiatan.id AS kegiatan_id', */
+                                                    'kegiatan_tahunan.id AS kegiatan_tahunan_id'
+
+                                            ) 
+                                                ->WHERE('renja_indikator_kegiatan.id', $request->indikator_kegiatan_id)
+                                                ->first();
+        
         if ($keg_tahunan){
             $kegiatan_tahunan_id = $keg_tahunan->kegiatan_tahunan_id;
             
@@ -880,6 +890,7 @@ class RencanaAksiAPIController extends Controller {
         }else{
             $kegiatan_tahunan_id = 0 ;
         }
+        //return $kegiatan_tahunan_id;
         
         $dt = RencanaAksi::
                         SELECT([   
@@ -932,7 +943,7 @@ class RencanaAksiAPIController extends Controller {
             $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
 
-        return $datatables->make(true);  
+        return $datatables->make(true);   
         
     }
 

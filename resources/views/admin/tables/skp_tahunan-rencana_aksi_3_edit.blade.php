@@ -97,7 +97,7 @@
 							],
 			ajax			: {
 								url	: '{{ url("api_resource/skp_tahunan_rencana_aksi") }}',
-								data: { indikator_kegiatan_id: indikator_kegiatan_id },
+								data: { indikator_kegiatan_id: indikator_kegiatan_id , skp_tahunan_id: {!! $skp->id !!} },
 							},
 							
 			columns			: [
