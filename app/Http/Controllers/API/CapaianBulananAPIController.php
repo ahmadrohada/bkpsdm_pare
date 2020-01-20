@@ -521,6 +521,9 @@ class CapaianBulananAPIController extends Controller {
     
         $jenis_jabatan = $capaian_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
         $bulan = $capaian_bulanan->SKPBulanan->bulan;
+        $renja_id = $capaian_bulanan->SKPBulanan->SKPTahunan->renja_id;
+
+        
 
         //jm kegiatan JFT
         if ( $jenis_jabatan == 5 ){
@@ -589,6 +592,7 @@ class CapaianBulananAPIController extends Controller {
                         ->SELECT('skp_tahunan_rencana_aksi.target','realisasi.realisasi')
                         ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child)
                         ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan', $bulan)
+                        ->WHERE('skp_tahunan_rencana_aksi.renja_id', $renja_id)
                         ->get();
 
             $capaian_kinerja_bulanan = 0 ;
@@ -632,6 +636,7 @@ class CapaianBulananAPIController extends Controller {
                         ->SELECT('skp_tahunan_rencana_aksi.target','realisasi.realisasi')
                         ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id)
                         ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan', $bulan)
+                        ->WHERE('skp_tahunan_rencana_aksi.renja_id', $renja_id)
                         ->get();
 
             $capaian_kinerja_bulanan = 0 ;
@@ -687,6 +692,7 @@ class CapaianBulananAPIController extends Controller {
                         ->SELECT('skp_tahunan_rencana_aksi.target','realisasi.realisasi')
                         ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id)
                         ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan', $bulan)
+                        ->WHERE('skp_tahunan_rencana_aksi.renja_id', $renja_id)
                         ->get();
 
             $capaian_kinerja_bulanan = 0 ;
