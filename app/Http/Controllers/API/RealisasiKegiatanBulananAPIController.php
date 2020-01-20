@@ -321,6 +321,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                 'realisasi_kabid.satuan AS satuan_rencana_aksi'
 
                             ) 
+                    ->GroupBy('skp_tahunan_rencana_aksi.id')
                     ->get();
         
         $skp_id = $request->skp_bulanan_id;

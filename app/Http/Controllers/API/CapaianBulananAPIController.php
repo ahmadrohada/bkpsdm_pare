@@ -139,7 +139,7 @@ class CapaianBulananAPIController extends Controller {
                         leftjoin('db_pare_2018.capaian_bulanan', function($join){
                             $join   ->on('capaian_bulanan.skp_bulanan_id','=','skp_bulanan.id');
                         })
-                        ->WHERE('skp_bulanan.pegawai_id',$request->pegawai_id)
+                        
                         ->select(
                                 'skp_bulanan.id AS skp_bulanan_id',
                                 'skp_bulanan.skp_tahunan_id',
@@ -148,20 +148,23 @@ class CapaianBulananAPIController extends Controller {
                                 'skp_bulanan.tgl_selesai',
                                 'skp_bulanan.u_jabatan_id',
                                 'skp_bulanan.status AS skp_bulanan_status',
+                                'capaian_bulanan.created_at',
                                 'capaian_bulanan.id AS capaian_id',
                                 'capaian_bulanan.status_approve AS capaian_status_approve',
                                 'capaian_bulanan.send_to_atasan AS capaian_send_to_atasan'
 
             
                          )
-                       // ->orderBy('bulan','ASC')
-                        ->get();
+                        ->WHERE('skp_bulanan.pegawai_id',$request->pegawai_id)
+                        ->orderBy('skp_bulanan.bulan')
+                        //->orderBy('skp_bulanan.skp_tahunan_id')
+                        ->get()->sortByDesc('skp_bulanan.bulan');
 
        
            $datatables = Datatables::of($skp)
              ->addColumn('periode', function ($x) {
                 return  Pustaka::Tahun($x->tgl_mulai);
-                //$x->SKPTahunan->Renja->Periode->label;
+                //return $x->bulan;
             }) 
             ->addColumn('bulan', function ($x) {
                 return Pustaka::bulan($x->bulan);

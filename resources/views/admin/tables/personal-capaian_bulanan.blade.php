@@ -36,8 +36,8 @@
 				processing      : true,
 				serverSide      : true,
 				searching      	: false,
-				paging          : false,
-				order 			: [ 2 , 'desc' ],
+				paging          : true,
+				//order 			: [ 1, 'asc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
