@@ -19,7 +19,7 @@
 		</p>
 	</div>
 @endif
-@if (  \Auth::user()->pegawai->JabatanAktif->Jabatan == null )				
+@if (  $jabatan_aktif == null )				
 	<div class="callout callout-danger skp_tahunan_status" style="height:60px;">
 		<p style="font-family:mainandra; font-size:12pt; color:#ebecf5; font-weight:bold; ">
 			Jabatan AKtif anda tidak valid, hubungi admin

@@ -45,11 +45,11 @@
 						<p >
 						  <font style="font-size:15px; color:#e0c200;">{{ Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)  }}</font>
 						  <small style="color:#d7dff9;">
-						  @if (  \Auth::user()->pegawai->JabatanAktif->Jabatan != null )
+						  {{-- @if (  \Auth::user()->pegawai->JabatanAktif->Jabatan != null )
 						  	{{ Pustaka::capital_string(\Auth::user()->pegawai->JabatanAktif->Jabatan->skpd ) }}
 						  @else
-							<span class="text-danger">Tidak Ada Jabatan Aktif</span>
-						  @endif
+							<span class="text-danger">Tidak Ada Jabatan Aktif </span>
+						  @endif --}}
 						  
 						
 						

@@ -150,6 +150,8 @@ class DashboardController extends Controller
         $email          = $profil->email;
         $alamat         = $profil->alamat;
 
+        
+
 
 
         if ($profil->foto != null) {
@@ -187,6 +189,8 @@ class DashboardController extends Controller
                 'nip'                   => $nip,
                 'skpd'                  => $skpd,
                 'unit_kerja'            => $unit_kerja,
+
+                'jabatan_aktif'         => $jabatan,
 
                 'jabatan'               => $jabatan,
                 'eselon'                => $eselon,
