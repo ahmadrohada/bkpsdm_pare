@@ -239,12 +239,12 @@ class KegiatanAPIController extends Controller {
                 $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(620,637,637))
                                 ->select('id','skpd')
                                 ->get();
-            }else if ( $x->id == '650'){  //pertanian
+            }/* else if ( $x->id == '650'){  //pertanian
                
                 $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(650,675,675))
                                 ->select('id','skpd')
                                 ->get();
-            }else if ( $x->id == '273'){  //PUPR
+            } */else if ( $x->id == '273'){  //PUPR
                
                 $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(273,302,302))
                                 ->select('id','skpd')
@@ -336,7 +336,7 @@ class KegiatanAPIController extends Controller {
                        
                 
                     //AGAR KASUBAG TU DISPERINDAG BISA SEJAJAR DENGAN DEWNGAN KEPALA UPTD DINAS
-                    }else if ( $y->id == 761 ){  //168 adalah id UPTD kesehatan
+                    }else if ( $y->id == 761 ){  
                         $level3a = SKPD::where('parent_id','=',$y->id)
                                         ->where(function ($query) {
                                             $query->where('id_eselon', '=' , null )
@@ -356,7 +356,30 @@ class KegiatanAPIController extends Controller {
                                         ->select('id','skpd','id_eselon')->get();
 
                         $level3 = $level3a->merge($level3b);
-                    
+
+                    //AGAR KASUBAG TU Dinas Pertanian bisa add kegiatan
+                    }else if ( $y->id == 675 ){  //675 adalah ID UPTD dinas kesehatan
+                        $level3a = SKPD::where('parent_id','=',$y->id)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+                        $kapus_list = [];
+                        foreach ($level3a as $x) {
+                            $kapus_list[] = array( 'id' => $x->id );
+                        }
+
+                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+
+                        $level3 = $level3a->merge($level3b);
+                
+                
                     }else{
                         $level3 = SKPD::where('parent_id','=',$y->id)
                                         ->where(function ($query) {
