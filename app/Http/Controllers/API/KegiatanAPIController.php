@@ -227,14 +227,14 @@ class KegiatanAPIController extends Controller {
                                 ->select('id','skpd')
                                 ->get();
 
-            }else */ if ( $x->id == '527'){  //dishub
+            }else  if ( $x->id == '527'){  //dishub
                
                 $level2 = SKPD::where('parent_id','=',$x->id)
                                 ->where('id','!=','544')
                                 ->orwhere('parent_id','=', '544')
                                 ->select('id','skpd')
                                 ->get();
-            }else if ( $x->id == '620'){  //perikanan
+            }else */if ( $x->id == '620'){  //perikanan
                
                 $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(620,637,637))
                                 ->select('id','skpd')
@@ -359,6 +359,29 @@ class KegiatanAPIController extends Controller {
 
                     //AGAR KASUBAG TU Dinas Pertanian bisa add kegiatan
                     }else if ( $y->id == 675 ){  //675 adalah ID UPTD dinas kesehatan
+                        $level3a = SKPD::where('parent_id','=',$y->id)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+                        $kapus_list = [];
+                        foreach ($level3a as $x) {
+                            $kapus_list[] = array( 'id' => $x->id );
+                        }
+
+                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+
+                        $level3 = $level3a->merge($level3b);
+                
+                
+                    //AGAR KASUBAG TU dishub bisa add kegiatan
+                    }else if ( $y->id == 544 ){  //675 adalah 
                         $level3a = SKPD::where('parent_id','=',$y->id)
                                         ->where(function ($query) {
                                             $query->where('id_eselon', '=' , null )

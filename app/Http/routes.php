@@ -917,7 +917,6 @@ Route::group(['middleware' => 'auth'], function () {
 		'uses' 		=> 'ProfilesController@show'
 	]);
 
-	
 
 	
 	// MIDDLEWARE INCEPTIONED - MAKE SURE THIS IS THE CURRENT USERS PROFILE TO EDIT
@@ -1597,6 +1596,23 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
 
 
+
+
+
+
+});
+
+
+//===============================================================================================================//
+//=============== NON PNS ACCESS LEVEL PAGE ROUTES - RUNNING THROUGH PERSONAL MIDDLEWARE ====================//
+//===============================================================================================================//
+
+Route::group(['prefix' => 'non_pns','middleware' => 'non_pns'], function () {
+
+	Route::get('', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePersonalController@showHomePersonal'
+	]);
 
 
 

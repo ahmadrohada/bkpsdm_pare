@@ -71,6 +71,7 @@ class DashboardController extends Controller
         $userRole       = $user->hasRole('personal');
         $admin_skpdRole = $user->hasRole('admin_skpd');
         $adminRole      = $user->hasRole('administrator');
+        $non_pnsRole      = $user->hasRole('non_pns');
 
         if ($userRole) {
             $access = 'Personal';
@@ -83,8 +84,16 @@ class DashboardController extends Controller
             $access = 'Administrator';
             //$dashboard = 'administrator';
             $dashboard = 'personal';
+        }elseif ($non_pnsRole) {
+            $access = 'NonPns';
+            $dashboard = 'personal';
         }
 
+        if ( $access == 'NonPns' ){
+            return redirect('non_pns/tes')->with('status',  \Lang::get('auth.loggedOut'));
+        }else{
+
+        
 
 
 
@@ -214,6 +223,8 @@ class DashboardController extends Controller
         } else {
             \Auth::logout();
             return redirect('auth/login')->with('status', 'Roles is Unidentified');
+        }
+
         }
     }
 

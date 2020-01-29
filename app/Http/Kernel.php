@@ -24,14 +24,15 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $routeMiddleware = [
-        'auth' 			=> \App\Http\Middleware\Authenticate::class,
+        'auth' 				=> \App\Http\Middleware\Authenticate::class,
         'auth.basic' 		=> \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' 		=> \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest' 			=> \App\Http\Middleware\RedirectIfAuthenticated::class,
         'currentUser' 		=> \App\Http\Middleware\CheckCurrentUser::class,
         'administrator' 	=> \App\Http\Middleware\Administrator::class,
-	'personal' 		=> \App\Http\Middleware\Personal::class,
-	'skpd' 			=> \App\Http\Middleware\Skpd::class,
-	'auth.api' 		=> \App\Http\Middleware\ApiAccess::class,
+		'personal' 			=> \App\Http\Middleware\Personal::class,
+		'skpd' 				=> \App\Http\Middleware\Skpd::class,
+		'non_pns' 			=> \App\Http\Middleware\NonPns::class,
+		'auth.api' 			=> \App\Http\Middleware\ApiAccess::class,
 	];
 
 }
