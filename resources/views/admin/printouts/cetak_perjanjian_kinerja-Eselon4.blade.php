@@ -130,7 +130,7 @@
 	
 		<pagebreak></pagebreak>
 		<table class="kop" border="0">
-				<tr>
+				{{-- <tr>
 					<td rowspan="4" align="right" valign="top">
 						<img src="{{asset('assets/images/logo_karawang.png')}}" width="90px" height="120px" >
 					</td>
@@ -162,6 +162,9 @@
 						<hr class="kop_hr">
 						<hr class="kop_hr2">
 					</td>
+				</tr> --}}
+				<tr>
+					<td height="180px"></td>
 				</tr>
 				<tr>
 					<td colspan="2"  valign="top" align="center">
