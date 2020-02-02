@@ -6,7 +6,7 @@
                 <h4 class="modal-title">
 					Add Realisasi Kegiatan Tahunan
                 </h4>
-            </div>
+            </div> 
 
             <form  id="realisasi_tahunan_form" method="POST" action="">
 
@@ -18,10 +18,12 @@
 			<input type="hidden"  name="jumlah_indikator">
 			<input type="hidden"  name="satuan">
 
+			<input type="hidden"  name="target_angka_kredit">
 			<input type="hidden"  name="target_quantity">
 			<input type="hidden"  name="target_quality">
 			<input type="hidden"  name="target_waktu">
 			<input type="hidden"  name="target_cost">
+
 			
 
 			
@@ -34,11 +36,27 @@
 								<span class="kegiatan_tahunan_label"></span>
 							</p>
 						</div>
-						<div class="col-md-12 form-group label_kegiatan_tahunan" style="margin-top:-10px !important;">
-							<strong>Indikator </strong>
-							<p class="text-info " style="margin-top:1px;">
-								<span class="indikator_label"></span>
-							</p>
+
+						@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  != '5')
+							<div class="col-md-12 form-group label_kegiatan_tahunan" style="margin-top:-10px !important;">
+								<strong>Indikator </strong>
+								<p class="text-info " style="margin-top:1px;">
+									<span class="indikator_label"></span>
+								</p>
+							</div>
+						@endif
+					</div>
+
+
+
+					<div class="row" style="margin-top:10px;"> 
+						<div class="col-md-6 col-xs-6 form-group">	
+							<label class="control-label">Target AK </label>
+							<span type="text" class="form-control input-sm target_angka_kredit"></span>
+						</div>
+						<div class="col-md-6 col-xs-6 form-group angka_kredit">	
+							<label class="control-label">Realisasi AK</label>
+							<input type="text" name="realisasi_angka_kredit" required class="form-control input-sm realisasi_angka_kredit" placeholder="realisasi">
 						</div>
 					</div>
 
@@ -63,7 +81,7 @@
 						</div>
 					</div>
 
-					<div class="row" style="margin-top:-20px;" hidden> 
+					<div class="row" style="margin-top:-20px;" > 
 						<div class="col-md-6 col-xs-6 form-group">	
 							<label class="control-label">Target Quality </label>
 							<div class="input-group">
@@ -76,7 +94,7 @@
 						<div class="col-md-6 col-xs-6 form-group quality">	
 							<label class="control-label">Realisasi Quality</label>
 							<div class="input-group">
-								<input type="text" name="realisasi_quality"  required class="form-control input-sm realisasi_quality" placeholder="realisasi">
+								<input type="text" name="realisasi_quality" required class="form-control input-sm realisasi_quality" placeholder="realisasi" >
 								<div class="input-group-addon">
 									<span class="">%</span>
 								</div>
@@ -152,7 +170,7 @@
 
 	$('.modal-realisasi_tahunan').on('hidden.bs.modal', function(){
 		$('.quantity,.cost').removeClass('has-error');
-		$('.modal-realisasi_tahunan').find('[name=realisasi_quantity],[name=realisasi_quality],[name=realisasi_waktu],[name=realisasi_cost]').val('');
+		$('.modal-realisasi_tahunan').find('[name=realisasi_quantity],[name=realisasi_angka_kredit],[name=realisasi_quality],[name=realisasi_waktu],[name=realisasi_cost]').val('');
 	});
 
 
@@ -186,6 +204,16 @@
 
 	$(document).on('click','#submit-save',function(e){
 
+		@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+			save_jft();
+		@else
+			save_eselon();
+		@endif
+
+
+	});
+
+	function save_eselon(){
 		on_submitx();
 		var data = $('#realisasi_tahunan_form').serialize();
 
@@ -246,16 +274,84 @@
 			}
 			
 		});
+	}
 
+	function save_jft(){
+		on_submitx();
+		var data = $('#realisasi_tahunan_form').serialize();
 
+		//alert(data);
+		$.ajax({
+			url		: '{{ url("api_resource/simpan_realisasi_kegiatan_tahunan_5") }}',
+			type	: 'POST',
+			data	:  data,
+			success	: function(data , textStatus, jqXHR) {
+				
+				//$('#program_table').DataTable().ajax.reload(null,false);
+               
+				reset_submitx();
+				Swal.fire({
+					title: "",
+					text: "Sukses",
+					type: "success",
+					width: "200px", 
+					showConfirmButton: false,
+					allowOutsideClick : false,
+					timer:1500
+				}).then(function () {
+					$('.modal-realisasi_tahunan').modal('hide');
+					$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
+					
+					
+					
+				},
+					
+					function (dismiss) {
+						if (dismiss === 'timer') {
+							
+						}
+					}
+			)	
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
 
+				var test = $.parseJSON(jqXHR.responseText);
+				
+				var data= test.errors;
 
+				$.each(data, function(index,value){
+					//alert (index+":"+value);
+					
+					//error message
+					((index == 'realisasi_quantity')?$('.quantity').addClass('has-error'):'');
+					((index == 'realisasi_quality')?$('.quality').addClass('has-error'):'');
+					((index == 'realisasi_waktu')?$('.waktu').addClass('has-error'):'');
+					((index == 'realisasi_cost')?$('.cost').addClass('has-error'):'');
+					
+					reset_submitx();
+					
+				
+				});
 
-	});
+			
+			}
+			
+		});
+	}
 
 
 	$(document).on('click','#submit-update',function(e){
 
+
+		@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+			update_jft();
+		@else
+			update_eselon();
+		@endif
+
+	});
+
+	function update_eselon(){
 		on_submitx();
 		var data = $('#realisasi_tahunan_form').serialize();
 
@@ -313,16 +409,67 @@
 			}
 			
 		});
+	}
 
+	function update_jft(){
+		on_submitx();
+		var data = $('#realisasi_tahunan_form').serialize();
 
+		//alert(data);
+		$.ajax({
+			url		: '{{ url("api_resource/update_realisasi_kegiatan_tahunan_5") }}',
+			type	: 'POST',
+			data	:  data,
+			success	: function(data , textStatus, jqXHR) {
+				
+			
+				reset_submitx();
+				Swal.fire({
+					title: "",
+					text: "Sukses",
+					type: "success",
+					width: "200px", 
+					showConfirmButton: false,
+					allowOutsideClick : false,
+					timer:1500
+				}).then(function () {
+					$('.modal-realisasi_tahunan').modal('hide');
+					$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
+					
+				},
+					
+					function (dismiss) {
+						if (dismiss === 'timer') {
+							
+						}
+					}
+			)	
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
 
+				var test = $.parseJSON(jqXHR.responseText);
+				
+				var data= test.errors;
 
+				$.each(data, function(index,value){
+					//alert (index+":"+value);
+					
+					//error message
+					((index == 'realisasi_quantity')?$('.quantity').addClass('has-error'):'');
+					((index == 'realisasi_quality')?$('.quality').addClass('has-error'):'');
+					((index == 'realisasi_waktu')?$('.waktu').addClass('has-error'):'');
+					((index == 'realisasi_cost')?$('.cost').addClass('has-error'):'');
+					reset_submitx();
 
+					
+				
+				});
+
+			
+			}
+			
 		});
-
-
-
-
+	}
 
 
 

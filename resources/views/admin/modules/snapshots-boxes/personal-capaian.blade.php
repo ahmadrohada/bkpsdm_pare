@@ -14,7 +14,7 @@
 				<div class="small-box bg-yellow capaian_bulanan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							{{$jm_capaian_bulanan}}
 						</h3>
 						<p>
 							<strong>Bulanan</strong>
@@ -31,7 +31,7 @@
 				<div class="small-box bg-aqua capaian_triwulan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							{{$jm_capaian_triwulan}}
 						</h3>
 						<p>
 							<strong>Triwulan</strong>
@@ -48,7 +48,7 @@
 				<div class="small-box bg-red capaian_tahunan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							{{$jm_capaian_tahunan}}
 						</h3>
 						<p>
 							<strong>Tahunan</strong>

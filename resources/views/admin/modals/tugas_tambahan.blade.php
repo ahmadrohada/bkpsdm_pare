@@ -13,8 +13,8 @@
 
                         <div class="modal-body">
 
-						<input type="text" name="capaian_tahunan_id" class="capaian_tahunan_id" value="{{ $capaian->id }}">
-						<input type="text" name="tugas_tambahan_id" class="tugas_tambahan_id" >
+						<input type="hidden" name="capaian_tahunan_id" class="capaian_tahunan_id" value="{{ $capaian->id }}">
+						<input type="hidden" name="tugas_tambahan_id" class="tugas_tambahan_id" >
 						
 
                         <div class="form-group tugas_tambahan_label">

@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-5">
+	<div class="col-md-6">
 
 			<div class="box box-primary ">
 				<div class="box-header with-border">
@@ -23,7 +23,7 @@
 	
 
 	</div>
-	<div class="col-md-7">
+	<div class="col-md-6">
 
 
 		<div class="box box-skp_bulanan" id='skp_bulanan'>
@@ -105,7 +105,13 @@
 
 <script type="text/javascript">
 
-	function initTreeKegBulanan() {
+	function refreshTreeKegBulanan(){
+		jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+		jQuery('#skp_bulanan_tree').jstree().open_all(true);
+		$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+	} 
+
+	
 		$('#skp_bulanan_tree')
 		.jstree({
             'core' : {
@@ -124,17 +130,14 @@
 			},'contextmenu' : { 
 					'items' : context_menus
 				},
-				'plugins' : [ /* 'contextmenu', */  'types' ,'search'],
+				'plugins' : [ /* 'contextmenu', */  'types' ,'search','state'],
 				'types' : {
 					'skp_tahunan' 			: { /* options */ },
 					'skp_bulanan' 	  	: { /* options */ },
-			  	'rencana_aksi' 	  	: { /* options */ }
+			  		'rencana_aksi' 	  	: { /* options */ }
 				}
 			}).on('create_node.jstree', function (e, data) {
-			
-
 				modal_create_skp_bulanan();
-				
 		}).on("loaded.jstree", function(){
 			$('#skp_bulanan_tree').jstree('open_all');
 		}).on("changed.jstree", function (e, data) {
@@ -144,8 +147,7 @@
 				detail_table_2(data.instance.get_node(data.selected[0]).id);
 			}
 		});
-	}
-
+	
 
 
 	function context_menus(node){
@@ -242,6 +244,7 @@
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				bInfo 			: false,
 				order 			    : [ 0 , 'asc' ],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2,3 ] }
@@ -286,12 +289,13 @@
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				bInfo 			: false,
 				//order 			    : [ 0 , 'asc' ],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,1,3,4 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skp_bulanan_list_4") }}',
+									url	: '{{ url("api_resource/skp_bulanan_list_5") }}',
 									data: { 
 										
 											"skp_tahunan_id" : {!! $skp->id !!} 
@@ -527,11 +531,13 @@
 									timer: 900
 									}).then(function () {
 										$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+										$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
 										jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
 											$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+											$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
 											jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 											
 										}

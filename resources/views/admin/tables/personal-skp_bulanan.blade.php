@@ -36,7 +36,7 @@
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
-				lengthMenu		: [12,100],
+				lengthMenu		: [12,100], 
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,2,5 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */

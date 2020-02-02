@@ -213,8 +213,10 @@
 				}).then(function () {
 					$('.modal-kegiatan_bulanan_jft').modal('hide');
 					$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+					$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
 					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 					jQuery('#skp_bulanan_tree').jstree().deselect_all(true);
+					
 
 					
 					
@@ -289,6 +291,7 @@
 				}).then(function () {
 					$('.modal-kegiatan_bulanan_jft').modal('hide');
 					$('#kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
+					$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
 					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 					//jQuery('#skp_bulanan_tree').jstree().deselect_all(true);
 					

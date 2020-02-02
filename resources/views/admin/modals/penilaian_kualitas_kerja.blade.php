@@ -116,8 +116,17 @@
 
 
 	$(document).on('click', '#simpan_penilaian_kualitas_kerja', function(){
+		@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+			save_jft();
+		@else
+			save();
+		@endif
+        
 		
-        var data = $('.penilaian_kualitas_kerja_form').serialize();
+    });
+
+	function save(){
+		var data = $('.penilaian_kualitas_kerja_form').serialize();
 		$.ajax({
 			url		: '{{ url("api_resource/simpan_penilaian_kualitas_kerja") }}',
 			type	: 'POST',
@@ -160,9 +169,53 @@
 			}
 			
 		  });
-		
-    });
+	}
 
+	function save_jft(){
+		var data = $('.penilaian_kualitas_kerja_form').serialize();
+		$.ajax({
+			url		: '{{ url("api_resource/simpan_penilaian_kualitas_kerja_5") }}',
+			type	: 'POST',
+			data	:  data,
+			success	: function(data , textStatus, jqXHR) {
+				
+				//$('#indikator_sasaran_table').DataTable().ajax.reload(null,false);
+
+				Swal.fire({
+					title: "",
+					text: "Sukses",
+					type: "success",
+					width: "200px",
+					showConfirmButton: false,
+					allowOutsideClick : false,
+					timer: 1500
+				}).then(function () {
+					status_pengisian();
+					$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
+					$('.modal-penilaian_kualitas_kerja').modal('hide');
+
+				},
+					function (dismiss) {
+						if (dismiss === 'timer') {
+							$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
+						}
+					}
+			)	
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
+
+				var test = $.parseJSON(jqXHR.responseText);
+				
+				var data= test.errors;
+				alert(data);
+
+				
+
+				
+			}
+			
+		  });
+	}
 
 
 

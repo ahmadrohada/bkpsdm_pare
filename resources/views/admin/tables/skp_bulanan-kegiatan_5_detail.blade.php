@@ -275,7 +275,7 @@
 									{ className: "text-center", targets: [ 0,1,3 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skp_bulanan_list_4") }}',
+									url	: '{{ url("api_resource/skp_bulanan_list_5") }}',
 									data: { 
 										
 											"skp_tahunan_id" : {!! $skp->id !!} 

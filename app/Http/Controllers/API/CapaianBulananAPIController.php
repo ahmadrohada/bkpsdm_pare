@@ -139,7 +139,7 @@ class CapaianBulananAPIController extends Controller {
                         leftjoin('db_pare_2018.capaian_bulanan', function($join){
                             $join   ->on('capaian_bulanan.skp_bulanan_id','=','skp_bulanan.id');
                         })
-                        
+                         
                         ->select(
                                 'skp_bulanan.id AS skp_bulanan_id',
                                 'skp_bulanan.skp_tahunan_id',
@@ -156,9 +156,10 @@ class CapaianBulananAPIController extends Controller {
             
                          )
                         ->WHERE('skp_bulanan.pegawai_id',$request->pegawai_id)
-                        ->orderBy('skp_bulanan.bulan')
+                        ->orderBy('skp_bulanan.skp_tahunan_id','DESC')
+                        ->orderBy('skp_bulanan.bulan','ASC')
                         //->orderBy('skp_bulanan.skp_tahunan_id')
-                        ->get()->sortByDesc('skp_bulanan.bulan');
+                        ->get();//->sortByDesc('skp_bulanan.id');
 
        
            $datatables = Datatables::of($skp)
@@ -745,7 +746,7 @@ class CapaianBulananAPIController extends Controller {
             
             $penilaian_kode_etik = Pustaka::persen($jm,30) ;
 
-            $capaian_skp_bulanan = number_format( ($capaian_kinerja_bulanan * 70 / 100)+( $penilaian_kode_etik * 30 / 100 ) , 2 ).' %';
+            $capaian_skp_bulanan = number_format( ($capaian_kinerja_bulanan * 70 / 100)+( $penilaian_kode_etik * 30 / 100 ) , 2 );
             
           
           
@@ -760,7 +761,7 @@ class CapaianBulananAPIController extends Controller {
                 
                 'jm_kegiatan_bulanan'       => $jm_kegiatan_bulanan,
                 'capaian_kinerja_bulanan'   => $capaian_kinerja_bulanan,
-                'capaian_skp_bulanan'       => $capaian_skp_bulanan,
+                'capaian_skp_bulanan'       => Pustaka::persen_bulat($capaian_skp_bulanan).' %',
                 'penilaian_kode_etik_id'    => $capaian_bulanan->penilaian_kode_etik_id,
                 'penilaian_kode_etik'       => $penilaian_kode_etik,
                 'status_approve'            => $persetujuan_atasan,

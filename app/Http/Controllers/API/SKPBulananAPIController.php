@@ -678,58 +678,7 @@ class SKPBulananAPIController extends Controller {
         
     }
 
-    public function SKPBulananList4(Request $request)
-    {
-        $skp = SKPBulanan::
-                        WHERE('skp_tahunan_id',$request->skp_tahunan_id)
-                        ->select(
-                                'id AS skp_bulanan_id',
-                                'skp_tahunan_id',
-                                'bulan',
-                                'tgl_mulai',
-                                'tgl_selesai',
-                                'p_nama',
-                                'status'
-            
-                         )
-                        ->orderBy('bulan')
-                        ->get();
-
-       
-           $datatables = Datatables::of($skp)
-           ->addColumn('periode', function ($x) {
-                return Pustaka::bulan($x->bulan) . ' '.Pustaka::tahun($x->tgl_mulai);
-            }) 
-            ->addColumn('masa_penilaian', function ($x) {
-                $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
-                return   $masa_penilaian;
-            }) 
-            ->addColumn('label', function ($x) {
-                
-                return   "SKP Periode " .Pustaka::bulan($x->bulan);
-            })
-            ->addColumn('pejabat_penilai', function ($x) {
-            
-                if ( !empty($x->p_nama)){
-                    return $x->p_nama;
-                }else{
-                    return "<font style='color:red'>Belum Ada</font>";
-                }
-                
-            })->addColumn('jm_kegiatan', function ($x) {
-                
-                return KegiatanSKPBulanan::WHERE('skp_bulanan_id',$x->skp_bulanan_id)->SELECT('id')->count();
-               
-            });
     
-            if ($keyword = $request->get('search')['value']) {
-                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-            } 
-            
-    
-        return $datatables->make(true);
-        
-    }
 
     public function SKPBulananList1(Request $request)
     {
@@ -939,6 +888,112 @@ class SKPBulananAPIController extends Controller {
                                     ->count();
 
 
+               
+            });
+    
+            if ($keyword = $request->get('search')['value']) {
+                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            } 
+            
+    
+        return $datatables->make(true);
+        
+    }
+
+    public function SKPBulananList4(Request $request)
+    {
+        $skp = SKPBulanan::
+                        WHERE('skp_tahunan_id',$request->skp_tahunan_id)
+                        ->select(
+                                'id AS skp_bulanan_id',
+                                'skp_tahunan_id',
+                                'bulan',
+                                'tgl_mulai',
+                                'tgl_selesai',
+                                'p_nama',
+                                'status'
+            
+                         )
+                        ->orderBy('bulan')
+                        ->get();
+
+       
+           $datatables = Datatables::of($skp)
+           ->addColumn('periode', function ($x) {
+                return Pustaka::bulan($x->bulan) . ' '.Pustaka::tahun($x->tgl_mulai);
+            }) 
+            ->addColumn('masa_penilaian', function ($x) {
+                $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
+                return   $masa_penilaian;
+            }) 
+            ->addColumn('label', function ($x) {
+                
+                return   "SKP Periode " .Pustaka::bulan($x->bulan);
+            })
+            ->addColumn('pejabat_penilai', function ($x) {
+            
+                if ( !empty($x->p_nama)){
+                    return $x->p_nama;
+                }else{
+                    return "<font style='color:red'>Belum Ada</font>";
+                }
+                
+            })->addColumn('jm_kegiatan', function ($x) {
+                
+                return KegiatanSKPBulanan::WHERE('skp_bulanan_id',$x->skp_bulanan_id)->SELECT('id')->count();
+               
+            });
+    
+            if ($keyword = $request->get('search')['value']) {
+                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            } 
+            
+    
+        return $datatables->make(true);
+        
+    }
+
+    public function SKPBulananList5(Request $request)
+    {
+        $skp = SKPBulanan::
+                        WHERE('skp_tahunan_id',$request->skp_tahunan_id)
+                        ->select(
+                                'id AS skp_bulanan_id',
+                                'skp_tahunan_id',
+                                'bulan',
+                                'tgl_mulai',
+                                'tgl_selesai',
+                                'p_nama',
+                                'status'
+            
+                         )
+                        ->orderBy('bulan')
+                        ->get();
+
+       
+           $datatables = Datatables::of($skp)
+           ->addColumn('periode', function ($x) {
+                return Pustaka::bulan($x->bulan) . ' '.Pustaka::tahun($x->tgl_mulai);
+            }) 
+            ->addColumn('masa_penilaian', function ($x) {
+                $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
+                return   $masa_penilaian;
+            }) 
+            ->addColumn('label', function ($x) {
+                
+                return   "SKP Periode " .Pustaka::bulan($x->bulan);
+            })
+            ->addColumn('pejabat_penilai', function ($x) {
+            
+                if ( !empty($x->p_nama)){
+                    return $x->p_nama;
+                }else{
+                    return "<font style='color:red'>Belum Ada</font>";
+                }
+                
+            })->addColumn('jm_kegiatan', function ($x) {
+                
+                return KegiatanSKPBulananJFT::WHERE('skp_bulanan_id',$x->skp_bulanan_id)->SELECT('id')->count();
                
             });
     

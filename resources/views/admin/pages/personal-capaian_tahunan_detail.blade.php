@@ -3,7 +3,7 @@
 @section('template_title')
 {{ Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)  }}
 @stop
-
+ 
 
 @section('content')
 	 <div class="content-wrapper" >
@@ -32,6 +32,11 @@
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
 						@include('admin.modules.timeline.capaian_tahunan_status_detail')
 					@endif
+
+					<!-- 5. JFT -->
+					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+						@include('admin.modules.timeline.capaian_tahunan_status_detail')
+					@endif
 					
 					
 				</div>
@@ -41,10 +46,25 @@
 								
 				<div class=" tab-pane" id="kegiatan_tahunan_tab">
 
-					<!-- 3. KASUBID -->
-					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.tables.capaian_kegiatan_tahunan_detail')
-					@endif
+					<?php
+						switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+							case '1': 
+									?><?php
+									break;
+							case '2':
+									?>@include('admin.tables.capaian_kegiatan_tahunan_detail')<?php
+									break;
+							case '3': 
+									?>@include('admin.tables.capaian_kegiatan_tahunan_detail')<?php
+									break;
+							case '4':   
+									?><?php
+									break;
+							case '5':   
+									?>@include('admin.tables.capaian_kegiatan_tahunan_detail')<?php
+									break;
+						}
+					?>
 				
 					
 				</div>

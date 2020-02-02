@@ -17,35 +17,16 @@ use App\Models\PeriodeTahunan;
 
 use App\Models\SKPTahunan;
 use App\Models\SKPBulanan;
-use App\Models\PerjanjianKinerja;
-use App\Models\Sasaran;
-use App\Models\SasaranPerjanjianKinerja;
-use App\Models\IndikatorSasaran;
-use App\Models\Program;
-use App\Models\IndikatorProgram;
-use App\Models\Kegiatan;
-use App\Models\IndikatorKegiatan;
-use App\Models\RencanaKerja;
-use App\Models\PetaJabatan;
+use App\Models\CapaianBulanan;
+use App\Models\CapaianTriwulan;
+use App\Models\CapaianTahunan;
 
 
 
 use App\Helpers\Pustaka;
-
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Support\Facades;
 use Illuminate\Http\Request;
 
 
-use Datatables;
-use Validator;
-use Gravatar;
-use Input;
-Use Alert;
 
 class HomePersonalController extends Controller {
     
@@ -67,6 +48,21 @@ class HomePersonalController extends Controller {
     }
     protected function jm_skp_bulanan($pegawai_id){
         $data       = SKPBulanan::WHERE('pegawai_id',$pegawai_id)->count();
+        return $data;
+    }
+
+    protected function jm_capaian_bulanan($pegawai_id){
+        $data       = CapaianBulanan::WHERE('pegawai_id',$pegawai_id)->count();
+        return $data;
+    }
+
+    protected function jm_capaian_triwulan($pegawai_id){
+        $data       = CapaianTriwulan::WHERE('pegawai_id',$pegawai_id)->count();
+        return $data;
+    }
+
+    protected function jm_capaian_tahunan($pegawai_id){
+        $data       = CapaianTahunan::WHERE('pegawai_id',$pegawai_id)->count();
         return $data;
     }
 
@@ -176,8 +172,9 @@ class HomePersonalController extends Controller {
         return view('admin.pages.personal-home-capaian_bulanan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
-               'jm_capaian_tahunan'     => '',
-               'jm_capaian_bulanan'     => '',
+               'jm_capaian_bulanan'     => $this->jm_capaian_bulanan($pegawai->id),
+               'jm_capaian_triwulan'    => $this->jm_capaian_triwulan($pegawai->id),
+               'jm_capaian_tahunan'     => $this->jm_capaian_tahunan($pegawai->id),
                'h_box'                  => 'box-warning',
                
            ]
@@ -195,8 +192,9 @@ class HomePersonalController extends Controller {
         return view('admin.pages.personal-home-capaian_triwulan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
-               'jm_capaian_tahunan'     => '',
-               'jm_capaian_bulanan'     => '',
+               'jm_capaian_bulanan'     => $this->jm_capaian_bulanan($pegawai->id),
+               'jm_capaian_triwulan'    => $this->jm_capaian_triwulan($pegawai->id),
+               'jm_capaian_tahunan'     => $this->jm_capaian_tahunan($pegawai->id),
                'h_box'                  => 'box-info',
                
            ]
@@ -214,8 +212,9 @@ class HomePersonalController extends Controller {
         return view('admin.pages.personal-home-capaian_tahunan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
-               'jm_capaian_tahunan'     => '',
-               'jm_capaian_bulanan'     => '',
+               'jm_capaian_bulanan'     => $this->jm_capaian_bulanan($pegawai->id),
+               'jm_capaian_triwulan'    => $this->jm_capaian_triwulan($pegawai->id),
+               'jm_capaian_tahunan'     => $this->jm_capaian_tahunan($pegawai->id),
                'h_box'                  => 'box-danger',
                
            ]

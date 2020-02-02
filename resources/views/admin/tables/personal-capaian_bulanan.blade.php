@@ -37,7 +37,7 @@
 				serverSide      : true,
 				searching      	: false,
 				paging          : true,
-				//order 			: [ 1, 'asc' ],
+				order 			: [ 5, 'asc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
@@ -69,7 +69,7 @@
 
 									}	
 								},
-								{ data: "bulan" ,  name:"bulan", orderable: true, searchable: true,
+								{ data: "bulan" ,  name:"skp_bulanan.bulan", orderable: true, searchable: true,
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
 											return "<span class='text-danger'>"+row.bulan+"</span>";

@@ -84,6 +84,9 @@ table.dataTable tbody td {
 				columnDefs		: [
 									{ "orderable": false, className: "text-center", targets: [ 0,3,4,5,7,8,10,11,12,13,14,15,16 ] },
 									{ className: "text-right", targets: [ 6,9] },
+									@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+										{ className: "hide", targets: [ 2 ] },
+									@endif
 									
 								],
 				ajax			: {
@@ -160,7 +163,7 @@ table.dataTable tbody td {
 									},
 									{ data: "hitung_quantity", name:"hitung_quantity", width:"50px",
 										"render": function ( data, type, row ) {
-											if ( row.hitung_quality == 0 ){
+											if ( row.hitung_quantity == 0 ){
 												return "<span class='text-danger'> - </span>";
 											}else{
 												return row.hitung_quantity +" %";

@@ -17,7 +17,7 @@
 	    <section class="content">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
-				<li class="status"><a href="#status" data-toggle="tab">Timeline </a></li>
+				{{-- <li class="status"><a href="#status" data-toggle="tab">Timeline </a></li> --}}
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				
 				<?php 
@@ -61,14 +61,14 @@
 
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
-				<div class="active tab-pane" id="status">
+				{{-- <div class="active tab-pane" id="status">
 
 					<!-- ALL jabatan is one status edit -->
 					@include('admin.modules.timeline.skp_tahunan_status_general')	
 					
 					 
-				</div>
-				<div class="tab-pane" id="detail">
+				</div> --}}
+				<div class="active tab-pane" id="detail">
 					@include('admin.modules.edit_forms.skp_tahunan_detail')				
 				</div>
 
@@ -185,7 +185,7 @@ $(document).ready(function() {
 
 		if ( id == 'kegiatan_tahunan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
-			//initTreeKegTahunan();
+			initTreeKegTahunan();
 		}else if ( id == 'skp_bulanan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
 			initTreeKegBulanan();
@@ -210,7 +210,7 @@ $(document).ready(function() {
 	if ( hash != ''){
 		$('#myTab a[href="' + hash + '"]').tab('show');
 	}else{
-		$('#myTab a[href="#status"]').tab('show');
+		$('#myTab a[href="#detail"]').tab('show');
 	}
 	
 

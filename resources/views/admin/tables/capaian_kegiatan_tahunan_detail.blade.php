@@ -14,7 +14,7 @@
 			</div>
 			<div class="box-body table-responsive">
 
-				<div class="toolbar"> 
+				<div class="toolbar">  
 
 				</div>
 
@@ -83,6 +83,9 @@ table.dataTable tbody td {
 				columnDefs		: [
 									{ "orderable": false, className: "text-center", targets: [ 0,3,4,5,7,8,10,11,12,13,14,15 ] },
 									{ className: "text-right", targets: [ 6,9] },
+									@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+										{ className: "hide", targets: [ 2 ] },
+									@endif
 									
 								],
 				ajax			: {

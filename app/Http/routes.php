@@ -456,6 +456,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skp_bulanan_list_2','API\SKPBulananAPIController@SKPBulananList2');
 	Route::get('skp_bulanan_list_3','API\SKPBulananAPIController@SKPBulananList3');
 	Route::get('skp_bulanan_list_4','API\SKPBulananAPIController@SKPBulananList4');
+	Route::get('skp_bulanan_list_5','API\SKPBulananAPIController@SKPBulananList5');
 
 	
 
@@ -690,11 +691,19 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	Route::get('realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan');
 
+	Route::get('realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan5');
+
 	Route::get('add_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@AddRealisasiKegiatanTahunan');
+
+	Route::get('add_realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanTahunanAPIController@AddRealisasiKegiatanTahunan5');
 	
 	Route::post('simpan_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@Store');
 	Route::post('update_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@Update');
 	Route::post('hapus_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@Destroy');
+
+	Route::post('simpan_realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanTahunanAPIController@Store5');
+	Route::post('update_realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanTahunanAPIController@Update5');
+	Route::post('hapus_realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanTahunanAPIController@Destroy5');
 
 
 	//=====================        PENILAIAN KUALITAS KERJA      = =====================================//
@@ -702,7 +711,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 	Route::get('penilaian_kualitas_kerja_detail','API\RealisasiKegiatanTahunanAPIController@PenilaianKualitasKerja');
 	Route::post('simpan_penilaian_kualitas_kerja','API\RealisasiKegiatanTahunanAPIController@UpdateKualitasKerja');
-	
+	Route::post('simpan_penilaian_kualitas_kerja_5','API\RealisasiKegiatanTahunanAPIController@UpdateKualitasKerja5');
 
 	//=====================        PENILAIAN PERILAKU KERJA      = =====================================//
 	//========================================================================================================//

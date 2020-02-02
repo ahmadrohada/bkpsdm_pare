@@ -224,12 +224,15 @@ class CapaianTriwulanAPIController extends Controller {
 
 
 
+            $tahun = date("Y");
 
-
-           $datatables = Datatables::of($SKPTahunan)
+            $datatables = Datatables::of($SKPTahunan)
             ->addColumn('periode_SKP_tahunan', function ($x) {
                 return $x->label;
             }) 
+            ->addColumn('id_jenis_jabatan', function ($x) {
+                return ($x->PejabatYangDinilai->Eselon)?($x->PejabatYangDinilai->Eselon->id_jenis_jabatan):'';
+            })
             ->addColumn('jabatan', function ($x) {
                 if ( $this->jabatan($x->u_jabatan_id) == null ){
                     return "ID Jabatan : ".$x->u_jabatan_id;
@@ -238,36 +241,35 @@ class CapaianTriwulanAPIController extends Controller {
                 }
             })
             
-            ->addColumn('remaining_time_triwulan1', function ($x) {
+            ->addColumn('remaining_time_triwulan1', function ($x) use($tahun) {
 
-                $tgl_selesai = strtotime("2019-04-01");
+                $tgl_selesai = strtotime($tahun."-04-01");
+                $now         = time();
+                return floor(($tgl_selesai - $now)/ (60*60*24)) * -1; 
+
+                
+            })
+            ->addColumn('remaining_time_triwulan2', function ($x) use($tahun) {
+
+                $tgl_selesai = strtotime($tahun."-07-01");
                 $now         = time();
                 return floor(($tgl_selesai - $now)/ (60*60*24)) * -1;
 
             
                 
             })
-            ->addColumn('remaining_time_triwulan2', function ($x) {
+            ->addColumn('remaining_time_triwulan3', function ($x) use($tahun){
 
-                $tgl_selesai = strtotime("2019-07-01");
+                $tgl_selesai = strtotime($tahun."-10-01");
                 $now         = time();
                 return floor(($tgl_selesai - $now)/ (60*60*24)) * -1;
 
             
                 
             })
-            ->addColumn('remaining_time_triwulan3', function ($x) {
+            ->addColumn('remaining_time_triwulan4', function ($x) use($tahun){
 
-                $tgl_selesai = strtotime("2019-10-01");
-                $now         = time();
-                return floor(($tgl_selesai - $now)/ (60*60*24)) * -1;
-
-            
-                
-            })
-            ->addColumn('remaining_time_triwulan4', function ($x) {
-
-                $tgl_selesai = strtotime("2020-01-01");
+                $tgl_selesai = strtotime(($tahun+1)."-01-01");
                 $now         = time();
                 return floor(($tgl_selesai - $now)/ (60*60*24)) * -1;
 

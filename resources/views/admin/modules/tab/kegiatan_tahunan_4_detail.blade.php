@@ -110,7 +110,14 @@
 
 <script type="text/javascript">
 
-	function initTreeKegTahunan() {
+
+	function refreshTreeKegTahunan(){
+		jQuery('#kegiatan_tahunan_pelaksana').jstree(true).refresh(true);
+		jQuery('#kegiatan_tahunan_pelaksana').jstree().deselect_all(true);
+		$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+	} 
+
+
 		$('#kegiatan_tahunan_pelaksana')
 		.on("loaded.jstree", function(){
 			//$('#kegiatan_tahunan_pelaksana').jstree('open_all');
@@ -143,8 +150,7 @@
 			
 		
 	    });
-	}
-
+	
 	
 	
 	var to = false;

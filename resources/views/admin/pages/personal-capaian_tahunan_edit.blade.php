@@ -3,8 +3,8 @@
 @section('template_title')
 {{ Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)  }}
 @stop
-
-
+ 
+ 
 @section('content')
 	 <div class="content-wrapper" >
 	    <section class="content-header">
@@ -28,8 +28,14 @@
 				<div class="active tab-pane" id="status">
 
 
-					<!-- 2. KASUBID -->
+					<!-- 3. KASUBID -->
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+						@include('admin.modules.timeline.capaian_tahunan_status_edit')
+					@endif
+
+
+					<!-- 5. JFT -->
+					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
 						@include('admin.modules.timeline.capaian_tahunan_status_edit')
 					@endif
 					
@@ -55,6 +61,9 @@
 									break;
 							case '4':   
 									?><?php
+									break;
+							case '5':   
+									?>@include('admin.tables.capaian_kegiatan_tahunan_edit')<?php
 									break;
 						}
 					?>

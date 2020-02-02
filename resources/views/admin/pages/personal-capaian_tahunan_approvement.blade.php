@@ -3,7 +3,7 @@
 @section('template_title')
 {{ Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)  }}
 @stop
-
+ 
 
 @section('content')
 	 <div class="content-wrapper" >
@@ -33,6 +33,11 @@
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
 						@include('admin.modules.timeline.capaian_tahunan_status_approvement')
 					@endif
+
+					<!-- 5. JFT -->
+					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+						@include('admin.modules.timeline.capaian_tahunan_status_approvement')
+					@endif
 					
 					
 				</div>
@@ -44,6 +49,11 @@
 
 					<!-- 3. KASUBID -->
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+						@include('admin.tables.capaian_kegiatan_tahunan_approvement')
+					@endif
+
+					<!-- 5. JFT -->
+					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
 						@include('admin.tables.capaian_kegiatan_tahunan_approvement')
 					@endif
 				

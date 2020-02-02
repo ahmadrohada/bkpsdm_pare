@@ -18,8 +18,11 @@ use App\Models\Golongan;
 use App\Models\Eselon; 
 
 use App\Models\KegiatanSKPTahunan;
+use App\Models\KegiatanSKPTahunanJFT;
+
 use App\Models\Kegiatan;
 use App\Models\RealisasiKegiatanTahunan;
+use App\Models\RealisasiKegiatanTahunanJFT;
 use App\Models\PerilakuKerja;
 use App\Models\RencanaAksi;
 use App\Models\RealisasiRencanaAksiKasubid;
@@ -272,10 +275,15 @@ class CapaianTahunanAPIController extends Controller {
             2 : KABID     / ESELON 3
             3 : KASUBID   / ESELON 4
             4 : PELAKSANA / JFU
+            5 : JFT -> kegiatan nya mandiri
         */
+        //=================================  JFT ================================================//
+        if ( $jenis_jabatan == 5 ){
 
+            $jm_kegiatan = KegiatanSKPTahunanJFT::WHERE('skp_tahunan_id',$skp_tahunan->skp_tahunan_id)->count();
+          
         //================================= PELAKSANA / JFU ================================================//
-        if ( $jenis_jabatan == 4 ){
+        }else if ( $jenis_jabatan == 4 ){
 
             $jm_kegiatan = 1 ;
         //================================= KASUBID   / ESELON 4 ===========================================//
@@ -700,8 +708,22 @@ class CapaianTahunanAPIController extends Controller {
         $jenis_jabatan = $capaian_tahunan->PejabatYangDinilai->Jabatan->Eselon->id_jenis_jabatan;
         //$bulan = $capaian_bulanan->SKPBulanan->bulan;
 
-        //jm kegiatan pelaksana
-        if ( $jenis_jabatan == 4 ){
+        //=================================  JFT ================================================//
+        if ( $jenis_jabatan == 5 ){
+
+            $jm_kegiatan = KegiatanSKPTahunanJFT::WHERE('skp_tahunan_id',$capaian_tahunan->skp_tahunan_id)->count();
+            $jm_realisasi = RealisasiKegiatanTahunanJFT::WHERE('capaian_id',$capaian_id)->count();
+          
+            //cari nilai_capaian Kegiatan tahunan
+            $data_cap = RealisasiKegiatanTahunanJFT::WHERE('capaian_id',$capaian_id)->get();
+            $nilai_capaian_kegiatan_tahunan = 0 ;
+            foreach ($data_cap as $x) {
+                $nilai_capaian_kegiatan_tahunan =  $nilai_capaian_kegiatan_tahunan + $x->hitung_quantity;
+            }
+
+
+        //================================= PELAKSANA / JFU ================================================//
+        }else if ( $jenis_jabatan == 4 ){
             
            
         }else if ( $jenis_jabatan == 3){  //kasubid

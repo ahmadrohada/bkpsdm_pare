@@ -18,7 +18,7 @@
 	    <section class="content">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
-				<li class="status"><a href="#status" data-toggle="tab">Timeline </a></li>
+				
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<?php 
 					switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
@@ -60,14 +60,8 @@
  
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
-				<div class="active tab-pane" id="status">
-
-					<!-- ALL jabatan is one status edit -->
-					@include('admin.modules.timeline.skp_tahunan_status_general')	
-					
-					 
-				</div>
-				<div class="tab-pane" id="detail">
+				
+				<div class="active tab-pane" id="detail">
 					@include('admin.modules.edit_forms.skp_tahunan_detail')			
 				</div>
 
@@ -172,13 +166,13 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
+
 	$('#myTab a').click(function(e) {
-		
 		e.preventDefault();
 		$(this).tab('show');
-		//$('html, body').animate({scrollTop:0}, 0);
-		
 	}); 
+
+	
 
 	// store the currently selected tab in the hash value
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
@@ -186,16 +180,14 @@ $(document).ready(function() {
 		window.location.hash = id;
 		//alert(id);
 
-		if ( id == 'kegiatan_tahunan_tab'){
+		if ( id == 'detail'){
+			detail_show();
+		}else if ( id == 'kegiatan_tahunan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
-			
+			refreshTreeKegTahunan();
 		}else if ( id == 'skp_bulanan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
-			initTreeKegBulanan();
-		}else if ( id == 'status'){
-			status_show();
-		}else if ( id == 'detail'){
-			detail_show();
+			refreshTreeKegBulanan();
 		}else if ( id == 'rencana_aksi_tab'){
 			rencana_aksi_time_table();
 		}else if ( id == 'perjanjian_kinerja_tab'){
@@ -212,7 +204,7 @@ $(document).ready(function() {
 	if ( hash != ''){
 		$('#myTab a[href="' + hash + '"]').tab('show');
 	}else{
-		$('#myTab a[href="#status"]').tab('show');
+		$('#myTab a[href="#detail"]').tab('show');
 	}
 	
 

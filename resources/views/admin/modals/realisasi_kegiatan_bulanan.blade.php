@@ -23,9 +23,14 @@
 							<p class="text-info " style="margin-top:8px;">
 								<span class="kegiatan_tahunan_label"></span>
 							</p>
+
+						
+							@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  != '5')
 							<p>
 								<i class="fa fa-user"></i> <span class="penanggung_jawab" style="margin-right:10px;"></span>
 							</p>
+							@endif
+							
 
 							
 							<i class="fa fa-industry" ></i> <span class="kegiatan_tahunan_output" style="margin-right:10px;"></span>
@@ -43,9 +48,13 @@
 							<p class="text-muted " style="margin-top:8px;">
 								<span class="kegiatan_bulanan_label"></span>
 							</p>
+
+							@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  != '5')
 							<p>
 								<i class="fa fa-user"></i> <span class="pelaksana" style="margin-right:10px;"></span>
 							</p>
+							@endif
+							
 
 							<i class="fa fa-industry"></i> <span class="kegiatan_bulanan_output" style="margin-right:10px;"></span>
 						</div>
@@ -66,7 +75,7 @@
 						<div class="col-md-6 col-xs-6 form-group realisasi" style="margin-top:8px;">	
 							<label class="control-label">Realisasi </label>
 							<div class="input-group">
-								<input type="text" name="realisasi" id="realisasi" required class="form-control input-sm" placeholder="realisasi">
+								<input type="text" name="realisasi" id="realisasi"  class="form-control input-sm" placeholder="realisasi">
 								<div class="input-group-addon">
 									<span class="kegiatan_bulanan_satuan"></span>
 								</div>

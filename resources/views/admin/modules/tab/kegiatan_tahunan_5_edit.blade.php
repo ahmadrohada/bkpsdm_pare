@@ -19,7 +19,6 @@
 	</div>
 	<div class="col-md-7">
 		@include('admin.tables.skp_tahunan-kegiatan_5_edit')
-		
 	</div>
 </div>
 
@@ -33,14 +32,17 @@
 <script type="text/javascript">
 	
 
+	function refreshTreeKegTahunan(){
+		jQuery('#keg_tahunan_5_tree').jstree(true).refresh(true);
+		jQuery('#keg_tahunan_5_tree').jstree().deselect_all(true);
+		$('#kegiatan_tahunan_5_table').DataTable().ajax.reload(null,false);
+	} 
+
 	
-	function initTreeKegTahunan() {
-		$('#keg_tahunan_5_tree')
-		
-		.jstree({
+	$('#keg_tahunan_5_tree').jstree({
             'core' : {
 						'data' : {
-						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_5") }}", //Eselon 4
+						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_5") }}", //Eselon 5
 						"data" 	: function (node) {
 							return  {   "renja_id" 			: {!! $skp->Renja->id !!} , 
                                         "jabatan_id" 		: {!! $skp->PejabatYangDinilai->Jabatan->id !!},
@@ -76,13 +78,10 @@
 				//detail_table(data.instance.get_node(data.selected[0]).id);
 
 			}
-		});
-	}
+	});
+	
 
 	function context_add_kegiatan_tahunan(node){
-
-		//alert(node.type);
-
 		var items = {
 			"tambah": {
 				"label" 	: "Tambah Kegiatan",

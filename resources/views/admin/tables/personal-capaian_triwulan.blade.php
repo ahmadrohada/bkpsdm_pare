@@ -86,96 +86,109 @@
 								{ data: "capaian_triwulan" , orderable: false,searchable:false,
 									"render": function ( data, type, row ) {
 
-										if (row.remaining_time_triwulan1 >= 0 ){
-											if (row.capaian_triwulan1_id == null ){
-												return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-trimester="1" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
-											}else{
-												if ( row.capaian_triwulan1_status == 0 ){
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-trimester="1" data-id="'+row.capaian_triwulan1_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-trimester="1" data-id="'+row.capaian_triwulan1_id+'"><i class="fa fa-close " ></i></a></span>';
-												}else{
-													return  '<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-trimester="1" data-id="'+row.capaian_triwulan1_id+'"><i class="fa fa-eye" ></i></a></span>'+
-															'<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-close " ></i></a></span>';
-												}
-												
-											}
+										if(row.id_jenis_jabatan == 5 ){ //JIka JFT,nggak wajib lah
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs " disabled style="width:75px;">Capaian</a></span>';
 										}else{
-											return row.remaining_time_triwulan1;
-										}	
+
+										
+											if (row.remaining_time_triwulan1 >= 0 ){
+												if (row.capaian_triwulan1_id == null ){
+													return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-trimester="1" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
+												}else{
+													if ( row.capaian_triwulan1_status == 0 ){
+														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-trimester="1" data-id="'+row.capaian_triwulan1_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-trimester="1" data-id="'+row.capaian_triwulan1_id+'"><i class="fa fa-close " ></i></a></span>';
+													}else{
+														return  '<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-trimester="1" data-id="'+row.capaian_triwulan1_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-close " ></i></a></span>';
+													}
+													
+												}
+											}else{
+												return row.remaining_time_triwulan1;
+											}	
+										}
 
 
 									}
 								},
 								{ data: "capaian_triwulan" , orderable: false,searchable:false,
 									"render": function ( data, type, row ) {
-
-										if (row.remaining_time_triwulan2 >= 0 ){
-											if (row.capaian_triwulan2_id == null ){
-												return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-trimester="2" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
-											}else{
-												if ( row.capaian_triwulan2_status == 0 ){
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-trimester="2" data-id="'+row.capaian_triwulan2_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-trimester="2" data-id="'+row.capaian_triwulan2_id+'"><i class="fa fa-close " ></i></a></span>';
-												}else{
-													return  '<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-trimester="2" data-id="'+row.capaian_triwulan2_id+'"><i class="fa fa-eye" ></i></a></span>'+
-															'<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-close " ></i></a></span>';
-												}
-											}
+										if(row.id_jenis_jabatan == 5 ){ //JIka JFT,nggak wajib lah
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs " disabled style="width:75px;">Capaian</a></span>';
 										}else{
-											return row.remaining_time_triwulan2;
-										}	
-
+											if (row.remaining_time_triwulan2 >= 0 ){
+												if (row.capaian_triwulan2_id == null ){
+													return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-trimester="2" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
+												}else{
+													if ( row.capaian_triwulan2_status == 0 ){
+														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-trimester="2" data-id="'+row.capaian_triwulan2_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-trimester="2" data-id="'+row.capaian_triwulan2_id+'"><i class="fa fa-close " ></i></a></span>';
+													}else{
+														return  '<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-trimester="2" data-id="'+row.capaian_triwulan2_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-close " ></i></a></span>';
+													}
+												}
+											}else{
+												return row.remaining_time_triwulan2;
+											}	
+										}
 
 									}
 								},
 								{ data: "capaian_triwulan" , orderable: false,searchable:false,
 									"render": function ( data, type, row ) {
-
-										if (row.remaining_time_triwulan3 >= 0 ){
-											if (row.capaian_triwulan3_id == null ){
-												return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-trimester="3" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
-											}else{
-												if ( row.capaian_triwulan3_status == 0 ){
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-trimester="3" data-id="'+row.capaian_triwulan3_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-trimester="3" data-id="'+row.capaian_triwulan3_id+'"><i class="fa fa-close " ></i></a></span>';
-												}else{
-													return  '<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-trimester="3" data-id="'+row.capaian_triwulan3_id+'"><i class="fa fa-eye" ></i></a></span>'+
-															'<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-close " ></i></a></span>';
-												}
-											}
+										if(row.id_jenis_jabatan == 5 ){ //JIka JFT,nggak wajib lah
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs " disabled style="width:75px;">Capaian</a></span>';
 										}else{
-											return row.remaining_time_triwulan3;
-										}	
-
+											if (row.remaining_time_triwulan3 >= 0 ){
+												if (row.capaian_triwulan3_id == null ){
+													return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-trimester="3" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
+												}else{
+													if ( row.capaian_triwulan3_status == 0 ){
+														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-trimester="3" data-id="'+row.capaian_triwulan3_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-trimester="3" data-id="'+row.capaian_triwulan3_id+'"><i class="fa fa-close " ></i></a></span>';
+													}else{
+														return  '<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-trimester="3" data-id="'+row.capaian_triwulan3_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-close " ></i></a></span>';
+													}
+												}
+											}else{
+												return row.remaining_time_triwulan3;
+											}	
+										}
 
 									}
 								},
 								{ data: "capaian_triwulan" , orderable: false,searchable:false,
 									"render": function ( data, type, row ) {
-
-										if (row.remaining_time_triwulan4 >= 0 ){
-											if (row.capaian_triwulan4_id == null ){
-												return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-trimester="4" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
-											}else{
-												if ( row.capaian_triwulan4_status == 0 ){
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-trimester="4" data-id="'+row.capaian_triwulan4_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-trimester="4" data-id="'+row.capaian_triwulan4_id+'"><i class="fa fa-close " ></i></a></span>';
-												}else{
-													return  '<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-trimester="4" data-id="'+row.capaian_triwulan4_id+'"><i class="fa fa-eye" ></i></a></span>'+
-															'<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-close " ></i></a></span>';
-												}
-											}
+										if(row.id_jenis_jabatan == 5 ){ //JIka JFT,nggak wajib lah
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs " disabled style="width:75px;">Capaian</a></span>';
 										}else{
-											return row.remaining_time_triwulan4;
-										}	
+											if (row.remaining_time_triwulan4 >= 0 ){
+												if (row.capaian_triwulan4_id == null ){
+													return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-trimester="4" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
+												}else{
+													if ( row.capaian_triwulan4_status == 0 ){
+														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-trimester="4" data-id="'+row.capaian_triwulan4_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-trimester="4" data-id="'+row.capaian_triwulan4_id+'"><i class="fa fa-close " ></i></a></span>';
+													}else{
+														return  '<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-trimester="4" data-id="'+row.capaian_triwulan4_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-close " ></i></a></span>';
+													}
+												}
+											}else{
+												return row.remaining_time_triwulan4;
+											}	
+										}
 
 
 									}
