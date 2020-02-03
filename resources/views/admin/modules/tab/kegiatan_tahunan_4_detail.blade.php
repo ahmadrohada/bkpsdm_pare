@@ -114,7 +114,7 @@
 	function refreshTreeKegTahunan(){
 		jQuery('#kegiatan_tahunan_pelaksana').jstree(true).refresh(true);
 		jQuery('#kegiatan_tahunan_pelaksana').jstree().deselect_all(true);
-		$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+		//$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
 	} 
 
 
@@ -176,7 +176,7 @@
                 case 'KegiatanTahunan':
                           //SHOW DETAIL KEGIATAN TAHUNAN DAN RENCANA KERJA LIST
                             $("#kegiatan_tahunan").hide();
-						    						$("#rencana_aksi").show();
+						    $("#rencana_aksi").show();
                             load_rencana_aksi( tx[1]);
                        
                 break;

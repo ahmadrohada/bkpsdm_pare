@@ -10,7 +10,7 @@
 	    <section class="content-header">
 			<h1>
 				SKP Tahunan  {!! $skp->PejabatYangDinilai->Eselon->eselon !!} 
-				
+				{!!$skp->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}
 			</h1>
 				{!! Breadcrumbs::render('personal_edit_skp_tahunan') !!}
       </section>
@@ -30,9 +30,9 @@
 						case '3': 
 								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
 								break;
-						case '4':   
+						/* case '4':   
 								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Kegiatan Bulanan</a></li>';
-								break;
+								break; */
 					}
 
 				?>
@@ -64,7 +64,10 @@
 				<div class="active tab-pane" id="detail">
 					@include('admin.modules.edit_forms.skp_tahunan_detail')			
 				</div>
-
+				<div class=" tab-pane" id="rencana_aksi_tab">
+					@include('admin.modules.tab.rencana_aksi_time_table')
+					
+				</div>
 				<div class="tab-pane" id="perjanjian_kinerja_tab">
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
@@ -76,12 +79,6 @@
 									break;
 							case '3':  //Eselon 4
 									?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_3')<?php
-									break;
-							case '4':   //JFU
-									?><?php
-									break;
-							case '5':   //JFT
-									?><?php
 									break;
 						}
 					?>		
@@ -120,10 +117,7 @@
 					?>
 
 				</div>
-				<div class=" tab-pane" id="rencana_aksi_tab">
-					@include('admin.modules.tab.rencana_aksi_time_table')
-					
-				</div>
+				
 				<div class="tab-pane" id="skp_bulanan_tab">
 
 					<?php

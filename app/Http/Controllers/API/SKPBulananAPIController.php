@@ -480,7 +480,7 @@ class SKPBulananAPIController extends Controller {
     {
         $renja_id = $request->renja_id;
         //bawahan
-        $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->ORWHERE('id', $request->jabatan_id )->get()->toArray(); 
 
         $skp_tahunan = SKPTahunan::where('id','=', $request->skp_tahunan_id )
                                     ->select('id','renja_id')
@@ -840,7 +840,8 @@ class SKPBulananAPIController extends Controller {
 
         $renja_id = $request->renja_id;
         //BAWAHA
-        $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
+        $jabatan_id = $request->jabatan_id;
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->ORWHERE('id', $request->jabatan_id )->get()->toArray(); 
 
         $skp = SKPBulanan::
                         WHERE('skp_tahunan_id',$request->skp_tahunan_id)
@@ -878,7 +879,7 @@ class SKPBulananAPIController extends Controller {
                     return "<font style='color:red'>Belum Ada</font>";
                 }
                 
-            })->addColumn('jm_kegiatan', function ($x) use($child,$renja_id) {
+            })->addColumn('jm_kegiatan', function ($x) use($child,$renja_id,$jabatan_id) {
                 
               
                 return  RencanaAksi::WHEREIN('jabatan_id',$child )

@@ -100,7 +100,11 @@
 
 <script type="text/javascript">
 
-	function initTreeKegBulanan() {
+	function refreshTreeKegBulanan(){
+		jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+		jQuery('#skp_bulanan_tree').jstree().deselect_all(true);
+		//$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+	} 
 		$('#skp_bulanan_tree')
 		.jstree({
             'core' : {
@@ -139,7 +143,7 @@
 				detail_table_2(data.instance.get_node(data.selected[0]).id);
 			}
 		});
-	}
+	
 
 
 

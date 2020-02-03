@@ -115,7 +115,13 @@
 
 <script type="text/javascript">
 	
-	function initTreeKegTahunan() {
+	function refreshTreeKegBulanan(){
+		jQuery('#kegiatan_tahunan_kaban').jstree(true).refresh(true);
+		jQuery('#kegiatan_tahunan_kaban').jstree().deselect_all(true);
+		//$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+	} 
+
+	
 		$('#kegiatan_tahunan_kaban')
 		.on("loaded.jstree", function(){
 			//$('#kegiatan_tahunan_kaban').jstree('open_all');
@@ -148,7 +154,7 @@
 			
 		
 	    });
-	}
+	
 	
 	
 	var to = false;

@@ -1,25 +1,4 @@
-<style>
-	::-webkit-scrollbar {
-		width: 10px ;
-	}
-	 
-	::-webkit-scrollbar-track {      
-		background: #666;    
-	}
-	 
-	::-webkit-scrollbar-thumb {
-		background: #232323;
-	}
-	
-	.auto{
-		 display:block;
-		 width:auto;
-		 height:600px;
-		 overflow:auto;
-		 
-		 
-	}
-</style>
+
 
 <div class="row">
 	<div class="col-md-5">
@@ -128,7 +107,15 @@
 
 <script type="text/javascript">
 
-	function initTreeKegBulanan() {
+
+
+	function refreshTreeKegBulanan(){
+		jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+		jQuery('#skp_bulanan_tree').jstree().deselect_all(true);
+		//$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+	} 
+
+
 		$('#skp_bulanan_tree')
 		.jstree({
             'core' : {
@@ -167,7 +154,7 @@
 				detail_table_2(data.instance.get_node(data.selected[0]).id);
 			}
 		});
-	}
+	
 
 
 

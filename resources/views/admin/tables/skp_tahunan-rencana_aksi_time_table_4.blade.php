@@ -136,7 +136,7 @@
 
 	
 
-	$(document).on('click','.create_rencana_aksi',function(e){
+	/* $(document).on('click','.create_rencana_aksi',function(e){
 
 
 	
@@ -252,5 +252,5 @@
 					});	
 			}
 		});
-	});
+	}); */
 </script>

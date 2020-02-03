@@ -74,9 +74,13 @@
 
 <script type="text/javascript">
 	
-	initTreeKegTahunan();
+	function refreshTreeKegTahunan(){
+		jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
+		jQuery('#keg_tahunan_3_tree').jstree().deselect_all(true);
+		//$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+		
+	} 
 	
-	function initTreeKegTahunan() {
 		$('#keg_tahunan_3_tree')
 		.on("loaded.jstree", function(){
 			//$('#keg_tahunan_3_tree').jstree('open_all');
@@ -109,7 +113,7 @@
 			
 		
 	    });
-	}
+	
 
 	
 	
