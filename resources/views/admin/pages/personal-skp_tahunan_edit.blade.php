@@ -39,7 +39,9 @@
 				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan</a></li>
 				
 				<?php
-				 	$id_jabatan_irban = ['143','144','145','146'];
+					$id_jabatan_irban = ['143','144','145','146'];
+					$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
+
 					switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 						case '1': 
 								echo '<li class="perjanjian_kinerja_tab"><a href="#perjanjian_kinerja_tab" data-toggle="tab" >Perjanjian Kinerja</a></li>';
@@ -105,7 +107,17 @@
 									
 									break;
 							case '3': 
-									?>@include('admin.modules.tab.kegiatan_tahunan_3_edit')<?php
+
+									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
+										?>
+											@include('admin.modules.tab.kegiatan_tahunan_2_detail')
+										<?php
+									}else{
+										?>
+											@include('admin.modules.tab.kegiatan_tahunan_3_edit')
+										<?php
+									}
+
 									break;
 							case '4':   
 									?>@include('admin.modules.tab.kegiatan_tahunan_4_detail')<?php
@@ -135,7 +147,16 @@
 									
 									break;
 							case '3': //eselon 4
-									?>@include('admin.modules.tab.kegiatan_bulanan_3_edit')<?php
+									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
+										?>
+											@include('admin.tables.skp_bulanan-kegiatan_2_edit')
+										<?php
+									}else{
+										?>
+											@include('admin.modules.tab.kegiatan_bulanan_3_edit')
+										<?php
+									}
+									
 									break;
 							case '4': // JFU
 									?>@include('admin.tables.skp_bulanan-kegiatan_4_edit')<?php

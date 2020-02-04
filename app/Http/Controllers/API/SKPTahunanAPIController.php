@@ -1117,6 +1117,9 @@ class SKPTahunanAPIController extends Controller {
         //untuk id jabatan irban yaitu [143,144,145,146]
         $id_jabatan_irban = ['143','144','145','146'];
 
+        //untuk Lurah di kec.karwang barat dan timur, eselon 4 namun diberikan perlakuan sebagai eselon 3
+        $id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
+
         $skpd_id = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))->SELECT('id','id_skpd')->first()->id_skpd;
         $renja_id   = Renja::WHERE('renja.periode_id',$request->get('periode_id'))
                         ->WHERE('renja.skpd_id',$skpd_id)
@@ -1142,7 +1145,7 @@ class SKPTahunanAPIController extends Controller {
 
             //CARI JENIS JABATAN
             switch($jenis_jabatan){
-                case "1":
+                case "1": //eselon II
                         //cek SKP bawahan jabatn 2 nya
                         //Jabatan Pimpinan Tinggi Pratama KA SKPD=====================================================================================//
                         $data = $this->new_skp_componen_kaban($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
@@ -1150,7 +1153,7 @@ class SKPTahunanAPIController extends Controller {
                         return $data;
 
                 break;
-                case "2":
+                case "2": //Eselon III
 
                         //JIKA ESELON 3 namun yang dikecualikan
                         if (in_array( $data_x->id_jabatan, $id_jabatan_irban)){
@@ -1205,11 +1208,62 @@ class SKPTahunanAPIController extends Controller {
 
 
                 break;
-                case "3":
-                        //Jabatan  KASUBID =======================================================================================//
-                        //ready to SKP
-                        $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
-                        return $data;
+                case "3": //eselon IV
+
+                        //JIKA LURAH,, jadikan dia sebagai eselon 3
+                        //JIKA ESELON 3 namun yang dikecualikan
+                        if (in_array( $data_x->id_jabatan, $id_jabatan_lurah)){
+                            //perlakuan disamakan sebagai eselon3
+                            //Jabatan Administrator KABID =====================================================================================//
+                            //cek SKP TAHUNAN bawahan  jabatan 3 nya
+                            $data = HistoryJabatan::WHERE('id', $request->jabatan_id )->first();
+                            $jabatan_id = $data->id_jabatan;
+                            $skpd_id    = $data->id_skpd;
+
+                            $renja = Renja::WHERE('skpd_id',$skpd_id)
+                                            ->WHERE('periode_id',$request->periode_id)
+                                            ->SELECT(
+                                                        'renja.id AS renja_id'
+                                                    )
+                                            ->first();
+                            $renja_id = $renja->renja_id;
+                            $bawahan_aktif = SKPD::WHERE('parent_id', $jabatan_id )
+                                                    ->rightjoin('demo_asn.tb_history_jabatan AS bawahan', function($join){
+                                                        $join   ->on('bawahan.id_jabatan','=','m_skpd.id');
+                                                        $join   ->where('bawahan.status','=','active');
+                                                    }) 
+                                                    ->join('demo_asn.tb_pegawai AS pegawai', function($join){
+                                                        $join   ->on('bawahan.id_pegawai','=','pegawai.id');
+                                                        $join   ->where('pegawai.status','=','active');
+                                                    }) 
+                                                    ->SELECT('bawahan.id AS bawahan_id')
+                                                    ->get(); 
+                            $skp_bawahan = SKPTahunan::WHERE('renja_id',$renja_id)
+                                                        ->WHEREIN('u_jabatan_id',$bawahan_aktif)
+                                                        ->count();
+
+                                if ( COUNT($bawahan_aktif) == $skp_bawahan ){
+                                        $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
+                                        return $data;
+                                }else{
+                                        $data = array(
+                                                        'status'			    => 'fail',
+                                                        'jenis_jabatan'			=> 2, //$jenis_jabatan,
+                                                        'renja_id'              => $renja_id,
+                                                        'jabatan_id'            => $jabatan_id,
+                                                        'bawahan_aktif'         => $bawahan_aktif,
+                                                        'skp_bawahan'           => $skp_bawahan
+                                                    );
+                                        return $data;
+                                } 
+                           
+
+                        }else{
+                            //Jabatan  KASUBID =======================================================================================//
+                            //ready to SKP
+                            $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
+                            return $data;
+                        }
 
                 break;
                 case "4":
