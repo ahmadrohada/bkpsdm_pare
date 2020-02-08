@@ -81,7 +81,7 @@
 									?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_1_detail')<?php
 									break;
 							case '2': //Eselon 3
-									?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_2')<?php
+									?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_2_detail')<?php
 									
 									break;
 							case '3':  //Eselon 4

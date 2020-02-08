@@ -119,6 +119,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('add_sasaran_to_pk','API\PerjanjianKinerjaAPIController@AddSasaranToPK');
 	Route::post('remove_sasaran_from_pk','API\PerjanjianKinerjaAPIController@RemoveSasaranFromPK');
 
+	Route::post('add_program_to_pk','API\PerjanjianKinerjaAPIController@AddProgramToPK');
+	Route::post('remove_program_from_pk','API\PerjanjianKinerjaAPIController@RemoveProgramFromPK');
+
 	//========================================================================================================//
 	//====================== SKP TAHUNAN SKPD =========================================================//
 	//========================================================================================================//

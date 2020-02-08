@@ -1,5 +1,5 @@
 <style>
-	.blm_add{color:#cfcdd6;}
+	
 	.no-sort::after { display: none!important; }
 	.no-sort { pointer-events: none!important; cursor: default!important; }
 

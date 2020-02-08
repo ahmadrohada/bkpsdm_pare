@@ -9,6 +9,7 @@ use App\Models\Renja;
 use App\Models\Kegiatan;
 use App\Models\Tujuan;
 use App\Models\Sasaran;
+use App\Models\Program;
 use App\Models\Pegawai;
 use App\Models\Jabatan;
 use App\Models\SKPTahunan;
@@ -187,6 +188,72 @@ class PerjanjianKinerjaAPIController extends Controller {
 
 
         $st_update  = Sasaran::find(Input::get('sasaran_id'));
+
+        $st_update->pk_status         = '0';
+    
+        if ( $st_update->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+    } 
+
+
+    public function AddProgramToPK(Request $request)
+    {
+
+            $messages = [
+                'program_id.required'=> 'Harus diisi'
+            ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'program_id' => 'required|numeric|min:1',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+
+        $st_update  = Program::find(Input::get('program_id'));
+
+        $st_update->pk_status         = '1';
+    
+        if ( $st_update->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+    } 
+
+
+    public function RemoveProgramFromPK(Request $request)
+    {
+
+            $messages = [
+                'program_id.required'=> 'Harus diisi'
+            ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'program_id' => 'required|numeric|min:1',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+
+        $st_update  = Program::find(Input::get('program_id'));
 
         $st_update->pk_status         = '0';
     
@@ -529,10 +596,11 @@ class PerjanjianKinerjaAPIController extends Controller {
         </table>');
         //"tpp".$bulan_depan."_".$skpd."
         //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
-        return $pdf->download('PerjanjianKinerja'.$Renja->nip_ka_skpd.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
+        return $pdf->stream('PerjanjianKinerja'.$Renja->nip_ka_skpd.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
     }
 
 
+    //SASARAN Perjajian kinerja nya kabid nih pa
     public function SasaranStrategisEselon3(Request $request)
     {
         $jabatan_id     = $request->get('jabatan_id');
@@ -559,6 +627,7 @@ class PerjanjianKinerjaAPIController extends Controller {
                             ->SELECT(   'sasaran.label AS sasaran_label',
                                         'program.label AS program_label',
                                         'program.id AS program_id',
+                                        'program.pk_status AS pk_status',
                                         'ind_program.label AS ind_program_label',
                                         'ind_program.target AS target',
                                         'ind_program.satuan AS satuan'
@@ -579,6 +648,9 @@ class PerjanjianKinerjaAPIController extends Controller {
                             })
                             ->addColumn('indikator', function ($x) {
                                 return Pustaka::capital_string($x->ind_program_label);
+                            })
+                            ->addColumn('pk_status', function ($x) {
+                                return $x->pk_status;
                             })
                             ->addColumn('target', function ($x) {
                                 return $x->target." ".$x->satuan;
@@ -604,7 +676,11 @@ class PerjanjianKinerjaAPIController extends Controller {
         //cari bawahan nya, karena eselon 3 tidak punya kegiatan tahunan,yang punya nya adalah  bawahan nya
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
         $dt = Kegiatan::
-                            SELECT(     'renja_kegiatan.id AS kegiatan_id',
+                            rightjoin('db_pare_2018.renja_program AS program', function($join){
+                                $join   ->on('renja_kegiatan.program_id','=','program.id');
+                                $join   ->WHERE('program.pk_status','=','1');
+                            })
+                            ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
                                         'renja_kegiatan.label AS kegiatan_label',
                                         'renja_kegiatan.cost AS anggaran'
                                     ) 
@@ -646,7 +722,11 @@ class PerjanjianKinerjaAPIController extends Controller {
         //cari bawahan nya, karena eselon 3 tidak punya kegiatan tahunan,yang punya nya adalah  bawahan nya
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
         $dt = Kegiatan::
-                            SELECT(     \DB::raw("SUM(renja_kegiatan.cost) as total_anggaran")
+                            rightjoin('db_pare_2018.renja_program AS program', function($join){
+                                $join   ->on('renja_kegiatan.program_id','=','program.id');
+                                $join   ->WHERE('program.pk_status','=','1');
+                            })
+                            ->SELECT(     \DB::raw("SUM(renja_kegiatan.cost) as total_anggaran")
                                     ) 
                             ->WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
@@ -670,8 +750,9 @@ class PerjanjianKinerjaAPIController extends Controller {
         //cari bawahan nya, karena eselon 3 tidak punya kegiatan tahunan,yang punya nya adalah  bawahan nya
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
         $data_1 = Kegiatan::
-                            join('db_pare_2018.renja_program AS program', function($join){
-                                $join   ->on('renja_kegiatan.program_id','=','program.id');
+                            rightjoin('db_pare_2018.renja_program AS program', function($join){
+                                $join   ->ON('renja_kegiatan.program_id','=','program.id');
+                                $join   ->WHERE('program.pk_status','=','1');
                             })
                             ->join('db_pare_2018.renja_indikator_program AS ind_program', function($join){
                                 $join   ->on('ind_program.program_id','=','program.id');
@@ -693,7 +774,11 @@ class PerjanjianKinerjaAPIController extends Controller {
                             ->OrderBY('ind_program.id','ASC')
                             ->get();
         $data_2 = Kegiatan::
-                            SELECT(     'renja_kegiatan.id AS kegiatan_id',
+                            rightjoin('db_pare_2018.renja_program AS program', function($join){
+                                $join   ->ON('renja_kegiatan.program_id','=','program.id');
+                                $join   ->WHERE('program.pk_status','=','1');
+                            })
+                            ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
                                         'renja_kegiatan.label AS kegiatan_label',
                                         'renja_kegiatan.cost AS anggaran'
                                     ) 
@@ -703,8 +788,13 @@ class PerjanjianKinerjaAPIController extends Controller {
                             ->get();
 
         $data_3 = Kegiatan::
-                            SELECT(     \DB::raw("SUM(renja_kegiatan.cost) as total_anggaran")
+                            rightjoin('db_pare_2018.renja_program AS program', function($join){
+                                $join   ->ON('renja_kegiatan.program_id','=','program.id');
+                                $join   ->WHERE('program.pk_status','=','1');
+                            })
+                            ->SELECT(     \DB::raw("SUM(renja_kegiatan.cost) as total_anggaran")
                                     ) 
+                                
                             ->WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
                             ->first();
