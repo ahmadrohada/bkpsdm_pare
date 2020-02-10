@@ -221,8 +221,10 @@ class TPPReportAPIController extends Controller
         
        
         }else if ( $jenis_jabatan == 0){
+            $capaian_kinerja_bulanan = 0 ;
             $jm_kegiatan_bulanan = 000 ;
         }else{
+            $capaian_kinerja_bulanan = 0 ;
             $jm_kegiatan_bulanan = 000 ;
         }
                         
