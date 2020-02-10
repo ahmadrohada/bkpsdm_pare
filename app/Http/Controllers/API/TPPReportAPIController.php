@@ -60,7 +60,7 @@ class TPPReportAPIController extends Controller
                             )
                             ->where('capaian_bulanan.id','=', $capaian_id )->first();
     
-        $jenis_jabatan = ($capaian_bulanan->PejabatYangDinilai->Eselon)?($capaian_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan):0;
+        $jenis_jabatan = ($capaian_bulanan->PejabatYangDinilai)?($capaian_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan):0;
         $bulan = $capaian_bulanan->SKPBulanan->bulan;
        
         //jm kegiatan pelaksana
