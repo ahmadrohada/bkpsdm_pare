@@ -57,34 +57,38 @@
 				</div>
 								
 				<div class=" tab-pane" id="kegiatan_bulanan_tab">
-					<!-- 1. ka capaianD -->
-					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
-						
-					@endif
+					<?php
+						$id_jabatan_irban = ['143','144','145','146'];
+						$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
 
-					<!-- 2. KABID -->
-					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('admin.tables.capaian_kegiatan_bulanan_2_detail')
-					@endif
+						switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+							case '1': // 1. KABAN 
+									?><?php
+									break;
+							case '2': //2. KABID 
+									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
+										?>@include('admin.tables.capaian_kegiatan_bulanan_3_detail')<?php
+									}else{
+										?>@include('admin.tables.capaian_kegiatan_bulanan_2_detail')<?php
+									}
+									
+									break;
+							case '3':  //3. KASUBID
+									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
+										?>@include('admin.tables.capaian_kegiatan_bulanan_2_detail')<?php
+									}else{
+										?>@include('admin.tables.capaian_kegiatan_bulanan_3_detail')<?php
+									}
 
-					<!-- 2. KASUBID -->
-					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.tables.capaian_kegiatan_bulanan_3_detail')
-					@endif
-
-					<!-- 2. PELAKSANA -->
-					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
-						@include('admin.tables.capaian_kegiatan_bulanan_4_detail')
-						
-					@endif
-
-					<!-- 2. JFT -->
-					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
-						@include('admin.tables.capaian_kegiatan_bulanan_5_detail')
-						
-					@endif
-				
-					
+									break;
+							case '4':  //4. PELAKSANA
+									?>@include('admin.tables.capaian_kegiatan_bulanan_4_detail')<?php
+									break;
+							case '5':   //5. JFT
+									?>@include('admin.tables.capaian_kegiatan_bulanan_5_detail')<?php
+									break;
+						}
+					?>
 				</div>
 				
 

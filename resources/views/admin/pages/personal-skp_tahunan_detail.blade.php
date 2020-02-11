@@ -21,6 +21,8 @@
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				
 				<?php 
+					$id_jabatan_irban = ['143','144','145','146'];
+					$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
 					switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 						case '1': 
 								break;
@@ -42,9 +44,6 @@
 				
 				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan</a></li>
 				<?php
-					$id_jabatan_irban = ['143','144','145','146'];
-					$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
-
 					switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 						case '1': 
 								echo '<li class="perjanjian_kinerja_tab"><a href="#perjanjian_kinerja_tab" data-toggle="tab" >Perjanjian Kinerja</a></li>';
@@ -74,38 +73,15 @@
 					@include('admin.modules.edit_forms.skp_tahunan_detail')				
 				</div>
 
-				<div class="tab-pane" id="perjanjian_kinerja_tab">
-					<?php
-						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
-							case '1':  //eselon 2
-									?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_1_detail')<?php
-									break;
-							case '2': //Eselon 3
-									?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_2_detail')<?php
-									
-									break;
-							case '3':  //Eselon 4
-									?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_3')<?php
-									break;
-							case '4':   //JFU
-									?><?php
-									break;
-							case '5':   //JFT
-									?><?php
-									break;
-						}
-					?>		
-				</div>
+				
 								
 				<div class=" tab-pane" id="kegiatan_tahunan_tab">
-				
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': 
 									?>@include('admin.tables.skp_tahunan-kegiatan_1_detail')<?php
 									break;
 							case '2':
-	
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
 										?>@include('admin.modules.tab.kegiatan_tahunan_3_detail')<?php
 									}else{
@@ -115,13 +91,9 @@
 									break;
 							case '3': 
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
-										?>
-											@include('admin.modules.tab.kegiatan_tahunan_2_detail')
-										<?php
+										?>@include('admin.modules.tab.kegiatan_tahunan_2_detail')<?php
 									}else{
-										?>
-											@include('admin.modules.tab.kegiatan_tahunan_3_detail')
-										<?php
+										?>@include('admin.modules.tab.kegiatan_tahunan_3_detail')<?php
 									}
 
 									break;
@@ -134,6 +106,38 @@
 						}
 					?>
 					
+				</div>
+				<div class="tab-pane" id="perjanjian_kinerja_tab">
+					<?php
+						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+							case '1':  //eselon 2
+									?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_1_detail')<?php
+									break;
+							case '2': //Eselon 3
+									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
+										?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_3')<?php
+									}else{
+										?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_2_detail')<?php
+									}
+									
+									
+									break;
+							case '3':  //Eselon 4
+									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
+										?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_2_detail')<?php
+									}else{
+										?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_3')<?php
+									}
+									
+									break;
+							case '4':   //JFU
+									?><?php
+									break;
+							case '5':   //JFT
+									?><?php
+									break;
+						}
+					?>		
 				</div>
 				<div class=" tab-pane" id="rencana_aksi_tab">
 					@include('admin.modules.tab.rencana_aksi_time_table')
@@ -155,13 +159,9 @@
 									break;
 							case '3': //KASUBID
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
-										?>
-											@include('admin.tables.skp_bulanan-kegiatan_2_edit')
-										<?php
+										?>@include('admin.tables.skp_bulanan-kegiatan_2_edit')<?php
 									}else{
-										?>
-											@include('admin.modules.tab.kegiatan_bulanan_3_detail')
-										<?php
+										?>@include('admin.modules.tab.kegiatan_bulanan_3_detail')<?php
 									}
 
 									break;

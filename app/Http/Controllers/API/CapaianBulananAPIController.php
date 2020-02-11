@@ -206,7 +206,7 @@ class CapaianBulananAPIController extends Controller {
 
 
     public function CreateConfirm(Request $request)
-	{
+	{ 
 
         //data yang harus diterima yaitu SKP Bulanan ID
         //cek apakah sudah punya capaian atau belum
@@ -233,12 +233,50 @@ class CapaianBulananAPIController extends Controller {
 
         $jenis_jabatan = $skp_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
 
+        //jika irban
+        $id_jabatan_irban = ['143','144','145','146'];
+        if ( ( $jenis_jabatan == 2 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_irban) ) ){
+            $jenis_jabatan = 31 ; //irban
+        }
+
 
         $renja_id = $skp_bulanan->SKPTahunan->renja_id;
         //$kegiatan_tahunan = KegiatanSKPTahunan::WHERE('skp_tahunan_id',$skp_bulanan->skp_tahunan_id)->get()->toArray();
 
+
+        //IRBAN
+        if ( $jenis_jabatan == 31){
+            //cari bawahan
+            $bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
+
+            //list bawahan
+            $jm_kegiatan = 0 ; 
+            foreach ($bawahan as $x) {
+            
+                $dt_reaksi = RencanaAksi::WHERE('jabatan_id',$x->id)
+                                            ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
+                                            ->WHERE('renja_id',$renja_id)
+                                            ->count();
+                $ls_reaksi = RencanaAksi::WHERE('jabatan_id',$x->id)
+                                            ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
+                                            ->WHERE('renja_id',$renja_id)
+                                            ->SELECT('id')
+                                            ->get()->toArray(); 
+                $dt_keg_bulanan = KegiatanSKPBulanan::WHEREIN('rencana_aksi_id',$ls_reaksi)->SELECT('id')->get()->toArray();
+                $jm_realisasi   = RealisasiKegiatanBulanan::WHEREIN('kegiatan_bulanan_id',$dt_keg_bulanan)->count();
+
+                $data_jabatan_id['jabatan']           = Pustaka::capital_string($x->jabatan);
+                $data_jabatan_id['jm_keg']            = $dt_reaksi;
+                $data_jabatan_id['jm_realisasi']      = $jm_realisasi;
+
+
+
+                $pelaksana_list[] = $data_jabatan_id ;
+                $jm_kegiatan += $dt_reaksi;
+            }
+            $list_bawahan  = $pelaksana_list;       
         //================================= JFU ===========================================//
-        if ( $jenis_jabatan == 5 ){
+        }else if ( $jenis_jabatan == 5 ){
             $jm_kegiatan = KegiatanSKPBulananJFT::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
 
             $list_bawahan = "";
@@ -287,7 +325,6 @@ class CapaianBulananAPIController extends Controller {
 
             //cari bawahan
             $bawahan = Jabatan::SELECT('id','skpd AS jabatan' )->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
-
             $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get()->toArray();
             //cari bawahan  , jabatanpelaksanan
             $pelaksana_list = Jabatan::
@@ -527,10 +564,48 @@ class CapaianBulananAPIController extends Controller {
         $bulan = $capaian_bulanan->SKPBulanan->bulan;
         $renja_id = $capaian_bulanan->SKPBulanan->SKPTahunan->renja_id;
 
-        
+        //jika irban
+        $id_jabatan_irban = ['143','144','145','146'];
+        if ( ( $jenis_jabatan == 2 ) & ( in_array( $capaian_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_irban) ) ){
+            $jenis_jabatan = 31 ; //irban
+        }
 
-        //jm kegiatan JFT
-        if ( $jenis_jabatan == 5 ){
+        
+        if ( $jenis_jabatan == 31){  //IRBAN
+            //cari bawahan
+            $child = Jabatan::SELECT('id')->WHERE('id',$capaian_bulanan->PejabatYangDinilai->id_jabatan )->get()->toArray(); 
+           
+            //hitung capaian kinerja bulanan
+            $xdata = RencanaAksi::
+                        leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
+                            $join   ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan.id');
+                        })
+                        ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join) use($capaian_id){
+                            $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                            $join   ->where('realisasi.capaian_id','=',$capaian_id);
+                        })
+                        ->SELECT('skp_tahunan_rencana_aksi.target','realisasi.realisasi')
+                        ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child)
+                        ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan', $bulan)
+                        ->WHERE('skp_tahunan_rencana_aksi.renja_id', $renja_id)
+                        ->get();
+
+            $capaian_kinerja_bulanan = 0 ;
+            $jm_kegiatan_bulanan = 0 ;
+
+            foreach ($xdata as $data) {
+            $jm_kegiatan_bulanan ++;
+
+            $capaian_kinerja_bulanan += Pustaka::persen($data->realisasi,$data->target);
+
+            }
+
+            $capaian_kinerja_bulanan =  Pustaka::persen2($capaian_kinerja_bulanan,$jm_kegiatan_bulanan);
+        
+        
+        
+        
+        }else if ( $jenis_jabatan == 5 ){//jm kegiatan JFT
             
             //hitung capaian kinerja bulanan
             $xdata = KegiatanSKPBulananJFT::

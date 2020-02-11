@@ -479,7 +479,7 @@ class SKPBulananAPIController extends Controller {
     public function skp_bulanan_tree3(Request $request)
     {
         $renja_id = $request->renja_id;
-        //bawahan
+        //bawahan atau jabatan sendiri untuk keg yang dilaksanakan sedniri
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->ORWHERE('id', $request->jabatan_id )->get()->toArray(); 
 
         $skp_tahunan = SKPTahunan::where('id','=', $request->skp_tahunan_id )

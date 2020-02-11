@@ -1,20 +1,33 @@
 <div class="row">
 	<div class="col-md-12">
 
-		<!-- 2 KAUBID -->
-		@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-			@include('admin.tables.skp_tahunan-rencana_aksi_time_table_2')
-		@endif
-
-		<!-- 3 KASUBID -->
-		@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-			@include('admin.tables.skp_tahunan-rencana_aksi_time_table_3')
-		@endif
-
-		<!-- 4. PELAKSANA -->
-		@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
-			@include('admin.tables.skp_tahunan-rencana_aksi_time_table_4')
-		@endif
+		<?php
+			switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+				case '1': //eselon 2
+						
+				break;
+				case '2': //eselon 3
+						if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
+							?>@include('admin.tables.skp_tahunan-rencana_aksi_time_table_3')<?php
+						}else{
+							?>@include('admin.tables.skp_tahunan-rencana_aksi_time_table_2')<?php
+						}
+				break;
+				case '3': //eselon 4
+						if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
+							?>@include('admin.tables.skp_tahunan-rencana_aksi_time_table_2')<?php
+						}else{
+							?>@include('admin.tables.skp_tahunan-rencana_aksi_time_table_3')<?php
+						}
+				break;
+				case '4': // JFU
+						?>@include('admin.tables.skp_tahunan-rencana_aksi_time_table_4')<?php
+				break;
+				case '5': // JFT
+						
+				break;
+			}
+		?>
 
 	</div>
 </div>

@@ -357,10 +357,11 @@ class KegiatanSKPBulananAPIController extends Controller {
     public function KegiatanBulanan3(Request $request)
     {
             
+        $jabatan_id = $request->jabatan_id;
         $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan','status')->first();
 
-        //cari bawahan  , jabatanpelaksanan
-        $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
+        //cari bawahan  , jabatanpelaksanan atau jabatan sendiri ( untuk keg yang dilaksanakan sendiri)
+        $child = Jabatan::SELECT('id')->WHERE('parent_id',  $jabatan_id  )->ORWHERE('id',  $jabatan_id )->get()->toArray(); 
         
 
         $dt = RencanaAksi::
@@ -399,10 +400,24 @@ class KegiatanSKPBulananAPIController extends Controller {
                 $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
                 $pelaksana = Pustaka::capital_string($dt->skpd);
             }else{
-                $pelaksana = "s";
+                $pelaksana = "";
             }
 
             return $pelaksana;
+        })->addColumn('kegiatan_bulanan_id', function ($x) use($jabatan_id){
+            if ( $x->pelaksana_id == $jabatan_id ){
+                return 1;
+            }else{
+                return $x->kegiatan_bulanan_id;
+            }
+
+        })->addColumn('kegiatan_bulanan_label', function ($x) use($jabatan_id) {
+            if ( $x->pelaksana_id == $jabatan_id ){
+                return $x->rencana_aksi_label;
+            }else{
+                return $x->kegiatan_bulanan_label;
+            }
+            
         })->addColumn('status_skp', function ($x) use($skp_bln){
             return $skp_bln->status;
         });

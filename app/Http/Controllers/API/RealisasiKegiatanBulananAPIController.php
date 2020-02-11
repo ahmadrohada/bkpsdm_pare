@@ -371,8 +371,9 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('skp_tahunan_id','bulan','status','skp_tahunan_id')->first();
         $renja_id = $skp_bln->SKPTahunan->renja_id;
         $skp_tahunan_id = $skp_bln->SKPTahunan->id;
+        $jabatan_id = $request->jabatan_id;
         //cari bawahan  , jabatanpelaksanan
-        $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->ORWHERE('id',  $jabatan_id )->get()->toArray(); 
 
         $keg_tahunan = $skp_bln->SKPTahunan->KegiatanTahunan;
         
