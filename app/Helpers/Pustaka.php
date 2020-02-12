@@ -465,29 +465,29 @@ class Pustaka {
 		
 				switch($bulan)
 					{
-				case 01 : $nm_bulan=12;
+				case 01 : $nm_bulan='12';
 						break;
-				case 02 : $nm_bulan=01;
+				case 02 : $nm_bulan='01';
 						break;
-				case 03 : $nm_bulan=02;
+				case 03 : $nm_bulan='02';
 						break;
-				case 04 : $nm_bulan=03;
+				case 04 : $nm_bulan='03';
 						break;
-				case 05 : $nm_bulan=04;
+				case 05 : $nm_bulan='04';
 						break;
-				case 06 : $nm_bulan=05;
+				case 06 : $nm_bulan='05';
 						break;
-				case 07 : $nm_bulan=06;
+				case 07 : $nm_bulan='06';
 						break;
-				case 8 : $nm_bulan=07;
+				case 8 : $nm_bulan='07';
 						break;
-				case 9 : $nm_bulan=08;
+				case 9 : $nm_bulan='08';
 						break;
-				case 10 : $nm_bulan=09;
+				case 10 : $nm_bulan='09';
 						break;
-				case 11 : $nm_bulan=10;
+				case 11 : $nm_bulan='10';
 						break;
-				case 12 : $nm_bulan=11;
+				case 12 : $nm_bulan='11';
 						break;
 					}
 
