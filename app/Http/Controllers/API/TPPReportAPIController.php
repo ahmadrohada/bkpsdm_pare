@@ -1077,7 +1077,7 @@ class TPPReportAPIController extends Controller
             ->ORDERBY('skp.id','ASC')
             ->get(); 
 
-              return $tpp_data;
+              return $bulan_lalu;
                 
             foreach ($tpp_data as $x) {
 
