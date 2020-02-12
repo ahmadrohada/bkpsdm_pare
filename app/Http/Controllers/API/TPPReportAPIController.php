@@ -991,7 +991,7 @@ class TPPReportAPIController extends Controller
                 $periode_id = Input::get('periode_id');
             }
 
-
+            
 
         //insert data pegawai to  tpp_report_data
         //dari data pegawai
@@ -1077,8 +1077,8 @@ class TPPReportAPIController extends Controller
             ->ORDERBY('skp.id','ASC')
             ->get(); 
 
-              
-
+              return $tpp_data;
+                
             foreach ($tpp_data as $x) {
 
                 //CAri formulasi perhitungan nya
