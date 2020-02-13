@@ -869,7 +869,8 @@ class RencanaAksiAPIController extends Controller {
                                     })
                                     ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use($skp_tahunan_id) {
                                         $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
-                                        $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id);
+                                        //ini masalahnya kalo di uncoment, eselon 3 gk muncul rencana aksinya
+                                        //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id);
                                     })
                                     ->SELECT(       /* 'renja_indikator_kegiatan.id AS ind_kegiatan_id',
                                                     'renja_indikator_kegiatan.label',
@@ -880,8 +881,8 @@ class RencanaAksiAPIController extends Controller {
                                                     'kegiatan_tahunan.id AS kegiatan_tahunan_id'
 
                                             ) 
-                                                ->WHERE('renja_indikator_kegiatan.id', $request->indikator_kegiatan_id)
-                                                ->first();
+                                    ->WHERE('renja_indikator_kegiatan.id', $request->indikator_kegiatan_id)
+                                    ->first();
         
         if ($keg_tahunan){
             $kegiatan_tahunan_id = $keg_tahunan->kegiatan_tahunan_id;
@@ -890,7 +891,7 @@ class RencanaAksiAPIController extends Controller {
         }else{
             $kegiatan_tahunan_id = 0 ;
         }
-        //return $kegiatan_tahunan_id;
+       
         
         $dt = RencanaAksi::
                         SELECT([   
@@ -943,7 +944,7 @@ class RencanaAksiAPIController extends Controller {
             $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
 
-        return $datatables->make(true);   
+        return $datatables->make(true); 
         
     }
 
