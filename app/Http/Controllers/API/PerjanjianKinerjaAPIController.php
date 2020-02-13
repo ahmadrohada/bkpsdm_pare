@@ -10,6 +10,7 @@ use App\Models\Kegiatan;
 use App\Models\Tujuan;
 use App\Models\Sasaran;
 use App\Models\Program;
+use App\Models\IndikatorProgram;
 use App\Models\Pegawai;
 use App\Models\Jabatan;
 use App\Models\SKPTahunan;
@@ -199,17 +200,17 @@ class PerjanjianKinerjaAPIController extends Controller {
     } 
 
 
-    public function AddProgramToPK(Request $request)
+    public function AddIndProgramToPK(Request $request)
     {
 
             $messages = [
-                'program_id.required'=> 'Harus diisi'
+                'ind_program_id.required'=> 'Harus diisi'
             ];
 
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'program_id' => 'required|numeric|min:1',
+                            'ind_program_id' => 'required|numeric|min:1',
                         ),
                         $messages
         );
@@ -220,7 +221,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         }
 
 
-        $st_update  = Program::find(Input::get('program_id'));
+        $st_update  = IndikatorProgram::find(Input::get('ind_program_id'));
 
         $st_update->pk_status         = '1';
     
@@ -232,17 +233,17 @@ class PerjanjianKinerjaAPIController extends Controller {
     } 
 
 
-    public function RemoveProgramFromPK(Request $request)
+    public function RemoveIndProgramFromPK(Request $request)
     {
 
             $messages = [
-                'program_id.required'=> 'Harus diisi'
+                'ind_program_id.required'=> 'Harus diisi'
             ];
 
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'program_id' => 'required|numeric|min:1',
+                            'ind_program_id' => 'required|numeric|min:1',
                         ),
                         $messages
         );
@@ -253,7 +254,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         }
 
 
-        $st_update  = Program::find(Input::get('program_id'));
+        $st_update  = IndikatorProgram::find(Input::get('ind_program_id'));
 
         $st_update->pk_status         = '0';
     
@@ -627,10 +628,11 @@ class PerjanjianKinerjaAPIController extends Controller {
                             ->SELECT(   'sasaran.label AS sasaran_label',
                                         'program.label AS program_label',
                                         'program.id AS program_id',
-                                        'program.pk_status AS pk_status',
+                                        'ind_program.id AS ind_program_id',
                                         'ind_program.label AS ind_program_label',
                                         'ind_program.target AS target',
-                                        'ind_program.satuan AS satuan'
+                                        'ind_program.satuan AS satuan',
+                                        'ind_program.pk_status AS pk_status'
                                     ) 
                             ->WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
@@ -678,7 +680,11 @@ class PerjanjianKinerjaAPIController extends Controller {
         $dt = Kegiatan::
                             rightjoin('db_pare_2018.renja_program AS program', function($join){
                                 $join   ->on('renja_kegiatan.program_id','=','program.id');
-                                $join   ->WHERE('program.pk_status','=','1');
+                                //$join   ->WHERE('program.pk_status','=','1');
+                            })
+                            ->rightjoin('db_pare_2018.renja_indikator_program AS ind_program', function($join){
+                                $join   ->on('ind_program.program_id','=','program.id');
+                                $join   ->WHERE('ind_program.pk_status','=','1');
                             })
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
                                         'renja_kegiatan.label AS kegiatan_label',
@@ -724,7 +730,11 @@ class PerjanjianKinerjaAPIController extends Controller {
         $dt = Kegiatan::
                             rightjoin('db_pare_2018.renja_program AS program', function($join){
                                 $join   ->on('renja_kegiatan.program_id','=','program.id');
-                                $join   ->WHERE('program.pk_status','=','1');
+                                //$join   ->WHERE('program.pk_status','=','1');
+                            })
+                            ->rightjoin('db_pare_2018.renja_indikator_program AS ind_program', function($join){
+                                $join   ->on('ind_program.program_id','=','program.id');
+                                $join   ->WHERE('ind_program.pk_status','=','1');
                             })
                             ->SELECT(     \DB::raw("SUM(renja_kegiatan.cost) as total_anggaran")
                                     ) 
@@ -752,10 +762,11 @@ class PerjanjianKinerjaAPIController extends Controller {
         $data_1 = Kegiatan::
                             rightjoin('db_pare_2018.renja_program AS program', function($join){
                                 $join   ->ON('renja_kegiatan.program_id','=','program.id');
-                                $join   ->WHERE('program.pk_status','=','1');
+                                //$join   ->WHERE('program.pk_status','=','1');
                             })
                             ->join('db_pare_2018.renja_indikator_program AS ind_program', function($join){
                                 $join   ->on('ind_program.program_id','=','program.id');
+                                $join   ->WHERE('ind_program.pk_status','=','1');
                             })
                             ->join('db_pare_2018.renja_sasaran AS sasaran', function($join){
                                 $join   ->on('program.sasaran_id','=','sasaran.id');
@@ -776,7 +787,11 @@ class PerjanjianKinerjaAPIController extends Controller {
         $data_2 = Kegiatan::
                             rightjoin('db_pare_2018.renja_program AS program', function($join){
                                 $join   ->ON('renja_kegiatan.program_id','=','program.id');
-                                $join   ->WHERE('program.pk_status','=','1');
+                                //$join   ->WHERE('program.pk_status','=','1');
+                            })
+                            ->join('db_pare_2018.renja_indikator_program AS ind_program', function($join){
+                                $join   ->on('ind_program.program_id','=','program.id');
+                                $join   ->WHERE('ind_program.pk_status','=','1');
                             })
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
                                         'renja_kegiatan.label AS kegiatan_label',
@@ -790,7 +805,11 @@ class PerjanjianKinerjaAPIController extends Controller {
         $data_3 = Kegiatan::
                             rightjoin('db_pare_2018.renja_program AS program', function($join){
                                 $join   ->ON('renja_kegiatan.program_id','=','program.id');
-                                $join   ->WHERE('program.pk_status','=','1');
+                                //$join   ->WHERE('program.pk_status','=','1');
+                            })
+                            ->join('db_pare_2018.renja_indikator_program AS ind_program', function($join){
+                                $join   ->on('ind_program.program_id','=','program.id');
+                                $join   ->WHERE('ind_program.pk_status','=','1');
                             })
                             ->SELECT(     \DB::raw("SUM(renja_kegiatan.cost) as total_anggaran")
                                     ) 

@@ -885,6 +885,7 @@ class TPPReportAPIController extends Controller
         //cari TPP report nya, kemudian kirim select data untuk memilih periode nya, yang kurang dari bulan ini
         $skpd_id            = $request->get('skpd_id');
 
+        //jadi jika create januari , makan list periode dan list bulan merupakan periode tahuna lalu
         //cari data bulan lalu
         $prevN          = mktime(0, 0, 0, date("m") - 1, date("d"), date("Y")); 
         //$bulan_lalu     = date("m", $prevN);

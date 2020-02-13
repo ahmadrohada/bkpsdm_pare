@@ -138,9 +138,9 @@ function load_perjanjian_kinerja(){
 							{  data: 'action',width:"30px",orderable: false,
 								"render": function ( data, type, row ) {
 									if ( row.pk_status == 1 ){
-										return  '<span  data-toggle="tooltip" title="Remove Program" style="margin:1px;" ><a class="btn btn-warning btn-xs remove_program"  data-id="'+row.program_id+'"><i class="fa fa-remove" ></i></a></span>';
+										return  '<span  data-toggle="tooltip" title="Remove Indikator Program" style="margin:1px;" ><a class="btn btn-warning btn-xs remove_ind_program"  data-id="'+row.ind_program_id+'"><i class="fa fa-remove" ></i></a></span>';
 									}else{
-										return  '<span  data-toggle="tooltip" title="Add Program" style="margin:1px;" ><a class="btn btn-success btn-xs add_program"  data-id="'+row.program_id+'"><i class="fa fa-plus" ></i></a></span>';
+										return  '<span  data-toggle="tooltip" title="Add Indikator Program" style="margin:1px;" ><a class="btn btn-success btn-xs add_ind_program"  data-id="'+row.ind_program_id+'"><i class="fa fa-plus" ></i></a></span>';
 									}
 									
 										
@@ -220,11 +220,13 @@ function load_perjanjian_kinerja(){
 		});
 	}
 
-	$(document).on('click','.add_program',function(e){
-		var program_id = $(this).data('id') ;
+	$(document).on('click','.add_ind_program',function(e){
+		
+		var ind_program_id = $(this).data('id') ;
+		//alert(ind_program_id);
 		$.ajax({
-				url			: '{{ url("api_resource/add_program_to_pk") }}',
-				data 		: {program_id : program_id},
+				url			: '{{ url("api_resource/add_ind_program_to_pk") }}',
+				data 		: {ind_program_id : ind_program_id},
 				method		: "POST",
 				success		: function(data) {
 					Swal.fire({
@@ -257,14 +259,14 @@ function load_perjanjian_kinerja(){
 			        		
 			        	});
 				}						
-		});	
+		});	 
 	});
 
-	$(document).on('click','.remove_program',function(e){
-		var program_id = $(this).data('id') ;
+	$(document).on('click','.remove_ind_program',function(e){
+		var ind_program_id = $(this).data('id') ;
 		$.ajax({
-				url			: '{{ url("api_resource/remove_program_from_pk") }}',
-				data 		: {program_id : program_id},
+				url			: '{{ url("api_resource/remove_ind_program_from_pk") }}',
+				data 		: {ind_program_id : ind_program_id},
 				method		: "POST",
 				success		: function(data) {
 					Swal.fire({
