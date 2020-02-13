@@ -693,8 +693,13 @@ class PerjanjianKinerjaAPIController extends Controller {
                             ->WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
                             ->WHERE('renja_kegiatan.cost','>', 0 )
+                            ->DISTINCT('ind_program.id')
                             ->get();
 
+        /* $total_anggaran = 0 ;
+        foreach ($dt as $x) {
+            $total_anggaran = $total_anggaran + $x->anggaran;
+        } */
         
         $datatables = Datatables::of($dt)
                             ->addColumn('id', function ($x) {
@@ -736,15 +741,23 @@ class PerjanjianKinerjaAPIController extends Controller {
                                 $join   ->on('ind_program.program_id','=','program.id');
                                 $join   ->WHERE('ind_program.pk_status','=','1');
                             })
-                            ->SELECT(     \DB::raw("SUM(renja_kegiatan.cost) as total_anggaran")
+                            ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
+                                        'renja_kegiatan.label AS kegiatan_label',
+                                        'renja_kegiatan.cost AS anggaran'
                                     ) 
                             ->WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
-                            ->first();
+                            ->WHERE('renja_kegiatan.cost','>', 0 )
+                            ->DISTINCT('ind_program.id')
+                            ->get();
 
+        $total_anggaran = 0 ;
+        foreach ($dt as $x) {
+            $total_anggaran = $total_anggaran + $x->anggaran;
+        }
 
         $ta = array(
-                'total_anggaran'    => "Rp.   " . number_format( $dt->total_anggaran, '0', ',', '.'),
+                'total_anggaran'    => "Rp.   " . number_format( $total_anggaran, '0', ',', '.'),
                 );
         return $ta;
     }
@@ -800,9 +813,10 @@ class PerjanjianKinerjaAPIController extends Controller {
                             ->WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
                             ->WHERE('renja_kegiatan.cost','>', 0 )
+                            ->DISTINCT('ind_program.id')
                             ->get();
 
-        $data_3 = Kegiatan::
+        /* $data_3 = Kegiatan::
                             rightjoin('db_pare_2018.renja_program AS program', function($join){
                                 $join   ->ON('renja_kegiatan.program_id','=','program.id');
                                 //$join   ->WHERE('program.pk_status','=','1');
@@ -816,8 +830,11 @@ class PerjanjianKinerjaAPIController extends Controller {
                                 
                             ->WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
-                            ->first();
-       
+                            ->first(); */
+        $total_anggaran = 0 ;
+        foreach ($data_2 as $x) {
+            $total_anggaran = $total_anggaran + $x->anggaran;
+        }
 
         //NAMA SKPD
         $Renja = Renja::WHERE('renja.id',$renja_id )
@@ -853,10 +870,10 @@ class PerjanjianKinerjaAPIController extends Controller {
 
         //JAbatan
         $jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
-       $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon3', [   
+        $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon3', [   
                                                     'data'          => $data_1 , 
                                                     'data_2'        => $data_2 ,
-                                                    'total_anggaran'=> $data_3->total_anggaran,
+                                                    'total_anggaran'=> $total_anggaran,
                                                     'tgl_dibuat'    => $Renja->tgl_dibuat,
                                                     'periode'       => Pustaka::tahun($Renja->periode->awal),
                                                     'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
