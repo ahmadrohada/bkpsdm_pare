@@ -173,7 +173,7 @@ class RealisasiRencanaAksiKabanAPIController extends Controller {
 
         $st_kt->rencana_aksi_id         = Input::get('rencana_aksi_id');
         $st_kt->capaian_id              = Input::get('capaian_id');
-        $st_kt->realisasi          = Input::get('realisasi');
+        $st_kt->realisasi               = Input::get('realisasi');
         $st_kt->satuan                  = Input::get('satuan');
         $st_kt->alasan_tidak_tercapai   = Input::get('alasan_tidak_tercapai');
         $st_kt->bukti                   = "";

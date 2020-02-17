@@ -14,6 +14,7 @@ use App\Models\KegiatanSKPTahunanJFT;
 use App\Models\KegiatanSKPBulananJFT;
 use App\Models\RealisasiKegiatanBulanan;
 use App\Models\RealisasiKegiatanBulananJFT;
+use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\IndikatorProgram;
 use App\Models\Skpd;
 use App\Models\Jabatan;
@@ -143,8 +144,8 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             
         $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan','status','skp_tahunan_id')->first();
         
-         //CARI KASUBID
-         $child = Jabatan::
+        //CARI KASUBID
+        $child = Jabatan::
                             
                             leftjoin('demo_asn.m_skpd AS kasubid', function($join){
                                 $join   ->on('kasubid.parent_id','=','m_skpd.id');
@@ -163,7 +164,25 @@ class RealisasiKegiatanBulananAPIController extends Controller {
 
         $capaian_id = $request->capaian_id;
         
-        $dt = RencanaAksi::
+        $dt = RealisasiRencanaAksiKaban::
+                                        leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                                            $join   ->on('rencana_aksi.id','=','realisasi_rencana_aksi_kaban.rencana_aksi_id');
+                                        })
+                                        ->SELECT(   'realisasi_rencana_aksi_kaban.id AS realisasi_rencana_aksi_id',
+                                                    'realisasi_rencana_aksi_kaban.realisasi AS realisasi_target',
+                                                    'realisasi_rencana_aksi_kaban.satuan AS realisasi_satuan',
+                                                    'rencana_aksi.kegiatan_tahunan_id',
+                                                    'rencana_aksi.label AS rencana_aksi_label',
+                                                    'rencana_aksi.target',
+                                                    'rencana_aksi.satuan',
+                                                    'rencana_aksi.jabatan_id AS pelaksana_id'
+
+                                        ) 
+                                       
+                                        ->WHERE('capaian_id',$capaian_id)
+                                        ->get();
+
+        /* $dt = RencanaAksi::
                     WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
                     ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
                     ->WHERE('skp_tahunan_rencana_aksi.renja_id',$skp_bln->SKPTahunan->renja_id)
@@ -212,36 +231,28 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                 'realisasi_kabid.satuan AS satuan_rencana_aksi'
 
                             ) 
-                    ->get();
-        
-        $skp_id = $request->skp_bulanan_id;
-
+                    ->get(); */
 
         $datatables = Datatables::of($dt)
-        ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
-            return $skp_id;
-       
+        ->addColumn('realisasi_rencana_aksi_id', function ($x){
+            return $x->realisasi_rencana_aksi_id;
         })->addColumn('kegiatan_tahunan_label', function ($x) {
-            return $x->KegiatanTahunan->label;
-            
+            return "";//$x->KegiatanTahunan->label; 
+        })->addColumn('target_rencana_aksi', function ($x) {
+            return    $x->target." ".$x->satuan;
+        })->addColumn('realisasi_rencana_aksi', function ($x) {
+            return   ( $x->realisasi_target == null )? "-": ( $x->realisasi_target." ".$x->realisasi_satuan );
         })->addColumn('persentasi_realisasi_rencana_aksi', function ($x) {
-          
-            return   Pustaka::persen($x->realisasi_rencana_aksi,$x->rencana_aksi_target);
-    
-            
+            return   Pustaka::persen($x->realisasi_target,$x->target);
         })->addColumn('penanggung_jawab', function ($x) {
-
-            return Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan);
-
+            return Pustaka::capital_string($x->KegiatanSKPTahunan->Kegiatan->PenanggungJawab->jabatan);
         })->addColumn('pelaksana', function ($x) {
-
             if ( $x->pelaksana_id != null ){
                 $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
                 $pelaksana = Pustaka::capital_string($dt->skpd);
             }else{
                 $pelaksana = "-";
             }
-
             return $pelaksana;
         })->addColumn('status_skp', function ($x) use($skp_bln){
             return $skp_bln->status;

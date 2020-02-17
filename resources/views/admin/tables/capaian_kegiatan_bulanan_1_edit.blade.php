@@ -61,7 +61,7 @@
 				processing      : false,
 				serverSide      : true,
 				searching      	: true,
-				paging          : false,
+				paging          : true,
 				order 			: [0 , 'asc' ],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2,3,4,5,6,7 ] }
@@ -82,92 +82,18 @@
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 									},
-									{ data: "rencana_aksi_label", name:"rencana_aksi_label",
-										"render": function ( data, type, row ) {
-											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
-												return "<span class='text-danger'>"+row.rencana_aksi_label+' / '+row.kegiatan_tahunan_label+"</span>";
-											}else{
-												return row.rencana_aksi_label+' / '+row.kegiatan_tahunan_label;
-											}
-										}
-									}, 
-									{ data: "penanggung_jawab", name:"penanggung_jawab",
-										"render": function ( data, type, row ) {
-											
-											if ( (row.capaian_rencana_aksi_id) <= 0 ){
-												return "<p class='text-danger'>"+row.penanggung_jawab;+"</p>";
-											}else{
-												return row.penanggung_jawab;
-											} 
-										}
-									},
-									{ data: "pelaksana", name:"pelaksana", width:"130px",
-										"render": function ( data, type, row ) {
-											//jika tidak dilaksanakan oleh pelaksana
-											if ( row.kegiatan_bulanan_id === null){
-												return "<p class='text-muted'>"+row.pelaksana+"</p>";
-											}else{
-												if ( (row.capaian_kegiatan_bulanan_id) <= 0 ){
-													return "<p class='text-danger'>"+row.pelaksana+"</p>";
-												}else{
-													return row.pelaksana;
-												}
-											}
-											
-										}
-									},
-									{ data: "target", name:"target", width:"130px",
-										"render": function ( data, type, row ) {
-										
-											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
-												return "<p class='text-danger'>"+row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan+"</p>";
-											}else{
-												return row.rencana_aksi_target + ' '+ row.rencana_aksi_satuan;
-											}
-											
-											
-										}
-									},
+									{ data: "rencana_aksi_label", name:"rencana_aksi_label"}, 
+									{ data: "penanggung_jawab", name:"penanggung_jawab"},
+									{ data: "pelaksana", name:"pelaksana", width:"130px"},
+									{ data: "target_rencana_aksi", name:"target_rencana_aksi", width:"130px"},
 									
 									
-									{ data: "realisasi_rencana_aksi", name:"realisasi_rencana_aksi", width:"130px",
-										"render": function ( data, type, row ) {
-											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
-												if ( row.realisasi_rencana_aksi_bawahan != null ){
-													return "<p class='text-danger'>"+row.realisasi_rencana_aksi_bawahan+' '+row.satuan_rencana_aksi_bawahan+"</p>";
-												}else{
-													return "<p class='text-danger'>0 "+row.rencana_aksi_satuan+"</p>";
-												}
-												
-											}else{
-												return row.realisasi_rencana_aksi + ' '+ row.satuan_rencana_aksi;
-											}
-
-											
-										}
-									},
-									{ data: "persentasi_realisasi_rencana_aksi", name:"persentasi_realisasi_rencana_aksi", width:"80px",
-										"render": function ( data, type, row ) {
-											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
-												return "<p class='text-danger'>-</p>";
-											}else{
-												return row.persentasi_realisasi_rencana_aksi;
-											}
-										}
-									},
+									{ data: "realisasi_rencana_aksi", name:"realisasi_rencana_aksi", width:"130px"},
+									{ data: "persentasi_realisasi_rencana_aksi", name:"persentasi_realisasi_rencana_aksi", width:"80px"},
 									{  data: 'action',width:"40px",
 											"render": function ( data, type, row ) {
+												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_rencana_aksi"  data-id="'+row.realisasi_rencana_aksi_id+'"><i class="fa fa-pencil" ></i></a></span>';
 											
-											if ( (row.realisasi_rencana_aksi_id) >= 1 ){
-												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_rencana_aksi"  data-id="'+row.realisasi_rencana_aksi_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_rencana_aksi"  data-id="'+row.realisasi_rencana_aksi_id+'" data-label="'+row.rencana_aksi_label+'" ><i class="fa fa-close " ></i></a></span>';
-											}else{
-												return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_realisasi_rencana_aksi"  data-id="'+row.rencana_aksi_id+'"><i class="fa fa-plus" ></i></a></span>'+
-														'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';
-											
-											} 
-													
-										
 										}
 									},
 									

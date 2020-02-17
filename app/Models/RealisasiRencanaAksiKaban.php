@@ -18,4 +18,8 @@ class RealisasiRencanaAksiKaban extends Model
 		return $this->belongsTo('App\Models\RencanaAksi','rencana_aksi_id');
 	}
 
+    public function KegiatanSKPTahunan()
+    {
+        return $this->hasOne('App\Models\KegiatanSKPTahunan','id','kegiatan_tahunan_id');
+    }
 }
