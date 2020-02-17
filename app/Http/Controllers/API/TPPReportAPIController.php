@@ -994,12 +994,12 @@ class TPPReportAPIController extends Controller
 
             
 
-        //insert data pegawai to  tpp_report_data
-        //dari data pegawai
+            //insert data pegawai to  tpp_report_data
+            //dari data pegawai
         $tpp_data = Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
-            $join->on('a.id_pegawai', '=', 'tb_pegawai.id');
-            $join->where('a.status', '=', 'active');
-        })
+                $join->on('a.id_pegawai', '=', 'tb_pegawai.id');
+                $join->where('a.status', '=', 'active');
+            })
 
             ->leftjoin('demo_asn.m_skpd AS skpd_now', function ($join) {
                 $join->on('skpd_now.id', '=', 'a.id_jabatan');
@@ -1078,9 +1078,9 @@ class TPPReportAPIController extends Controller
             ->ORDERBY('skp.id','ASC')
             ->get(); 
 
-            
+            return $tpp_data;
                 
-            foreach ($tpp_data as $x) {
+            /* foreach ($tpp_data as $x) {
 
                 //CAri formulasi perhitungan nya
                 $formula    = FormulaHitungTPP::WHERE('id',Input::get('formula_hitung_id'))->first();
@@ -1135,8 +1135,9 @@ class TPPReportAPIController extends Controller
                     $report_data->save();
                 }
                 
-            } 
+            }  
             return \Response::make('sukses', 200);
+            */
         } else {
             return \Response::make('error', 500);
         } 
