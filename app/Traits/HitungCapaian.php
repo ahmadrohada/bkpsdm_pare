@@ -16,10 +16,10 @@ trait HitungCapaian
 {
 
 
-    protected function capaian_kinerja_irban($capaian_id,$skp_bulanan_id,$bulan,$renja_id)
+    protected function capaian_kinerja_irban($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id)
     {
         //cari bawahan
-        $child = Jabatan::SELECT('id')->WHERE('id',$capaian_bulanan->PejabatYangDinilai->id_jabatan )->get()->toArray(); 
+        $child = Jabatan::SELECT('id')->WHERE('id',$jabatan_id )->get()->toArray(); 
 
         //hitung capaian kinerja bulanan
         $xdata = RencanaAksi::
@@ -299,7 +299,7 @@ trait HitungCapaian
 
         if ( $jenis_jabatan == 31){  //IRBAN
             //CAPAIAN KINERJA UNTUK IRBAN
-            $data = $this->capaian_kinerja_irban($capaian_id,$skp_bulanan_id,$bulan,$renja_id);
+            $data = $this->capaian_kinerja_irban($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 5 ){//jm kegiatan JFT
             $data = $this->capaian_kinerja_jft($capaian_id,$skp_bulanan_id,$bulan,$renja_id);
         }else if ( $jenis_jabatan == 4 ){ //jm kegiatan pelaksana JFU
