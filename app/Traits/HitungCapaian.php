@@ -7,6 +7,7 @@ use App\Models\Jabatan;
 use App\Models\RencanaAksi;
 use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\KegiatanSKPBulanan;
+use App\Models\KegiatanSKPBulananJFT;
 
 
 use App\Helpers\Pustaka;
@@ -58,7 +59,7 @@ trait HitungCapaian
                                 $join   ->where('realisasi.capaian_id','=',$capaian_id);
                             })
                             ->SELECT('skp_bulanan_kegiatan_jft.target','realisasi.realisasi')
-                            ->WHERE('skp_bulanan_kegiatan_jft.skp_bulanan_id','=',$capaian_bulanan->skp_bulanan_id)
+                            ->WHERE('skp_bulanan_kegiatan_jft.skp_bulanan_id','=',$skp_bulanan_id)
                             ->get();
         $jm_capaian = 0 ;
         $jm_kegiatan_bulanan = 0 ;
