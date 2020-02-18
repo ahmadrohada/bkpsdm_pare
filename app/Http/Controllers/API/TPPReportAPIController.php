@@ -995,7 +995,7 @@ class TPPReportAPIController extends Controller
                 $report_data->eselon_id             = ( $x->eselon_id != null ) ? $x->eselon_id : $x->eselon_id_now ;
                 $report_data->jabatan_id            = ( $x->jabatan_id != null ) ? $x->jabatan_id : $x->jabatan_id_now;
                 $report_data->golongan_id           = ( $x->golongan_id != null ) ? $x->golongan_id : $x->golongan_id_now;
-                $report_data->tpp_rupiah            = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah : $x->tpp_rupiah_now ;
+                $report_data->tpp_rupiah            = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah : ( ( $x->tpp_rupiah_now != null ) ? $x->tpp_rupiah_now : 0;
                 
                 //KINERJA
                 $report_data->tpp_kinerja           = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah * $kinerja/100 : $x->tpp_rupiah_now * $kinerja/100 ;
