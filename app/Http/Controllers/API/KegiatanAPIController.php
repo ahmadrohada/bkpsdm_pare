@@ -180,14 +180,15 @@ class KegiatanAPIController extends Controller {
         $ab = ['1152','1153','1154','1155','1156'];
         //KEC telagasari
         $ac = ['1125','1126','1127','1128','1129'];
-
         //KEC PEDES
         $ad = ['1062','1063','1064','1065','1066'];
+        //KEC CILAMAYA KULON
+        $ae = ['1179','1180','1181','1182','1183'];
 
 
 
 
-        $pengecualian = array_merge($a,$b,$c,$d,$e,$f,$g,$h,$i,$j,$k,$l,$m,$n,$o,$p,$q,$r,$s,$t,$u,$v,$w,$x,$y,$z,$aa,$ab,$ac,$ad);
+        $pengecualian = array_merge($a,$b,$c,$d,$e,$f,$g,$h,$i,$j,$k,$l,$m,$n,$o,$p,$q,$r,$s,$t,$u,$v,$w,$x,$y,$z,$aa,$ab,$ac,$ad,$ae);
 
         if ( $request->skpd_id == 3 ){
             //SEKDA 
