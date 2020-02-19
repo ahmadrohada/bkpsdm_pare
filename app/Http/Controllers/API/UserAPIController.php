@@ -161,6 +161,49 @@ class UserAPIController extends Controller {
     }
 
 
+
+    public function update_password(Request $request)
+    {
+        $messages = [
+            'username.required'            => 'Harus diisi',
+            'old_password.required'        => 'Harus diisi',
+            'new_password.required'        => 'Harus diisi',
+            'confirm_password.required'    => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'username'            => 'required',
+                            'old_password'        => 'required|min:6|max:15',
+                            'new_password'        => 'required|min:6|max:15',
+                            'confirm_password'    => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            return response()->json(['errors'=>$validator->messages()],422);
+        }
+        if ( Input::get('new_password') != Input::get('confirm_password') ){
+            $pesan =  ['confirm_password'  => 'Error'] ;
+            return response()->json(['errors'=> $pesan ],422);
+            
+        }
+
+        $dt = \Auth::user();
+
+
+        $user = User::find($dt->id);
+ 
+        $user->password = Hash::make(Input::get('new_password'));
+        $user->save();
+        
+        
+        
+    }
+
     
 
    

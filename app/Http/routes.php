@@ -32,6 +32,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('administrator_users_list','API\UserAPIController@administrator_users_list');
 	Route::post('add_pegawai','API\PegawaiAPIController@add_pegawai');
 	Route::post('reset_password','API\UserAPIController@reset_password');
+	Route::post('update_password','API\UserAPIController@update_password');
 	Route::post('ubah_username','API\UserAPIController@ubah_username');
 
 
@@ -1391,7 +1392,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'HomePersonalController@showHomePersonal'
 	]);
 
-
+	
 
 	//======================= H O M E   P E R S O N A L ========================================//
 	Route::get('skp', [
