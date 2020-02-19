@@ -99,7 +99,7 @@
                         <!-- CHANGE PASSWORD -->
                         <form  id="update_password" method="POST" action="">
                             <div class="box-body" style="margin-top:20px;">
-                                <input class="form-control input-sm" name="username" value="{!! $user->username !!}" type="text" style="display:none;">
+                                <input class="form-control input-sm" name="username" value="{!! $user->username !!}" type="text">
                                 <div class="form-group old_password ">
                                     <strong><i class="fa   fa-key margin-r-5"></i> Password Lama</strong>
                                     <input class="form-control input-sm old_password" name="old_password" type="password">
