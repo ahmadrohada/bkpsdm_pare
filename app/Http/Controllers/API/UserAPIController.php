@@ -193,12 +193,19 @@ class UserAPIController extends Controller {
         }
 
         $dt = \Auth::user();
-
-
         $user = User::find($dt->id);
+
+        $has_old = Hash::make(Input::get('old_password'));
+     
+        if (Hash::check( Input::get('old_password') , $user->password) ) {
+            $user->password = Hash::make(Input::get('new_password'));
+            $user->save();
+        }else{
+            $pesan =  ['old_password'  => 'Error'] ;
+            return response()->json(['errors'=> $pesan ],422);
+        }
  
-        $user->password = Hash::make(Input::get('new_password'));
-        $user->save();
+       
         
         
         
