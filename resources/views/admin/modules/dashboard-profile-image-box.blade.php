@@ -102,7 +102,7 @@
                                 <input class="form-control input-sm" name="username" value="{!! $user->username !!}" type="text" style="display:none;">
                                 <div class="form-group old_password ">
                                     <strong><i class="fa   fa-key margin-r-5"></i> Password Lama</strong>
-                                    <input class="form-control input-sm old_password" name="old_password" type="password">
+                                    <input class="form-control input-sm old_password" name="old_password" type="password" autocomplete="current-password">
                                 </div>
 
                                 <hr style="margin-top:8px !important;">
