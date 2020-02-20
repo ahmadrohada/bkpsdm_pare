@@ -1120,6 +1120,9 @@ class SKPTahunanAPIController extends Controller {
         //untuk Lurah di kec.karwang barat dan timur, eselon 4 namun diberikan perlakuan sebagai eselon 3
         $id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
 
+        $id_jabatan_staf_ahli = ['13','14','15'];
+
+
         $skpd_id = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))->SELECT('id','id_skpd')->first()->id_skpd;
         $renja_id   = Renja::WHERE('renja.periode_id',$request->get('periode_id'))
                         ->WHERE('renja.skpd_id',$skpd_id)
@@ -1148,8 +1151,12 @@ class SKPTahunanAPIController extends Controller {
                 case "1": //eselon II
                         //cek SKP bawahan jabatn 2 nya
                         //Jabatan Pimpinan Tinggi Pratama KA SKPD=====================================================================================//
-                        $data = $this->new_skp_componen_kaban($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
-
+                        
+                        if (in_array( $data_x->id_jabatan, $id_jabatan_staf_ahli)){ //dianggap JFT ajah
+                            $data = $this->new_skp_componen_kaban($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
+                        }else{
+                            $data = $this->new_skp_componen($request->get('jabatan_id'),$renja_id,$request->get('periode_id'));
+                        }
                         return $data;
 
                 break;

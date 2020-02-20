@@ -23,6 +23,8 @@
 				<?php 
 					$id_jabatan_irban = ['143','144','145','146'];
 					$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
+					$id_jabatan_staf_ahli = ['13','14','15'];
+					
 					switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 						case '1': 
 								break;
@@ -79,7 +81,12 @@
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': 
-									?>@include('admin.tables.skp_tahunan-kegiatan_1_detail')<?php
+									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli)){ //JIKA STAF AHLI
+										?>@include('admin.modules.tab.kegiatan_tahunan_5_detail')<?php
+									}else{
+										?>@include('admin.tables.skp_tahunan-kegiatan_1_detail')<?php
+									}
+									
 									break;
 							case '2':
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
@@ -145,10 +152,15 @@
 				<div class="tab-pane" id="skp_bulanan_tab">
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
-							case '1': //KABAN
-									?>@include('admin.tables.skp_bulanan-kegiatan_1_edit')<?php
+							case '1': //Eselon II
+									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli)){ //JIKA STAF AHLI
+										?>@include('admin.tables.skp_bulanan-kegiatan_5_detail')<?php
+									}else{
+										?>@include('admin.tables.skp_bulanan-kegiatan_1_edit')<?php
+									}
+									
 									break;
-							case '2': //KABID
+							case '2': //Deselon III
 	
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
 										?>@include('admin.modules.tab.kegiatan_bulanan_3_detail')<?php
@@ -157,7 +169,7 @@
 									}
 									
 									break;
-							case '3': //KASUBID
+							case '3': //dselon IV
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
 										?>@include('admin.tables.skp_bulanan-kegiatan_2_edit')<?php
 									}else{
@@ -165,7 +177,7 @@
 									}
 
 									break;
-							case '4': //PELAKSANA
+							case '4': //PELAKSANA JFU
 									?>@include('admin.tables.skp_bulanan-kegiatan_4_edit')<?php
 									break;
 							case '5': // JFT

@@ -290,6 +290,13 @@ trait HitungCapaian
         $skp_bulanan_id = $capaian_bulanan->skp_bulanan_id;
         $jabatan_id = ( $capaian_bulanan->PejabatYangDinilai ) ? $capaian_bulanan->PejabatYangDinilai->id_jabatan : 0 ;
 
+
+        //JENIS JABATAN STAF AHLI
+        $id_jabatan_staf_ahli = ['13','14','15'];
+        if ( ( $jenis_jabatan == 1 ) & ( in_array( $jabatan_id, $id_jabatan_staf_ahli) ) ){
+            $jenis_jabatan = 5 ; //staf ahli sebagai JFT
+        }
+
         //JENIS JABATAN UNTUK IRBAN ** 
         $id_jabatan_irban = ['143','144','145','146'];
         if ( ( $jenis_jabatan == 2 ) & ( in_array( $jabatan_id, $id_jabatan_irban) ) ){

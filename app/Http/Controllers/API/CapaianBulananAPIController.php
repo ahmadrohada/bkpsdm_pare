@@ -237,6 +237,12 @@ class CapaianBulananAPIController extends Controller {
 
         $jenis_jabatan = $skp_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
 
+        //Jika STAF AHLI
+        $id_jabatan_staf_ahli = ['13','14','15'];
+        if ( ( $jenis_jabatan == 1 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli) ) ){
+            $jenis_jabatan = 5 ; //STAFF AHLI DIANGGAP JFT
+        }
+
         //jika irban
         $id_jabatan_irban = ['143','144','145','146'];
         if ( ( $jenis_jabatan == 2 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_irban) ) ){
@@ -1016,16 +1022,30 @@ class CapaianBulananAPIController extends Controller {
         $jabatan_id = HistoryJabatan::SELECT('id')->WHERE('id_pegawai','=',$pegawai_id)->get();
        
         $dt = CapaianBulanan::
-                    WHEREIN('capaian_bulanan.p_jabatan_id',$jabatan_id)
-                    ->WHERE('capaian_bulanan.send_to_atasan','=','1')
+                    leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
+                        $join   ->on('a.id','=','capaian_bulanan.u_jabatan_id');
+                    }) 
+                    //jabatan
+                    ->leftjoin('demo_asn.m_skpd AS jabatan', function($join){
+                                $join   ->on('jabatan.id','=','a.id_jabatan');
+                    })  
+                    //eselon
+                    ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
+                                $join   ->on('eselon.id','=','jabatan.id_eselon');
+                    })  
                     ->SELECT( 
                              'capaian_bulanan.id AS capaian_bulanan_id',
                              'capaian_bulanan.u_nama',
+                             'a.nip AS nip',
                              'capaian_bulanan.skp_bulanan_id',
                              'capaian_bulanan.u_jabatan_id',
                              'capaian_bulanan.tgl_mulai',
-                             'capaian_bulanan.status_approve'
-                            );
+                             'capaian_bulanan.status_approve',
+                             'eselon.eselon AS eselon',
+                             'jabatan.skpd AS jabatan'
+                            )
+                    ->WHEREIN('capaian_bulanan.p_jabatan_id',$jabatan_id)
+                    ->WHERE('capaian_bulanan.send_to_atasan','=','1');
 
 
     
@@ -1035,8 +1055,7 @@ class CapaianBulananAPIController extends Controller {
         })->addColumn('nama', function ($x) {
             return $x->u_nama;
         })->addColumn('jabatan', function ($x) {
-            //return Pustaka::capital_string($x->PejabatYangDinilai->jabatan);
-            return Pustaka::capital_string($x->PejabatYangDinilai?$x->PejabatYangDinilai->jabatan:'');
+            return Pustaka::capital_string($x->jabatan);
         })->addColumn('capaian_bulanan_id', function ($x) {
             return $x->capaian_bulanan_id;
         });

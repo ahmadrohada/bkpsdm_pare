@@ -26,30 +26,44 @@
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
 				<div class="active tab-pane" id="status">
-					<!-- 1. KABAN -->
-					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
-						@include('admin.modules.timeline.capaian_bulanan_status_edit')
-					@endif
- 
-					<!-- 2. KABID -->
-					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('admin.modules.timeline.capaian_bulanan_status_edit')
-					@endif
+					<?php
+						$id_jabatan_irban = ['143','144','145','146'];
+						$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
+						$id_jabatan_staf_ahli = ['13','14','15'];
 
-					<!-- 2. KASUBID -->
-					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('admin.modules.timeline.capaian_bulanan_status_edit')
-					@endif
+					switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						case '1': // 1. Eselon II
+								if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli)){ //JIKA IRBAN
+									?>@include('admin.modules.timeline.capaian_bulanan_status_edit')<?php
+								}else{
+									?>@include('admin.modules.timeline.capaian_bulanan_status_edit')<?php
+								}
+								
+								break;
+						case '2': //2. Eselon III
+								if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
+									?>@include('admin.modules.timeline.capaian_bulanan_status_edit')<?php
+								}else{
+									?>@include('admin.modules.timeline.capaian_bulanan_status_edit')<?php
+								}
+								
+								break;
+						case '3':  //3. Eselon IV
+								if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
+									?>@include('admin.modules.timeline.capaian_bulanan_status_edit')<?php
+								}else{
+									?>@include('admin.modules.timeline.capaian_bulanan_status_edit')<?php
+								}
 
-					<!-- 2. PELAKSANA / JFU-->
-					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
-						@include('admin.modules.timeline.capaian_bulanan_status_edit')	
-					@endif
-
-					<!-- 2. JFT -->
-					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
-						@include('admin.modules.timeline.capaian_bulanan_status_edit')	
-					@endif
+								break;
+						case '4':  //4. JFU 
+								?>@include('admin.modules.timeline.capaian_bulanan_status_edit')<?php
+								break;
+						case '5':   //5. JFT
+								?>@include('admin.modules.timeline.capaian_bulanan_status_edit')<?php
+								break;
+					}
+					?>
 					
 				</div>
 				<div class="tab-pane" id="detail">
@@ -59,14 +73,17 @@
 				<div class=" tab-pane" id="kegiatan_bulanan_tab">
 
 					<?php
-						$id_jabatan_irban = ['143','144','145','146'];
-						$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
 
 						switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
-							case '1': // 1. KABAN 
-									?>@include('admin.tables.capaian_kegiatan_bulanan_1_edit')<?php
+							case '1': // 1. Eselon II
+									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli)){ //JIKA IRBAN
+										?>@include('admin.tables.capaian_kegiatan_bulanan_5_edit')<?php
+									}else{
+										?>@include('admin.tables.capaian_kegiatan_bulanan_1_edit')<?php
+									}
+									
 									break;
-							case '2': //2. KABID 
+							case '2': //2. Eselon III
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
 										?>@include('admin.tables.capaian_kegiatan_bulanan_3_edit')<?php
 									}else{
@@ -74,7 +91,7 @@
 									}
 									
 									break;
-							case '3':  //3. KASUBID
+							case '3':  //3. Eselon IV
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
 										?>@include('admin.tables.capaian_kegiatan_bulanan_2_edit')<?php
 									}else{
@@ -82,7 +99,7 @@
 									}
 
 									break;
-							case '4':  //4. PELAKSANA
+							case '4':  //4. JFU 
 									?>@include('admin.tables.capaian_kegiatan_bulanan_4_edit')<?php
 									break;
 							case '5':   //5. JFT

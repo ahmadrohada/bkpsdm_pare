@@ -17,7 +17,9 @@
 					<th>NO</th>
 					<th>PERIODE</th>
 					<th>NAMA</th>
+					<th>NIP</th>
 					<th>JABATAN</th>
+					<th>ESELON</th>
 					<th><i class="fa fa-cog"></i></th>
 				</tr>
 			</thead>
@@ -40,7 +42,7 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,4 ] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,3,5,6 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
@@ -60,15 +62,17 @@
 								
 								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
 								{ data: "nama" ,  name:"nama", orderable: true, searchable: true},
+								{ data: "nip" ,  name:"nip", orderable: true, searchable: true},
 								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true},
+								{ data: "eselon" ,  name:"eselon", orderable: true, searchable: true},
 								{ data: "capaian_bulanan_id" , orderable: false,searchable:false,width:"120px",
 										"render": function ( data, type, row ) {
 										if (row.status_approve == 0 ){
 											return  '<span  data-toggle="tooltip" title="Berikan Persetujuan" style="margin:1px;" ><a class="btn btn-warning btn-xs approval_capaian_bulanan"  data-capaian_bulanan_id="'+row.capaian_bulanan_id+'">Berikan Persetujuan</a></span>';
 										}else if ( row.status_approve == 1 ){
-											return  '<span  data-toggle="tooltip" title="Detail Capaian Tahunan" style="margin:1px;" ><a class="btn btn-success btn-xs lihat_capaian_bulanan"  data-capaian_bulanan_id="'+row.capaian_bulanan_id+'"> Lihat </a></span>';
+											return  '<span  data-toggle="tooltip" title="Lihat Capaian" style="margin:1px;" ><a class="btn btn-success btn-xs lihat_capaian_bulanan"  data-capaian_bulanan_id="'+row.capaian_bulanan_id+'"> Lihat </a></span>';
 										}else if ( row.status_approve == 2 ){
-											return  '<span  data-toggle="tooltip" title="Capaian Bulanan telah ditolak" style="margin:1px;" ><a class="btn btn-danger btn-xs lihat_capaian_bulanan"  data-capaian_bulanan_id="'+row.capaian_bulanan_id+'"> Ditolak </a></span>';
+											return  '<span  data-toggle="tooltip" title="Ditolak" style="margin:1px;" ><a class="btn btn-danger btn-xs lihat_capaian_bulanan"  data-capaian_bulanan_id="'+row.capaian_bulanan_id+'"> Ditolak </a></span>';
 										}
 									}
 								},

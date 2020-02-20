@@ -23,6 +23,8 @@
 				<?php 
 					$id_jabatan_irban = ['143','144','145','146'];
 					$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
+					$id_jabatan_staf_ahli = ['13','14','15'];
+
 
 					switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 						case '1': // eselon 2
@@ -79,7 +81,12 @@
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': 
-									?>@include('admin.tables.skp_tahunan-kegiatan_1_detail')<?php
+									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli)){ //JIKA STAF AHLI
+										?>@include('admin.modules.tab.kegiatan_tahunan_5_edit')<?php
+									}else{
+										?>@include('admin.tables.skp_tahunan-kegiatan_1_detail')<?php
+									}
+									
 									break;
 							case '2':
 	
@@ -102,7 +109,7 @@
 							case '4':   
 									?>@include('admin.modules.tab.kegiatan_tahunan_4_detail')<?php
 									break;
-							case '5':   
+							case '5':   // JFT
 									?>@include('admin.modules.tab.kegiatan_tahunan_5_edit')<?php
 									break;
 						}
@@ -140,7 +147,12 @@
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': //eselon 2
-									?>@include('admin.tables.skp_bulanan-kegiatan_1_edit')<?php
+									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli)){ //JIKA STAF AHLI
+										?>@include('admin.tables.skp_bulanan-kegiatan_5_edit')<?php
+									}else{
+										?>@include('admin.tables.skp_bulanan-kegiatan_1_edit')<?php
+									}
+									
 									break;
 							case '2': //eselon 3
 	

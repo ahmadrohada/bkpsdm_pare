@@ -249,11 +249,12 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         })->addColumn('pelaksana', function ($x) {
             if ( $x->pelaksana_id != null ){
                 $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
-                $pelaksana = Pustaka::capital_string($dt->skpd);
+                $pelaksana = Pustaka::capital_string( isset($dt)?$dt->skpd:'-');
             }else{
                 $pelaksana = "-";
             }
-            return $pelaksana;
+            return $pelaksana; 
+            
         })->addColumn('status_skp', function ($x) use($skp_bln){
             return $skp_bln->status;
         });
