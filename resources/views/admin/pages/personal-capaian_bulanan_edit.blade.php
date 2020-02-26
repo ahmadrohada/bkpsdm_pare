@@ -29,7 +29,7 @@
 					<?php
 						$id_jabatan_irban = ['143','144','145','146'];
 						$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
-						$id_jabatan_staf_ahli = ['13','14','15'];
+						$id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
 
 					switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 						case '1': // 1. Eselon II

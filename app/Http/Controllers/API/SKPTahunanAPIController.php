@@ -1120,7 +1120,7 @@ class SKPTahunanAPIController extends Controller {
         //untuk Lurah di kec.karwang barat dan timur, eselon 4 namun diberikan perlakuan sebagai eselon 3
         $id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
 
-        $id_jabatan_staf_ahli = ['13','14','15'];
+        $id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
 
 
         $skpd_id = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))->SELECT('id','id_skpd')->first()->id_skpd;

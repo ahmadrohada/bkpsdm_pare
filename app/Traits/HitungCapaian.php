@@ -292,7 +292,7 @@ trait HitungCapaian
 
 
         //JENIS JABATAN STAF AHLI
-        $id_jabatan_staf_ahli = ['13','14','15'];
+        $id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
         if ( ( $jenis_jabatan == 1 ) & ( in_array( $jabatan_id, $id_jabatan_staf_ahli) ) ){
             $jenis_jabatan = 5 ; //staf ahli sebagai JFT
         }
