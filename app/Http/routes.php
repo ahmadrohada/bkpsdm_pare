@@ -100,18 +100,37 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('skpd-pk_program','API\PerjanjianKinerjaAPIController@ProgramSKPD');
 	Route::get('skpd-total_anggaran_pk','API\PerjanjianKinerjaAPIController@TotalAnggaranSKPD');
 
+	
+
 	//ESELON 2 KA SKPD
 	Route::get('eselon2-pk_sasaran_strategis','API\PerjanjianKinerjaAPIController@SasaranStrategisSKPD');
 	Route::get('eselon2-pk_program','API\PerjanjianKinerjaAPIController@ProgramSKPD');
 	Route::get('eselon2-total_anggaran_pk','API\PerjanjianKinerjaAPIController@TotalAnggaranSKPD');
 
 
+
+	
+	Route::post('remove_esl2_kegiatan_from_pk','API\PerjanjianKinerjaAPIController@RemoveEsl2KegiatanFromPK');
+	Route::post('add_esl2_kegiatan_to_pk','API\PerjanjianKinerjaAPIController@AddEsl2KegiatanToPK');
+	Route::get('eselon2_kegiatan_list','API\PerjanjianKinerjaAPIController@KegiatanListSKPD');
+	Route::get('eselon2-total_anggaran_kegiatan','API\PerjanjianKinerjaAPIController@TotalAnggaranKegiatanSKPD');
+	
+
+
 	//ESELON 3 , KABID
+	Route::post('remove_esl3_kegiatan_from_pk','API\PerjanjianKinerjaAPIController@RemoveEsl3KegiatanFromPK');
+	Route::post('add_esl3_kegiatan_to_pk','API\PerjanjianKinerjaAPIController@AddEsl3KegiatanToPK');
+
+
 	Route::get('eselon3-pk_sasaran_strategis','API\PerjanjianKinerjaAPIController@SasaranStrategisEselon3');
 	Route::get('eselon3-pk_program','API\PerjanjianKinerjaAPIController@ProgramEselon3');
 	Route::get('eselon3-total_anggaran_pk','API\PerjanjianKinerjaAPIController@TotalAnggaranEselon3');
 
 	//ESELON 4 , KASUBID
+
+	Route::post('remove_esl4_kegiatan_from_pk','API\PerjanjianKinerjaAPIController@RemoveEsl4KegiatanFromPK');
+	Route::post('add_esl4_kegiatan_to_pk','API\PerjanjianKinerjaAPIController@AddEsl4KegiatanToPK');
+
 	Route::get('eselon4-pk_sasaran_strategis','API\PerjanjianKinerjaAPIController@SasaranStrategisEselon4');
 	Route::get('eselon4-pk_program','API\PerjanjianKinerjaAPIController@ProgramEselon4');
 	Route::get('eselon4-total_anggaran_pk','API\PerjanjianKinerjaAPIController@TotalAnggaranEselon4');

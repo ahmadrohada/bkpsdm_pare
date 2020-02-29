@@ -20,6 +20,19 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
+
+
+      function show_loader(){
+        Swal.fire({
+            title				: "Memproses data...",
+            text				: "Harap tunggu",
+            imageUrl			: "{{asset('assets/images/loader/load_1.gif')}}",
+            showConfirmButton	: false,
+            allowOutsideClick 	: false,
+            closeOnClickOutside	: false,
+            closeOnEsc			: false
+          })
+        }
 </script>
 
 

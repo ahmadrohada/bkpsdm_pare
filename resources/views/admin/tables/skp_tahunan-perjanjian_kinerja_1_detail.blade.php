@@ -3,15 +3,10 @@
 		<div class="box box-primary">
 			<div class="box-header with-border text-center">
 				<h1 class="box-title ">
-				
 				</h1>
-				<div class="box-tools pull-right">
-					{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
-				</div>
-			</div>
-			<div class="box-body table-responsive">
-				<div class="box-tools pull-right">
-					<form method="post" target="_blank" action="./{{$skp->id}}/cetak_perjanjian_kinerja-Eselon2">
+				<div class="box-tools pull-right" style="padding-top:5px;">
+					{{-- {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!} --}}
+					<form method="post" target="_blank" action="./cetak_perjanjian_kinerja-Eselon2">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="renja_id" value="{{ $skp->Renja->id }}">
 						<input type="hidden" name="jabatan_id" value="{{$skp->PejabatYangDinilai->Jabatan->id}}">
@@ -19,6 +14,9 @@
 						<button type="submit" class="btn btn-info btn-xs"><i class="fa fa-print"></i> Cetak</button>
 					</form>
 				</div>
+			</div>
+			<div class="box-body table-responsive">
+				
 				<table id="perjanjian_kinerja_sasaran_table" class="table table-striped table-hover" >
 					<thead>
 						<tr class="success">
@@ -52,8 +50,8 @@
 						<tr class="success">
 							<th class="no-sort" style="padding-right:8px;">NO</th>
 							<th >PROGRAM / KEGIATAN</th>
+							<th >JUMLAH KEGIATAN</th>
 							<th >AGGARAN</th>
-							<th >KETERANGAN</th>
 						</tr>
 					</thead>
 					
@@ -87,6 +85,8 @@ function load_perjanjian_kinerja(){
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				bInfo			: false,
+				bSort			: false,
 			columnDefs		: [
 								{ className: "text-center", targets: [ 0,3 ] }
 							  ],
@@ -97,7 +97,7 @@ function load_perjanjian_kinerja(){
 								 	},
 							 }, 
 			columns			:[
-				{ data: 'id' , orderable: false,searchable:false,width:"30px",
+							{ data: 'id' , orderable: false,searchable:false,width:"30px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
@@ -145,9 +145,11 @@ function load_perjanjian_kinerja(){
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				bInfo			: false,
+				bSort			: false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,3 ] },
-								{ className: "text-right", targets: [ 2 ] }
+								{ className: "text-center", targets: [ 0,2 ] },
+								{ className: "text-right", targets: [ 3 ] },
 							  ],
 			ajax			: {
 								url	: '{{ url("api_resource/eselon2-pk_program") }}',
@@ -163,8 +165,8 @@ function load_perjanjian_kinerja(){
 									}
 								},
 							{ data: "program", name:"program_label", orderable: false, searchable: false},
+							{ data: "jm_kegiatan", name:"jm_kegiatan", orderable: false, searchable: false},
 							{ data: "anggaran", name:"anggaran", orderable: false, searchable: false,width:"140px"},
-							{ data: "keterangan", name:"keterangan", orderable: false, searchable: false , width:"90px"},
 							
 							
 							

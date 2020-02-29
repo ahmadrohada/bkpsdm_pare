@@ -122,7 +122,7 @@
 									break;
 							case '2': //Eselon 3
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
-										?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_3')<?php
+										?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_3_detail')<?php
 									}else{
 										?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_2_detail')<?php
 									}
@@ -133,7 +133,7 @@
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
 										?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_2_detail')<?php
 									}else{
-										?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_3')<?php
+										?>@include('admin.tables.skp_tahunan-perjanjian_kinerja_3_detail')<?php
 									}
 									
 									break;

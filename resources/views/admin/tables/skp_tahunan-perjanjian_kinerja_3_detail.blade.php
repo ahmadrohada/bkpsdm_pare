@@ -5,12 +5,7 @@
 				<h1 class="box-title ">
 				
 				</h1>
-				<div class="box-tools pull-right">
-					{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
-				</div>
-			</div>
-			<div class="box-body table-responsive">
-				<div class="box-tools pull-right">
+				<div class="box-tools pull-right" style="padding-top:5px;">
 					<form method="post" target="_blank" action="./cetak_perjanjian_kinerja-Eselon4">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="renja_id" value="{{ $skp->Renja->id }}">
@@ -19,12 +14,15 @@
 						<button type="submit" class="btn btn-info btn-xs"><i class="fa fa-print"></i> Cetak</button>
 					</form>
 				</div>
+			</div>
+			<div class="box-body table-responsive">
+				
 				<table id="perjanjian_kinerja_sasaran_table" class="table table-striped table-hover" >
 					<thead>
 						<tr class="success">
 							<th class="no-sort"  style="padding-right:8px;">NO</th>
-							<th >SASARAN STRATEGIS/KEGIATAN</th>
-							<th >INDIKATOR KEGIATAN</th>
+							<th >SASARAN STRATEGIS/PROGRAM</th>
+							<th >INDIKATOR PROGRAM</th>
 							<th >TARGET</th>
 						</tr>
 					</thead>
@@ -53,7 +51,6 @@
 							<th class="no-sort" style="padding-right:8px;">NO</th>
 							<th >KEGIATAN</th>
 							<th >AGGARAN</th>
-							<th >KETERANGAN</th>
 						</tr>
 					</thead>
 					
@@ -74,7 +71,6 @@
 
 
 
-
 <script type="text/javascript">
 
 
@@ -87,6 +83,8 @@ function load_perjanjian_kinerja(){
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				bInfo			: false,
+				bSort			: false,
 			columnDefs		: [
 								{ className: "text-center", targets: [ 0,3 ] }
 							  ],
@@ -105,11 +103,35 @@ function load_perjanjian_kinerja(){
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-							{ data: "kegiatan", name:"kegiatan_label", orderable: false, searchable: false },
-							{ data: "indikator", name:"indikator_kegiatan_label", orderable: false, searchable: false },
-							{ data: "target", name:"target", orderable: false, searchable: false , width:"80px"},
+							{ data: "kegiatan", name:"kegiatan_label", orderable: false, searchable: false,
+								"render": function ( data, type, row ) {
+									if ( row.pk_status == 1 ){
+										return  row.kegiatan;
+									}else{
+										return  '<text class="blm_add">'+row.kegiatan+'</text>';
+									}		
+								}
+							},
+							{ data: "indikator", name:"indikator_kegiatan_label", orderable: false, searchable: false,
+								"render": function ( data, type, row ) {
+									if ( row.pk_status == 1 ){
+										return  row.indikator;
+									}else{
+										return  '<text class="blm_add">'+row.indikator+'</text>';
+									}		
+								}
 							
+							},
+							{ data: "target", name:"target", orderable: false, searchable: false , width:"80px",
+								"render": function ( data, type, row ) {
+									if ( row.pk_status == 1 ){
+										return  row.target;
+									}else{
+										return  '<text class="blm_add">'+row.target+'</text>';
+									}		
+								}
 							
+							}
 						],
 						initComplete: function(settings, json) {
 							
@@ -124,8 +146,10 @@ function load_perjanjian_kinerja(){
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				bInfo			: false,
+				bSort			: false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,3 ] },
+								{ className: "text-center", targets: [ 0 ] },
 								{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
@@ -138,14 +162,30 @@ function load_perjanjian_kinerja(){
 								 	},
 							 }, 
 			columns			:[
-							{ data: 'id' , orderable: false,searchable:false,width:"30px",
+								{ data: 'kegiatan_id' , orderable: false,searchable:false,width:"30px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-							{ data: "kegiatan", name:"kegiatan_label", orderable: false, searchable: false},
-							{ data: "anggaran", name:"anggaran", orderable: false, searchable: false,width:"140px"},
-							{ data: "keterangan", name:"keterangan", orderable: false, searchable: false , width:"90px"},
+								{ data: "kegiatan", name:"kegiatan_label", orderable: false, searchable: false,
+									"render": function ( data, type, row ) {
+										if ( row.pk_status == 1 ){
+											return  row.kegiatan;
+										}else{
+											return  '<text class="blm_add">'+row.kegiatan+'</text>';
+										}		
+									}
+								},
+								{ data: "anggaran", name:"anggaran", orderable: false, searchable: false,
+									"render": function ( data, type, row ) {
+										if ( row.pk_status == 1 ){
+											return  row.anggaran;
+										}else{
+											return  '<text class="blm_add">'+row.anggaran+'</text>';
+										}		
+									}
+								},
+								
 							
 							
 						],
@@ -183,5 +223,5 @@ function load_perjanjian_kinerja(){
 		});
 	}
 
-
+	
 </script>

@@ -3,14 +3,9 @@
 		<div class="box box-primary">
 			<div class="box-header with-border text-center">
 				<h1 class="box-title ">
-				
 				</h1>
-				<div class="box-tools pull-right">
-					{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
-				</div>
-			</div>
-			<div class="box-body table-responsive">
-				<div class="box-tools pull-right">
+				<div class="box-tools pull-right" style="padding-top:5px;">
+					{{-- {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!} --}}
 					<form method="post" target="_blank" action="./cetak_perjanjian_kinerja-Eselon2">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="renja_id" value="{{ $skp->Renja->id }}">
@@ -18,6 +13,11 @@
 						<input type="hidden" name="skp_tahunan_id" value="{{$skp->id}}">
 						<button type="submit" class="btn btn-info btn-xs"><i class="fa fa-print"></i> Cetak</button>
 					</form>
+				</div>
+			</div>
+			<div class="box-body table-responsive">
+				<div class="box-tools pull-right">
+					
 				</div>
 				<table id="perjanjian_kinerja_sasaran_table" class="table table-striped table-hover" >
 					<thead>
@@ -44,7 +44,7 @@
 				
 				</h1>
 				<div class="box-tools pull-right">
-					{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
+					{{-- {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!} --}}
 				</div>
 			</div>
 			<div class="box-body table-responsive">
@@ -53,8 +53,9 @@
 						<tr class="success">
 							<th class="no-sort" style="padding-right:8px;">NO</th>
 							<th >PROGRAM / KEGIATAN</th>
+							<th >JUMLAH KEGIATAN</th>
 							<th >AGGARAN</th>
-							<th >KETERANGAN</th>
+							<th><i class="fa fa-cog"></i></th>
 						</tr>
 					</thead>
 					
@@ -75,6 +76,7 @@
 
 
 
+@include('admin.modals.perjanjian_kinerja-add_kegiatan')
 
 <script type="text/javascript">
 
@@ -88,6 +90,8 @@ function load_perjanjian_kinerja(){
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				bInfo			: false,
+				bSort			: false,
 			columnDefs		: [
 								{ className: "text-center", targets: [ 0,3 ] }
 							  ],
@@ -133,9 +137,9 @@ function load_perjanjian_kinerja(){
 							{  data: 'action',width:"30px",orderable: false,
 								"render": function ( data, type, row ) {
 									if ( row.pk_status == 1 ){
-										return  '<span  data-toggle="tooltip" title="Remove Sasaran" style="margin:1px;" ><a class="btn btn-warning btn-xs remove_sasaran"  data-id="'+row.sasaran_id+'"><i class="fa fa-remove" ></i></a></span>';
+										return  '<span  data-toggle="tooltip" title="Hapus Sasaran" style="margin:1px;" ><a class="btn btn-success btn-xs remove_sasaran"  data-id="'+row.sasaran_id+'"><i class="fa fa-check" ></i></a></span>';
 									}else{
-										return  '<span  data-toggle="tooltip" title="Add Sasaran" style="margin:1px;" ><a class="btn btn-success btn-xs add_sasaran"  data-id="'+row.sasaran_id+'"><i class="fa fa-plus" ></i></a></span>';
+										return  '<span  data-toggle="tooltip" title="Tambah Sasaran" style="margin:1px;" ><a class="btn btn-default btn-xs add_sasaran"  data-id="'+row.sasaran_id+'"><i class="fa fa-minus" ></i></a></span>';
 									}
 									
 										
@@ -156,9 +160,11 @@ function load_perjanjian_kinerja(){
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				bInfo			: false,
+				bSort			: false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,3 ] },
-								{ className: "text-right", targets: [ 2 ] }
+								{ className: "text-center", targets: [ 0,2,4 ] },
+								{ className: "text-right", targets: [ 3 ] },
 							  ],
 			ajax			: {
 								url	: '{{ url("api_resource/eselon2-pk_program") }}',
@@ -174,9 +180,14 @@ function load_perjanjian_kinerja(){
 									}
 								},
 							{ data: "program", name:"program_label", orderable: false, searchable: false},
+							{ data: "jm_kegiatan", name:"jm_kegiatan", orderable: false, searchable: false},
 							{ data: "anggaran", name:"anggaran", orderable: false, searchable: false,width:"140px"},
-							{ data: "keterangan", name:"keterangan", orderable: false, searchable: false , width:"90px"},
 							
+							{  data: 'action',width:"30px",orderable: false,
+								"render": function ( data, type, row ) {
+									return  '<span  data-toggle="tooltip" title="Lihat Kegiatan" style="margin:1px;" ><a class="btn btn-success btn-xs lihat_kegiatan"  data-id="'+row.id+'"><i class="fa fa-edit" ></i></a></span>';		
+								}
+							},
 							
 							
 						],
@@ -212,95 +223,27 @@ function load_perjanjian_kinerja(){
 		});
 	}
 
+	$(document).on('click','.lihat_kegiatan',function(e){
+		var program_id = $(this).data('id') ;
 
-	/* $(document).on('click','.add_sasaran',function(e){
-		var sasaran_id = $(this).data('id') ;
-		$.ajax({
-				url			: '{{ url("api_resource/add_sasaran_to_pk") }}',
-				data 		: {sasaran_id : sasaran_id},
-				method		: "POST",
-				success		: function(data) {
-					Swal.fire({
-							title: "",
-							text: "Berhasil ditambahkan",
-							type: "success",
-							width: "200px",
-							showConfirmButton: false,
-							allowOutsideClick : false,
-							timer: 1500
-						}).then(function () {
-                           	$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false);
-							$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
-							hitung_total_anggaran();
-						},
-						function (dismiss) {
-							if (dismiss === 'timer') {
-								//table.ajax.reload(null,false);
-							}
-					})
+		show_modal_kegiatan(program_id); // function on included modal file
 
-
-				},
-				error: function(data){
-					Swal.fire({
-			        		title: "Error",
-			        		text: "",
-			        		type: "error"
-			        	}).then (function(){
-			        		
-			        	});
-				}						
-		});	
 	});
 
-	$(document).on('click','.remove_sasaran',function(e){
-		var sasaran_id = $(this).data('id') ;
-		$.ajax({
-				url			: '{{ url("api_resource/remove_sasaran_from_pk") }}',
-				data 		: {sasaran_id : sasaran_id},
-				method		: "POST",
-				success		: function(data) {
-					Swal.fire({
-							title: "",
-							text: "Berhasil dihapus",
-							type: "success",
-							width: "200px",
-							showConfirmButton: false,
-							allowOutsideClick : false,
-							timer: 1500
-						}).then(function () {
-                           	$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false);
-							$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
-							hitung_total_anggaran();
-						},
-						function (dismiss) {
-							if (dismiss === 'timer') {
-								//table.ajax.reload(null,false);
-							}
-					})
-
-
-				},
-				error: function(data){
-					Swal.fire({
-			        		title: "Error",
-			        		text: "",
-			        		type: "error"
-			        	}).then (function(){
-			        		
-			        	});
-				}						
-		});	
-	}); */
+	
 
 
 	$(document).on('click','.add_sasaran',function(e){
 		var sasaran_id = $(this).data('id') ;
+		show_loader();
 		$.ajax({
 				url			: '{{ url("api_resource/add_sasaran_to_pk") }}',
 				data 		: {sasaran_id : sasaran_id},
 				method		: "POST",
 				success		: function(data) {
+					$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false);
+					$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
+					hitung_total_anggaran();
 					Swal.fire({
 							title: "",
 							text: "Berhasil ditambahkan",
@@ -310,9 +253,7 @@ function load_perjanjian_kinerja(){
 							allowOutsideClick : false,
 							timer: 1500
 						}).then(function () {
-                           	$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false);
-							$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
-							hitung_total_anggaran();
+                           	
 						},
 						function (dismiss) {
 							if (dismiss === 'timer') {
@@ -336,11 +277,15 @@ function load_perjanjian_kinerja(){
 
 	$(document).on('click','.remove_sasaran',function(e){
 		var sasaran_id = $(this).data('id') ;
+		show_loader();
 		$.ajax({
 				url			: '{{ url("api_resource/remove_sasaran_from_pk") }}',
 				data 		: {sasaran_id : sasaran_id},
 				method		: "POST",
 				success		: function(data) {
+					$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false);
+					$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
+					hitung_total_anggaran();
 					Swal.fire({
 							title: "",
 							text: "Berhasil dihapus",
@@ -350,9 +295,7 @@ function load_perjanjian_kinerja(){
 							allowOutsideClick : false,
 							timer: 1500
 						}).then(function () {
-                           	$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false);
-							$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
-							hitung_total_anggaran();
+                           
 						},
 						function (dismiss) {
 							if (dismiss === 'timer') {
