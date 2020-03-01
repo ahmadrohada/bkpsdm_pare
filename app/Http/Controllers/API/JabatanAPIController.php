@@ -179,12 +179,29 @@ class JabatanAPIController extends Controller {
 
       $jabatan = $request->jabatan;
 
-      $jabatan       = HistoryJabatan:: 
+      //eselon sendiri
+      $jabatan_a       = HistoryJabatan:: 
                                 leftjoin('demo_asn.m_skpd AS skpd', function($join) use($jabatan){
-                                  $join   ->on('tb_history_jabatan.id_jabatan','=','skpd.parent_id');
-                                  $join  ->where('skpd.skpd','LIKE','%'.$jabatan.'%');
+                                  $join   ->on('tb_history_jabatan.id_jabatan','=','skpd.id');
                                 })
                                 ->WHERE('tb_history_jabatan.id',$request->jabatan_id)
+                                ->SELECT('skpd.id_eselon AS id_eselon')
+                                ->first();
+      if ( $jabatan_a->id_eselon == 6 ){
+        $eselon_a = 7 ;
+      }else{
+        $eselon_a = $jabatan_a->id_eselon;
+      }
+      
+
+      $jabatan       = HistoryJabatan:: 
+                                rightjoin('demo_asn.m_skpd AS skpd', function($join) use($jabatan,$eselon_a){
+                                  $join   ->on('tb_history_jabatan.id_jabatan','=','skpd.parent_id');
+                                  $join  ->where('skpd.skpd','LIKE','%'.$jabatan.'%');
+                                  $join  ->WHERE('skpd.id_eselon','>',$eselon_a);
+                                })
+                                ->WHERE('tb_history_jabatan.id',$request->jabatan_id)
+                                
                                 ->SELECT('skpd.id AS jabatan_id','skpd.skpd')
                                 ->get();
                         
@@ -192,6 +209,13 @@ class JabatanAPIController extends Controller {
       
          $no = 0;
          $pegawai_list = [];
+
+         $pegawai_list[] = array(
+                'id'		    => $request->jabatan_sendiri,
+                'jabatan'	  => "Dilaksanakan Sendiri",
+                );
+      
+
          foreach  ( $jabatan as $x){
              $no++;
              $pegawai_list[] = array(

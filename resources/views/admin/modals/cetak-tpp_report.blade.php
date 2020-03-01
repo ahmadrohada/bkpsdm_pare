@@ -9,8 +9,8 @@
 			</div>
 			<div class="modal-body">
 			<form method="post" target="_blank" action="tpp_report/cetak">
-				<input type="text" name="_token" value="{{ csrf_token() }}">
-				<input type="text" name="tpp_report_id" class="tpp_report_id" >
+				<input type="hidden" name="_token" value="{{ csrf_token() }}">
+				<input type="hidden" name="tpp_report_id" class="tpp_report_id" >
 				
 					<div class="form-group">
 						<label>Nama SKPD</label>

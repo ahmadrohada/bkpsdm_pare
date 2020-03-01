@@ -15,7 +15,7 @@
 			<input type="hidden" required name="renja_id" class="renja_id" value="{!! $skp->renja_id !!}">
 			<div class="modal-body">
 					
-					<br>
+					
 					<!-- <div class="row">
 						<div class="col-md-12 form-group label_kegiatan_tahunan ">
 							<label class="control-label">Kegiatan Tahunan</label>
@@ -57,11 +57,12 @@
 							<label>Pelaksana</label>
 							<select id= "pelaksana" class="form-control" name="pelaksana" style="width: 100%;">
 								<?php
-								if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
+								
+								/* if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
 									echo '<option value = '.$skp->PejabatYangDinilai->id_jabatan.' > Dilaksanakan Sendiri </option>';
 								}else{
 									echo '<option value = "0" > pilih pejabat pelaksana </option>';
-								}
+								} */
 								?>
 							</select>
 						</div>
@@ -132,47 +133,14 @@
 
 <script type="text/javascript">
 
+	//disabled bulan yang kelewat
 
-
-	/* $('#ind_kegiatan').select2({
-		ajax: {
-			url				: '{{ url("api_resource/select2_indikator_kegiatan_list") }}',
-			dataType		: 'json',
-			quietMillis		: 100,
-			data			: function (params) {
-				var queryParameters = {
-					jabatan					: params.term,
-					kegiatan_renja_id		: $('.kegiatan_renja_id').val(),
-				}
-				return queryParameters;
-			},
-			processResults: function (data) {
-				return {
-					results: $.map(data, function (item) {
-						return {
-							text	: item.text,
-							id		: item.id,
-							target	: item.target,
-							satuan 	: item.satuan,
-						}	
-					})
-				};		
-			}
-		},
-	}); */
-
-/* 
-	$('#ind_kegiatan').on('select2:select', function (e) {
-		var data = e.params.data;
-		//alert(data['target']);
-		$('.modal-rencana_aksi').find('[id=target]').val(data['target']);
-		$('.modal-rencana_aksi').find('[id=satuan]').val(data['satuan']);
-
-
-	}); */
-
-	$('.waktu_pelaksanaan,.waktu_pelaksanaan_edit').select2();
+	//$('.waktu_pelaksanaan  option[value="01"]').prop('disabled',true);
 	
+
+	$('.waktu_pelaksanaan,.waktu_pelaksanaan_edit,#pelaksana').select2();
+	
+
 	$('#pelaksana').select2({
 		ajax: {
 			url				: '{{ url("api_resource/select2_bawahan_list") }}',
@@ -181,17 +149,19 @@
 			data			: function (params) {
 				var queryParameters = {
 					jabatan				: params.term,
-					jabatan_id		    : {{$skp->u_jabatan_id}}
+					jabatan_id		    : {{$skp->u_jabatan_id}},
+					jabatan_sendiri		: {{ $skp->PejabatYangDinilai->id_jabatan }}
 				}
 				return queryParameters;
 			},
-			processResults: function (data) {
+			processResults: function (data) {	
 				return {
 					results: $.map(data, function (item) {
 						return {
 							text	: item.jabatan,
 							id		: item.id,
-						}		
+						}	
+						
 					})
 				};
 			}
@@ -241,7 +211,7 @@
 	}
 	
 	$(document).on('click','#submit-save_rencana_aksi',function(e){
-		
+		show_loader();
 		on_submit();
 		var data = $('#rencana_aksi_form').serialize();
  
@@ -252,7 +222,12 @@
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
 				
-				//$('#program_table').DataTable().ajax.reload(null,false);
+				$('.modal-rencana_aksi').modal('hide');
+				$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+				//$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
+				jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
+				jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+					
                
 				reset_submit();
 				Swal.fire({
@@ -264,11 +239,6 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-rencana_aksi').modal('hide');
-					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-					//$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
-					jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
-					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 					
 					
 					
@@ -314,7 +284,7 @@
 
 
 	$(document).on('click','#submit-update_rencana_aksi',function(e){
-
+		show_loader();
 		on_submit();
 		var data = $('#rencana_aksi_form').serialize();
 
@@ -325,7 +295,11 @@
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
 				
-				//$('#program_table').DataTable().ajax.reload(null,false);
+				$('.modal-rencana_aksi').modal('hide');
+				$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+				//$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
+				jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
+				jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 			
 				reset_submit();
 				Swal.fire({
@@ -337,11 +311,7 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-rencana_aksi').modal('hide');
-					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-					//$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
-					jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
-					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+					
 				},
 					
 					function (dismiss) {
