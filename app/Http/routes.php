@@ -1288,6 +1288,10 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'TPPReportController@editSKPDTPPReport'
 	]);
 	
+	Route::post('tpp_report/cetak', [
+		'as' 			=> '',
+		'uses' 			=> 'API\TPPReportAPIController@cetakTPPReportData'
+	]);
 
 	//========================================================================================//
 	//=============================       PERJANJIAN KINERJA       ===========================//

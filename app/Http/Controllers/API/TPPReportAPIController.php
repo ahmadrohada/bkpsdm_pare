@@ -688,6 +688,7 @@ class TPPReportAPIController extends Controller
                 'tpp_report.periode_id',
                 'tpp_report.bulan',
                 'tpp_report.skpd_id',
+                'tpp_report.admin_skpd AS nama_admin',
                 'tpp_report.status',
                 'tpp_report.created_at',
                 'periode.label AS periode_label',
@@ -703,6 +704,9 @@ class TPPReportAPIController extends Controller
             })
             ->addColumn('jumlah_data', function ($x) {
                 return TPPReportData::WHERE('tpp_report_id', $x->tpp_report_id)->count();
+            })
+            ->addColumn('created_at', function ($x) {
+                return Pustaka::tgl_jam($x->created_at);
             });
 
         if ($keyword = $request->get('search')['value']) {

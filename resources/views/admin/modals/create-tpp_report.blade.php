@@ -83,7 +83,7 @@
 	$('.bulan').select2();
 
 	$(document).on('click', '#simpan_tpp_report', function() {
-
+		show_loader();
 		var data = $('#create-tpp_report-form').serialize();
 		$.ajax({
 			url: '{{ url("api_resource/simpan_tpp_report") }}',
@@ -125,8 +125,7 @@
 						confirmButtonText: "Close",
 						confirmButtonColor: "btn btn-success",
 					});
-
-
+					});
 			}
 
 		});

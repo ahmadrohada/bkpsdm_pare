@@ -10,9 +10,7 @@
 	<div class="box-body">
 		<div class="row">
 
-			<form method="post" 
-				target="_blank" 
-				action="tpp_report/cetak">
+			<form method="post" target="_blank" action="tpp_report/cetak">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<div class="col-md-5">
 				<div class="form-group margin periode_capaian_f">
