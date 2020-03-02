@@ -42,7 +42,7 @@
 						<div class="form-horizontal col-md-12" style="margin-top:20px;">
 							<div class="form-group form-group-sm header_list" hidden>
 									
-								<label>Jabatan Bawahan </label> <label class="pull-right">Kegiatan / Realisasi</label>
+								<label>Pelaksana Kegiatan </label> <label class="pull-right">Kegiatan / Realisasi</label>
 							</div>
 							
 							<div class="form-group form-group-sm" style="margin-top:-10px;">

@@ -125,7 +125,6 @@
 						confirmButtonText: "Close",
 						confirmButtonColor: "btn btn-success",
 					});
-					});
 			}
 
 		});

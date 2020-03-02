@@ -384,18 +384,28 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         $renja_id = $skp_bln->SKPTahunan->renja_id;
         $skp_tahunan_id = $skp_bln->SKPTahunan->id;
         $jabatan_id = $request->jabatan_id;
-        //cari bawahan  , jabatanpelaksanan
-        $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->ORWHERE('id',  $jabatan_id )->get()->toArray(); 
+
+        //Cari bawahan ( staff nya ), 
+        $child = Jabatan::
+                            WHERE('id',$jabatan_id )
+                            ->orwhere(function ($query) use($jabatan_id) {
+                                $query  ->where('parent_id',$jabatan_id )
+                                        ->Where('id_eselon', '!=', 7 );
+                            })
+                            ->SELECT('id')
+                            ->get() 
+                            ->toArray(); 
 
         $keg_tahunan = $skp_bln->SKPTahunan->KegiatanTahunan;
         
         $capaian_id = $request->capaian_id;
 
+        //return  $keg_tahunan;
      
 
         $dt = RencanaAksi::
                     WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child )
-                    ->WHEREIN('skp_tahunan_rencana_aksi.kegiatan_tahunan_id',$keg_tahunan )
+                    //->WHEREIN('skp_tahunan_rencana_aksi.kegiatan_tahunan_id',$keg_tahunan )
                     ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan','=',$skp_bln->bulan)
                     ->WHERE('skp_tahunan_rencana_aksi.renja_id','=',$renja_id)
                     ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join) use($skp_tahunan_id){
@@ -448,25 +458,19 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
             return $skp_id;
         })
-       
         ->addColumn('persentasi_realisasi_rencana_aksi', function ($x) {
-          
             return   Pustaka::persen($x->realisasi_rencana_aksi,$x->rencana_aksi_target);
-    
-            
         })
         ->addColumn('kegiatan_tahunan_label', function ($x) {
             return $x->KegiatanTahunan->label;
         })
         ->addColumn('pelaksana', function ($x) {
-
             if ( $x->pelaksana_id != null ){
                 $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
                 $pelaksana = Pustaka::capital_string($dt->skpd);
             }else{
                 $pelaksana = "-";
             }
-
             return $pelaksana;
         })
         ->addColumn('status_skp', function ($x) use($skp_bln){

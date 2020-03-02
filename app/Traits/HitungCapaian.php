@@ -106,8 +106,21 @@ trait HitungCapaian
 
     protected function capaian_kinerja_eselon4($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id)
     {
-        //cari bawahan
-        $child = Jabatan::SELECT('id')->WHERE('parent_id',$jabatan_id )->get()->toArray(); 
+
+        //ada kondisi tertentu misal KA UPTD dan KASUBAG TU nya,, dia atasan dan bawahan, namun keggiatan
+        //KA UPTD tidak dapat dilaksanakan oleh KASUBAG nya karena sama sama eselon 4
+        
+        //Cari bawahan ( staff nya ), 
+        $child = Jabatan::
+                            WHERE('id',$jabatan_id )
+                            ->orwhere(function ($query) use($jabatan_id) {
+                                $query  ->where('parent_id',$jabatan_id )
+                                        ->Where('id_eselon', '!=', 7 );
+                                    /*->orWhere('id_eselon', '=', 17 ); */
+                            })
+                            ->SELECT('id')
+                            ->get()
+                            ->toArray(); 
 
         //hitung capaian kinerja bulanan
         $xdata = RencanaAksi::

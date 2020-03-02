@@ -302,7 +302,18 @@ class CapaianBulananAPIController extends Controller {
         //================================= K A S U B I D ========================================// 
         }else if ( $jenis_jabatan == 3){
             //cari bawahan
-            $bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
+            $jabatan_id = $skp_bulanan->PejabatYangDinilai->id_jabatan;
+            $bawahan = Jabatan::
+                            WHERE('id',$jabatan_id)
+                            ->orwhere(function ($query) use($jabatan_id) {
+                                $query  ->where('parent_id',$jabatan_id )
+                                        ->Where('id_eselon', '!=', 7 );
+                            })
+                            ->SELECT('id','skpd AS jabatan')
+                            ->get();
+
+            //return $bawahan;
+            //$bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
 
             //list bawahan
             $jm_kegiatan = 0 ; 
@@ -541,8 +552,6 @@ class CapaianBulananAPIController extends Controller {
     public function CapaianBulananStatusPengisian( Request $request )
     {
        
-        
-        $button_kirim = 0 ;
         $capaian_id = $request->capaian_bulanan_id;
 
         $capaian_bulanan = CapaianBulanan::
