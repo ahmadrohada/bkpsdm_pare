@@ -312,7 +312,7 @@ $.ajax({
 								{ 'orderable': false , targets: [ 0,1]  }
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/skp_tahunan_rencana_aksi") }}',
+								url	: '{{ url("api_resource/skp_tahunan_rencana_aksi_3") }}',
 								data: { kegiatan_tahunan_id: kegiatan_tahunan_id },
 							},
 							columns			: [

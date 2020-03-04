@@ -12,5 +12,10 @@ class TPPReport extends Model
     {
         return $this->hasOne('App\Models\FormulaHitungTPP','id','formula_hitung_id');
     }
+
+    public function SKPD()
+    {
+        return $this->hasOne('App\Models\Skpd','id','skpd_id')->Select('skpd as nama_skpd');
+    }
     
 }

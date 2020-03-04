@@ -236,7 +236,7 @@ var table_rencana_aksi = $('#rencana_aksi_table').DataTable({
 						  { 'orderable': false , targets: [2]  } 
 						],
 		ajax			: {
-							url	: '{{ url("api_resource/skp_tahunan_rencana_aksi") }}',
+							url	: '{{ url("api_resource/skp_tahunan_rencana_aksi_3") }}',
 							data: { kegiatan_tahunan_id: kegiatan_tahunan_id },
 						},
 						columns			: [

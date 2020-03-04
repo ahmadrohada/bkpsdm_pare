@@ -136,18 +136,15 @@
 	$(document).on('click', '.cetak_tpp_report_data', function(e) {
 		var tpp_report_id = $(this).data('id');
 		$.ajax({
-				url		: '{{ url("api_resource/create_tpp_report_confirm") }}',
+				url		: '{{ url("api_resource/tpp_report_detail") }}',
 				type	: 'GET',
-				data	:  	{ 
-								skpd_id : {{ $skpd->id }},
-								admin_id : {{ $pegawai_id }}
-							},
+				data	:  	{ tpp_report_id : tpp_report_id },
 				success	: function(data) {
 							
 							$('.tpp_report_id').val(tpp_report_id); 
 							$('.nama_skpd').html(data['nama_skpd']); 
-							$('.jumlah_pegawai').html(data['jumlah_pegawai']);
-							$('.tahun').html(data['tahun']); 
+							$('.jumlah_pegawai').html(data['jm_data_pegawai']);
+							$('.periode').html(data['periode']); 
 							
 							$('.cetak-tpp_report_modal').modal('show'); 
 				

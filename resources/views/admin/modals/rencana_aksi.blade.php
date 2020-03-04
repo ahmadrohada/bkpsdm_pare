@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    Rencana Aksi
+                    Rencana Aksi 
                 </h4>
             </div>
 
@@ -205,6 +205,7 @@
 		$('#submit-save_rencana_aksi').prop('disabled',true);
 	}
 	function reset_submit(){
+    	
 		$('.modal-rencana_aksi').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
 		$('.modal-rencana_aksi').find('.button_simpan').addClass('fa-floppy-o');
 		$('#submit-save_rencana_aksi').prop('disabled',false);
@@ -253,7 +254,7 @@
 				$("#submit-save_rencana_aksi").show();
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
-
+				swal.close();
 				var test = $.parseJSON(jqXHR.responseText);
 				
 				var data= test.errors;
@@ -322,7 +323,7 @@
 			)	
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
-
+				swal.close();
 				var test = $.parseJSON(jqXHR.responseText);
 				
 				var data= test.errors;

@@ -544,7 +544,7 @@ class TPPReportAPIController extends Controller
                 'periode.label AS periode_label',
                 'periode.awal AS tahun_periode'
 
-
+ 
             ])
             ->first();
 
@@ -555,6 +555,7 @@ class TPPReportAPIController extends Controller
             'created_at'        => Pustaka::tgl_jam($x->created_at),
             'ka_skpd'           => $x->ka_skpd,
             'admin_skpd'        => $x->admin_skpd,
+            'nama_skpd'         => Pustaka::capital_string($x->SKPD->nama_skpd),
 
 
             'jm_data_pegawai'   => TPPReportData::WHERE('tpp_report_id', $x->tpp_report_id)->count(),

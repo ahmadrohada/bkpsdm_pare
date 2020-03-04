@@ -10,7 +10,7 @@
 	    <section class="content-header">
 			<h1>
 				SKP Tahunan  {!! $skp->PejabatYangDinilai->Eselon->eselon !!} 
-				{!!$skp->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}
+				
 			</h1>
 				{!! Breadcrumbs::render('personal_edit_skp_tahunan') !!}
       </section>
@@ -61,6 +61,7 @@
 				
 					
 				<li class="skp_bulanan_tab"><a href="#skp_bulanan_tab" data-toggle="tab">SKP Bulanan</a></li>
+				
 			</ul>
  
  

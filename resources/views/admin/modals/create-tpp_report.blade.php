@@ -114,7 +114,7 @@
 				)
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-
+				swal.close();
 				var test = $.parseJSON(jqXHR.responseText);
 				var data = test.errors;
 

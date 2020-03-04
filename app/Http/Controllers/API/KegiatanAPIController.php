@@ -185,10 +185,12 @@ class KegiatanAPIController extends Controller {
         //KEC CILAMAYA KULON
         $ae = ['1179','1180','1181','1182','1183'];
 
+        $kearsipan = ['786','787'];
 
 
 
-        $pengecualian = array_merge($a,$b,$c,$d,$e,$f,$g,$h,$i,$j,$k,$l,$m,$n,$o,$p,$q,$r,$s,$t,$u,$v,$w,$x,$y,$z,$aa,$ab,$ac,$ad,$ae);
+
+        $pengecualian = array_merge($a,$b,$c,$d,$e,$f,$g,$h,$i,$j,$k,$l,$m,$n,$o,$p,$q,$r,$s,$t,$u,$v,$w,$x,$y,$z,$aa,$ab,$ac,$ad,$ae,$kearsipan);
 
         if ( $request->skpd_id == 3 ){
             //SEKDA 
@@ -429,6 +431,50 @@ class KegiatanAPIController extends Controller {
                 
                     
                     }else if ( $y->id == 61804 ){  //61804 adalah DLHK
+                        $level3a = SKPD::where('parent_id','=',$y->id)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+                        $kapus_list = [];
+                        foreach ($level3a as $x) {
+                            $kapus_list[] = array( 'id' => $x->id );
+                        }
+
+                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+
+                        $level3 = $level3a->merge($level3b);
+                
+                    
+                    }else if ( $y->id == 61830 ){  //61830 adalah DISNAKERTRANS
+                        $level3a = SKPD::where('parent_id','=',$y->id)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+                        $kapus_list = [];
+                        foreach ($level3a as $x) {
+                            $kapus_list[] = array( 'id' => $x->id );
+                        }
+
+                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                        ->where(function ($query) {
+                                            $query->where('id_eselon', '=' , null )
+                                                ->orWhere('id_eselon', '<=', 8 );
+                                        })
+                                        ->select('id','skpd','id_eselon')->get();
+
+                        $level3 = $level3a->merge($level3b);
+                
+                    
+                    }else if ( $y->id == 61831 ){  //61831 adalah DINSOS
                         $level3a = SKPD::where('parent_id','=',$y->id)
                                         ->where(function ($query) {
                                             $query->where('id_eselon', '=' , null )
@@ -800,7 +846,7 @@ class KegiatanAPIController extends Controller {
     public function SKPTahunanKegiatanTree3(Request $request)
     {
        
-        //Kegiatan nya KSUBID
+        //Kegiatan nya ESELON IV
         $skp_tahunan_id = $request->skp_tahunan_id;
         $kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
@@ -845,7 +891,9 @@ class KegiatanAPIController extends Controller {
               
                     //Rencana aksi
                     $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$y->id)
-                                        ->WHERE('kegiatan_tahunan_id',$x->kegiatan_tahunan_id)
+                                        ->WHERE('kegiatan_tahunan_id',$x->kegiatan_tahunan_id) 
+                                        ->orderBy('waktu_pelaksanaan','ASC')
+                                        ->orderBy('id','DESC')
                                         ->get();
                     foreach ($ra as $z) {
                         $data_rencana_aksi['id']	        = "RencanaAksi|".$z->id;

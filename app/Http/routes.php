@@ -769,6 +769,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	Route::get('rencana_aksi_tree','API\RencanaAksiAPIController@rencana_aksi_tree');
 	Route::get('skp_tahunan_rencana_aksi','API\RencanaAksiAPIController@RencanaAksiList');
+	Route::get('skp_tahunan_rencana_aksi_3','API\RencanaAksiAPIController@RencanaAksiList3');
 	Route::get('skp_tahunan_rencana_aksi_4','API\RencanaAksiAPIController@RencanaAksiList4');
 	
 	Route::get('rencana_aksi_time_table_2','API\RencanaAksiAPIController@RencanaAksiTimeTable2');

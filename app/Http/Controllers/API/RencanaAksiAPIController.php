@@ -869,8 +869,7 @@ class RencanaAksiAPIController extends Controller {
                                     })
                                     ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use($skp_tahunan_id) {
                                         $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
-                                        //ini masalahnya kalo di uncoment, eselon 3 gk muncul rencana aksinya
-                                        //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id);
+                                       
                                     })
                                     ->SELECT(       /* 'renja_indikator_kegiatan.id AS ind_kegiatan_id',
                                                     'renja_indikator_kegiatan.label',
@@ -886,12 +885,99 @@ class RencanaAksiAPIController extends Controller {
         
         if ($keg_tahunan){
             $kegiatan_tahunan_id = $keg_tahunan->kegiatan_tahunan_id;
-            
-
         }else{
             $kegiatan_tahunan_id = 0 ;
         }
        
+        
+        $dt = RencanaAksi::
+                        SELECT([   
+                            'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                            'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                            'skp_tahunan_rencana_aksi.target',
+                            'skp_tahunan_rencana_aksi.satuan',
+                            'skp_tahunan_rencana_aksi.waktu_pelaksanaan',
+                            'skp_tahunan_rencana_aksi.jabatan_id',
+                            
+                            ])
+                        ->WHERE('skp_tahunan_rencana_aksi.indikator_kegiatan_id','=', $request->indikator_kegiatan_id )
+                        ->WHERE('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=', $kegiatan_tahunan_id )
+                        ->orderBy('skp_tahunan_rencana_aksi.waktu_pelaksanaan','ASC')
+                        ->orderBy('skp_tahunan_rencana_aksi.id','DESC')
+                        ->get();
+
+        $datatables = Datatables::of($dt)
+        ->addColumn('label', function ($x) {
+            return $x->rencana_aksi_label;
+        })
+        ->addColumn('kegiatan_bulanan', function ($x) {
+            $kb =  KegiatanSKPBulanan::WHERE('rencana_aksi_id',$x->rencana_aksi_id)->SELECT('id')->count();
+            return $kb;
+        })
+        ->addColumn('target', function ($x) {
+            
+            return $x->target.' '.$x->satuan;
+          
+        })
+        ->addColumn('pelaksana', function ($x) {
+            if ( ( $x->jabatan_id > 0 ) & ( $x->Pelaksana != null ) ){
+                return Pustaka::capital_string($x->Pelaksana->jabatan);
+            }else{
+                return '-';
+            }
+        })   
+        ->addColumn('pelaksana_id', function ($x) {
+            if ( ( $x->jabatan_id > 0 ) & ( $x->Pelaksana != null ) ){
+                return Pustaka::capital_string($x->Pelaksana->jabatan)."[".$x->jabatan_id."]";
+            }else{
+                return '-';
+            }
+        })      
+        ->addColumn('waktu_pelaksanaan', function ($x) {
+            return Pustaka::bulan($x->waktu_pelaksanaan);
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true); 
+        
+    }
+
+    public function RencanaAksiList3(Request $request)
+    {
+            
+        $skp_tahunan_id = $request->skp_tahunan_id;
+        //CARI kegiatan _tahunan nya
+        $keg_tahunan = IndikatorKegiatan::
+                                    leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
+                                        $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
+                                    })
+                                    ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use($skp_tahunan_id) {
+                                        $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                        //ini karena Rencana Aksi nya eselon 4 harus milik kegiatan tahunan nya sewndiri
+                                        $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id);
+                                    })
+                                    ->SELECT(       /* 'renja_indikator_kegiatan.id AS ind_kegiatan_id',
+                                                    'renja_indikator_kegiatan.label',
+                                                    'renja_indikator_kegiatan.target',
+                                                    'renja_indikator_kegiatan.satuan',
+                                                    'kegiatan_tahunan.cost AS cost',
+                                                    'renja_kegiatan.id AS kegiatan_id', */
+                                                    'kegiatan_tahunan.id AS kegiatan_tahunan_id'
+
+                                            ) 
+                                    ->WHERE('renja_indikator_kegiatan.id', $request->indikator_kegiatan_id)
+                                    ->first();
+        
+        if ($keg_tahunan){
+            $kegiatan_tahunan_id = $keg_tahunan->kegiatan_tahunan_id;
+        }else{
+            $kegiatan_tahunan_id = 0 ;
+        }
+       
+        //return $kegiatan_tahunan_id;
         
         $dt = RencanaAksi::
                         SELECT([   

@@ -300,14 +300,14 @@ class CapaianBulananAPIController extends Controller {
             $list_bawahan = "";
             $kegiatan_list = "";
         //================================= K A S U B I D ========================================// 
-        }else if ( $jenis_jabatan == 3){
+        }else if ( $jenis_jabatan == 3){ //eselon IV
             //cari bawahan
             $jabatan_id = $skp_bulanan->PejabatYangDinilai->id_jabatan;
             $bawahan = Jabatan::
                             WHERE('id',$jabatan_id)
                             ->orwhere(function ($query) use($jabatan_id) {
                                 $query  ->where('parent_id',$jabatan_id )
-                                        ->Where('id_eselon', '!=', 7 );
+                                        ->Where('id_eselon', '=', 9 );
                             })
                             ->SELECT('id','skpd AS jabatan')
                             ->get();
@@ -342,7 +342,7 @@ class CapaianBulananAPIController extends Controller {
             }
             $list_bawahan  = $pelaksana_list;    
         //================================= K A B I D ========================================// 
-        }else if ( $jenis_jabatan == 2){
+        }else if ( $jenis_jabatan == 2){   //Eselon III
 
             //cari bawahan
             $bawahan = Jabatan::SELECT('id','skpd AS jabatan' )->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
