@@ -775,13 +775,15 @@ class CapaianBulananAPIController extends Controller {
                                                 ->SELECT('skp_tahunan_rencana_aksi.id','realisasi.realisasi','skp_tahunan_rencana_aksi.satuan')
                                                 ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',Input::get('waktu_pelaksanaan'))
                                                 ->WHERE('skp_tahunan_rencana_aksi.renja_id',Input::get('renja_id'))
+                                                ->DISTINCT('realisasi.rencana_aksi_id')
                                                 ->get(); 
                     $i = 0 ;
                     foreach ($kegiatan_list as $x) {
                         $data[] = array(
                                         
-                            'rencana_aksi_id'       => $x->id,
+                            
                             'capaian_id'            => $capaian_bulanan->id,
+                            'rencana_aksi_id'       => $x->id,
                             'realisasi'             => $x->realisasi,
                             'satuan'                => $x->satuan,
                             'created_at'            => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
