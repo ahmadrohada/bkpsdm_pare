@@ -308,8 +308,9 @@ class CapaianBulananAPIController extends Controller {
                             WHERE('id',$jabatan_id)
                             ->orwhere(function ($query) use($jabatan_id) {
                                 $query  ->where('parent_id',$jabatan_id )
-                                        ->Where('id_eselon', '=', 9 )
-                                        ->orWhere('id_eselon', '=', 10 );
+                                        //->Where('id_eselon', '=', 9 )
+                                        //->orWhere('id_eselon', '=', 10 );
+                                        ->whereBetween('id_eselon', [9,10]);
                             })
                             ->SELECT('id','skpd AS jabatan')
                             ->get();
