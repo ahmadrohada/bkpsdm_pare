@@ -115,7 +115,56 @@ trait HitungCapaian
                             WHERE('id',$jabatan_id )
                             ->orwhere(function ($query) use($jabatan_id) {
                                 $query  ->where('parent_id',$jabatan_id )
-                                        ->Where('id_eselon', '!=', 7 );
+                                        ->Where('id_eselon', '=', 9 );
+                                    /*->orWhere('id_eselon', '=', 17 ); */
+                            })
+                            ->SELECT('id')
+                            ->get()
+                            ->toArray(); 
+
+        //hitung capaian kinerja bulanan
+        $xdata = RencanaAksi::
+            leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
+                $join   ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan.id');
+            })
+            ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join) use($capaian_id){
+                $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                $join   ->where('realisasi.capaian_id','=',$capaian_id);
+            })
+            ->SELECT('skp_tahunan_rencana_aksi.target','realisasi.realisasi')
+            ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child)
+            ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan', $bulan)
+            ->WHERE('skp_tahunan_rencana_aksi.renja_id', $renja_id)
+            ->get();
+
+        $jm_capaian = 0 ;
+        $jm_kegiatan_bulanan = 0 ;
+
+        foreach ($xdata as $data) {
+            $jm_kegiatan_bulanan ++;
+            $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
+        }
+
+        return array(
+            'jm_kegiatan_bulanan'       => $jm_kegiatan_bulanan,
+            'jm_capaian'                => $jm_capaian,
+        );
+
+
+    }
+
+    protected function capaian_kinerja_eselon4_puskesmas($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id)
+    {
+
+        //ada kondisi tertentu misal KA UPTD dan KASUBAG TU nya,, dia atasan dan bawahan, namun keggiatan
+        //KA UPTD tidak dapat dilaksanakan oleh KASUBAG nya karena sama sama eselon 4
+        
+        //Cari bawahan ( staff nya ), 
+        $child = Jabatan::
+                            WHERE('id',$jabatan_id )
+                            ->orwhere(function ($query) use($jabatan_id) {
+                                $query  ->where('parent_id',$jabatan_id )
+                                        ->Where('id_eselon', '=', 10 );
                                     /*->orWhere('id_eselon', '=', 17 ); */
                             })
                             ->SELECT('id')
@@ -324,8 +373,10 @@ trait HitungCapaian
             $data = $this->capaian_kinerja_jft($capaian_id,$skp_bulanan_id,$bulan,$renja_id);
         }else if ( $jenis_jabatan == 4 ){ //jm kegiatan pelaksana JFU
             $data = $this->capaian_kinerja_jfu($capaian_id,$skp_bulanan_id,$bulan,$renja_id);
-        }else if ( $jenis_jabatan == 3 | $jenis_jabatan == 12){  //kasubid ESELON IV
+        }else if ( $jenis_jabatan == 3 ){  //kasubid ESELON IV
             $data =  $this->capaian_kinerja_eselon4($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);
+        }else if ( $jenis_jabatan == 12 ){  //KA UPTD PUSkesmAA
+            $data =  $this->capaian_kinerja_eselon4_puskesmas($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 2){ //kabid ESELON III
             $data =  $this->capaian_kinerja_eselon3($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 1){ //KABAN ESELON II
