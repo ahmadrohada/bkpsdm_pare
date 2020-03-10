@@ -308,7 +308,8 @@ class CapaianBulananAPIController extends Controller {
                             WHERE('id',$jabatan_id)
                             ->orwhere(function ($query) use($jabatan_id) {
                                 $query  ->where('parent_id',$jabatan_id )
-                                        ->Where('id_eselon', '=', 9 );
+                                        ->Where('id_eselon', '=', 9 )
+                                        ->Where('id_eselon', '=', 10 );
                             })
                             ->SELECT('id','skpd AS jabatan')
                             ->get();
@@ -320,48 +321,6 @@ class CapaianBulananAPIController extends Controller {
             $jm_kegiatan = 0 ; 
             foreach ($bawahan as $x) {
               
-                $dt_reaksi = RencanaAksi::WHERE('jabatan_id',$x->id)
-                                            ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
-                                            ->WHERE('renja_id',$renja_id)
-                                            ->count();
-                $ls_reaksi = RencanaAksi::WHERE('jabatan_id',$x->id)
-                                            ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
-                                            ->WHERE('renja_id',$renja_id)
-                                            ->SELECT('id')
-                                            ->get()->toArray(); 
-                $dt_keg_bulanan = KegiatanSKPBulanan::WHEREIN('rencana_aksi_id',$ls_reaksi)->SELECT('id')->get()->toArray();
-                $jm_realisasi   = RealisasiKegiatanBulanan::WHEREIN('kegiatan_bulanan_id',$dt_keg_bulanan)->count();
-
-                $data_jabatan_id['jabatan']           = Pustaka::capital_string($x->jabatan);
-                $data_jabatan_id['jm_keg']            = $dt_reaksi;
-                $data_jabatan_id['jm_realisasi']      = $jm_realisasi;
-
-
-
-                $pelaksana_list[] = $data_jabatan_id ;
-                $jm_kegiatan += $dt_reaksi;
-            }
-            $list_bawahan  = $pelaksana_list;    
-        //================================= KA UPTD PUSKESMAS ========================================// 
-        }else if ( $jenis_jabatan == 12 ){ // KA UPTD PUskesmas
-            //cari bawahan
-            $jabatan_id = $skp_bulanan->PejabatYangDinilai->id_jabatan;
-            $bawahan = Jabatan::
-                            WHERE('id',$jabatan_id)
-                            ->orwhere(function ($query) use($jabatan_id) {
-                                $query  ->where('parent_id',$jabatan_id )
-                                        ->Where('id_eselon', '=', 10 );
-                            })
-                            ->SELECT('id','skpd AS jabatan')
-                            ->get();
-
-            //return $jenis_jabatan;
-            //$bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
-
-            //list bawahan
-            $jm_kegiatan = 0 ; 
-            foreach ($bawahan as $x) {
-            
                 $dt_reaksi = RencanaAksi::WHERE('jabatan_id',$x->id)
                                             ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
                                             ->WHERE('renja_id',$renja_id)
