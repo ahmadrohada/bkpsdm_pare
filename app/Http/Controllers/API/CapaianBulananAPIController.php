@@ -237,7 +237,6 @@ class CapaianBulananAPIController extends Controller {
 
         $jenis_jabatan = $skp_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
 
-        return $jenis_jabatan;
         
         //Jika STAF AHLI
         $id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
