@@ -354,7 +354,7 @@ class CapaianBulananAPIController extends Controller {
                             ->SELECT('id','skpd AS jabatan')
                             ->get();
 
-            //return $bawahan;
+            return $jenis_jabatan ;
             //$bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
 
             //list bawahan
