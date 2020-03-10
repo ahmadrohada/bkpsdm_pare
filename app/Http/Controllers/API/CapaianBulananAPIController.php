@@ -309,7 +309,7 @@ class CapaianBulananAPIController extends Controller {
                             ->orwhere(function ($query) use($jabatan_id) {
                                 $query  ->where('parent_id',$jabatan_id )
                                         ->Where('id_eselon', '=', 9 )
-                                        ->Where('id_eselon', '=', 10 );
+                                        ->orWhere('id_eselon', '=', 10 );
                             })
                             ->SELECT('id','skpd AS jabatan')
                             ->get();
