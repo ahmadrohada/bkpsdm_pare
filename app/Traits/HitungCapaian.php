@@ -324,7 +324,7 @@ trait HitungCapaian
             $data = $this->capaian_kinerja_jft($capaian_id,$skp_bulanan_id,$bulan,$renja_id);
         }else if ( $jenis_jabatan == 4 ){ //jm kegiatan pelaksana JFU
             $data = $this->capaian_kinerja_jfu($capaian_id,$skp_bulanan_id,$bulan,$renja_id);
-        }else if ( $jenis_jabatan == 3){  //kasubid ESELON IV
+        }else if ( $jenis_jabatan == 3 | $jenis_jabatan == 12){  //kasubid ESELON IV
             $data =  $this->capaian_kinerja_eselon4($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 2){ //kabid ESELON III
             $data =  $this->capaian_kinerja_eselon3($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);

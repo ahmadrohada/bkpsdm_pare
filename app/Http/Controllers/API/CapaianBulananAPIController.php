@@ -300,7 +300,7 @@ class CapaianBulananAPIController extends Controller {
             $list_bawahan = "";
             $kegiatan_list = "";
         //================================= K A S U B I D ========================================// 
-        }else if ( $jenis_jabatan == 3){ //eselon IV
+        }else if ( $jenis_jabatan == 3 | $jenis_jabatan == 12 ){ //eselon IV
             //cari bawahan
             $jabatan_id = $skp_bulanan->PejabatYangDinilai->id_jabatan;
             $bawahan = Jabatan::
