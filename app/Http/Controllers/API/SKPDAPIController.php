@@ -58,13 +58,13 @@ class SKPDAPIController extends Controller {
                             ->SELECT('id AS parent_id')
                             ->first();
 
-            $jm_uk = SKPD::WHERE('parent_id',$dx->parent_id)
-                            ->count();
-            
-
-
-
-            return  $jm_uk;
+            if ( $dx != null ){
+                $jm_uk = SKPD::WHERE('parent_id',$dx->parent_id)->count();
+                return  $jm_uk;
+            }else{
+                return  0;
+            }
+           
         
         })->addColumn('jm_pegawai', function ($x) {
             
