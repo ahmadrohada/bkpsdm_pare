@@ -25,7 +25,7 @@
 					<div class="row" hidden>
 						<div class="col-md-4 form-group ak_field">
 						<label class="control-label">Angka Kredit :</label>
-						<input type="text" name="angka_kredit" id="angka_kredit" required class="form-control input-sm" placeholder="AK" maxlength="5" onkeypress='return angka(event)'>
+						<input type="text" name="angka_kredit" id="angka_kredit" required class="form-control input-sm" placeholder="AK" maxlength="6" onkeypress='return angka(event)'>
 						</div>
 					
 						<div class="col-md-4 form-group target">
