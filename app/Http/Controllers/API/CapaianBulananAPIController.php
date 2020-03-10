@@ -237,6 +237,8 @@ class CapaianBulananAPIController extends Controller {
 
         $jenis_jabatan = $skp_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
 
+        return $jenis_jabatan;
+        
         //Jika STAF AHLI
         $id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
         if ( ( $jenis_jabatan == 1 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli) ) ){
@@ -354,7 +356,7 @@ class CapaianBulananAPIController extends Controller {
                             ->SELECT('id','skpd AS jabatan')
                             ->get();
 
-            return $jenis_jabatan ;
+            //return $jenis_jabatan;
             //$bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
 
             //list bawahan
