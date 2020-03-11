@@ -120,8 +120,8 @@ class KegiatanAPIController extends Controller {
         //Pimpinan tertinggi / Kaban /eselon II 
         //---- Administrator // KABID // eselon III
         //--------Pengawas // KASUBID // eselonIV  ------- jabatan inilah yang akan diberikan kegiatan
-        //Pengecualian untuk irban
-        $a = ['143','144','145','146'];
+        //Pengecualian untuk irban dan KPUD
+        $a = ['143','144','145','146','1326','1327','1328','1329'];
         //pengecualian untuk KEC Telukjambe Barat
         $b = ['1235','1236','1237','1238','1239'];
         //KEC Cikampek
