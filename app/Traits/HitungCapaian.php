@@ -211,8 +211,8 @@ trait HitungCapaian
                             ->get()
                             ->toArray();
 
-                            //cari bawahan  , jabatanpelaksanan
-                            $pelaksana_id = Jabatan::
+        //cari bawahan  , jabatanpelaksanan
+        $pelaksana_id = Jabatan::
                             SELECT('m_skpd.id')
                             ->WHEREIN('m_skpd.parent_id', $child )
                             ->get()
@@ -234,10 +234,10 @@ trait HitungCapaian
                             ->get(); */
         $xdata = RealisasiRencanaAksiKaban::
                             leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
-                                $join   ->on('rencana_aksi.id','=','realisasi_rencana_aksi_kaban.rencana_aksi_id');
+                                $join   ->on('rencana_aksi.id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
                             })
                             ->SELECT(   
-                                        'realisasi_rencana_aksi_kaban.realisasi AS realisasi',
+                                        'realisasi_rencana_aksi_eselon2.realisasi AS realisasi',
                                         'rencana_aksi.target'
 
                             ) 

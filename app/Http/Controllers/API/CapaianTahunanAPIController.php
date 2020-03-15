@@ -26,7 +26,7 @@ use App\Models\RealisasiKegiatanTahunanJFT;
 use App\Models\PerilakuKerja;
 use App\Models\RencanaAksi;
 use App\Models\RealisasiRencanaAksiKasubid;
-use App\Models\RealisasiRencanaAksiKabid;
+use App\Models\RealisasiRencanaAksiEselon3;
 use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\RealisasiKegiatanBulanan;
@@ -930,7 +930,7 @@ class CapaianTahunanAPIController extends Controller {
                     }
                             
                     if ( $i >= 1 ){
-                        $st_ra   = new RealisasiRencanaAksiKabid;
+                        $st_ra   = new RealisasiRencanaAksiEselon3;
                         $st_ra -> insert($data);
                     } */
                 }else if ( Input::get('jenis_jabatan') == '1'){ //KAABAN

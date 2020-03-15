@@ -42,7 +42,7 @@
 						<div class="form-horizontal col-md-12" style="margin-top:20px;">
 							<div class="form-group form-group-sm header_list" hidden>
 									
-								<label>Pelaksana Kegiatan </label> <label class="pull-right">Kegiatan / Realisasi</label>
+								<label>Bawahan Langsung </label> <label class="pull-right">Kegiatan / Realisasi</label>
 							</div>
 							
 							<div class="form-group form-group-sm" style="margin-top:-10px;">
@@ -230,6 +230,7 @@
 
 	$(document).on('click', '#save_capaian_bulanan', function(){
 		var data = $('#create-capaian_bulanan_confirm-form').serialize();
+		show_loader();
 
 		$.ajax({
 			url		: '{{ url("api_resource/simpan_capaian_bulanan") }}',
@@ -264,7 +265,7 @@
 				var test = $.parseJSON(jqXHR.responseText);
 				
 				var data= test.errors;
-
+				swal.close();
 				$.each(data, function(index,value){
 					//alert (index+":"+value);
 					

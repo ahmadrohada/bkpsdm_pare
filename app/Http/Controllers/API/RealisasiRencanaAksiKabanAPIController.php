@@ -40,11 +40,11 @@ class RealisasiRencanaAksiKabanAPIController extends Controller {
 
     public function RealisasiRencanaAksiDetail(Request $request)
     {
-       
+        
 
-        $x = RealisasiRencanaAksiKaban::WHERE('realisasi_rencana_aksi_kaban.id', $request->realisasi_rencana_aksi_id)
+        $x = RealisasiRencanaAksiKaban::WHERE('realisasi_rencana_aksi_eselon2.id', $request->realisasi_rencana_aksi_id)
                     ->leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS skp_tahunan_rencana_aksi', function($join){
-                        $join   ->on('skp_tahunan_rencana_aksi.id','=','realisasi_rencana_aksi_kaban.rencana_aksi_id');
+                        $join   ->on('skp_tahunan_rencana_aksi.id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
                        
                     })
                     ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
@@ -75,10 +75,10 @@ class RealisasiRencanaAksiKabanAPIController extends Controller {
                                 'realisasi_kegiatan_bulanan.satuan AS realisasi_satuan',
                                 'realisasi_kegiatan_bulanan.bukti',
                                 'realisasi_kegiatan_bulanan.alasan_tidak_tercapai',
-                                'realisasi_rencana_aksi_kaban.id AS realisasi_rencana_aksi_id',
-                                'realisasi_rencana_aksi_kaban.rencana_aksi_id',
-                                'realisasi_rencana_aksi_kaban.realisasi AS realisasi_rencana_aksi_target',
-                                'realisasi_rencana_aksi_kaban.satuan AS realisasi_rencana_aksi_satuan'
+                                'realisasi_rencana_aksi_eselon2.id AS realisasi_rencana_aksi_id',
+                                'realisasi_rencana_aksi_eselon2.rencana_aksi_id',
+                                'realisasi_rencana_aksi_eselon2.realisasi AS realisasi_rencana_aksi_target',
+                                'realisasi_rencana_aksi_eselon2.satuan AS realisasi_rencana_aksi_satuan'
 
                             ) 
                     ->first();
@@ -89,23 +89,6 @@ class RealisasiRencanaAksiKabanAPIController extends Controller {
             $pelaksana = "-";
         }
 
-        /* $x = RencanaAksi::
-                            SELECT(     'id AS rencana_aksi_id',
-                                        'label',
-                                        'waktu_pelaksanaan',
-                                        'jabatan_id',
-                                        'kegiatan_tahunan_id'
-                                    ) 
-                            ->WHERE('id', $request->rencana_aksi_id)
-                            ->first();
-
-        if ( $x->jabatan_id > 0 ){
-            $pelaksana = Pustaka::capital_string($x->Pelaksana->jabatan);
-        }else{
-            $pelaksana = '-';
-        } */
-		
-		//return  $rencana_aksi;
         $rencana_aksi = array(
             'realisasi_rencana_aksi_id'       => $x->realisasi_rencana_aksi_id,
             'label'                         => $x->rencana_aksi_label,

@@ -7,7 +7,7 @@ use App\Models\PeriodeTahunan;
 use App\Models\PerjanjianKinerja;
 use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPBulanan;
-use App\Models\RealisasiRencanaAksiKabid;
+use App\Models\RealisasiRencanaAksiEselon3;
 
 
 
@@ -42,7 +42,7 @@ class RealisasiRencanaAksiKabidAPIController extends Controller {
     {
        
 
-        $x = RealisasiRencanaAksiKabid::WHERE('realisasi_rencana_aksi_kabid.id', $request->realisasi_rencana_aksi_id)
+        $x = RealisasiRencanaAksiEselon3::WHERE('realisasi_rencana_aksi_kabid.id', $request->realisasi_rencana_aksi_id)
                     ->leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS skp_tahunan_rencana_aksi', function($join){
                         $join   ->on('skp_tahunan_rencana_aksi.id','=','realisasi_rencana_aksi_kabid.rencana_aksi_id');
                        
@@ -173,7 +173,7 @@ class RealisasiRencanaAksiKabidAPIController extends Controller {
         }
 
 
-        $st_kt    = new RealisasiRencanaAksiKabid;
+        $st_kt    = new RealisasiRencanaAksiEselon3;
 
         $st_kt->rencana_aksi_id         = Input::get('rencana_aksi_id');
         $st_kt->capaian_id              = Input::get('capaian_id');
@@ -219,7 +219,7 @@ class RealisasiRencanaAksiKabidAPIController extends Controller {
         }
 
         
-        $st_ra    = RealisasiRencanaAksiKabid::find(Input::get('realisasi_rencana_aksi_id'));
+        $st_ra    = RealisasiRencanaAksiEselon3::find(Input::get('realisasi_rencana_aksi_id'));
         if (is_null($st_ra)) {
             return $this->sendError('Capaian Rencana Aksi tidak ditemukan.');
         }
@@ -260,7 +260,7 @@ class RealisasiRencanaAksiKabidAPIController extends Controller {
         }
 
         
-        $st_ra    = RealisasiRencanaAksiKabid::find(Input::get('realisasi_rencana_aksi_id'));
+        $st_ra    = RealisasiRencanaAksiEselon3::find(Input::get('realisasi_rencana_aksi_id'));
         if (is_null($st_ra)) {
             return $this->sendError('Capaian Rencana Aksi tidak ditemukan.');
         }

@@ -516,7 +516,9 @@ class PerjanjianKinerjaAPIController extends Controller {
                                 'sasaran.pk_status AS pk_status',
                                 'ind_sasaran.label AS ind_sasaran_label',
                                 'ind_sasaran.target AS target',
-                                'ind_sasaran.satuan AS satuan'
+                                'ind_sasaran.satuan AS satuan',
+                                \DB::raw("COUNT(ind_sasaran.id) as indikator_count")
+                                
                             ])
 
                     ->ORDERBY('renja_tujuan.id','DESC')
@@ -641,7 +643,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         </table>');
         //"tpp".$bulan_depan."_".$skpd."
         //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
-        return $pdf->download('PerjanjianKinerja'.$Renja->nip_ka_skpd.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
+        return $pdf->stream('PerjanjianKinerja'.$Renja->nip_ka_skpd.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
     }
 
     public function cetakPerjanjianKinerjaSKPD(Request $request)
@@ -791,7 +793,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         </table>');
         //"tpp".$bulan_depan."_".$skpd."
         //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
-        return $pdf->stream('PerjanjianKinerja'.$Renja->nip_ka_skpd.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
+        return $pdf->download('PerjanjianKinerja'.$Renja->nip_ka_skpd.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
     }
 
 

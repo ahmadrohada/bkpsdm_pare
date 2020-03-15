@@ -23,14 +23,14 @@
 						<tr>
 							<th rowspan="2">NO</th>
 							<th rowspan="2">RENCANA AKSI</th>
-							<th rowspan="2">PENGAWAS</th>
-							<th rowspan="2">PELAKSANA</th>
-							<th colspan="3">OUTPUT</th>
+							<th rowspan="2">TARGET</th>
+							<th colspan="2">REALISASI BAWAHAN</th>
+							<th colspan="2">REALISASI PERSONAL</th>
 						</tr>
 						<tr>
-						
-							<th>TARGET</th>
-							<th>REALISASI</th>
+							<th>JABATAN</th>
+							<th>OUTPUT</th>
+							<th>OUTPUT</th>
 							<th>%</th>
 						</tr>
 					</thead>
@@ -47,7 +47,7 @@
 	
 </div>
 
-@include('admin.modals.realisasi_rencana_aksi_kaban')
+@include('admin.modals.realisasi_rencana_aksi_eselon2')
 
 <script type="text/javascript">
 
@@ -61,9 +61,11 @@
 				serverSide      : true,
 				searching      	: true,
 				paging          : true,
+				bInfo			: false,
 				order 			: [0 , 'asc' ],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3,4,5,6 ] }
+									{ className: "text-center", targets: [ 0,2,3,4,5,6 ] }, 
+									{ bSortable: false, targets: [ "_all" ] }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/realisasi_kegiatan_bulanan_1") }}',
@@ -76,22 +78,17 @@
 									 },
 								},
 				columns			: [
-									{ data: 'kegiatan_bulanan_id' ,width:"10px",
+					{ data: 'kegiatan_bulanan_id' ,width:"10px",
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
-									}
+										}
 									},
-									{ data: "rencana_aksi_label", name:"rencana_aksi_label"}, 
-									{ data: "penanggung_jawab", name:"penanggung_jawab"},
-									{ data: "pelaksana", name:"pelaksana", width:"130px"},
-									{ data: "target_rencana_aksi", name:"target_rencana_aksi", width:"130px"},
-									
-									
-									{ data: "realisasi_rencana_aksi", name:"realisasi_rencana_aksi", width:"130px"},
-									{ data: "persentasi_realisasi_rencana_aksi", name:"persentasi_realisasi_rencana_aksi", width:"80px"},
-									
-									
-								
+									{ data: "rencana_aksi_label", name:"label"}, 
+									{ data: "rencana_aksi_target", name:"target", width:"110px"},
+									{ data: "jabatan_bawahan", name:"", width:"220px"},
+									{ data: "rencana_aksi_realisasi_bawahan", name:"", width:"110px"},
+									{ data: "rencana_aksi_realisasi", name:"realisasi_target", width:"110px"},
+									{ data: "persentasi_realisasi_rencana_aksi", name:"persentasi_realisasi_rencana_aksi", width:"60px"},
 								],
 								initComplete: function(settings, json) {
 								

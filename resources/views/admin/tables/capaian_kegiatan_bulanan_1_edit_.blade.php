@@ -23,15 +23,15 @@
 						<tr>
 							<th rowspan="2">NO</th>
 							<th rowspan="2">RENCANA AKSI</th>
-							<th rowspan="2">TARGET</th>
-							<th colspan="2">REALISASI BAWAHAN</th>
-							<th colspan="2">REALISASI PERSONAL</th>
+							<th rowspan="2">PENGAWAS</th>
+							<th rowspan="2">PELAKSANA</th>
+							<th colspan="3">OUTPUT</th>
 							<th rowspan="2"><i class="fa fa-cog"></i></th>
 						</tr>
 						<tr>
-							<th>JABATAN</th>
-							<th>OUTPUT</th>
-							<th>OUTPUT</th>
+						
+							<th>TARGET</th>
+							<th>REALISASI</th>
 							<th>%</th>
 						</tr>
 					</thead>
@@ -82,15 +82,16 @@
 									{ data: 'kegiatan_bulanan_id' ,width:"10px",
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
-										}
+									}
 									},
-									{ data: "rencana_aksi_label", name:"label"}, 
-									{ data: "rencana_aksi_target", name:"target", width:"110px"},
-									{ data: "jabatan_bawahan", name:"", width:"220px"},
-									{ data: "rencana_aksi_realisasi_bawahan", name:"", width:"110px"},
+									{ data: "rencana_aksi_label", name:"rencana_aksi_label"}, 
+									{ data: "penanggung_jawab", name:"penanggung_jawab"},
+									{ data: "pelaksana", name:"pelaksana", width:"130px"},
+									{ data: "target_rencana_aksi", name:"target_rencana_aksi", width:"130px"},
 									
-									{ data: "rencana_aksi_realisasi", name:"realisasi_target", width:"110px"},
-									{ data: "persentasi_realisasi_rencana_aksi", name:"persentasi_realisasi_rencana_aksi", width:"60px"},
+									
+									{ data: "realisasi_rencana_aksi", name:"realisasi_rencana_aksi", width:"130px"},
+									{ data: "persentasi_realisasi_rencana_aksi", name:"persentasi_realisasi_rencana_aksi", width:"80px"},
 									{  data: 'action',width:"40px",
 											"render": function ( data, type, row ) {
 												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_rencana_aksi"  data-id="'+row.realisasi_rencana_aksi_id+'"><i class="fa fa-pencil" ></i></a></span>';
@@ -185,7 +186,7 @@
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
 
 					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['realisasi_rencana_aksi_satuan']);
-					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').html(data['kegiatan_bulanan_target']);
+					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').html(data['target_rencana_aksi']);
 					
 					$('.modal-realisasi_rencana_aksi').find('h4').html('Edit realisasi Rencana Aksi');
 					$('.modal-realisasi_rencana_aksi').find('.btn-submit').attr('id', 'submit-update');

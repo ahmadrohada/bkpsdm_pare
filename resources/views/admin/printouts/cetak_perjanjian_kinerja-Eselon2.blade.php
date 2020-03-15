@@ -114,7 +114,6 @@
 						</td>
 						<td>
 							<u>{{ $nama_pejabat }}</u><br>
-							{{ $jenis_jabatan }}<br>
 							<font style="font-size:10pt;">NIP. {{ $nip_pejabat }}</font>
 						</td>
 					</tr>
@@ -214,15 +213,17 @@
 		</thead>
 
 		<tbody>
-			@php $i=1 @endphp
-			@foreach($data as $p)
+			@php 
+				$i=1 ;
+			@endphp
 
-				<tr>
-                    <td align='right'>{{ $i++ }}</td>
-					<td>{{ $p->sasaran_label }}</td>
-					<td>{{ $p->ind_sasaran_label }}</td>
-					<td align='center'>{{ $p->target." ".$p->satuan  }}</td>
-                </tr>
+			@foreach($data as $p)
+					<tr>
+						<td align='right'>{{ $i++ }}</td>
+						<td>{{ $p->sasaran_label }}</td>
+						<td>{{ $p->ind_sasaran_label }}</td>
+						<td align='center'>{{ $p->target." ".$p->satuan  }}</td>
+					</tr>
 			
 			@endforeach
 		</tbody>

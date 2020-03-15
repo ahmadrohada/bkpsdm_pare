@@ -14,7 +14,7 @@
 		</div>
 
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
-			<label class="col-md-4">Periode CAPAIAN</label>
+			<label class="col-md-4">Periode Capaian</label>
 			<div class="col-md-8">
 				<span id="periode" class="form-control"></span>
 			</div>

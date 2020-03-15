@@ -41,22 +41,35 @@
 					<br>
 					<div class="row">
 						<div class="col-md-12 form-group label_kegiatan ">
-							<strong>Kegiatan Bulanan  </strong>
-							<p class="text-muted " style="margin-top:8px;">
+							<strong>Rencana Aksi  </strong>
+							<p class="text-info " style="margin-top:8px;">
 								<span class="kegiatan_bulanan_label"></span>
 							</p>
-							<p>
+							{{-- <p>
+								<i class="fa fa-user"></i> <span class="pelaksana" style="margin-right:10px;"></span>
+							</p> --}}
+
+							<i class="fa fa-industry"></i> 
+								Target : <span class="kegiatan_bulanan_output" style="margin-right:10px;"></span>
+						</div>
+					</div>
+					<br>
+					{{-- <div class="row">
+						<div class="col-md-12 form-group label_kegiatan ">
+							<strong>Realisasi Bawahan</strong>
+							<p  style="margin-top:8px;">
 								<i class="fa fa-user"></i> <span class="pelaksana" style="margin-right:10px;"></span>
 							</p>
 
 							<i class="fa fa-industry"></i> 
-								Target : <span class="kegiatan_bulanan_output" style="margin-right:10px;"></span>
 								Realisasi : <span class="realisasi_kegiatan_bulanan_output" style="margin-right:10px;"></span>
 						</div>
 					</div>
-					<hr>
+					<br> --}}
+					
+					<strong>Realisasi Personal</strong>
 					<div class="row"> 
-
+						
 						<div class="col-md-6 col-xs-6 form-group" style="margin-top:8px;">	
 							<label class="control-label">Target Quantity </label>
 							<div class="input-group">

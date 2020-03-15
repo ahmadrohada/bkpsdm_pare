@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RealisasiRencanaAksiKaban extends Model
 {
-    protected $table = 'realisasi_rencana_aksi_kaban';
+    protected $table = 'realisasi_rencana_aksi_eselon2';
 
     public function CapaianBulanan()
     {

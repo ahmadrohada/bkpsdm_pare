@@ -1093,7 +1093,7 @@ class RencanaAksiAPIController extends Controller {
                     ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
                         $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
                     })
-                    ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kaban AS realisasi_rencana_aksi', function($join){
+                    ->leftjoin('db_pare_2018.realisasi_rencana_aksi_eselon2 AS realisasi_rencana_aksi', function($join){
                         $join   ->on('realisasi_rencana_aksi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                     })
                     ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
