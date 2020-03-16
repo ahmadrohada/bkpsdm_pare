@@ -775,9 +775,9 @@ class CapaianBulananAPIController extends Controller {
                                                 $join   ->ON('jabatan.id','=','skp_tahunan.u_jabatan_id');
                                                 $join   ->WHERE('jabatan.id_jabatan','=',$jabatan_id);
                                             })
-                                            ->join('db_pare_2018.skp_bulanan AS skp_bulanan', function($join){
+                                            ->join('db_pare_2018.skp_bulanan AS skp_bulanan', function($join) use($bulan){
                                                 $join   ->ON('skp_tahunan.id','=','skp_bulanan.skp_tahunan_id');
-                                                $join   ->WHERE('skp_bulanan.bulan','=','02');
+                                                $join   ->WHERE('skp_bulanan.bulan','=',$bulan);
                                             }) 
                                             ->join('db_pare_2018.capaian_bulanan AS capaian_bulanan', function($join) use($bulan){
                                                 $join   ->ON('capaian_bulanan.skp_bulanan_id','=','skp_bulanan.id');
