@@ -190,7 +190,7 @@ function load_kegiatan_kasubid(jabatan_id){
 	function unlink_kegiatan_kasubid(kegiatan_id){
 		Swal.fire({
 			title: "Hapus  Kegiatan",
-			text: "Hanya menghapus kegiatan pada jabatan saja",
+			text: "Kegiatan dan Rencana Aksi pada SKP Tahunan dan Capaian yang sudah dibuat akan ikut terhapus",
 			type: "warning",
 			showCancelButton: true,
 			cancelButtonText: "Batal",
@@ -268,7 +268,7 @@ function load_kegiatan_kasubid(jabatan_id){
 
 		Swal.fire({
 			title: "Hapus  Kegiatan",
-			text:/* $(this).data('label')+ */ "Hanya menghapus kegiatan pada jabatan saja",
+			text:"Kegiatan dan Rencana Aksi pada SKP Tahunan dan Capaian yang sudah dibuat akan ikut terhapus",
 			type: "warning",
 			//type: "question",
 			showCancelButton: true,

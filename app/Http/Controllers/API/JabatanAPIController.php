@@ -180,48 +180,11 @@ class JabatanAPIController extends Controller {
       $jabatan_id   = $request->jabatan_sendiri;
       $jabatan      = $request->jabatan;
 
-      //eselon sendiri
-      /* $jabatan_a       = HistoryJabatan:: 
-                                leftjoin('demo_asn.m_skpd AS skpd', function($join) use($jabatan){
-                                  $join   ->on('tb_history_jabatan.id_jabatan','=','skpd.id');
-                                })
-                                ->WHERE('tb_history_jabatan.id',$request->jabatan_id)
-                                ->SELECT('skpd.id_eselon AS id_eselon')
-                                ->first();
-
       
-
-      if ( $jabatan_a->id_eselon == 6 ){
-        $eselon_a = 7 ;
-      }else{
-        $eselon_a = $jabatan_a->id_eselon;
-      }
-      
-
-      $jabatan       = HistoryJabatan:: 
-                                rightjoin('demo_asn.m_skpd AS skpd', function($join) use($jabatan,$eselon_a){
-                                  $join   ->on('tb_history_jabatan.id_jabatan','=','skpd.parent_id');
-                                  $join  ->where('skpd.skpd','LIKE','%'.$jabatan.'%');
-                                  //$join  ->WHERE('skpd.id_eselon','>',$eselon_a);
-                                })
-                                ->WHERE('tb_history_jabatan.id',$request->jabatan_id)
-                                
-                                ->SELECT('skpd.id AS jabatan_id','skpd.skpd')
-                                ->get(); */
-                        
-        //return $jabatan;
       $eselon = Skpd::WHERE('m_skpd.id',$jabatan_id)->SELECT('m_skpd.id_eselon AS id_eselon')->first()->id_eselon;
       //id eselon
-      //1 : I.a
-      //2 : II.a
-      //3 : II.b 
-      //4 : III.a 
-      //5 : III.b 
-      //6 : IV.a
-      //7 : IV.b 
-      //8 : V.a 
-      //9 : JFU
-      //10: JFT
+      //1 : I.a 2 : II.a 3 : II.b 4 : III.a  5 : III.b  6 : IV.a  7 : IV.b  8 : V.a  9 : JFU  10: JFT
+      
 
       $bawahan = Skpd::WHERE('m_skpd.parent_id',$jabatan_id)
                       ->WHERE('m_skpd.skpd','LIKE','%'.$jabatan.'%')
@@ -231,18 +194,14 @@ class JabatanAPIController extends Controller {
                               );
 
       if ( $eselon == 6 ){
-        $bawahan->WHERE('m_skpd.id_eselon','=','9');
+        $bawahan->WHERE('m_skpd.id_eselon','=',9);
       }
             
        $data = $bawahan->get();
-      
-      
+          $no = 0;
+          $pegawai_list = [];
 
-      
-        $no = 0;
-         $pegawai_list = [];
-
-         $pegawai_list[] = array(
+          $pegawai_list[] = array(
                 'id'		    => $request->jabatan_sendiri,
                 'jabatan'	  => "Dilaksanakan Sendiri",
                 );
@@ -252,7 +211,7 @@ class JabatanAPIController extends Controller {
              $no++;
              $pegawai_list[] = array(
                              'id'		    => $x->jabatan_id,
-                             'jabatan'	=> Pustaka::capital_string($x->skpd),
+                             'jabatan'	=> Pustaka::capital_string($x->skpd).$eselon,
                              );
              } 
          

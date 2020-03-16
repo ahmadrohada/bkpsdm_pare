@@ -215,15 +215,48 @@
 		<tbody>
 			@php 
 				$i=1 ;
+				$count = 1 ;
 			@endphp
 
 			@foreach($data as $p)
-					<tr>
-						<td align='right'>{{ $i++ }}</td>
-						<td>{{ $p->sasaran_label }}</td>
-						<td>{{ $p->ind_sasaran_label }}</td>
-						<td align='center'>{{ $p->target." ".$p->satuan  }}</td>
-					</tr>
+
+				@php 
+				if ( $jm->ind_sasaran > 1 ) {
+					
+					if ( $count == 1  ) {
+					
+						echo '
+							<tr>
+								<td rowspan="'.$jm->ind_sasaran.'" align="right">'. $i++ .'</td>
+								<td rowspan="'.$jm->ind_sasaran.'" >'. $p->sasaran_label  .'</td>
+								<td>'. $p->ind_sasaran_label  .'</td>
+								<td align="center">'. $p->target.' '.$p->satuan   .'</td>
+							</tr>';
+						$count ++;
+					}else{
+						echo '
+						<tr>
+							
+							<td>'. $p->ind_sasaran_label  .'</td>
+							<td align="center">'. $p->target.' '.$p->satuan   .'</td>
+						</tr>';
+						
+					}
+					
+					
+				}else{
+					echo '
+						<tr>
+							<td align="right">'. $i++ .'</td>
+							<td>'. $p->sasaran_label  .'</td>
+							<td>'. $p->ind_sasaran_label  .'</td>
+							<td align="center">'. $p->target.' '.$p->satuan   .'</td>
+						</tr>';
+					$count = 1 ;
+					
+				}
+						
+				@endphp	
 			
 			@endforeach
 		</tbody>

@@ -292,6 +292,7 @@ class CapaianBulananAPIController extends Controller {
 
             $list_bawahan = "";
             $kegiatan_list = "";
+			$jm_realisasi = "";
 
 
         //================================= PELAKSANA ===========================================//
@@ -300,6 +301,7 @@ class CapaianBulananAPIController extends Controller {
        
             $list_bawahan = "";
             $kegiatan_list = "";
+			$jm_realisasi = "";
         //================================= K A S U B I D ========================================// 
         }else if ( $jenis_jabatan == 3 ){ //eselon IV
             //cari bawahan
@@ -444,7 +446,9 @@ class CapaianBulananAPIController extends Controller {
         
         //===================================================================================// 
         }else{
+			$list_bawahan = "";
             $jm_kegiatan = 0 ;
+			$jm_realisasi = "";
         }
         //
         

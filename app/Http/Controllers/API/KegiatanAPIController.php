@@ -1505,11 +1505,16 @@ class KegiatanAPIController extends Controller {
         }
         
         $sr    = Kegiatan::find(Input::get('kegiatan_id'));
+        $data = $sr->jabatan_id;
         if (is_null($sr)) {
             return $this->sendError('Kegiatan Tidak ditemukan.');
         }
         $sr->jabatan_id     = 0;
         if ( $sr->save()){
+            //Hapus semua kegiatan tahunan yang nge link pada kegiatan ini
+            KegiatanSKPTahunan::WHERE('kegiatan_id','=',Input::get('kegiatan_id'))->delete();
+
+
             return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);
