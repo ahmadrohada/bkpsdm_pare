@@ -359,10 +359,15 @@ class KegiatanSKPBulananAPIController extends Controller {
             
         $jabatan_id = $request->jabatan_id;
         $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan','status')->first();
-
+       
+        //id eselon
+        //1 : I.a 2 : II.a 3 : II.b 4 : III.a  5 : III.b  6 : IV.a  7 : IV.b  8 : V.a  9 : JFU  10: JFT
+        
         //cari bawahan  , jabatanpelaksanan atau jabatan sendiri ( untuk keg yang dilaksanakan sendiri)
         $child = Jabatan::SELECT('id')->WHERE('parent_id',  $jabatan_id  )->ORWHERE('id',  $jabatan_id )->get()->toArray(); 
         
+       
+
 
         $dt = RencanaAksi::
                     WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child )
@@ -386,6 +391,7 @@ class KegiatanSKPBulananAPIController extends Controller {
                                 'kegiatan_bulanan.target AS target_pelaksana',
                                 'kegiatan_bulanan.satuan AS satuan_pelaksana'
                             ) 
+                    ->GROUPBY('skp_tahunan_rencana_aksi.id')
                     ->get();
         
         $skp_id = $request->skp_bulanan_id;

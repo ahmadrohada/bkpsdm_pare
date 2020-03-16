@@ -211,7 +211,7 @@ class JabatanAPIController extends Controller {
              $no++;
              $pegawai_list[] = array(
                              'id'		    => $x->jabatan_id,
-                             'jabatan'	=> Pustaka::capital_string($x->skpd).$eselon,
+                             'jabatan'	=> Pustaka::capital_string($x->skpd),
                              );
              } 
          
