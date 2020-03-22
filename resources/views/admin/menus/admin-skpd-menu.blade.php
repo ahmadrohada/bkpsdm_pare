@@ -1,7 +1,7 @@
-<li class="header">ADMIN SKPD</li>
+<li class="header"></li>
 
 <li>
-    {!! HTML::icon_link( "skpd/pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_home'), "<span>".Lang::get('sidebar-nav.link_title_home')."</span>", array('title' => Lang::get('sidebar-nav.link_title_home') , 'data-toggle' => 'tooltip')) !!}
+    {!! HTML::icon_link( "skpd/pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_home'), "<span>ADMIN SKPD</span>", array('title' => Lang::get('sidebar-nav.link_title_home') , 'data-toggle' => 'tooltip')) !!}
 </li>
 
 <li>

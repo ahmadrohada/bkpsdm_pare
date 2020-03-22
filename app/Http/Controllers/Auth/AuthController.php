@@ -53,7 +53,7 @@ class AuthController extends Controller {
 	public function __construct(Guard $auth, UserRepository $userRepository)
 	{
 		$this->middleware('guest',
-			['except' =>
+				['except' =>
 				['getLogout', 'resendEmail', 'activateAccount']]);
 
         $this->auth = $auth;
@@ -67,7 +67,10 @@ class AuthController extends Controller {
     public function getLogout()
     {
 	    \Auth::logout();
-	    return redirect('auth/login')->with('status',  \Lang::get('auth.loggedOut'));
+		//return redirect('auth/login')->with('status',  \Lang::get('auth.loggedOut'));
+
+		//agar gk baliklagi jika dusah logout
+		return redirect(\URL::previous());
     }
 
 	/**

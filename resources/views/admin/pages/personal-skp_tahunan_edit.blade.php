@@ -21,6 +21,7 @@
 				
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<?php 
+					$id_jabatan_sekda = ['16'];
 					$id_jabatan_irban = ['143','144','145','146'];
 					$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
 					$id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
@@ -71,9 +72,7 @@
 					@include('admin.modules.edit_forms.skp_tahunan_detail')			
 				</div>
 				<div class=" tab-pane" id="rencana_aksi_tab">
-
 					@include('admin.modules.tab.rencana_aksi_time_table')
-					
 				</div>
 				
 								
@@ -84,7 +83,9 @@
 							case '1': 
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli)){ //JIKA STAF AHLI
 										?>@include('admin.modules.tab.kegiatan_tahunan_5_edit')<?php
-									}else{
+									}else if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_sekda)){ //JIKA SEKDA
+										?>@include('admin.tables.skp_tahunan-kegiatan_sekda_detail')<?php
+									}else{ //normal kondisi
 										?>@include('admin.tables.skp_tahunan-kegiatan_1_detail')<?php
 									}
 									

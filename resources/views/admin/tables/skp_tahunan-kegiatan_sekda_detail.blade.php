@@ -5,7 +5,7 @@
 
 		<div class="table-responsive" >
 			<input type='text' id = 'cari_ktj' class="form-control" placeholder="cari">
-			<div id="kegiatan_tahunan_kaban" class="demo"></div>
+			<div id="kegiatan_tahunan_sekda" class="demo"></div>
 			
 		</div>
 		
@@ -116,15 +116,15 @@
 <script type="text/javascript">
 	
 	function refreshTreeKegBulanan(){
-		jQuery('#kegiatan_tahunan_kaban').jstree(true).refresh(true);
-		jQuery('#kegiatan_tahunan_kaban').jstree().deselect_all(true);
+		jQuery('#kegiatan_tahunan_sekda').jstree(true).refresh(true);
+		jQuery('#kegiatan_tahunan_sekda').jstree().deselect_all(true);
 		//$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
 	} 
 
 	
-		$('#kegiatan_tahunan_kaban')
+		$('#kegiatan_tahunan_sekda')
 		.on("loaded.jstree", function(){
-			//$('#kegiatan_tahunan_kaban').jstree('open_all');
+			//$('#kegiatan_tahunan_sekda').jstree('open_all');
 			
 		})
 		.on("changed.jstree", function (e, data) {
@@ -136,11 +136,11 @@
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_1") }}", 
+						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_sekda") }}", 
 						"data" 	: function (node) {
-							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
-                          "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
-													"skp_tahunan_id" : {!! $skp->id !!}
+							return  {   "renja_id" 		: {!! $skp->Renja->id !!} , 
+                         				"jabatan_id" 	: {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+										"skp_tahunan_id": {!! $skp->id !!}
                       };
 						},
 						"dataType" : "json"
@@ -162,7 +162,7 @@
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 		var v = $('#cari_ktj').val();
-		$('#kegiatan_tahunan_kaban').jstree(true).search(v);
+		$('#kegiatan_tahunan_sekda').jstree(true).search(v);
 		}, 250);
 	});
 	
@@ -183,16 +183,7 @@
 						    $("#rencana_aksi").show();
                             load_rencana_aksi( tx[1]);
                        
-				break; 
-				case 'IndikatorKegiatan':
-					$("#kegiatan_tahunan").hide();
-					$("#indikator_kegiatan").hide();
-					$("#rencana_aksi").show();
-					$("#rencana_aksi_detail").hide();
-					load_rencana_aksi( tx[1]);	
-					rencana_aksi_list( tx[1]);
-
-				break;
+                break; 
                 case 'KegiatanRenja':
 									show_modal_create(tx[1]);
                   
@@ -232,7 +223,7 @@
 									{ "orderable": false, targets: [ 0,1,2,3,4,5,6 ]  }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_tahunan_1") }}',
+									url	: '{{ url("api_resource/kegiatan_tahunan_sekda") }}',
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 

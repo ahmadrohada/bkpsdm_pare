@@ -76,6 +76,84 @@ class KegiatanSKPTahunanAPIController extends Controller {
         return $datatables->make(true); 
         
     }
+    public function KegiatanTahunanSekda(Request $request)
+    {
+             
+        $x = Jabatan::
+                            
+                            leftjoin('demo_asn.m_skpd AS kasubid', function($join){
+                                $join   ->on('kasubid.parent_id','=','m_skpd.id');
+                            })
+                            ->SELECT('kasubid.id')
+                            ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                            ->get()
+                            ->toArray(); 
+        $child = Jabatan::
+                            
+                            leftjoin('demo_asn.m_skpd AS kasubid', function($join){
+                                $join   ->on('kasubid.parent_id','=','m_skpd.id');
+                            })
+                            ->SELECT('kasubid.id')
+                            ->WHEREIN('m_skpd.id', $x )
+                            ->get()
+                            ->toArray(); 
+
+        //return $child;
+
+        //KEGIATAN KABAN
+
+        $kegiatan = Kegiatan::SELECT('id','label')
+                            ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
+                            ->WHEREIN('renja_kegiatan.jabatan_id',$child )
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                
+                            })
+                            ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
+                                        'renja_kegiatan.label AS kegiatan_label',
+                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label',
+                                        'kegiatan_tahunan.id AS kegiatan_tahunan_id',
+                                        'kegiatan_tahunan.target',
+                                        'kegiatan_tahunan.satuan',
+                                        'kegiatan_tahunan.angka_kredit',
+                                        'kegiatan_tahunan.quality',
+                                        'kegiatan_tahunan.cost',
+                                        'kegiatan_tahunan.target_waktu',
+
+                                        'renja_kegiatan.target AS renja_target',
+                                        'renja_kegiatan.satuan AS renja_satuan',
+                                        'renja_kegiatan.cost AS renja_biaya'
+                                    ) 
+                            ->get();
+
+                
+                
+        $datatables = Datatables::of($kegiatan)
+            ->addColumn('label', function ($x) {
+                return $x->kegiatan_tahunan_label;
+            })->addColumn('ak', function ($x) {
+                return $x->ak;
+            })->addColumn('renja_output', function ($x) {
+                return $x->renja_target.' '.$x->renja_satuan;
+            })->addColumn('output', function ($x) {
+                return $x->target.' '.$x->satuan;
+            })->addColumn('mutu', function ($x) {
+                return $x->quality;
+            })->addColumn('waktu', function ($x) {
+                return $x->target_waktu;
+            })->addColumn('renja_biaya', function ($x) {
+                return number_format($x->renja_biaya,'0',',','.');
+            })->addColumn('biaya', function ($x) {
+                return number_format($x->cost,'0',',','.');
+            });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);  
+        
+    }
 
     public function KegiatanTahunan1(Request $request)
     {

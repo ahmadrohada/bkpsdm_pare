@@ -322,6 +322,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	Route::get('skpd_renja_distribusi_kegiatan_tree','API\KegiatanAPIController@RenjaDistribusiKegiatanTree');
 
+	//Kegiatan SEKDA
+	Route::get('skp_tahunan_kegiatan_sekda','API\KegiatanAPIController@SKPTahunanKegiatanTreeSekda');
+
+
 	//Kegiatan KA SKPD
 	Route::get('skpd-renja_kegiatan_list_kaskpd','API\KegiatanAPIController@RenjaKegiatanKaSKPD');
 	Route::get('skp_tahunan_kegiatan_1','API\KegiatanAPIController@SKPTahunanKegiatanTree1');
@@ -428,6 +432,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('kegiatan_tahunan_detail','API\KegiatanSKPTahunanAPIController@KegiatanTahunanDetail');
 	
 	/* Route::get('skp_tahunan_ktj','API\KegiatanSKPTahunanAPIController@KTJoverKegiatanIdlist'); */
+
+	//SEKDA
+	Route::get('kegiatan_tahunan_sekda','API\KegiatanSKPTahunanAPIController@KegiatanTahunanSekda');
+
 
 	//KABAN
 	Route::get('kegiatan_tahunan_1','API\KegiatanSKPTahunanAPIController@KegiatanTahunan1');
@@ -906,7 +914,8 @@ Route::get('login', function () {
     return redirect('/auth/login');
 });
 Route::get('logout', function () {
-    return redirect('/auth/logout');
+	return redirect('/auth/logout');
+	
 });
 Route::get('register', function () {
 	//return redirect('/auth/register');
