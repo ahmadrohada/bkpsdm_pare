@@ -35,9 +35,8 @@
 	$('#approval_request_renja_table').DataTable({
 				processing      : true,
 				serverSide      : true,
-				type			: "post",
-				searching      	: false,
-				paging          : false,
+				searching      	: true,
+				paging          : true,
 				order 			: [ 0 , 'desc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
@@ -60,11 +59,11 @@
 									}
 								},
 								
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "nama" ,  name:"nama", orderable: true, searchable: true},
-								{ data: "nip" ,  name:"nip", orderable: true, searchable: true},
-								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true},
-								{ data: "eselon" ,  name:"eselon", orderable: true, searchable: true},
+								{ data: "periode" ,  name:"periode", orderable: true, searchable: false},
+								{ data: "nama" ,  name:"capaian_bulanan.u_nama", orderable: true, searchable: true},
+								{ data: "nip" ,  name:"a.nip AS nip", orderable: true, searchable: true},
+								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true},
+								{ data: "eselon" ,  name:"eselon", orderable: true, searchable: false},
 								{ data: "capaian_bulanan_id" , orderable: false,searchable:false,width:"120px",
 										"render": function ( data, type, row ) {
 										if (row.status_approve == 0 ){
