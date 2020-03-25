@@ -3,9 +3,10 @@
 <li>
     {!! HTML::icon_link( "admin/pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_home'), "<span>ADMINISTRATOR</span>", array('title' => Lang::get('sidebar-nav.link_title_home') , 'data-toggle' => 'tooltip')) !!}
 </li>
-<li>
+
+{{-- <li>
     {!! HTML::icon_link( "admin/cetak_tpp_report", 'fa '.Lang::get('sidebar-nav.link_icon_tpp_report_cetak'), "<span>".Lang::get('sidebar-nav.link_title_tpp_report_cetak')."</span>", array('title' => Lang::get('sidebar-nav.link_title_tpp_report_cetak'))) !!}
-</li>
+</li> --}}
 
 
 

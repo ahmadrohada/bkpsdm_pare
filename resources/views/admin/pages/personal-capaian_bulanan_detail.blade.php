@@ -9,6 +9,7 @@
 	 <div class="content-wrapper" >
 	    <section class="content-header">
 			<h1>
+				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-capaian_bulanan') }}"><span class="fa fa-angle-left"></span></a>
 				Capaian Bulanan Detail
 			</h1>
 				{!! Breadcrumbs::render('personal_detail_capaian_bulanan') !!}

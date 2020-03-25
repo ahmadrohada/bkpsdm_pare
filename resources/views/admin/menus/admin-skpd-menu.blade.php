@@ -4,13 +4,11 @@
     {!! HTML::icon_link( "skpd/pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_home'), "<span>ADMIN SKPD</span>", array('title' => Lang::get('sidebar-nav.link_title_home') , 'data-toggle' => 'tooltip')) !!}
 </li>
 
+
+<!--
 <li>
     {!! HTML::icon_link( "skpd/report", 'fa '.Lang::get('sidebar-nav.link_icon_report'), "<span>".Lang::get('sidebar-nav.link_title_report')."</span>", array('title' => Lang::get('sidebar-nav.link_title_report'))) !!}
 </li>
-
-
-
-<!--
 <li>
     {!! HTML::icon_link( "skpd/peta-jabatan", 'fa '.Lang::get('sidebar-nav.link_icon_peta_jabatan'), "<span>".Lang::get('sidebar-nav.link_title_peta_jabatan')."</span>", array('title' => Lang::get('sidebar-nav.link_title_peta_jabatan'))) !!}
 </li>

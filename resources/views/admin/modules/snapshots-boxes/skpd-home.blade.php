@@ -26,7 +26,7 @@
 				</div>
 			</div>
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-red unit_kerja" style="cursor:pointer;">
+				<div class="small-box bg-red unit_kerja_box" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							{{$total_unit_kerja}}
@@ -121,6 +121,22 @@
 				</div>
 			</div>
 
+			<div class="col-md-3 col-xs-6">
+				<div class="small-box bg-green tpp_report" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							{{$total_tpp_report}}
+						</h3>
+						<p>
+							<strong>TPP Report</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa  fa-money"></i>
+					</div>
+				</div>
+			</div>
+
 
 		</div>
 	</div>
@@ -134,7 +150,7 @@ $(document).ready(function(){
 		window.location.assign("pegawai");
     });
 
-	$(".unit_kerja").click(function(){
+	$(".unit_kerja_box").click(function(){
 		window.location.assign("unit_kerja");
     });
 
@@ -156,6 +172,10 @@ $(document).ready(function(){
 
 	$(".skp_bulanan").click(function(){
 		window.location.assign("skp_bulanan");
+    });
+
+	$(".tpp_report").click(function(){
+		window.location.assign("tpp_report");
     });
 
 

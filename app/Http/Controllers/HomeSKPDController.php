@@ -13,6 +13,7 @@ use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
 use App\Models\Skpd;
 use App\Models\Renja;
+use App\Models\TPPReport;
 
 use App\Models\SKPTahunan;
 use App\Models\Sasaran;
@@ -111,7 +112,10 @@ class HomeSKPDController extends Controller {
                             })->count();
     }
    
-    
+    protected function total_tpp_report($skpd_id){
+        return 	TPPReport::WHERE('tpp_report.skpd_id',$skpd_id)
+                            ->count();
+    }
 
     protected function total_skpd()
 	{
@@ -144,6 +148,7 @@ class HomeSKPDController extends Controller {
                'total_unit_kerja' 	    => $this->total_unit_kerja($skpd_id),
                'total_pohon_kinerja' 	=> $this->total_pohon_kinerja($skpd_id),
                'total_skp_tahunan' 	    => $this->total_skp_tahunan($skpd_id),
+               'total_tpp_report' 	    => $this->total_tpp_report($skpd_id),
 
                'h_box'                  => 'box-info',
                
@@ -168,6 +173,8 @@ class HomeSKPDController extends Controller {
                 'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+                'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
+
 
                 'h_box'                   => 'box-danger',
                 
@@ -195,6 +202,7 @@ class HomeSKPDController extends Controller {
                 'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+                'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
                 'h_box'                  => 'box-warning',
                
@@ -222,6 +230,7 @@ class HomeSKPDController extends Controller {
                 'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+                'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
 
                 'h_box'                  => 'box-success',
@@ -249,6 +258,7 @@ class HomeSKPDController extends Controller {
                 'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+                'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
                 'h_box'                  => 'box-danger',
                
@@ -273,6 +283,7 @@ class HomeSKPDController extends Controller {
                 'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+                'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
                 'h_box'                  => 'box-info',
                
@@ -297,6 +308,7 @@ class HomeSKPDController extends Controller {
                 'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+                'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
                 'h_box'                  => 'box-danger',
                
@@ -321,12 +333,45 @@ class HomeSKPDController extends Controller {
                 'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+                'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
 
                 'h_box'                  => 'box-success',
                
            ]
         );   
+
+        
+    }
+
+
+    public function showSKPDTPPReport(Request $request)
+    {
+        $user      = \Auth::user();
+        
+        $user      = \Auth::user();
+        $pegawai   = $user->pegawai;
+
+        //CARI id skpd nya
+        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+        return view(
+            'admin.pages.skpd-home-tpp_report',
+            [
+                'skpd'                   => $pegawai->JabatanAktif->SKPD,
+                'pegawai_id'             => $pegawai->id,
+                'nama_pegawai'           => Pustaka::nama_pegawai($pegawai->gelardpn, $pegawai->nama, $pegawai->gelarblk),
+                'h_box'                  => 'box-success',
+                'nama_skpd'     	     => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
+                'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
+                'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
+                'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+                'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
+
+            ]
+        ); 
+        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+       
 
         
     }

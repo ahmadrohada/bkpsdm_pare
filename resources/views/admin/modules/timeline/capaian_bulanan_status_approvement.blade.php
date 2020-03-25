@@ -37,12 +37,12 @@
 					
 				</ul>
 
-				
-				
+				<?php if ( $capaian->status_approve == 0 ) { ?>
 				<div class="pull-right">
 					<a href="#" class="btn btn-sm btn-danger tolak_capaian_bulanan">TOLAK</a>
 					<a href="#" id="btn_terima" class="btn btn-sm btn-primary  penilaian_kode_etik">TERIMA</a>
 				</div>
+				<?php } ?>
 
 			</div>
 			

@@ -49,10 +49,12 @@
 					</li>
 					
 				</ul>
+				<?php if ( $capaian->status_approve == 0 ) { ?>
 				<div class="pull-right">
 					<a href="#" class="btn btn-sm btn-danger tolak_capaian_tahunan">TOLAK</a>
 					<a href="#" id="btn_terima" class="btn btn-sm btn-primary  penilaian_perilaku_kerja">TERIMA</a>
 				</div>
+				<?php } ?>
 
 
 			</div>
@@ -166,7 +168,12 @@
 					$('.st_nilai_prestasi_kerja').html('94.18');
 					$('.st_formula_hitung').html(data['tgl_dibuat']);
 					
-
+					if (data['penilaian_perilaku_kerja'] >= 1 ){
+						
+						$('#btn_terima').removeClass('penilaian_perilaku_kerja');
+						$('#btn_terima').addClass('terima_capaian_tahunan');
+						
+					}
 					
 				},
 				error: function(data){
@@ -228,9 +235,9 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/terima_capaian_bulanan") }}',
+					url		: '{{ url("api_resource/terima_capaian_tahunan") }}',
 					type	: 'POST',
-					data    : { capaian_bulanan_id:{!! $capaian->id !!}
+					data    : { capaian_tahunan_id:{!! $capaian->id !!}
 							   },
 					cache   : false,
 					success:function(data){

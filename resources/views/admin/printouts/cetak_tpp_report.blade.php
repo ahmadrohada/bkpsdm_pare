@@ -50,8 +50,12 @@
 				</tr>
 				<tr>
 					<td colspan="2"  valign="top" align="center">
-						<FONT style=" font-size:11pt;  font-family:Times New Roman,Cambria;">
+						<FONT style=" font-size:12pt;  font-weight:bold; font-family:Times New Roman,Cambria;">
 						{{ $nama_skpd }}
+						</font>
+						<br>
+						<FONT style=" font-size:11pt;  font-family:Times New Roman,Cambria;">
+							{{ $nama_unit_kerja }}
 						</font>
 					</td>
 				</tr>

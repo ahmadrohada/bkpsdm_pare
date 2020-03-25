@@ -1280,11 +1280,9 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'HomeSKPDController@showSKPBulanan'
 	]);
 
-
-	//=======================   R E P O R T   ==================================//
-	Route::get('report', [
-		'as' 			=> '',
-		'uses' 			=> 'TPPReportController@showSKPDTPPReport'
+	Route::get('tpp_report', [
+		'as' 			=> 'skpd-tpp_report',
+		'uses' 			=> 'HomeSKPDController@showSKPDTPPReport'
 	]);
 
 	//=======================   TPP R E P O R T   ==================================//
@@ -1443,6 +1441,11 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'HomePersonalController@showSKPJabatan'
 	]);
 	
+
+	Route::get('skp_tahunan', [
+		'as' 			=> 'personal-skp_tahunan',
+		'uses' 			=> 'HomePersonalController@showSKPTahunan'
+	]);
 	
 
 	Route::get('capaian', [
@@ -1450,6 +1453,15 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'HomePersonalController@showCapaianBulanan'
 	]);
 
+	Route::get('capaian-bulanan', [
+		'as' 			=> 'personal-capaian_bulanan',
+		'uses' 			=> 'HomePersonalController@showCapaianBulanan'
+	]);
+
+	Route::get('capaian-tahunan', [
+		'as' 			=> 'personal-capaian_tahunan',
+		'uses' 			=> 'HomePersonalController@showCapaianTahunan'
+	]);
 
 //======================= A P P R O V A L    R E Q U E S T ==================================//
 
@@ -1488,7 +1500,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	]);
 
 	Route::get('capaian_bulanan_approval-request', [
-		'as' 			=> '',
+		'as' 			=> 'personal-capaian_bulanan_approvement',
 		'uses' 			=> 'CapaianBulananController@CapaianBulananApprovalRequestList'
 	]);
 
@@ -1499,7 +1511,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
 
 	Route::get('capaian_tahunan_approval-request', [
-		'as' 			=> '',
+		'as' 			=> 'personal-capaian_tahunan_approvement',
 		'uses' 			=> 'CapaianTahunanController@CapaianTahunanApprovalRequestList'
 	]);
 
@@ -1543,10 +1555,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	//=========================================================================================//
 	//================================= SKP TAHUNAN      =====================================//
 	//=========================================================================================//
-	Route::get('skp_tahunan', [
-		'as' 			=> '',
-		'uses' 			=> 'HomePersonalController@showSKPTahunan'
-	]);
+	
 
 	Route::get('skp_tahunan/{skp_tahunan_id}/edit',[
 		'as' 			=> '',
@@ -1593,10 +1602,6 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	//=========================================================================================//
 	//=============================   CAPAIAN BULANAN     =====================================//
 	//=========================================================================================//
-	Route::get('capaian-bulanan', [
-		'as' 			=> '',
-		'uses' 			=> 'HomePersonalController@showCapaianBulanan'
-	]);
 
 	Route::get('capaian-bulanan/{capaian_bulanan_id}',[
 		'as' 			=> '',
@@ -1635,10 +1640,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	//=========================================================================================//
 	//=============================   CAPAIAN TAHUNAN     ====================================//
 	//=========================================================================================//
-	Route::get('capaian-tahunan', [
-		'as' 			=> '',
-		'uses' 			=> 'HomePersonalController@showCapaianTahunan'
-	]);
+	
 	
 	Route::get('capaian-tahunan/{capaian_tahunan_id}/edit',[
 		'as' 			=> '',

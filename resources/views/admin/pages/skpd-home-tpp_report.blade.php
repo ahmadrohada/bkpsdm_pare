@@ -9,12 +9,12 @@
 <div class="content-wrapper">
 	<section class="content-header">
 		<h1>
-			REPORT
+			{{ Pustaka::capital_string($nama_skpd) }}
 		</h1>
 		{!! Breadcrumbs::render('skpd-tpp_report') !!}
 	</section>
 	<section class="content">
-		@include('admin.modules.snapshots-boxes.skpd-report')
+		@include('admin.modules.snapshots-boxes.skpd-home')
 
 		@include('admin.tables.skpd-tpp_report_list')
 

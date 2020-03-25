@@ -9,6 +9,7 @@
 	 <div class="content-wrapper" >
 	    <section class="content-header">
 			<h1>
+				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-capaian_tahunan') }}"><span class="fa fa-angle-left"></span></a>
 				Edit Capaian Tahunan Eselon {{ $capaian->PejabatYangDinilai->Eselon->eselon }}
 			</h1>
 				{!! Breadcrumbs::render('personal_edit_capaian_tahunan') !!}

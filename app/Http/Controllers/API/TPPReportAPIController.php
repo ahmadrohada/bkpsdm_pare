@@ -16,6 +16,7 @@ use App\Models\RencanaAksi;
 use App\Models\Periode;
 use App\Models\Pegawai;
 use App\Models\Skpd;
+use App\Models\UnitKerja;
 
 use App\Helpers\Pustaka;
 
@@ -203,8 +204,23 @@ class TPPReportAPIController extends Controller
 
         $tpp_report_id = $request->tpp_report_id;
 
+        $data = TPPReportData::
+                        join('demo_asn.m_unit_kerja AS unit_kerja', function ($join) {
+                            $join->on('unit_kerja.id', '=', 'tpp_report_data.unit_kerja_id');
+                        })
+                        ->WHERE('tpp_report_data.tpp_report_id',$tpp_report_id)
+                        ->where('unit_kerja.unit_kerja', 'LIKE', '%' . $nama_unit_kerja . '%')
+                        ->select([
+                            'unit_kerja.id AS unit_kerja_id',
+                            'unit_kerja.unit_kerja AS unit_kerja'
 
-        $data = TPPReport::
+                        ])
+                        //->GROUPBY('tpp_report_data.unit_kerja_id')
+                        ->DISTINCT('tpp_report_data.unit_kerja_id')
+                        ->get();
+        
+
+        /* $data = TPPReport::
                         rightjoin('demo_asn.m_skpd AS skpd', function ($join) {
                             $join->on('skpd.parent_id', '=', 'tpp_report.skpd_id');
                         })
@@ -222,7 +238,7 @@ class TPPReportAPIController extends Controller
 
                         ])
 
-                        ->get();
+                        ->get(); */
            
 
 
@@ -457,6 +473,12 @@ class TPPReportAPIController extends Controller
         //JIKA UNIT KERJA BUKAN ALL
         if ( $unit_kerja_id != 0 ){
             $dt->WHERE('tpp_report_data.unit_kerja_id',$unit_kerja_id);
+
+            //NAMA UNIT KERJA UNTUK PRINTOUT
+            $dt_uk = UnitKerja::WHERE('id',$unit_kerja_id)->SELECT('unit_kerja')->first();
+            $nama_unit_kerja = $dt_uk->unit_kerja;
+        }else{
+            $nama_unit_kerja = "";
         }
 
         $data = $dt->get();
@@ -495,7 +517,8 @@ class TPPReportAPIController extends Controller
         $profil  = Pegawai::WHERE('tb_pegawai.id',  $user_x->id_pegawai)->first();
         
 
-       $pdf = PDF::loadView('admin.printouts.cetak', [  'data'          =>  $data , 
+       $pdf = PDF::loadView('admin.printouts.cetak_tpp_report', [  'data'          =>  $data , 
+                                                        'nama_unit_kerja'          =>  $nama_unit_kerja,
                                                         'periode'       =>  strtoupper(Pustaka::bulan($p->bulan)) . "  " . Pustaka::tahun($p->tahun_periode), 
                                                         'kinerja'       =>  $p->kinerja,
                                                         'kehadiran'     =>  $p->kehadiran,

@@ -76,23 +76,7 @@ class TPPReportController extends Controller
 
     
 
-    public function showSKPDTPPReport(Request $request)
-    {
-        $user      = \Auth::user();
-        $pegawai   = $user->pegawai;
-
-
-        return view(
-            'admin.pages.skpd-tpp_report',
-            [
-                'skpd'                     => $pegawai->JabatanAktif->SKPD,
-                'pegawai_id'               => $pegawai->id,
-                'nama_pegawai'             => Pustaka::nama_pegawai($pegawai->gelardpn, $pegawai->nama, $pegawai->gelarblk),
-                'h_box'                  => 'box-danger',
-
-            ]
-        ); 
-    }
+  
      
 
     public function editSKPDTPPReport(Request $request)

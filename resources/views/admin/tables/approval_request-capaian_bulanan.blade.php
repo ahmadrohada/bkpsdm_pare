@@ -95,10 +95,7 @@
 	$(document).on('click','.lihat_capaian_bulanan',function(e){
 		var capaian_bulanan_id = $(this).data('capaian_bulanan_id') ;
 		//alert(skp_tahunan_id);
-
-
-
-		window.location.assign("capaian-bulanan/"+capaian_bulanan_id);
+		window.location.assign("capaian_bulanan_approval-request/"+capaian_bulanan_id);
 	});
 
 	

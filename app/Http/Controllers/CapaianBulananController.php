@@ -62,11 +62,11 @@ class CapaianBulananController extends Controller {
 	{
         $capaian_bulanan    = CapaianBulanan::WHERE('id', $request->capaian_bulanan_id)->first();
         
-        if ( $capaian_bulanan->status_approve != '0' ){
+        /* if ( $capaian_bulanan->status_approve != '0' ){
             return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'telah diterima/ditolak');
-        }else{
+        }else{ */
             return view('admin.pages.personal-capaian_bulanan_approvement', ['capaian'=> $capaian_bulanan]);
-        }
+        //}
         
 
     }

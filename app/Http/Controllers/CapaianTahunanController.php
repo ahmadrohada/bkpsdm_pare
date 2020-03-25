@@ -63,11 +63,11 @@ class CapaianTahunanController extends Controller {
 	{
         $capaian_tahunan    = CapaianTahunan::WHERE('id', $request->capaian_tahunan_id)->first();
         
-        if ( $capaian_tahunan->status_approve != '0' ){
+      /*   if ( $capaian_tahunan->status_approve != '0' ){
             return redirect('/personal/capaian-tahunan/'.$request->capaian_tahunan_id)->with('status', 'telah diterima/ditolak');
-        }else{
+        }else{ */
             return view('admin.pages.personal-capaian_tahunan_approvement', ['capaian'=> $capaian_tahunan]);
-        }
+       // }
         
 
     }
