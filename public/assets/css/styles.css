@@ -184,3 +184,22 @@ li.user-header, .widget-user-username{
 .blm_add{color:#cfcdd6;}
 .no-sort::after { display: none!important; }
 .no-sort { pointer-events: none!important; cursor: default!important; }
+
+
+a.back_button {
+	text-decoration: none;
+	display: inline-block;
+	padding: 6px 12px;
+  }
+  
+  a.back_button:hover {
+	border: 1px solid #b7b5ba;
+	color: #3600c2;
+  }
+  
+  .back_button {
+	  border: 1px solid #dedede;
+	  background-color:none;
+		color: black;
+		border-radius: 50%;
+  }

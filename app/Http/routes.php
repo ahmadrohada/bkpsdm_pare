@@ -1028,7 +1028,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	]);
 
 	Route::get('admin/tpp_report', [
-		'as' 			=> '',
+		'as' 			=> 'admin-tpp_report',
 		'uses' 			=> 'HomeAdminController@showTPPReport'
 	]);
 
@@ -1054,6 +1054,11 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::post('admin/tpp_report/cetak', [
 		'as' 			=> '',
 		'uses' 			=> 'API\TPPReportAPIController@cetakTPPReportData'
+	]);
+
+	Route::get('admin/tpp_report/{tpp_report_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'TPPReportController@AdministratorTPPReport'
 	]);
 
 	

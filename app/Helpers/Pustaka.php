@@ -409,6 +409,47 @@ class Pustaka {
 	}
 
 
+	public static function bulan_short($data){
+		
+		$bulan = $data; 
+
+		//ubah angka ke nama bulan
+				switch($bulan)
+					{
+				case 01 : $nm_bulan='Jan';
+						break;
+				case 02 : $nm_bulan='Feb';
+						break;
+				case 03 : $nm_bulan='Mar';
+						break;
+				case 04 : $nm_bulan='Apr';
+						break;
+				case 05 : $nm_bulan='Mei';
+						break;
+				case 06 : $nm_bulan='Jun';
+						break;
+				case 07 : $nm_bulan='Jul';
+						break;
+				case 8 : $nm_bulan='Agu';
+						break;
+				case 9 : $nm_bulan='Sep';
+						break;
+				case 10 : $nm_bulan='Okt';
+						break;
+				case 11 : $nm_bulan='Nov';
+						break;
+				case 12 : $nm_bulan='Des';
+						break;
+					}
+
+					
+		
+		$data=$nm_bulan;
+	return $data;
+
+	}
+
+
 	public static function periode($data){
 		$tanggal = substr($data,8,2); 
 		$bulan = substr($data,5,2); 
@@ -576,6 +617,7 @@ class Pustaka {
 		$x		= explode(' ', $data);
 		$tgl	= $x[0];
 		$jam 	= $x[1];
+		$jam 	= substr($jam,0,5); 
 
 		$tanggal = substr($tgl,8,2); 
 		$bulan = substr($tgl,5,2); 
@@ -616,6 +658,26 @@ class Pustaka {
 		$tahun = isset($tahun) ? $tahun : '';
 		
 		$data=$tanggal.'   '.$nm_bulan.'  '.$tahun;
+	return $data . "&nbsp;&nbsp;[" .$jam. "]" ;
+
+	}
+
+	public static function tgl_jam_short($data) {
+       
+		$x		= explode(' ', $data);
+		$tgl	= $x[0];
+		$jam 	= $x[1];
+		$jam 	= substr($jam,0,5); 
+
+		$tanggal = substr($tgl,8,2); 
+		$bulan = substr($tgl,5,2); 
+		$tahun = substr($tgl,0,4); 
+
+		
+		$tanggal = isset($tanggal) ? $tanggal : '';
+		$tahun = isset($tahun) ? $tahun : '';
+		
+		$data=$tanggal.'/'.$bulan.'/'.$tahun;
 	return $data . "&nbsp;&nbsp;[" .$jam. "]" ;
 
 	}

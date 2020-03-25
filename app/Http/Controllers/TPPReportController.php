@@ -134,4 +134,24 @@ class TPPReportController extends Controller
             ]
         );
     }
+
+
+    public function AdministratorTPPReport(Request $request)
+    {
+        $user      = \Auth::user();
+        $pegawai   = $user->pegawai;
+        $tpp_report = TPPreport::where('id', $request->tpp_report_id)->first();
+
+        return view(
+            'admin.pages.administrator-tpp_report_detail',
+            [
+                'tpp_report'          => $tpp_report,
+                'kinerja'             => $tpp_report->FormulaHitung->kinerja,
+                'kehadiran'           => $tpp_report->FormulaHitung->kehadiran,
+                'nama_pegawai'        => Pustaka::nama_pegawai($pegawai->gelardpn, $pegawai->nama, $pegawai->gelarblk),
+                'h_box'               => 'box-danger',
+
+            ]
+        );
+    }
 }

@@ -633,39 +633,40 @@ class TPPReportAPIController extends Controller
 
 
         $tpp_report = TPPReport::
-            join('db_pare_2018.periode AS periode', function ($join) {
-                $join->on('periode.id', '=', 'tpp_report.periode_id');
-            })
-            ->join('demo_asn.m_skpd AS skpd', function ($join) {
-                $join->on('tpp_report.skpd_id', '=', 'skpd.id');
-            })
-            ->select([
-                'tpp_report.id AS tpp_report_id',
-                'tpp_report.periode_id',
-                'tpp_report.bulan',
-                'tpp_report.skpd_id',
-                'tpp_report.status',
-                'tpp_report.created_at',
-                'periode.label AS periode_label',
-                'periode.awal AS tahun_periode',
-                'skpd.skpd'
+                                join('db_pare_2018.periode AS periode', function ($join) {
+                                    $join->on('periode.id', '=', 'tpp_report.periode_id');
+                                })
+                                ->join('demo_asn.m_skpd AS skpd', function ($join) {
+                                    $join->on('tpp_report.skpd_id', '=', 'skpd.id');
+                                })
+                                ->select([
+                                    'tpp_report.id AS tpp_report_id',
+                                    'tpp_report.periode_id',
+                                    'tpp_report.bulan',
+                                    'tpp_report.skpd_id',
+                                    'tpp_report.admin_skpd AS nama_admin',
+                                    'tpp_report.status',
+                                    'tpp_report.created_at',
+                                    'periode.label AS periode_label',
+                                    'periode.awal AS tahun_periode',
+                                    'skpd.skpd'
 
-            ])
-            ->orderBy('tpp_report.id', 'DESC')
-            ->get();
+                                ])
+                                ->orderBy('tpp_report.created_at', 'ASC')
+                                ->get();
 
         $datatables = Datatables::of($tpp_report)
             ->addColumn('periode', function ($x) {
-                return Pustaka::tahun($x->tahun_periode);
+                return Pustaka::bulan_short($x->bulan).' '.Pustaka::tahun($x->tahun_periode);
             })
-            ->addColumn('bulan', function ($x) {
-                return Pustaka::bulan($x->bulan);
+            ->addColumn('jumlah_data', function ($x) {
+                return TPPReportData::WHERE('tpp_report_id', $x->tpp_report_id)->count();
             })
             ->addColumn('skpd', function ($x) {
                 return Pustaka::capital_string($x->skpd);
             })
             ->addColumn('created_at', function ($x) {
-                return Pustaka::tgl_jam($x->created_at);
+                return Pustaka::tgl_jam_short($x->created_at);
             });
 
         if ($keyword = $request->get('search')['value']) {
@@ -701,13 +702,13 @@ class TPPReportAPIController extends Controller
 
         $datatables = Datatables::of($tpp_report)
             ->addColumn('periode', function ($x) {
-                return Pustaka::bulan($x->bulan) . "  " . Pustaka::tahun($x->tahun_periode);
+                return Pustaka::bulan_short($x->bulan) . "  " . Pustaka::tahun($x->tahun_periode);
             })
             ->addColumn('jumlah_data', function ($x) {
                 return TPPReportData::WHERE('tpp_report_id', $x->tpp_report_id)->count();
             })
             ->addColumn('created_at', function ($x) {
-                return Pustaka::tgl_jam($x->created_at);
+                return Pustaka::tgl_jam_short($x->created_at);
             });
 
         if ($keyword = $request->get('search')['value']) {
