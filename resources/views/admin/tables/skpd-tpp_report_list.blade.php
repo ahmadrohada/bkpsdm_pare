@@ -1,7 +1,7 @@
 <div class="box {{ $h_box }}">
 	<div class="box-header with-border">
 		<h1 class="box-title">
-			Data TPP Report
+			Data TPP Report 
 		</h1>
 
 		<div class="box-tools pull-right">
@@ -23,6 +23,7 @@
 					<th>NAMA ADMIN</th>
 					<th>JUMLAH DATA</th>
 					<th>CREATED AT</th>
+					<th>STATUS</th>
 					<th><i class="fa fa-cog"></i></th>
 				</tr>
 			</thead>
@@ -83,7 +84,7 @@
 					//dom 			: '<"toolbar">frtip',
 					lengthMenu: [50, 100],
 					columnDefs: [
-									{className: "text-center",targets: [0,1,2,3,4,5]}
+									{className: "text-center",targets: [0,1,2,3,4,5,6]}
 								],
 					ajax: {
 						url		: '{{ url("api_resource/skpd_tpp_report_list") }}',
@@ -100,6 +101,15 @@
 					{data: "nama_admin",name: "nama_admin"},
 					{data: "jumlah_data",name: "jumlah_data"},
 					{data: "created_at",name: "created_at"},
+					{data: "status",orderable: true,searchable: false,width: "80px",
+									"render": function(data, type, row) {
+											if (row.status == '1' ) {
+												return 	'[ close ]';
+											} else {
+												return 	'<span style="color:red; margin:2px;" >[ open ]</span>';
+											}
+									}
+								},
 					{data: "status",orderable: false,searchable: false,width: "120px",
 						"render": function(data, type, row) {
 								if (row.status == '1' ) {
