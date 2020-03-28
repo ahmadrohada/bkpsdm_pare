@@ -52,7 +52,7 @@ class CapaianTahunanController extends Controller {
         return view('admin.pages.approval_request-capaian_tahunan', [
                'pegawai' 		        => $pegawai,
                'nama_skpd'     	        => 'x',
-               'h_box'                  => 'box-warning',
+               'h_box'                  => 'box-purple',
                
            ]
         );   

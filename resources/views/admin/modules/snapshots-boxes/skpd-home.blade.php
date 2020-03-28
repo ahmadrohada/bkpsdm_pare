@@ -7,17 +7,17 @@
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
            </div>
     </div>
-	<div class="box-body">
+	<div class="box-body" style="padding:20px 20px 0px 20px;">
 		<div class="row">
-			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-aqua pegawai" style="cursor:pointer;" >
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-fuchsia pegawai" style="cursor:pointer;" >
 					<div class="inner">
 						<h3>
 							{{$total_pegawai}}
 							
 						</h3>
 						<p>
-							<strong>Total Pegawai</strong>
+							TOTAL PEGAWAI
 						</p>
 					</div>
 					<div class="icon">
@@ -25,14 +25,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-red unit_kerja_box" style="cursor:pointer;">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-teal unit_kerja_box" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							{{$total_unit_kerja}}
 						</h3>
 						<p>
-							<strong>Unit Kerja</strong>
+							UNIT KERJA
 						</p>
 					</div>
 					<div class="icon">
@@ -40,14 +40,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-green struktur_organisasi" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							&nbsp;
 						</h3>
 						<p>
-							<strong>Struktur Organisasi</strong>
+							STRUKTUR ORGANISASI
 						</p>
 					</div>
 					<div class="icon">
@@ -55,14 +55,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-yellow rencana_kerja" style="cursor:pointer;">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-light-blue rencana_kerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							{{$total_pohon_kinerja}}
 						</h3>
 						<p>
-							<strong>Pohon Kinerja</strong>
+							POHON KINERJA
 						</p>
 					</div>
 					<div class="icon">
@@ -72,14 +72,14 @@
 			</div>
 
 
-			<div class="col-md-3 col-xs-6" hidden>
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12" hidden>
 				<div class="small-box bg-aqua perjanjian_kinerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							*
 						</h3>
 						<p>
-							<strong>Perjanjian Kinerja</strong>
+							PERJANJIAN KINERJA
 						</p>
 					</div>
 					<div class="icon">
@@ -88,14 +88,14 @@
 				</div>
 			</div>
 
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-red skp_tahunan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							{{$total_skp_tahunan}}
 						</h3>
 						<p>
-							<strong>SKP Tahunan</strong>
+							SKP TAHUNAN
 						</p>
 					</div>
 					<div class="icon">
@@ -105,14 +105,14 @@
 			</div>
 
 
-			<div class="col-md-3 col-xs-6" hidden>
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12" hidden>
 				<div class="small-box bg-green skp_bulanan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							*
 						</h3>
 						<p>
-							<strong>SKP Bulanan</strong>
+							SKP BULANAN
 						</p>
 					</div>
 					<div class="icon">
@@ -121,14 +121,14 @@
 				</div>
 			</div>
 
-			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-green tpp_report" style="cursor:pointer;">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-purple tpp_report" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							{{$total_tpp_report}}
 						</h3>
 						<p>
-							<strong>TPP Report</strong>
+							TPP REPORT
 						</p>
 					</div>
 					<div class="icon">

@@ -132,14 +132,9 @@ class HomeSKPDController extends Controller {
     
     public function showPegawai(Request $request)
     {
-            
         $user                   = \Auth::user();
-        
-
        //CARI id skpd nya
        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
-       
-
        return view('admin.pages.skpd-home-pegawai', [
                
                'skpd_id'                => $skpd_id,
@@ -150,7 +145,7 @@ class HomeSKPDController extends Controller {
                'total_skp_tahunan' 	    => $this->total_skp_tahunan($skpd_id),
                'total_tpp_report' 	    => $this->total_tpp_report($skpd_id),
 
-               'h_box'                  => 'box-info',
+               'h_box'                  => 'box-fuchsia',
                
            ]
        );  
@@ -176,7 +171,7 @@ class HomeSKPDController extends Controller {
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
 
-                'h_box'                   => 'box-danger',
+                'h_box'                   => 'box-teal',
                 
         	]
         );   
@@ -204,7 +199,7 @@ class HomeSKPDController extends Controller {
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
-                'h_box'                  => 'box-warning',
+                'h_box'                  => 'box-light-blue',
                
            ]
         );   
@@ -233,7 +228,7 @@ class HomeSKPDController extends Controller {
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
 
-                'h_box'                  => 'box-success',
+                'h_box'                  => 'box-green',
                
            ]
         ); 
@@ -260,7 +255,7 @@ class HomeSKPDController extends Controller {
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
-                'h_box'                  => 'box-danger',
+                'h_box'                  => 'box-green',
                
            ]
         ); 
@@ -285,7 +280,7 @@ class HomeSKPDController extends Controller {
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
-                'h_box'                  => 'box-info',
+                'h_box'                  => 'box-aqua',
                
            ]
         );   
@@ -310,7 +305,7 @@ class HomeSKPDController extends Controller {
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
-                'h_box'                  => 'box-danger',
+                'h_box'                  => 'box-red',
                
            ]
         );   
@@ -336,7 +331,7 @@ class HomeSKPDController extends Controller {
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
 
 
-                'h_box'                  => 'box-success',
+                'h_box'                  => 'box-green',
                
            ]
         );   

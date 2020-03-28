@@ -115,7 +115,7 @@ class HomePersonalController extends Controller {
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
                'jm_skp_bulanan'         => $this->jm_skp_bulanan($pegawai->id),
-               'h_box'                  => 'box-danger',
+               'h_box'                  => 'box-teal',
                
            ]
         );   
@@ -134,7 +134,7 @@ class HomePersonalController extends Controller {
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
                'jm_skp_bulanan'         => $this->jm_skp_bulanan($pegawai->id),
-               'h_box'                  => 'box-warning',
+               'h_box'                  => 'box-red',
                
            ]
         );   
@@ -154,7 +154,7 @@ class HomePersonalController extends Controller {
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
                'jm_skp_bulanan'         => $this->jm_skp_bulanan($pegawai->id),
-               'h_box'                  => 'box-info',
+               'h_box'                  => 'box-green',
                
            ]
         );   

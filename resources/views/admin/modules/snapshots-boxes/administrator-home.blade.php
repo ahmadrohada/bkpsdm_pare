@@ -8,78 +8,59 @@
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
     </div>
-	<div class="box-body">
+	<div class="box-body" style="padding:20px 20px 0px 20px;">
 		<div class="row">
-			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-aqua total_pegawai" style="cursor:pointer;" >
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-fuchsia total_pegawai" style="cursor:pointer;" >
 					<div class="inner">
-						<h3>
-							{{$total_pegawai}}
-							
-						</h3>
-						<p>
-							<strong>Total Pegawai</strong>
-						</p>
+						<h3>{{$total_pegawai}}</h3>
+						<p>TOTAL PEGAWAI</p>
 					</div>
 					<div class="icon">
 						<i class="fa fa-users"></i>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-green total_users" style="cursor:pointer;">
 					<div class="inner">
-						<h3>
-							{{$total_users}}
-						</h3>
-						<p>
-							<strong>User PARE</strong>
-						</p>
+						<h3>{{$total_users}}</h3>
+						<p>USER PARE</p>
 					</div>
 					<div class="icon">
 						<i class="fa fa-users"></i>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-red total_skpd" style="cursor:pointer;">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-teal total_skpd" style="cursor:pointer;">
 					<div class="inner">
-						<h3>
-							{{$total_skpd}}
-						</h3>
-						<p>
-							<strong>SKPD</strong>
-						</p>
+						<h3>{{$total_skpd}}</h3>
+						<p>SKPD</p>
 					</div>
 					<div class="icon">
 						<i class="fa  fa-institution"></i>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6" hidden>
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12" hidden>
 				<div class="small-box bg-yellow masa_pemerintahan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							&nbsp;
 						</h3>
-						<p>
-							<strong>Masa Pemerintahan</strong>
-						</p>
+						<p>MASA PEMERINTAHAN</p>
 					</div>
 					<div class="icon">
 						<i class="fa fa-hourglass-start"></i>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-yellow pohon_kinerja_skpd" style="cursor:pointer;">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-light-blue pohon_kinerja_skpd" style="cursor:pointer;">
 					<div class="inner">
-						<h3>
-							{{$total_pohon_kinerja}}
-						</h3>
-						<p>
-							<strong>Pohon Kinerja SKPD</strong>
-						</p>
+						<h3>{{$total_pohon_kinerja}}</h3>
+						<p>POHON KINERJA</p>
 					</div>
 					<div class="icon">
 						<i class="fa fa-tasks"></i>
@@ -87,15 +68,11 @@
 				</div>
 			</div>
 
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-red skp skp_tahunan" style="cursor:pointer;">
 					<div class="inner">
-						<h3>
-							{{$total_skp_tahunan}}
-						</h3>
-						<p>
-							<strong>SKP Tahunan</strong>
-						</p>
+						<h3>{{$total_skp_tahunan}}</h3>
+						<p>SKP TAHUNAN</p>
 					</div>
 					<div class="icon">
 						<i class="fa  fa-tasks"></i>
@@ -103,15 +80,11 @@
 				</div>
 			</div>
 
-			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-green tpp_report" style="cursor:pointer;">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-purple tpp_report" style="cursor:pointer;">
 					<div class="inner">
-						<h3>
-							{{$total_TPP_report}}
-						</h3>
-						<p>
-							<strong>TPP Report</strong>
-						</p>
+						<h3>{{$total_TPP_report}}</h3>
+						<p>TPP REPORT</p>
 					</div>
 					<div class="icon">
 						<i class="fa  fa-money"></i>

@@ -14,27 +14,8 @@
 
 	<div class="box-body">
 		<div class="row">
-			{{-- @if ( $pegawai->JabatanAktif->Jabatan->Eselon->id_jenis_jabatan == '1' )
-				<div class="col-md-3 col-xs-6">
-					<div class="small-box bg-blue renja" style="cursor:pointer;" >
-						<div class="inner">
-							<h3>
-								*
-								
-							</h3>
-							<p>
-								<strong>Pohon Kinerja</strong>
-							</p>
-						</div>
-						<div class="icon">
-							<i class="fa fa-tasks"></i>
-						</div>
-					</div>
-				</div>
-			@endif --}}
-			
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-orange capaian_bulanan" style="cursor:pointer;">
+				<div class="small-box bg-teal capaian_bulanan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							*
@@ -49,7 +30,7 @@
 				</div>
 			</div>
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-green capaian_tahunan" style="cursor:pointer;" >
+				<div class="small-box bg-purple capaian_tahunan" style="cursor:pointer;" >
 					<div class="inner">
 						<h3>
 							*

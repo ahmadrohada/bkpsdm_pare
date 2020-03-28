@@ -167,7 +167,7 @@ class HomeAdminController extends Controller {
 				'nama_skpd' 	          => $skpd,
         		'user' 			          => $user,
         		'access' 	              => $access,
-                'h_box'                   => 'box-info',
+                'h_box'                   => 'box-fuchsia',
         	]
         );   
 
@@ -257,7 +257,7 @@ class HomeAdminController extends Controller {
                 'nama_skpd' 	          => $this->nama_skpd($skpd_id),
         		'user' 			          => $user,
         		'access' 	              => $access,
-                'h_box'                   => 'box-danger',
+                'h_box'                   => 'box-teal',
         	]
         );   
 
@@ -348,7 +348,7 @@ class HomeAdminController extends Controller {
                 'nama_skpd' 	          => $this->nama_skpd($skpd_id),
         		'user' 			          => $user,
         		'access' 	              => $access,
-                'h_box'                   => 'box-warning',
+                'h_box'                   => 'box-light-blue',
         	]
         );   
 
@@ -433,7 +433,7 @@ class HomeAdminController extends Controller {
                 'nama_skpd' 	          => $this->nama_skpd($skpd_id),
         		'user' 			          => $user,
         		'access' 	              => $access,
-                'h_box'                   => 'box-success',
+                'h_box'                   => 'box-purple',
         	]
         );   
 

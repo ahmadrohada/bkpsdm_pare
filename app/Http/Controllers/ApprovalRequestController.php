@@ -19,22 +19,14 @@ class ApprovalRequestController extends Controller {
     }
 
 
+   
+
     public function showDashoard(Request $request)
     {
-        $user      = \Auth::user();
-        $pegawai   = $user->pegawai;       
-        
-
-        return view('admin.pages.approval_request', [
-               'pegawai' 		        => $pegawai,
-               'nama_skpd'     	        => 'approval',
-               'h_box'                  => 'box-info',
-               
-           ]
-        );   
-
-        
+        return redirect('/personal/capaian_bulanan_approval-request');
     }
+
+    
 
     
     public function showRenja(Request $request)
@@ -46,7 +38,7 @@ class ApprovalRequestController extends Controller {
         return view('admin.pages.approval_request-renja', [
                'pegawai' 		        => $pegawai,
                'nama_skpd'     	        => 'x',
-               'h_box'                  => 'box-info',
+               'h_box'                  => 'box-teal',
                
            ]
         );   
@@ -63,7 +55,7 @@ class ApprovalRequestController extends Controller {
         return view('admin.pages.approval_request-skp_tahunan', [
                'pegawai' 		        => $pegawai,
                'nama_skpd'     	        => 'x',
-               'h_box'                  => 'box-danger',
+               'h_box'                  => 'box-purple',
                
            ]
         );   

@@ -51,7 +51,7 @@ class CapaianBulananController extends Controller {
         return view('admin.pages.approval_request-capaian_bulanan', [
                'pegawai' 		        => $pegawai,
                'nama_skpd'     	        => 'x',
-               'h_box'                  => 'box-warning',
+               'h_box'                  => 'box-teal',
                
            ]
         );   

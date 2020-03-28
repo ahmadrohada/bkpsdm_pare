@@ -27,8 +27,8 @@
 			</div>
 
 
-				<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-aqua capaian_triwulan" style="cursor:pointer;">
+			<div class="col-md-3 col-xs-6">
+				<div class="small-box bg-red capaian_triwulan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							{{$jm_capaian_triwulan}}

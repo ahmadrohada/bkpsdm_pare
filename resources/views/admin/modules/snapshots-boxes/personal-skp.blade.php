@@ -11,7 +11,7 @@
 		<div class="row">
 			
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-red skp_jabatan" style="cursor:pointer;">
+				<div class="small-box bg-teal skp_jabatan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							&nbsp;
@@ -27,7 +27,7 @@
 			</div>
 
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-yellow skp_tahunan" style="cursor:pointer;">
+				<div class="small-box bg-red skp_tahunan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							{{ $jm_skp_tahunan }}
@@ -43,7 +43,7 @@
 			</div>
 
 			<div class="col-md-3 col-xs-6">
-				<div class="small-box bg-aqua skp_bulanan" style="cursor:pointer;">
+				<div class="small-box bg-green skp_bulanan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							{{ $jm_skp_bulanan }}

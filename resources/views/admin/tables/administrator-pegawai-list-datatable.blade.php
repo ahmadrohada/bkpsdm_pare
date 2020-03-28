@@ -1,4 +1,4 @@
-<div class="box box-info">
+<div class="box {{ $h_box}}">
     <div class="box-header with-border">
         <h1 class="box-title">
             Data ASN Kabupaten Karawang
