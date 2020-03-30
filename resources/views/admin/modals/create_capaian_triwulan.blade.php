@@ -171,8 +171,8 @@
 					<input type="hidden" class="form-control p_jabatan_id	" name="p_jabatan_id"  />
 
 
-               	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-               	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_create_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_create_text'), array('class' => 'btn btn-sm btn-primary pull-right btn-flat', 'type' => 'button', 'id' => 'save_capaian_triwulan' )) !!}
+               	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left ', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
+               	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_create_icon').' button_simpan" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_create_text'), array('class' => 'btn btn-sm btn-primary pull-right ', 'type' => 'button', 'id' => 'save_capaian_triwulan' )) !!}
 			
 			</div>
 			</form>
@@ -186,9 +186,17 @@
 
 
 
-<script type="text/javascript">
+<script type="text/javascript"> 
 
-
+	function on_submitx(){
+		$('.modal-create_capaian_triwulan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('#save_capaian_triwulan').prop('disabled',true);
+	}
+	function reset_submitx(){
+		$('.modal-create_capaian_triwulan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-create_capaian_triwulan').find('.button_simpan').addClass('fa-floppy-o');
+		$('#save_capaian_triwulan').prop('disabled',false);
+	}
 
 
 
@@ -213,7 +221,7 @@
 				}).then(function () {
 						$('.modal-create_capaian_triwulan').modal('hide');
 						$('#capaian_triwulan_table').DataTable().ajax.reload(null,false);
-						//window.location.assign("capaian-bulanan/"+data+"/edit");
+						window.location.assign("capaian-triwulan/"+data+"/edit");
 
 				},
 					function (dismiss) {
@@ -235,7 +243,13 @@
 				
 				});
 				
-			}
+			},
+			beforeSend: function(){
+				on_submitx();
+			},
+			complete: function(){
+				reset_submitx();
+			} 	
 			
 		  }); 
 

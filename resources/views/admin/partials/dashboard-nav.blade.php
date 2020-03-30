@@ -62,11 +62,11 @@
 					  <li class="user-footer">
 						<!--
 						<div class="pull-left">
-						  <a href="/profile/{{Auth::user()->name}}" class="btn btn-default btn-flat">Profile</a>
+						  <a href="/profile/{{Auth::user()->name}}" class="btn btn-default ">Profile</a>
 						</div>
 						-->
 						<div class="pull-right">
-						  <a href="/public/logout" class="btn btn-default btn-flat">Sign out</a>
+						  <a href="/public/logout" class="btn btn-default ">Sign out</a>
 						</div>
 					  </li>
 					</ul>

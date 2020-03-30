@@ -1458,6 +1458,11 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'HomePersonalController@showCapaianBulanan'
 	]);
 
+	Route::get('capaian-triwulan', [
+		'as' 			=> 'personal-capaian_triwulan',
+		'uses' 			=> 'HomePersonalController@showCapaianTriwulan'
+	]);
+
 	Route::get('capaian-tahunan', [
 		'as' 			=> 'personal-capaian_tahunan',
 		'uses' 			=> 'HomePersonalController@showCapaianTahunan'
@@ -1622,15 +1627,6 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	//=============================   CAPAIAN TRIWULAN     ====================================//
 	//=========================================================================================//
 	
-	
-	
-	
-	Route::get('capaian-triwulan', [
-		'as' 			=> '',
-		'uses' 			=> 'HomePersonalController@showCapaianTriwulan'
-	]);
-
-
 	Route::get('capaian-triwulan/{capaian_triwulan_id}/edit',[
 		'as' 			=> '',
 		'uses' 			=> 'CapaianTriwulanController@PersonalCapaianTriwulanEdit'

@@ -1,7 +1,7 @@
 <div class="box {{ $h_box }}">
     <div class="box-header with-border">
         <h1 class="box-title">
-            Data Capaian Triwulan 
+            Data Capaian Triwulan
         </h1>
 
         <div class="box-tools pull-right">
@@ -265,7 +265,11 @@
 		});
 	});
 
+
+
+
 	$(document).on('click','.create_capaian_triwulan',function(e){
+		
 		var skp_tahunan_id = $(this).data('skp_tahunan_id') ;
 		var trimester = $(this).data('trimester') ;
 
@@ -284,7 +288,13 @@
 				},
 				error: function(data){
 					alert("tes gagal ajah");
-				}						
+				},
+				beforeSend: function(){
+					show_loader();
+				},
+				complete: function(){
+					swal.close();
+				} 						
 		});	  
 
 

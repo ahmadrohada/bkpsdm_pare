@@ -26,7 +26,7 @@
 
 			<div class="row margin-top-1">
 				<div class="col-md-3">
-					{!! HTML::icon_link( "/users/create", 'fa-fw fa '.Lang::get('sidebar-nav.link_icon_user_create'), Lang::get('sidebar-nav.link_title_user_create'), array('class' =>'btn btn-primary btn-flat btn-block')) !!}
+					{!! HTML::icon_link( "/users/create", 'fa-fw fa '.Lang::get('sidebar-nav.link_icon_user_create'), Lang::get('sidebar-nav.link_title_user_create'), array('class' =>'btn btn-primary  btn-block')) !!}
 				</div>
 			</div>
 

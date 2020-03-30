@@ -19,8 +19,8 @@
                  Anda Akan Membuat <strong>PERJANJIAN KINERJA</strong> untuk <strong><span class="periode"></span></strong>    
             </div>
             <div class="modal-footer">
-                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-outline pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-outline pull-right btn-flat', 'type' => 'button', 'id' => 'simpan_perjanjian_kinerja' )) !!}
+                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-outline pull-left ', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
+                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-outline pull-right ', 'type' => 'button', 'id' => 'simpan_perjanjian_kinerja' )) !!}
             </div>
 
 

@@ -14,7 +14,7 @@
 		<div class="input-group input-group-sm">
               <input type="input" class="form-control" id="input-search" placeholder="Type to search..." value="">
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-info btn-flat" id="btn-clear-search"><i class="fa fa-undo"></i></button>
+                      <button type="button" class="btn btn-info " id="btn-clear-search"><i class="fa fa-undo"></i></button>
                     </span>
 				</div>
 				<p class="margin"></p>

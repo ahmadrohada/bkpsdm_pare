@@ -31,7 +31,7 @@
 					<!-- <div class="input-group input-group-sm"> -->
 					<select class="form-control input-sm skpd" name="tpp_report_id" style="width: 100%;"></select>
 					<!-- <span class="input-group-btn">
-							<button type="button" class="btn btn-info btn-flat">Go!</button>
+							<button type="button" class="btn btn-info ">Go!</button>
 						</span> -->
 					<!-- </div> -->
 				</div>
