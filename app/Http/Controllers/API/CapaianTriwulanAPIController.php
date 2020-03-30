@@ -204,7 +204,7 @@ class CapaianTriwulanAPIController extends Controller {
                             
                                     'skp_tahunan.id AS skp_tahunan_id',
                                     'periode.label',
-                                    'periode.awal',
+                                    'periode.awal AS awal',
                                     'skp_tahunan.tgl_mulai',
                                     'skp_tahunan.tgl_selesai',
                                     'skp_tahunan.u_jabatan_id',
@@ -242,25 +242,25 @@ class CapaianTriwulanAPIController extends Controller {
                 }
             })
             ->addColumn('remaining_time_triwulan1', function ($x){
-                $tahun = Pustaka::tahun($x->mulai);
+                $tahun = Pustaka::tahun($x->awal);
                 $tgl_selesai = strtotime($tahun."-04-01");
                 $now         = time();
                 return floor(($tgl_selesai - $now)/ (60*60*24)) * -1; 
             })
             ->addColumn('remaining_time_triwulan2', function ($x){
-                $tahun = Pustaka::tahun($x->mulai);
+                $tahun = Pustaka::tahun($x->awal);
                 $tgl_selesai = strtotime($tahun."-07-01");
                 $now         = time();
                 return floor(($tgl_selesai - $now)/ (60*60*24)) * -1;
             })
             ->addColumn('remaining_time_triwulan3', function ($x){
-                $tahun = Pustaka::tahun($x->mulai);
+                $tahun = Pustaka::tahun($x->awal);
                 $tgl_selesai = strtotime($tahun."-10-01");
                 $now         = time();
                 return floor(($tgl_selesai - $now)/ (60*60*24)) * -1;
             })
             ->addColumn('remaining_time_triwulan4', function ($x){
-                $tahun = Pustaka::tahun($x->mulai);
+                $tahun = Pustaka::tahun($x->awal);
                 $tgl_selesai = strtotime(($tahun+1)."-01-01");
                 $now         = time();
                 return floor(($tgl_selesai - $now)/ (60*60*24)) * -1;
