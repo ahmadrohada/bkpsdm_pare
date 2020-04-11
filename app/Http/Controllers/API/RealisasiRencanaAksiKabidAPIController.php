@@ -109,8 +109,9 @@ class RealisasiRencanaAksiKabidAPIController extends Controller {
 		
 		//return  $rencana_aksi;
         $rencana_aksi = array(
-            'realisasi_rencana_aksi_id'       => $x->realisasi_rencana_aksi_id,
-            'label'                         => $x->rencana_aksi_label,
+            'realisasi_rencana_aksi_id'         => $x->realisasi_rencana_aksi_id,
+            'rencana_aksi_id'                   => $x->rencana_aksi_id,
+            'label'                             => $x->rencana_aksi_label,
             'realisasi_rencana_aksi_target'   => $x->realisasi_rencana_aksi_target,
             'realisasi_rencana_aksi_satuan'   => $x->realisasi_rencana_aksi_satuan,
 
@@ -150,9 +151,10 @@ class RealisasiRencanaAksiKabidAPIController extends Controller {
 
         $messages = [
                 'rencana_aksi_id.required'      => 'Harus diisi',
-                'capaian_id.required'               => 'Harus diisi',
-                'realisasi.required'           => 'Harus diisi',
-                'satuan.required'                   => 'Harus diisi',
+                'capaian_id.required'           => 'Harus diisi',
+                'target.required'               => 'Harus diisi',
+                'realisasi.required'            => 'Harus diisi',
+                'satuan.required'               => 'Harus diisi',
         ];
 
         $validator = Validator::make(
@@ -160,8 +162,9 @@ class RealisasiRencanaAksiKabidAPIController extends Controller {
                         array(
                             'rencana_aksi_id'   => 'required',
                             'capaian_id'        => 'required',
-                            'realisasi'        => 'required',
-                            'satuan'                => 'required',
+                            'realisasi'         => 'required',
+                            'target'            => 'required',
+                            'satuan'            => 'required',
                         ),
                         $messages
         );
@@ -171,13 +174,16 @@ class RealisasiRencanaAksiKabidAPIController extends Controller {
             return response()->json(['errors'=>$validator->messages()],422);
             
         }
-
+        //UPDATE dulu target nya
+        $rencana_aksi            = RencanaAksi::find(Input::get('rencana_aksi_id'));
+        $rencana_aksi->target    = $request->target;
+        $rencana_aksi->save();
 
         $st_kt    = new RealisasiRencanaAksiEselon3;
 
         $st_kt->rencana_aksi_id         = Input::get('rencana_aksi_id');
         $st_kt->capaian_id              = Input::get('capaian_id');
-        $st_kt->realisasi          = Input::get('realisasi');
+        $st_kt->realisasi               = Input::get('realisasi');
         $st_kt->satuan                  = Input::get('satuan');
         $st_kt->alasan_tidak_tercapai   = Input::get('alasan_tidak_tercapai');
         $st_kt->bukti                   = "";
@@ -197,17 +203,21 @@ class RealisasiRencanaAksiKabidAPIController extends Controller {
     {
 
         $messages = [
-                'realisasi_rencana_aksi_id.required'  => 'Harus diisi',
-                'realisasi.required'           => 'Harus diisi',
-                'satuan.required'                   => 'Harus diisi',
+                'realisasi_rencana_aksi_id.required'    => 'Harus diisi',
+                'rencana_aksi_id.required'              => 'Harus diisi',
+                'realisasi.required'                    => 'Harus diisi',
+                'target.required'                       => 'Harus diisi',
+                'satuan.required'                       => 'Harus diisi',
         ];
 
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'realisasi_rencana_aksi_id'  => 'required',
-                            'realisasi'                  => 'required',
-                            'satuan'                     => 'required',
+                            'realisasi_rencana_aksi_id'     => 'required',
+                            'rencana_aksi_id'               => 'required',
+                            'target'                        => 'required',
+                            'realisasi'                     => 'required',
+                            'satuan'                        => 'required',
                         ),
                         $messages
         );
@@ -218,7 +228,12 @@ class RealisasiRencanaAksiKabidAPIController extends Controller {
             
         }
 
-        
+        //UPDATE dulu target nya
+        $rencana_aksi            = RencanaAksi::find(Input::get('rencana_aksi_id'));
+        $rencana_aksi->target    = $request->target;
+        $rencana_aksi->save();
+
+
         $st_ra    = RealisasiRencanaAksiEselon3::find(Input::get('realisasi_rencana_aksi_id'));
         if (is_null($st_ra)) {
             return $this->sendError('Capaian Rencana Aksi tidak ditemukan.');

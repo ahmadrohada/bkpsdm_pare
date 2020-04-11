@@ -554,7 +554,8 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         $messages = [
                 'kegiatan_bulanan_id.required'      => 'Harus diisi',
                 'capaian_id.required'               => 'Harus diisi',
-                'realisasi.required'           => 'Harus diisi',
+                'target.required'                   => 'Harus diisi',
+                'realisasi.required'                => 'Harus diisi',
                 'satuan.required'                   => 'Harus diisi',
         ];
 
@@ -562,8 +563,9 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                         Input::all(),
                         array(
                             'kegiatan_bulanan_id'   => 'required',
-                            'capaian_id'        => 'required',
-                            'realisasi'        => 'required',
+                            'capaian_id'            => 'required',
+                            'target'                => 'required',
+                            'realisasi'             => 'required',
                             'satuan'                => 'required',
                         ),
                         $messages
@@ -575,12 +577,16 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             
         }
 
+        //UPDATE dulu target nya
+        $keg_bulanan            = KegiatanSKPBulanan::find(Input::get('kegiatan_bulanan_id'));
+        $keg_bulanan->target    = $request->target;
+        $keg_bulanan->save();
 
         $st_kt    = new RealisasiKegiatanBulanan;
 
         $st_kt->kegiatan_bulanan_id     = Input::get('kegiatan_bulanan_id');
         $st_kt->capaian_id              = Input::get('capaian_id');
-        $st_kt->realisasi          = Input::get('realisasi');
+        $st_kt->realisasi               = Input::get('realisasi');
         $st_kt->satuan                  = Input::get('satuan');
         $st_kt->alasan_tidak_tercapai   = Input::get('alasan_tidak_tercapai');
         $st_kt->bukti                   = "";
@@ -601,16 +607,20 @@ class RealisasiKegiatanBulananAPIController extends Controller {
     {
 
         $messages = [
-                'realisasi_kegiatan_bulanan_id.required'   => 'Harus diisi',
-                'realisasi.required'                => 'Harus diisi',
+                'realisasi_kegiatan_bulanan_id.required'    => 'Harus diisi',
+                'kegiatan_bulanan_id.required'              => 'Harus diisi',
+                'realisasi.required'                        => 'Harus diisi',
+                'target.required'                           => 'Harus diisi',
 
         ];
 
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'realisasi_kegiatan_bulanan_id'   => 'required',
-                            'realisasi'                => 'required',
+                            'realisasi_kegiatan_bulanan_id'     => 'required',
+                            'kegiatan_bulanan_id'               => 'required',
+                            'realisasi'                         => 'required',
+                            'target'                            => 'required',
                         ),
                         $messages
         );
@@ -620,6 +630,11 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             return response()->json(['errors'=>$validator->messages()],422);
             
         }
+
+        //UPDATE dulu target nya
+        $keg_bulanan            = KegiatanSKPBulanan::find(Input::get('kegiatan_bulanan_id'));
+        $keg_bulanan->target    = $request->target;
+        $keg_bulanan->save();
 
         
         $st_kt    = RealisasiKegiatanBulanan::find(Input::get('realisasi_kegiatan_bulanan_id'));

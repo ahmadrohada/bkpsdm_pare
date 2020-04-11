@@ -4,8 +4,8 @@
 <!--====================== KEGIATAN BULANAN LIST =========================================== -->
 		<div class="box box-primary" id='kegiatan_bulanan'>
 			<div class="box-header with-border">
-				<h1 class="box-title">
-					List Realisasi Kegiatan Bulanan
+				<h1 class="box-title"> 
+					List Realisasi Kegiatan Bulanan 
 				</h1>
 
 				<div class="box-tools pull-right">
@@ -171,6 +171,8 @@
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_output').html(data['kegiatan_bulanan_output']);
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_target').html(data['kegiatan_bulanan_target']);
+					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_target').val(data['kegiatan_bulanan_target']);
+					
 
 					$('.modal-realisasi_kegiatan_bulanan').find('h4').html('Add Realisasi Kegiatan Bulanan');
 					$('.modal-realisasi_kegiatan_bulanan').find('.btn-submit').attr('id', 'submit-save');
@@ -196,6 +198,7 @@
 				dataType		: "json",
 				success	: function(data) {
 
+					$('.modal-realisasi_kegiatan_bulanan').find('[name=kegiatan_bulanan_id]').val(data['id']);
 					$('.modal-realisasi_kegiatan_bulanan').find('[name=realisasi_kegiatan_bulanan_id]').val(data['realisasi_kegiatan_bulanan_id']);
 					$('.modal-realisasi_kegiatan_bulanan').find('[name=skp_bulanan_id]').val(data['skp_bulanan_id']);
 					$('.modal-realisasi_kegiatan_bulanan').find('[name=capaian_id]').val({!! $capaian->id !!});
@@ -213,6 +216,7 @@
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_output').html(data['kegiatan_bulanan_output']);
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_target').html(data['kegiatan_bulanan_target']);
+					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_target').val(data['kegiatan_bulanan_target']);
 					
 					$('.modal-realisasi_kegiatan_bulanan').find('h4').html('Edit Realisasi Kegiatan Bulanan');
 					$('.modal-realisasi_kegiatan_bulanan').find('.btn-submit').attr('id', 'submit-update');

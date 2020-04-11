@@ -9,7 +9,7 @@
             </div>
 
             <form  id="realisasi_kegiatan_bulanan_form" method="POST" action="">
-			<input type="hidden"  name="kegiatan_bulanan_id" class="kegiatan_bulanan_id">
+			<input type="text"  name="kegiatan_bulanan_id" class="kegiatan_bulanan_id">
 			<input type="hidden"  name="skp_bulanan_id" class="skp_bulanan_id">
 			<input type="hidden"  name="capaian_id" class="capaian_id">
 			<input type="hidden"  name="realisasi_kegiatan_bulanan_id" class="realisasi_kegiatan_bulanan_id">
@@ -65,7 +65,8 @@
 						<div class="col-md-6 col-xs-6 form-group" style="margin-top:8px;">	
 							<label class="control-label">Target </label>
 							<div class="input-group">
-								<span type="text" class="form-control input-sm kegiatan_bulanan_target"></span>
+								<input type="text" name="target" id="kegiatan_bulanan_target"  class="form-control input-sm kegiatan_bulanan_target">
+								{{-- <span type="text" class="form-control input-sm kegiatan_bulanan_target"></span> --}}
 								<div class="input-group-addon">
 									<span class="kegiatan_bulanan_satuan"></span>
 								</div>

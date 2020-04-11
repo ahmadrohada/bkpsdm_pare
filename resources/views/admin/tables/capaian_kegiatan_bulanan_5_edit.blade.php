@@ -171,6 +171,7 @@
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_output').html(data['output']);
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_satuan').html(data['satuan']);
 					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_target').html(data['target']);
+					$('.modal-realisasi_kegiatan_bulanan').find('.kegiatan_bulanan_target').val(data['target']);
 
 					$('.modal-realisasi_kegiatan_bulanan').find('h4').html('Add Realisasi Kegiatan Bulanan');
 					$('.modal-realisasi_kegiatan_bulanan').find('.btn-submit').attr('id', 'submit-save_jft');

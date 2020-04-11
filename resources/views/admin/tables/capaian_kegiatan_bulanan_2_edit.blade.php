@@ -215,6 +215,7 @@
 
 					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['satuan_target_rencana_aksi']);
 					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').html(data['target_rencana_aksi']);
+					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').val(data['target_rencana_aksi']);
 
 					$('.modal-realisasi_rencana_aksi').find('h4').html('Add Realisasi Rencana Aksi');
 					$('.modal-realisasi_rencana_aksi').find('.btn-submit').attr('id', 'submit-save');
@@ -239,7 +240,7 @@
 				method			: "GET",
 				dataType		: "json",
 				success	: function(data) {
-
+					$('.modal-realisasi_rencana_aksi').find('[name=rencana_aksi_id]').val(data['rencana_aksi_id']);
 					$('.modal-realisasi_rencana_aksi').find('[name=realisasi_rencana_aksi_id]').val(data['realisasi_rencana_aksi_id']);
 					$('.modal-realisasi_rencana_aksi').find('[name=skp_bulanan_id]').val(data['skp_bulanan_id']);
 					$('.modal-realisasi_rencana_aksi').find('[name=capaian_id]').val({!! $capaian->id !!});
@@ -259,7 +260,8 @@
 
 					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['satuan_target_rencana_aksi']);
 					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').html(data['target_rencana_aksi']);
-					
+					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').val(data['target_rencana_aksi']);
+
 					$('.modal-realisasi_rencana_aksi').find('h4').html('Edit realisasi Rencana Aksi');
 					$('.modal-realisasi_rencana_aksi').find('.btn-submit').attr('id', 'submit-update');
 					$('.modal-realisasi_rencana_aksi').find('[name=text_button_submit]').html('Update Data');
