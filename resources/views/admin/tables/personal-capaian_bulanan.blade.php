@@ -37,7 +37,7 @@
 				serverSide      : true,
 				searching      	: false,
 				paging          : true,
-				order 			: [ 5, 'asc' ],
+				order 			: [ 1, 'asc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [

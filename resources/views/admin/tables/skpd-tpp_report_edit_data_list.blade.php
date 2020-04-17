@@ -7,36 +7,36 @@
 	 
 	  clear: both;
 	  border-collapse: collapse;
-	  table-layout: fixed; // ***********add this
-	  word-wrap:break-word; // ***********and this
-	  white-space: nowrap;
+	  table-layout: fixed; 
+	  word-wrap:break-word;
+	 /*  white-space: nowrap; */
 	  text-overflow: ellipsis;
 	  overflow: hidden;
 	}
 	
 </style>
 
-<div class="table-responsive" style="margin:20px 10px 10px 10px; ">
+<div class="table-responsive" style="">
 
 	<table id="tpp_report_table" class="table table-striped table-hover">
 
 		<thead>
 			<tr>
-				<th rowspan="2" class="no-sort" width="20px;">NO</th>
+				<th rowspan="2" class="no-sort" width="23px;">NO</th>
 				<th rowspan="2" width="200px;">NAMA</th>
-				<th rowspan="2" width="140px;">NIP</th>
+				<th rowspan="2" width="145px;">NIP</th>
 				<th rowspan="2" width="60px;">GOL</th>
 				<th rowspan="2" width="250px;">JABATAN</th>
 				<th rowspan="2" width="60px;">ESELON</th>
 				<th rowspan="2" width="105px;">TPP</th>
-				<th colspan="5" width="550px;">KINERJA ( {{ $kinerja }} % )</th>
-				<th colspan="4" width="450px;">KEHADIRAN ( {{ $kehadiran }} % )</th>
+				<th colspan="5" width="560px;">KINERJA ( {{ $kinerja }} % )</th>
+				<th colspan="4" width="440px;">KEHADIRAN ( {{ $kehadiran }} % )</th>
 				<th rowspan="2" width="105px;">TOTAL</th>
 				<th rowspan="2" width="40px;"><i class="fa fa-cog"></i></th>
 			</tr>
 			<tr>
 				<th>TPP x {{ $kinerja }} %</th>
-				<th >CAPAIAN</th>
+				<th>CAPAIAN</th>
 				<th>SKOR (%)</th>
 				<th>POT (%)</th>
 				<th>JM TPP ( Rp. )</th>
@@ -222,8 +222,9 @@
 
 	$(document).on('click','.ubah_tpp_report_data_id',function(e){
 		var tpp_report_data_id = $(this).data('id');
+		show_loader();
 		$.ajax({
-			url		: '{{ url("api_resource/tpp_report_data_detail") }}',
+			url		: '{{ url("api_resource/tpp_report_data_edit") }}',
 			type	: 'GET',
 			data	:  	{ 
 							tpp_report_data_id : tpp_report_data_id
@@ -231,17 +232,66 @@
 			success	: function(data) {
 
 					
-					$('.jabatan').html(data['jabatan']); 
-					$('.eselon').html(data['eselon']); 
-					$('.unit_kerja').html(data['unit_kerja']); 
-					$('.golongan').html(data['golongan']);
+					$('.nama_pegawai').html(data['nama_pegawai']); 
+					$('.jabatan').html(data['jabatan']+' [ '+data['eselon']+' ]'); 
+					$('.tpp_rupiah').html(data['tpp_rupiah']); 
 
+					$('.persen_kinerja').html(data['persen_kinerja']); 
+					$('.tpp_kinerja').html(data['tpp_kinerja']); 
+					$('.capaian_kinerja').html(data['capaian']); 
+					$('.skor_capaian').html(data['skor_capaian']); 
+					$('.potongan_kinerja').html(data['pot_kinerja']); 
+					$('.jm_tpp_kinerja').html(data['jm_tpp_kinerja']); 
+
+					$('.persen_kehadiran').html(data['persen_kehadiran']); 
+					$('.tpp_kehadiran').html(data['tpp_kehadiran']); 
+					$('.skor_kehadiran').html(data['skor_kehadiran']); 
+					$('.pot_kehadiran').html(data['pot_kehadiran']); 
+					$('.jm_tpp_kehadiran').html(data['jm_tpp_kehadiran']); 
+
+					//DATA BARU
+					$('.new_tpp_rupiah').html(data['data_baru'].tpp_rupiah); 
+
+					$('.new_persen_kinerja').html(data['data_baru'].persen_kinerja); 
+					$('.new_tpp_kinerja').html(data['data_baru'].tpp_kinerja); 
+					$('.new_capaian_kinerja').html(data['data_baru'].capaian); 
+					$('.new_skor_capaian').html(data['data_baru'].skor_capaian); 
+					$('.new_potongan_kinerja').html(data['data_baru'].pot_kinerja); 
+					$('.new_jm_tpp_kinerja').html(data['data_baru'].jm_tpp_kinerja); 
+
+					$('.new_persen_kehadiran').html(data['data_baru'].persen_kehadiran); 
+					$('.new_tpp_kehadiran').html(data['data_baru'].tpp_kehadiran); 
+					$('.new_skor_kehadiran').html(data['data_baru'].skor_kehadiran); 
+					$('.new_pot_kehadiran').html(data['data_baru'].pot_kehadiran); 
+					$('.new_jm_tpp_kehadiran').html(data['data_baru'].jm_tpp_kehadiran); 
+
+					$('.tpp_report_data_id').val(data['tpp_report_data_id']); 
+					$('.new_capaian_bulanan_id').val(data['data_baru'].capaian_bulanan_id); 
+					$('.new_tpp_rupiah').val(data['data_baru'].ntpp_rupiah); 
+					$('.new_tpp_kinerja').val(data['data_baru'].ntpp_kinerja); 
+					$('.new_capaian_kinerja').val(data['data_baru'].capaian); 
+					$('.new_skor_capaian').val(data['data_baru'].nskor_capaian); 
+					$('.new_potongan_kinerja').val(data['data_baru'].pot_kinerja); 
+
+					$('.new_tpp_kehadiran').val(data['data_baru'].ntpp_kehadiran); 
+					$('.new_skor_kehadiran').val(data['data_baru'].nskor_kehadiran); 
+					$('.new_pot_kehadiran').val(data['data_baru'].pot_kehadiran); 
+
+					if ( ( ( data['tpp_rupiah'] != data['data_baru'].tpp_rupiah )|( data['capaian'] != data['data_baru'].capaian ) ) && ( data['data_baru'].capaian_bulanan_id != null ) ){
+						$('.data_baru').removeClass('hidden');
+					}else{
+						$('.data_baru').addClass('hidden');
+					}
+					
+					
+					
+					
 					$('.modal-tpp_report_data').modal('show'); 
-			
+					swal.close();
 				
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
-
+					swal.close();
 					Swal.fire({
 						title: 'Error!',
 						text: '',

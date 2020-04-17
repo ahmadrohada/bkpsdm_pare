@@ -588,6 +588,9 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//============================= TPP REPORT DATA =====================================================//
 	
 	Route::get('tpp_report_data_detail','API\TPPReportAPIController@TPPReportDataDetail');
+	Route::get('tpp_report_data_edit','API\TPPReportAPIController@TPPReportDataEdit');
+
+	Route::post('tpp_report_data_update','API\TPPReportAPIController@TPPReportDataUpdate');
 
 	//========================================================================================================//
 	//============================== =======    CAPAIAN TRIWULAN ================================================//

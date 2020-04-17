@@ -21,6 +21,7 @@ use App\Models\UnitKerja;
 use App\Helpers\Pustaka;
 
 use App\Traits\HitungCapaian;
+use App\Traits\UpdateCapaian;
 
 use Datatables;
 use Validator;
@@ -33,6 +34,7 @@ class TPPReportAPIController extends Controller
 {
 
     use HitungCapaian;
+    use UpdateCapaian;
 
     //============================= HITUNG CAPAIAN ==========================================//
     protected function penilaian_kode_etik($x)
@@ -334,7 +336,7 @@ class TPPReportAPIController extends Controller
                 return $x->golongan;
             })
             ->addColumn('eselon', function ($x) {
-                return $x->eselon;
+                return Pustaka::short_eselon($x->eselon);
             })
             ->addColumn('jabatan', function ($x) {
                 return Pustaka::capital_string($x->jabatan);
@@ -648,6 +650,95 @@ class TPPReportAPIController extends Controller
         return $tpp;
     }
 
+    protected function TPPReportDataEdit(Request $request)
+    {
+
+        $x = TPPReportData::
+            //JABATAN
+            leftjoin('demo_asn.m_skpd AS jabatan', function ($join) {
+                $join->on('jabatan.id', '=', 'tpp_report_data.jabatan_id');
+            }) 
+            //ESELON
+            ->leftjoin('demo_asn.m_eselon AS eselon', function ($join) {
+                $join->on('eselon.id', '=', 'tpp_report_data.eselon_id');
+            }) 
+            //UNIT KERJA 
+            ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', function ($join) {
+                $join->on('unit_kerja.id', '=', 'tpp_report_data.unit_kerja_id');
+            })
+            //Golongan
+            ->leftjoin('demo_asn.m_golongan AS golongan', function ($join) {
+                $join->on('golongan.id', '=', 'tpp_report_data.golongan_id');
+            })
+            //CAPAIAN SKP
+            ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
+                $join->on('capaian.id', '=', 'tpp_report_data.capaian_bulanan_id');
+            })
+            //TPP Report
+            ->leftjoin('db_pare_2018.tpp_report AS tpp_report', function ($join) {
+                $join->on('tpp_report.id', '=', 'tpp_report_data.tpp_report_id');
+            })
+            ->select([
+                'tpp_report_data.id AS tpp_report_data_id',
+                'tpp_report_data.nama_pegawai AS nama_pegawai',
+                'tpp_report_data.pegawai_id AS pegawai_id',
+                'tpp_report_data.skpd_id AS skpd_id',
+                'tpp_report_data.tpp_rupiah',
+                'tpp_report_data.tpp_kinerja',
+                'tpp_report_data.cap_skp AS capaian',
+                'tpp_report_data.skor_cap AS skor_capaian',
+                'tpp_report_data.pot_kinerja',
+                'tpp_report_data.tpp_kehadiran',
+                'tpp_report_data.skor_kehadiran',
+                'tpp_report_data.pot_kehadiran',
+                'jabatan.skpd AS jabatan',
+                'eselon.eselon AS eselon',
+                'capaian.id AS capaian_id',
+                'tpp_report.formula_hitung_id',
+                'tpp_report.bulan',
+                'tpp_report.periode_id'
+
+
+            ])
+            ->WHERE('tpp_report_data.id', $request->tpp_report_data_id)
+            ->first();
+        //FORMULA HITUNG
+        $formula    = FormulaHitungTPP::WHERE('id',$x->formula_hitung_id)->first();
+
+
+        //CARI CAPAIAN BULANAN TERBARU
+        $tpp = array(
+            'tpp_report_data_id'    => $x->tpp_report_data_id,
+            'nama_pegawai'          => $x->nama_pegawai,
+            'jabatan'               => Pustaka::capital_string($x->jabatan),
+            'eselon'                => $x->eselon,
+
+            'persen_kinerja'        => $formula->kinerja." %",
+            'persen_kehadiran'      => $formula->kehadiran." %",
+
+            'tpp_rupiah'            => "Rp. " . number_format($x->tpp_rupiah, '0', ',', '.'),
+            'tpp_kinerja'           => "Rp. " . number_format($x->tpp_kinerja, '0', ',', '.'),
+            'capaian'               => $x->capaian,
+            'skor_capaian'          => Pustaka::persen_bulat($x->skor_capaian)." %",
+            'pot_kinerja'           => $x->pot_kinerja,
+            'jm_tpp_kinerja'        => "Rp. " . number_format( (($x->tpp_kinerja)*($x->skor_capaian/100) ) - ( ($x->pot_kinerja/100 )*$x->tpp_kinerja), '0', ',', '.'),
+
+
+            'tpp_kehadiran'         => "Rp. " . number_format($x->tpp_kehadiran, '0', ',', '.'),
+            'skor_kehadiran'        => Pustaka::persen_bulat($x->skor_kehadiran)." %",
+            'pot_kehadiran'         => $x->pot_kehadiran,
+            'jm_tpp_kehadiran'      => "Rp. " . number_format( (($x->tpp_kehadiran)*($x->skor_kehadiran/100) ) - ( ($x->pot_kehadiran/100 )*$x->tpp_kehadiran), '0', ',', '.'),
+            
+            'capaian_id'            => $x->capaian_id,
+
+            'data_baru'             => $this->update_capaian($x->bulan,$x->periode_id,$x->pegawai_id,$x->skpd_id,$x->formula_hitung_id,$x->pot_kinerja,$x->skor_kehadiran,$x->pot_kehadiran),
+
+
+
+        );
+        return $tpp; 
+    }
+
 
     
     public function AdministratorTPPList(Request $request)
@@ -841,9 +932,9 @@ class TPPReportAPIController extends Controller
 
             //ambil data periode skp bulanan, jikatpp report januari, maka skp bulanan nya adalah skp bulan sebelumnya
             $bulan_lalu = Pustaka::bulan_lalu(Input::get('bulan'));
+            
+
             //jika bulan januari, maka periode nya cari yang periode sebelumnya
-
-
             if ( Input::get('bulan') == 01 ){
                 $dt = Periode::WHERE('periode.id',Input::get('periode_id'))->first();
                 $periode_akhir = date('Y-m-d', strtotime("-1 day", strtotime(date($dt->awal))));
@@ -939,9 +1030,10 @@ class TPPReportAPIController extends Controller
             ->WHERE('tb_pegawai.nip', '!=', 'admin')
             ->WHERE('tb_pegawai.status', 'active')
             ->ORDERBY('skp.id','ASC')
+            
             ->get(); 
 
-           
+           //return $tpp_data;
                 
             foreach ($tpp_data as $x) {
 
@@ -1037,9 +1129,18 @@ class TPPReportAPIController extends Controller
                 $report_data->skor_kehadiran        = 100;
                 $report_data->pot_kehadiran         = 0;
 
+                //DATA TAMBAHAN
+                /* $report_data->jm_capaian                = $jm_capaian;
+                $report_data->jm_kegiatan_bulanan       = $jm_kegiatan_bulanan;
+                $report_data->capaian_kinerja_bulanan   = $capaian_kinerja_bulanan;
+                $report_data->penilaian_kode_etik       = $penilaian_kode_etik; */
+
+
+
                 if ( $x->periode_id == null | $x->periode_id == $periode_id ){
                     $report_data->save();
                 }
+                
                 
             }  
             return \Response::make('sukses', 200);
@@ -1056,17 +1157,38 @@ class TPPReportAPIController extends Controller
 
 
 
-    public function TPPClose(Request $request)
+    
+    
+    public function TPPReportDataUpdate(Request $request)
     {
         $messages = [
-                'tpp_report_id.required'   => 'Harus diisi',
+                'tpp_report_data_id.required'       => 'Harus diisi',
+                'new_capaian_bulanan_id.required'   => 'Harus diisi',
+                'new_tpp_rupiah.required'           => 'Harus diisi',
+                'new_tpp_kinerja.required'          => 'Harus diisi',
+                'new_capaian_kinerja.required'      => 'Harus diisi',
+                'new_skor_capaian.required'         => 'Harus diisi',
+                'new_potongan_kinerja.required'     => 'Harus diisi',
+                'new_tpp_kehadiran.required'        => 'Harus diisi',
+                'new_skor_kehadiran.required'       => 'Harus diisi',
+                'new_pot_kehadiran.required'        => 'Harus diisi',
 
         ];
 
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'tpp_report_id'   => 'required',
+                            
+                            'tpp_report_data_id'       => 'required',
+                            'new_capaian_bulanan_id'   => 'required',
+                            'new_tpp_rupiah'           => 'required',
+                            'new_tpp_kinerja'          => 'required',
+                            'new_capaian_kinerja'      => 'required',
+                            'new_skor_capaian'         => 'required',
+                            'new_potongan_kinerja'     => 'required',
+                            'new_tpp_kehadiran'        => 'required',
+                            'new_skor_kehadiran'       => 'required',
+                            'new_pot_kehadiran'        => 'required',
                         ),
                         $messages
         );
@@ -1078,15 +1200,23 @@ class TPPReportAPIController extends Controller
         }
 
         
-        $tpp_report    = TPPReport::find(Input::get('tpp_report_id'));
-        if (is_null($tpp_report)) {
-            return $this->sendError('TPP Report tidak ditemukan.');
+        $tpp_report_data    = TPPReportData::find(Input::get('tpp_report_data_id'));
+        if (is_null($tpp_report_data)) {
+            return $this->sendError('TPP Report Data tidak ditemukan.');
         }
 
 
-        $tpp_report->status    = '1';
+        $tpp_report_data->capaian_bulanan_id    = Input::get('new_capaian_bulanan_id');
+        $tpp_report_data->tpp_rupiah            = Input::get('new_tpp_rupiah');
+        $tpp_report_data->tpp_kinerja           = Input::get('new_tpp_kinerja');
+        $tpp_report_data->cap_skp               = Input::get('new_capaian_kinerja');
+        $tpp_report_data->skor_cap              = Input::get('new_skor_capaian');
+        $tpp_report_data->pot_kinerja           = Input::get('new_potongan_kinerja');
+        $tpp_report_data->tpp_kehadiran         = Input::get('new_tpp_kehadiran');
+        $tpp_report_data->skor_kehadiran        = Input::get('new_skor_kehadiran');
+        $tpp_report_data->pot_kehadiran         = Input::get('new_pot_kehadiran');
 
-        if ( $tpp_report->save()){
+        if ( $tpp_report_data->save()){
             //return back();
             return \Response::make('sukses', 200);
             

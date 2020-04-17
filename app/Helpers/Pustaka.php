@@ -109,6 +109,29 @@ class Pustaka {
 	
 
 	}
+
+	public static function short_eselon($data){
+		
+		if ( $data === NULL ){
+			return "";
+		}else{
+			switch($data)
+						{
+					case "Non Struktural (JFU)" : $eselon= "JFU";
+							break;
+					case "Non Struktural (JFT)"  : $eselon= "JFT";
+							break;
+					default		: $eselon = $data;
+							break;
+						}
+
+			return $eselon;
+		}
+		
+
+	
+
+	}
 	
 	public static function balik($data){
 		$tanggal = substr($data,8,2); 

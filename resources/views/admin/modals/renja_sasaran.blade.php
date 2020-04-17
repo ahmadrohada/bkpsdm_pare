@@ -66,7 +66,6 @@
 			success	: function(data , textStatus, jqXHR) {
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
-               
 
 				Swal.fire({
 					title: "",

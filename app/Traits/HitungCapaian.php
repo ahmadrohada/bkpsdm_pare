@@ -261,7 +261,7 @@ trait HitungCapaian
     }
 
 
-    public function hitung_capaian($capaian_id){
+    public function hitung_capaian($capaian_id){ 
 
         $capaian_bulanan = CapaianBulanan::
 
@@ -298,6 +298,8 @@ trait HitungCapaian
                     'eselon.id_jenis_jabatan AS id_jenis_jabatan'
                 )
                 ->where('capaian_bulanan.id','=', $capaian_id )->first();
+
+                
 
         //$jenis_jabatan = $capaian_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
         $jenis_jabatan = $capaian_bulanan->id_jenis_jabatan;
