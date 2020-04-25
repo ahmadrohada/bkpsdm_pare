@@ -76,6 +76,7 @@
 <script type="text/javascript">
 
 
+
 function load_perjanjian_kinerja(){
 
 
@@ -99,6 +100,7 @@ function load_perjanjian_kinerja(){
 
 								 	},
 							 }, 
+			rowsGroup		: [1],
 			columns			:[
 							{ data: 'id' , orderable: false,searchable:false,width:"30px",
 									"render": function ( data, type, row ,meta) {

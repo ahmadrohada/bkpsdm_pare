@@ -201,6 +201,11 @@
 	<font style=" font-size:8pt;  font-family:Trebuchet MS,Calibri;">
 		Tanggal Cetak &nbsp;&nbsp;: {{ $waktu_cetak }} <br>
 	</font>
+
+
+	
+
+
 	<table class="cetak_report">
 		<thead>
 			<tr>
@@ -216,19 +221,16 @@
 			@php 
 				$i=1 ;
 				$count = 1 ;
+				
 			@endphp
-
-			@foreach($data as $p)
-
+			@foreach(  json_decode($data)   as $p)
 				@php 
-				if ( $jm->ind_sasaran > 1 ) {
-					
+				if ( $p->jm_ind_sasaran > 1 ) {
 					if ( $count == 1  ) {
-					
 						echo '
 							<tr>
-								<td rowspan="'.$jm->ind_sasaran.'" align="right">'. $i++ .'</td>
-								<td rowspan="'.$jm->ind_sasaran.'" >'. $p->sasaran_label  .'</td>
+								<td rowspan="'.$p->jm_ind_sasaran.'" align="right">'. $i++ .'</td>
+								<td rowspan="'.$p->jm_ind_sasaran.'" >'. $p->sasaran_label  .'</td>
 								<td>'. $p->ind_sasaran_label  .'</td>
 								<td align="center">'. $p->target.' '.$p->satuan   .'</td>
 							</tr>';
@@ -240,9 +242,7 @@
 							<td>'. $p->ind_sasaran_label  .'</td>
 							<td align="center">'. $p->target.' '.$p->satuan   .'</td>
 						</tr>';
-						
 					}
-					
 					
 				}else{
 					echo '

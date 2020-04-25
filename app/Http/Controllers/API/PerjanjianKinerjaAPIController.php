@@ -11,6 +11,7 @@ use App\Models\Tujuan;
 use App\Models\Sasaran;
 use App\Models\Program;
 use App\Models\IndikatorProgram;
+use App\Models\IndikatorSasaran;
 use App\Models\Pegawai;
 use App\Models\Jabatan;
 use App\Models\SKPTahunan;
@@ -516,31 +517,34 @@ class PerjanjianKinerjaAPIController extends Controller {
                                 'sasaran.pk_status AS pk_status',
                                 'ind_sasaran.label AS ind_sasaran_label',
                                 'ind_sasaran.target AS target',
-                                'ind_sasaran.satuan AS satuan'
+                                'ind_sasaran.satuan AS satuan',
                                 
                             ])
 
                     ->ORDERBY('renja_tujuan.id','DESC')
                     ->ORDERBY('sasaran.id','DESC')
                     ->get(); 
-		
-		  $jm = Tujuan::
-                                rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
-                                    $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
-                                    $join->WHERE('sasaran.pk_status', '=', '1');
-                                })
-                                ->leftjoin('db_pare_2018.renja_indikator_sasaran AS ind_sasaran', function ($join) {
-                                    $join->on('ind_sasaran.sasaran_id', '=', 'sasaran.id');
-                                })
-                                ->where('renja_tujuan.renja_id', '=' ,$renja_id )
-                                ->select([  
-                                            \DB::raw("COUNT(ind_sasaran.id) as ind_sasaran")
-                                            
-                                        ])
 
-                                ->ORDERBY('renja_tujuan.id','DESC')
-                                ->ORDERBY('sasaran.id','DESC')
-                                ->first();  
+            foreach ($data as $x) {
+                $d['sasaran_id']            = $x->sasaran_id;
+                $d['sasaran_label']         = $x->sasaran_label;
+                $d['pk_status']             = $x->pk_status;
+                $d['ind_sasaran_label']     = $x->ind_sasaran_label;
+                $d['target']                = $x->target;
+                $d['satuan']                = $x->satuan;
+
+                //JM indikator sasaran
+                $jm       = IndikatorSasaran::WHERE('sasaran_id',$x->sasaran_id)->count();
+                $d['jm_ind_sasaran']                = $jm;
+
+
+
+                $data_x[] = $d ;
+            }
+
+            $data_x = json_encode($data_x);
+
+        
 
         $data_2 = Tujuan:: 
                     rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
@@ -619,6 +623,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         
 
         $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon2', [   
+                                                    'data'          => $data_x , 
                                                     'data'          => $data , 
                                                     'data_2'        => $data_2 ,
 													'jm'            => $jm,
@@ -661,7 +666,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         </table>');
         //"tpp".$bulan_depan."_".$skpd."
         //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
-        return $pdf->stream('PerjanjianKinerja'.$Renja->nip_ka_skpd.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
+        return $pdf->download('PerjanjianKinerja'.$Renja->nip_ka_skpd.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
     }
 
     public function cetakPerjanjianKinerjaSKPD(Request $request)
@@ -691,24 +696,25 @@ class PerjanjianKinerjaAPIController extends Controller {
 
                         ->ORDERBY('renja_tujuan.id','DESC')
                         ->ORDERBY('sasaran.id','DESC')
-                        ->get();  
-        $jm = Tujuan::
-                                rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
-                                    $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
-                                    $join->WHERE('sasaran.pk_status', '=', '1');
-                                })
-                                ->leftjoin('db_pare_2018.renja_indikator_sasaran AS ind_sasaran', function ($join) {
-                                    $join->on('ind_sasaran.sasaran_id', '=', 'sasaran.id');
-                                })
-                                ->where('renja_tujuan.renja_id', '=' ,$renja_id )
-                                ->select([  
-                                            \DB::raw("COUNT(ind_sasaran.id) as ind_sasaran")
-                                            
-                                        ])
+                        ->get(); 
 
-                                ->ORDERBY('renja_tujuan.id','DESC')
-                                ->ORDERBY('sasaran.id','DESC')
-                                ->first();  
+        foreach ($data as $x) {
+                            $d['sasaran_id']            = $x->sasaran_id;
+                            $d['sasaran_label']         = $x->sasaran_label;
+                            $d['pk_status']             = $x->pk_status;
+                            $d['ind_sasaran_label']     = $x->ind_sasaran_label;
+                            $d['target']                = $x->target;
+                            $d['satuan']                = $x->satuan;
+            
+                            //JM indikator sasaran
+                            $jm       = IndikatorSasaran::WHERE('sasaran_id',$x->sasaran_id)->count();
+                            $d['jm_ind_sasaran']                = $jm;
+            
+            
+            
+                            $data_x[] = $d ;
+                        }
+        $data_x = json_encode($data_x);
 
         $data_2 = Tujuan:: 
                     rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
@@ -785,9 +791,8 @@ class PerjanjianKinerjaAPIController extends Controller {
         
 
         $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon2', [   
-                                                    'data'          => $data , 
+                                                    'data'          => $data_x , 
                                                     'data_2'        => $data_2 ,
-                                                    'jm'            => $jm,
                                                     'total_anggaran'=> $dt_3->total_anggaran,
                                                     'tgl_dibuat'    => $Renja->tgl_dibuat,
                                                     'periode'       => Pustaka::tahun($Renja->periode->awal),
@@ -828,8 +833,7 @@ class PerjanjianKinerjaAPIController extends Controller {
 				<td width="33%" style="text-align: right;"></td>
 			</tr>
         </table>');
-        //"tpp".$bulan_depan."_".$skpd."
-        //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
+        //return $pdf->stream('PerjanjianKinerja'.$Renja->nip_ka_skpd.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
         return $pdf->download('PerjanjianKinerja'.$Renja->nip_ka_skpd.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
     }
 

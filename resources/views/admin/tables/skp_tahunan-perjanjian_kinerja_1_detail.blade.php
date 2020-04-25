@@ -96,6 +96,7 @@ function load_perjanjian_kinerja(){
 										"renja_id" : {!! $skp->Renja->id !!}
 								 	},
 							 }, 
+			rowsGroup		: [1],
 			columns			:[
 							{ data: 'id' , orderable: false,searchable:false,width:"30px",
 									"render": function ( data, type, row ,meta) {

@@ -6,6 +6,7 @@
 
 {!! HTML::script('/assets/js/sweetalert2.all.min.js', array('type' => 'text/javascript')) !!}
 
+{!! HTML::script('assets/js/dataTables.rowsGroup.js', array('type' => 'text/javascript')) !!}
 
 
 {!! HTML::script('/assets/bower_components/jquery-datetimepicker/jquery.datetimepicker.full.min.js', array('type' => 'text/javascript')) !!}
