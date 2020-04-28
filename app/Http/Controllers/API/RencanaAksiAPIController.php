@@ -10,6 +10,7 @@ use App\Models\KegiatanSKPBulanan;
 use App\Models\CapaianRencanaAksi;
 use App\Models\HistoryJabatan;
 use App\Models\Jabatan;
+use App\Models\Pegawai;
 
 
 use App\Models\Tujuan;
@@ -33,7 +34,7 @@ use Datatables;
 use Validator;
 use Gravatar;
 use Input;
-Use Alert;
+Use PDF;
 
 class RencanaAksiAPIController extends Controller {
 
@@ -629,6 +630,90 @@ class RencanaAksiAPIController extends Controller {
 
         return $datatables->make(true);  
         
+    }
+
+    public function cetakRencanaAksiEsl3(Request $request)
+    {
+
+       
+        $skp_tahunan_id       = $request->get('skp_tahunan_id');
+
+        $data = KegiatanSKPTahunan::
+                            leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
+                                $join   ->on('kegiatan.id','=','skp_tahunan_kegiatan.kegiatan_id');
+                            })
+                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
+                                $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan.id');
+                            })
+                            ->join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                                $join   ->on('rencana_aksi.indikator_kegiatan_id','=','indikator_kegiatan.id');
+                                
+                            })
+                            ->leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
+                                $join   ->on('pelaksana.id','=','rencana_aksi.jabatan_id');
+                            })
+                            ->SELECT([  
+                                'kegiatan.id AS renja_kegiatan_id',
+                                'rencana_aksi.id AS rencana_aksi_id',
+                                'rencana_aksi.renja_id AS renja_id',
+                                'rencana_aksi.label AS rencana_aksi_label',
+                                'rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
+                                'pelaksana.skpd AS pelaksana'
+
+
+                                
+                                
+                                ])
+                            
+                            ->orderBy('rencana_aksi.indikator_kegiatan_id','ASC')
+                            ->groupBy('rencana_aksi.label','rencana_aksi.jabatan_id')
+                            
+                            ->WHERE('skp_tahunan_kegiatan.skp_tahunan_id','=', $skp_tahunan_id )
+                            ->get();
+
+      /*   foreach ($data as $x) {
+                                $d['rencana_aksi_label']            = $x->rencana_aksi_label;
+                
+                
+                                $data_x[] = $d ;
+        }
+                
+        $data_x = json_encode($data_x); */
+
+        //NAMA ADMIN
+        $user_x  = \Auth::user();
+        $profil  = Pegawai::WHERE('tb_pegawai.id',  $user_x->id_pegawai)->first();
+
+        //JAbatan
+        //$jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
+        
+
+        $pdf = PDF::loadView('admin.printouts.cetak_rencana_aksi-Eselon3', [   
+                                                    'data'          => $data,
+                                                    'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
+
+                                                   
+
+                                                     ], [], [
+                                                     'format' => 'Legal-L',
+                                                     'margin_left' => 0,    	// 15 margin_left
+				                                     'margin_right' => 0,    	// 15 margin right
+          ]);
+       
+        $pdf->getMpdf()->shrink_tables_to_fit = 1;
+        $pdf->getMpdf()->setWatermarkImage('assets/images/form/watermark.png');
+        $pdf->getMpdf()->showWatermarkImage = true;
+        
+        $pdf->getMpdf()->SetHTMLFooter('
+		<table width="100%">
+			<tr>
+				<td width="33%"></td>
+				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
+				<td width="33%" style="text-align: right;"></td>
+			</tr>
+        </table>');
+        
+        return $pdf->stream('RencanaAKsi'.'.pdf');
     }
 
     public function RencanaAksiTimeTable4(Request $request)

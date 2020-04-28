@@ -321,6 +321,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 
 	Route::get('skpd_renja_distribusi_kegiatan_tree','API\KegiatanAPIController@RenjaDistribusiKegiatanTree');
+	Route::get('skpd_renja_distribusi_kegiatan_tree_','API\KegiatanAPIController@RenjaDistribusiKegiatanTree_');
 
 	//Kegiatan SEKDA
 	Route::get('skp_tahunan_kegiatan_sekda','API\KegiatanAPIController@SKPTahunanKegiatanTreeSekda');
@@ -1542,6 +1543,8 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl2'
 	]);
 
+	
+
 	Route::post('skp_tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon3', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl3'
@@ -1549,6 +1552,11 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	Route::post('skp_tahunan/cetak_perjanjian_kinerja-Eselon3', [
 		'as' 			=> '',
 		'uses' 			=> 'API\PerjanjianKinerjaAPIController@cetakPerjanjianKinerjaEsl3'
+	]);
+
+	Route::post('skp_tahunan/{skp_tahunan_id}/cetak_rencana_aksi-Eselon3', [
+		'as' 			=> '',
+		'uses' 			=> 'API\RencanaAksiAPIController@cetakRencanaAksiEsl3'
 	]);
 
 	Route::post('skp_tahunan/{skp_tahunan_id}/cetak_perjanjian_kinerja-Eselon4', [

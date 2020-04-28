@@ -3,7 +3,14 @@
 		<h1 class="box-title"> 
 			List Pelaksanaan Rencana Aksi
 		</h1>
-
+		<div class="box-tools pull-right">
+			<form method="post" target="_blank" action="./cetak_rencana_aksi-Eselon3">
+				<input type="hidden" name="_token" value="{{ csrf_token() }}">
+				<input type="hidden" name="renja_id" value="">
+				
+				<button type="submit" class="btn btn-info btn-xs"><i class="fa fa-print"></i> Cetak</button>
+			</form> 
+		</div>
 	</div>
 	<div class="box-body table-responsive">
 		<table id="rencana_aksi_time_table" class="table table-striped table-hover">
