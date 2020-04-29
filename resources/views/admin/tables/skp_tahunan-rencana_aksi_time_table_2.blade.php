@@ -1,3 +1,4 @@
+
 <div class="box box-primary " style="min-height:340px;">
 	<div class="box-header with-border">
 		<h1 class="box-title"> 
@@ -6,7 +7,8 @@
 		<div class="box-tools pull-right">
 			<form method="post" target="_blank" action="./cetak_rencana_aksi-Eselon3">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
-				<input type="hidden" name="renja_id" value="">
+				<input type="hidden" name="skp_tahunan_id" value="{{ $skp->id }}">
+				<input type="hidden" name="jabatan_id" value="{{ $skp->PejabatYangDinilai->id_jabatan }}">
 				
 				<button type="submit" class="btn btn-info btn-xs"><i class="fa fa-print"></i> Cetak</button>
 			</form> 
@@ -46,7 +48,7 @@
 	function rencana_aksi_time_table(){
 		var table_rencana_aksi = $('#rencana_aksi_time_table').DataTable({
 			destroy			: true,
-			processing      : false,
+			processing      : true,
 			serverSide      : true,
 			searching      	: true,
 			paging          : true,
@@ -69,9 +71,9 @@
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "label", name:"rencana_aksi_label" , width:"42%", orderable: true, },
-								{ data: "pengawas", name:"pengawas" , width:"16%", orderable: true, },
-								{ data: "pelaksana", name:"pelaksana" , width:"16%", orderable: true, },
+								{ data: "label", name:"rencana_aksi_label" , width:"42%", orderable: false, },
+								{ data: "pengawas", name:"pengawas" , width:"16%", orderable: false, },
+								{ data: "pelaksana", name:"pelaksana" , width:"16%", orderable: false, },
 								
 								{ data: "jan", width:"3%", orderable: false,
 									"render": function ( data, type, row ) {

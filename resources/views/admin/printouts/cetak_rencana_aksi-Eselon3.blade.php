@@ -6,16 +6,20 @@
 		<title>Cetak</title>
 </head>
 <body>
+	@php  
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Pegawai.xls");
+	@endphp
 	
 	<div style="padding:5px 50px 10px 50px;">
 
 
 		<table width="100%" style="margin-top:20px;">
-			<tr>
+			{{-- <tr>
 				<td align="center" valign="top">
 					<img src="{{asset('assets/images/logo_karawang.png')}}" width="90px" height="120px" >
 				</td>
-			</tr>
+			</tr> --}}
 			<tr>
 				<td align="center" style="padding:20px 0 35px 0 ;">
 					<FONT style="font-size:13pt; font-family:Cambria; letter-spacing:1pt;">
@@ -33,7 +37,7 @@
 	<font style=" font-size:8pt;  font-family:Trebuchet MS,Calibri;">
 		Tanggal Cetak &nbsp;&nbsp;: {{ $waktu_cetak }} <br>
 	</font>
-	<table class="cetak_report">
+	<table class="cetak_report_reaksi" style=" font-size:7pt !important;">
 		<thead>
 			<tr>
 				<th rowspan="2" width="5%" >NO</th>
@@ -71,36 +75,36 @@
 
 		<tbody>
 			@php $i=1 @endphp
-			@foreach( $data as $p)
+			@foreach( json_decode($data) as $p)
 
 				<tr>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
+					<td class="tengah" width="3%">{{ $i }}</td>
+					<td >{{ $p->sasaran_label }}</td>
+					<td >{{ $p->indikator_sasaran_label }}</td>
+					<td >{{ $p->indikator_sasaran_target }}</td>
+					<td >{{ $p->program_label }}</td>
+					<td >{{ $p->kegiatan_label }}</td>
 					<td >{{ $p->rencana_aksi_label }}</td>
+					<td >{{ $p->rencana_aksi_target }}</td>
+					<td class="kanan">{{ $p->kegiatan_anggaran }}</td>
+					<td class="tengah" width="22px">{{ $p->b_1 }}</td>
+					<td class="tengah" width="22px">{{ $p->b_2 }}</td>
+					<td class="tengah" width="22px">{{ $p->b_3 }}</td>
+					<td class="tengah" width="22px">{{ $p->b_4 }}</td>
+					<td class="tengah" width="22px">{{ $p->b_5 }}</td>
+					<td class="tengah" width="22px">{{ $p->b_6 }}</td>
+					<td class="tengah" width="22px">{{ $p->b_7 }}</td>
+					<td class="tengah" width="22px">{{ $p->b_8 }}</td>
+					<td class="tengah" width="22px">{{ $p->b_9 }}</td>
+					<td class="tengah" width="22px">{{ $p->b_10 }}</td>
+					<td class="tengah" width="22px">{{ $p->b_11 }}</td>
+					<td class="tengah" width="22px">{{ $p->b_12 }}</td>
 					<td ></td>
 					<td ></td>
 					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-                </tr>
-			
+				</tr>
+				
+				@php $i++ @endphp
 			@endforeach 
 		</tbody>
 	</table>

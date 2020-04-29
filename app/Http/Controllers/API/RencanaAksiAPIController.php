@@ -253,23 +253,43 @@ class RencanaAksiAPIController extends Controller {
 
         $dt = RencanaAksi::
         
-                            /* join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join) use($pelaksana_id){
-                                $join   ->on('rencana_aksi.kegiatan_tahunan_id','=','skp_tahunan_kegiatan.id');
-                                //$join   ->WHEREIN('rencana_aksi.jabatan_id',$pelaksana_id);
-                            }) */
                             leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
                                 $join   ->on('pelaksana.id','=','skp_tahunan_rencana_aksi.jabatan_id');
                             })
                             ->leftjoin('demo_asn.m_skpd AS pengawas', function($join){
                                 $join   ->on('pelaksana.parent_id','=','pengawas.id');
                             })
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS keg_skp_tahunan', function($join){
+                                $join   ->on('keg_skp_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
+                            })
+                            ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
+                                $join   ->on('kegiatan.id','=','keg_skp_tahunan.kegiatan_id');
+                            })
+                            ->leftjoin('db_pare_2018.renja_program AS program', function($join){
+                                $join   ->on('program.id','=','kegiatan.program_id');
+                            })
+                            ->leftjoin('db_pare_2018.renja_sasaran AS sasaran', function($join){
+                                $join   ->on('sasaran.id','=','program.sasaran_id');
+                            })
+                            ->leftjoin('db_pare_2018.renja_indikator_sasaran AS indikator_sasaran', function($join){
+                                $join   ->on('sasaran.id','=','indikator_sasaran.sasaran_id');
+                            })
                             ->SELECT([  
                                     'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                    'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
+                                    'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
                                     'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
                                     'skp_tahunan_rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
                                     'skp_tahunan_rencana_aksi.waktu_pelaksanaan AS wapel',
-                                    'pelaksana.skpd AS pelaksana',
-                                    'pengawas.skpd AS pengawas'
+                                    'kegiatan.label AS kegiatan_label',
+                                    'kegiatan.cost AS kegiatan_anggaran',
+                                    'kegiatan.id AS kegiatan_id',
+                                    'keg_skp_tahunan.id AS kegiatan_tahunan_id',
+                                    'program.label AS program_label',
+                                    'sasaran.label AS sasaran_label',
+                                    'indikator_sasaran.label AS indikator_sasaran_label',
+                                    'indikator_sasaran.target AS indikator_sasaran_target',
+                                    'indikator_sasaran.satuan AS indikator_sasaran_satuan'
 
 
                                 
@@ -278,7 +298,10 @@ class RencanaAksiAPIController extends Controller {
                             
                             ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id)
                             ->WHERE('skp_tahunan_rencana_aksi.renja_id','=', $renja_id )
-                            ->orderBy('skp_tahunan_rencana_aksi.indikator_kegiatan_id','ASC')
+                            ->ORDERBY('sasaran.id','ASC')
+                            ->ORDERBY('program.id','ASC')
+                            ->ORDERBY('kegiatan.id','ASC')
+                            ->ORDERBY('skp_tahunan_rencana_aksi.id','ASC')
                             ->groupBy('skp_tahunan_rencana_aksi.label','skp_tahunan_rencana_aksi.jabatan_id')
                             ->get();
 
@@ -442,6 +465,182 @@ class RencanaAksiAPIController extends Controller {
         return $datatables->make(true); 
        
     }
+
+    
+
+    public function cetakRencanaAksiEsl3(Request $request)
+    {
+
+       
+        //bawahan bawahan nya lagi
+        $pelaksana_id = Jabatan::
+                        leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
+                            $join   ->on('pelaksana.parent_id','=','m_skpd.id');
+                        })
+                        ->SELECT('pelaksana.id')
+                        ->WHERE('m_skpd.parent_id', $request->get('jabatan_id') )
+                        ->get()
+                        ->toArray(); 
+
+        $renja_id = SKPTahunan::find($request->get('skp_tahunan_id'))->renja_id;
+               
+        
+
+        $dt = RencanaAksi::
+        
+                            leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
+                                $join   ->on('pelaksana.id','=','skp_tahunan_rencana_aksi.jabatan_id');
+                            })
+                            ->leftjoin('demo_asn.m_skpd AS pengawas', function($join){
+                                $join   ->on('pelaksana.parent_id','=','pengawas.id');
+                            })
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS keg_skp_tahunan', function($join){
+                                $join   ->on('keg_skp_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
+                            })
+                            ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
+                                $join   ->on('kegiatan.id','=','keg_skp_tahunan.kegiatan_id');
+                            })
+                            ->leftjoin('db_pare_2018.renja_program AS program', function($join){
+                                $join   ->on('program.id','=','kegiatan.program_id');
+                            })
+                            ->leftjoin('db_pare_2018.renja_sasaran AS sasaran', function($join){
+                                $join   ->on('sasaran.id','=','program.sasaran_id');
+                            })
+                            ->leftjoin('db_pare_2018.renja_indikator_sasaran AS indikator_sasaran', function($join){
+                                $join   ->on('sasaran.id','=','indikator_sasaran.sasaran_id');
+                            })
+                            ->SELECT([  
+                                    'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                    'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
+                                    'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
+                                    'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                                    'skp_tahunan_rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
+                                    'skp_tahunan_rencana_aksi.waktu_pelaksanaan AS wapel',
+                                    'kegiatan.label AS kegiatan_label',
+                                    'kegiatan.cost AS kegiatan_anggaran',
+                                    'kegiatan.id AS kegiatan_id',
+                                    'keg_skp_tahunan.id AS kegiatan_tahunan_id',
+                                    'program.label AS program_label',
+                                    'sasaran.label AS sasaran_label',
+                                    'indikator_sasaran.label AS indikator_sasaran_label',
+                                    'indikator_sasaran.target AS indikator_sasaran_target',
+                                    'indikator_sasaran.satuan AS indikator_sasaran_satuan'
+
+
+                                
+                                
+                                ])
+                            
+                            ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id)
+                            ->WHERE('skp_tahunan_rencana_aksi.renja_id','=', $renja_id )
+                            ->ORDERBY('sasaran.id','ASC')
+                            ->ORDERBY('program.id','ASC')
+                            ->ORDERBY('kegiatan.id','ASC')
+                            ->ORDERBY('skp_tahunan_rencana_aksi.id','ASC')
+                            ->groupBy('skp_tahunan_rencana_aksi.label','skp_tahunan_rencana_aksi.jabatan_id')
+                            ->get();
+        
+        
+        foreach ($dt as $x) {
+
+            $d['sasaran_label']                 = $x->sasaran_label;
+            $d['indikator_sasaran_label']       = $x->indikator_sasaran_label;
+            $d['indikator_sasaran_target']      = $x->indikator_sasaran_target.' '.$x->indikator_sasaran_satuan;
+            $d['program_label']                 = $x->program_label;
+            $d['kegiatan_label']                = $x->kegiatan_label;
+            $d['kegiatan_anggaran']             = "Rp. ". number_format($x->kegiatan_anggaran,'0',',','.');
+
+
+            $d['rencana_aksi_label']            = $x->rencana_aksi_label;
+            $d['rencana_aksi_target']           = $x->rencana_aksi_target.' '.$x->rencana_aksi_satuan;
+
+
+            //jumlah baris kegiatan
+            $jm = Kegiatan::
+                                leftjoin('db_pare_2018.skp_tahunan_kegiatan AS keg_skp_tahunan', function($join){
+                                    $join   ->on('keg_skp_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                })
+                                ->leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                                    $join   ->on('keg_skp_tahunan.id','=','rencana_aksi.kegiatan_tahunan_id');
+                                })
+                                ->WHERE('renja_kegiatan.id','=', $x->kegiatan_id )
+                                ->SELECT('rencana_aksi.label')
+                                ->DISTINCT()
+                                
+                                ->count('rencana_aksi.label');
+            $d['jm_row_kegiatan']            = $jm;
+            $d['kegiatan_id']                = $x->kegiatan_id;
+
+            for ($i = 1; $i <= 12; $i++){
+                $bulan = Pustaka::nol($i);
+                $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
+                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('waktu_pelaksanaan', $bulan)
+                                ->first();
+                if ( $kb ){
+                    $d['b_'.$i]            = "&radic;";
+                }else{
+                    $d['b_'.$i]            = "";
+                }
+
+
+                
+            }
+            
+
+                
+                
+            $data[] = $d ;
+        }
+                
+        $data = json_encode($data);
+        //return $data;
+
+        //NAMA ADMIN
+        $user_x  = \Auth::user();
+        $profil  = Pegawai::WHERE('tb_pegawai.id',  $user_x->id_pegawai)->first();
+
+        //JAbatan
+        //$jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
+        
+
+        return view('admin.printouts.cetak_rencana_aksi-Eselon3', [
+                    'data'          => $data,
+                    'nama_file'     => "RencanaAksi".$request->get('jabatan_id'),
+                    'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
+
+                
+            ]
+        );  
+
+        /* $pdf = PDF::loadView('admin.printouts.cetak_rencana_aksi-Eselon3', [   
+                                                    'data'          => $data,
+                                                    'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
+
+                                                   
+
+                                                     ], [], [
+                                                     'format' => 'Legal-L',
+                                                     'margin_left' => 0,    	// 15 margin_left
+				                                     'margin_right' => 0,    	// 15 margin right
+          ]);
+       
+        $pdf->getMpdf()->shrink_tables_to_fit = 1;
+        $pdf->getMpdf()->setWatermarkImage('assets/images/form/watermark.png');
+        $pdf->getMpdf()->showWatermarkImage = true;
+        
+        $pdf->getMpdf()->SetHTMLFooter('
+		<table width="100%">
+			<tr>
+				<td width="33%"></td>
+				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
+				<td width="33%" style="text-align: right;"></td>
+			</tr>
+        </table>');
+        
+        return $pdf->stream('RencanaAKsi'.'.pdf'); */
+    }
+
 
     public function RencanaAksiTimeTable3(Request $request)
     {
@@ -630,90 +829,6 @@ class RencanaAksiAPIController extends Controller {
 
         return $datatables->make(true);  
         
-    }
-
-    public function cetakRencanaAksiEsl3(Request $request)
-    {
-
-       
-        $skp_tahunan_id       = $request->get('skp_tahunan_id');
-
-        $data = KegiatanSKPTahunan::
-                            leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
-                                $join   ->on('kegiatan.id','=','skp_tahunan_kegiatan.kegiatan_id');
-                            })
-                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
-                                $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan.id');
-                            })
-                            ->join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
-                                $join   ->on('rencana_aksi.indikator_kegiatan_id','=','indikator_kegiatan.id');
-                                
-                            })
-                            ->leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
-                                $join   ->on('pelaksana.id','=','rencana_aksi.jabatan_id');
-                            })
-                            ->SELECT([  
-                                'kegiatan.id AS renja_kegiatan_id',
-                                'rencana_aksi.id AS rencana_aksi_id',
-                                'rencana_aksi.renja_id AS renja_id',
-                                'rencana_aksi.label AS rencana_aksi_label',
-                                'rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
-                                'pelaksana.skpd AS pelaksana'
-
-
-                                
-                                
-                                ])
-                            
-                            ->orderBy('rencana_aksi.indikator_kegiatan_id','ASC')
-                            ->groupBy('rencana_aksi.label','rencana_aksi.jabatan_id')
-                            
-                            ->WHERE('skp_tahunan_kegiatan.skp_tahunan_id','=', $skp_tahunan_id )
-                            ->get();
-
-      /*   foreach ($data as $x) {
-                                $d['rencana_aksi_label']            = $x->rencana_aksi_label;
-                
-                
-                                $data_x[] = $d ;
-        }
-                
-        $data_x = json_encode($data_x); */
-
-        //NAMA ADMIN
-        $user_x  = \Auth::user();
-        $profil  = Pegawai::WHERE('tb_pegawai.id',  $user_x->id_pegawai)->first();
-
-        //JAbatan
-        //$jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
-        
-
-        $pdf = PDF::loadView('admin.printouts.cetak_rencana_aksi-Eselon3', [   
-                                                    'data'          => $data,
-                                                    'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
-
-                                                   
-
-                                                     ], [], [
-                                                     'format' => 'Legal-L',
-                                                     'margin_left' => 0,    	// 15 margin_left
-				                                     'margin_right' => 0,    	// 15 margin right
-          ]);
-       
-        $pdf->getMpdf()->shrink_tables_to_fit = 1;
-        $pdf->getMpdf()->setWatermarkImage('assets/images/form/watermark.png');
-        $pdf->getMpdf()->showWatermarkImage = true;
-        
-        $pdf->getMpdf()->SetHTMLFooter('
-		<table width="100%">
-			<tr>
-				<td width="33%"></td>
-				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
-				<td width="33%" style="text-align: right;"></td>
-			</tr>
-        </table>');
-        
-        return $pdf->stream('RencanaAKsi'.'.pdf');
     }
 
     public function RencanaAksiTimeTable4(Request $request)

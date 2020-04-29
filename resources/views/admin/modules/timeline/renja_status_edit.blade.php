@@ -42,7 +42,7 @@
 
  
 	 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/animatecss/3.5.2/animate.min.css" />
+<link rel="stylesheet" href="{{asset('assets/timeline/animate.min.css')}}" />
 <link rel="stylesheet" href="{{asset('assets/timeline/style-albe-timeline.css')}}" />
 <script src="{{asset('assets/timeline/jquery-albe-timeline.js')}}"></script>
 

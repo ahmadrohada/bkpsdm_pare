@@ -49,7 +49,6 @@ table.cetak_report th{
 		
 }
 
-
 table.cetak_report td {
 	font:normal 9pt Arial,Sans-Serif;
 	padding:4px 6px 4px 6px;
@@ -64,6 +63,46 @@ table.cetak_report td.tengah {
 	vertical-align:middle;
 	text-align: center;
 }
+
+
+
+table.cetak_report_reaksi {
+	margin:auto;
+	border-collapse:collapse;
+	border:1px solid black;
+	width:100%;
+	
+}
+
+table.cetak_report_reaksi th{
+		vertical-align:middle;
+		padding:4px 3px 5px 4px;
+		border:1px solid black;
+		font: 8pt Arial,Sans-Serif;
+		background:#e8e7e9;
+		
+}
+
+table.cetak_report_reaksi td {
+	font:normal 7pt Arial,Sans-Serif;
+	padding:4px 4px 4px 4px;
+	vertical-align:center;
+	border:1px solid black;
+	color:#383c43;
+}
+
+
+
+table.cetak_report_reaksi td.tengah {
+	vertical-align:middle;
+	text-align: center;
+}
+
+table.cetak_report_reaksi td.kanan {
+	/* vertical-align:middle; */
+	text-align: right;
+}
+
 
 
 

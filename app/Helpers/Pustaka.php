@@ -177,6 +177,42 @@ class Pustaka {
 
 	}
 
+	public static function nol($data){
+		
+
+		//ubah angka ke nama bulan
+				switch($data)
+					{
+				case 1 : $x='01';
+						break;
+				case 2 : $x='02';
+						break;
+				case 3 : $x='03';
+						break;
+				case 4 : $x='04';
+						break;
+				case 5 : $x='05';
+						break;
+				case 6 : $x='06';
+						break;
+				case 7 : $x='07';
+						break;
+				case 8 : $x='08';
+						break;
+				case 9 : $x='08';
+						break;
+				case 10 : $x='10';
+						break;
+				case 11 : $x='11';
+						break;
+				case 12 : $x='12';
+						break;
+					}
+
+	return $x;
+
+	}
+
 //================================== RUMUS PERHITUNGAN REALISASI KEGIATAN PADA CAPAIAN TAHUAN ==========//
 /** RUMUS UNTUK MENENTUKAN CAPAIAN SKP TAHUNAN **/
 /* 
