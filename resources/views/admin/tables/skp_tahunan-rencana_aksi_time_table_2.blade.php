@@ -18,10 +18,10 @@
 		<table id="rencana_aksi_time_table" class="table table-striped table-hover">
 			<thead>
 					<tr>
-						<th rowspan="2" width="5%" >NO</th>
+						<th class="no-sort" style="padding-right:8px;" rowspan="2" width="5%" >NO</th>
 						<th rowspan="2"  width="">SASARAN</th>
 						<th rowspan="2"  width="">INDIKATOR SASARAN KINERJA UTAMA</th>
-						<th rowspan="2"  width="" >TARGET ( SESUAI DENGAN TAHUN YANG DIJANJIKAN )</th>
+						<th rowspan="2"  width="" >TARGET</th>
 						<th rowspan="2"  width="">PROGRAM</th>
 						<th rowspan="2"  width="">KEGIATAN</th>
 						<th rowspan="2"  width="">URAIAN KEGIATAN</th>
@@ -44,7 +44,7 @@
 						<th width="">10</th>
 						<th width="">11</th>
 						<th width="">12</th>
-						<th width=""></th>
+						<th width=""> TRIWULAN </th>
 						<th width="">KINERJA</th>
 						<th width="">ANGGARAN</th>								
 					</tr>
@@ -62,10 +62,12 @@
 			serverSide      : true,
 			searching      	: true,
 			paging          : true,
-			lengthMenu		: [30,100,200],
+			lengthMenu		: [50,100,200],
 			bInfo			: true,
+			bSort			: false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,8,9,10,11,12,13,14,15 ] },
+								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21 ] },
+								{ className: "text-right", targets: [ 8 ] },
 							
 							],
 			ajax			: {
@@ -76,36 +78,36 @@
 							},
 			rowsGroup		: [1,2,3,4,5,8],
 			columns			: [
-								{ data: 'rencana_aksi_id' , width:"6%",orderable: false,
+								{ data: 'rencana_aksi_id' , width:"3%",orderable: false,
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "sasaran_label", name:"sasaran_label" , width:"42%", orderable: false, },
-								{ data: "indikator_sasaran_label", name:"indikator_sasaran_label" , width:"", orderable: false, },
+								{ data: "sasaran_label", name:"sasaran_label" , width:"8%", orderable: false, },
+								{ data: "indikator_sasaran_label", name:"indikator_sasaran_label" , width:"8%", orderable: false, },
 								{ data: "indikator_sasaran_target", name:"indikator_sasaran_target" , width:"", orderable: false, },
-								{ data: "program_label", name:"program_label" , width:"", orderable: false, },
-								{ data: "kegiatan_label", name:"kegiatan_label" , width:"", orderable: false, },
-								{ data: "rencana_aksi_label", name:"rencana_aksi_label" , width:"", orderable: false, },
+								{ data: "program_label", name:"program_label" , width:"10%", orderable: false, },
+								{ data: "kegiatan_label", name:"kegiatan_label" , width:"10%", orderable: false, },
+								{ data: "rencana_aksi_label", name:"rencana_aksi_label" , width:"22%", orderable: false, },
 								{ data: "rencana_aksi_target", name:"rencana_aksi_target" , width:"", orderable: false, },
 								{ data: "kegiatan_anggaran", name:"kegiatan_anggaran" , width:"", orderable: false, },
-								{ data: "b_01", width:"3%", orderable: false},
-								{ data: "b_02", width:"3%", orderable: false},
-								{ data: "b_03", width:"3%", orderable: false},
-								{ data: "b_04", width:"3%", orderable: false},
-								{ data: "b_05", width:"3%", orderable: false},
-								{ data: "b_06", width:"3%", orderable: false},
-								{ data: "b_07", width:"3%", orderable: false},
-								{ data: "b_08", width:"3%", orderable: false},
-								{ data: "b_09", width:"3%", orderable: false},
-								{ data: "b_10", width:"3%", orderable: false},
-								{ data: "b_11", width:"3%", orderable: false},
-								{ data: "b_12", width:"3%", orderable: false},
+								{ data: "b_01", width:"2%", orderable: false},
+								{ data: "b_02", width:"2%", orderable: false},
+								{ data: "b_03", width:"2%", orderable: false},
+								{ data: "b_04", width:"2%", orderable: false},
+								{ data: "b_05", width:"2%", orderable: false},
+								{ data: "b_06", width:"2%", orderable: false},
+								{ data: "b_07", width:"2%", orderable: false},
+								{ data: "b_08", width:"2%", orderable: false},
+								{ data: "b_09", width:"2%", orderable: false},
+								{ data: "b_10", width:"2%", orderable: false},
+								{ data: "b_11", width:"2%", orderable: false},
+								{ data: "b_12", width:"2%", orderable: false},
 								
 
-								{ data: "triwulan", name:"" , width:"16%", orderable: false, },
-								{ data: "kinerja", name:"" , width:"16%", orderable: false, },
-								{ data: "anggaran", name:"" , width:"16%", orderable: false, },
+								{ data: "triwulan", name:"" , width:"4%", orderable: false, },
+								{ data: "kinerja", name:"" , width:"4%", orderable: false, },
+								{ data: "anggaran", name:"" , width:"4%", orderable: false, },
 
 								
 							

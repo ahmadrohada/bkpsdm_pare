@@ -61,7 +61,7 @@
 				$i=1; 
 				$merge = 1 ;
 			@endphp
-			@foreach( json_decode($data) as $p)
+			@foreach( json_decode($data) as $p) 
 				@php 
 					if ( $p->jm_row_kegiatan > 1 ) { //5
 						if ( $merge == 1  ) {

@@ -9,24 +9,35 @@
 		<table id="rencana_aksi_time_table" class="table table-striped table-hover">
 			<thead>
 				<tr>
-					<th rowspan="2">No</th>
-					<th rowspan="2">RENCANA AKSI</th>
-					<th rowspan="2">PELAKSANA</th>
-					<th colspan="12">BULAN</th>
+					<th class="no-sort" style="padding-right:8px;" rowspan="2" width="5%" >NO</th>
+					<th rowspan="2"  width="">SASARAN</th>
+					<th rowspan="2"  width="">INDIKATOR SASARAN KINERJA UTAMA</th>
+					<th rowspan="2"  width="" >TARGET</th>
+					<th rowspan="2"  width="">PROGRAM</th>
+					<th rowspan="2"  width="">KEGIATAN</th>
+					<th rowspan="2"  width="">URAIAN KEGIATAN</th>
+					<th rowspan="2"  width="">TARGET URAIAN KEGIATAN ( OUTPUT )</th>
+					<th rowspan="2"  width="">ANGGARAN KEGIATAN ( APBD )</th>
+					<th colspan="12" width="">TARGET PELAKSANAAN URAIAN KEGIATAN</th>
+					<th colspan="3" width="">TARGET KEGIATAN ( TW )</th>
+																
 				</tr>
 				<tr>
-					<th>1</th>
-					<th>2</th>
-					<th>3</th>
-					<th>4</th>
-					<th>5</th>
-					<th>6</th>
-					<th>7</th>
-					<th>8</th>
-					<th>9</th>
-					<th>10</th>
-					<th>11</th>
-					<th>12</th>
+					<th width="">1</th>
+					<th width="">2</th>
+					<th width="">3</th>
+					<th width="">4</th>
+					<th width="">5</th>
+					<th width="">6</th>
+					<th width="">7</th>
+					<th width="">8</th>
+					<th width="">9</th>
+					<th width="">10</th>
+					<th width="">11</th>
+					<th width="">12</th>
+					<th width=""> TRIWULAN </th>
+					<th width="">KINERJA</th>
+					<th width="">ANGGARAN</th>								
 				</tr>
 			</thead>
 		</table>
@@ -42,87 +53,49 @@
 			serverSide      : true,
 			searching      	: true,
 			paging          : true,
-			lengthMenu		: [15,30],
-			bInfo			: false,
+			lengthMenu		: [50,100,200],
+			bInfo			: true,
+			bSort			: false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,8,9,10,11,12,13,14 ] },
-							
-							],
+								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21 ] },
+								{ className: "text-right", targets: [ 8 ] },
+							 ],
 			ajax			: {
 								url	: '{{ url("api_resource/rencana_aksi_time_table_3") }}',
 								data: { skp_tahunan_id: {!! $skp->id !!} },
 							},
-							
+			rowsGroup		: [1,2,3,4,5,8],
 			columns			: [
-								{ data: 'rencana_aksi_id' , width:"6%",orderable: false,
+								{ data: 'rencana_aksi_id' , width:"3%",orderable: false,
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "label", name:"rencana_aksi_label" , width:"42%", orderable: true, },
-								{ data: "pelaksana", name:"pelaksana" , width:"16%", orderable: true, },
+								{ data: "sasaran_label", name:"sasaran_label" , width:"8%", orderable: false, },
+								{ data: "indikator_sasaran_label", name:"indikator_sasaran_label" , width:"8%", orderable: false, },
+								{ data: "indikator_sasaran_target", name:"indikator_sasaran_target" , width:"", orderable: false, },
+								{ data: "program_label", name:"program_label" , width:"10%", orderable: false, },
+								{ data: "kegiatan_label", name:"kegiatan_label" , width:"10%", orderable: false, },
+								{ data: "rencana_aksi_label", name:"rencana_aksi_label" , width:"22%", orderable: false, },
+								{ data: "rencana_aksi_target", name:"rencana_aksi_target" , width:"", orderable: false, },
+								{ data: "kegiatan_anggaran", name:"kegiatan_anggaran" , width:"", orderable: false, },
+								{ data: "b_01", width:"2%", orderable: false},
+								{ data: "b_02", width:"2%", orderable: false},
+								{ data: "b_03", width:"2%", orderable: false},
+								{ data: "b_04", width:"2%", orderable: false},
+								{ data: "b_05", width:"2%", orderable: false},
+								{ data: "b_06", width:"2%", orderable: false},
+								{ data: "b_07", width:"2%", orderable: false},
+								{ data: "b_08", width:"2%", orderable: false},
+								{ data: "b_09", width:"2%", orderable: false},
+								{ data: "b_10", width:"2%", orderable: false},
+								{ data: "b_11", width:"2%", orderable: false},
+								{ data: "b_12", width:"2%", orderable: false},
 								
-								{ data: "jan", width:"3%", orderable: false,
-									"render": function ( data, type, row ) {
-										return  '<i class="fa '+row.jan+' text-success" ></i>';
-									}
-								},
-								{ data: "feb", width:"3%", orderable: false,
-									"render": function ( data, type, row ) {
-										return  '<i class="fa '+row.feb+' text-success" ></i>';
-									}
-								},
-								{ data: "mar", width:"3%", orderable: false,
-									"render": function ( data, type, row ) {
-										return  '<i class="fa '+row.mar+' text-success" ></i>';
-									}
-								},
-								{ data: "apr", width:"3%", orderable: false,
-									"render": function ( data, type, row ) {
-										return  '<i class="fa '+row.apr+' text-success" ></i>';
-									}
-								},
-								{ data: "mei", width:"3%", orderable: false,
-									"render": function ( data, type, row ) {
-										return  '<i class="fa '+row.mei+' text-success" ></i>';
-									}
-								},
-								{ data: "jun", width:"3%", orderable: false,
-									"render": function ( data, type, row ) {
-										return  '<i class="fa '+row.jun+' text-success" ></i>';
-									}
-								},
-								{ data: "jul", width:"3%", orderable: false,
-									"render": function ( data, type, row ) {
-										return  '<i class="fa '+row.jul+' text-success" ></i>';
-									}
-								},
-								{ data: "agu", width:"3%", orderable: false,
-									"render": function ( data, type, row ) {
-										return  '<i class="fa '+row.agu+' text-success" ></i>';
-									}
-								},
-								{ data: "sep", width:"3%", orderable: false,
-									"render": function ( data, type, row ) {
-										return  '<i class="fa '+row.sep+' text-success" ></i>';
-									}
-								},
-								{ data: "okt", width:"3%", orderable: false,
-									"render": function ( data, type, row ) {
-										return  '<i class="fa '+row.okt+' text-success" ></i>';
-									}
-								},
-								{ data: "nov", width:"3%", orderable: false,
-									"render": function ( data, type, row ) {
-										return  '<i class="fa '+row.nov+' text-success" ></i>';
-									}
-								},
-								{ data: "des", width:"3%", orderable: false,
-									"render": function ( data, type, row ) {
-										return  '<i class="fa '+row.des+' text-success" ></i>';
-									}
-								},
 
+								{ data: "triwulan", name:"" , width:"4%", orderable: false, },
+								{ data: "kinerja", name:"" , width:"4%", orderable: false, },
+								{ data: "anggaran", name:"" , width:"4%", orderable: false, },
 
 								
 							
