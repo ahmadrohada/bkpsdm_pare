@@ -1,9 +1,11 @@
 <html>
 <head>
 		@include('admin.printouts.style')
+		
 
 
 		<title>Cetak</title>
+
 </head>
 <body>
 	@php  
@@ -14,30 +16,11 @@
 	<div style="padding:5px 50px 10px 50px;">
 
 
-		<table width="100%" style="margin-top:20px;">
-			{{-- <tr>
-				<td align="center" valign="top">
-					<img src="{{asset('assets/images/logo_karawang.png')}}" width="90px" height="120px" >
-				</td>
-			</tr> --}}
-			<tr>
-				<td align="center" style="padding:20px 0 35px 0 ;">
-					<FONT style="font-size:13pt; font-family:Cambria; letter-spacing:1pt;">
-						RENCANA AKSI
-					</FONT>
-				</td>
-			</tr>
-		</table>
-	
-		
-	
-			
-	
 
 	<font style=" font-size:8pt;  font-family:Trebuchet MS,Calibri;">
 		Tanggal Cetak &nbsp;&nbsp;: {{ $waktu_cetak }} <br>
 	</font>
-	<table class="cetak_report_reaksi" style=" font-size:7pt !important;">
+	<table class="cetak_report_reaksi" style=" font-size:7pt !important; page-break-inside:avoid;">
 		<thead>
 			<tr>
 				<th rowspan="2" width="5%" >NO</th>
@@ -74,39 +57,101 @@
 		</thead>
 
 		<tbody>
-			@php $i=1 @endphp
+			@php 
+				$i=1; 
+				$merge = 1 ;
+			@endphp
 			@foreach( json_decode($data) as $p)
-
-				<tr>
-					<td class="tengah" width="3%">{{ $i }}</td>
-					<td >{{ $p->sasaran_label }}</td>
-					<td >{{ $p->indikator_sasaran_label }}</td>
-					<td >{{ $p->indikator_sasaran_target }}</td>
-					<td >{{ $p->program_label }}</td>
-					<td >{{ $p->kegiatan_label }}</td>
-					<td >{{ $p->rencana_aksi_label }}</td>
-					<td >{{ $p->rencana_aksi_target }}</td>
-					<td class="kanan">{{ $p->kegiatan_anggaran }}</td>
-					<td class="tengah" width="22px">{{ $p->b_1 }}</td>
-					<td class="tengah" width="22px">{{ $p->b_2 }}</td>
-					<td class="tengah" width="22px">{{ $p->b_3 }}</td>
-					<td class="tengah" width="22px">{{ $p->b_4 }}</td>
-					<td class="tengah" width="22px">{{ $p->b_5 }}</td>
-					<td class="tengah" width="22px">{{ $p->b_6 }}</td>
-					<td class="tengah" width="22px">{{ $p->b_7 }}</td>
-					<td class="tengah" width="22px">{{ $p->b_8 }}</td>
-					<td class="tengah" width="22px">{{ $p->b_9 }}</td>
-					<td class="tengah" width="22px">{{ $p->b_10 }}</td>
-					<td class="tengah" width="22px">{{ $p->b_11 }}</td>
-					<td class="tengah" width="22px">{{ $p->b_12 }}</td>
-					<td ></td>
-					<td ></td>
-					<td ></td>
-				</tr>
-				
-				@php $i++ @endphp
+				@php 
+					if ( $p->jm_row_kegiatan > 1 ) { //5
+						if ( $merge == 1  ) {
+							echo 	'<tr>
+										<td class="tengah" width="3%">'.$i++.'</td>
+										<td class="tengah" >'.$p->sasaran_label.'</td>
+										<td >'.$p->indikator_sasaran_label.'</td>
+										<td >'.$p->indikator_sasaran_target.'</td>
+										<td >'.$p->program_label.'</td>
+										<td rowspan="'.$p->jm_row_kegiatan.'" >'.$p->kegiatan_label.'|'.$merge.'</td>
+										<td >'.$p->rencana_aksi_label.'</td>
+										<td >'.$p->rencana_aksi_target.'</td>
+										<td rowspan="'.$p->jm_row_kegiatan.'"  class="kanan">'.$p->kegiatan_anggaran.'</td>
+										<td class="tengah" width="22px">'.$p->b_1.'</td>
+										<td class="tengah" width="22px">'.$p->b_2.'</td>
+										<td class="tengah" width="22px">'.$p->b_3.'</td>
+										<td class="tengah" width="22px">'.$p->b_4.'</td>
+										<td class="tengah" width="22px">'.$p->b_5.'</td>
+										<td class="tengah" width="22px">'.$p->b_6.'</td>
+										<td class="tengah" width="22px">'.$p->b_7.'</td>
+										<td class="tengah" width="22px">'.$p->b_8.'</td>
+										<td class="tengah" width="22px">'.$p->b_9.'</td>
+										<td class="tengah" width="22px">'.$p->b_10.'</td>
+										<td class="tengah" width="22px">'.$p->b_11.'</td>
+										<td class="tengah" width="22px">'.$p->b_12.'</td>
+										<td ></td>
+										<td ></td>
+										<td ></td>
+									</tr>';
+							$merge = $p->jm_row_kegiatan + 1;
+						}else{
+							echo '<tr>
+										<td class="tengah" width="3%">'.$i++.'</td>
+										<td >'.$p->sasaran_label.'</td>
+										<td >'.$p->indikator_sasaran_label.'</td>
+										<td >'.$p->indikator_sasaran_target.'</td>
+										<td >'.$p->program_label.'</td>
+										<td >'.$p->rencana_aksi_label.'</td>
+										<td >'.$p->rencana_aksi_target.'</td>
+										<td class="tengah" width="22px">'.$p->b_1.'</td>
+										<td class="tengah" width="22px">'.$p->b_2.'</td>
+										<td class="tengah" width="22px">'.$p->b_3.'</td>
+										<td class="tengah" width="22px">'.$p->b_4.'</td>
+										<td class="tengah" width="22px">'.$p->b_5.'</td>
+										<td class="tengah" width="22px">'.$p->b_6.'</td>
+										<td class="tengah" width="22px">'.$p->b_7.'</td>
+										<td class="tengah" width="22px">'.$p->b_8.'</td>
+										<td class="tengah" width="22px">'.$p->b_9.'</td>
+										<td class="tengah" width="22px">'.$p->b_10.'</td>
+										<td class="tengah" width="22px">'.$p->b_11.'</td>
+										<td class="tengah" width="22px">'.$p->b_12.'</td>
+										<td ></td>
+										<td ></td>
+										<td ></td>
+									</tr>';
+						}
+						$merge =  $merge - 1 ;
+					}else{
+						echo 	'<tr>
+									<td class="tengah" width="3%">'.$i++.'</td>
+									<td >'.$p->sasaran_label.'</td>
+									<td >'.$p->indikator_sasaran_label.'</td>
+									<td >'.$p->indikator_sasaran_target.'</td>
+									<td >'.$p->program_label.'</td>
+									<td >'.$p->kegiatan_label.'|'.$merge.'</td>
+									<td >'.$p->rencana_aksi_label.'</td>
+									<td >'.$p->rencana_aksi_target.'</td>
+									<td class="kanan">'.$p->kegiatan_anggaran.'</td>
+									<td class="tengah" width="22px">'.$p->b_1.'</td>
+									<td class="tengah" width="22px">'.$p->b_2.'</td>
+									<td class="tengah" width="22px">'.$p->b_3.'</td>
+									<td class="tengah" width="22px">'.$p->b_4.'</td>
+									<td class="tengah" width="22px">'.$p->b_5.'</td>
+									<td class="tengah" width="22px">'.$p->b_6.'</td>
+									<td class="tengah" width="22px">'.$p->b_7.'</td>
+									<td class="tengah" width="22px">'.$p->b_8.'</td>
+									<td class="tengah" width="22px">'.$p->b_9.'</td>
+									<td class="tengah" width="22px">'.$p->b_10.'</td>
+									<td class="tengah" width="22px">'.$p->b_11.'</td>
+									<td class="tengah" width="22px">'.$p->b_12.'</td>
+									<td ></td>
+									<td ></td>
+									<td ></td>
+								</tr>';
+						$merge = 1 ;
+					}
+							
+					@endphp	
 			@endforeach 
-		</tbody>
+		</tbody> 
 	</table>
 	
 

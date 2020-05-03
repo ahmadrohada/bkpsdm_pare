@@ -173,7 +173,7 @@ return [
 		
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
 	],
 
@@ -277,7 +277,9 @@ return [
 		
         'Pustaka' => App\Helpers\Pustaka::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
-        'PDF' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class
+        'PDF' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class,
+
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
 	],
 
