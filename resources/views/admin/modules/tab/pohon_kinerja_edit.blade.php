@@ -89,8 +89,9 @@
 			'check_callback' : true,
 			'themes' : { 'responsive' : false },
 			'plugins': ['search'] ,
+			
 		}).on("loaded.jstree", function(){
-				$('#renja_tree_kegiatan').jstree('open_all');
+				//$('#renja_tree_kegiatan').jstree('open_all');
 		}).on("changed.jstree", function (e, data) {
 				if(data.selected.length) {
 					//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);

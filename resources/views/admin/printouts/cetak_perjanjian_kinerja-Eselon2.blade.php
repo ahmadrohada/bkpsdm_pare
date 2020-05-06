@@ -234,7 +234,7 @@
 								<td>'. $p->ind_sasaran_label  .'</td>
 								<td align="center">'. $p->target.' '.$p->satuan   .'</td>
 							</tr>';
-						$count ++;
+							$count = $p->jm_ind_sasaran + 1;
 					}else{
 						echo '
 						<tr>
@@ -243,7 +243,7 @@
 							<td align="center">'. $p->target.' '.$p->satuan   .'</td>
 						</tr>';
 					}
-					
+					$count =  $count - 1 ;
 				}else{
 					echo '
 						<tr>

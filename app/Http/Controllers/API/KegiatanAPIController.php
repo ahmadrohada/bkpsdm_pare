@@ -20,10 +20,14 @@ use App\Models\PerjanjianKinerja;
 use App\Helpers\Pustaka;
 use Datatables;
 use Validator;
-use Gravatar;
 use Input;
-Use Alert;
+
+use App\Traits\Pengecualian;
+
 class KegiatanAPIController extends Controller {
+
+    use Pengecualian;
+
     public function PohonKinerjaKegiatanTree(Request $request)
     {
        
@@ -113,601 +117,439 @@ class KegiatanAPIController extends Controller {
         
     }
  
-    public function RenjaDistribusiKegiatanTree(Request $request)
-    {
-       
-        //23-10-2019  distribusi berdasarkan jenis jabatan , 
-        //Pimpinan tertinggi / Kaban /eselon II 
-        //---- Administrator // KABID // eselon III
-        //--------Pengawas // KASUBID // eselonIV  ------- jabatan inilah yang akan diberikan kegiatan
-        //Pengecualian untuk irban dan KPUD
-        $a = ['143','144','145','146','1326','1327','1328','1329'];
-        //pengecualian untuk KEC Telukjambe Barat
-        $b = ['1235','1236','1237','1238','1239'];
-        //KEC Cikampek
-        $c = ['1089','1090','1091','1092','1093'];
-        //KEC JAtisari
-        $d = ['1098','1099','1100','1101','1102'];
-        //KEC Ciampel
-        $e = ['1335','1336','1337','1338','1339'];
-        //KEC teluk jambe timur
-        $f = ['1008','1009','1010','1011','1012'];
-        //KEC Klari
-        $g = ['1017','1018','1019','1020','1021'];
-        //KEC karawang barat
-        $h = ['1271','1272','1273','1274','1275'];
-        //KEC Tegal waru
-        $i = ['1244','1245','1246','1247','1248'];
-        //KEC pangkalan
-        $j = ['999','1000','1001','1002','1003'];
-        //KEC Kutawaluya
-        $k = ['1035','1036','1037','1038','1039'];
-        //KEC lemahabang
-        $l = ['1143','1144','1145','1146','1147'];
-        //KEC purwasari
-        $m = ['1253','1254','1255','1256','1257'];
-        //KEC KAwarang Timur
-        $n = ['1206','1207','1208','1209','1210'];
-        //KEC Kota BAru
-        $o = ['1197','1198','1199','1200','1201'];
-        //KEC Banyusari
-        $p = ['1188','1189','1190','1191','1192'];
-        //KEC Tirtamulya
-        $q = ['1116','1117','1118','1119','1120'];
-        //KEC Jayakerta
-        $r = ['1170','1171','1172','1173','1174'];
-        //KEC PAkisjaya
-        $s = ['1080','1081','1082','1083','1084'];
-        //KEC Cibuaya
-        $t = ['1071','1072','1073','1074','1075'];
-        //KEC Majalaya
-        $u = ['1161','1162','1163','1164','1165'];
-        //KEC Batujaya
-        $v = ['1044','1045','1046','1047','1048'];
-        //KEC Rwamerta
-        $w = ['1134','1135','1136','1137','1138'];
-        //KEC Cilebar
-        $x = ['1262','1263','1264','1265','1266'];
-        //KEC tirtajaya
-        $y = ['1053','1054','1055','1056','1057'];
-        //KEC Rengas dengklok
-        $z = ['1026','1027','1028','1029','1030'];
-        //KEC RCilamaya kulon
-        $aa = ['1179','1180','1181','1182','1183'];
-        //KEC RCilamaya Wetan
-        $aa = ['1107','1108','1109','1110','1111'];
-        //KEC Tempuran
-        $ab = ['1152','1153','1154','1155','1156'];
-        //KEC telagasari
-        $ac = ['1125','1126','1127','1128','1129'];
-        //KEC PEDES
-        $ad = ['1062','1063','1064','1065','1066'];
-        //KEC CILAMAYA KULON
-        $ae = ['1179','1180','1181','1182','1183'];
-
-        $kearsipan = ['786','787'];
-
-
-
-
-        $pengecualian = array_merge($a,$b,$c,$d,$e,$f,$g,$h,$i,$j,$k,$l,$m,$n,$o,$p,$q,$r,$s,$t,$u,$v,$w,$x,$y,$z,$aa,$ab,$ac,$ad,$ae,$kearsipan);
-
-        if ( $request->skpd_id == 3 ){
-            //SEKDA 
-            $level1 = SKPD::
-                            leftjoin('demo_asn.m_skpd AS data', function($join){
-                                $join   ->on('data.parent_id','=','m_skpd.id');
-                            })
-                            ->select('data.id','data.skpd')
-                            ->where('m_skpd.parent_id','=', $request->skpd_id)
-                            ->get();
-            
-           
-        }else if ( $request->skpd_id == 11 ){
-            //JIKA KANTOR KESBANGPOL, level satunya adalah atasan nya
-            $level1 = SKPD::where('id','=', 11)->select('id','skpd','id_eselon')->get();
-
-            
-        }else{
-            //Distibusi kegiatan dengan level normal
-            $level1 = SKPD::where('parent_id','=', $request->skpd_id)->select('id','skpd','id_eselon')->get();
-        }
-       
-		foreach ($level1 as $x) {
-            $data_level1['id']	            = "lv1|".$x->id;
-			$data_level1['text']		    = Pustaka::capital_string($x->skpd);
-            $data_level1['icon']            = "jstree-people";
-            $data_level1['type']            = "JPT";
-            
-        
-            //JIKA DINKES maka array level 2 nya di merge dengan uptd puskesmas
-          
-            /* if ( $x->id == '147'){
-               
-                $level2 = SKPD::where('parent_id','=',$x->id)
-                                ->where('id','!=','168')
-                                ->orwhere('parent_id','=', '168')
-                                ->select('id','skpd')
-                                ->get(); 
-                $level2 = SKPD::whereRaw('parent_id = ?  or parent_id = ? ', array(168,168))
-                                ->select('id','skpd')
-                                ->get();
-
-            }else  if ( $x->id == '527'){  //dishub
-               
-                $level2 = SKPD::where('parent_id','=',$x->id)
-                                ->where('id','!=','544')
-                                ->orwhere('parent_id','=', '544')
-                                ->select('id','skpd')
-                                ->get();
-            }else if ( $x->id == '620'){  //perikanan
-               
-                $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(620,637,637))
-                                ->select('id','skpd')
-                                ->get();
-            }/* else if ( $x->id == '650'){  //pertanian
-               
-                $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(650,675,675))
-                                ->select('id','skpd')
-                                ->get();
-            }else  */ if ( $x->id == '273'){  //PUPR
-               
-                $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(273,302,302))
-                                ->select('id','skpd')
-                                ->get();
-            }/*else if ( $x->id == '412'){  //DLHK
-               
-                $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(412,433,433))
-                                ->select('id','skpd')
-                                ->get();
-            } else if ( $x->id == '740'){  //disperindag
-               
-                $level2 = SKPD::whereRaw('parent_id = ?  or parent_id = ? ', array(740,761))
-                                ->select('id','skpd')
-                                ->get();
-            }  */
-            /* else if ( $x->id == '788'){  //disdik , korwil ,, gak jadi,,karena yang mendapat kegiatan memang korwil
-               
-                //korwil dan SMP
-                $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? and id != ?) or parent_id = ? or parent_id = ?', array(788,805,9632,805,9632))
-                                
-                                ->select('id','skpd')
-                                ->get();
-
-                
-               
-            } */
-            else{
-                $level2 = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
-            }
-
-           
-
-
-            foreach ($level2 as $y) {
-                
-                if (in_array( $y->id, $pengecualian)){
-                //JIKA YANG DIKECUALIKAN,MALAH BISA ADD KEGIATAN
-                    $data_level2['id']	        = "lv2|".$y->id;
-                    $data_level2['text']		= Pustaka::capital_string($y->skpd);
-                    $data_level2['icon']        = "jstree-people";
-                    $data_level2['type']        = "pengawas";
-                    
-                    //LEVEL 3 nya adalah kegiatan
-                    $level3 = Kegiatan::WHERE('jabatan_id','=',$y->id)
-                                        ->WHERE('renja_id',$request->renja_id)
-                                        ->select('id','label','cost')
-                                        ->get();
-
-                }else{
-                    $data_level2['id']	        = "lv2|".$y->id;
-                    $data_level2['type']        = "administrator";
-                    $data_level2['text']		= Pustaka::capital_string($y->skpd);
-                    $data_level2['icon']        = "jstree-people ";
-
-
-                    
-                    //JIKA disdik,tampilkan korwil ( eselon 9 /Unit Kerja Teknis Korwil)
-                    if ( $y->id == 805 ){
-                        $level3 = SKPD::where('parent_id','=',$y->id)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 9 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-                    
-                    //JIKA PUSKESMAS LEVEL  3 nya boleh eselon id 11 .. 
-                    //AGAR KASUBAG TU PUSKESMASNYA BISA SEJAJAR DENGAN DEWNGAN KEPALA PUSKESMAS
-                    }else if ( $y->id == 168 ){  //168 adalah id UPTD kesehatan
-                        $level3a = SKPD::where('parent_id','=',$y->id)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 )
-                                                ->orWhere('id_eselon', '=', 17 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-                        $kapus_list = [];
-                        foreach ($level3a as $x) {
-                             $kapus_list[] = array( 'id' => $x->id );
-                        }
-
-                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-
-                        $level3 = $level3a->merge($level3b);
-                       
-                
-                    //AGAR KASUBAG TU DISPERINDAG BISA SEJAJAR DENGAN DEWNGAN KEPALA UPTD DINAS
-                    }else if ( $y->id == 761 ){  
-                        $level3a = SKPD::where('parent_id','=',$y->id)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-                        $kapus_list = [];
-                        foreach ($level3a as $x) {
-                            $kapus_list[] = array( 'id' => $x->id );
-                        }
-
-                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-
-                        $level3 = $level3a->merge($level3b);
-
-                    //AGAR KASUBAG TU Dinas Pertanian bisa add kegiatan
-                    }else if ( $y->id == 637 ){  //637 adalah ID UPTD dinas kesehatan
-                        $level3a = SKPD::where('parent_id','=',$y->id)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-                        $kapus_list = [];
-                        foreach ($level3a as $x) {
-                            $kapus_list[] = array( 'id' => $x->id );
-                        }
-
-                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-
-                        $level3 = $level3a->merge($level3b);
-                
-                
-                    //AGAR KASUBAG TU dishub bisa add kegiatan
-                    }else if ( $y->id == 544 ){  //675 adalah 
-                        $level3a = SKPD::where('parent_id','=',$y->id)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-                        $kapus_list = [];
-                        foreach ($level3a as $x) {
-                            $kapus_list[] = array( 'id' => $x->id );
-                        }
-
-                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-
-                        $level3 = $level3a->merge($level3b);
-                
-                    }else if ( $y->id == 620 ){  //620 adalah perikanan
-                        $level3a = SKPD::where('parent_id','=',$y->id)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-                        $kapus_list = [];
-                        foreach ($level3a as $x) {
-                            $kapus_list[] = array( 'id' => $x->id );
-                        }
-
-                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-
-                        $level3 = $level3a->merge($level3b);
-                
-                    
-                    }else if ( $y->id == 61804 ){  //61804 adalah DLHK
-                        $level3a = SKPD::where('parent_id','=',$y->id)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-                        $kapus_list = [];
-                        foreach ($level3a as $x) {
-                            $kapus_list[] = array( 'id' => $x->id );
-                        }
-
-                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-
-                        $level3 = $level3a->merge($level3b);
-                
-                    
-                    }else if ( $y->id == 61830 ){  //61830 adalah DISNAKERTRANS
-                        $level3a = SKPD::where('parent_id','=',$y->id)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-                        $kapus_list = [];
-                        foreach ($level3a as $x) {
-                            $kapus_list[] = array( 'id' => $x->id );
-                        }
-
-                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-
-                        $level3 = $level3a->merge($level3b);
-                
-                    
-                    }else if ( $y->id == 61831 ){  //61831 adalah DINSOS
-                        $level3a = SKPD::where('parent_id','=',$y->id)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-                        $kapus_list = [];
-                        foreach ($level3a as $x) {
-                            $kapus_list[] = array( 'id' => $x->id );
-                        }
-
-                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-
-                        $level3 = $level3a->merge($level3b);
-                
-                    
-                    }else if ( $y->id == 61832 ){  //61832 adalah PRKP
-                        $level3a = SKPD::where('parent_id','=',$y->id)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-                        $kapus_list = [];
-                        foreach ($level3a as $x) {
-                            $kapus_list[] = array( 'id' => $x->id );
-                        }
-
-                        $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-
-                        $level3 = $level3a->merge($level3b);
-                
-                    
-                    }else{
-                        $level3 = SKPD::where('parent_id','=',$y->id)
-                                        ->where(function ($query) {
-                                            $query->where('id_eselon', '=' , null )
-                                                ->orWhere('id_eselon', '<=', 8 );
-                                        })
-                                        ->select('id','skpd','id_eselon')->get();
-                    }
-                    
-                    
-
-
-                    
-                    
-                }
-               
-                    
-                //menentukan apakah mau nampilin bawahan atau langsung ke kegiatan untuk jabatan2 tertentu
-                if (in_array( $y->id, $pengecualian)){
-                    
-
-                    foreach ($level3 as $a) {
-                        $data_kegiatan['id']	        = "kegiatan|".$a->id;
-                        $data_kegiatan['text']			= Pustaka::capital_string($a->label);
-                        $data_kegiatan['type']          = "kegiatan";
-                        if ( $a->cost > 0 ){
-                            $data_kegiatan['icon']      = "jstree-kegiatan";
-                        }else{
-                            $data_kegiatan['icon']      = "jstree-kegiatan_non_anggaran";
-                        }
-                        
-         
-                            $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$a->id)->select('id','label')->get();
-                            foreach ($ind_kegiatan as $g) {
-                                $data_ind_kegiatan['id']	        = "ind_kegiatan|".$g->id;
-                                $data_ind_kegiatan['text']			= Pustaka::capital_string($g->label);
-                                $data_ind_kegiatan['icon']          = "jstree-ind_kegiatan";
-                                $data_ind_kegiatan['type']          = "ind_kegiatan";
-                                $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$g->id)->get();
-                                        foreach ($ra as $za) {
-                                            $data_rencana_aksi['id']	= "rencana_aksi|".$za->id;
-                                            $data_rencana_aksi['text']	= Pustaka::capital_string($za->label).' ['. Pustaka::bulan($za->waktu_pelaksanaan).']';
-                                            $data_rencana_aksi['icon']  = 'jstree-rencana_aksi';
-                                            $data_rencana_aksi['type']  = "rencana_aksi";
- //TARGET PADA KEGIATAN BULANAN
-                                        $kb = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$za->id)->get();
-                                            foreach ($kb as $az) {
-                                                $data_keg_bulanan['id']	    = "kegiatan_bulanan|".$az->id;
-                                                $data_keg_bulanan['text']	=  'Target : '. $az->target.' '.$az->satuan.' / Pelaksana : '.Pustaka::capital_string($az->RencanaAksi->pelaksana->jabatan);
-                                                $data_keg_bulanan['icon']	= 'jstree-target';
-                                                $data_keg_bulanan['type']   = "kegiatan_bulanan";
-                                            
-                                                $keg_bulanan_list[] = $data_keg_bulanan ;
-                                            }	
-                                                if(!empty($keg_bulanan_list)) {
-                                                    $data_rencana_aksi['children']     = $keg_bulanan_list;
-                                                }
-                                                $rencana_aksi_list[] = $data_rencana_aksi ;
-                                                $keg_bulanan_list = "";
-                                                unset($data_rencana_aksi['children']);
-                                            }
-                                            if(!empty($rencana_aksi_list)) {
-                                                $data_ind_kegiatan['children']     = $rencana_aksi_list;
-                                            }
-                                            
-                                        $ind_kegiatan_list[] = $data_ind_kegiatan ;
-                                        $rencana_aksi_list = "";
-                                        unset($data_ind_kegiatan['children']);
-                                        
-                                    }
-                                    if(!empty($ind_kegiatan_list)) {
-                                        $data_kegiatan['children']     = $ind_kegiatan_list;
-                                    }
-                                    $kegiatan_list[] = $data_kegiatan ;
-                                    $ind_kegiatan_list = "";
-                                    unset($data_kegiatan['children']);
-                                }
-                    if(!empty($kegiatan_list)) {
-                        $data_level2['children']     = $kegiatan_list;
-                    }
-                   
-                    $level2_list[] = $data_level2 ;
-                    $kegiatan_list = "";
-                    unset($data_level2['children']);
-                   
-               
-                }else{
-                    foreach ($level3 as $z) {
-
-                        $data_level3['id']	            = "lv3|".$z->id;
-                        $data_level3['text']			= Pustaka::capital_string($z->skpd);
-                        $data_level3['icon']            = "jstree-people   faa-pulse animated-hover ";
-                        $data_level3['type']            = "pengawas";
-                      
-                        $kegiatan = Kegiatan::WHERE('jabatan_id','=',$z->id)
-                                                ->WHERE('renja_id',$request->renja_id)
-                                                ->select('id','label','cost')
-                                                ->get();
     
 
-                    foreach ($kegiatan as $a) {
-                        $data_kegiatan['id']	        = "kegiatan|".$a->id;
-                        $data_kegiatan['text']			= Pustaka::capital_string($a->label);
-                        $data_kegiatan['type']          = "kegiatan";
-                        if ( $a->cost > 0 ){
-                            $data_kegiatan['icon']      = "jstree-kegiatan";
-                        }else{
-                            $data_kegiatan['icon']      = "jstree-kegiatan_non_anggaran";
-                        }
+    public function RenjaDistribusiKegiatanTree(Request $request)
+    {
+        //klasifikasi get data menurut root node nya,.. 
+        if ( $request->id == "#"){
+            $data = 'level_1';
+        }else{
+            $data = $request->data;
+        }
+        $state = array( "opened" => true, "selected" => false );
+
+
+        switch ($data) {
+            case 'level_1':
+
+            if ( $request->skpd_id == 3 ){
+                //SEKDA 
+                $level1 = SKPD::leftjoin('demo_asn.m_skpd AS data', function($join){
+                                    $join   ->on('data.parent_id','=','m_skpd.id');
+                                })
+                                ->select('data.id','data.skpd')
+                                ->where('m_skpd.parent_id','=', $request->skpd_id)
+                                ->get();
+            }else if ( $request->skpd_id == 11 ){
+                //JIKA KANTOR KESBANGPOL, level satunya adalah atasan nya
+                $level1 = SKPD::where('id','=', 11)->select('id','skpd','id_eselon')->get();
+            }else{
+                //Distibusi kegiatan dengan level normal
+                $level1 = SKPD::where('parent_id','=', $request->skpd_id)->select('id','skpd','id_eselon')->get();
+            }
+        
+            foreach ($level1 as $x) {
+                $data_level1['id']	            = $x->id;
+                $data_level1['data']            = "level_1";
+                $data_level1['type']            = "JPT";
+                $data_level1['text']		    = Pustaka::capital_string($x->skpd);
+                $data_level1['icon']            = "jstree-people";
+                
+                $data_level1['children']        = true ;
+                $data_level1['state']           = $state;
+
+                
+                if ( $x->id == '273'){  //PUPR
+                    $level2 = SKPD::whereRaw('(parent_id = ? and  id != ? ) or parent_id = ? ', array(273,302,302))
+                                    ->select('id','skpd')
+                                    ->get();
+                }
+                else{
+                    //normal Level 2
+                    $level2 = SKPD::where('parent_id','=',$x->id)->select('id','skpd')->get();
+                }
+
+                foreach ($level2 as $y) {
+                    
+                    if (in_array( $y->id, $this->pengecualian() )){ //yang dikeualikan from trait/pengecualian
+                    //JIKA YANG DIKECUALIKAN,MALAH BISA ADD KEGIATAN
+                        $data_level2['id']	        = $y->id;
+                        $data_level2['data']        = "level_3"; // dianggap di level 3
+                        $data_level2['text']		= Pustaka::capital_string($y->skpd);
+                        $data_level2['icon']        = "jstree-people";
+                        $data_level2['type']        = "pengawas";
+                        $data_level2['state']       = "state";
+                        $data_level2['children']    = true ;
+                        //$data_level2['state']       = $state;
                         
-         
-                            $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$a->id)->select('id','label')->get();
-                            foreach ($ind_kegiatan as $g) {
-                                $data_ind_kegiatan['id']	        = "ind_kegiatan|".$g->id;
-                                $data_ind_kegiatan['text']			= Pustaka::capital_string($g->label);
-                                $data_ind_kegiatan['icon']          = "jstree-ind_kegiatan";
-                                $data_ind_kegiatan['type']          = "ind_kegiatan";
-                                $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$g->id)->get();
-                                        foreach ($ra as $za) {
-                                            $data_rencana_aksi['id']	= "rencana_aksi|".$za->id;
-                                            $data_rencana_aksi['text']	= Pustaka::capital_string($za->label).' ['. Pustaka::bulan($za->waktu_pelaksanaan).']';
-                                            $data_rencana_aksi['icon']  = 'jstree-rencana_aksi';
-                                            $data_rencana_aksi['type']  = "rencana_aksi";
- //TARGET PADA KEGIATAN BULANAN
-                                        $kb = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$za->id)->get();
-                                            foreach ($kb as $az) {
-                                                $data_keg_bulanan['id']	    = "kegiatan_bulanan|".$az->id;
-                                                $data_keg_bulanan['text']	=  'Target : '. $az->target.' '.$az->satuan.' / Pelaksana : '.Pustaka::capital_string($az->RencanaAksi->pelaksana->jabatan);
-                                                $data_keg_bulanan['icon']	= 'jstree-target';
-                                                $data_keg_bulanan['type']   = "kegiatan_bulanan";
-                                            
-                                                $keg_bulanan_list[] = $data_keg_bulanan ;
-                                            }	
-                                                if(!empty($keg_bulanan_list)) {
-                                                    $data_rencana_aksi['children']     = $keg_bulanan_list;
-                                                }
-                                                $rencana_aksi_list[] = $data_rencana_aksi ;
-                                                $keg_bulanan_list = "";
-                                                unset($data_rencana_aksi['children']);
-                                            }
-                                            if(!empty($rencana_aksi_list)) {
-                                                $data_ind_kegiatan['children']     = $rencana_aksi_list;
-                                            }
-                                            
-                                        $ind_kegiatan_list[] = $data_ind_kegiatan ;
-                                        $rencana_aksi_list = "";
-                                        unset($data_ind_kegiatan['children']);
-                                        
-                                    }
-                                    if(!empty($ind_kegiatan_list)) {
-                                        $data_kegiatan['children']     = $ind_kegiatan_list;
-                                    }
-                                    $kegiatan_list[] = $data_kegiatan ;
-                                    $ind_kegiatan_list = "";
-                                    unset($data_kegiatan['children']);
-                                }
-                    if(!empty($kegiatan_list)) {
-                        $data_level3['children']     = $kegiatan_list;
+                    }else{
+                        $data_level2['id']	        = $y->id;
+                        $data_level2['data']        = "level_2";
+                        $data_level2['type']        = "administrator";
+                        $data_level2['text']		= Pustaka::capital_string($y->skpd);
+                        $data_level2['icon']        = "jstree-people ";
+                        $data_level2['state']       = "state";
+                        $data_level2['children']    = true ;
+                        $data_level2['state']       = $state;
+
                     }
-                    $level3_list[] = $data_level3 ;
-                    $kegiatan_list = "";
-                    unset($data_level3['children']);
-                
+
+                    $level2_list[] = $data_level2 ;
                 }
+                if(!empty($level2_list)) {
+                    $data_level1['children']     = $level2_list;
+                }
+                $level1_list[] = $data_level1 ;	
+                $level2_list = "";
+                unset($data_level1['children']);
+
                
+            }    
+            if(!empty($level1_list)) { 
+                return $level1_list;
+            }else{
+                return "[{}]";
+            }
 
+            break;
+            case 'level_2': //jika klik level 2
+                //JIKA disdik,tampilkan korwil ( eselon 9 /Unit Kerja Teknis Korwil)
+                if ( $request->id == 805 ){
+                    $level3 = SKPD::where('parent_id','=',$request->id)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 9 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
                 
-                if(!empty($level3_list)) {
-                    $data_level2['children']     = $level3_list;
-                }
-                $level2_list[] = $data_level2 ;
-                $level3_list = "";
-                unset($data_level2['children']);
+                //JIKA PUSKESMAS LEVEL  3 nya boleh eselon id 11 .. 
+                //AGAR KASUBAG TU PUSKESMASNYA BISA SEJAJAR DENGAN DEWNGAN KEPALA PUSKESMAS
+                }else if ( $request->id == 168 ){  //168 adalah id UPTD kesehatan
+                    $level3a = SKPD::where('parent_id','=',$request->id)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 )
+                                            ->orWhere('id_eselon', '=', 17 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+                    $kapus_list = [];
+                    foreach ($level3a as $x) {
+                         $kapus_list[] = array( 'id' => $x->id );
+                    }
 
-                }
+                    $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+
+                    $level3 = $level3a->merge($level3b);
+                   
             
-            }
+                //AGAR KASUBAG TU DISPERINDAG BISA SEJAJAR DENGAN DEWNGAN KEPALA UPTD DINAS
+                }else if ( $request->id == 761 ){  
+                    $level3a = SKPD::where('parent_id','=',$request->id)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+                    $kapus_list = [];
+                    foreach ($level3a as $x) {
+                        $kapus_list[] = array( 'id' => $x->id );
+                    }
+
+                    $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+
+                    $level3 = $level3a->merge($level3b);
+
+                //AGAR KASUBAG TU Dinas Pertanian bisa add kegiatan
+                }else if ( $request->id == 637 ){  //637 adalah ID UPTD dinas kesehatan
+                    $level3a = SKPD::where('parent_id','=',$request->id)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+                    $kapus_list = [];
+                    foreach ($level3a as $x) {
+                        $kapus_list[] = array( 'id' => $x->id );
+                    }
+
+                    $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+
+                    $level3 = $level3a->merge($level3b);
+            
+            
+                //AGAR KASUBAG TU dishub bisa add kegiatan
+                }else if ( $request->id == 544 ){  //675 adalah 
+                    $level3a = SKPD::where('parent_id','=',$request->id)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+                    $kapus_list = [];
+                    foreach ($level3a as $x) {
+                        $kapus_list[] = array( 'id' => $x->id );
+                    }
+
+                    $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+
+                    $level3 = $level3a->merge($level3b);
+            
+                }else if ( $request->id == 620 ){  //620 adalah perikanan
+                    $level3a = SKPD::where('parent_id','=',$request->id)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+                    $kapus_list = [];
+                    foreach ($level3a as $x) {
+                        $kapus_list[] = array( 'id' => $x->id );
+                    }
+
+                    $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+
+                    $level3 = $level3a->merge($level3b);
+            
+                
+                }else if ( $request->id == 61804 ){  //61804 adalah DLHK
+                    $level3a = SKPD::where('parent_id','=',$request->id)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+                    $kapus_list = [];
+                    foreach ($level3a as $x) {
+                        $kapus_list[] = array( 'id' => $x->id );
+                    }
+
+                    $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+
+                    $level3 = $level3a->merge($level3b);
+            
+                
+                }else if ( $request->id == 61830 ){  //61830 adalah DISNAKERTRANS
+                    $level3a = SKPD::where('parent_id','=',$request->id)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+                    $kapus_list = [];
+                    foreach ($level3a as $x) {
+                        $kapus_list[] = array( 'id' => $x->id );
+                    }
+
+                    $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+
+                    $level3 = $level3a->merge($level3b);
+            
+                
+                }else if ( $request->id == 61831 ){  //61831 adalah DINSOS
+                    $level3a = SKPD::where('parent_id','=',$request->id)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+                    $kapus_list = [];
+                    foreach ($level3a as $x) {
+                        $kapus_list[] = array( 'id' => $x->id );
+                    }
+
+                    $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+
+                    $level3 = $level3a->merge($level3b);
+            
+                
+                }else if ( $request->id == 61832 ){  //61832 adalah PRKP
+                    $level3a = SKPD::where('parent_id','=',$request->id)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+                    $kapus_list = [];
+                    foreach ($level3a as $x) {
+                        $kapus_list[] = array( 'id' => $x->id );
+                    }
+
+                    $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+
+                    $level3 = $level3a->merge($level3b);
+            
+                
+                }else{
+                    $level3 = SKPD::where('parent_id','=',$request->id)
+                                    ->where(function ($query) {
+                                        $query->where('id_eselon', '=' , null )
+                                            ->orWhere('id_eselon', '<=', 8 );
+                                    })
+                                    ->select('id','skpd','id_eselon')->get();
+                }
+
+
+                foreach ($level3 as $z) {
+
+                    $data_level3['id']	            =  $z->id;
+                    $data_level3['data']	        = "level_3";
+                    $data_level3['text']			= Pustaka::capital_string($z->skpd);
+                    $data_level3['icon']            = "jstree-people   faa-pulse animated-hover ";
+                    $data_level3['type']            = "pengawas";
+                    $data_level3['children']        = true ;
+                    //$data_level3['state']           = $state;
+
+
+                    $level3_list[] = $data_level3 ;
+                }
+
+                if(!empty($level3_list)) { 
+                    return $level3_list;
+                }else{
+                    return "[{}]";
+                }
                
-            if(!empty($level2_list)) {
-                $data_level1['children']     = $level2_list;
-            }
-            $data[] = $data_level1 ;	
-            $level2_list = "";
-            unset($data_level1['children']);
-		
-        }	
-           
-		return $data;
+            break;
+            case 'level_3': //jika klik level 3
+                $kegiatan = Kegiatan::WHERE('jabatan_id','=',$request->id)
+                                    ->WHERE('renja_id',$request->renja_id)
+                                    ->select('id','label','cost')
+                                    ->get();
+
+                foreach ($kegiatan as $a) {
+                    $data_kegiatan['id']	        = $a->id;
+                    $data_kegiatan['data']          = "kegiatan";
+                    $data_kegiatan['type']          = "kegiatan";
+                    $data_kegiatan['text']			= Pustaka::capital_string($a->label);
+                    
+                    if ( $a->cost > 0 ){
+                            $data_kegiatan['icon']  = "jstree-kegiatan";
+                    }else{
+                        $data_kegiatan['icon']      = "jstree-kegiatan_non_anggaran";
+                    }
+                    $data_kegiatan['children']      = true ;
+
+                    $kegiatan_list[] = $data_kegiatan ;
+                }
+
+                if(!empty($kegiatan_list)) { 
+                    return $kegiatan_list;
+                }else{
+                    return "[{}]";
+                }
+
+            break;
+            case 'kegiatan':
+                $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$request->id)->select('id','label')->get();
+                foreach ($ind_kegiatan as $g) {
+                    $data_ind_kegiatan['id']	        = $g->id;
+                    $data_ind_kegiatan['data']          = "ind_kegiatan";
+                    $data_ind_kegiatan['type']          = "ind_kegiatan";
+                    $data_ind_kegiatan['text']			= Pustaka::capital_string($g->label);
+                    $data_ind_kegiatan['icon']          = "jstree-ind_kegiatan";
+                    $data_ind_kegiatan['children']      = true ;
+
+                    $ind_kegiatan_list[] = $data_ind_kegiatan ;
+                }
+
+                if(!empty($ind_kegiatan_list)) { 
+                    return $ind_kegiatan_list;
+                }else{
+                    return "[{}]";
+                }
+            break;
+            case 'ind_kegiatan':
+                $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$request->id)->get();
+                foreach ($ra as $za) {
+                    $data_rencana_aksi['id']	    = $za->id;
+                    $data_rencana_aksi['type']      = "rencana_aksi";
+                    $data_rencana_aksi['data']      = "rencana_aksi";
+                    $data_rencana_aksi['text']	    = Pustaka::capital_string($za->label).' ['. Pustaka::bulan($za->waktu_pelaksanaan).']';
+                    $data_rencana_aksi['icon']      = 'jstree-rencana_aksi';
+                    $data_rencana_aksi['children']  = true ;
+                    $rencana_aksi_list[] = $data_rencana_aksi ;
+                }
+
+                if(!empty($rencana_aksi_list)) { 
+                    return $rencana_aksi_list;
+                }else{
+                    return "[{}]";
+                }
+            break;
+            case 'rencana_aksi':
+                $kb = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$request->id)->get();
+                foreach ($kb as $az) {
+                    $data_keg_bulanan['id']	    = $az->id;
+                    $data_keg_bulanan['data']   = "kegiatan_bulanan";
+                    $data_keg_bulanan['type']   = "kegiatan_bulanan";
+                    $data_keg_bulanan['text']	=  'Target : '. $az->target.' '.$az->satuan.' / Pelaksana : '.Pustaka::capital_string($az->RencanaAksi->pelaksana->jabatan);
+                    $data_keg_bulanan['icon']	= 'jstree-target';
+                
+                    $keg_bulanan_list[] = $data_keg_bulanan ;
+                }
+
+                if(!empty($keg_bulanan_list)) { 
+                    return $keg_bulanan_list;
+                }else{
+                    return "[{}]";
+                }	
+            break;
+            default:
+            return "[{}]";
+            break;
+        }
+        
         
     }
+
+
+
     public function SKPTahunanKegiatanTreeSekda(Request $request)
     {
        

@@ -25,7 +25,7 @@ use App\Models\KegiatanSKPBulananJFT;
 use App\Models\RealisasiKegiatanBulanan;
 
 use App\Helpers\Pustaka;
-use App\Traits\HitungCapaian;
+use App\Traits\HitungCapaian; 
 use App\Traits\BawahanList;
 
 use Datatables;

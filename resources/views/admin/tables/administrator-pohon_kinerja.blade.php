@@ -33,10 +33,9 @@
 
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		//alert();
-		
+	
 		$('#renja_table').DataTable({
+				destroy      	: true,
 				processing      : true,
 				serverSide      : true,
 				searching      	: true,
@@ -85,7 +84,5 @@
 		
 		window.location.assign("pohon_kinerja/"+renja_id);
 	});
-
-});
 
 </script>

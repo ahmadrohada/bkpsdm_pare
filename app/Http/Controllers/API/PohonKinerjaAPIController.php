@@ -395,7 +395,7 @@ class PohonKinerjaAPIController extends Controller {
     }
 
 
-    public function PohonKinerjaTree(Request $request)
+    public function PohonKinerjaTree(Request $request) 
     {
        
         //klasifikasi get data menurut root node nya,.. 
@@ -404,17 +404,22 @@ class PohonKinerjaAPIController extends Controller {
         }else{
             $data = $request->data;
         }
+        $state = array( "opened" => true, "selected" => false );
         
         switch ($data) {
             case 'tujuan':
+            
     
             $tujuan = Tujuan::where('renja_id','=', $request->renja_id )->select('id','label')->get();
             foreach ($tujuan as $x) {
+                   
+
                     $sub_data_tujuan['id']	            = $x->id;
                     $sub_data_tujuan['data']	        = "tujuan";
                     $sub_data_tujuan['text']			= Pustaka::capital_string($x->label);
                     $sub_data_tujuan['icon']            = "jstree-tujuan";
                     $sub_data_tujuan['type']            = "tujuan";
+                    $sub_data_tujuan['state']           = $state;
                     
                     //$sub_data_tujuan['children']        = true ;
 
@@ -426,7 +431,8 @@ class PohonKinerjaAPIController extends Controller {
                         $sub_data_sasaran['icon']           = "jstree-sasaran";
                         $sub_data_sasaran['type']           = "sasaran";
                         $sub_data_sasaran['children']       = true ;
-                        $sub_data_sasaran['state']['selected']    = true ;
+                        $sub_data_sasaran['state']           = $state;
+
                         //$sub_data_sasaran['state']['open']    = true ;
 
                     $sasaran_list[] = $sub_data_sasaran ;
@@ -443,7 +449,7 @@ class PohonKinerjaAPIController extends Controller {
                 }else{
                     return "[{}]";
                 }
-                break;
+            break;
             case 'sasaran':
                 $program = Program:: where('sasaran_id','=',$request->id)->select('id','label')->get();
                 foreach ($program as $d) {
@@ -453,12 +459,13 @@ class PohonKinerjaAPIController extends Controller {
                     $sub_data_program['icon']           = "jstree-program";
                     $sub_data_program['type']           = "program";
                     $sub_data_program['children']       = true ;
+                    //$sub_data_program['state']          = $state;
 
                     $program_list[] = $sub_data_program;
                 }
                 return $program_list ;
                 
-                break;
+            break;
             case 'program':
                 $kegiatan = Kegiatan:: where('program_id','=',$request->id)->select('id','label')->get();
                 foreach ($kegiatan as $e) {
@@ -471,9 +478,13 @@ class PohonKinerjaAPIController extends Controller {
 
                     $kegiatan_list[] = $sub_data_kegiatan;
                 }
-                return $kegiatan_list ;
+                if(!empty($kegiatan_list)) { 
+                    return $kegiatan_list;
+                }else{
+                    return "[{}]";
+                }
                 
-                break;
+            break;
             case 'kegiatan':
                 $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$request->id)->select('id','label')->get();
                 foreach ($ind_kegiatan as $g) {
@@ -486,12 +497,17 @@ class PohonKinerjaAPIController extends Controller {
 
                     $ind_kegiatan_list[] = $sub_data_ind_kegiatan;
                 }
-                return $ind_kegiatan_list ;
                 
-                break;
+                if(!empty($ind_kegiatan_list)) { 
+                    return $ind_kegiatan_list;
+                }else{
+                    return "[{}]";
+                }
+                
+            break;
             default:
-                return "[{}]";
-                break;
+            return "[{}]";
+            break;
         }
  
            

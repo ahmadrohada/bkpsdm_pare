@@ -1,11 +1,30 @@
 <div class="row">
-	<div class="col-md-5">
-		<div class="table-responsive">
-			<input type='text' id = 'cari_keg' class="form-control" placeholder="cari">
-			<div id="ditribusi_renja"></div>
-		</div>
+	<div class="col-md-6">
+
+
+			<div class="box box-primary ">
+					<div class="box-header with-border">
+						<h1 class="box-title">
+							Distibusi Kegiatan
+						</h1>
+				 
+						<div class="box-tools pull-right">
+							{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
+		
+						</div>
+					</div>
+					<div class="box-body" style="padding-left:0px; padding-right:0px;">
+							<input type='text' id = 'cari_keg' class="form-control" placeholder="cari">
+						
+						<div class="table-responsive auto">
+								
+							<div id="ditribusi_renja" class="demo"></div>
+						</div>
+					</div>
+				</div>
+
 	</div>
-	<div class="col-md-7">
+	<div class="col-md-6">
 			@include('admin.tables.distribusi_kegiatan-ka_skpd')
 			@include('admin.tables.distribusi_kegiatan-kabid')
 			@include('admin.tables.distribusi_kegiatan-kasubid')
@@ -25,7 +44,6 @@
 @include('admin.modals.distribusi_kegiatan-add')
 
 <script type="text/javascript">
-
 	function initTreeDistribusiKegiatan() {
 		$('#ditribusi_renja')
 		.jstree({
@@ -47,13 +65,16 @@
 			,'contextmenu' : {
 					'items' : context_add_kegiatan
 				},
-			"plugins" : [ 'search','contextmenu','types','state'],
+			"plugins" : [ 'search','contextmenu','types','state'/*,'dnd' ,"state","wholerow" */ ],
 			'types' : {
 					'JPT' 				: { "disabled" : true },
 					'administrator' 	: { },
 					'pengawas' 			: { },
 					'pelaksana' 		: { },
 					'kegiatan' 			: { },
+					'ind_kegiatan'		: { },
+					'rencana_aksi'		: { },
+					'keg_bulanan'		: { },
 				}
 			
 		
@@ -64,29 +85,43 @@
 		.on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
 				//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
-				//alert(data.instance.get_node(data.selected[0]).type)
+				//alert(data.instance.get_node(data.selected[0]).id)
 				detail_table_jabatan(data.instance.get_node(data.selected[0]).id , data.instance.get_node(data.selected[0]).type);
 			}
 		});
+
+
+
+
+
 	}
-
+	
 	function context_add_kegiatan(node){
-
 		var items = {
 			"tambah": {
-				"label" : "Tambah Kegiatan",
-				"action" :function(obj){
+				"label" 	: "Tambah Kegiatan",
+				"icon"    	: "faa-ring fa fa-plus animated",
+				"action" 	:function(obj){
+
+						var text = node.id;
+						var tx = text.split('|');
+						//alert('id_jabatan = '+tx[1]);
+					
 						if ( node.type === 'pengawas'){
-							$('.distribusi_kegiatan_add, #tes').val(node.id);
+							$('.distribusi_kegiatan_add, #tes').val(tx[1]);
 							//SHOW MODAL UNTUK ADD KEGIATAN
 							$('.distribusi_kegiatan_add').modal('show');
 						} 	
 				}
 			},                  
 			"delete": {
-				"label": "Hapus Kegiatan",
+				"label"	: "Hapus Kegiatan",
+				"icon" 	: "faa-ring fa fa-remove animated",
 				"action": function (obj) {
-					unlink_kegiatan_kasubid(node.id);
+
+					var text = node.id;
+					var tx = text.split('|');
+					unlink_kegiatan_kasubid(tx[1]);
 					
 					/* if(confirm('Anda Akan menghapus kegiatan jabatan ?')){
 						var text = node.id;
@@ -99,17 +134,16 @@
 		};
 
 
-		if (node.type != "pengawas") {
+		if (node.type == "pengawas") {
+			delete items.delete;
+		}else if (node.type == "kegiatan") {
 			delete items.tambah;
+		}else{
 			delete items.delete;
-		}if (node.type == "pengawas") {
-			delete items.delete;
-		}if (node.type == "kegiatan") {
 			delete items.tambah;
 		}
 		return items;
 	}
-
 	
 	var to = false;
 	$('#cari_keg').keyup(function () {
@@ -119,14 +153,12 @@
 		$('#ditribusi_renja').jstree(true).search(v);
 		}, 250);
 	});
-
-
 	function detail_table_jabatan(id,type){
-
+		
 		var id 		= id;
 		var type 	= type;
-
-
+		
+		var tx = id.split('|');
 
 		switch ( type ){
 			case 'JPT':
@@ -135,7 +167,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
-						load_kegiatan_ka_skpd(id);
+						load_kegiatan_ka_skpd(tx[1]);
 				
 			break;
 			case 'administrator':
@@ -144,7 +176,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
-						load_kegiatan_kabid(id);
+						load_kegiatan_kabid(tx[1]);
 				
 			break;
 			case 'pengawas':
@@ -153,7 +185,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").show();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
-						load_kegiatan_kasubid(id);
+						load_kegiatan_kasubid(tx[1]);
 				
 			break;
 			case 'kegiatan':
@@ -162,7 +194,7 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").show();
 						$(".div_ind_kegiatan_detail").hide();
-						load_ind_kegiatan2(id);
+						load_ind_kegiatan2(tx[1]);
 				
 			break;
 			case 'ind_kegiatan':
@@ -171,25 +203,34 @@
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 						$(".div_ind_kegiatan_detail").show();
-						load_ind_kegiatan_end2(id);
+						load_ind_kegiatan_end2(tx[1]);
 				
 			break;
-			case 'pelaksana':
+			case 'rencana_aksi':
 						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
 						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
 						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
 						$(".div_ind_kegiatan_detail").hide();
+					
+			break;
+			case 'keg_bulanan':
+						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
+						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
+						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
+						$(".div_ind_kegiatan_detail").hide();
+					
 			break;
 			case 'default':
-						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
-						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
-						$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
-						$(".div_kegiatan_detail, .div_ind_kegiatan_list").hide();
-						$(".div_ind_kegiatan_detail").hide();
-						//load_ind_kegiatan_end2(id);
-				
-			break;
+							$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").hide();
+							$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
+							$(".div_kasubid_detail, .div_kegiatan_kasubid_list").hide();
+							$(".div_kegiatan_detail, .div_rencana_aksi_list,.div_ind_kegiatan_list").hide();
+							$(".div_ind_kegiatan_detail").hide();
+							//load_ind_kegiatan_end2(id);
+					
+				break;
 			default: 
 			$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
 			$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
@@ -200,7 +241,6 @@
 		
 		}
 	}
-
 	$(".tutup_detail").click(function(){
 		$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
 		$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();

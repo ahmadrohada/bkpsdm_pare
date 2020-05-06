@@ -35,25 +35,27 @@
 <script type="text/javascript">
 
 	function initTreeDistribusiKegiatan() {
-		$('#ditribusi_renja')
-		.jstree({
+		$('#ditribusi_renja').jstree({
             'core' : {
 				'data' : {
 						"url" 	: "{{ url("api_resource/skpd_renja_distribusi_kegiatan_tree") }}",
 						"data" 	: function (node) {
-							return { "renja_id" : {!! $renja->id !!},
-									 "skpd_id"  : {!! $renja->SKPD->id !!}
-									 };
+							return { 	"id" 		: node.id ,
+										"data" 		: node.data,
+										"renja_id" 	: {!! $renja->id !!},
+									 	"skpd_id"  	: {!! $renja->SKPD->id !!}
+									};
 						},
-						"dataType" : "json"
 				}
-				,'check_callback' : true,
-						'themes' : {
-							'responsive' : false
-						}
+				
 			},
-			
-			"plugins" : [ 'search','types','state' ],
+				'check_callback' : true,
+				'themes' : { 'responsive' : false },
+				'plugins': ['search'] ,
+			/* 'contextmenu' : {
+					'items' : context_add_kegiatan
+				},
+			"plugins" : [ 'search','contextmenu','types','state' ],
 			'types' : {
 					'JPT' 				: { "disabled" : true },
 					'administrator' 	: { },
@@ -63,18 +65,14 @@
 					'ind_kegiatan'		: { },
 					'rencana_aksi'		: { },
 					'keg_bulanan'		: { },
-				}
+				} */
 			
 		
-	    })
-		.on("loaded.jstree", function(){
-			$('#ditribusi_renja').jstree('open_all');
-		})
-		.on("changed.jstree", function (e, data) {
+	    }).on("loaded.jstree", function(){
+			//$('#ditribusi_renja').jstree('open_all');
+		}).on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
-				//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
-				//alert(data.instance.get_node(data.selected[0]).id)
-				detail_table_jabatan(data.instance.get_node(data.selected[0]).id , data.instance.get_node(data.selected[0]).type);
+				detail_table_jabatan((data.instance.get_node(data.selected[0]).type)+'|'+(data.instance.get_node(data.selected[0]).id));
 			}
 		});
 	}
@@ -89,13 +87,11 @@
 	});
 
 
-	function detail_table_jabatan(id,type){
+	function detail_table_jabatan(id){
 
-		var id 		= id;
-		var type 	= type;
 		var tx = id.split('|');
-
-		switch ( type ){
+		
+		switch ( tx[0] ){
 			case 'JPT':
 						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();

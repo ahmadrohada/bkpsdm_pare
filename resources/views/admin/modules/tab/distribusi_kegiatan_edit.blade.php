@@ -45,29 +45,29 @@
 
 <script type="text/javascript">
 	function initTreeDistribusiKegiatan() {
-		$('#ditribusi_renja')
-		.jstree({
+		$('#ditribusi_renja').jstree({
             'core' : {
 				'data' : {
 						"url" 	: "{{ url("api_resource/skpd_renja_distribusi_kegiatan_tree") }}",
 						"data" 	: function (node) {
-							return { "renja_id" : {!! $renja->id !!},
-									 "skpd_id"  : {!! $renja->SKPD->id !!}
-									 };
+							return { 	"id" 		: node.id ,
+										"data" 		: node.data,
+										"renja_id" 	: {!! $renja->id !!},
+									 	"skpd_id"  	: {!! $renja->SKPD->id !!}
+									};
 						},
-						"dataType" : "json"
 				}
-				,'check_callback' : true,
-						'themes' : {
-							'responsive' : false
-						}
-			}
-			,'contextmenu' : {
+				
+			},
+				'check_callback' : true,
+				'themes' : { 'responsive' : false },
+				'plugins': ['search'] ,
+			'contextmenu' : {
 					'items' : context_add_kegiatan
 				},
-			"plugins" : [ 'search','contextmenu','types','state'/*,'dnd' ,"state","wholerow" */ ],
+			"plugins" : [ 'search','contextmenu','types','state' ],
 			'types' : {
-					'JPT' 				: { "disabled" : true },
+					'JPT' 				: { },
 					'administrator' 	: { },
 					'pengawas' 			: { },
 					'pelaksana' 		: { },
@@ -75,18 +75,14 @@
 					'ind_kegiatan'		: { },
 					'rencana_aksi'		: { },
 					'keg_bulanan'		: { },
-				}
+				} 
 			
 		
-	    })
-		.on("loaded.jstree", function(){
-			$('#ditribusi_renja').jstree('open_all');
-		})
-		.on("changed.jstree", function (e, data) {
+	    }).on("loaded.jstree", function(){
+			//$('#ditribusi_renja').jstree('open_all');
+		}).on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
-				//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
-				//alert(data.instance.get_node(data.selected[0]).id)
-				detail_table_jabatan(data.instance.get_node(data.selected[0]).id , data.instance.get_node(data.selected[0]).type);
+				detail_table_jabatan((data.instance.get_node(data.selected[0]).type)+'|'+(data.instance.get_node(data.selected[0]).id));
 			}
 		});
 
@@ -103,12 +99,10 @@
 				"icon"    	: "faa-ring fa fa-plus animated",
 				"action" 	:function(obj){
 
-						var text = node.id;
-						var tx = text.split('|');
-						//alert('id_jabatan = '+tx[1]);
+						var id = node.id;
 					
 						if ( node.type === 'pengawas'){
-							$('.distribusi_kegiatan_add, #tes').val(tx[1]);
+							$('.distribusi_kegiatan_add, #tes').val(id);
 							//SHOW MODAL UNTUK ADD KEGIATAN
 							$('.distribusi_kegiatan_add').modal('show');
 						} 	
@@ -119,9 +113,8 @@
 				"icon" 	: "faa-ring fa fa-remove animated",
 				"action": function (obj) {
 
-					var text = node.id;
-					var tx = text.split('|');
-					unlink_kegiatan_kasubid(tx[1]);
+					var id = node.id;
+					unlink_kegiatan_kasubid(id);
 					
 					/* if(confirm('Anda Akan menghapus kegiatan jabatan ?')){
 						var text = node.id;
@@ -153,14 +146,11 @@
 		$('#ditribusi_renja').jstree(true).search(v);
 		}, 250);
 	});
-	function detail_table_jabatan(id,type){
-		
-		var id 		= id;
-		var type 	= type;
+	function detail_table_jabatan(id){
 		
 		var tx = id.split('|');
-
-		switch ( type ){
+		//alert(id);
+		switch ( tx[0] ){
 			case 'JPT':
 						$(".div_ka_skpd_detail, .div_kegiatan_ka_skpd_list").show();
 						$(".div_kabid_detail, .div_kegiatan_kabid_list").hide();
