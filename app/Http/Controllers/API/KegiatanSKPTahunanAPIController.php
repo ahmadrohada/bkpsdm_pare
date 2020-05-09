@@ -357,8 +357,6 @@ class KegiatanSKPTahunanAPIController extends Controller {
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                             })
-                            
-                            ->orderBY('skp_tahunan_rencana_aksi.label')
                             ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
                                         'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
                                         'kegiatan_tahunan.label AS kegiatan_tahunan_label',
@@ -372,7 +370,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
                                     ) 
                             ->groupBy('kegiatan_tahunan.id')
-                            
+                            //->orderBY('skp_tahunan_rencana_aksi.label')
                             ->distinct()
                             ->get(); 
              
@@ -387,13 +385,13 @@ class KegiatanSKPTahunanAPIController extends Controller {
         })->addColumn('output', function ($x) {
             return $x->target.' '.$x->satuan;
         })->addColumn('mutu', function ($x) {
-            return $x->quality;
+            return $x->quality." %";
         })->addColumn('waktu', function ($x) {
-            return $x->target_waktu;
+            return $x->target_waktu." bln";
         })->addColumn('renja_biaya', function ($x) {
-            return number_format($x->renja_biaya,'0',',','.');
+            return "Rp. ".number_format($x->renja_biaya,'0',',','.');
         })->addColumn('biaya', function ($x) {
-            return number_format($x->cost,'0',',','.');
+            return "Rp. ".number_format($x->cost,'0',',','.');
         });
 
         if ($keyword = $request->get('search')['value']) {

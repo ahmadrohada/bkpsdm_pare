@@ -186,7 +186,7 @@
   function load_kegiatan_bulanan(skp_bulanan_id){
 		var table_skp_bulanan = $('#kegiatan_bulanan_table').DataTable({
 				destroy			: true,
-				processing      : false,
+				processing      : true,
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,

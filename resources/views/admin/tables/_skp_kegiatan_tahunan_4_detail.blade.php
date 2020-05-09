@@ -9,7 +9,7 @@
 		
 	</div>
 	<div class="col-md-7">
-		<div class="box box-primary" id='kegiatan_tahunan'>
+		<div class="box box-kegiatan_tahunan" id='kegiatan_tahunan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
 					List Kegiatan SKP Tahunan

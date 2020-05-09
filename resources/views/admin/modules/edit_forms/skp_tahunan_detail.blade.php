@@ -165,7 +165,9 @@ function detail_show(){
 		type    	: "GET",
 		data    	: { skp_tahunan_id: {{ $skp->id }} },
 		beforeSend	: function ( xhr ) {
+			if ( $("#date_created").html() == "" ){
 				show_loader_2();
+			}
         },
 		success		: function (data) {
 			

@@ -1219,11 +1219,20 @@ class KegiatanAPIController extends Controller {
        
     }
    
-    public function SKPTahunanKegiatanTree4(Request $request)
+    public function SKPTahunanKegiatanTree4(Request $request) 
     {
        
-       
-        $rencana_aksi = RencanaAksi::WHERE('jabatan_id',$request->jabatan_id)
+         //klasifikasi get data menurut root node nya,.. 
+         if ( $request->id == "#"){
+            $data = 'kegiatan';
+        }else{
+            $data = $request->data;
+        }
+        $state = array( "opened" => true, "selected" => false );
+        
+        switch ($data) {
+            case 'kegiatan':
+                $data = RencanaAksi::WHERE('jabatan_id',$request->jabatan_id)
                             ->WHERE('renja_id',$request->renja_id)
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
@@ -1243,6 +1252,63 @@ class KegiatanAPIController extends Controller {
                             ->groupBy('kegiatan_tahunan.id')
                             ->distinct()
                             ->get();
+                
+
+                foreach ($data as $x) {
+                    if ( $x->kegiatan_tahunan_id >= 1 ){
+                        $kegiatan_id                = $x->kegiatan_tahunan_id;
+                        $data_kegiatan['data']	    = "kegiatan_tahunan";
+                        $kegiatan_label             = $x->kegiatan_tahunan_label;
+                        $data_kegiatan['icon']	    = 'jstree-kegiatan_tahunan';
+                        $data_kegiatan['type']      = "kegiatan_tahunan";
+                    }else{
+                        $kegiatan_id                = $x->kegiatan_id;
+                        $data_kegiatan['data']	    = "kegiatan_renja";
+                        $kegiatan_label             = $x->kegiatan_tahunan_label;
+                        $data_kegiatan['icon']	    = 'jstree-kegiatan';
+                        $data_kegiatan['type']      = "kegiatan_renja";
+                    }
+
+                        $data_kegiatan['id']	    = $kegiatan_id;
+                        $data_kegiatan['text']	    = Pustaka::capital_string($kegiatan_label);
+                        $data_kegiatan['children']  = true ;
+                        //$data_kegiatan['state']     = $state;
+                        
+                        //RENCANA AKSI
+                        $ra = RencanaAksi::WHERE('kegiatan_tahunan_id',$x->kegiatan_tahunan_id)->WHERE('jabatan_id',$request->jabatan_id)->orderBY('waktu_pelaksanaan')->orderBY('id','DESC')->get();
+                        foreach ($ra as $y) {
+                            $data_rencana_aksi['id']	        = "KegiatanBulanan|".$y->id;
+                            $data_rencana_aksi['text']			= Pustaka::capital_string($y->label).' ['. Pustaka::bulan($y->waktu_pelaksanaan).']';
+                            $data_rencana_aksi['icon']	        = 'jstree-kegiatan_bulanan';
+                        
+                            $rencana_aksi_list[] = $data_rencana_aksi ;
+                        }	
+                        if(!empty($rencana_aksi_list)) {
+                            $data_kegiatan['children']     = $rencana_aksi_list;
+                        }
+                        $kegiatan_list[] = $data_kegiatan ;
+                        $rencana_aksi_list = "";
+                        unset($data_kegiatan['children']);
+                }
+                    
+                if(!empty($kegiatan_list)) { 
+                    return $kegiatan_list;
+                }else{
+                    return "[{}]";
+                }
+                                       
+            break;
+            case 'ind_kegiatan':
+                
+
+            break;
+            default:
+            return "[{}]";
+            break;
+
+        }
+       
+        
         $kegiatan_list = [];
 		foreach ($rencana_aksi as $x) {
             if ( $x->kegiatan_tahunan_id >= 1 ){

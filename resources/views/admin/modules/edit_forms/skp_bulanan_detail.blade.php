@@ -146,6 +146,11 @@ function detail_show(){
 		url     	: '{{ url("api_resource/skp_bulanan_detail") }}',
 		type    	: "GET",
 		data    	: { skp_bulanan_id: {{ $skp->id }} },
+		beforeSend	: function ( xhr ) {
+			if ( $("#date_created").html() == "" ){
+				show_loader_2();
+			}
+        },
 		success		: function (data) {
 
 				$("#date_created").html(data['date_created']);
@@ -166,6 +171,7 @@ function detail_show(){
 				$("#p_jabatan").html(data['p_jabatan']);
 				$("#p_eselon").html(data['p_eselon']);
 				$("#p_unit_kerja").html(data['p_unit_kerja']);
+				swal.close();
 
 			},
 			error: function (data) {

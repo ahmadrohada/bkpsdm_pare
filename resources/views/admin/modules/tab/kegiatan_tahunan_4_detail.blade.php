@@ -3,13 +3,13 @@
 
 		<div class="table-responsive">
 			<input type='text' id = 'cari' class="form-control" placeholder="cari">
-			<div id="kegiatan_tahunan_pelaksana"></div>
+			<div id="kegiatan_tahunan_4"></div>
 			
 		</div>
 		
 	</div>
 	<div class="col-md-7">
-		<div class="box box-primary" id='kegiatan_tahunan'>
+		<div class="box box-kegiatan_tahunan" id='kegiatan_tahunan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
 					List Kegiatan SKP Tahunan
@@ -46,7 +46,7 @@
 			</div>
 		</div>
 		<div id='rencana_aksi' hidden>
-			<div class="box box-primary">
+			<div class="box box-kegiatan_tahunan">
 				<div class="box-header with-border">
 					<h1 class="box-title">
 						Detail Kegiatan Tahunan
@@ -74,7 +74,7 @@
 
 
 
-			<div class="box box-primary">
+			<div class="box box-kegiatan_bulanan">
 				<div class="box-header with-border">
 					<h1 class="box-title">
 						List Kegiatan Bulanan
@@ -112,44 +112,36 @@
 
 
 	function refreshTreeKegTahunan(){
-		jQuery('#kegiatan_tahunan_pelaksana').jstree(true).refresh(true);
-		jQuery('#kegiatan_tahunan_pelaksana').jstree().deselect_all(true);
+		jQuery('#kegiatan_tahunan_4').jstree(true).refresh(true);
+		jQuery('#kegiatan_tahunan_4').jstree().deselect_all(true);
 		//$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
 	} 
 
 
-		$('#kegiatan_tahunan_pelaksana')
-		.on("loaded.jstree", function(){
-			//$('#kegiatan_tahunan_pelaksana').jstree('open_all');
-			
-		})
-		.on("changed.jstree", function (e, data) {
-			if(data.selected.length) {
-				detail_table(data.instance.get_node(data.selected[0]).id);
-			
-			}
-		})
-		.jstree({
-            'core' : {
-				'data' : {
-						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_4") }}", 
-						"data" 	: function (node) {
-							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
-                          "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
-													"skp_tahunan_id" : {!! $skp->id !!}
-                      };
-						},
-						"dataType" : "json"
-				}
-				,'check_callback' : true,
-						'themes' : {
-							'responsive' : false
-						}
-			}
-			,"plugins" : [ "search"/* ,"state","contextmenu","wholerow" */ ]
-			
-		
-	    });
+	$('#kegiatan_tahunan_4').jstree({
+				'core' : {
+					'data' : {
+							"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_4") }}", 
+							'data' : function (node) {
+								return { 	"id" 		: node.id ,
+											"data" 		: node.data,
+											"renja_id" : {!! $skp->Renja->id !!} , 
+											"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+											"skp_tahunan_id" : {!! $skp->id !!}
+										};
+									}
+							}
+				},
+						'check_callback' : true,
+						'themes' : { 'responsive' : false },
+						'plugins': ['search'] ,
+				}).on("loaded.jstree", function(){
+					//$('#kegiatan_tahunan_kaban').jstree('open_all');
+				}).on("changed.jstree", function (e, data) {
+					if(data.selected.length) {
+						detail_table((data.instance.get_node(data.selected[0]).data)+'|'+(data.instance.get_node(data.selected[0]).id));
+					}
+				});
 	
 	
 	
@@ -158,7 +150,7 @@
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 		var v = $('#cari').val();
-		$('#kegiatan_tahunan_pelaksana').jstree(true).search(v);
+		$('#kegiatan_tahunan_4').jstree(true).search(v);
 		}, 250);
 	});
 	
@@ -167,13 +159,9 @@
 
 	//========================== TABLE DETAIL KEGIATAN ==================================//
 	function detail_table(id){
-
 		var tx = id.split('|');
-	
-
-
 		switch ( tx[0] ){
-                case 'KegiatanTahunan':
+                case 'kegiatan_tahunan':
                           //SHOW DETAIL KEGIATAN TAHUNAN DAN RENCANA KERJA LIST
                             $("#kegiatan_tahunan").hide();
 						    $("#rencana_aksi").show();
@@ -201,13 +189,13 @@
     $(".tutup_detail").click(function(){
 			$("#kegiatan_tahunan").show();
 			$("#rencana_aksi").hide();
-			jQuery('#kegiatan_tahunan_pelaksana').jstree().deselect_all(true);
+			jQuery('#kegiatan_tahunan_4').jstree().deselect_all(true);
     }); 
 
 
 	var table_kegiatan_tahunan = $('#kegiatan_tahunan_table').DataTable({
 				destroy			: true,
-				processing      : false,
+				processing      : true,
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,

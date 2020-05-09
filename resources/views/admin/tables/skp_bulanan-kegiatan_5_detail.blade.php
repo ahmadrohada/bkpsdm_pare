@@ -231,7 +231,7 @@
 
 		var table_skp_bulanan = $('#kegiatan_bulanan_table').DataTable({
 				destroy			: true,
-				processing      : false,
+				processing      : falstruee,
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
