@@ -49,7 +49,7 @@
 	function rencana_aksi_time_table(){
 		var table_rencana_aksi = $('#rencana_aksi_time_table').DataTable({
 			destroy			: true,
-			processing      : false,
+			processing      : true,
 			serverSide      : true,
 			searching      	: true,
 			paging          : true,

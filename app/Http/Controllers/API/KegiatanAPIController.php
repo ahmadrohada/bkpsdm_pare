@@ -968,7 +968,7 @@ class KegiatanAPIController extends Controller {
                            
     } 
 
-    public function SKPTahunanKegiatanTree3(Request $request)
+    public function SKPTahunanKegiatanTree3_(Request $request)
     {
        
         //Kegiatan nya ESELON IV
@@ -1030,7 +1030,7 @@ class KegiatanAPIController extends Controller {
                         $kb = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$z->id)->get();
                         foreach ($kb as $a) {
                             $data_keg_bulanan['id']	        = "KegiatanBulanan|".$a->id;
-                            $data_keg_bulanan['text']			=  'Target : '. $a->target.' '.$a->satuan.' / Pelaksana : '.Pustaka::capital_string($a->RencanaAksi->pelaksana->jabatan);
+                            $data_keg_bulanan['text']			=  'Target : '. $a->target.' '.$a->satuan.' / Pelaksana : '/* .Pustaka::capital_string($a->RencanaAksi->pelaksana->jabatan) */;
                             $data_keg_bulanan['icon']	        = 'jstree-target';
                         
             
@@ -1062,6 +1062,160 @@ class KegiatanAPIController extends Controller {
         }	
         
         return  $kegiatan_list;
+       
+    }
+
+    public function SKPTahunanKegiatanTree3(Request $request)
+    {
+       
+        //klasifikasi get data menurut root node nya,.. 
+        if ( $request->id == "#"){
+            $data = 'kegiatan';
+        }else{
+            $data = $request->data;
+        }
+        $state = array( "opened" => true, "selected" => false );
+        
+        switch ($data) {
+            case 'kegiatan':
+                $skp_tahunan_id = $request->skp_tahunan_id;
+                $kegiatan = Kegiatan::SELECT('id','label')
+                                    ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
+                                    ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
+                                    ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
+                                        $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                        $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
+                                    })
+                                    ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
+                                                'renja_kegiatan.label AS kegiatan_label',
+                                                'kegiatan_tahunan.id AS kegiatan_tahunan_id',
+                                                'kegiatan_tahunan.label AS kegiatan_tahunan_label'
+                                            ) 
+                                    ->get(); 
+                
+
+                foreach ($kegiatan as $x) {
+                    if ( $x->kegiatan_tahunan_id >= 1 ){
+                        $kegiatan_id                = $x->kegiatan_tahunan_id;
+                        $data_kegiatan['data']	    = "kegiatan_tahunan";
+                        $kegiatan_label             = $x->kegiatan_label;
+                        $data_kegiatan['icon']	    = 'jstree-kegiatan_tahunan';
+                        $data_kegiatan['type']      = "kegiatan_tahunan";
+                    }else{
+                        $kegiatan_id                = $x->kegiatan_id;
+                        $data_kegiatan['data']	    = "kegiatan_renja";
+                        $kegiatan_label             = $x->kegiatan_label;
+                        $data_kegiatan['icon']	    = 'jstree-kegiatan';
+                        $data_kegiatan['type']      = "kegiatan_renja";
+                    }
+
+                        $data_kegiatan['id']	    = $kegiatan_id;
+                        $data_kegiatan['text']	    = Pustaka::capital_string($kegiatan_label);
+                        $data_kegiatan['children']  = true ;
+                        //$data_kegiatan['state']     = $state;
+                        
+                        $ik = IndikatorKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->get();
+                        foreach ($ik as $y) {
+                            $data_ind_kegiatan['id']	        = $y->id;
+                            $data_ind_kegiatan['data']	        = "ind_kegiatan";
+                            $data_ind_kegiatan['text']			= Pustaka::capital_string($y->label);
+                            $data_ind_kegiatan['icon']	        = 'jstree-ind_kegiatan';
+                            $data_ind_kegiatan['type']          = "ind_kegiatan";
+                            $data_ind_kegiatan['children']      = true ;
+                            //$data_ind_kegiatan['state']         = $state;
+
+
+                            $ind_kegiatan_list[] = $data_ind_kegiatan;
+                        }
+
+                        if(!empty($ind_kegiatan_list)) { 
+                            $data_kegiatan['children']       = $ind_kegiatan_list;
+                        }
+                        $kegiatan_list[] = $data_kegiatan ;	
+                        $ind_kegiatan_list = "";
+                        unset($data_kegiatan['children']);
+                }
+                    
+                if(!empty($kegiatan_list)) { 
+                    return $kegiatan_list;
+                }else{
+                    return "[{}]";
+                }
+                                       
+            break;
+            case 'ind_kegiatan':
+                $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$request->id)
+                                    ->orderBy('skp_tahunan_rencana_aksi.waktu_pelaksanaan','ASC')
+                                    ->orderBy('skp_tahunan_rencana_aksi.id','DESC')
+                                    ->get();
+                    
+                foreach ($ra as $z) {
+                    $data_rencana_aksi['id']	        = $z->id;
+                    $data_rencana_aksi['data']	        = "rencana_aksi";
+                    $data_rencana_aksi['text']			= Pustaka::capital_string($z->label).' ['. Pustaka::bulan($z->waktu_pelaksanaan).']';
+                    $data_rencana_aksi['icon']	        = 'jstree-rencana_aksi';
+                    $data_rencana_aksi['type']          = "rencana_aksi";
+                    //$data_rencana_aksi['children']      = true ;
+                    //$data_rencana_aksi['state']         = $state;
+                    $kb = KegiatanSKPBulanan::
+                            leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                                            $join   ->on('rencana_aksi.id','=','skp_bulanan_kegiatan.rencana_aksi_id');
+                                        })
+                                        ->leftjoin('demo_asn.m_skpd AS skpd', function($join){
+                                            $join   ->on('skpd.id','=','rencana_aksi.jabatan_id');
+                                        })
+                                        ->SELECT(   'skp_bulanan_kegiatan.id AS kegiatan_id',
+                                                    'skp_bulanan_kegiatan.target AS target',
+                                                    'skp_bulanan_kegiatan.satuan AS satuan',
+                                                    'skpd.skpd AS pelaksana'
+
+                                                    )
+                                        ->WHERE('rencana_aksi_id',$z->id)->get();
+               
+
+                    foreach ($kb as $a) {
+                            $pelaksana  = ( $a->pelaksana != "" ) ? Pustaka::capital_string($a->pelaksana) : '-'; 
+
+                            $data_keg_bulanan['id']	        = $a->id;
+                            $data_keg_bulanan['data']	    = "kegiatan_bulanan";
+                            $data_keg_bulanan['text']		=  'Target : '. $a->target.' '.$a->satuan.' / Pelaksana : '.$pelaksana;
+                            $data_keg_bulanan['icon']	    = 'jstree-target';
+                            $data_keg_bulanan['type']       = "kegiatan_bulanan";
+                            
+                
+                            $keg_bulanan_list[] = $data_keg_bulanan ;
+                    }	
+
+                    if(!empty($keg_bulanan_list)) {
+                        $data_rencana_aksi['children']     = $keg_bulanan_list;
+                    }
+                    $rencana_aksi_list[] = $data_rencana_aksi ;
+                    $keg_bulanan_list = "";
+                    unset($data_rencana_aksi['children']);
+
+                }
+                if(!empty($rencana_aksi_list)) { 
+                    return $rencana_aksi_list;
+                }else{
+                    return "[{}]";
+                }
+
+
+            break;
+            case 'rencana_aksi':
+                
+                if(!empty($keg_bulanan_list)) { 
+                    return $keg_bulanan_list;
+                }else{
+                    return "[{}]";
+                }
+
+            break;
+            default:
+            return "[{}]";
+            break;
+
+        }
        
     }
    

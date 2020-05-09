@@ -28,7 +28,7 @@
 
 		<!-- ========================== DETAIL RENVANA AKSI ====================================== -->
 		<div id='rencana_aksi_detail' hidden>
-			<div class="box box-primary">
+			<div class="box box-rencana_aksi">
 				<div class="box-header with-border">
 					<h1 class="box-title">
 						Detail Rencana Aksi
