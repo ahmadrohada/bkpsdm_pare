@@ -85,7 +85,7 @@
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli)){ //JIKA STAF AHLI
 										?>@include('admin.modules.tab.kegiatan_tahunan_5_edit')<?php
 									}else if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_sekda)){ //JIKA SEKDA
-										?>@include('admin.tables.skp_tahunan-kegiatan_sekda_detail')<?php
+										?>@include('admin.modules.tab.kegiatan_tahunan_sekda_detail')<?php
 									}else{ //normal kondisi
 										?>@include('admin.modules.tab.kegiatan_tahunan_1_detail')<?php
 									}

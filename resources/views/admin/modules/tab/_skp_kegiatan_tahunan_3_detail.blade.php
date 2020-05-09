@@ -13,7 +13,7 @@
 		<div class="box box-primary" id='kegiatan_tahunan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					List Kegiatan SKP Tahunan c
+					List Kegiatan SKP Tahunan
 				</h1>
 
 				<div class="box-tools pull-right">
