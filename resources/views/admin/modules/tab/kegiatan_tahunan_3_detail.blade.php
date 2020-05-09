@@ -15,7 +15,7 @@
 			<div class="box-body" style="padding-left:0px; padding-right:0px;">
 				<input type='text' id = 'cari' class="form-control" placeholder="cari">
 				<div class="table-responsive auto">
-					<div id="keg_tahunan_3_tree"></div>
+					<div id="kegiatan_tahunan_3"></div>
 				</div>
 			</div>
 		</div>
@@ -70,39 +70,37 @@
 <script type="text/javascript">
 	
 
-	initTreeKegTahunan();
-	function initTreeKegTahunan() {
-		$('#keg_tahunan_3_tree')
-		.on("loaded.jstree", function(){
-			$('#keg_tahunan_3_tree').jstree('open_all');
-		})
-		.on("changed.jstree", function (e, data) {
-			if(data.selected.length) {
-				detail_table(data.instance.get_node(data.selected[0]).id);
-			}
-		})
-		.jstree({
-            'core' : {
-						'data' : {
-						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_3") }}", //Eselon 4
-						"data" 	: function (node) {
-							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
-                                        "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
-										"skp_tahunan_id" : {!! $skp->id !!}
-                                    };
-						},
-						"dataType" : "json"
-				}
-				,'check_callback' : true,
-						'themes' : {
-							'responsive' : false
-						}
-			}
-			,"plugins" : [ "search"/* ,"state","contextmenu","wholerow" */ ]
-			
+	function refreshTreeKegTahunan(){
+		jQuery('#kegiatan_tahunan_3').jstree(true).refresh(true);
+		jQuery('#kegiatan_tahunan_3').jstree().deselect_all(true);
+		//$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
 		
-	    });
-	}
+	} 
+	
+	$('#kegiatan_tahunan_3').jstree({
+				'core' : {
+					'data' : {
+							"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_3") }}", 
+							'data' : function (node) {
+								return { 	"id" 		: node.id ,
+											"data" 		: node.data,
+											"renja_id" : {!! $skp->Renja->id !!} , 
+											"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+											"skp_tahunan_id" : {!! $skp->id !!}
+										};
+									}
+							}
+				},
+						'check_callback' : true,
+						'themes' : { 'responsive' : false },
+						'plugins': ['search'] ,
+				}).on("loaded.jstree", function(){
+					//$('#kegiatan_tahunan_kaban').jstree('open_all');
+				}).on("changed.jstree", function (e, data) {
+					if(data.selected.length) {
+						detail_table((data.instance.get_node(data.selected[0]).data)+'|'+(data.instance.get_node(data.selected[0]).id));
+					}
+				});
 
 	
 	
@@ -111,7 +109,7 @@
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 		var v = $('#cari').val();
-		$('#keg_tahunan_3_tree').jstree(true).search(v);
+		$('#kegiatan_tahunan_3').jstree(true).search(v);
 		}, 250);
 	});
 	
@@ -122,7 +120,7 @@
 		
 		
 		switch ( tx[0] ){
-                case 'KegiatanTahunan':
+                case 'kegiatan_tahunan':
                   	//SHOW DETAIL KEGIATAN TAHUNAN DAN RENCANA KERJA LIST
                   	$("#kegiatan_tahunan").hide();
 					$("#indikator_kegiatan").show();
@@ -131,10 +129,10 @@
 
                   	load_indikator_kegiatan( tx[1]);
 				break; 
-				case 'KegiatanRenja':
+				case 'kegiatan_renja':
 					show_modal_create(tx[1]);
 				break;
-				case 'IndikatorKegiatan':
+				case 'ind_kegiatan':
 					 $("#kegiatan_tahunan").hide();
 					$("#indikator_kegiatan").hide();
 					$("#rencana_aksi").show();
@@ -144,14 +142,14 @@
 					rencana_aksi_list( tx[1]);
 
 				break;
-				case 'RencanaAksi':
+				case 'rencana_aksi':
 					$("#kegiatan_tahunan").hide();
 					$("#indikator_kegiatan").hide();
 					$("#rencana_aksi").hide();
 					$("#rencana_aksi_detail").show();
 					load_rencana_aksi_detail( tx[1]);	
 				break;
-				case 'KegiatanBulanan':
+				case 'kegiatan_bulanan':
 					$("#kegiatan_tahunan").hide();
 					$("#indikator_kegiatan").hide();
 					$("#rencana_aksi").hide();
@@ -176,7 +174,7 @@
 			$("#indikator_kegiatan").hide();
 			$("#rencana_aksi").hide();
 			$("#rencana_aksi_detail").hide();
-			jQuery('#keg_tahunan_3_tree').jstree().deselect_all(true);
+			jQuery('#kegiatan_tahunan_3').jstree().deselect_all(true);
 	}); 
 	
 	function load_rencana_aksi_detail(rencana_aksi_id){

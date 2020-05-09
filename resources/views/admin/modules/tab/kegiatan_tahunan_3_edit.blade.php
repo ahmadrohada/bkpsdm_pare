@@ -114,7 +114,7 @@
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 		var v = $('#cari').val();
-		$('#keg_tahunan_3_tree').jstree(true).search(v);
+		$('#kegiatan_tahunan_3').jstree(true).search(v);
 		}, 250);
 	});
 	
@@ -178,7 +178,7 @@
 			$("#indikator_kegiatan").hide();
 			$("#rencana_aksi").hide();
 			$("#rencana_aksi_detail").hide();
-			jQuery('#keg_tahunan_3_tree').jstree().deselect_all(true);
+			jQuery('#kegiatan_tahunan_3').jstree().deselect_all(true);
 	}); 
 	
 	function load_rencana_aksi_detail(rencana_aksi_id){
