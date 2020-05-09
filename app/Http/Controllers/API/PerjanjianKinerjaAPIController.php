@@ -544,7 +544,7 @@ class PerjanjianKinerjaAPIController extends Controller {
 
             $data_x = json_encode($data_x);
 
-        
+            //return $data_x;
 
         $data_2 = Tujuan:: 
                     rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
@@ -624,9 +624,7 @@ class PerjanjianKinerjaAPIController extends Controller {
 
         $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon2', [   
                                                     'data'          => $data_x , 
-                                                    'data'          => $data , 
                                                     'data_2'        => $data_2 ,
-													'jm'            => $jm,
                                                     'total_anggaran'=> $dt_3->total_anggaran,
                                                     'tgl_dibuat'    => $Renja->tgl_dibuat,
                                                     'periode'       => Pustaka::tahun($Renja->periode->awal),

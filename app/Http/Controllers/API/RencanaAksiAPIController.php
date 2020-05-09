@@ -1161,15 +1161,7 @@ class RencanaAksiAPIController extends Controller {
                                         $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                        
                                     })
-                                    ->SELECT(       /* 'renja_indikator_kegiatan.id AS ind_kegiatan_id',
-                                                    'renja_indikator_kegiatan.label',
-                                                    'renja_indikator_kegiatan.target',
-                                                    'renja_indikator_kegiatan.satuan',
-                                                    'kegiatan_tahunan.cost AS cost',
-                                                    'renja_kegiatan.id AS kegiatan_id', */
-                                                    'kegiatan_tahunan.id AS kegiatan_tahunan_id'
-
-                                            ) 
+                                    ->SELECT( 'kegiatan_tahunan.id AS kegiatan_tahunan_id') 
                                     ->WHERE('renja_indikator_kegiatan.id', $request->indikator_kegiatan_id)
                                     ->first();
         
@@ -1249,15 +1241,7 @@ class RencanaAksiAPIController extends Controller {
                                         //ini karena Rencana Aksi nya eselon 4 harus milik kegiatan tahunan nya sewndiri
                                         $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id);
                                     })
-                                    ->SELECT(       /* 'renja_indikator_kegiatan.id AS ind_kegiatan_id',
-                                                    'renja_indikator_kegiatan.label',
-                                                    'renja_indikator_kegiatan.target',
-                                                    'renja_indikator_kegiatan.satuan',
-                                                    'kegiatan_tahunan.cost AS cost',
-                                                    'renja_kegiatan.id AS kegiatan_id', */
-                                                    'kegiatan_tahunan.id AS kegiatan_tahunan_id'
-
-                                            ) 
+                                    ->SELECT( 'kegiatan_tahunan.id AS kegiatan_tahunan_id' ) 
                                     ->WHERE('renja_indikator_kegiatan.id', $request->indikator_kegiatan_id)
                                     ->first();
         

@@ -27,14 +27,31 @@
         Swal.fire({
             title				: "Memproses data...",
             text				: "Harap tunggu",
-            imageUrl			: "{{asset('assets/images/loader/load_1.gif')}}",
+            imageUrl			: "{{asset('assets/images/loader/loading.gif')}}",
             showConfirmButton	: false,
             allowOutsideClick 	: false,
             closeOnClickOutside	: false,
-            closeOnEsc			: false
+			closeOnEsc			: false,
+			//backdrop			: false,
+			//background			: "#cbef9f",
+			
           })
-        }
+      }
 
+	  function show_loader_2(){
+        Swal.fire({
+            title				: "",
+            text				: "sedang memuat data",
+            imageUrl			: "{{asset('assets/images/loader/loading.gif')}}",
+            showConfirmButton	: false,
+            allowOutsideClick 	: false,
+            closeOnClickOutside	: false,
+			closeOnEsc			: false,
+			backdrop			: false,
+			background			: "#cbef9f",
+          })
+	  }
+	  
       /* Fungsi */
 	function formatRupiah(angka, prefix)
 	{

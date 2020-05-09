@@ -76,7 +76,7 @@
 		$('#renja_tree_kegiatan').jstree({
 			'core' : {
 				'data' : {
-					'url' : "{{ url("api_resource/skpd_pohon_kinerja") }}", 
+					'url' : "{{ url("api_resource/skpd_pohon_kinerja") }}",  
 					'data' : function (node) {
 						return { 	"id" 		: node.id ,
 									"data" 		: node.data,
@@ -116,9 +116,6 @@
 	function detail_table(id){
 
 		var tx = id.split('|');
-
-
-
 		switch ( tx[0] ){
 				case 'tujuan':
 							$(".div_tujuan_list").hide();

@@ -463,7 +463,12 @@ class PohonKinerjaAPIController extends Controller {
 
                     $program_list[] = $sub_data_program;
                 }
-                return $program_list ;
+                
+                if(!empty($program_list)) { 
+                    return $program_list;
+                }else{
+                    return "[{}]";
+                }
                 
             break;
             case 'program':

@@ -10,7 +10,7 @@
 	<div class="col-md-7">
 
 
-		<div class="box box-primary" id='skp_bulanan'>
+		<div class="box box-skp_bulanan" id='skp_bulanan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
 					List SKP Bulanan
@@ -42,7 +42,7 @@
 			</div>
 		</div>
 <!--====================== KEGIATAN BULANAN LIST =========================================== -->
-		<div class="box box-primary" id='kegiatan_bulanan' hidden>
+		<div class="box box-kegiatan_bulanan" id='kegiatan_bulanan' hidden>
 			<div class="box-header with-border">
 				<h1 class="box-title">
 					List Kegiatan Bulanan
@@ -228,8 +228,8 @@
   function load_kegiatan_bulanan(skp_bulanan_id){
 		var table_skp_bulanan = $('#kegiatan_bulanan_table').DataTable({
 				destroy			: true,
-				processing      : false,
-				serverSide      : true,
+				processing      : true,
+				serverSide      : false,
 				searching      	: false,
 				paging          : false,
 				order 			: [ 0 , 'asc' ],

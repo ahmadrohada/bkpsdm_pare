@@ -194,12 +194,14 @@ a.back_button {
   
   a.back_button:hover {
 	border: 1px solid #b7b5ba;
+	background-color:#e8e8e8;
 	color: #3600c2;
+	text-shadow: rgb(110, 110, 110) 0.08em 0.08em 0.1em;
   }
   
   .back_button {
-	  border: 1px solid #dedede;
-	  background-color:none;
+	  	border: 1px solid #9c9c9c;
+	  	background-color:none;
 		color: black;
 		border-radius: 50%;
   }

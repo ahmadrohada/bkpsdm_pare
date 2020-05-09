@@ -87,7 +87,7 @@
 									}else if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_sekda)){ //JIKA SEKDA
 										?>@include('admin.tables.skp_tahunan-kegiatan_sekda_detail')<?php
 									}else{ //normal kondisi
-										?>@include('admin.tables.skp_tahunan-kegiatan_1_detail')<?php
+										?>@include('admin.modules.tab.kegiatan_tahunan_1_detail')<?php
 									}
 									
 									break;

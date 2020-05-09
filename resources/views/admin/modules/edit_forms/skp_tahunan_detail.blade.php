@@ -152,20 +152,23 @@
 </div> 
 			
 
-
+<style type="text/css"> .sweet_container {background-color: rgba(0,0,100,0.5);} .sweet_containerImportant {background-color: rgba(0,0,100,0.5) !important;}</style> 
 
 
 <script type="text/javascript">
 
 
 function detail_show(){
-
+	
 	$.ajax({
 		url     	: '{{ url("api_resource/skp_tahunan_detail") }}',
 		type    	: "GET",
 		data    	: { skp_tahunan_id: {{ $skp->id }} },
+		beforeSend	: function ( xhr ) {
+				show_loader_2();
+        },
 		success		: function (data) {
-
+			
 				$("#date_created").html(data['date_created']);
 				$("#periode").html(data['periode']);
 				$("#masa_penilaian").html(data['masa_penilaian']);
@@ -184,7 +187,7 @@ function detail_show(){
 				$("#p_jabatan").html(data['p_jabatan']);
 				$("#p_eselon").html(data['p_eselon']);
 				$("#p_unit_kerja").html(data['p_unit_kerja']);
-
+				swal.close();
 			},
 			error: function (data) {
 				

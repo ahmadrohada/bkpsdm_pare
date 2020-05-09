@@ -1,4 +1,4 @@
-<!-- ========================== edit form URAIAN TUGAS JABATAN ESELON 2 , PADA SKP TAHUNAN  ======================================= -->
+<!-- ========================== edit form URAIAN TUGAS JABATAN ESELON 3 , PADA SKP TAHUNAN  ======================================= -->
 
 <div class="row">
 	<div class="col-md-5" >
@@ -81,7 +81,7 @@
 			<div class="box box-primary">
 				<div class="box-header with-border">
 					<h1 class="box-title">
-						List Rencana Aksi d
+						List Rencana Aksi
 					</h1>
 
 				</div>
