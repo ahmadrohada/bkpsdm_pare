@@ -76,13 +76,18 @@ class CapaianTahunanController extends Controller {
 
     public function PersonalCapaianTahunanEdit(Request $request)
 	{
-        
+        $user           = \Auth::user();
         $capaian_tahunan    = CapaianTahunan::WHERE('id', $request->capaian_tahunan_id)->first();
 
-        if ( $capaian_tahunan->send_to_atasan != '0' ){
-            return redirect('/personal/capaian-tahunan/'.$request->capaian_tahunan_id)->with('status', 'terkirim');
+        //hanya user ysb yang bisa buka skp tahunan tsb
+        if ( $capaian_tahunan->pegawai_id == $user->id_pegawai ){
+            if ( $capaian_tahunan->send_to_atasan != '0' ){
+                return redirect('/personal/capaian-tahunan/'.$request->capaian_tahunan_id)->with('status', 'terkirim');
+            }else{
+                return view('admin.pages.personal-capaian_tahunan_edit', ['capaian'=> $capaian_tahunan]);  
+            }
         }else{
-            return view('admin.pages.personal-capaian_tahunan_edit', ['capaian'=> $capaian_tahunan]);  
+            return redirect('/dashboard');
         }
 
           
@@ -91,15 +96,18 @@ class CapaianTahunanController extends Controller {
 
     public function PersonalCapaianTahunanRalat(Request $request)
 	{
-        
+        $user           = \Auth::user();
         $capaian_tahunan    = CapaianTahunan::WHERE('id', $request->capaian_tahunan_id)->first();
-
-        if ( $capaian_tahunan->status_approve != '2' ){
-            return redirect('/personal/capaian-tahunan/'.$request->capaian_tahunan_id)->with('status', 'terkirim');
+        //hanya user ysb yang bisa buka skp tahunan tsb
+        if ( $capaian_tahunan->pegawai_id == $user->id_pegawai ){
+            if ( $capaian_tahunan->status_approve != '2' ){
+                return redirect('/personal/capaian-tahunan/'.$request->capaian_tahunan_id)->with('status', 'terkirim');
+            }else{
+                return view('admin.pages.personal-capaian_tahunan_edit', ['capaian'=> $capaian_tahunan]);  
+            }
         }else{
-            return view('admin.pages.personal-capaian_tahunan_edit', ['capaian'=> $capaian_tahunan]);  
+            return redirect('/dashboard');
         }
-
           
 
     }

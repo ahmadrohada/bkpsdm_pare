@@ -59,12 +59,19 @@ class SKPTahunanController extends Controller {
 
     public function PersonalSKPTahunanDetail(Request $request)
 	{
+        $user           = \Auth::user();
         $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
 
-        if( ($skp_tahunan->status) == 0 ) {
-            return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
+        //hanya user ysb yang bisa buka skp tahunan tsb
+        if ( $skp_tahunan->pegawai_id == $user->id_pegawai ){
+
+            if( ($skp_tahunan->status) == 0 ) {
+                return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
+            }else{
+                return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan , 'role' =>'personal']);  
+            }
         }else{
-            return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan , 'role' =>'personal']);  
+            return redirect('/dashboard');
         }
 
         //APPROVAL MODE
@@ -81,15 +88,21 @@ class SKPTahunanController extends Controller {
 
     public function PersonalSKPTahunanEdit(Request $request)
 	{
-        
+        $user           = \Auth::user();
         $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
 
-        /* if(  ( ($skp_tahunan->send_to_atasan) == 1 ) &  ( ($skp_tahunan->status_approve) != 2 ) ){ */
-        if ( $skp_tahunan->status != '0' ){
-            return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id)->with('status', 'SKP close ');
+        //hanya user ysb yang bisa buka skp tahunan tsb
+        if ( $skp_tahunan->pegawai_id == $user->id_pegawai ){
+            if ( $skp_tahunan->status != '0' ){
+                return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id)->with('status', 'SKP close ');
+            }else{
+                return view('admin.pages.personal-skp_tahunan_edit', ['skp'=> $skp_tahunan,'role' =>'personal']);  
+            }
         }else{
-            return view('admin.pages.personal-skp_tahunan_edit', ['skp'=> $skp_tahunan,'role' =>'personal']);  
+            return redirect('/dashboard');
         }
+
+        
 
           
 
@@ -97,16 +110,21 @@ class SKPTahunanController extends Controller {
 
     public function PersonalSKPTahunanRalat(Request $request)
 	{
+        $user           = \Auth::user();
         $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
 
-        
+        //hanya user ysb yang bisa buka skp tahunan tsb
+        if ( $skp_tahunan->pegawai_id == $user->id_pegawai ){
 
-        if(  ( ($skp_tahunan->send_to_atasan) == 1 ) &  ( ($skp_tahunan->status_approve) != 2 ) ){
-            return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id)->with('status', 'SKP belum dikirm ke atasan');
-        }else if( ($skp_tahunan->send_to_atasan) == 0 ) {
-            return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
+            if(  ( ($skp_tahunan->send_to_atasan) == 1 ) &  ( ($skp_tahunan->status_approve) != 2 ) ){
+                return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id)->with('status', 'SKP belum dikirm ke atasan');
+            }else if( ($skp_tahunan->send_to_atasan) == 0 ) {
+                return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
+            }else{
+                return view('admin.pages.personal-skp_tahunan_ralat', ['skp'=> $skp_tahunan,'role' =>'personal']);  
+            }
         }else{
-            return view('admin.pages.personal-skp_tahunan_ralat', ['skp'=> $skp_tahunan,'role' =>'personal']);  
+            return redirect('/dashboard');
         }
     }
 

@@ -75,28 +75,38 @@ class CapaianBulananController extends Controller {
 
     public function PersonalCapaianBulananEdit(Request $request)
 	{
-        
+        $user           = \Auth::user();
         $capaian_bulanan    = CapaianBulanan::WHERE('id', $request->capaian_bulanan_id)->first();
 
-        if ( $capaian_bulanan->send_to_atasan != '0' ){
-            return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'terkirim');
-        }else{
-            return view('admin.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
-        }
+        //hanya user ysb yang bisa buka skp tahunan tsb
+        if ( $capaian_bulanan->pegawai_id == $user->id_pegawai ){
 
+            if ( $capaian_bulanan->send_to_atasan != '0' ){
+                return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'terkirim');
+            }else{
+                return view('admin.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
+            } 
+        }else{
+            return redirect('/dashboard');
+        }
           
 
     }
 
     public function PersonalCapaianBulananRalat(Request $request)
 	{
-        
+        $user               = \Auth::user();
         $capaian_bulanan    = CapaianBulanan::WHERE('id', $request->capaian_bulanan_id)->first();
 
-        if ( $capaian_bulanan->status_approve != '2' ){
-            return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'terkirim');
+        //hanya user ysb yang bisa buka skp tahunan tsb
+        if ( $capaian_bulanan->pegawai_id == $user->id_pegawai ){
+            if ( $capaian_bulanan->status_approve != '2' ){
+                return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'terkirim');
+            }else{
+                return view('admin.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
+            }
         }else{
-            return view('admin.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
+            return redirect('/dashboard');
         }
 
           

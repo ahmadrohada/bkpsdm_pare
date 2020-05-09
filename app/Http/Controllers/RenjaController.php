@@ -114,14 +114,21 @@ class RenjaController extends Controller {
 	{
          
         
-        $renja	= Renja::where('id', '=', $x->renja_id)->first();
+        $renja	        = Renja::where('id', '=', $x->renja_id)->first();
+        $user           = \Auth::user();
+
+        if ( $user->pegawai->JabatanAktif->id_skpd == $renja->skpd_id ){
+            if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) != 2 ) ){
+                return redirect('/skpd/pohon_kinerja/'.$x->renja_id)->with('status', 'Rencana Kerja dikirm ke atasan');
+            }else{
+                return view('admin.pages.skpd-pohon_kinerja_edit', ['renja'=> $renja,'h_box'=> 'box-info','role' =>'skpd']);    
+            }
+        }else{
+            return redirect('/dashboard');
+        }
        
 
-        if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) != 2 ) ){
-            return redirect('/skpd/pohon_kinerja/'.$x->renja_id)->with('status', 'Rencana Kerja dikirm ke atasan');
-        }else{
-            return view('admin.pages.skpd-pohon_kinerja_edit', ['renja'=> $renja,'h_box'=> 'box-info','role' =>'skpd']);    
-        }
+        
 
     }
 

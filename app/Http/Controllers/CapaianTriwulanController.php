@@ -45,17 +45,14 @@ class CapaianTriwulanController extends Controller {
 
     public function PersonalCapaianTriwulanEdit(Request $request)
 	{
-        
-            $capaian_triwulan   = CapaianTriwulan::WHERE('id', $request->capaian_triwulan_id)->first();
+        $user               = \Auth::user();
+        $capaian_triwulan   = CapaianTriwulan::WHERE('id', $request->capaian_triwulan_id)->first();
 
-       /*  if ( $capaian_bulanan->send_to_atasan != '0' ){
-            return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'terkirim');
+        if ( $capaian_triwulan->pegawai_id == $user->id_pegawai ){
+            return view('admin.pages.personal-capaian_triwulan_edit', ['capaian_triwulan'=> $capaian_triwulan]); 
         }else{
-            return view('admin.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
-        } */
-
-        return view('admin.pages.personal-capaian_triwulan_edit', ['capaian_triwulan'=> $capaian_triwulan]); 
-
+            return redirect('/dashboard');
+        }
     }
 
    
