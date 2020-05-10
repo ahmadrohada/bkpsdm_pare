@@ -1,8 +1,6 @@
 
-
 <div class="row">
 	<div class="col-md-5">
-
 			<div class="box box-primary ">
 				<div class="box-header with-border">
 					<h1 class="box-title">
@@ -10,12 +8,10 @@
 					</h1>
 					<div class="box-tools pull-right">
 						{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
-						
 					</div>
 				</div>
 				<div class="box-body" style="padding-left:0px; padding-right:0px;">
 					<input type='text' id = 'cari_skp_bulanan' class="form-control" placeholder="cari">
-						
 					<div class="table-responsive auto">
 						<div id="skp_bulanan_tree" class="demo"></div>
 					</div>
@@ -28,7 +24,7 @@
 	<div class="col-md-7">
 
 
-		<div class="box box-primary" id='skp_bulanan'>
+		<div class="box box-skp_bulanan" id='skp_bulanan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
 					List SKP Bulanan 
@@ -60,7 +56,7 @@
 			</div>
 		</div>
 <!--====================== KEGIATAN BULANAN LIST =========================================== -->
-		<div class="box box-primary" id='kegiatan_bulanan' hidden>
+		<div class="box box-kegiatan_bulanan" id='kegiatan_bulanan' hidden>
 			<div class="box-header with-border">
 				<h1 class="box-title">
 					List Kegiatan Bulanan
@@ -112,51 +108,33 @@
 	function refreshTreeKegBulanan(){
 		jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 		jQuery('#skp_bulanan_tree').jstree().deselect_all(true);
-		//$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
 	} 
 
-
-		$('#skp_bulanan_tree')
-		.jstree({
-            'core' : {
-				'data' : {
-						"url" 	: "{{ url("api_resource/skp_bulanan_tree4") }}",
-						"data" 	: function (node) {
-							return { "renja_id" : {!! $skp->Renja->id !!} , 
-                          "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
-													"skp_tahunan_id" : {!! $skp->id !!} };
-						},
-						"dataType" : "json"
-				},'check_callback' : true,
-						'themes' : {
-							'responsive' : false
-						}
-			},'contextmenu' : { 
-					'items' : context_menus
+	$('#skp_bulanan_tree').jstree({
+				'core' : {
+					'data' : {
+							"url" 	: "{{ url("api_resource/skp_bulanan_tree4") }}", 
+							'data' : function (node) {
+								return { 	"id" 		: node.id ,
+											"data" 		: node.data,
+											"renja_id" : {!! $skp->Renja->id !!} , 
+                          					"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+											"skp_tahunan_id" : {!! $skp->id !!} 
+										};
+									}
+							}
 				},
-				'plugins' : [ /* 'contextmenu', */  'types' ,'search'],
-				'types' : {
-					'skp_tahunan' 			: { /* options */ },
-					'skp_bulanan' 	  	: { /* options */ },
-			  	'rencana_aksi' 	  	: { /* options */ }
-				}
-			}).on('create_node.jstree', function (e, data) {
-			
-
-				modal_create_skp_bulanan();
-				
-		}).on("loaded.jstree", function(){
-			$('#skp_bulanan_tree').jstree('open_all');
-		}).on("changed.jstree", function (e, data) {
-			if(data.selected.length) {
-				//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
-				//alert(data.instance.get_node(data.selected[0]).id)
-				detail_table_2(data.instance.get_node(data.selected[0]).id);
-			}
-		});
+						'check_callback' : true,
+						'themes' : { 'responsive' : false },
+						'plugins': ['search'] ,
+				}).on("loaded.jstree", function(){
+					//$('#kegiatan_tahunan_kaban').jstree('open_all');
+				}).on("changed.jstree", function (e, data) {
+					if(data.selected.length) {
+						detail_table2((data.instance.get_node(data.selected[0]).data)+'|'+(data.instance.get_node(data.selected[0]).id));
+					}
+				});
 	
-
-
 
 	function context_menus(node){
 			var tree = $('#skp_bulanan_tree').jstree(true);
@@ -203,25 +181,22 @@
 
 
 	//========================== TABLE DETAIL KEGIATAN ==================================//
-	function detail_table_2(id){
-
+	function detail_table2(id){
 	var tx = id.split('|');
-
-
-
+	
 	switch ( tx[0] ){
-							case 'SKPTahunan':
-													$("#kegiatan_bulanan").hide();
-													$("#skp_bulanan").show();
-													load_skp_bulanan( tx[1]);
+							case 'skp_tahunan':
+										$("#kegiatan_bulanan").hide();
+										$("#skp_bulanan").show();
+										load_skp_bulanan( tx[1]);
 													
 										
 							break;
-							case 'SKPBulanan':
-												  //SHOW KEGIATAN BULANAN
-												  $("#skp_bulanan").hide();
-													$("#kegiatan_bulanan").show();
-													load_kegiatan_bulanan( tx[1]);
+							case 'skp_bulanan':
+										//SHOW KEGIATAN BULANAN
+										$("#skp_bulanan").hide();
+										$("#kegiatan_bulanan").show();
+										load_kegiatan_bulanan( tx[1]);
 													
 										
 							break;
