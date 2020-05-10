@@ -19,15 +19,15 @@
 			<thead>
 				<tr class="success">
 					<th rowspan="2">NO</th>
-					<th rowspan="2">PERIODE SKP TAHUNAN</th>
+					<th rowspan="2">PERIODE SKP</th>
 					<th rowspan="2">JABATAN</th>
 					<th colspan="4">CAPAIAN TRIWULAN</th>
 				</tr>
 				<tr>
-					<th>PERIODE I</th>
-					<th>PERIODE II</th>
-					<th>PERIODE III</th>
-					<th>PERIODE IV</th>
+					<th>TRIWULAN I</th>
+					<th>TRIWULAN II</th>
+					<th>TRIWULAN III</th>
+					<th>TRIWULAN IV</th>
 				</tr>
 			</thead>
 			
@@ -45,11 +45,13 @@
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
+				bInfo			: false,
+				bSort			: false,
 				//order 			: [ 0 , 'desc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,2,3,4,5,6 ] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,3,4,5,6 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
@@ -61,13 +63,13 @@
 				
 
 				columns	:[
-								{ data: 'capaian_id' , orderable: true,searchable:false,
+								{ data: 'capaian_id' , orderable: true,searchable:false,width:"35px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
 								
-								{ data: "periode_SKP_tahunan" ,  name:"periode_SKP_tahunan", orderable: true, searchable: true,
+								{ data: "periode_SKP_tahunan" ,  name:"periode_SKP_tahunan", orderable: true, searchable: true,width:"125px",
 									"render": function ( data, type, row ) {
 										return row.periode_SKP_tahunan;
 									}	
@@ -83,7 +85,7 @@
 
 									}	
 								},
-								{ data: "capaian_triwulan" , orderable: false,searchable:false,
+								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"120px",
 									"render": function ( data, type, row ) {
 
 										if(row.id_jenis_jabatan == 5 ){ //JIka JFT,nggak wajib lah
@@ -114,7 +116,7 @@
 
 									}
 								},
-								{ data: "capaian_triwulan" , orderable: false,searchable:false,
+								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"120px",
 									"render": function ( data, type, row ) {
 										if(row.id_jenis_jabatan == 5 ){ //JIka JFT,nggak wajib lah
 											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs " disabled style="width:75px;">Capaian</a></span>';
@@ -140,7 +142,7 @@
 
 									}
 								},
-								{ data: "capaian_triwulan" , orderable: false,searchable:false,
+								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"120px",
 									"render": function ( data, type, row ) {
 										if(row.id_jenis_jabatan == 5 ){ //JIka JFT,nggak wajib lah
 											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs " disabled style="width:75px;">Capaian</a></span>';
@@ -166,7 +168,7 @@
 
 									}
 								},
-								{ data: "capaian_triwulan" , orderable: false,searchable:false,
+								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"120px",
 									"render": function ( data, type, row ) {
 										if(row.id_jenis_jabatan == 5 ){ //JIka JFT,nggak wajib lah
 											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs " disabled style="width:75px;">Capaian</a></span>';

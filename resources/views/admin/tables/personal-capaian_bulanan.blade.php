@@ -35,9 +35,11 @@
 	$('#skp_bulanan_table').DataTable({
 				processing      : true,
 				serverSide      : true,
-				searching      	: false,
+				searching      	: true,
 				paging          : true,
-				order 			: [ 1, 'asc' ],
+				bInfo			: false,
+				bSort			: false,
+				//order 			: [ 1, 'desc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
@@ -51,15 +53,15 @@
 
 								},
 				
-
-				columns	:[
-								{ data: 'capaian_id' , orderable: true,searchable:false,
+				rowsGroup		: [1],
+				columns			:[
+								{ data: 'capaian_id',searchable:false,width:"35px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
 								
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true,
+								{ data: "periode" , name:"periode",searchable: true,width:"90px",
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
 											return "<span class='text-danger'>"+row.periode+"</span>";
@@ -69,7 +71,7 @@
 
 									}	
 								},
-								{ data: "bulan" ,  name:"skp_bulanan.bulan", orderable: true, searchable: true,
+								{ data: "bulan" ,  name:"skp_bulanan.bulan",searchable: true,width:"110px",
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
 											return "<span class='text-danger'>"+row.bulan+"</span>";
@@ -79,7 +81,7 @@
 
 									}	
 								},
-								{ data: "pelaksanaan" ,  name:"pelaksanaan", orderable: true, searchable: true,width:"250px",
+								{ data: "pelaksanaan" ,  name:"pelaksanaan",searchable: true,width:"220px",
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
 											return "<span class='text-danger'>"+row.pelaksanaan+"</span>";
@@ -89,7 +91,7 @@
 
 									}	
 								},
-								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true,
+								{ data: "jabatan" ,  name:"jabatan",searchable: true,
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
 											return "<span class='text-danger'>"+row.jabatan+"</span>";
@@ -100,7 +102,7 @@
 									}	
 								},
 								
-								{ data: "capaian" , orderable: false,searchable:false,width:"120px",
+								{ data: "capaian",searchable:false,width:"120px",
 										"render": function ( data, type, row ) {
 										if (row.remaining_time >= 0 ){ 
 											if (row.capaian >= 1 ){ 

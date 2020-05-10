@@ -1022,7 +1022,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	]);
 
 	Route::get('admin/pohon_kinerja', [
-		'as' 			=> '',
+		'as' 			=> 'admin-pohon_kinerja',
 		'uses' 			=> 'HomeAdminController@showPohonKinerja'
 	]);
 

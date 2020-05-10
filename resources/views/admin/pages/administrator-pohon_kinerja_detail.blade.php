@@ -6,10 +6,11 @@
 
 
 @section('content')
-	 <div class="content-wrapper">
+	 <div class="content-wrapper"> 
 	    <section class="content-header">
 
 			<h1>
+				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('admin-pohon_kinerja') }}"><span class="fa fa-angle-left"></span></a>
 				Pohon Kinerja {{ Pustaka::capital_string($renja->SKPD->skpd) }}
 			</h1>
    

@@ -219,6 +219,7 @@ class CapaianTriwulanAPIController extends Controller {
                                     'triwulan3.status AS capaian_triwulan3_status',
                                     'triwulan4.status AS capaian_triwulan4_status'
                                 )
+                        ->orderBy('periode.id','DESC')
                         ->get(); 
 
        

@@ -53,22 +53,20 @@
 									delay:3000
 
 								},
-				columns	:[
+				//rowsGroup		: [4],
+				columns			:[
 								{ data: 'id' , orderable: true,searchable:false,
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								
 								{ data: "periode" ,  name:"periode", orderable: true, searchable: true,
 									"render": function ( data, type, row ) {
 										if ( row.jabatan_status == 'active' ){
 											return  '<p class="text-success">'+row.periode+'</p>';
 										}else{
 											return  row.periode;
-											
 										}
-										
 									}
 								},
 								{ data: "tmt_jabatan" ,  name:"tmt_jabatan", orderable: true, searchable: true,
@@ -77,25 +75,17 @@
 											return  '<p class="text-success">'+row.tmt_jabatan+'</p>';
 										}else{
 											return  row.tmt_jabatan;
-											
 										}
-										
 									}
 								},
-
-
-
 								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true,
 									"render": function ( data, type, row ) {
 										if ( ( row.jabatan_status == 'active') & ( row.tahun_now == 1 ) ){
 											return  '<span class="btn btn-sm label-success">'+row.jabatan+'</span>';
 										}else{
 											return  row.jabatan;
-											
 										}
-										
 									}
-								
 								
 								},
 								{ data: "skpd" ,  name:"skpd", orderable: true, searchable: true},

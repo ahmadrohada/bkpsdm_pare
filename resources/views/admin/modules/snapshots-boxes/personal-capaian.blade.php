@@ -7,10 +7,10 @@
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
            </div>
     </div>
-	<div class="box-body">
+	<div class="box-body" style="padding:20px 20px 0px 20px;">
 		<div class="row">
 			
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-yellow capaian_bulanan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -27,7 +27,7 @@
 			</div>
 
 
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-aqua capaian_triwulan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -44,7 +44,7 @@
 			</div>
 
 
-				<div class="col-md-3 col-xs-6">
+				<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-red capaian_tahunan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>

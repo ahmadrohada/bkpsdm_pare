@@ -138,7 +138,7 @@ class CapaianBulananAPIController extends Controller {
 
     }
 
-    public function PersonalCapaianBulananList(Request $request)
+    public function PersonalCapaianBulananList(Request $request) 
     {
         $skp = SKPBulanan::
                         leftjoin('db_pare_2018.capaian_bulanan', function($join){
@@ -161,10 +161,10 @@ class CapaianBulananAPIController extends Controller {
             
                          )
                         ->WHERE('skp_bulanan.pegawai_id',$request->pegawai_id)
-                        ->orderBy('skp_bulanan.skp_tahunan_id','DESC')
-                        ->orderBy('skp_bulanan.bulan','ASC')
+                        ->orderBy('skp_bulanan.tgl_mulai','DESC')
+                        //->orderBy('skp_bulanan.bulan','ASC')
                         //->orderBy('skp_bulanan.skp_tahunan_id')
-                        ->get();//->sortByDesc('skp_bulanan.id');
+                        ->get();
 
        
            $datatables = Datatables::of($skp)
@@ -176,7 +176,7 @@ class CapaianBulananAPIController extends Controller {
                 return Pustaka::bulan($x->bulan);
             }) 
             ->addColumn('pelaksanaan', function ($x) {
-                $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
+                $masa_penilaian = Pustaka::tgl_form($x->tgl_mulai). ' &nbsp; s.d &nbsp; ' . Pustaka::tgl_form($x->tgl_selesai);
                 return   $masa_penilaian;
             }) 
             ->addColumn('jabatan', function ($x) {

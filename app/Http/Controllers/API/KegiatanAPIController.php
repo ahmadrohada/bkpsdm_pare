@@ -1298,10 +1298,7 @@ class KegiatanAPIController extends Controller {
                 }
                                        
             break;
-            case 'ind_kegiatan':
-                
-
-            break;
+        
             default:
             return "[{}]";
             break;

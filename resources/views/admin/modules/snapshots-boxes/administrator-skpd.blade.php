@@ -9,7 +9,7 @@
     </div>
 	<div class="box-body">
 		<div class="row">
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-aqua pegawai" style="cursor:pointer;" >
 					<div class="inner">
 						<h3>
@@ -25,7 +25,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6 hidden">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12 hidden">
 				<div class="small-box bg-red unit_kerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -40,7 +40,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-green struktur_organisasi" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -55,7 +55,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6 hidden">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12 hidden">
 				<div class="small-box bg-yellow rencana_kerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -72,7 +72,7 @@
 			</div>
 
 
-			<div class="col-md-3 col-xs-6 hidden">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12 hidden">
 				<div class="small-box bg-aqua perjanjian_kinerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -88,7 +88,7 @@
 				</div>
 			</div>
 
-			<div class="col-md-3 col-xs-6 hidden">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-red skp_tahunan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -105,7 +105,7 @@
 			</div>
 
 
-			<div class="col-md-3 col-xs-6" hidden>
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12" hidden>
 				<div class="small-box bg-green skp_bulanan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>

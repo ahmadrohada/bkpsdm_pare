@@ -1,12 +1,20 @@
 <div class="row">
-	<div class="col-md-5">
-
-		<div class="table-responsive">
-			<input type='text' id = 'cari' class="form-control" placeholder="cari">
-			<div id="kegiatan_tahunan_4"></div>
-			
-		</div>
-		
+	<div class="col-md-5" >
+		<div class="box box-kegiatan_tahunan ">
+			<div class="box-header with-border">
+				<h1 class="box-title">
+				</h1>
+				<div class="box-tools pull-right">
+					{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
+				</div>
+			</div>
+			<div class="box-body" style="padding-left:0px; padding-right:0px;">
+				<input type='text' id = 'cari' class="form-control" placeholder="cari">
+				<div class="table-responsive auto">
+					<div id="kegiatan_tahunan_4" class="demo"></div>
+				</div>
+			</div>
+		</div>	
 	</div>
 	<div class="col-md-7">
 		<div class="box box-kegiatan_tahunan" id='kegiatan_tahunan'>
