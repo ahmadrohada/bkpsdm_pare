@@ -12,6 +12,7 @@ use App\Models\IndikatorKegiatan;
 use App\Models\Kegiatan;
 use App\Models\Jabatan;
 use App\Models\Sasaran;
+use App\Models\RencanaAksi;
 
 use App\Helpers\Pustaka;
 
@@ -393,77 +394,83 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
 
         protected function kegiatan_triwulan_jfu($renja_id,$jabatan_id,$capaian_id,$search){
  
+            //KEGIATAN pelaksana
+            \DB::statement(\DB::raw('set @rownum=0')); 
+            $rencana_aksi = RencanaAksi::
+                            rightjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
+                            })
+                            // JOIN RENJA KEGIATAN
+                            ->leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join){
+                                $join   ->on('renja_kegiatan.id','=','kegiatan_tahunan.kegiatan_id');
+                                
+                            })
+                            // JOIN IND KEGIATAN
+                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS renja_indikator_kegiatan', function($join){
+                                $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
+                                
+                            })
+                            //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
+                            ->leftjoin('db_pare_2018.realisasi_indikator_kegiatan_triwulan AS realisasi_indikator', function($join) use ( $capaian_id ){
+                                $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
+                                $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
+                                
+                            })
+                            //LEFT JOIN TERHADAP REALISASI TAHUNAN tahunan
+                            ->leftjoin('db_pare_2018.realisasi_kegiatan_triwulan AS realisasi_kegiatan', function($join) use ( $capaian_id ){
+                                $join   ->on('realisasi_kegiatan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
+                                $join   ->WHERE('realisasi_kegiatan.capaian_id','=',  $capaian_id );
+                                
+                            })
+                            //LEFT JOIN KE CAPAIAN TAHUNAN
+                            ->leftjoin('db_pare_2018.capaian_triwulan AS capaian_triwulan', function($join){
+                                $join   ->on('capaian_triwulan.id','=','realisasi_kegiatan.capaian_id');
+                            })
+                            ->SELECT(   \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
+                                        'renja_kegiatan.id AS kegiatan_id',
+                                        'renja_kegiatan.id AS no',
+                                        'renja_kegiatan.jabatan_id',
+                                        'renja_kegiatan.label AS kegiatan_label',
+
+
+                                        'renja_indikator_kegiatan.id AS indikator_kegiatan_id',
+                                        'renja_indikator_kegiatan.label AS indikator_label',
+                                        'renja_indikator_kegiatan.target AS indikator_quantity',
+                                        'renja_indikator_kegiatan.satuan AS indikator_satuan',
+
+                                        'kegiatan_tahunan.id AS kegiatan_tahunan_id',
+                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label',
+                                        'kegiatan_tahunan.quality AS kegiatan_tahunan_quality',
+                                        'kegiatan_tahunan.cost AS kegiatan_tahunan_cost',
+                                        'kegiatan_tahunan.target_waktu AS kegiatan_tahunan_target_waktu',
+                                        'kegiatan_tahunan.angka_kredit AS kegiatan_tahunan_ak',
+
+                                        'realisasi_indikator.id AS realisasi_indikator_id',
+                                        'realisasi_indikator.target_quantity AS realisasi_indikator_target_quantity',
+                                        'realisasi_indikator.realisasi_quantity AS realisasi_indikator_realisasi_quantity',
+                                        'realisasi_indikator.satuan AS realisasi_indikator_satuan',
+        
+        
+                                        'realisasi_kegiatan.id AS realisasi_kegiatan_id',
+                                        'realisasi_kegiatan.target_cost AS realisasi_kegiatan_target_cost',
+                                        'realisasi_kegiatan.realisasi_cost AS realisasi_kegiatan_realisasi_cost',
+        
+                                        'capaian_triwulan.status' 
+
+                                    ) 
+                            ->WHERE('skp_tahunan_rencana_aksi.jabatan_id',$jabatan_id)
+                            ->WHERE('skp_tahunan_rencana_aksi.renja_id',$renja_id)
+                            ->groupBy('kegiatan_tahunan.id')
+                            ->get(); 
+          
+
     
-            \DB::statement(\DB::raw('set @rownum=0'));
-            $kegiatan = Kegiatan::WHERE('renja_kegiatan.renja_id', $renja_id )
-                                    ->WHERE('renja_kegiatan.jabatan_id','=',  $jabatan_id  )
-                                    //LEFT JOIN ke Kegiatan SKP TAHUNAN
-                                    ->JOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                        $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
-                                        
-                                    })
-                                    //LEFT JOIN ke INDIKATOR KEGIATAN
-                                    ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS renja_indikator_kegiatan', function($join){
-                                        $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
-                                        
-                                    })
-                                     //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
-                                     ->leftjoin('db_pare_2018.realisasi_indikator_kegiatan_triwulan AS realisasi_indikator', function($join) use ( $capaian_id ){
-                                        $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
-                                        $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
-                                        
-                                    })
-                                    //LEFT JOIN TERHADAP REALISASI TAHUNAN tahunan
-                                    ->leftjoin('db_pare_2018.realisasi_kegiatan_triwulan AS realisasi_kegiatan', function($join) use ( $capaian_id ){
-                                        $join   ->on('realisasi_kegiatan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
-                                        $join   ->WHERE('realisasi_kegiatan.capaian_id','=',  $capaian_id );
-                                        
-                                    })
-                                    //LEFT JOIN KE CAPAIAN TAHUNAN
-                                    ->leftjoin('db_pare_2018.capaian_triwulan AS capaian_triwulan', function($join){
-                                        $join   ->on('capaian_triwulan.id','=','realisasi_kegiatan.capaian_id');
-                                    })
-        
-                                    ->SELECT(   \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-                                                'renja_kegiatan.id AS kegiatan_id',
-                                                'renja_kegiatan.id AS no',
-                                                'renja_kegiatan.jabatan_id',
-                                                'renja_kegiatan.label AS kegiatan_label',
-        
-        
-                                                'renja_indikator_kegiatan.id AS indikator_kegiatan_id',
-                                                'renja_indikator_kegiatan.label AS indikator_label',
-                                                'renja_indikator_kegiatan.target AS indikator_quantity',
-                                                'renja_indikator_kegiatan.satuan AS indikator_satuan',
-        
-        
-                                                'kegiatan_tahunan.id AS kegiatan_tahunan_id',
-                                                'kegiatan_tahunan.label AS kegiatan_tahunan_label',
-                                                'kegiatan_tahunan.quality AS kegiatan_tahunan_quality',
-                                                'kegiatan_tahunan.cost AS kegiatan_tahunan_cost',
-                                                'kegiatan_tahunan.target_waktu AS kegiatan_tahunan_target_waktu',
-                                                'kegiatan_tahunan.angka_kredit AS kegiatan_tahunan_ak',
-        
-                                                'realisasi_indikator.id AS realisasi_indikator_id',
-                                                'realisasi_indikator.target_quantity AS realisasi_indikator_target_quantity',
-                                                'realisasi_indikator.realisasi_quantity AS realisasi_indikator_realisasi_quantity',
-                                                'realisasi_indikator.satuan AS realisasi_indikator_satuan',
-        
-        
-                                                'realisasi_kegiatan.id AS realisasi_kegiatan_id',
-                                                'realisasi_kegiatan.target_cost AS realisasi_kegiatan_target_cost',
-                                                'realisasi_kegiatan.realisasi_cost AS realisasi_kegiatan_realisasi_cost',
-        
-                                                'capaian_triwulan.status'
-                                               
-                                            ) 
-                                    
-                                    ->get();
+           
                         
-                $datatables = Datatables::of($kegiatan)
+                $datatables = Datatables::of($rencana_aksi)
                
                 ->addColumn('id', function ($x) {
-                    return $x->kegiatan_tahunan_id;
+                    return $x->rownum;
                 })->addColumn('capaian_tahunan_id', function ($x) use ($capaian_id) {
                     return $capaian_id;
                 })->addColumn('target_quantity', function ($x) {

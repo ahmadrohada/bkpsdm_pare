@@ -21,7 +21,7 @@
 				<table id="realisasi_kegiatan_triwulan_table" class="table table-striped table-hover" >
 					<thead>
 						<tr>
-							<th rowspan="2">ID</th>
+							<th rowspan="2">NO</th>
 							<th rowspan="2">KEGIATAN TAHUNAN</th>
 							<th rowspan="2">INDIKATOR</th>
 							<th colspan="2">TARGET</th>
@@ -89,12 +89,9 @@ table.dataTable tbody td {
 				bSort			: false,
 				rowsGroup		: [ 0,1,4,6 ],
 				columns			: [
-									{ data: 'id' ,width:"10px",
-										"render": function ( data, type, row ) {
-
-											return row.id;
-											
-											
+									{ data: 'id' , orderable: true,searchable:false,width:"30px",
+										"render": function ( data, type, row ,meta) {
+											return meta.row + meta.settings._iDisplayStart + 1 ;
 										}
 									},
 									{ data: "kegiatan_label", name:"kegiatan_label",
