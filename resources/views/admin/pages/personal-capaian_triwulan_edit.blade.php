@@ -37,6 +37,11 @@
 						@include('admin.modules.timeline.capaian_triwulan_status_edit')
 					@endif
 
+					<!-- 4. JFU -->
+					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
+						@include('admin.modules.timeline.capaian_triwulan_status_edit')
+					@endif
+
 					<!-- 5. JFT -->
 					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
 						@include('admin.modules.timeline.capaian_triwulan_status_edit')

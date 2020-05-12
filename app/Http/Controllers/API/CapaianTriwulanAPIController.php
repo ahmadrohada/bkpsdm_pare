@@ -47,94 +47,6 @@ class CapaianTriwulanAPIController extends Controller {
         
     }
 
-
-    /* public function CreateConfirm(Request $request)
-	{
-
-        //data yang harus diterima yaitu SKP tahunan ID dan trimester
-
-        //dapatkan tgl akhir bulan
-        $to     = Pustaka::tgl_akhir(Pustaka::tgl_sql($request->get('tgl_selesai')));
-
-        //mencari tgl 3 bulan lalu
-        $from   = Pustaka::triwulan_lalu($to);
-        
-       
-
-        $jm_skp    =   SKPBulanan::whereBetween('tgl_selesai',[$from,$to])
-                            ->WHERE('skp_bulanan.pegawai_id', $request->get('pegawai_id'))
-                            ->count();
-      
-        $capaian   =   CapaianBulanan::whereBetween('tgl_selesai',[$from,$to])
-                            ->WHERE('capaian_bulanan.pegawai_id',$request->get('pegawai_id'))
-                            ->SELECT('id AS capaian_bulanan_id',
-                                     'tgl_mulai',
-                                     'u_nama',
-                                     'u_jabatan_id',
-                                     'p_nama',
-                                     'p_jabatan_id'
-                                    )
-                            ->get();
-
-
-        $total_realisasi = 0 ; 
-        $ck_data = 0 ;
-        foreach ($capaian as $x) {
-                $ck_data++;
-                //realisasi
-                $jm_realisasi   = RealisasiKegiatanBulanan::WHERE('capaian_id',$x->capaian_bulanan_id)->count();
-                
-                ///$data_jabatan_id['jabatan']          = Pustaka::capital_string($x->jabatan);
-                $data_capaian_id['capaian_bulanan_id']  = $x->capaian_bulanan_id;
-                $data_capaian_id['periode_capaian']     = Pustaka::periode($x->tgl_mulai);
-
-                //tes 
-                $u_nama                                 = $x->u_nama;
-                $u_jabatan_id                           = $x->u_jabatan_id;
-                $p_nama                                 = $x->p_nama;
-                $p_jabatan_id                           = $x->p_jabatan_id;
-
-                $data_capaian_id['jm_realisasi']        = $jm_realisasi;
-                
-                $list_capaian[] = $data_capaian_id ;
-                $total_realisasi += $jm_realisasi;
-        }
-
-        if ( $ck_data > 0){
-            $list_capaian = $list_capaian;
-        }else{
-            $list_capaian   = 0;
-            $u_nama         = "";
-            $u_jabatan_id   = "";
-            $p_nama         = "";
-            $p_jabatan_id   = "";
-        }
-        
-
-        $data = array(
-                    'status'			            =>  'pass',
-                    'jm_cap_skp'                    =>  $ck_data." / ".$jm_skp,
-                    'periode_capaian_triwulan'      =>  Pustaka::periode($from)." s.d ".Pustaka::periode($to),
-                    'total_realisasi'               =>  $total_realisasi,
-
-
-                    'tgl_mulai_capaian'             => $from,
-                    'tgl_selesai_capaian'           => $to,
-                    
-                    'pegawai_id'                    => $request->get('pegawai_id'),
-                    'u_nama'                        => $u_nama,
-                    'u_jabatan_id'                  => $u_jabatan_id,
-                    'p_nama'                        => $p_nama,
-                    'p_jabatan_id'                  => $p_jabatan_id,
-
-
-                    'list_capaian'                  =>  $list_capaian
-                );
-
-        return $data;
-    } */
-
-
     public function CreateConfirm(Request $request)
 	{
 
@@ -330,6 +242,20 @@ class CapaianTriwulanAPIController extends Controller {
     
             if ( $capaian_triwulan->save()){
                 return \Response::make($capaian_triwulan->id, 200);
+                //add realisasi kegiatan bawahan
+
+
+
+
+
+
+
+
+
+
+
+
+                
             }else{
                 return \Response::make('error', 500);
             } 
