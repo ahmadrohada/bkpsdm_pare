@@ -74,30 +74,30 @@
 							<thead>
 								<tr>
 									<th rowspan="2" width="30px" >NO</th>
-									<th rowspan="2" width="220px">NAMA PEGAWAI</th>
+									<th rowspan="2" width="190px">NAMA PEGAWAI</th>
 									<th rowspan="2" width="">NIP</th>
 															
-									<th rowspan="2" width="80px" >TPP</th>
+									<th rowspan="2" width="100px" >TPP</th>
 															
 									<th colspan="5">KINERJA  ( {{ $kinerja }} % )</th>
 									<th colspan="4">KEHADIRAN  ( {{ $kehadiran }} % )</th>
 															
 															
 															
-									<th rowspan="2" width="80px">TOTAL</th>
+									<th rowspan="2" width="100px">TOTAL</th>
 															
 								</tr>
 								<tr>
-									<th width="80px"> TPP x {{ $kinerja }}%</th>
+									<th width="100px"> TPP x {{ $kinerja }}%</th>
 									<th width="50px"> CAP</th>
 									<th width="50px"> SKOR</th>
 									<th width="50px"> POT</th>
-									<th width="80px"> JM TPP</th>
+									<th width="100px"> JM TPP</th>
 														
-									<th width="80px"> TPP x {{ $kehadiran }}%</th>
+									<th width="100px"> TPP x {{ $kehadiran }}%</th>
 									<th width="50px"> SKOR</th>
 									<th width="50px"> POT </th>
-									<th width="80px"> JM TPP</th>
+									<th width="100px"> JM TPP</th>
 								</tr>
 							</thead>
 

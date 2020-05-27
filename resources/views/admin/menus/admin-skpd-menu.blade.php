@@ -1,6 +1,6 @@
 <li class="header"></li>
 
-<li>
+<li class="{{ (request()->segment(1) == 'skpd') ? 'active' : '' }}">
     {!! HTML::icon_link( "skpd/pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_home'), "<span>ADMIN SKPD</span>", array('title' => Lang::get('sidebar-nav.link_title_home') , 'data-toggle' => 'tooltip')) !!}
 </li>
 

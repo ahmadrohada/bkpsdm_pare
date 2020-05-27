@@ -10,7 +10,8 @@
 	    <section class="content-header">
 
 			<h1>
-				Edit Pohon Kinerja
+				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('skpd-pohon_kinerja') }}"><span class="fa fa-angle-left"></span></a>
+				Edit Pohon Kinerja 
 			</h1>
 
 				{!! Breadcrumbs::render($role.'-pohon_kinerja-edit') !!}

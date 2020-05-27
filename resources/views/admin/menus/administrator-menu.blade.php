@@ -1,6 +1,6 @@
 <li class="header"></li>
 
-<li>
+<li class="{{ (request()->segment(1) == 'admin') ? 'active' : '' }}">
     {!! HTML::icon_link( "admin/pegawai", 'fa '.Lang::get('sidebar-nav.link_icon_home'), "<span>ADMINISTRATOR</span>", array('title' => Lang::get('sidebar-nav.link_title_home') , 'data-toggle' => 'tooltip')) !!}
 </li>
 

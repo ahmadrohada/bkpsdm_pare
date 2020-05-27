@@ -1027,7 +1027,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	]);
 
 	Route::get('admin/skp_tahunan', [
-		'as' 			=> '',
+		'as' 			=> 'admin-skp_tahunan',
 		'uses' 			=> 'HomeAdminController@showSKPTahunan'
 	]);
 
@@ -1257,7 +1257,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	
 
 	Route::get('pohon_kinerja', [
-		'as' 			=> '',
+		'as' 			=> 'skpd-pohon_kinerja',
 		'uses' 			=> 'HomeSKPDController@showRenja'
 	]);
 
@@ -1275,7 +1275,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 
 
 	Route::get('skp_tahunan', [
-		'as' 			=> '',
+		'as' 			=> 'skpd-skp_tahunan',
 		'uses' 			=> 'HomeSKPDController@showSKPTahunan'
 	]);
 
@@ -1447,7 +1447,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	
 
 	Route::get('skp_tahunan', [
-		'as' 			=> 'personal-skp_tahunan',
+		'as' 			=> 'personal-skp_tahunan', 
 		'uses' 			=> 'HomePersonalController@showSKPTahunan'
 	]);
 	

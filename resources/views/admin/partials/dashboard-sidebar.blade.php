@@ -11,7 +11,7 @@
 
             
 
-            <li class="active">
+            <li class="{{ (request()->segment(1) == 'dashboard') ? 'active' : '' }}">
                 {!! HTML::icon_link( "/dashboard", 'fa '.Lang::get('sidebar-nav.link_icon_dashboard'), "<span>".Lang::get('sidebar-nav.link_title_dashboard')."</span>", array('title' => Lang::get('sidebar-nav.link_title_dashboard'))) !!}
             </li>
 
