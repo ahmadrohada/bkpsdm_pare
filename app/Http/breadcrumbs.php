@@ -16,7 +16,7 @@
 // DASHBOARD
 Breadcrumbs::register('dashboard', function($breadcrumbs)
 {
-	$breadcrumbs->push(Lang::get('sidebar-nav.link_title_dashboard'), '/public/dashboard', ['icon' => Lang::get('sidebar-nav.link_icon_dashboard')]);
+	//$breadcrumbs->push(Lang::get('sidebar-nav.link_title_dashboard'), '/public/dashboard', ['icon' => Lang::get('sidebar-nav.link_icon_dashboard')]);
 });
 
 // DASHBOARD > PROFILE

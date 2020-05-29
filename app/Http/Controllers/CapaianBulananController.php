@@ -48,7 +48,7 @@ class CapaianBulananController extends Controller {
         $pegawai   = $user->pegawai;       
         
 
-        return view('admin.pages.approval_request-capaian_bulanan', [
+        return view('pare_pns.pages.approval_request-capaian_bulanan', [
                'pegawai' 		        => $pegawai,
                'nama_skpd'     	        => 'x',
                'h_box'                  => 'box-teal',
@@ -65,7 +65,7 @@ class CapaianBulananController extends Controller {
         /* if ( $capaian_bulanan->status_approve != '0' ){
             return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'telah diterima/ditolak');
         }else{ */
-            return view('admin.pages.personal-capaian_bulanan_approvement', ['capaian'=> $capaian_bulanan]);
+            return view('pare_pns.pages.personal-capaian_bulanan_approvement', ['capaian'=> $capaian_bulanan]);
         //}
         
 
@@ -84,7 +84,7 @@ class CapaianBulananController extends Controller {
             if ( $capaian_bulanan->send_to_atasan != '0' ){
                 return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'terkirim');
             }else{
-                return view('admin.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
+                return view('pare_pns.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
             } 
         }else{
             return redirect('/dashboard');
@@ -103,7 +103,7 @@ class CapaianBulananController extends Controller {
             if ( $capaian_bulanan->status_approve != '2' ){
                 return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'terkirim');
             }else{
-                return view('admin.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
+                return view('pare_pns.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
             }
         }else{
             return redirect('/dashboard');
@@ -121,7 +121,7 @@ class CapaianBulananController extends Controller {
         if ( $capaian_bulanan->send_to_atasan == '0' ){
             return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id.'/edit')->with('status', 'terkirim');
         }else{
-            return view('admin.pages.personal-capaian_bulanan_detail', ['capaian'=> $capaian_bulanan]);  
+            return view('pare_pns.pages.personal-capaian_bulanan_detail', ['capaian'=> $capaian_bulanan]);  
         }
 
           

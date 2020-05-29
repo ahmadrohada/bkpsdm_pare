@@ -46,7 +46,7 @@ class JabatanController extends Controller
 
 		$user                  = \Auth::user();
 		
-        return view('admin.pages.show-peta-jabatan',compact('tree'),[
+        return view('pare_pns.pages.show-peta-jabatan',compact('tree'),[
         		'user' 		          => $user,
         	]);
     }
@@ -184,7 +184,7 @@ class JabatanController extends Controller
             $access = 'Administrator';
         }
         
-        return view('admin.pages.show-peta-jabatan',compact('tree'),[
+        return view('pare_pns.pages.show-peta-jabatan',compact('tree'),[
         		'user' 		          => $user,
 				'access' 	          => $access,
         	]);

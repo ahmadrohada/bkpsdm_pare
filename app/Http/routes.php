@@ -1280,7 +1280,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]);
 
 	Route::get('skp_bulanan', [
-		'as' 			=> '',
+		'as' 			=> 'skpd-skp_bulanan',
 		'uses' 			=> 'HomeSKPDController@showSKPBulanan'
 	]);
 
@@ -1593,7 +1593,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	//================================= SKP BULANAN      =====================================//
 	//=========================================================================================//
 	Route::get('skp_bulanan', [
-		'as' 			=> '',
+		'as' 			=> 'personal-skp_bulanan',
 		'uses' 			=> 'HomePersonalController@showSKPBulanan'
 	]);
 
@@ -1696,10 +1696,10 @@ Route::group(['prefix' => 'non_pns','middleware' => 'non_pns'], function () {
 // CATCH ALL ERROR FOR USERS AND NON USERS
 Route::any('/{page?}',function(){
 	if (Auth::check()) {
-		/* return view('admin.errors.users404'); */
+		/* return view('pare_pns.errors.users404'); */
 		$data['title'] = '404';
 		$data['name'] = 'Page not found';
-		return response()->view('admin.errors.users404',$data,404);
+		return response()->view('pare_pns.errors.users404',$data,404);
 		
 	} else {
 		return View('errors.404');

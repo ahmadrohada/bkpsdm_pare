@@ -229,7 +229,7 @@ class UserController extends Controller {
        
 
 
-		return view('admin.pages.administrator-detail-pegawai', [
+		return view('pare_pns.pages.administrator-detail-pegawai', [
                 'pegawai_id'            => $profil->id,
                 'user_id'               => $profil->user_id,
                 'nama'                  => $nama,
@@ -274,7 +274,7 @@ class UserController extends Controller {
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
         
 
-		return view('admin.pages.skpd-show-pegawai', [
+		return view('pare_pns.pages.skpd-show-pegawai', [
                 //'users' 		          => $users,
                 'skpd_id'                 => $skpd_id,
                 'nama_skpd'     	      => $this->nama_skpd($skpd_id),
@@ -375,7 +375,7 @@ class UserController extends Controller {
             $access = 'Administrator';
         }
 
-        return view('admin.pages.edit-users', [
+        return view('pare_pns.pages.edit-users', [
                 'users'             => $users,
                 'total_users'       => $total_users,
                 'user'              => $user,
@@ -452,7 +452,7 @@ class UserController extends Controller {
             $access = '3';
         }
 
-        return view('admin.pages.edit-user', [
+        return view('pare_pns.pages.edit-user', [
                 'user'                      => $user,
                 'access'                    => $access,
                 //'totaltwitterFollowers'     => $totaltwitterFollowers,
@@ -508,7 +508,7 @@ class UserController extends Controller {
      */
    /*  public function create()
     {
-        return view('admin.pages.create-user');
+        return view('pare_pns.pages.create-user');
     } */
 
     /**
@@ -591,7 +591,7 @@ class UserController extends Controller {
     	// GET USER
         $user = User::find($id);
 
-        return view('admin.pages.show-user')->withUser($user);
+        return view('pare_pns.pages.show-user')->withUser($user);
     } */
 
     /**

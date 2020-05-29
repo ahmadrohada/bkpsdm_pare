@@ -49,7 +49,7 @@ class CapaianTriwulanController extends Controller {
         $capaian_triwulan   = CapaianTriwulan::WHERE('id', $request->capaian_triwulan_id)->first();
 
         if ( $capaian_triwulan->pegawai_id == $user->id_pegawai ){
-            return view('admin.pages.personal-capaian_triwulan_edit', ['capaian_triwulan'=> $capaian_triwulan]); 
+            return view('pare_pns.pages.personal-capaian_triwulan_edit', ['capaian_triwulan'=> $capaian_triwulan]); 
         }else{
             return redirect('/dashboard');
         }

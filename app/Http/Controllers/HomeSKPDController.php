@@ -135,7 +135,7 @@ class HomeSKPDController extends Controller {
         $user                   = \Auth::user();
        //CARI id skpd nya
        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
-       return view('admin.pages.skpd-home-pegawai', [
+       return view('pare_pns.pages.skpd-home-pegawai', [
                
                'skpd_id'                => $skpd_id,
                'nama_skpd'     	        => $this->nama_skpd($skpd_id),
@@ -161,7 +161,7 @@ class HomeSKPDController extends Controller {
         
          
 
-		return view('admin.pages.skpd-home-unit_kerja', [
+		return view('pare_pns.pages.skpd-home-unit_kerja', [
                 'skpd_id'                => $skpd_id,
                 'nama_skpd'     	     => $this->nama_skpd($skpd_id),
                 'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
@@ -190,7 +190,7 @@ class HomeSKPDController extends Controller {
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
 
-        return view('admin.pages.skpd-home-renja', [
+        return view('pare_pns.pages.skpd-home-renja', [
                 'skpd_id'                => $skpd_id,
                 'nama_skpd'     	     => $this->nama_skpd($skpd_id),
                 'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
@@ -218,7 +218,7 @@ class HomeSKPDController extends Controller {
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
 
-        return view('admin.pages.skpd-home-peta_jabatan', [
+        return view('pare_pns.pages.skpd-home-peta_jabatan', [
                 'skpd_id'                => $skpd_id,
                 'nama_skpd'     	     => $this->nama_skpd($skpd_id),
                 'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
@@ -246,7 +246,7 @@ class HomeSKPDController extends Controller {
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
 
-        return view('admin.pages.skpd-home-struktur_organisasi', [
+        return view('pare_pns.pages.skpd-home-struktur_organisasi', [
                 'skpd_id'                => $skpd_id,
                 'nama_skpd'     	     => $this->nama_skpd($skpd_id),
                 'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
@@ -271,7 +271,7 @@ class HomeSKPDController extends Controller {
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
 
-        return view('admin.pages.skpd-home-perjanjian_kinerja', [
+        return view('pare_pns.pages.skpd-home-perjanjian_kinerja', [
                 'skpd_id'                => $skpd_id,
                 'nama_skpd'     	     => $this->nama_skpd($skpd_id),
                 'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
@@ -296,7 +296,7 @@ class HomeSKPDController extends Controller {
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
 
-        return view('admin.pages.skpd-home-skp_tahunan', [
+        return view('pare_pns.pages.skpd-home-skp_tahunan', [
                 'skpd_id'                => $skpd_id,
                 'nama_skpd'     	     => $this->nama_skpd($skpd_id),
                 'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
@@ -321,7 +321,7 @@ class HomeSKPDController extends Controller {
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
 
-        return view('admin.pages.skpd-home-skp_bulanan', [
+        return view('pare_pns.pages.skpd-home-skp_bulanan', [
                 'skpd_id'                => $skpd_id,
                 'nama_skpd'     	     => $this->nama_skpd($skpd_id),
                 'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
@@ -350,7 +350,7 @@ class HomeSKPDController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
         return view(
-            'admin.pages.skpd-home-tpp_report',
+            'pare_pns.pages.skpd-home-tpp_report',
             [
                 'skpd'                   => $pegawai->JabatanAktif->SKPD,
                 'pegawai_id'             => $pegawai->id,

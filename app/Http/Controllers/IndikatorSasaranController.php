@@ -76,7 +76,7 @@ class IndikatorSasaranController extends Controller {
 		$indikator_sasaran	= IndikatorSasaran::where('id', '=', $id)->firstOrFail();
        
 	   
-      return view('admin.pages.skpd-indikator-sasaran-detail', [
+      return view('pare_pns.pages.skpd-indikator-sasaran-detail', [
                 'nama_skpd'  		=> $skpd,
                 'id_skpd'    		=> $id_skpd_admin,
         		'user' 		 		=> $user,

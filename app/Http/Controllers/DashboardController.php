@@ -192,7 +192,7 @@ class DashboardController extends Controller
 
 
         if (isset($dashboard)) {
-            return view('admin.pages.home-' . $dashboard, [
+            return view('pare_pns.pages.home-' . $dashboard, [
 
                 'nama'                  => $nama,
                 'nip'                   => $nip,
@@ -246,7 +246,7 @@ class DashboardController extends Controller
             $dashboard = 'administrator';
         }
 
-        return view('admin.pages.home-' . $dashboard);
+        return view('pare_pns.pages.home-' . $dashboard);
     }
 
     //OLD LTE
@@ -258,7 +258,7 @@ class DashboardController extends Controller
      */
     public function showUserDashboard()
     {
-        return view('admin.layouts.dashboard');
+        return view('pare_pns.layouts.dashboard');
     }
 
     /**
@@ -268,7 +268,7 @@ class DashboardController extends Controller
      */
     public function showUserProfile()
     {
-        return view('admin.layouts.user-profile');
+        return view('pare_pns.layouts.user-profile');
     }
 
     public function show($id)

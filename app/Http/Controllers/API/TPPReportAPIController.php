@@ -519,7 +519,7 @@ class TPPReportAPIController extends Controller
         $profil  = Pegawai::WHERE('tb_pegawai.id',  $user_x->id_pegawai)->first();
         
 
-       $pdf = PDF::loadView('admin.printouts.cetak_tpp_report', [  'data'          =>  $data , 
+       $pdf = PDF::loadView('pare_pns.printouts.cetak_tpp_report', [  'data'          =>  $data , 
                                                         'nama_unit_kerja'          =>  $nama_unit_kerja,
                                                         'periode'       =>  strtoupper(Pustaka::bulan($p->bulan)) . "  " . Pustaka::tahun($p->tahun_periode), 
                                                         'kinerja'       =>  $p->kinerja,

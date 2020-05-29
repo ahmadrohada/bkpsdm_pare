@@ -155,7 +155,7 @@ class HomeAdminController extends Controller {
         $skpd       = Skpd::where('id_skpd', $id_skpd)->first()->unit_kerja;
        
        
-		return view('admin.pages.administrator-pegawai', [
+		return view('pare_pns.pages.administrator-pegawai', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
@@ -202,7 +202,7 @@ class HomeAdminController extends Controller {
        
        
 
-		return view('admin.pages.administrator-users', [
+		return view('pare_pns.pages.administrator-users', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
@@ -245,7 +245,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('admin.pages.administrator-skpd', [
+		return view('pare_pns.pages.administrator-skpd', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
@@ -289,7 +289,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('admin.pages.administrator-masa_pemerintahan', [
+		return view('pare_pns.pages.administrator-masa_pemerintahan', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
@@ -336,7 +336,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('admin.pages.administrator-pohon_kinerja', [
+		return view('pare_pns.pages.administrator-pohon_kinerja', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
@@ -378,7 +378,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('admin.pages.administrator-SKP_tahunan', [
+		return view('pare_pns.pages.administrator-SKP_tahunan', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
@@ -420,7 +420,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('admin.pages.administrator-TPP_report', [
+		return view('pare_pns.pages.administrator-TPP_report', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
@@ -451,7 +451,7 @@ class HomeAdminController extends Controller {
         
        
 
-		return view('admin.pages.administrator-skpd-pegawai', [
+		return view('pare_pns.pages.administrator-skpd-pegawai', [
                 //'users' 		          => $users,
                 'skpd_id'                 => $skpd_id,
                 'nama_skpd'     	      => $this->nama_skpd($skpd_id),
@@ -477,7 +477,7 @@ class HomeAdminController extends Controller {
         $skpd_id     = $request->skpd_id;
        
 
-        return view('admin.pages.administrator-skpd-struktur_organisasi', [
+        return view('pare_pns.pages.administrator-skpd-struktur_organisasi', [
                //'users' 		         => $users,
                'skpd_id'                => $skpd_id,
                'nama_skpd'     	        => $this->nama_skpd($skpd_id),
@@ -500,7 +500,7 @@ class HomeAdminController extends Controller {
 
        
 
-        return view('admin.pages.administrator-update_table', [
+        return view('pare_pns.pages.administrator-update_table', [
                'h_box'                  => 'box-success',
                
            ]

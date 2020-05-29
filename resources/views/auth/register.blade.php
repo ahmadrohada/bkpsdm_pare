@@ -3,7 +3,7 @@
 	$templateBodybodyClasses = 'login-page';
 ?>
 
-@extends('admin.layouts.auth')
+@extends('pare_pns.layouts.auth')
 
 @section('template_title')
 	Login
@@ -23,7 +23,7 @@
 			  	{{ Lang::get('auth.register') }}
 			</h4>
 
-	        @include('admin.forms.register-form')
+	        @include('pare_pns.forms.register-form')
 
 			<div class="row">
 				<div class="col-xs-12">

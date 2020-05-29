@@ -35,7 +35,7 @@ class ApprovalRequestController extends Controller {
         $pegawai   = $user->pegawai;       
         
 
-        return view('admin.pages.approval_request-renja', [
+        return view('pare_pns.pages.approval_request-renja', [
                'pegawai' 		        => $pegawai,
                'nama_skpd'     	        => 'x',
                'h_box'                  => 'box-teal',
@@ -52,7 +52,7 @@ class ApprovalRequestController extends Controller {
         $pegawai   = $user->pegawai;       
         
 
-        return view('admin.pages.approval_request-skp_tahunan', [
+        return view('pare_pns.pages.approval_request-skp_tahunan', [
                'pegawai' 		        => $pegawai,
                'nama_skpd'     	        => 'x',
                'h_box'                  => 'box-purple',

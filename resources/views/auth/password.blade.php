@@ -3,7 +3,7 @@
 	$templateBodybodyClasses = 'hold-transition lockscreen';
 ?>
 
-@extends('admin.layouts.auth')
+@extends('pare_pns.layouts.auth')
 
 @section('template_title')
 	Reset Password Request
@@ -19,13 +19,13 @@
             <a href="/">Lara<b>Admin</b>LTE</a>
         </div>
 
-        @include('admin.partials.return-messages')
+        @include('pare_pns.partials.return-messages')
 
         <div class="lockscreen-name margin-bottom-2">
             {{ Lang::get('titles.resetPword') }}
         </div>
 
-		@include('admin.forms.submit-pw-reset-form')
+		@include('pare_pns.forms.submit-pw-reset-form')
 
         <div class="lockscreen-footer text-center">
             <p class="text-muted text-center margin-bottom-2">- OR -</p>

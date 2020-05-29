@@ -62,7 +62,7 @@ class SasaranController extends Controller {
         $skpd       = Skpd::where('id_skpd', $this->id_skpd_admin() )->first()->unit_kerja;
        
 	   
-      return view('admin.pages.skpd-sasaran', [
+      return view('pare_pns.pages.skpd-sasaran', [
                 'nama_skpd'  => $skpd,
                 'id_skpd'    => $this->id_skpd_admin(),
         		'user' 		 => $user
@@ -83,7 +83,7 @@ class SasaranController extends Controller {
        
         
         
-        return view('admin.pages.skpd-perjanjian_kinerja_sasaran', [
+        return view('pare_pns.pages.skpd-perjanjian_kinerja_sasaran', [
                 'nama_skpd'         => $skpd,
                 'id_skpd'           => $this->id_skpd_admin(),
                 'perjanjian_kinerja'=> $perjanjian_kinerja,
@@ -155,7 +155,7 @@ class SasaranController extends Controller {
         $skpd       = Skpd::where('id_skpd', $this->id_skpd_admin() )->first()->unit_kerja;
        
 	   
-      return view('admin.pages.add-indikator-sasaran', [
+      return view('pare_pns.pages.add-indikator-sasaran', [
                 'nama_skpd'  => $skpd,
                 'id_skpd'    => $this->id_skpd_admin(),
         		'user' 		 => $user

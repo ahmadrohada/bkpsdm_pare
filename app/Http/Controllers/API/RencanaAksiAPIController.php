@@ -655,7 +655,7 @@ class RencanaAksiAPIController extends Controller {
             $excel->sheet('Tes', function($sheet) use($data) {
 
                 $skp_tahunan    = SKPTahunan::WHERE('id', 3874)->first(); 
-                $sheet->loadView('admin.tables.skp_tahunan-rencana_aksi_time_table_2',['skp'=> $skp_tahunan , 'role' =>'skpd']);
+                $sheet->loadView('pare_pns.tables.skp_tahunan-rencana_aksi_time_table_2',['skp'=> $skp_tahunan , 'role' =>'skpd']);
         
             });
         
@@ -663,7 +663,7 @@ class RencanaAksiAPIController extends Controller {
 
         
        //export to excel
-      /*  return view('admin.printouts.cetak_rencana_aksi-Eselon3', [
+      /*  return view('pare_pns.printouts.cetak_rencana_aksi-Eselon3', [
                     'data'          => $data,
                     'nama_file'     => "RencanaAksi".$request->get('jabatan_id'),
                     'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
@@ -672,7 +672,7 @@ class RencanaAksiAPIController extends Controller {
             ]
         );  */  
 
-        $pdf = PDF::loadView('admin.printouts.cetak_rencana_aksi-Eselon3', [   
+        $pdf = PDF::loadView('pare_pns.printouts.cetak_rencana_aksi-Eselon3', [   
                                                     'data'          => $data,
                                                     'waktu_cetak'   => Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
 

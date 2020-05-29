@@ -1,4 +1,4 @@
-@extends('admin.layouts.dashboard')
+@extends('pare_pns.layouts.dashboard')
 
 @section('template_title')
 	{{ (Auth::user()->name === Auth::user()->nip) ? ((is_null(Auth::user()->first_name)) ? (Auth::user()->name) : (Auth::user()->first_name)) : (((is_null(Auth::user()->name)) ? (Auth::user()->nip) : (Auth::user()->name))) }}'s Profile
@@ -31,19 +31,19 @@
 				{{-- LEFT/TOP COLUMN --}}
 			    <div class="col-lg-4 col-md-5 col-sm-6">
 			    	{{--
-			    	@include('admin.modules.profile-image-box-split-bg')
-			    	@include('admin.modules.profile-image-box')
+			    	@include('pare_pns.modules.profile-image-box-split-bg')
+			    	@include('pare_pns.modules.profile-image-box')
 			    	--}}
 
-					@include('admin.modules.profile-image-box-w-bg')
+					@include('pare_pns.modules.profile-image-box-w-bg')
 
-					@include('admin.modules.profile-basics')
+					@include('pare_pns.modules.profile-basics')
 
 			    </div>
 
 			    {{-- RIGHT/BOTTOM COLUMN --}}
 			    <div class="col-lg-8 col-md-7 col-sm-6">
-			    	@include('admin.modules.profile-about')
+			    	@include('pare_pns.modules.profile-about')
 			    </div>
 
 			</div>
@@ -54,6 +54,6 @@
 
 @section('template_scripts')
 
-	 @include('admin.structure.dashboard-scripts')
+	 @include('pare_pns.structure.dashboard-scripts')
 
 @endsection

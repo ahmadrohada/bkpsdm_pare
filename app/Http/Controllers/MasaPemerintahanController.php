@@ -56,7 +56,7 @@ class MasaPemerintahanController extends Controller {
        
 
 
-        return view('admin.pages.administrator-masa_pemerintahan', [
+        return view('pare_pns.pages.administrator-masa_pemerintahan', [
 
 
 

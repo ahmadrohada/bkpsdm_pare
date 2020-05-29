@@ -3,7 +3,7 @@
 	$templateBodybodyClasses = 'login-page tes';
 ?>
 
-@extends('admin.layouts.auth')
+@extends('pare_pns.layouts.auth')
 
 @section('template_title')
 	Login
@@ -67,12 +67,12 @@
 		</div>
 		<div class="login-box-body" style="border-radius: 3px !important; background-color:rgba(255,255, 255, 0.3);">
 
-			@include('admin.partials.return-messages')
+			@include('pare_pns.partials.return-messages')
 			<h4 class="login-box-msg">
 			  	{{-- Lang::get('auth.login') --}}
 			</h4>
 
-			@include('admin.forms.login-form')
+			@include('pare_pns.forms.login-form')
 
 			
 

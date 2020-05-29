@@ -23,7 +23,7 @@ class SkillsTagController extends Controller
     public function index()
     {
         $skillstags = SkillsTag::all();
-        return view('admin.pages.skills-tags')->withSkillstags($skillstags);
+        return view('pare_pns.pages.skills-tags')->withSkillstags($skillstags);
     }
 
     /**
@@ -38,7 +38,7 @@ class SkillsTagController extends Controller
             $data[$field] = old($field, $default);
         }
 
-        return view('admin.pages.skill-tag-create', $data);
+        return view('pare_pns.pages.skill-tag-create', $data);
     }
     /**
      * Store a newly created resource in storage.
@@ -70,7 +70,7 @@ class SkillsTagController extends Controller
         foreach (array_keys($this->fields) as $field) {
             $data[$field] = old($field, $skilltag->$field);
         }
-        return view('admin.pages.skill-tag-edit', $data);
+        return view('pare_pns.pages.skill-tag-edit', $data);
     }
 
     /**

@@ -1,4 +1,4 @@
-@extends('admin.layouts.dashboard')
+@extends('pare_pns.layouts.dashboard')
 
 @section('template_title')
 	Edit your profile
@@ -25,9 +25,9 @@
 				<div class="col-lg-8 col-md-12 col-sm-12">
 					@if ($user->profile)
 						@if (Auth::user()->id == $user->id)
-							@include('admin.partials.return-callouts')
-							@include('admin.modules.profile-image-box-split-bg')
-							@include('admin.forms.edit-profile-form')
+							@include('pare_pns.partials.return-callouts')
+							@include('pare_pns.modules.profile-image-box-split-bg')
+							@include('pare_pns.forms.edit-profile-form')
 						@else
 							<p>{{ Lang::get('profile.notYourProfile') }}</p>
 						@endif
@@ -39,21 +39,21 @@
 
 			    {{-- RIGHT/BOTTOM COLUMN --}}
 			    <div class="col-lg-4 col-md-12 col-sm-12">
-			    	@include('admin.modules.profile-basics')
-			    	@include('admin.modules.profile-about')
+			    	@include('pare_pns.modules.profile-basics')
+			    	@include('pare_pns.modules.profile-about')
 			    </div>
 
 			</div>
 	    </section>
 	</div>
 
-	@include('admin.modals.confirm-save')
+	@include('pare_pns.modals.confirm-save')
 
 @endsection
 
 @section('template_scripts')
 
-	@include('admin.structure.dashboard-scripts')
+	@include('pare_pns.structure.dashboard-scripts')
 	@include('scripts.address-lookup-g-api')
 	@include('scripts.modals')
 

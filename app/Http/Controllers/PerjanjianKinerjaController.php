@@ -77,7 +77,7 @@ class PerjanjianKinerjaController extends Controller {
        
 
 
-        return view('admin.pages.skpd-perjanjian_kinerja', [
+        return view('pare_pns.pages.skpd-perjanjian_kinerja', [
 
 
 
@@ -99,7 +99,7 @@ class PerjanjianKinerjaController extends Controller {
        
 
 
-        return view('admin.pages.skpd-edit_perjanjian_kinerja', [
+        return view('pare_pns.pages.skpd-edit_perjanjian_kinerja', [
                 'skpd'              => $this->skpd(),
                 'id_skpd'           => $this->skpd()->id,
                 'perjanjian_kinerja'=> $perjanjian_kinerja,
@@ -116,7 +116,7 @@ class PerjanjianKinerjaController extends Controller {
         $perjanjian_kinerja	 = PerjanjianKinerja::where('id', '=', $perjanjian_kinerja_id)->first();
         $sasaran             = SasaranPerjanjianKinerja::where('id', $sasaran_perjanjian_kinerja_id )->first();
       
-        return view('admin.pages.skpd-edit_perjanjian_kinerja', [
+        return view('pare_pns.pages.skpd-edit_perjanjian_kinerja', [
                 'skpd'              => $this->skpd(),
                 'id_skpd'           => $this->skpd()->id,
                 'perjanjian_kinerja'=> $perjanjian_kinerja,
@@ -135,7 +135,7 @@ class PerjanjianKinerjaController extends Controller {
         $indikator_sasaran =  IndikatorSasaran::where('id','=',$indikator_sasaran_id)->first();
       
 
-        return view('admin.pages.skpd-edit_perjanjian_kinerja', [
+        return view('pare_pns.pages.skpd-edit_perjanjian_kinerja', [
                 'skpd'              => $this->skpd(),
                 'id_skpd'           => $this->skpd()->id,
                 'perjanjian_kinerja'=> $perjanjian_kinerja,
@@ -157,7 +157,7 @@ class PerjanjianKinerjaController extends Controller {
         //== cari unit kerja atau bidang pada SKPD perjanjian kinerja
         $unit_kerja      = $perjanjian_kinerja->skpd->UnitKerja;
 
-        return view('admin.pages.skpd-edit_perjanjian_kinerja', [
+        return view('pare_pns.pages.skpd-edit_perjanjian_kinerja', [
                 'skpd'              => $this->skpd(),
                 'id_skpd'           => $this->skpd()->id,
                 'perjanjian_kinerja'=> $perjanjian_kinerja,
@@ -179,7 +179,7 @@ class PerjanjianKinerjaController extends Controller {
         //== cari unit kerja atau bidang pada SKPD perjanjian kinerja
         $unit_kerja      = $perjanjian_kinerja->skpd->UnitKerja;
 
-        return view('admin.pages.skpd-edit_perjanjian_kinerja', [
+        return view('pare_pns.pages.skpd-edit_perjanjian_kinerja', [
                 'skpd'              => $this->skpd(),
                 'id_skpd'           => $this->skpd()->id,
                 'perjanjian_kinerja'=> $perjanjian_kinerja,
@@ -199,7 +199,7 @@ class PerjanjianKinerjaController extends Controller {
         $kegiatan   =  Kegiatan::where('id','=',$kegiatan_id)->first();
         //$kegiatan            = $indikator_program->kegiatan;
 
-        return view('admin.pages.skpd-edit_perjanjian_kinerja', [
+        return view('pare_pns.pages.skpd-edit_perjanjian_kinerja', [
                 'skpd'              => $this->skpd(),
                 'id_skpd'           => $this->skpd()->id,
                 'perjanjian_kinerja'=> $perjanjian_kinerja,

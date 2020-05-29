@@ -56,7 +56,7 @@ class SKPBulananController extends Controller {
     public function SKPTahunanPersonal()
 	{
         
-       return view('admin.pages.personal-skp_tahunan', [
+       return view('pare_pns.pages.personal-skp_tahunan', [
                 'skpd'      => $this->skpd(),
         		'user' 		=> $this->user()
 	  			]
@@ -71,7 +71,7 @@ class SKPBulananController extends Controller {
         if( ($skp_bulanan->status) == 0 ) {
             return redirect('/personal/skp_bulanan/'.$request->skp_bulanan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
         }else{
-            return view('admin.pages.personal-skp_bulanan_detail', ['skp'=> $skp_bulanan]);  
+            return view('pare_pns.pages.personal-skp_bulanan_detail', ['skp'=> $skp_bulanan]);  
         }
     }
 
@@ -87,7 +87,7 @@ class SKPBulananController extends Controller {
 
 
 
-        return view('admin.pages.skpd-skp_bulanan', [
+        return view('pare_pns.pages.skpd-skp_bulanan', [
                     
                     'skp'                   => $skp_bulanan,
                     ]

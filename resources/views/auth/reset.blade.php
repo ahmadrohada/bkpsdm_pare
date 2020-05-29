@@ -3,7 +3,7 @@
 	$templateBodybodyClasses = 'login-page';
 ?>
 
-@extends('admin.layouts.auth')
+@extends('pare_pns.layouts.auth')
 
 @section('template_title')
 	Reset Password
@@ -23,7 +23,7 @@
 			  	{{ Lang::get('titles.resetPword') }}
 			</h4>
 
-			@include('admin.forms.reset-password-form')
+			@include('pare_pns.forms.reset-password-form')
 
       	</div>
     </div>

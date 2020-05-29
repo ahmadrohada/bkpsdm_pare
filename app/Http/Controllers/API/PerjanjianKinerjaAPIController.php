@@ -622,7 +622,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         $jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
         
 
-        $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon2', [   
+        $pdf = PDF::loadView('pare_pns.printouts.cetak_perjanjian_kinerja-Eselon2', [   
                                                     'data'          => $data_x , 
                                                     'data_2'        => $data_2 ,
                                                     'total_anggaran'=> $dt_3->total_anggaran,
@@ -788,7 +788,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         //$jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
         
 
-        $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon2', [   
+        $pdf = PDF::loadView('pare_pns.printouts.cetak_perjanjian_kinerja-Eselon2', [   
                                                     'data'          => $data_x , 
                                                     'data_2'        => $data_2 ,
                                                     'total_anggaran'=> $dt_3->total_anggaran,
@@ -1110,7 +1110,7 @@ class PerjanjianKinerjaAPIController extends Controller {
 
         //JAbatan
         $jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
-        $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon3', [   
+        $pdf = PDF::loadView('pare_pns.printouts.cetak_perjanjian_kinerja-Eselon3', [   
                                                     'data'          => $data_1 , 
                                                     'data_2'        => $data_2 ,
                                                     'total_anggaran'=> $total_anggaran,
@@ -1408,7 +1408,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         $jabatan = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
         
 
-       $pdf = PDF::loadView('admin.printouts.cetak_perjanjian_kinerja-Eselon4', [   
+       $pdf = PDF::loadView('pare_pns.printouts.cetak_perjanjian_kinerja-Eselon4', [   
                                                     'data'          => $data_1 , 
                                                     'data_2'        => $data_2 ,
                                                     'total_anggaran'=> $data_3->total_anggaran,

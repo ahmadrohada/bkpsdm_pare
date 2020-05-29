@@ -73,7 +73,7 @@ class HomePersonalController extends Controller {
         $pegawai   = $user->pegawai;       
         
 
-        return view('admin.pages.personal-home', [
+        return view('pare_pns.pages.personal-home', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
@@ -90,7 +90,7 @@ class HomePersonalController extends Controller {
         $pegawai   = $user->pegawai;       
         
 
-        return view('admin.pages.personal-home', [
+        return view('pare_pns.pages.personal-home', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
@@ -110,7 +110,7 @@ class HomePersonalController extends Controller {
         $pegawai   = $user->pegawai;       
         
 
-        return view('admin.pages.personal-home-skp', [
+        return view('pare_pns.pages.personal-home-skp', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
@@ -129,7 +129,7 @@ class HomePersonalController extends Controller {
         $pegawai   = $user->pegawai;       
         
 
-        return view('admin.pages.personal-home-skp_tahunan', [
+        return view('pare_pns.pages.personal-home-skp_tahunan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
@@ -149,7 +149,7 @@ class HomePersonalController extends Controller {
         $pegawai   = $user->pegawai;       
         
 
-        return view('admin.pages.personal-home-skp_bulanan', [
+        return view('pare_pns.pages.personal-home-skp_bulanan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                'jm_skp_tahunan'         => $this->jm_skp_tahunan($pegawai->id),
@@ -169,7 +169,7 @@ class HomePersonalController extends Controller {
         $pegawai   = $user->pegawai;       
         
 
-        return view('admin.pages.personal-home-capaian_bulanan', [
+        return view('pare_pns.pages.personal-home-capaian_bulanan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                'jm_capaian_bulanan'     => $this->jm_capaian_bulanan($pegawai->id),
@@ -189,7 +189,7 @@ class HomePersonalController extends Controller {
         $pegawai   = $user->pegawai;       
         
 
-        return view('admin.pages.personal-home-capaian_triwulan', [
+        return view('pare_pns.pages.personal-home-capaian_triwulan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                'jm_capaian_bulanan'     => $this->jm_capaian_bulanan($pegawai->id),
@@ -209,7 +209,7 @@ class HomePersonalController extends Controller {
         $pegawai   = $user->pegawai;       
         
 
-        return view('admin.pages.personal-home-capaian_tahunan', [
+        return view('pare_pns.pages.personal-home-capaian_tahunan', [
                'pegawai' 		        => $pegawai,
                'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
                'jm_capaian_bulanan'     => $this->jm_capaian_bulanan($pegawai->id),

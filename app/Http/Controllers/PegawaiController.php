@@ -253,7 +253,7 @@ class PegawaiController extends Controller {
 
        
         if ( $dt->user_id === null  ){
-            return view('admin.pages.administrator-add-pegawai', [
+            return view('pare_pns.pages.administrator-add-pegawai', [
                 'pegawai_id'            => $pegawai_id,
                 'nama'                  => $nama,
                 'nip'                   => $nip,
@@ -418,7 +418,7 @@ class PegawaiController extends Controller {
        
 
 
-		return view('admin.pages.administrator-detail-pegawai', [
+		return view('pare_pns.pages.administrator-detail-pegawai', [
                 'pegawai_id'            => $pegawai_id,
                 'user_id'               => $user_id,
                 'nama'                  => $nama,

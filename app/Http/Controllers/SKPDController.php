@@ -118,7 +118,7 @@ class SKPDController extends Controller {
         
        
 
-		return view('admin.pages.skpd-pegawai', [
+		return view('pare_pns.pages.skpd-pegawai', [
                 //'users' 		          => $users,
                 'skpd_id'                 => $skpd_id,
                 'nama_skpd'     	      => $this->nama_skpd($skpd_id),
@@ -142,7 +142,7 @@ class SKPDController extends Controller {
         
          
 
-		return view('admin.pages.skpd-unit_kerja', [
+		return view('pare_pns.pages.skpd-unit_kerja', [
                 //'users' 		          => $users,
                 'skpd_id'                 => $skpd_id,
                 'nama_skpd'     	      => $this->nama_skpd($skpd_id),
@@ -175,7 +175,7 @@ class SKPDController extends Controller {
         
 
 
-        return view('admin.pages.skpd-struktur_organisasi', [
+        return view('pare_pns.pages.skpd-struktur_organisasi', [
                //'users' 		         => $users,
                'skpd_id'                => $skpd_id,
                'nama_skpd'     	        => $this->nama_skpd($skpd_id),
@@ -197,7 +197,7 @@ class SKPDController extends Controller {
         $skpd_id     = $request->skpd_id;
        
 
-        return view('admin.pages.skpd-renja', [
+        return view('pare_pns.pages.skpd-renja', [
                //'users' 		         => $users,
                'skpd_id'                => $skpd_id,
                'nama_skpd'     	        => $this->nama_skpd($skpd_id),

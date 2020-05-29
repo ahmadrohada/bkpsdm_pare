@@ -61,7 +61,7 @@ class TPPReportController extends Controller
         
 
         return view(
-            'admin.pages.administrator-TPP_report_cetak',
+            'pare_pns.pages.administrator-TPP_report_cetak',
             [
                 'users'                   => $users,
                 'user'                    => $user,
@@ -86,7 +86,7 @@ class TPPReportController extends Controller
         $tpp_report = TPPreport::where('id', $request->tpp_report_id)->first();
 
         return view(
-            'admin.pages.skpd-tpp_report_edit',
+            'pare_pns.pages.skpd-tpp_report_edit',
             [
                 'skpd'                => $pegawai->JabatanAktif->SKPD,
                 'tpp_report'          => $tpp_report,
@@ -106,7 +106,7 @@ class TPPReportController extends Controller
         $tpp_report = TPPreport::where('id', $request->tpp_report_id)->first();
 
         return view(
-            'admin.pages.skpd-tpp_report_detail',
+            'pare_pns.pages.skpd-tpp_report_detail',
             [
                 'skpd'                => $pegawai->JabatanAktif->SKPD,
                 'tpp_report'          => $tpp_report,
@@ -127,7 +127,7 @@ class TPPReportController extends Controller
         $tpp_report = TPPreport::where('id', $request->tpp_report_id)->first();
 
         return view(
-            'admin.pages.administrator-tpp_report_detail',
+            'pare_pns.pages.administrator-tpp_report_detail',
             [
                 'tpp_report'          => $tpp_report,
                 'kinerja'             => $tpp_report->FormulaHitung->kinerja,

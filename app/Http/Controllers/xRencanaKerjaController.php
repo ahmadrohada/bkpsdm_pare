@@ -68,7 +68,7 @@ class RencanaKerjaController extends Controller
             $access = 'Administrator';
         }
         
-        return view('admin.pages.show-rencana-kerja',compact('tree'),[
+        return view('pare_pns.pages.show-rencana-kerja',compact('tree'),[
         		'user' 		          => $user,
 				'access' 	          => $access,
         	]);

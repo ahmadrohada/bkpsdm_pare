@@ -7,6 +7,6 @@
 return [
 
 	//'view' => 'breadcrumbs::bootstrap3',
-	'view' => 'admin.partials.breadcrumbs',
+	'view' => 'pare_pns.partials.breadcrumbs',
 
 ];

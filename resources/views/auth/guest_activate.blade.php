@@ -3,7 +3,7 @@
 	$templateBodybodyClasses = 'hold-transition lockscreen login-page';
 ?>
 
-@extends('admin.layouts.auth')
+@extends('pare_pns.layouts.auth')
 
 @section('template_title')
 	Activation Required
@@ -18,7 +18,7 @@
 			<a href="/">Lara<strong>Admin</strong>LTE</a>
 		</div>
 
-		@include('admin.partials.return-messages')
+		@include('pare_pns.partials.return-messages')
 
 		<div class="login-box-body">
 

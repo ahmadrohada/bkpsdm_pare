@@ -44,7 +44,7 @@ class SKPTahunanController extends Controller {
         $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
 
         
-        return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan,'role' =>'admin']);  
+        return view('pare_pns.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan,'role' =>'admin']);  
        
     }
 
@@ -53,7 +53,7 @@ class SKPTahunanController extends Controller {
         $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
 
         
-        return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan , 'role' =>'skpd']);  
+        return view('pare_pns.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan , 'role' =>'skpd']);  
        
     }
 
@@ -68,7 +68,7 @@ class SKPTahunanController extends Controller {
             if( ($skp_tahunan->status) == 0 ) {
                 return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
             }else{
-                return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan , 'role' =>'personal']);  
+                return view('pare_pns.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan , 'role' =>'personal']);  
             }
         }else{
             return redirect('/dashboard');
@@ -80,7 +80,7 @@ class SKPTahunanController extends Controller {
         }else if( ($skp_tahunan->send_to_atasan) == 0 ) {
             return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
         }else{
-            return view('admin.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan]);  
+            return view('pare_pns.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan]);  
         } */
     }
 
@@ -96,7 +96,7 @@ class SKPTahunanController extends Controller {
             if ( $skp_tahunan->status != '0' ){
                 return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id)->with('status', 'SKP close ');
             }else{
-                return view('admin.pages.personal-skp_tahunan_edit', ['skp'=> $skp_tahunan,'role' =>'personal']);  
+                return view('pare_pns.pages.personal-skp_tahunan_edit', ['skp'=> $skp_tahunan,'role' =>'personal']);  
             }
         }else{
             return redirect('/dashboard');
@@ -121,7 +121,7 @@ class SKPTahunanController extends Controller {
             }else if( ($skp_tahunan->send_to_atasan) == 0 ) {
                 return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
             }else{
-                return view('admin.pages.personal-skp_tahunan_ralat', ['skp'=> $skp_tahunan,'role' =>'personal']);  
+                return view('pare_pns.pages.personal-skp_tahunan_ralat', ['skp'=> $skp_tahunan,'role' =>'personal']);  
             }
         }else{
             return redirect('/dashboard');
@@ -135,7 +135,7 @@ class SKPTahunanController extends Controller {
 
         if(  $skp_tahunan->status_approve == '0'   ){
         
-            return view('admin.pages.personal-skp_tahunan_approval', ['skp'=> $skp_tahunan,'pegawai'=>\Auth::user()->pegawai]);  
+            return view('pare_pns.pages.personal-skp_tahunan_approval', ['skp'=> $skp_tahunan,'pegawai'=>\Auth::user()->pegawai]);  
         }else if(  $skp_tahunan->status_approve == '1'   ){
             return redirect('/personal/skp_tahunan/'.$skp_tahunan->id)->with('status', 'SKP Tahunan Sudah disetujui/ditolak');
         }else if(  $skp_tahunan->status_approve == '2'   ){

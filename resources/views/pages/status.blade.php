@@ -3,7 +3,7 @@
 	$templateBodybodyClasses = '';
 ?>
 
-@extends('admin.layouts.auth')
+@extends('pare_pns.layouts.auth')
 
 @section('template_title')
 	Errors

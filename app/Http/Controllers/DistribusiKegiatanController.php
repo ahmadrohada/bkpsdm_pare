@@ -86,7 +86,7 @@ class DistribusiKegiatanController extends Controller {
         $skpd       = Skpd::where('id_skpd', $id_skpd_admin)->first()->unit_kerja;
        
 	   
-      return view('admin.pages.distribusi-kegiatan', [
+      return view('pare_pns.pages.distribusi-kegiatan', [
 				'jenis_jabatan'            => 'All',
 				'modules'				   => 'data_table',
 				'nama_skpd' 			   => $skpd,
@@ -114,7 +114,7 @@ class DistribusiKegiatanController extends Controller {
         $skpd       = Skpd::where('id_skpd', $id_skpd_admin)->first()->unit_kerja;
        
 	   
-        return view('admin.pages.distribusi-kegiatan', [
+        return view('pare_pns.pages.distribusi-kegiatan', [
 				'jenis_jabatan'            => ucwords($jenis_jabatan),
 				'modules'				   => 'data_table',
 				'nama_skpd' 			   => $skpd,
@@ -416,7 +416,7 @@ class DistribusiKegiatanController extends Controller {
 		}
 
 	   
-        return view('admin.pages.distribusi-kegiatan', [
+        return view('pare_pns.pages.distribusi-kegiatan', [
 				'jenis_jabatan'            => $jenis_jabatan,
 				'id_jabatan'               => $id_jabatan,
 				'modules'				   => 'add_kegiatan',
