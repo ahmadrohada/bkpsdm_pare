@@ -19,7 +19,7 @@
       </section>
 	  
 	    <section class="content">
-		<div class="nav-tabs-custom" style="border: #e8e6e6 solid 1px;">
+		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="active detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan SKP Bulanan Eselon {!! $skp->PejabatYangDinilai->Eselon->eselon !!} / {!! $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>

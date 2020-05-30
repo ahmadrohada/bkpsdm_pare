@@ -541,8 +541,6 @@
   color:rgb(26, 35, 53);
   border: 1px solid rgb(167, 4, 153);
   font-size:13px; 
-  
-  
 }
 .jstree-tujuan:after{
   content:'Tujuan';
@@ -828,6 +826,39 @@
   margin:-5px 0 0 -5px;
 }
 
+.jstree-default .jstree-tugas_tambahan {
+  height:18px !important;
+  width:120px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(92, 204, 17);
+  font-size:13px;
+}
+
+.jstree-tugas_tambahan:after{
+  content:'Tugas Tambahan';
+  display:block;
+  margin:-5px 0 0 -5px;
+}
+
+.jstree-default .jstree-uraian_tugas_tambahan {
+  height:18px !important;
+  width:120px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(182, 219, 157);
+  font-size:13px;
+}
+
+.jstree-uraian_tugas_tambahan:after{
+  content:'Uraian';
+  display:block;
+  margin:-5px 0 0 -5px;
+}
 
 .jstree-default .jstree-people {
   background: url("32px.png") -263px -38px no-repeat;

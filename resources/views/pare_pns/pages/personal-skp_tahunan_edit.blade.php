@@ -215,7 +215,8 @@ $(document).ready(function() {
 		//alert(id);
 
 		if ( id == 'detail'){
-			detail_show();
+			$('html, body').animate({scrollTop:0}, 0);
+			LoadDetailTab();
 		}else if ( id == 'kegiatan_tahunan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
 			refreshTreeKegTahunan();
@@ -226,6 +227,10 @@ $(document).ready(function() {
 			rencana_aksi_time_table();
 		}else if ( id == 'perjanjian_kinerja_tab'){
 			load_perjanjian_kinerja();
+		}else if ( id == 'tugas_tambahan_tab'){
+			$('html, body').animate({scrollTop:0}, 0);
+			LoadTugasTambahanTab();
+			
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});

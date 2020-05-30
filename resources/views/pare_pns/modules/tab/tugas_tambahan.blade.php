@@ -2,7 +2,7 @@
 
 <div class="row">
 	<div class="col-md-5">
-		<div class="box box-sasaran ">
+		<div class="box box-tugas_tambahan ">
 			<div class="box-header with-border">
 				<h1 class="box-title">
 				</h1>
@@ -12,7 +12,7 @@
 			</div>
 			<div class="box-body" style="padding-left:0px; padding-right:0px;">
 				
-				<input type='text' id = 'cari' class="form-control" placeholder="cari">
+				<input type='text' id='tugas_tambahan_cari' class="form-control" placeholder="cari">
 				<div class="table-responsive auto">
 					<div id="tugas_tambahan_tree"></div>
 				</div>
@@ -24,116 +24,47 @@
 	</div>
 </div>
 
-@include('pare_pns.modals.tugas_tambahan')
      
-
-
-<link rel="stylesheet" href="{{asset('assets/jstree/themes/default/style.css')}}" />
-<script src="{{asset('assets/jstree/jstree.min.js')}}"></script>
-
 <script type="text/javascript">
 	
 
-	function refreshTreeKegTahunan(){
-		jQuery('#tugas_tambahan_tree').jstree(true).refresh(true);
-		jQuery('#tugas_tambahan_tree').jstree().deselect_all(true);
-		$('#tugas_tambahan_table').DataTable().ajax.reload(null,false);
-	} 
+	function LoadTugasTambahanTab(){
 
-	
-	$('#tugas_tambahan_tree').jstree({
+		$('#tugas_tambahan_tree').jstree({
             'core' : {
 						'data' : {
-						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_5") }}", //Eselon 5
+						"url" 	: "{{ url("api_resource/tugas_tambahan_tree") }}",
 						"data" 	: function (node) {
-							return  {   "renja_id" 			: {!! $skp->Renja->id !!} , 
-                                        "jabatan_id" 		: {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+							return  {  
+										"id" 				: node.id ,
+										"data" 				: node.data,
 										"skp_tahunan_id" 	: {!! $skp->id !!}
                                     };
 						},
-						"dataType" : "json" 
 				}
-				,'check_callback' : true,
-						'themes' : {
-							'responsive' : false
-						}
-			}
-			,'contextmenu' : {
-					'items' : context_add_kegiatan_tahunan
 				
-			}
-			,"plugins" : [ "search","state","contextmenu","types"/* ,"wholerow" */ ],
-			'types' : {
-					'JPT' 				: { "disabled" : true },
-					'sasaran' 			: { },
-					'kegiatan' 			: { }
-				}
-			
-		
-	    })
-		.on("loaded.jstree", function(){
+			},
+						'check_callback' : true,
+						'themes' : { 'responsive' : false },
+						'plugins': ['search'] ,
+	    }).on("loaded.jstree", function(){
 			//$('#tugas_tambahan_tree').jstree('open_all');
-		})
-		.on("changed.jstree", function (e, data) {
+		}).on("changed.jstree", function (e, data) {
 			if(data.selected.length) {
-
-				//detail_table(data.instance.get_node(data.selected[0]).id);
-
+				//detail_table_jabatan((data.instance.get_node(data.selected[0]).type)+'|'+(data.instance.get_node(data.selected[0]).id));
 			}
-	});
+		});
+
+		LoadTugasTambahanTable();
+	}
 	
-
-	/* function context_add_kegiatan_tahunan(node){
-		var items = {
-			"tambah": {
-				"label" 	: "Tambah Kegiatan",
-				"icon"    	: "faa-ring fa fa-plus animated",
-				"action" 	:function(obj){
-
-						var text = node.id;
-						var tx = text.split('|');
-						//alert('id_jabatan = '+tx[1]);
-					
-						if ( node.type === 'sasaran'){
-							//$('.modal-kegiatan_tahunan_jft, .sasaran_id').val(tx[1]);
-							//SHOW MODAL UNTUK ADD KEGIATAN TAHUNAN
-							//$('.modal-kegiatan_tahunan_jft').modal('show');
-							show_modal_kegiatan(tx[1]);
-						} 	
-				}
-			},                  
-			"delete": {
-				"label"	: "Hapus Kegiatan",
-				"icon" 	: "faa-ring fa fa-remove animated",
-				"action": function (obj) {
-
-					var text = node.id;
-					var tx = text.split('|');
-					unlink_kegiatan_kasubid(tx[1]);
-					
-				}
-			}
-		};
-
-
-		if (node.type == "sasaran") {
-			delete items.delete;
-		}else if (node.type == "default") {
-			delete items.tambah;
-			delete items.delete;
-		}else{
-			//delete items.delete;
-			//delete items.tambah;
-		}
-		return items;
-	} */
 	
 	var to = false;
-	$('#cari').keyup(function () {
+	$('#tugas_tambahan_cari').keyup(function () {
 		if(to) { clearTimeout(to); }
-		to = setTimeout(function () {
-		var v = $('#cari').val();
-		$('#tugas_tambahan_tree').jstree(true).search(v);
+			to = setTimeout(function () {
+			var v = $('#tugas_tambahan_cari').val();
+			$('#tugas_tambahan_tree').jstree(true).search(v);
 		}, 250);
 	});
 	

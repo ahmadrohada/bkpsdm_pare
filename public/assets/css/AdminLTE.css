@@ -1599,6 +1599,14 @@ a:focus {
 }
 
 
+.box.box-tugas_tambahan {
+  border-top-color: rgb(92, 204, 17);
+}
+
+.box.box-uraian_tugas_tambahan {
+  border-top-color: rgb(182, 219, 157);
+}
+
 
 .box.box-navy {
   border-top-color: #001f3f;
@@ -2576,11 +2584,13 @@ a:focus {
   text-transform: uppercase;
 }
 /* NAV TABS */
-.nav-tabs-custom {
+.nav-tabs-custom { 
   margin-bottom: 20px;
   background: #fff;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
+  border: #e8e6e6 solid 1px;
+  min-height: 460px;
 }
 .nav-tabs-custom > .nav-tabs {
   margin: 0;

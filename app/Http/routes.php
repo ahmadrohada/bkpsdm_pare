@@ -760,12 +760,14 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 
 	//=================================         TUGAS TAMBAHAN     = =====================================//
 	//=====================================================================================================//
-	Route::get('tugas_tambahan_list','API\TugasTambahanAPIController@TugasTambahanList');
-	Route::get('tugas_tambahan_detail','API\TugasTambahanAPIController@Detail');
+	Route::get('tugas_tambahan_tree','API\TugasTambahanAPIController@TugasTambahanTree');
 	
+	Route::get('tugas_tambahan_list','API\TugasTambahanAPIController@TugasTambahanList');
 	Route::post('simpan_tugas_tambahan','API\TugasTambahanAPIController@Store');
-	Route::post('update_tugas_tambahan','API\TugasTambahanAPIController@Update');
 	Route::post('hapus_tugas_tambahan','API\TugasTambahanAPIController@Destroy');
+	Route::get('tugas_tambahan_detail','API\TugasTambahanAPIController@Detail');
+	Route::post('update_tugas_tambahan','API\TugasTambahanAPIController@Update');
+	
 
 	//=================================         K R E A T I V I T A S     = ==================================//
 	//========================================================================================================//
