@@ -54,7 +54,7 @@
 						<label class="control-label">Anggaran Kegiatan :</label>
 						<div class="input-group input-group-sm">
 						<span class="input-group-addon">Rp.</span>
-						<input type="text" name="cost" id="cost" required class="form-control" placeholder="Anggaran kegiatan" maxlength="14" onkeypress='return angka(event)'>
+						<input type="text" name="cost" id="cost_tugas_tambahan" required class="form-control" placeholder="Anggaran kegiatan" maxlength="14" >
 						</div>
 						</div>
 					</div>
@@ -75,7 +75,7 @@
 
 <script type="text/javascript">
 
-	var tanpa_rupiah = document.getElementById('cost');
+	var tanpa_rupiah = document.getElementById('cost_tugas_tambahan');
 	tanpa_rupiah.addEventListener('keyup', function(e)
 	{
         tanpa_rupiah.value = formatRupiah(this.value);
