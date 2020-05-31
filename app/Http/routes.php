@@ -761,12 +761,21 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//=================================         TUGAS TAMBAHAN     = =====================================//
 	//=====================================================================================================//
 	Route::get('tugas_tambahan_tree','API\TugasTambahanAPIController@TugasTambahanTree');
+	Route::get('tugas_tambahan_select2','API\TugasTambahanAPIController@TugasTambahanSelect2');
 	
 	Route::get('tugas_tambahan_list','API\TugasTambahanAPIController@TugasTambahanList');
 	Route::post('simpan_tugas_tambahan','API\TugasTambahanAPIController@Store');
 	Route::post('hapus_tugas_tambahan','API\TugasTambahanAPIController@Destroy');
 	Route::get('tugas_tambahan_detail','API\TugasTambahanAPIController@Detail');
 	Route::post('update_tugas_tambahan','API\TugasTambahanAPIController@Update');
+
+	//======================      URAIAN    TUGAS TAMBAHAN   ==================================//
+	//==========================================================================================//
+	Route::get('uraian_tugas_tambahan_list','API\UraianTugasTambahanAPIController@UraianTugasTambahanList');
+	Route::post('simpan_uraian_tugas_tambahan','API\UraianTugasTambahanAPIController@Store');
+	Route::get('uraian_tugas_tambahan_detail','API\UraianTugasTambahanAPIController@Detail');
+	Route::post('update_uraian_tugas_tambahan','API\UraianTugasTambahanAPIController@Update');
+	Route::post('hapus_uraian_tugas_tambahan','API\UraianTugasTambahanAPIController@Destroy');
 	
 
 	//=================================         K R E A T I V I T A S     = ==================================//

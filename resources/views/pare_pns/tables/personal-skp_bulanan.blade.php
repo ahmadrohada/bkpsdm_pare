@@ -65,7 +65,7 @@
 										
 
 										if ( row.status == 0 ){
-											return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs" disabled><i class="fa fa-eye" ></i></a></span>'
+											return  '<span style="margin:2px;" ><a class="btn btn-success btn-xs edit_skp_bulanan"  data-id="'+row.skp_bulanan_id+'"><i class="fa fa-pencil" ></i></a></span>'
 													
 													+'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_skp_bulanan"  data-id="'+row.skp_bulanan_id+'" data-periode="'+row.periode+'" ><i class="fa fa-close " ></i></a></span>';
 										
@@ -89,19 +89,11 @@
 
 	$(document).on('click','.edit_skp_bulanan',function(e){
 		var skp_bulanan_id = $(this).data('id') ;
-		//alert(skp_bulanan_id);
-
-
-
 		window.location.assign("skp_bulanan/"+skp_bulanan_id+"/edit");
 	});
 
 	$(document).on('click','.lihat_skp_bulanan',function(e){
 		var skp_bulanan_id = $(this).data('id') ;
-		//alert(skp_bulanan_id);
-
-
-
 		window.location.assign("skp_bulanan/"+skp_bulanan_id);
 	});
 

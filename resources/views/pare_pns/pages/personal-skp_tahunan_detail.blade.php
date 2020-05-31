@@ -13,7 +13,7 @@
 					$middleware = request()->segment(1); 
 				?>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route($middleware.'-skp_tahunan') }}"><span class="fa fa-angle-left"></span></a>
-				SKP Tahunan   {!!  request()->is('admin/skp_tahunan*') ? 'admin' : 'personal' !!} {!! $skp->PejabatYangDinilai->Eselon->eselon !!}
+				SKP Tahunan  {!! $skp->PejabatYangDinilai->Eselon->eselon !!}
 			</h1>
 				{!! Breadcrumbs::render($role.'-skp_tahunan_detail') !!}
       </section>
@@ -229,7 +229,7 @@ $(document).ready(function() {
 			status_show();
 		}else if ( id == 'detail'){
 			$('html, body').animate({scrollTop:0}, 0);
-			detail_show();
+			LoadDetailTab();
 		}else if ( id == 'rencana_aksi_tab'){
 			rencana_aksi_time_table();
 		}else if ( id == 'perjanjian_kinerja_tab'){

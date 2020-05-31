@@ -19,7 +19,22 @@ use Input;
 class TugasTambahanAPIController extends Controller {
 
 
-   
+    public function TugasTambahanSelect2(Request $request)
+    {
+            
+        $tugas_tambahan = TugasTambahan::SELECT('id','label')
+                        ->WHERE('skp_tahunan_tugas_tambahan.skp_tahunan_id', $request->skp_tahunan_id )
+                        ->get(); 
+
+        $tugas_tambahan_list = [];
+            foreach ($tugas_tambahan as $x) {
+                $tugas_tambahan_list[] = array(
+                        'text'          => $x->label,
+                        'id'            => $x->id,
+                );
+            }
+        return $tugas_tambahan_list;
+    }
 
 
     public function TugasTambahanTree(Request $request)

@@ -72,8 +72,10 @@ $(document).ready(function() {
 								{ className: "text-right", targets: [ 6 ] }
 							  ],
 			ajax			: {
-								url	: '',
-								data: { skp_tahunan_id: {!! $skp->id !!} },
+								url		: '',
+								data	: { skp_tahunan_id: {!! $skp->id !!} },
+								cache 	: false,
+								quietMillis: 500,
 							  },
 			columns			: [
 								{ data: 'rownum', orderable: true, searchable: false ,width:"30px"},
