@@ -219,7 +219,7 @@ $(document).ready(function() {
 			LoadDetailTab();
 		}else if ( id == 'kegiatan_tahunan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
-			refreshTreeKegTahunan();
+			refreshTreeKegTahunan(); 
 		}else if ( id == 'skp_bulanan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
 			refreshTreeKegBulanan();

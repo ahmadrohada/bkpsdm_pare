@@ -23,7 +23,7 @@
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="active detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan SKP Bulanan Eselon {!! $skp->PejabatYangDinilai->Eselon->eselon !!} / {!! $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
-				<li class="tugas_tambahan_tab"><a href="#tugas_tambahan_tab" data-toggle="tab" >Tugas Tambahan</a></li>
+				<li class="uraian_tugas_tambahan_tab"><a href="#uraian_tugas_tambahan_tab" data-toggle="tab" >Uraian Tugas Tambahan</a></li>
 			</ul>
 
 
@@ -54,7 +54,7 @@
 						@include('pare_pns.tables.skp_bulanan-kegiatan_4_detail')		
 					@endif
 				</div>
-				<div class="tab-pane" id="tugas_tambahan_tab">
+				<div class="tab-pane" id="uraian_tugas_tambahan_tab">
 					@include('pare_pns.tables.skp_bulanan-uraian_tugas_tambahan')
 				</div>
 
@@ -88,6 +88,8 @@ $(document).ready(function() {
 			load_kegiatan_bulanan();
 		}else if ( id == 'detail'){
 			detail_show();
+		}else if ( id == 'uraian_tugas_tambahan_tab'){
+			LoadUraianTugasTambahanTable();
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});

@@ -11,7 +11,9 @@
 	</div>
 	<div class="box-body table-responsive" style="min-height:330px;">
 		<div class="toolbar"> 
-			<span><a class="btn btn-info btn-sm add_tugas_tambahan" ><i class="fa fa-plus" ></i> Add Tugas Tambahan</a></span>
+			@if ( request()->segment(4) == 'edit' )
+				<span><a class="btn btn-info btn-sm add_tugas_tambahan" ><i class="fa fa-plus" ></i> Add Tugas Tambahan</a></span>
+			@endif
 		</div>
 
 		<table id="tugas_tambahan_table" class="table table-striped table-hover" >
@@ -33,6 +35,7 @@
 	</div>
 </div>
 
+
 @include('pare_pns.modals.skp_tahunan_tugas_tambahan')
 
 <script type="text/javascript">
@@ -50,7 +53,10 @@
 					columnDefs		: [
 										{ className: "text-center", targets: [ 0,2,3,4 ] },
 										/* { className: "text-right", targets: [ 6 ] }, */
-										{ "orderable": false, targets: [ 0,1,2,3,4,5 ]  }
+										{ "orderable": false, targets: [ 0,1,2,3,4,5 ]  },
+										@if ( request()->segment(4) != 'edit' )
+											{ "visible": false, "targets": [5]}
+										@endif
 									],
 					ajax			: {
 										url	: '{{ url("api_resource/tugas_tambahan_list") }}',

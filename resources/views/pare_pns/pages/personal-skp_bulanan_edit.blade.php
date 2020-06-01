@@ -55,7 +55,7 @@
 					@endif
 				</div>
 				<div class="tab-pane" id="uraian_tugas_tambahan_tab">
-					@include('pare_pns.modules.tab.uraian_tugas_tambahan')
+					@include('pare_pns.tables.skp_bulanan-uraian_tugas_tambahan')
 				</div>
 
 			</div>			
@@ -89,7 +89,7 @@ $(document).ready(function() {
 		}else if ( id == 'detail'){
 			detail_show();
 		}else if ( id == 'uraian_tugas_tambahan_tab'){
-			LoadUraianTugasTambahanTab();
+			LoadUraianTugasTambahanTable();
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});

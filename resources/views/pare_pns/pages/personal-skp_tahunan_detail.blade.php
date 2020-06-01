@@ -64,6 +64,7 @@
 					}
 				?>
 				<li class="skp_bulanan_tab"><a href="#skp_bulanan_tab" data-toggle="tab">SKP Bulanan</a></li>
+				<li class="tugas_tambahan_tab"><a href="#tugas_tambahan_tab" data-toggle="tab" >Tugas Tambahan</a></li>
 			</ul>
 
  
@@ -191,6 +192,9 @@
 					?>
 					
 				</div>
+				<div class="tab-pane" id="tugas_tambahan_tab">
+					@include('pare_pns.modules.tab.tugas_tambahan')
+				</div>
 
 			</div>			
 		</div>
@@ -216,7 +220,7 @@ $(document).ready(function() {
 	// store the currently selected tab in the hash value
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
 		var id = $(e.target).attr("href").substr(1);
-		window.location.hash = id;
+		window.location.hash = id; 
 		//alert(id);
 
 		if ( id == 'kegiatan_tahunan_tab'){
@@ -234,6 +238,10 @@ $(document).ready(function() {
 			rencana_aksi_time_table();
 		}else if ( id == 'perjanjian_kinerja_tab'){
 			load_perjanjian_kinerja();
+		}else if ( id == 'tugas_tambahan_tab'){
+			$('html, body').animate({scrollTop:0}, 0);
+			LoadTugasTambahanTab();
+			
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});

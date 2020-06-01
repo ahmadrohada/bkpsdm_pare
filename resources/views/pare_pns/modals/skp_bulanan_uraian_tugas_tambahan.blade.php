@@ -9,8 +9,8 @@
             </div> 
 
             <form  id="uraian_tugas_tambahan_form" method="POST" action="">
-			<input type="text"  name="skp_bulanan_id" value="{!! $skp->id !!}">
-			<input type="text"  name="uraian_tugas_tambahan_id" value="">
+			<input type="hidden"  name="skp_bulanan_id" value="{!! $skp->id !!}">
+			<input type="hidden"  name="uraian_tugas_tambahan_id" value="">
 			
  			<div class="modal-body">
 					<div class="row">
@@ -59,7 +59,7 @@
 		ajax: {
 			url: '{{ url("api_resource/tugas_tambahan_select2") }}',
 			dataType: 'json',
-			quietMillis: 500,
+			quietMillis: 100,
 			data: function(params) {
 				var queryParameters = {
 					sasaran				: params.term,
