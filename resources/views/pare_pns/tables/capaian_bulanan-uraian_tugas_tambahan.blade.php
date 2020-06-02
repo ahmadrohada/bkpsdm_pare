@@ -56,7 +56,7 @@
 													"skp_bulanan_id" : {!! $capaian->skp_bulanan_id !!}
 												  },
 										cache : false,
-										deferLoading: 57000
+										quietMillis: 500,
 									},
 					rowsGroup		: [2],
 					columns			: [
