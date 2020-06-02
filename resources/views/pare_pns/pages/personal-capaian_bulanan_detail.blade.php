@@ -21,12 +21,12 @@
 				<li class="status"><a href="#status" data-toggle="tab">Status </a></li>
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan Bulanan Eselon {!! $capaian->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
-				
+				<li class="uraian_tugas_tambahan_tab"><a href="#uraian_tugas_tambahan_tab" data-toggle="tab">Uraian Tugas Tambahan</a></li>
 			</ul>
 
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
-				<div class="active tab-pane" id="status">
+				<div class="active tab-pane fade" id="status">
 					<?php
 						$id_jabatan_irban = ['143','144','145','146'];
 						$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
@@ -67,11 +67,11 @@
 					?>
 					
 				</div>
-				<div class="tab-pane" id="detail">
+				<div class="tab-pane fade" id="detail">
 					@include('pare_pns.modules.detail_forms.capaian_bulanan_detail')			
 				</div>
 								
-				<div class=" tab-pane" id="kegiatan_bulanan_tab">
+				<div class=" tab-pane fade" id="kegiatan_bulanan_tab">
 					<?php
 						switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': // 1. Eselon II 
@@ -85,13 +85,13 @@
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_3_detail')<?php
 									}else{
-										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2_detail')<?php
+										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2')<?php
 									}
 									
 									break;
 							case '3':  //3. ESL IV
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
-										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2_detail')<?php
+										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2')<?php
 									}else{
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_3_detail')<?php
 									}
@@ -106,6 +106,9 @@
 						}
 					?>
 					
+				</div>
+				<div class="tab-pane fade " id="uraian_tugas_tambahan_tab">
+					@include('pare_pns.tables.capaian_bulanan-uraian_tugas_tambahan')
 				</div>
 				
 

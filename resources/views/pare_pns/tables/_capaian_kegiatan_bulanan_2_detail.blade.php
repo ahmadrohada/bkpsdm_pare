@@ -1,4 +1,4 @@
-<div class="row">
+{{-- <div class="row">
 	<div class="col-md-12">
 
 <!--====================== KEGIATAN BULANAN LIST =========================================== -->
@@ -11,7 +11,7 @@
 				<div class="box-tools pull-right">
 				
 				</div>
-			</div>
+			</div> --}}
 			<div class="box-body table-responsive">
 
 				<div class="toolbar">
@@ -38,14 +38,9 @@
 				</table>
 
 			</div>
-		</div>
-
+		{{-- </div>
 	</div>
-
-
-
-	
-</div>
+</div> --}}
 
 <script type="text/javascript">
 
@@ -55,10 +50,10 @@
 		
 		var table_skp_bulanan = $('#realisasi_kegiatan_bulanan_table').DataTable({
 				destroy			: true,
-				processing      : false,
+				processing      : true,
 				serverSide      : true,
-				searching      	: false,
-				paging          : false,
+				searching      	: true,
+				paging          : true,
 				order 			: [0 , 'asc' ],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2,3,4,5,6 ] }
@@ -72,6 +67,8 @@
 											"skp_bulanan_id" 	: {!! $capaian->SKPBulanan->id !!},
 											"capaian_id" 		: {!! $capaian->id !!},
 									 },
+									cache : false,
+									quietMillis: 500,
 								},
 				columns			: [
 					{ data: 'kegiatan_bulanan_id' ,width:"10px",

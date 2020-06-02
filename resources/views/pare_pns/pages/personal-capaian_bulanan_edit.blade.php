@@ -89,13 +89,13 @@
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_3_edit')<?php
 									}else{
-										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2_edit')<?php
+										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2')<?php
 									}
 									
 									break;
 							case '3':  //3. Eselon IV
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
-										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2_edit')<?php
+										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2')<?php
 									}else{
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_3_edit')<?php
 									}

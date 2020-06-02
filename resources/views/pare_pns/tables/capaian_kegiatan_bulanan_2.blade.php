@@ -59,7 +59,12 @@
 				paging          : true,
 				order 			: [0 , 'asc' ],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3,4,5,6,7 ] }
+									{ className: "text-center", targets: [ 0,2,3,4,5,6,7 ] },
+									@if ( request()->segment(4) != 'edit' )
+											{ "visible": false, "targets": [7]}
+									@else
+											{ "visible": true, "targets": [7]}
+									@endif
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/realisasi_kegiatan_bulanan_2") }}',
@@ -71,7 +76,7 @@
 											"capaian_id" 		: {!! $capaian->id !!},
 									 },
 									cache : false,
-									quietMillis: 500,
+									quietMillis: 500, 
 								},
 				columns			: [
 									{ data: 'kegiatan_bulanan_id' ,width:"10px",
