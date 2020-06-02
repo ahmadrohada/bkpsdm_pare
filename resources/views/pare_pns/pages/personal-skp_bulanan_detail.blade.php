@@ -28,11 +28,11 @@
 
 
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
-				<div class="active tab-pane" id="detail">
+				<div class="active tab-pane fade" id="detail">
 					@include('pare_pns.modules.edit_forms.skp_bulanan_detail')
 				</div>
 								
-				<div class=" tab-pane" id="kegiatan_bulanan_tab">
+				<div class=" tab-pane fade" id="kegiatan_bulanan_tab">
 				<!-- 1. KABAN -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
 						@include('pare_pns.tables.skp_bulanan-kegiatan_1_detail')
@@ -54,7 +54,7 @@
 						@include('pare_pns.tables.skp_bulanan-kegiatan_4_detail')		
 					@endif
 				</div>
-				<div class="tab-pane" id="uraian_tugas_tambahan_tab">
+				<div class="tab-pane fade" id="uraian_tugas_tambahan_tab">
 					@include('pare_pns.tables.skp_bulanan-uraian_tugas_tambahan')
 				</div>
 
@@ -89,7 +89,7 @@ $(document).ready(function() {
 		}else if ( id == 'detail'){
 			detail_show();
 		}else if ( id == 'uraian_tugas_tambahan_tab'){
-			LoadUraianTugasTambahanTable();
+			//LoadUraianTugasTambahanTable();
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});

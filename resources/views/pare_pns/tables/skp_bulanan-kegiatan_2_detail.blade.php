@@ -37,8 +37,8 @@
   	function load_kegiatan_bulanan(){
 		var table_skp_bulanan = $('#kegiatan_bulanan_table').DataTable({
 				destroy			: true,
-				processing      : true,
-				serverSide      : true,
+				processing      : false,
+				serverSide      : false,
 				searching      	: true,
 				paging          : true,
 				order 			: [ 0 , 'asc' ],
