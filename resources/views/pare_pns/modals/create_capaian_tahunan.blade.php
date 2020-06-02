@@ -19,7 +19,7 @@
 
 
 				<div class="tab-content"  style="margin-left:10px; min-height:370px;">
-					<div class="active tab-pane" id="tab_a">
+					<div class="active tab-pane fade" id="tab_a">
 <!-- ============================================================================================================= -->
 						
 						<div class="form-horizontal col-md-6 " style="margin-top:10px;">
@@ -63,7 +63,7 @@
 					
 <!-- ============================================================================================================= -->
 					</div>
-					<div class="tab-pane" id="tab_b">
+					<div class="tab-pane fade" id="tab_b">
 <!-- ============================================================================================================= -->
 			<div class="form-horizontal col-md-12" style="margin-left:-16px; margin-top:10px; padding-right:0px;">
 					
@@ -114,7 +114,7 @@
 
 <!-- ============================================================================================================= -->
 					</div>			
-					<div class=" tab-pane" id="tab_c">
+					<div class=" tab-pane fade" id="tab_c">
 <!-- ============================================================================================================= -->
 			<div class="form-horizontal col-md-12" style="margin-left:-16px; margin-top:10px; padding-right:0px;">
 					

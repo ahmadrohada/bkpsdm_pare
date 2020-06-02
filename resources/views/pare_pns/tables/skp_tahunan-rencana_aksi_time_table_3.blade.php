@@ -63,6 +63,8 @@
 			ajax			: {
 								url	: '{{ url("api_resource/rencana_aksi_time_table_3") }}',
 								data: { skp_tahunan_id: {!! $skp->id !!} },
+								cache : false,
+								quietMillis: 500,
 							},
 			rowsGroup		: [1,2,3,4,5,8],
 			columns			: [

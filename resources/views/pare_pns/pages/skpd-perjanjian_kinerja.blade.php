@@ -27,19 +27,19 @@
 					</ul>
 						
 					<div class="tab-content"  style="margin-left:20px;">
-						<div class="active tab-pane" id="status">
+						<div class="active tab-pane fade" id="status">
 							@include('pare_pns.modules.skpd-perjanjian_kinerja_status')
 						</div>
-						<div class="tab-pane" id="detail">
+						<div class="tab-pane fade" id="detail">
 							@include('pare_pns.modules.skpd-perjanjian_kinerja_detail')
 						</div>
 						
-						<div class="tab-pane" id="renja_list">
+						<div class="tab-pane fade" id="renja_list">
 							@include('pare_pns.modules.skpd-perjanjian_kinerja_tree')
 						</div>
 						
 
-						<div class="tab-pane" id="distribusi_kegiatan">
+						<div class="tab-pane fade" id="distribusi_kegiatan">
 							@include('pare_pns.modules.skpd-renja_distribusi_kegiatan')
 						</div>
 						

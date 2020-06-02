@@ -22,14 +22,14 @@
 			</ul>
 								
 			<div class="tab-content"  style="margin-left:20px; min-height:450px;">
-				<div class="active tab-pane" id="status">
+				<div class="active tab-pane fade" id="status">
 					@include('pare_pns.modules.skpd-skp_bulanan_status')	
 				</div>
-				<div class="tab-pane" id="detail">
+				<div class="tab-pane fade" id="detail">
 					@include('pare_pns.modules.skpd-skp_bulanan_detail')				
 				</div>
 								
-				<div class=" tab-pane" id="kegiatan_tugas_jabatan">
+				<div class=" tab-pane fade" id="kegiatan_tugas_jabatan">
 					@include('pare_pns.tables.skp_bulanan-kegiatan_tugas_jabatan')				
 				</div>
 								

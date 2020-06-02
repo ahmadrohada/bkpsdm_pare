@@ -26,7 +26,7 @@
 
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
-				<div class="active tab-pane" id="status">
+				<div class="active tab-pane fade" id="status">
 					<!-- 2. KABID -->
 					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
 						@include('pare_pns.modules.timeline.capaian_triwulan_status_edit')
@@ -48,11 +48,11 @@
 					@endif
 					
 				</div>
-				<div class="tab-pane" id="detail">
+				<div class="tab-pane fade" id="detail">
 					@include('pare_pns.modules.edit_forms.capaian_triwulan_detail')		
 				</div>
 								
-				<div class=" tab-pane" id="kegiatan_triwulan_tab">
+				<div class=" tab-pane fade" id="kegiatan_triwulan_tab">
 
 					<!-- 2. KABID -->
 					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')

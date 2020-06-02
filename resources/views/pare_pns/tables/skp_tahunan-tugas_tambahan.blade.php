@@ -44,7 +44,7 @@
 	function LoadTugasTambahanTable(){
 		$('#tugas_tambahan_table').DataTable({
 					destroy			: true,
-					processing      : true,
+					//processing      : true,
 					serverSide      : true,
 					searching      	: false,
 					paging          : false,
@@ -65,6 +65,8 @@
 										data: 	{ 
 													"skp_tahunan_id" : {!! $skp->id !!}
 												},
+										cache : false,
+										quietMillis: 500,
 									},
 					columns			: [
 										{ data: 'kegiatan_tahunan_id' ,

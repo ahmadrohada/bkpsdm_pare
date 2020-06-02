@@ -26,7 +26,7 @@
 
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
-				<div class="active tab-pane" id="status">
+				<div class="active tab-pane fade" id="status">
 					<?php
 						$id_jabatan_irban = ['143','144','145','146'];
 						$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];

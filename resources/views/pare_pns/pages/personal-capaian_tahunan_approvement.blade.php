@@ -27,7 +27,7 @@
 
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
-				<div class="active tab-pane" id="status">
+				<div class="active tab-pane fade" id="status">
 
 
 					<!-- 2. KASUBID -->
@@ -42,11 +42,11 @@
 					
 					
 				</div>
-				<div class="tab-pane" id="detail">
+				<div class="tab-pane fade" id="detail">
 					@include('pare_pns.modules.detail_forms.capaian_tahunan_detail')			
 				</div>
 								
-				<div class=" tab-pane" id="kegiatan_tahunan_tab">
+				<div class=" tab-pane fade" id="kegiatan_tahunan_tab">
 
 					<!-- 3. KASUBID -->
 					@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
@@ -60,7 +60,7 @@
 				
 					
 				</div>
-				<div class=" tab-pane" id="unsur_penunjang_tab">
+				<div class=" tab-pane fade" id="unsur_penunjang_tab">
 					@include('pare_pns.tables.unsur_penunjang_detail')
 				</div>
 			

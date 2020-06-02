@@ -1,4 +1,4 @@
-
+{{-- 
 <div class="box box-primary " style="min-height:340px;">
 	<div class="box-header with-border">
 		<h1 class="box-title"> 
@@ -10,11 +10,11 @@
 				<input type="hidden" name="skp_tahunan_id" value="{{ $skp->id }}">
 				<input type="hidden" name="jabatan_id" value="{{ $skp->PejabatYangDinilai->id_jabatan }}">
 				
-				{{-- <button type="submit" class="btn btn-info btn-xs "><i class="fa fa-print"></i> Cetak</button> --}}
+				<button type="submit" class="btn btn-info btn-xs "><i class="fa fa-print"></i> Cetak</button>
 			</form> 
 		</div>
-	</div>
-	<div class="box-body table-responsive">
+	</div> --}}
+	<div class="box-body table-responsive" style="min-height:420px;">
 		<table id="rencana_aksi_time_table" class="table table-striped table-hover">
 			<thead>
 					<tr>
@@ -51,18 +51,18 @@
 			</thead>
 		</table>
 	</div>
-</div>
+{{-- </div> --}}
 
 <script type="text/javascript"> 
  
 	function rencana_aksi_time_table(){
 		var table_rencana_aksi = $('#rencana_aksi_time_table').DataTable({
 			destroy			: true,
-			processing      : true,
+			//processing      : false,
 			serverSide      : true,
 			searching      	: true,
 			paging          : true,
-			lengthMenu		: [50,100,200],
+			lengthMenu		: [20,50,100,200],
 			bInfo			: true,
 			bSort			: false,
 			columnDefs		: [

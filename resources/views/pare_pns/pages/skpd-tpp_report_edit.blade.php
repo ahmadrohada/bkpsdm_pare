@@ -24,10 +24,10 @@
 				<li class="tpp_report_data"><a href="#tpp_report_data" data-toggle="tab">TPP Report Data</a></li>
 			</ul>
 			<div class="tab-content" style="margin-left:10px; min-height:400px;">
-				<div class="active tab-pane" id="status">
+				<div class="active tab-pane fade" id="status">
 					@include('pare_pns.modules.timeline.tpp_report_status_edit')
 				</div>
-				<div class=" tab-pane" id="tpp_report_data">
+				<div class=" tab-pane fade" id="tpp_report_data">
 					@include('pare_pns.tables.skpd-tpp_report_edit_data_list')
 				</div>
 

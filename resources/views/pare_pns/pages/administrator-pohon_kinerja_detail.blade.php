@@ -31,27 +31,27 @@
 					</ul>
 						
 					<div class="tab-content"  style="margin-left:20px;">
-						<div class="active tab-pane" id="status">
+						<div class="active tab-pane fade" id="status">
 							@include('pare_pns.modules.timeline.renja_status_detail')	
 						</div>
-						<div class="tab-pane" id="detail">
+						<div class="tab-pane fade" id="detail">
 							@include('pare_pns.modules.edit_forms.renja_detail')
 						</div>
 						
-						<div class=" tab-pane" id="rencana_kerja_tab">
+						<div class=" tab-pane fade" id="rencana_kerja_tab">
 							@include('pare_pns.modules.tab.pohon_kinerja_detail')
 						</div> 
 						
   
-						<div class=" tab-pane" id="distribusi_kegiatan">
+						<div class=" tab-pane fade" id="distribusi_kegiatan">
 							@include('pare_pns.modules.tab.distribusi_kegiatan_detail') 
 						</div>
-						<div class=" tab-pane" id="perjanjian_kinerja">
+						<div class=" tab-pane fade" id="perjanjian_kinerja">
 							@include('pare_pns.modules.tab.perjanjian_kinerja_skpd_detail') 
 						</div>
 
 						
-						<div class=" tab-pane" id="kegiatan_tahunan">
+						<div class=" tab-pane fade" id="kegiatan_tahunan">
 							@include('pare_pns.modules.tab.pohon_kinerja-kegiatan_tahunan_detail') 
 						</div>
 

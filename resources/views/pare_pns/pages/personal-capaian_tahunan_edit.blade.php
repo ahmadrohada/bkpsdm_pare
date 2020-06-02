@@ -26,7 +26,7 @@
 
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
-				<div class="active tab-pane" id="status">
+				<div class="active tab-pane fade" id="status">
 
 
 					<!-- 3. KASUBID -->
@@ -42,11 +42,11 @@
 					
 					
 				</div>
-				<div class="tab-pane" id="detail">
+				<div class="tab-pane fade" id="detail">
 					@include('pare_pns.modules.edit_forms.capaian_tahunan_detail')			
 				</div>
 								
-				<div class=" tab-pane" id="kegiatan_tahunan_tab">
+				<div class=" tab-pane fade" id="kegiatan_tahunan_tab">
 
 
 					<?php
@@ -71,7 +71,7 @@
 					
 				
 				</div>
-				<div class=" tab-pane" id="unsur_penunjang_tab">
+				<div class=" tab-pane fade" id="unsur_penunjang_tab">
 					@include('pare_pns.tables.unsur_penunjang_edit')
 				</div>
 

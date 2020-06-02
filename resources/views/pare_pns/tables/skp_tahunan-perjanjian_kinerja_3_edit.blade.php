@@ -81,7 +81,7 @@ function load_perjanjian_kinerja(){
 
     $('#perjanjian_kinerja_sasaran_table').DataTable({
 				destroy			: true,
-				processing      : false,
+				//processing      : false,
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
@@ -199,18 +199,6 @@ function load_perjanjian_kinerja(){
 										}		
 									}
 								},
-								/* {  data: 'action',width:"30px",orderable: false,
-									"render": function ( data, type, row ) {
-										if ( row.pk_status == 1 ){
-											return  '<span  data-toggle="tooltip" title="Hapus Kegiatan" style="margin:1px;" ><a class="btn btn-success btn-xs remove_esl3_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-check" ></i></a></span>';
-										}else{
-											return  '<span  data-toggle="tooltip" title="Tambah Kegiatan" style="margin:1px;" ><a class="btn btn-default btn-xs add_esl3_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-minus" ></i></a></span>';
-										}
-										
-											
-									}
-								}, */
-							
 							
 						],
 						initComplete: function(settings, json) {

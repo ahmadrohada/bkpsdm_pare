@@ -69,15 +69,15 @@
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
 				
-				<div class="active tab-pane" id="detail">
+				<div class="active tab-pane fade" id="detail">
 					@include('pare_pns.modules.edit_forms.skp_tahunan_detail')			
 				</div>
-				<div class=" tab-pane" id="rencana_aksi_tab">
+				<div class=" tab-pane fade" id="rencana_aksi_tab">
 					@include('pare_pns.modules.tab.rencana_aksi_time_table')
 				</div>
 				
 								
-				<div class=" tab-pane" id="kegiatan_tahunan_tab">
+				<div class=" tab-pane fade" id="kegiatan_tahunan_tab">
 
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
@@ -119,7 +119,7 @@
 					?>
 
 				</div>
-				<div class="tab-pane" id="perjanjian_kinerja_tab">
+				<div class="tab-pane fade" id="perjanjian_kinerja_tab">
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1':  //eselon 2
@@ -145,7 +145,7 @@
 					?>		
 				</div>
 				
-				<div class="tab-pane" id="skp_bulanan_tab">
+				<div class="tab-pane fade" id="skp_bulanan_tab">
 
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
@@ -183,7 +183,7 @@
 						}
 					?>
 				</div>
-				<div class="tab-pane" id="tugas_tambahan_tab">
+				<div class="tab-pane fade" id="tugas_tambahan_tab">
 					@include('pare_pns.modules.tab.tugas_tambahan')
 				</div>
 

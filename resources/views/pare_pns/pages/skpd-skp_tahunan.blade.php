@@ -24,22 +24,22 @@
 			</ul>
 								
 			<div class="tab-content"  style="margin-left:20px; min-height:450px;">
-				<div class="active tab-pane" id="status">
+				<div class="active tab-pane fade" id="status">
 					@include('pare_pns.modules.skpd-skp_tahunan_status')	
 				</div>
-				<div class="tab-pane" id="detail">
+				<div class="tab-pane fade" id="detail">
 					@include('pare_pns.modules.skpd-skp_tahunan_detail')				
 				</div>
 								
-				<div class=" tab-pane" id="kegiatan_tugas_jabatan">
+				<div class=" tab-pane fade" id="kegiatan_tugas_jabatan">
 					@include('pare_pns.tables.skp_tahunan-kegiatan_tugas_jabatan')				
 				</div>
 								
-				<div class="tab-pane" id="rencana_aksi">
+				<div class="tab-pane fade" id="rencana_aksi">
 					@include('pare_pns.modules.skp_tahunan-rencana_aksi_tree')		
 				</div>
 
-				<div class="tab-pane" id="skp_bulanan">
+				<div class="tab-pane fade" id="skp_bulanan">
 					@include('pare_pns.modules.skp_tahunan-skp_bulanan_tree')		
 				</div>
 
