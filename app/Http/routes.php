@@ -776,6 +776,15 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('uraian_tugas_tambahan_detail','API\UraianTugasTambahanAPIController@Detail');
 	Route::post('update_uraian_tugas_tambahan','API\UraianTugasTambahanAPIController@Update');
 	Route::post('hapus_uraian_tugas_tambahan','API\UraianTugasTambahanAPIController@Destroy');
+
+
+	//======================  REALISASI   URAIAN    TUGAS TAMBAHAN   ===========================//
+	//==========================================================================================//
+	Route::get('realisasi_uraian_tugas_tambahan_list','API\RealisasiUraianTugasTambahanAPIController@RealisasiUraianTugasTambahanList');
+	Route::post('simpan_realisasi_uraian_tugas_tambahan','API\RealisasiUraianTugasTambahanAPIController@Store');
+	Route::get('realisasi_uraian_tugas_tambahan_detail','API\RealisasiUraianTugasTambahanAPIController@Detail');
+	Route::post('update_realisasi_uraian_tugas_tambahan','API\RealisasiUraianTugasTambahanAPIController@Update');
+	Route::post('hapus_realisasi_uraian_tugas_tambahan','API\RealisasiUraianTugasTambahanAPIController@Destroy');
 	
 
 	//=================================         K R E A T I V I T A S     = ==================================//

@@ -119,7 +119,7 @@ class UraianTugasTambahanAPIController extends Controller {
                             leftjoin('db_pare_2018.skp_tahunan_tugas_tambahan AS tugas_tambahan', function($join){
                                 $join   ->on('tugas_tambahan.id','=','uraian_tugas_tambahan.tugas_tambahan_id');
                             })
-                            ->SELECT(    'uraian_tugas_tambahan.id AS uraian_tugas_tambahan_id',
+                            ->SELECT(   'uraian_tugas_tambahan.id AS uraian_tugas_tambahan_id',
                                         'uraian_tugas_tambahan.tugas_tambahan_id AS tugas_tambahan_id',
                                         'uraian_tugas_tambahan.skp_bulanan_id',
                                         'uraian_tugas_tambahan.label',

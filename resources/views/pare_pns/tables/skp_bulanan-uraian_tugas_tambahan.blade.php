@@ -10,8 +10,9 @@
 		<thead>
 			<tr>
 				<th >No</th>
-				<th >TUGAS TAMBAHAN</th>
+				
 				<th >URAIAN TUGAS TAMBAHAN</th>
+				<th >TUGAS TAMBAHAN</th>
 				<th >TARGET OUTPUT</th>
 				<th ><i class="fa fa-cog"></i></th>
 			</tr>
@@ -39,9 +40,11 @@
 					columnDefs		: [
 										{ className: "text-center", targets: [ 0,3,4 ] },
 										/* { className: "text-right", targets: [ 6 ] }, */
-										{ "orderable": false, targets: [ 0,2,3,4 ]  },
+										{ "orderable": false, targets: [ 2,3,4 ]  },
 										@if ( request()->segment(4) != 'edit' )
 											{ "visible": false, "targets": [4]}
+										@else
+											{ "visible": true, "targets": [4]}
 										@endif
 									],
 					ajax			: {
@@ -52,15 +55,16 @@
 										cache : false,
 										quietMillis: 500,
 									},
-					rowsGroup		: [1],
+					rowsGroup		: [2],
 					columns			: [
 										{ data: 'kegiatan_tahunan_id',width:"30px",
 											"render": function ( data, type, row ,meta) {
 												return meta.row + meta.settings._iDisplayStart + 1 ;
 											}
 										},
-										{ data: "tugas_tambahan_label", name:"tugas_tambahan_label", width:"320px"},
+										
 										{ data: "label", name:"uraian_tugas_tambahan_label"},
+										{ data: "tugas_tambahan_label", name:"tugas_tambahan_label", width:"320px"},
 										{ data: "output", name:"output",width:"140px",},
 										{  data: 'action',width:"60px",
 											"render": function ( data, type, row ) {

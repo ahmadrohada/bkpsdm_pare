@@ -54,7 +54,9 @@
 										{ className: "text-center", targets: [ 0,2,3,4 ] },
 										/* { className: "text-right", targets: [ 6 ] }, */
 										{ "orderable": false, targets: [ 0,1,2,3,4,5 ]  },
-										@if ( request()->segment(4) != 'edit' )
+										@if ( request()->segment(4) == 'edit' )
+											{ "visible": true, "targets": [5]}
+										@else
 											{ "visible": false, "targets": [5]}
 										@endif
 									],

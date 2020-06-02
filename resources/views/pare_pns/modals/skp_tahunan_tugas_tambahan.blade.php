@@ -54,7 +54,7 @@
 						<label class="control-label">Anggaran Kegiatan :</label>
 						<div class="input-group input-group-sm">
 						<span class="input-group-addon">Rp.</span>
-						<input type="text" name="cost" id="cost_tugas_tambahan" required class="form-control" placeholder="Anggaran kegiatan" maxlength="14" readonly>
+						<input type="text" name="cost" id="cost_tugas_tambahan" required class="form-control" placeholder="Anggaran kegiatan" maxlength="14">
 						</div>
 						</div>
 					</div>

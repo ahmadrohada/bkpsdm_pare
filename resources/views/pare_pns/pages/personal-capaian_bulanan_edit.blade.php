@@ -21,12 +21,13 @@
 				<li class="status"><a href="#status" data-toggle="tab">Status </a></li>
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan Bulanan Eselon {!! $capaian->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="uraian_tugas_tambahan_tab"><a href="#uraian_tugas_tambahan_tab" data-toggle="tab">Uraian Tugas Tambahan</a></li>
 				
 			</ul>
 
  
 			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
-				<div class="active tab-pane" id="status">
+				<div class="active tab-pane fade" id="status">
 					<?php
 						$id_jabatan_irban = ['143','144','145','146'];
 						$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
@@ -67,11 +68,11 @@
 					?>
 					
 				</div>
-				<div class="tab-pane" id="detail">
+				<div class="tab-pane fade" id="detail">
 					@include('pare_pns.modules.edit_forms.capaian_bulanan_detail')			
 				</div>
 								
-				<div class=" tab-pane" id="kegiatan_bulanan_tab">
+				<div class=" tab-pane fade" id="kegiatan_bulanan_tab">
 
 					<?php
 
@@ -109,6 +110,9 @@
 						}
 					?>
 				</div>
+				<div class="tab-pane fade " id="uraian_tugas_tambahan_tab">
+					@include('pare_pns.tables.capaian_bulanan-uraian_tugas_tambahan')
+				</div>
 				
 
 			</div>			
@@ -141,6 +145,8 @@ $(document).ready(function() {
 			load_kegiatan_bulanan();
 		}else if ( id == 'status'){
 			status_show();
+		}else if ( id == 'uraian_tugas_tambahan_tab'){
+			//LoadUraianTugasTambahanTable();
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});
