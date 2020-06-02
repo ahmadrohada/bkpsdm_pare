@@ -53,8 +53,8 @@
 		
 		var table_skp_bulanan = $('#realisasi_kegiatan_bulanan_table').DataTable({
 				destroy			: true,
-				processing      : true,
-				serverSide      : true,
+				processing      : false,
+				serverSide      : false,
 				searching      	: true,
 				paging          : true,
 				order 			: [0 , 'asc' ],

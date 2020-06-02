@@ -34,8 +34,8 @@
 	function LoadUraianTugasTambahanTable(){
 		$('#realisasi_uraian_tugas_tambahan_table').DataTable({
 					destroy			: true,
-					processing      : true,
-					serverSide      : true,
+					processing      : false,
+					serverSide      : false,
 					searching      	: true,
 					paging          : true,
 					bInfo			: false,
