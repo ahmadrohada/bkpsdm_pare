@@ -27,16 +27,16 @@
 
 <script type="text/javascript">
 
-	LoadUraianTugasTambahanTable();
 	function LoadUraianTugasTambahanTable(){
 		$('#uraian_tugas_tambahan_table').DataTable({
 					destroy			: true,
-					processing      : false,
-					serverSide      : false,
+					//processing      : false,
+					serverSide      : true,
 					searching      	: true,
 					paging          : true,
-					bInfo			: false,
-					//order 			: [ 1 , 'asc' ],
+					lengthMenu		: [20,50,100,200],
+					bInfo			: true,
+					bSort			: false,
 					columnDefs		: [
 										{ className: "text-center", targets: [ 0,3,4 ] },
 										/* { className: "text-right", targets: [ 6 ] }, */

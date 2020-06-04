@@ -1,20 +1,4 @@
-{{-- 
-<div class="box box-primary " style="min-height:340px;">
-	<div class="box-header with-border">
-		<h1 class="box-title"> 
-			List Pelaksanaan Rencana Aksi
-		</h1>
-		<div class="box-tools pull-right">
-			<form method="post" target="_blank" action="./cetak_rencana_aksi-Eselon3">
-				<input type="hidden" name="_token" value="{{ csrf_token() }}">
-				<input type="hidden" name="skp_tahunan_id" value="{{ $skp->id }}">
-				<input type="hidden" name="jabatan_id" value="{{ $skp->PejabatYangDinilai->id_jabatan }}">
-				
-				<button type="submit" class="btn btn-info btn-xs "><i class="fa fa-print"></i> Cetak</button>
-			</form> 
-		</div>
-	</div> --}}
-	<div class="box-body table-responsive" style="min-height:420px;">
+	<div class="box-body table-responsive" style="">
 		<table id="rencana_aksi_time_table" class="table table-striped table-hover">
 			<thead>
 					<tr>
@@ -51,11 +35,10 @@
 			</thead>
 		</table>
 	</div>
-{{-- </div> --}}
 
 <script type="text/javascript"> 
  
-	function rencana_aksi_time_table(){
+	function rencana_aksi_time_table(){ 
 		var table_rencana_aksi = $('#rencana_aksi_time_table').DataTable({
 			destroy			: true,
 			//processing      : false,
@@ -75,6 +58,8 @@
 								data: { skp_tahunan_id: {!! $skp->id !!} ,
 										jabatan_id    : {!! $skp->PejabatYangDinilai->id_jabatan !!}
 									 },
+								cache : false,
+								quietMillis: 500,
 							},
 			rowsGroup		: [1,2,3,4,5,8],
 			columns			: [

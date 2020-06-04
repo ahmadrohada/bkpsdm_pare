@@ -148,7 +148,7 @@ function detail_show(){
 		data    	: { skp_bulanan_id: {{ $skp->id }} },
 		beforeSend	: function ( xhr ) {
 			if ( $("#date_created").html() == "" ){
-				show_loader_2();
+				//show_loader_2();
 			}
         },
 		success		: function (data) {

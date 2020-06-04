@@ -21,7 +21,7 @@
 	    <section class="content">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
-				<li class="active detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
+				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan SKP Bulanan Eselon {!! $skp->PejabatYangDinilai->Eselon->eselon !!} / {!! $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				<li class="uraian_tugas_tambahan_tab"><a href="#uraian_tugas_tambahan_tab" data-toggle="tab" >Uraian Tugas Tambahan</a></li>
 			</ul>
@@ -70,42 +70,31 @@
 	</div>
 <script type="text/javascript">
 $(document).ready(function() {
-	detail_show();
+	
 	$('#myTab a').click(function(e) {
-		
 		e.preventDefault();
 		$(this).tab('show');
-		//$('html, body').animate({scrollTop:0}, 0);
-		
 	}); 
 
-	// store the currently selected tab in the hash value
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
-
 		if ( id == 'kegiatan_bulanan_tab'){
 			load_kegiatan_bulanan();
 		}else if ( id == 'detail'){
 			detail_show();
 		}else if ( id == 'uraian_tugas_tambahan_tab'){
-			//LoadUraianTugasTambahanTable();
+			LoadUraianTugasTambahanTable();
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});
 
-
-	
-
-	// on load of the page: switch to the currently selected tab
 	var hash = window.location.hash;
 	if ( hash != ''){
 		$('#myTab a[href="' + hash + '"]').tab('show');
 	}else{
-		$('#myTab a[href="#status"]').tab('show');
+		$('#myTab a[href="#detail"]').tab('show');
 	}
-	
-
 });
 </script>
 
