@@ -3,10 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CapaianTahunan extends Model
 {
+   
+    use SoftDeletes;
     protected $table = 'capaian_tahunan';
+    protected $dates = ['deleted_at'];
 
     //tes
 

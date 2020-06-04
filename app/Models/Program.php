@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Program extends Model
 {
+    use SoftDeletes;
     protected $table = 'renja_program';
+    protected $dates = ['deleted_at'];
 
 
     

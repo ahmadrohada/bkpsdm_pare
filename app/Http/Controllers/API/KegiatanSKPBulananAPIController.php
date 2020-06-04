@@ -303,6 +303,7 @@ class KegiatanSKPBulananAPIController extends Controller {
                                 'kegiatan_tahunan.target',
                                 'kegiatan_tahunan.satuan'
                             ) 
+                    //->withTrashed()
                     ->get();
         
         $skp_id = $request->skp_bulanan_id;
@@ -333,15 +334,14 @@ class KegiatanSKPBulananAPIController extends Controller {
             return $pelaksana;
         })->addColumn('penanggung_jawab', function ($x) {
 
-            return Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan);
-           /*  if ( $x->pelaksana_id != null ){
-                $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
-                $pelaksana = Pustaka::capital_string($dt->skpd);
+            //return Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan);
+            if ($x->KegiatanTahunan->Kegiatan){
+                return Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan);
             }else{
-                $pelaksana = "s";
+                return "";
             }
 
-            return $pelaksana; */
+
         })->addColumn('status_skp', function ($x) use($skp_bln){
             return $skp_bln->status;
         });

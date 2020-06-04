@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class IndikatorKegiatan extends Model
 {
-    protected $table = 'renja_indikator_kegiatan';
 
+    use SoftDeletes;
+    protected $table = 'renja_indikator_kegiatan';
+    protected $dates = ['deleted_at'];
+    
 
     public function skp_tahunan()
     {
