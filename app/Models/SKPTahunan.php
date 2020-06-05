@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SKPTahunan extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
     protected $table = 'skp_tahunan';
-    protected $dates = ['deleted_at'];
+    //protected $dates = ['deleted_at'];
 
 
     public function Renja()

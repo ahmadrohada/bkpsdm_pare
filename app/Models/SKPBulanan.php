@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SKPBulanan extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
     protected $table = 'skp_bulanan';
-    protected $dates = ['deleted_at'];
+    //protected $dates = ['deleted_at'];
     
 
     //tes

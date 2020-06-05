@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CapaianTahunan extends Model
 {
    
-    use SoftDeletes;
+    //use SoftDeletes;
     protected $table = 'capaian_tahunan';
-    protected $dates = ['deleted_at'];
+    //protected $dates = ['deleted_at'];
 
     //tes
 

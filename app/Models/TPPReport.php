@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TPPReport extends Model
 {
 
-    use SoftDeletes;
+    //use SoftDeletes;
     protected $table = 'tpp_report';
-    protected $dates = ['deleted_at'];
+    //protected $dates = ['deleted_at'];
     
 
     public function FormulaHitung()
