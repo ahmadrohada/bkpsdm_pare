@@ -1,47 +1,15 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Logic\User\UserRepository;
-use App\Logic\User\CaptureIp;
-use App\Http\Requests;
 
-use App\Models\Social;
 use App\Models\User;
-use App\Models\Role;
 use App\Models\UsersRole;
 use App\Models\Pegawai;
-use App\Models\HistoryJabatan;
 use App\Models\Skpd;
-use App\Models\PeriodeTahunan;
-
-use App\Models\PerjanjianKinerja;
-use App\Models\Sasaran;
-use App\Models\SasaranPerjanjianKinerja;
-use App\Models\IndikatorSasaran;
-use App\Models\Program;
-use App\Models\IndikatorProgram;
-use App\Models\Kegiatan;
-use App\Models\IndikatorKegiatan;
-
-
 
 use App\Helpers\Pustaka;
 
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Support\Facades;
-use Illuminate\Http\Request;
-
-
-use Datatables;
-use Validator;
-use Gravatar;
 use Input;
-Use Alert;
-
 class PegawaiController extends Controller {
     
     //=======================================================================================//
@@ -278,14 +246,9 @@ class PegawaiController extends Controller {
         	    ]
             );   
         }else{
-
-            if ($admin_skpdRole) {
-                return redirect('/skpd/pegawai/'.$pegawai_id)->with('status', 'Pegawai sudah terdaftar');
-            } elseif ($adminRole) {
-                return redirect('/admin/pegawai/'.$pegawai_id)->with('status', 'Pegawai sudah terdaftar');
-            }
-            
-
+            $middleware = request()->segment(1);
+            return redirect('/'.$middleware.'/pegawai/'.$pegawai_id)->with('status', 'Pegawai sudah terdaftar');
+           
         }
 
 
@@ -300,14 +263,15 @@ class PegawaiController extends Controller {
 
     public function detailPegawai($pegawai_id)
     {
+
+        $user = User::WHERE('id_pegawai',$pegawai_id)->exists();
+        if ( $user ){
+
+       
+
+
         $user           = \Auth::user();
-
-
         $pegawaix        = Pegawai::WHERE('id',$pegawai_id)->first();
-
-
-
-        
         $userRole       = $user->hasRole('pegawai');
         $admin_skpdRole = $user->hasRole('admin_skpd');
         $adminRole      = $user->hasRole('administrator');
@@ -325,7 +289,6 @@ class PegawaiController extends Controller {
             //$dashboard = 'administrator';
             $dashboard = 'pegawai';
         }
-
 
         $dt = Pegawai::WHERE('tb_pegawai.id',$pegawai_id)
                             ->rightjoin('demo_asn.tb_history_jabatan AS a', function($join){
@@ -407,17 +370,13 @@ class PegawaiController extends Controller {
 
        
         if ( $dt->foto != null  ){
-            
-
             $foto   = 'data:image/jpeg;base64,'.base64_encode( $dt->foto );
-
         }else{
             $foto   = asset('assets/images/form/sample.jpg');
         }
 
-       
-
-
+        
+        
 		return view('pare_pns.pages.administrator-detail-pegawai', [
                 'pegawai_id'            => $pegawai_id,
                 'user_id'               => $user_id,
@@ -446,9 +405,13 @@ class PegawaiController extends Controller {
 
 
         	]
-        );    
+        );  
 
-        
+    }else{
+        $middleware = request()->segment(1);
+        return redirect('/'.$middleware.'/pegawai/'.$pegawai_id.'/add')->with('status', 'Pegawai blm terdaftar');
+    }
+    
     }
 
     

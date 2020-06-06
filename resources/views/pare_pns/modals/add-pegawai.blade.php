@@ -8,17 +8,9 @@
                 </h4>
             </div>
             <div class="modal-body">
-					
                   Add {{ $nama }} menjadi user PARE.<br>
 				  username   <b> {{ $nip }}</b><br>
-				  password &nbsp; <b>bkd12345</b>
-
-
-            
-
-
-
-                        
+				  password &nbsp; <b>bkd12345</b>  
             </div>
             <div class="box-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
@@ -64,22 +56,7 @@ $(document).ready(function() {
 			)	
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
-
                 alert('Terjadi kesalahan');
-				/* var test = $.parseJSON(jqXHR.responseText);
-				var data= test.errors;
-				$.each(data, function(index,value){
-					//alert (index+":"+value);
-					if (index == 'label'){
-						$('.indikator_program').addClass('has-error');
-					}
-					if (index == 'target'){
-						$('.target').addClass('has-error');
-					}
-					if (index == 'satuan'){
-						$('.satuan').addClass('has-error');
-					}
-				}); */
 			}
 			
 		  });

@@ -1,7 +1,7 @@
 @extends('pare_pns.layouts.dashboard')
 
 @section('template_title')
-	 Add 
+	 Add ASN
 @endsection
 
 @section('template_fastload_css')
@@ -10,14 +10,9 @@
 @section('content')
 	 <div class="content-wrapper">
 	    <section class="content-header">
-
 			<h1>
-				<!-- {{ Lang::get('pages.dashboard-welcome',['username' => Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)] ) }} -->
 				Add Pegawai
 			</h1>
-
-			
-
 	    </section>
 	    <section class="content">
 

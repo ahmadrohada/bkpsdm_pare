@@ -45,9 +45,9 @@
 					deferRender		: true,
 					bInfo			: false,
 					bSort			: true,
-					lengthChange	: false,
+					lengthChange	: true,
 					//order 			: [ 0 , 'desc' ],
-					lengthMenu		: [10,25,50],
+					lengthMenu		: [20,50,100],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,3,5,7] }
 								],
