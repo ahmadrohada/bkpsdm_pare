@@ -30,13 +30,17 @@
 	function LoadUraianTugasTambahanTable(){
 		$('#uraian_tugas_tambahan_table').DataTable({
 					destroy			: true,
-					//processing      : false,
+					processing      : true,
 					serverSide      : true,
 					searching      	: true,
 					paging          : true,
-					lengthMenu		: [20,50,100,200],
+					autoWidth		: false,
+					deferRender		: true,
 					bInfo			: true,
 					bSort			: false,
+					//lengthChange	: false,
+					//order 		: [ 0 , 'asc' ],
+					lengthMenu		: [20,50,100,200],
 					columnDefs		: [
 										{ className: "text-center", targets: [ 0,3,4 ] },
 										/* { className: "text-right", targets: [ 6 ] }, */

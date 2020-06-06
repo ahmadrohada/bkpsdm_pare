@@ -22,12 +22,12 @@
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
-				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan SKP Bulanan Eselon {!! $skp->PejabatYangDinilai->Eselon->eselon !!} / {!! $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan <span class="hidden-xs">SKP Bulanan Eselon {!! $skp->PejabatYangDinilai->Eselon->eselon !!} / {!! $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</span> </a></li>
 				<li class="uraian_tugas_tambahan_tab"><a href="#uraian_tugas_tambahan_tab" data-toggle="tab" >Uraian Tugas Tambahan</a></li>
 			</ul>
 
 
-			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
+			<div class="tab-content"  style="min-height:400px;">
 				<div class="active tab-pane fade" id="detail">
 					@include('pare_pns.modules.edit_forms.skp_bulanan_detail')
 				</div>
@@ -46,7 +46,7 @@
 
 					<!-- 3. KASUBID -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('pare_pns.tables.skp_bulanan-kegiatan_3_detail')
+						@include('pare_pns.tables.skp_bulanan-kegiatan_3')
 					@endif
 
 					<!-- 4. PELAKSANA -->

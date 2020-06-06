@@ -23,13 +23,10 @@ class StrukturOrganisasiAPIController extends Controller {
 										$join   ->WHERE('a.status','=','active');
 											
 									})
-									
-
 									->leftjoin('demo_asn.tb_pegawai AS pegawai', 'a.id_pegawai','=','pegawai.id')
 									//eselon
 									->leftjoin('demo_asn.m_eselon AS eselon', 'a.id_eselon','=','eselon.id')
 									->leftjoin('demo_asn.m_jenis_jabatan AS c', 'c.id','=','eselon.id_jenis_jabatan')
-
 									->select(
 										'm_skpd.id',
 										'm_skpd.skpd',
@@ -45,17 +42,9 @@ class StrukturOrganisasiAPIController extends Controller {
 										'eselon.eselon',
 										'c.jenis_jabatan'
 									)
-	
-
-								
 									//->where('pegawai.status', '=', 'active')
 									->where('m_skpd.id_skpd','=',$skpd_id)
 									->where('m_skpd.id','!=',$skpd_id)
-
-									
-
-
-
 									//->limit(10)
                                     ->get();
 		
@@ -64,68 +53,40 @@ class StrukturOrganisasiAPIController extends Controller {
 		
 		
 		foreach ($peta_jabatan as $x) {
-            if ( $no == 0 ){
-				$parent = null;
-			}else{
-				$parent = $x->parent_id;
-			}
- 
-			
-			
+            
 			//jika pejabat nya sudah pensiun maka tampilin aja jabatan nya mah
 			if ( $x->status_pegawai == 'active'){
-				$title 			= Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
-				$label 			= Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
-				$nip			= $x->nip;
-				$eselon			= $x->eselon;
-				$jenis_jabatan	= $x->jenis_jabatan . $x->id;
-
-				//FOTO
-				$foto = Pegawai::find($x->id_pegawai);
-
-				/* if ( $foto->Foto ){
-					$sub_data['image'] = 'data:image/jpeg;base64,'.base64_encode($foto->Foto->isi) ;
+				
+				$filename = 'assets/images/foto/'.$x->nip.'.jpg';
+				if (file_exists($filename)) {
+					$sub_data['image']   =asset($filename);
 				}else{
-		
-					if ( $x->jenis_kelamin == 'Perempuan'){
-						$sub_data['image']   = asset('assets/images/form/female_icon.png');
+					if ( $x->jk == 'Perempuan'){
+						$sub_data['image']   = asset('assets/images/foto/female_icon.png');
 					}else{
-						$sub_data['image']  = asset('assets/images/form/male_icon.png');
-					}
-		
-				} */
-
-				//Foto pagawai
-				if ( $x->jk == 'Perempuan'){
-					$sub_data['image']   = asset('assets/images/form/female_icon.png');
-				}else{
-					$sub_data['image']   = asset('assets/images/form/male_icon.png');
-				} 
-
-				$sub_data['itemTitleColor']		= "#4b0082";
+						$sub_data['image']   = asset('assets/images/foto/male_icon.png');
+					} 
+				}
+				
+				
 
 			}else{
-				$title 			= "PENSIUN";
-				$label 			= "PENSIUN";
-				$nip			= "-";
-				$eselon			= "-";
-				$jenis_jabatan	= "-";
-				$sub_data['image']   = asset('assets/images/form/default_icon.png');
-				$sub_data['itemTitleColor']		= "#e3dede";
+				
+				$sub_data['image']   = asset('assets/images/foto/default_icon.png');
 			}
 
 
 
-			
 			$sub_data['id']					= $x->id;
-			$sub_data['parent']				= $parent;
-			$sub_data['title']				= $title;
-			$sub_data['label']				= $label;
+			$sub_data['parent']				= ($no >= 1)?$x->parent_id : null;
+			$sub_data['title']				= ( $x->status_pegawai == 'active')?Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk):"PENSIUN";
+			$sub_data['label']				= ( $x->status_pegawai == 'active')?Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk):"PENSIUN";
 			$sub_data['jabatan']			= Pustaka::capital_string($x->skpd);
-			$sub_data['nip']				= $nip;
-			$sub_data['eselon']				= $eselon;
-			$sub_data['jenis_jabatan']		= $jenis_jabatan;
+			$sub_data['nip']				= ( $x->status_pegawai == 'active')?$x->nip:"-";
+			$sub_data['eselon']				= ( $x->status_pegawai == 'active')?$x->eselon:"-";
+			$sub_data['jenis_jabatan']		= ( $x->status_pegawai == 'active')?$x->jenis_jabatan . $x->id : "-";
 			$sub_data['groupTitleColor']	= "primitives.common.Colors.Green";
+			$sub_data['itemTitleColor']		= ( $x->status_pegawai == 'active')?"#4b0082":"#e3dede";
 			
 			$data[] = $sub_data ;	
 

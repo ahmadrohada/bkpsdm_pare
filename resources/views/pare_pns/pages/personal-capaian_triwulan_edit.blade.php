@@ -25,7 +25,7 @@
 			</ul>
 
  
-			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
+			<div class="tab-content"  style="min-height:400px;">
 				<div class="active tab-pane fade" id="status">
 					<!-- 2. KABID -->
 					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')

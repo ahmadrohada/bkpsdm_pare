@@ -22,28 +22,33 @@
 
 	
 <link   href="{{asset('assets/org_diagram/css/primitives.latest.css')}}" media="screen" rel="stylesheet" type="text/css" />
-
-
 <script src="{{asset('assets/org_diagram/js/primitives.latest.js')}}"></script>
 
 
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
-
+    
+    
     $.ajax({
 			url		: "{{ url("api_resource/skpd_struktur_organisasi") }}",
 			method	: "GET",
 			dataType: "json",
-			data    : { skpd_id : {{$skpd_id}} },
+            data    : { skpd_id : {{$skpd_id}} },
+            cache   : true,
+            beforeSend: function(){
+					show_loader();
+			},
+			complete: function(){
+					swal.close();
+			},
 			success	: function(data) {
                 
-            jQuery("#strukturorganisasi").orgDiagram({
-                items: data,
-                cursorItem : 4 
-            });
-      
+                jQuery("#strukturorganisasi").orgDiagram({
+                    items: data,
+                    cursorItem : 4 ,
+                });
+                swal.close();
 						
 			},
 			error: function(data){

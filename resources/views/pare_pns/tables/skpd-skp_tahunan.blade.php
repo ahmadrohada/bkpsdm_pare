@@ -8,27 +8,25 @@
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
-    </div>
-	<div class="box-body table-responsive">
-
-		<table id="rkpd_table" class="table table-striped table-hover table-condensed">
-			<thead>
-				<tr class="success">
-					<th>NO</th>
-					<th>PERIODE</th>
-					<th>NIP</th>
-					<th>NAMA</th>
-					
-					<th>JABATAN</th>
-					<th>ESELON</th>
-					<th>NAMA ATASAN</th>
-					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
-				</tr>
-			</thead>
-			
-			
-		</table>
-
+	</div>
+	<div class="row" style="padding:5px 30px; min-height:200px;">
+		<div class="box-body table-responsive">
+			<table id="rkpd_table" class="table table-striped table-hover table-condensed">
+				<thead>
+					<tr class="success">
+						<th>NO</th>
+						<th>PERIODE</th>
+						<th>NIP</th>
+						<th>NAMA</th>
+						
+						<th>JABATAN</th>
+						<th>ESELON</th>
+						<th>NAMA ATASAN</th>
+						<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 	</div>
 </div>
 
@@ -37,13 +35,18 @@
 <script type="text/javascript">
 
 	$('#rkpd_table').DataTable({
+				destroy			: true,
 				processing      : true,
 				serverSide      : true,
 				searching      	: true,
 				paging          : true,
-				//order 			: [ 3 , 'asc' ],
-				//dom 			: '<"toolbar">frtip',
-				lengthMenu		: [50,100],
+				autoWidth		: false,
+				deferRender		: true,
+				bInfo			: false,
+				bSort			: true,
+				lengthChange	: false,
+				//order 			: [ 2 , 'desc' ],
+				lengthMenu		: [10,25,50],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,2,5,7 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */

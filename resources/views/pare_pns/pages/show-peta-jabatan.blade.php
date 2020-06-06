@@ -16,19 +16,15 @@
 #treeview-searchable .node-disabled {
     display: none;
 }
-
 .node-treeview-searchable{
 	font-size:9pt;
 }
-
 .dropdown-menu{
 	border-color:#2cd7e4;
 }
-
 .dropdown-menu > li > a {
     color: #000;
 }
-
 .dropdown-menu > li > a:hover {
     background-color: #00acd6;
     color: #fff;
@@ -44,23 +40,15 @@ text-align:left;
 }
 
 </style>
-
 	 <div class="content-wrapper">
 	    <section class="content-header">
-
 			<h1>
 				Peta Jabatan
 			</h1>
-
 			{!! Breadcrumbs::render('peta_jabatan') !!}
-
 	    </section>
 	    <section class="content">
-			
-			
 			@include('pare_pns.modules.peta-jabatan-list')
-			
-			
 	    </section>
 	</div>
 @endsection

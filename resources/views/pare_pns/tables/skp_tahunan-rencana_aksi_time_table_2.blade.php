@@ -59,7 +59,7 @@
 										jabatan_id    : {!! $skp->PejabatYangDinilai->id_jabatan !!}
 									 },
 								cache : false,
-								quietMillis: 500,
+								quietMillis: 800,
 							},
 			rowsGroup		: [1,2,3,4,5,8],
 			columns			: [
@@ -104,7 +104,7 @@
 	}
 
 	
-
+/* 
 	$(document).on('click','.create_rencana_aksi',function(e){
 
 
@@ -221,5 +221,5 @@
 					});	
 			}
 		});
-	});
+	}); */
 </script>

@@ -12,13 +12,13 @@
 <!-- ============================================================================================================= -->
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs" id="myTab">
-					<li class="active"><a href="#tab_a" data-toggle="tab"><i class="fa fa-tag"></i> Capaian Bulanan </a></li>
+					<li class=""><a href="#tab_a" data-toggle="tab"><i class="fa fa-tag"></i> Capaian Bulanan </a></li>
 					<li class=""><a href="#tab_b" data-toggle="tab" ><i class="fa fa-user"></i> Data Pribadi</a></li>
 					<li class=""><a href="#tab_c" data-toggle="tab"><i class="fa fa-user"></i> Data Atasan</a></li>
 				</ul>
 
 
-				<div class="tab-content"  style="margin-left:10px; min-height:320px;">
+				<div class="tab-content"  style="min-height:320px;">
 					<div class="active tab-pane  fade" id="tab_a">
 <!-- ============================================================================================================= -->
 						
@@ -102,7 +102,7 @@
 				</div>
 			</div>	 
 
-
+ 
 
 <!-- ============================================================================================================= -->
 					</div>			
@@ -209,7 +209,7 @@
 
 	
 	$('.modal-create_capaian_bulanan_confirm').on('shown.bs.modal', function(){
-		
+		$('#myTab a[href="#tab_a"]').tab('show');
 	});
 
 	$('.modal-create_capaian_bulanan_confirm').on('hidden.bs.modal', function(){

@@ -26,7 +26,7 @@
 			</ul>
 
  
-			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
+			<div class="tab-content"  style="min-height:400px;">
 				<div class="active tab-pane fade" id="status">
 					<?php
 						$id_jabatan_irban = ['143','144','145','146'];

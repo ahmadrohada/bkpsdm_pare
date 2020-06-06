@@ -1,10 +1,3 @@
-<div class="box box-primary " style="min-height:340px;">
-	<div class="box-header with-border">
-		<h1 class="box-title"> 
-			List Pelaksanaan Rencana Aksi
-		</h1>
-
-	</div>
 	<div class="box-body table-responsive">
 		<table id="rencana_aksi_time_table" class="table table-striped table-hover">
 			<thead>
@@ -42,7 +35,8 @@
 			</thead>
 		</table>
 	</div>
-</div>
+	
+
 
 <script type="text/javascript">
  
@@ -53,9 +47,14 @@
 			serverSide      : true,
 			searching      	: true,
 			paging          : true,
-			lengthMenu		: [50,100,200],
+			autoWidth		: false,
+			deferRender		: true,
 			bInfo			: true,
 			bSort			: false,
+			fixedHeader		: true,
+			//lengthChange	: false,
+			//order 		: [ 0 , 'asc' ],
+			lengthMenu		: [10,25,50,100],
 			columnDefs		: [
 								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21 ] },
 								{ className: "text-right", targets: [ 8 ] },
@@ -64,7 +63,7 @@
 								url	: '{{ url("api_resource/rencana_aksi_time_table_3") }}',
 								data: { skp_tahunan_id: {!! $skp->id !!} },
 								cache : false,
-								quietMillis: 500,
+								quietMillis: 800,
 							},
 			rowsGroup		: [1,2,3,4,5,8],
 			columns			: [
@@ -109,7 +108,7 @@
 	}
 
 	
-
+/* 
 	$(document).on('click','.create_rencana_aksi',function(e){
 
 
@@ -226,5 +225,5 @@
 					});	
 			}
 		});
-	});
+	}); */
 </script>

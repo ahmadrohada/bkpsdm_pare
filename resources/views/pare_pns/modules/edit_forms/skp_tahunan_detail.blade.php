@@ -152,23 +152,17 @@
 </div> 
 			
 
-<style type="text/css"> .sweet_container {background-color: rgba(0,0,100,0.5);} .sweet_containerImportant {background-color: rgba(0,0,100,0.5) !important;}</style> 
-
-
 <script type="text/javascript">
 
 
-function LoadDetailTab(){
+function LoadDetailTab(){ 
 	
 	$.ajax({
 		url     	: '{{ url("api_resource/skp_tahunan_detail") }}',
 		type    	: "GET",
 		data    	: { skp_tahunan_id: {{ $skp->id }} },
-		beforeSend	: function ( xhr ) {
-			if ( $("#date_created").html() == "" ){
-				//show_loader_2();
-			}
-        },
+		cache 		: false,
+		quietMillis	: 500,
 		success		: function (data) {
 			
 				$("#date_created").html(data['date_created']);
@@ -189,7 +183,6 @@ function LoadDetailTab(){
 				$("#p_jabatan").html(data['p_jabatan']);
 				$("#p_eselon").html(data['p_eselon']);
 				$("#p_unit_kerja").html(data['p_unit_kerja']);
-				swal.close();
 			},
 			error: function (data) {
 				

@@ -8,32 +8,29 @@
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
-    </div>
-	<div class="box-body table-responsive">
-
-		<div class="toolbar" hidden>
-			<span  data-toggle="tooltip" title="Create Capaian Triwulan"><a class="btn btn-info btn-xs create_capaian_triwulan" ><i class="fa fa-plus" ></i> Create Capaian</a></span>
+	</div>
+	<div class="row" style="padding:5px 30px; min-height:200px;">
+		<div class="box-body table-responsive">
+			<div class="toolbar" hidden>
+				<span  data-toggle="tooltip" title="Create Capaian Triwulan"><a class="btn btn-info btn-xs create_capaian_triwulan" ><i class="fa fa-plus" ></i> Create Capaian</a></span>
+			</div>
+			<table id="capaian_triwulan_table" class="table table-striped table-hover">
+				<thead>
+					<tr class="success">
+						<th rowspan="2">NO</th>
+						<th rowspan="2">PERIODE SKP</th>
+						<th rowspan="2">JABATAN</th>
+						<th colspan="4">CAPAIAN TRIWULAN</th>
+					</tr>
+					<tr>
+						<th>TRIWULAN I</th>
+						<th>TRIWULAN II</th>
+						<th>TRIWULAN III</th>
+						<th>TRIWULAN IV</th>
+					</tr>
+				</thead>
+			</table>
 		</div>
-		<table id="capaian_triwulan_table" class="table table-striped table-hover table-condensed">
-
-			<thead>
-				<tr class="success">
-					<th rowspan="2">NO</th>
-					<th rowspan="2">PERIODE SKP</th>
-					<th rowspan="2">JABATAN</th>
-					<th colspan="4">CAPAIAN TRIWULAN</th>
-				</tr>
-				<tr>
-					<th>TRIWULAN I</th>
-					<th>TRIWULAN II</th>
-					<th>TRIWULAN III</th>
-					<th>TRIWULAN IV</th>
-				</tr>
-			</thead>
-			
-			
-		</table>
-
 	</div>
 </div>
 

@@ -67,7 +67,7 @@
 			</ul>
  
  
-			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
+			<div class="tab-content"  style="min-height:400px;">
 				
 				<div class="active tab-pane fade" id="detail">
 					@include('pare_pns.modules.edit_forms.skp_tahunan_detail')			
@@ -200,21 +200,24 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
+	var hash = window.location.hash;
+	if ( hash != ''){
+		$('#myTab a[href="' + hash + '"]').tab('show');
+	}else{
+		$('#myTab a[href="#detail"]').tab('show');
+	}
 
 	$('#myTab a').click(function(e) {
 		e.preventDefault();
 		$(this).tab('show');
 	}); 
-
-	
-
 	// store the currently selected tab in the hash value
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
 		//alert(id);
 
-		if ( id == 'detail'){
+		if ( id == 'detail'){ 
 			$('html, body').animate({scrollTop:0}, 0);
 			LoadDetailTab();
 		}else if ( id == 'kegiatan_tahunan_tab'){
@@ -234,18 +237,6 @@ $(document).ready(function() {
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});
-
-
-	
-
-	// on load of the page: switch to the currently selected tab
-	var hash = window.location.hash;
-	if ( hash != ''){
-		$('#myTab a[href="' + hash + '"]').tab('show');
-	}else{
-		$('#myTab a[href="#detail"]').tab('show');
-	}
-	
 
 });
 </script>

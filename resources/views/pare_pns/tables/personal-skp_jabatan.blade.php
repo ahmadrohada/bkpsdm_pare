@@ -9,25 +9,23 @@
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
 	</div> 
-	
-	<div class="box-body table-responsive">
-		<table id="skp_tahunan_table" class="table table-striped table-hover" style="width:100%">
-			<thead>
-				<tr class="success">
-					<th>NO</th>
-					<th>PERIODE</th>
-					<th>TMT</th>
-					<th>JABATAN</th>
-					<th>SKPD</th>
-					<th>POHON KINERJA</th>
+	<div class="row" style="padding:5px 30px; min-height:200px;">
+		<div class="box-body table-responsive">
+			<table id="skp_tahunan_table" class="table table-striped table-hover">
+				<thead>
+					<tr class="success">
+						<th>NO</th>
+						<th>PERIODE</th>
+						<th>TMT</th>
+						<th>JABATAN</th>
+						<th>SKPD</th>
+						<th>POHON KINERJA</th>
 
-					<th>SKP TAHUNAN</th>
-				</tr>
-			</thead>
-			
-			
-		</table>
-
+						<th>SKP TAHUNAN</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 	</div>
 </div>
 
@@ -37,13 +35,19 @@
 
 <script type="text/javascript">
 	$('#skp_tahunan_table').DataTable({
-				processing      : true,
-				serverSide      : true,
-				searching      	: false,
-				paging          : false,
-				order 			: [ 0 , 'desc' ],
-				//dom 			: '<"toolbar">frtip',
-				lengthMenu		: [50,100],
+					destroy			: true,
+					processing      : true,
+					serverSide      : true,
+					searching      	: false,
+					paging          : true,
+					autoWidth		: false,
+					deferRender		: true,
+					bInfo			: false,
+					bSort			: true,
+					lengthChange	: false,
+					order 			: [ 0 , 'desc' ],
+					lengthMenu		: [10,25,50],
+
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,2,5,6 ] }
 								  ],

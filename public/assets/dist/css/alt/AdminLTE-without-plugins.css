@@ -3994,6 +3994,7 @@ table.text-center th {
   }
   .table-responsive {
     overflow: auto;
+    border: none;
   }
   .table-responsive > .table tr th,
   .table-responsive > .table tr td {

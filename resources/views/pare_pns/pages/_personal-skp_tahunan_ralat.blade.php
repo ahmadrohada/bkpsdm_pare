@@ -23,7 +23,7 @@
 			</ul>
 
 
-			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
+			<div class="tab-content"  style="min-height:400px;">
 				<div class="active tab-pane" id="status">
 					@include('pare_pns.modules.timeline.skp_tahunan_status_ralat')	
 				</div>

@@ -1,30 +1,28 @@
 <div class="box {{ $h_box }}">
     <div class="box-header with-border">
         <h1 class="box-title">
-            Data SKPD
+            Data SKPD 
         </h1>
 
         <div class="box-tools pull-right">
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
-    </div>
-	<div class="box-body table-responsive">
-
-		<table id="user_table" class="table table-striped table-hover table-condensed">
-			<thead>
-				<tr class="success">
-					<th>NO</th>
-					<th>NAMA SKPD</th>
-					<th>JM UNIT KERJA</th>
-					<th>JM PEGAWAI</th>
-					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
-				</tr>
-			</thead>
-			
-			
-		</table>
-
+	</div>
+	<div class="row" style="padding:5px 30px; min-height:200px;">
+		<div class="box-body table-responsive">
+			<table id="user_table" class="table table-striped table-hover table-condensed">
+				<thead>
+					<tr class="success">
+						<th>NO</th>
+						<th>NAMA SKPD</th>
+						<th>JM UNIT KERJA</th>
+						<th>JM PEGAWAI</th>
+						<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 	</div>
 </div>
 

@@ -8,24 +8,22 @@
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
-    </div>
-	<div class="box-body table-responsive">
-
-		<table id="skp_bulanan_table" class="table table-striped table-hover table-condensed">
-			<thead>
-				<tr class="success">
-					<th>NO</th>
-					<th>PERIODE</th>
-					<th>BULAN</th>
-					<th>PELAKSANAAN</th>
-					<th>JABATAN</th>
-					<th>CAPAIAN</th>
-				</tr>
-			</thead>
-			
-			
-		</table>
-
+	</div>
+	<div class="row" style="padding:5px 30px; min-height:200px;">
+		<div class="box-body table-responsive">
+			<table id="skp_bulanan_table" class="table table-striped table-hover">
+				<thead>
+					<tr class="success">
+						<th>NO</th>
+						<th>PERIODE</th>
+						<th>BULAN</th>
+						<th>PELAKSANAAN</th>
+						<th>JABATAN</th>
+						<th>CAPAIAN</th> 
+					</tr>
+				</thead>
+			</table>
+		</div>
 	</div>
 </div>
 

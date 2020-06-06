@@ -55,7 +55,7 @@
 	
 </div>
 
-@include('pare_pns.modals.tugas_tambahan')
+{{-- @include('pare_pns.modals.tugas_tambahan') --}}
 <script type="text/javascript">
 
   	function load_tugas_tambahan(){

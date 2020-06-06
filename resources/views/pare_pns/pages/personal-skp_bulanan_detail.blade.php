@@ -27,7 +27,7 @@
 			</ul>
 
 
-			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
+			<div class="tab-content"  style="min-height:400px;">
 				<div class="active tab-pane fade" id="detail">
 					@include('pare_pns.modules.edit_forms.skp_bulanan_detail')
 				</div>
@@ -46,7 +46,7 @@
 
 					<!-- 3. KASUBID -->
 					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('pare_pns.tables.skp_bulanan-kegiatan_3_detail')
+						@include('pare_pns.tables.skp_bulanan-kegiatan_3')
 					@endif
 
 					<!-- 4. PELAKSANA -->

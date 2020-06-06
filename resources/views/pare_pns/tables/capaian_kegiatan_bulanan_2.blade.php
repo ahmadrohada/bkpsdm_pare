@@ -1,47 +1,25 @@
-{{-- <div class="row">
-	<div class="col-md-12">
+<div class="box-body table-responsive">
+	<div class="toolbar">
 
-<!--====================== KEGIATAN BULANAN LIST =========================================== -->
-		<div class="box box-primary" id='kegiatan_bulanan'>
-			<div class="box-header with-border">
-				<h1 class="box-title">
-					List Realisasi Rencana Aksi Eselon III.b
-				</h1>
-
-				<div class="box-tools pull-right">
-				
-				</div>
-			</div> --}}
-			<div class="box-body table-responsive">
-
-				<div class="toolbar">
-
-				</div>
-
-				<table id="realisasi_kegiatan_bulanan_table" class="table table-striped table-hover" >
-					<thead>
-						<tr>
-							<th rowspan="2">NO</th>
-							<th rowspan="2">RENCANA AKSI</th>
-							<th rowspan="2">PENGAWAS</th>
-							<th rowspan="2">PELAKSANA</th>
-							<th colspan="3">OUTPUT</th>
-							<th rowspan="2"><i class="fa fa-cog"></i></th>
-						</tr>
-						<tr>
-						
-							<th>TARGET</th>
-							<th>REALISASI</th>
-							<th>%</th>
-						</tr>
-					</thead>
-							
-				</table>
-
-			</div>
-		{{-- </div>
 	</div>
-</div> --}}
+		<table id="realisasi_kegiatan_bulanan_table" class="table table-striped table-hover" >
+			<thead>
+				<tr>
+					<th rowspan="2">NO</th>
+					<th rowspan="2">RENCANA AKSI</th>
+					<th rowspan="2">PENGAWAS</th>
+					<th rowspan="2">PELAKSANA</th>
+					<th colspan="3">OUTPUT</th>
+					<th rowspan="2"><i class="fa fa-cog"></i></th>
+				</tr>
+			<tr>	
+				<th>TARGET</th>
+				<th>REALISASI</th>
+				<th>%</th>
+			</tr>
+		</thead>			
+	</table>
+</div>
 
 @include('pare_pns.modals.realisasi_rencana_aksi_kabid')
 
@@ -53,8 +31,8 @@
 		
 		var table_skp_bulanan = $('#realisasi_kegiatan_bulanan_table').DataTable({
 				destroy			: true,
-				processing      : false,
-				serverSide      : false,
+				processing      : true,
+				serverSide      : true,
 				searching      	: true,
 				paging          : true,
 				order 			: [0 , 'asc' ],

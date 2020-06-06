@@ -119,7 +119,7 @@ class CapaianTahunanAPIController extends Controller {
            $datatables = Datatables::of($skp)
              ->addColumn('periode', function ($x) {
                 //return  Pustaka::Tahun($x->tgl_mulai);
-                return $x->Renja->Periode->label;
+                return Pustaka::periode_tahun($x->Renja->Periode->label);
             }) 
             ->addColumn('pelaksanaan', function ($x) {
                 $masa_penilaian = Pustaka::balik($x->tgl_mulai). ' s.d ' . Pustaka::balik($x->tgl_selesai);
@@ -742,7 +742,9 @@ class CapaianTahunanAPIController extends Controller {
 
         }else if ( $jenis_jabatan == 2){ //kabid
             //cari bawahan bawahan nya
-
+            $jm_kegiatan = 0 ;
+            $jm_realisasi = 0 ;
+            $nilai_capaian_kegiatan_tahunan = 0 ;
        
         }else if ( $jenis_jabatan == 1){ //KABAN
             //cari bawahan bawahan nya

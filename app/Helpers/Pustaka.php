@@ -133,6 +133,16 @@ class Pustaka {
 
 	}
 	
+	public static function periode_tahun($data){
+		if ( $data != null ){
+			$x			= explode(' ',$data);
+		}else{
+			$x = "0 0";
+		}
+	return $x[1];
+
+	}
+
 	public static function balik($data){
 		$tanggal = substr($data,8,2); 
 		$bulan = substr($data,5,2); 

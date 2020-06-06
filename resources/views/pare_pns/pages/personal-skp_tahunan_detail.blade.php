@@ -68,7 +68,7 @@
 			</ul>
 
  
-			<div class="tab-content"  style="margin-left:10px; min-height:400px;">
+			<div class="tab-content"  style="min-height:400px;">
 				{{-- <div class="active tab-pane" id="status">
 
 					<!-- ALL jabatan is one status edit -->
@@ -241,7 +241,6 @@ $(document).ready(function() {
 		}else if ( id == 'tugas_tambahan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
 			LoadTugasTambahanTab();
-			
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});

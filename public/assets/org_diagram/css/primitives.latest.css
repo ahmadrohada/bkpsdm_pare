@@ -31,7 +31,7 @@
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 14px;
+    font-size: 11px;
     line-height: 16px;
     color: white;
     padding: 0;
@@ -52,7 +52,7 @@
 }
 
 .bp-jabatan {
-    font-size: 10px;
+    font-size: 7pt;
     line-height: 12px;
 }
 

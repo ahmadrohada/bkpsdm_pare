@@ -9,28 +9,26 @@
 
 		</div>
 	</div>
-	<div class="box-body table-responsive">
-
-		<div class="toolbar">
+	<div class="row" style="padding:5px 30px; min-height:200px;">
+		<div class="box-body table-responsive">
 			<span data-toggle="tooltip" title="Create Report"><a class="btn btn-info btn-xs create_tpp_report "><i class="fa fa-plus"></i> Create TPP Report</a></span>
+			<div class="toolbar">
+				
+			</div>
+			<table id="skpd_tpp_report_list_table" class="table table-striped table-hover table-condensed">
+				<thead>
+					<tr class="success">
+						<th>NO</th>
+						<th>PERIODE</th>
+						<th>NAMA ADMIN</th>
+						<th>JUMLAH DATA</th>
+						<th>CREATED AT</th>
+						<th>STATUS</th>
+						<th><i class="fa fa-cog"></i></th>
+					</tr>
+				</thead>
+			</table>
 		</div>
-
-		<table id="skpd_tpp_report_list_table" class="table table-striped table-hover table-condensed">
-			<thead>
-				<tr class="success">
-					<th>NO</th>
-					<th>PERIODE</th>
-					<th>NAMA ADMIN</th>
-					<th>JUMLAH DATA</th>
-					<th>CREATED AT</th>
-					<th>STATUS</th>
-					<th><i class="fa fa-cog"></i></th>
-				</tr>
-			</thead>
-
-
-		</table>
-
 	</div>
 </div>
 @include('pare_pns.modals.create-tpp_report')
@@ -76,13 +74,18 @@
 
 
 	$('#skpd_tpp_report_list_table').DataTable({
-					processing: true,
-					serverSide: true,
-					searching: false,
-					paging: false,
-					order: [2, 'desc'],
-					//dom 			: '<"toolbar">frtip',
-					lengthMenu: [50, 100],
+					destroy			: true,
+					processing      : true,
+					serverSide      : true,
+					searching      	: true,
+					paging          : true,
+					autoWidth		: false,
+					deferRender		: true,
+					bInfo			: false,
+					bSort			: true,
+					lengthChange	: false,
+					order 			: [ 2 , 'desc' ],
+					lengthMenu		: [10,25,50],
 					columnDefs: [
 									{className: "text-center",targets: [0,1,2,3,4,5,6]}
 								],

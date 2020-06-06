@@ -11,7 +11,7 @@
     </div>
 	<div class="box-body table-responsive">
 
-		<table id="capaian_tahunan_table" class="table table-striped table-hover table-condensed">
+		<table id="capaian_tahunan_table" class="table table-striped table-hover">
 			<thead>
 				<tr class="success">
 					<th>NO</th>
@@ -38,7 +38,7 @@
 				serverSide      : true,
 				searching      	: false,
 				paging          : false,
-				order 			: [ 2 , 'desc' ],
+				order 			: [ 1 , 'asc' ],
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [

@@ -8,26 +8,24 @@
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
-    </div>
-	<div class="box-body table-responsive">
-
-		<table id="user_table" class="table table-striped table-hover table-condensed">
-			<thead>
-				<tr class="success">
-					<th>NO</th>
-					<th>NIP</th>
-					<th>NAMA LENGKAP</th>
-					<th>GOL</th>
-					<th>JABATAN</th>
-					<th>ESL</th>
-					<th>SKPD</th>
-					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
-				</tr>
-			</thead>
-			
-			
-		</table>
-
+	</div>
+	<div class="row" style="padding:5px 30px; min-height:200px;">
+		<div class="box-body table-responsive">
+			<table id="user_table" class="table table-striped table-hover">
+				<thead>
+					<tr class="success">
+						<th>NO</th>
+						<th>NIP</th>
+						<th>NAMA LENGKAP</th>
+						<th>GOL</th>
+						<th>JABATAN</th>
+						<th>ESL</th>
+						<th>SKPD</th>
+						<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 	</div>
 </div>
 
@@ -41,13 +39,18 @@
 		//alert();
 		
 		$('#user_table').DataTable({
-				processing      : true,
-				serverSide      : true,
-				searching      	: true,
-				paging          : true,
-				//order 			: [ 3 , 'asc' ],
-				//dom 			: '<"toolbar">frtip',
-				lengthMenu		: [20,50,100],
+					destroy			: true,
+					processing      : true,
+					serverSide      : true,
+					searching      	: true,
+					paging          : true,
+					autoWidth		: false,
+					deferRender		: true,
+					bInfo			: false,
+					bSort			: true,
+					lengthChange	: false,
+					//order 			: [ 0 , 'desc' ],
+					lengthMenu		: [10,25,50],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,3,5,7] }/* ,
 									{	className: "hidden", targets: [5] } */

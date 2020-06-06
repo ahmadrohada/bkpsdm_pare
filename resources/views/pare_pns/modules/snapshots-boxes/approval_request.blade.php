@@ -7,12 +7,7 @@
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
            </div>
 	</div>
-	
-	
-	
-
-
-	<div class="box-body">
+	<div class="box-body" style="padding:20px 20px 0px 20px;">
 		<div class="row">
 			<div class="col-md-3 col-xs-6">
 				<div class="small-box bg-teal capaian_bulanan" style="cursor:pointer;">

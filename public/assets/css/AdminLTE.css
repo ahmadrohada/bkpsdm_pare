@@ -1233,7 +1233,7 @@ a:focus {
  * ---------------
  */
 .form-control {
-  border-radius: 0;
+  border-radius: 3px;
   box-shadow: none;
   border-color: #d2d6de;
 }
@@ -1896,11 +1896,13 @@ a:focus {
   box-shadow: none;
 }
 .box-body {
+  margin-top : 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
-  padding: 10px;
+  border: none !important;
+  /* padding: 10px; */
 }
 .no-header .box-body {
   border-top-right-radius: 3px;
@@ -2674,7 +2676,7 @@ a:focus {
 }
 .nav-tabs-custom > .tab-content {
   background: #fff;
-  padding: 10px;
+  padding: 25px 20px;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }
@@ -2704,7 +2706,9 @@ a:focus {
 /* PAGINATION */
 .pagination > li > a {
   background: #fafafa;
-  color: #666;
+  color: rgb(145, 145, 145);
+  padding: 4px 10px;
+  font-size:11px;
 }
 .pagination.pagination-flat > li > a {
   border-radius: 0 !important;
