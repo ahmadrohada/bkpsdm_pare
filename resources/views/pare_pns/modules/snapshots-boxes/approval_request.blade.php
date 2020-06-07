@@ -9,7 +9,7 @@
 	</div>
 	<div class="box-body" style="padding:20px 20px 0px 20px;">
 		<div class="row">
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-teal capaian_bulanan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -24,12 +24,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-6">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-purple capaian_tahunan" style="cursor:pointer;" >
 					<div class="inner">
 						<h3>
 							*
-							
 						</h3>
 						<p>
 							<strong>Capaian Tahunan</strong>
@@ -40,31 +39,19 @@
 					</div>
 				</div>
 			</div>
-
-
-
 		</div>
 	</div>
 </div>
 
 
 <script>
-
-   
 	$(".renja").click(function(){
 		window.location.assign("renja_approval-request");
 	});
-	
 	$(".capaian_bulanan").click(function(){
 		window.location.assign("capaian_bulanan_approval-request");
     });
-
 	$(".capaian_tahunan").click(function(){
 		window.location.assign("capaian_tahunan_approval-request");
     });
-
-	
-
-	
-
 </script>

@@ -8,25 +8,23 @@
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
-    </div>
-	<div class="box-body table-responsive">
-
-		<table id="capaian_tahunan_table" class="table table-striped table-hover">
-			<thead>
-				<tr class="success">
-					<th>NO</th>
-					<th>PERIODE</th>
-					<th>PELAKSANAAN</th>
-					<th>JABATAN</th>
-					<th>CAPAIAN</th>
-					<th><i class="fa fa-cog"></i></th> 
-				</tr>
-			</thead>
-			
-			
-		</table>
-
 	</div>
+	<div class="row" style="padding:5px 30px; min-height:200px;">
+		<div class="box-body table-responsive">
+			<table id="capaian_tahunan_table" class="table table-striped table-hover">
+				<thead>
+					<tr class="success">
+						<th>NO</th>
+						<th>PERIODE</th>
+						<th>PELAKSANAAN</th>
+						<th>JABATAN</th>
+						<th>CAPAIAN</th>
+						<th><i class="fa fa-cog"></i></th> 
+					</tr>
+				</thead>
+			</table>
+		</div>
+	<div class="row" style="padding:5px 30px; min-height:200px;">
 </div>
 
 
@@ -34,13 +32,18 @@
 
 <script type="text/javascript">
 	$('#capaian_tahunan_table').DataTable({
+				destroy			: true,
 				processing      : true,
 				serverSide      : true,
-				searching      	: false,
-				paging          : false,
+				searching      	: true,
+				paging          : true,
+				autoWidth		: false,
+				deferRender		: true,
+				bInfo			: false,
+				bSort			: true,
+				lengthChange	: true,
 				order 			: [ 1 , 'asc' ],
-				//dom 			: '<"toolbar">frtip',
-				lengthMenu		: [50,100],
+				lengthMenu		: [20,45,80],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,2,4,5] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */

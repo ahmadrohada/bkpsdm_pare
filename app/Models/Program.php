@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Program extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
     protected $table = 'renja_program';
-    protected $dates = ['deleted_at'];
+    //protected $dates = ['deleted_at'];
 
 
     

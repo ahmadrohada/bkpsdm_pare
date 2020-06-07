@@ -67,6 +67,11 @@
 
 	$('.unit_kerja').select2();
 
+	$('.cetak-tpp_report_modal').on('hidden.bs.modal', function(){
+		$('.unit_kerja').val("").trigger('change');
+	})
+
+
 	$('.cetak-tpp_report_modal').on('shown.bs.modal', function(){
 		var tpp_report_id = $('.tpp_report_id').val();
 		$('.unit_kerja').select2({

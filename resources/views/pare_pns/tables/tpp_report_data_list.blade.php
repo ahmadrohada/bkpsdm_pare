@@ -16,10 +16,8 @@
 	
 </style>
 
-<div class="table-responsive" style="">
-
+<div class="box-body table-responsive">
 	<table id="tpp_report_table" class="table table-striped table-hover">
-
 		<thead>
 			<tr>
 				<th rowspan="2" class="no-sort" width="23px;">NO</th>
@@ -47,12 +45,8 @@
 				<th>JM TPP ( Rp. )</th>
 			</tr>
 		</thead>
-
-
 	</table>
-
 </div>
-
 
 
 @include('pare_pns.modals.tpp_report_data')
@@ -66,154 +60,157 @@
 
 	function load_table_tpp() {
 		$('#tpp_report_table').DataTable({
-			destroy: true,
-			processing: true,
-			serverSide: true,
-			searching: true,
-			paging: true,
-			lengthMenu: [50, 100],
-			columnDefs: [{
-					className: "text-center",
-					targets: [0, 2,3,5,8,9,10,13,14,17]
-				},
-				{
-					className: "text-right",
-					targets: [6,7,11,12,15,16]
-				},
-				{ className: "dt-nowrap", "targets": [6,7,11,12,15,16 ] }
+						destroy			: true,
+						processing      : true,
+						serverSide      : true,
+						searching      	: true,
+						paging          : true,
+						autoWidth		: false,
+						deferRender		: true,
+						bInfo			: false,
+						bSort			: true,
+						lengthChange	: true,
+						//order 			: [ 0 , 'desc' ],
+						lengthMenu		: [10,25,50,100],
+						columnDefs	: [	{ className: "text-center",targets: [0, 2,3,5,8,9,10,13,14,17]},
+										{className: "text-right",targets: [6,7,11,12,15,16]},
+										{ className: "dt-nowrap", "targets": [6,7,11,12,15,16 ] },
+										@if ( request()->segment(5) == 'edit' )
+											{ "visible": true, "targets": [17]}
+										@else
+											{ "visible": false, "targets": [17]}
+										@endif
 
-			],
-			ajax: {
-				url: '{{ url("api_resource/skpd_tpp_report_data_list") }}',
-				data: {
-					tpp_report_id: {{ $tpp_report->id }}
-				},
+									],
+						ajax		: {
+										url: '{{ url("api_resource/skpd_tpp_report_data_list") }}',
+										data: { tpp_report_id: {{ $tpp_report->id }}},
 
-			},
+										},
 
 
-			columns: [{
-					data: 'tpp_report_data_id',
-					orderable: false,
-					searchable: false,
-					"render": function(data, type, row, meta) {
-						return meta.row + meta.settings._iDisplayStart + 1;
-					}
-				}, 
-				{
-					data: "nama_pegawai",
-					name: "nama_pegawai",
-					orderable: false,
-					searchable: true,
-				},
-				{
-					data: "nip_pegawai",
-					name: "nip_pegawai",
-					orderable: false,
-					searchable: false
-				},
-				{
-					data: "gol",
-					name: "gol",
-					orderable: false,
-					searchable: false
-				},
-				
-				{
-					data: "jabatan",
-					name: "jabatan",
-					orderable: false,
-					searchable: false
-				},
-				
-				{
-					data: "eselon",
-					name: "eselon",
-					orderable: false,
-					searchable: false
-				},
-				{
-					data: "tunjangan",
-					name: "tunjangan",
-					orderable: false,
-					searchable: false,
-					
-				},
-				{
-					data: "tpp_kinerja",
-					name: "tpp_kinerja",
-					orderable: false,
-					searchable: false,
-				},
-				{
-					data: "capaian",
-					name: "capaian",
-					orderable: false,
-					searchable: false,
-					width: "120px"
-				},
-				{
-					data: "skor",
-					name: "skor",
-					orderable: false,
-					searchable: false,
-				},
-				{
-					data: "potongan_kinerja",
-					name: "potongan_kinerja",
-					orderable: false,
-					searchable: false,
-				},
-				{
-					data: "jm_tpp_kinerja",
-					name: "jm_tpp_kinerja",
-					orderable: false,
-					searchable: false,
-				},
-				{
-					data: "tpp_kehadiran",
-					name: "tpp_kehadiran",
-					orderable: false,
-					searchable: false,
-				},
-				{
-					data: "skor_kehadiran",
-					name: "skor_kehadiran",
-					orderable: false,
-					searchable: false
-				},
-				{
-					data: "potongan_kehadiran",
-					name: "potongan_kehadiran",
-					orderable: false,
-					searchable: false
-				},
-				{
-					data: "jm_tpp_kehadiran",
-					name: "jm_tpp_kehadiran",
-					orderable: false,
-					searchable: false
-				},
-				{
-					data: "total_tpp",
-					name: "total_tpp",
-					orderable: false,
-					searchable: false
-				},
+						columns		: [{
+											data: 'tpp_report_data_id',
+											orderable: false,
+											searchable: false,
+											"render": function(data, type, row, meta) {
+												return meta.row + meta.settings._iDisplayStart + 1;
+											}
+									}, 
+									{
+										data: "nama_pegawai",
+										name: "nama_pegawai",
+										orderable: false,
+										searchable: true,
+									},
+									{
+										data: "nip_pegawai",
+										name: "nip_pegawai",
+										orderable: false,
+										searchable: false
+									},
+									{
+										data: "gol",
+										name: "gol",
+										orderable: false,
+										searchable: false
+									},
+									
+									{
+										data: "jabatan",
+										name: "jabatan",
+										orderable: false,
+										searchable: false
+									},
+									
+									{
+										data: "eselon",
+										name: "eselon",
+										orderable: false,
+										searchable: false
+									},
+									{
+										data: "tunjangan",
+										name: "tunjangan",
+										orderable: false,
+										searchable: false,
+										
+									},
+									{
+										data: "tpp_kinerja",
+										name: "tpp_kinerja",
+										orderable: false,
+										searchable: false,
+									},
+									{
+										data: "capaian",
+										name: "capaian",
+										orderable: false,
+										searchable: false,
+										width: "120px"
+									},
+									{
+										data: "skor",
+										name: "skor",
+										orderable: false,
+										searchable: false,
+									},
+									{
+										data: "potongan_kinerja",
+										name: "potongan_kinerja",
+										orderable: false,
+										searchable: false,
+									},
+									{
+										data: "jm_tpp_kinerja",
+										name: "jm_tpp_kinerja",
+										orderable: false,
+										searchable: false,
+									},
+									{
+										data: "tpp_kehadiran",
+										name: "tpp_kehadiran",
+										orderable: false,
+										searchable: false,
+									},
+									{
+										data: "skor_kehadiran",
+										name: "skor_kehadiran",
+										orderable: false,
+										searchable: false
+									},
+									{
+										data: "potongan_kehadiran",
+										name: "potongan_kehadiran",
+										orderable: false,
+										searchable: false
+									},
+									{
+										data: "jm_tpp_kehadiran",
+										name: "jm_tpp_kehadiran",
+										orderable: false,
+										searchable: false
+									},
+									{
+										data: "total_tpp",
+										name: "total_tpp",
+										orderable: false,
+										searchable: false
+									},
 
-				{
-					data: "status",
-					orderable: false,
-					searchable: false,
-					"render": function(data, type, row) {
-					
-							return '<span  data-toggle="tooltip" title="Ubah Data" style="margin:1px;" ><a class="btn btn-info btn-xs ubah_tpp_report_data_id"  data-id="' + row.tpp_report_data_id + '"><i class="fa fa-edit" ></i></a></span>';
-						
+									{
+										data: "status",
+										orderable: false,
+										searchable: false,
+										"render": function(data, type, row) {
+										
+												return '<span  data-toggle="tooltip" title="Ubah Data" style="margin:1px;" ><a class="btn btn-info btn-xs ubah_tpp_report_data_id"  data-id="' + row.tpp_report_data_id + '"><i class="fa fa-edit" ></i></a></span>';
+											
 
-					}
-				}
+										}
+									}
 
-			]
+						]
 
 		});
 	};

@@ -43,7 +43,7 @@
 
 
 
-        <div class="box-body" style="margin-top:-20px;">
+        <div class="box-body" style="margin-top:-20px; padding:10px 20px;">
                 <input type="hidden" class="user_id" value="{{ $user_id }}" >
                 <hr>
                 <strong><i class="fa fa-user margin-r-5"></i> Usename</strong>

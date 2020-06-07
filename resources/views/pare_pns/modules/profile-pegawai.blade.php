@@ -9,10 +9,10 @@
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
     </div>
-	<div class="box-body" style="margin-left:20px;">
+	<div class="box-body" style="padding:10px 30px;">
 
                 
-                <strong><i class="fa fa-university margin-r-5"></i> SKPD</strong>
+                <strong><i class="fa fa-university margin-r-5 "></i> SKPD</strong>
                 <p class="text-muted">
                 {{ $skpd }}
                 </p>

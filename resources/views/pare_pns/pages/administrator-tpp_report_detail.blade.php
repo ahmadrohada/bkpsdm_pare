@@ -26,7 +26,7 @@ TPP Report {{ Pustaka::capital_string($tpp_report->skpd->nama_skpd) }}
 					@include('pare_pns.modules.timeline.tpp_report_status_edit')
 				</div>
 				<div class=" tab-pane fade" id="tpp_report_data">
-					@include('pare_pns.tables.skpd-tpp_report_detail_data_list')
+					@include('pare_pns.tables.tpp_report_data_list')
 				</div>
 
 			</div>

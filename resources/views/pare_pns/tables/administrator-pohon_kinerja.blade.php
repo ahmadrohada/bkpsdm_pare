@@ -33,18 +33,18 @@
 <script type="text/javascript">
 	
 		$('#renja_table').DataTable({
-			destroy			: true,
-					processing      : true,
-					serverSide      : true,
-					searching      	: true,
-					paging          : true,
-					autoWidth		: false,
-					deferRender		: true,
-					bInfo			: false,
-					bSort			: true,
-					lengthChange	: false,
-					order 			: [ 0 , 'desc' ],
-					lengthMenu		: [10,25,50],
+				destroy			: true,
+				processing      : true,
+				serverSide      : true,
+				searching      	: true,
+				paging          : true,
+				autoWidth		: false,
+				deferRender		: true,
+				bInfo			: false,
+				bSort			: true,
+				lengthChange	: false,
+				order 			: [ 0 , 'desc' ],
+				lengthMenu		: [10,25,50],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,4,5 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */

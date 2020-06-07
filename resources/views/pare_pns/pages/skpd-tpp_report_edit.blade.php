@@ -28,7 +28,7 @@
 					@include('pare_pns.modules.timeline.tpp_report_status_edit')
 				</div>
 				<div class=" tab-pane fade" id="tpp_report_data">
-					@include('pare_pns.tables.skpd-tpp_report_edit_data_list')
+					@include('pare_pns.tables.tpp_report_data_list')
 				</div>
 
 			</div>

@@ -16,8 +16,7 @@ table{
 
 </style>
 
-<div class="table-responsive" style="margin:20px 10px 10px 10px; ">
-
+<div class="box-body table-responsive">
 	<table id="tpp_report_table" class="table table-striped table-hover">
 
 		<thead>
@@ -65,12 +64,18 @@ table{
 
 	function load_table_tpp() {
 		$('#tpp_report_table').DataTable({
-			destroy: true,
-			processing: true,
-			serverSide: true,
-			searching: true,
-			paging: true,
-			lengthMenu: [50, 100],
+			destroy			: true,
+			processing      : true,
+			serverSide      : true,
+			searching      	: true,
+			paging          : true,
+			autoWidth		: false,
+			deferRender		: true,
+			bInfo			: true,
+			bSort			: true,
+			lengthChange	: true,
+			//order 			: [ 5 , 'desc' ],
+			lengthMenu		: [20,50,100],
 			columnDefs: [{
 					className: "text-center",
 					targets: [0, 2,3,5,8,9,10,13,14]

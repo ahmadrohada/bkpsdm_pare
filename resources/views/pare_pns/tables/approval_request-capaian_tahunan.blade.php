@@ -8,37 +8,39 @@
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
-    </div>
-	<div class="box-body table-responsive">
-
-		<table id="approval_request_capaian_tahunan_table" class="table table-striped table-hover table-condensed">
-			<thead>
-				<tr class="success">
-					<th>NO</th>
-					<th>PERIODE</th>
-					<th>NAMA</th>
-					<th>JABATAN</th>
-					<th><i class="fa fa-cog"></i></th>
-				</tr>
-			</thead>
-			
-			
-		</table>
-
+	</div>
+	<div class="row" style="padding:5px 30px; min-height:200px;">
+		<div class="box-body table-responsive">
+			<table id="approval_request_capaian_tahunan_table" class="table table-striped table-hover table-condensed">
+				<thead>
+					<tr class="success">
+						<th>NO</th>
+						<th>PERIODE</th>
+						<th>NAMA</th>
+						<th>JABATAN</th>
+						<th><i class="fa fa-cog"></i></th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
 		
 	$('#approval_request_capaian_tahunan_table').DataTable({
+				destroy			: true,
 				processing      : true,
 				serverSide      : true,
-				type			: "post",
-				searching      	: false,
-				paging          : false,
+				searching      	: true,
+				paging          : true,
+				autoWidth		: false,
+				deferRender		: true,
+				bInfo			: false,
+				bSort			: true,
+				lengthChange	: true,
 				order 			: [ 0 , 'desc' ],
-				//dom 			: '<"toolbar">frtip',
-				lengthMenu		: [50,100],
+				lengthMenu		: [20,45,80],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,4 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */

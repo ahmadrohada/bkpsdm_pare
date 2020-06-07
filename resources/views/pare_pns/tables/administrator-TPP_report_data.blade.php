@@ -8,26 +8,24 @@
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
-    </div>
-	<div class="box-body table-responsive">
-
-		<table id="tpp_data_table" class="table table-striped table-hover table-condensed">
-			<thead>
-				<tr class="success">
-					<th>NO</th>
-					<th>PERIODE</th>
-					<th>SKPD</th>
-					<th>NAMA ADMIN</th>
-					<th>JUMLAH DATA</th>
-					<th>CREATED AT</th>
-					<th>STATUS</th>
-					<th><i class="fa fa-cog"></i></th>
-				</tr>
-			</thead>
-			
-			
-		</table>
-
+	</div>
+	<div class="row" style="padding:5px 30px; min-height:200px;">
+		<div class="box-body table-responsive">
+			<table id="tpp_data_table" class="table table-striped table-hover table-condensed">
+				<thead>
+					<tr class="success">
+						<th>NO</th>
+						<th>PERIODE</th>
+						<th>SKPD</th>
+						<th>NAMA ADMIN</th>
+						<th>JUMLAH DATA</th>
+						<th>CREATED AT</th>
+						<th>STATUS</th>
+						<th><i class="fa fa-cog"></i></th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 	</div>
 </div>
 
@@ -36,13 +34,18 @@
 <script type="text/javascript">
 
 	$('#tpp_data_table').DataTable({
+				destroy			: true,
 				processing      : true,
 				serverSide      : true,
 				searching      	: true,
 				paging          : true,
+				autoWidth		: false,
+				deferRender		: true,
+				bInfo			: false,
+				bSort			: true,
+				lengthChange	: true,
 				order 			: [ 5 , 'desc' ],
-				//dom 			: '<"toolbar">frtip',
-				lengthMenu		: [50,100],
+				lengthMenu		: [20,45,80],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,4,5,6,7 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */

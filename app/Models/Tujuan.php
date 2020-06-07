@@ -7,17 +7,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tujuan extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
     protected $table = 'renja_tujuan';
-    protected $dates = ['deleted_at'];
-
-
+    //protected $dates = ['deleted_at'];
 
     public function sasaran()
     {
         return $this->hasMany('App\Models\Sasaran');
     }
-
 
     public function misi()
     {
