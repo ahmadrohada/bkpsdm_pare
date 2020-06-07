@@ -8,23 +8,23 @@
             {!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
-    </div>
-	<div class="box-body table-responsive">
+	</div>
+	<div class="row" style="padding:5px 30px; min-height:200px;">
+		<div class="box-body table-responsive">
+			<table id="renja_table" class="table table-striped table-hover table-condensed">
+				<thead>
+					<tr class="success">
+						<th>NO</th>
+						<th>PERIODE</th>
+						<th>KEPALA SKPD</th>
 
-		<table id="renja_table" class="table table-striped table-hover table-condensed">
-			<thead>
-				<tr class="success">
-					<th>NO</th>
-					<th>PERIODE</th>
-					<th>KEPALA SKPD</th>
-
-					<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
-				</tr>
-			</thead>
-			
-			
-		</table>
-
+						<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
+					</tr>
+				</thead>
+				
+				
+			</table>
+		</div>
 	</div>
 </div>
 
@@ -36,13 +36,18 @@
 		//alert();
 		
 		$('#renja_table').DataTable({
+			destroy			: true,
 				processing      : true,
 				serverSide      : true,
-				searching      	: false,
-				paging          : false,
+				searching      	: true,
+				paging          : true,
+				autoWidth		: false,
+				deferRender		: true,
+				bInfo			: false,
+				bSort			: true,
+				lengthChange	: false,
 				order 			: [ 0 , 'desc' ],
-				//dom 			: '<"toolbar">frtip',
-				lengthMenu		: [50,100],
+				lengthMenu		: [10,25,50],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,3 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
