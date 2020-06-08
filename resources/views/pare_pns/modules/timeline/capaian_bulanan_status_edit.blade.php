@@ -16,7 +16,10 @@
 						Pejabat Penilai <a class="pull-right st_pejabat_penilai">-</a>
 					</li>
 					<li class="list-group-item">
-						Jumlah Kegiatan <a class="pull-right st_jm_kegiatan_bulanan" >-</a>
+						Jumlah Kegiatan SKP <a class="pull-right st_jm_kegiatan_bulanan" >-</a>
+					</li>
+					<li class="list-group-item">
+						Jumlah Uraian Tugas Tambahan <a class="pull-right st_jm_uraian_tugas_tambahan" >-</a>
 					</li>
 					<li class="list-group-item">
 						Capaian Kinerja Bulanan <a class="pull-right st_capaian_kinerja_bulanan" >-</a>
@@ -102,6 +105,7 @@
 					$('.st_created_at').html(data['tgl_dibuat']);
 					$('.st_pejabat_penilai').html(data['p_nama']);
 					$('.st_jm_kegiatan_bulanan').html(data['jm_kegiatan_bulanan']);
+					$('.st_jm_uraian_tugas_tambahan').html(data['jm_uraian_tugas_tambahan']);
 					$('.st_capaian_kinerja_bulanan').html(data['capaian_kinerja_bulanan']);
 					$('.st_status_approve').html(data['status_approve']);
 					$('.st_alasan_penolakan').html(data['alasan_penolakan']);

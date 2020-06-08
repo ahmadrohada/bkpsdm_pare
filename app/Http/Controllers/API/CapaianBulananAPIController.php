@@ -23,6 +23,8 @@ use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\KegiatanSKPBulananJFT;
 use App\Models\RealisasiKegiatanBulanan;
+use App\Models\TugasTambahan;
+use App\Models\UraianTugasTambahan;
 
 use App\Helpers\Pustaka;
 use App\Traits\HitungCapaian; 
@@ -239,6 +241,9 @@ class CapaianBulananAPIController extends Controller {
         $jenis_jabatan  = $skp_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
         $renja_id       = $skp_bulanan->SKPTahunan->renja_id;
         $bulan          = $skp_bulanan->bulan;
+
+        //Uraian Tugas Jabatan pada skp bulanan
+        $jm_uraian_tugas_tambahan =  UraianTugasTambahan::WHERE('skp_bulanan_id',$request->get('skp_bulanan_id'))->count();
         
         //Jika STAF AHLI
         $id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
@@ -286,7 +291,7 @@ class CapaianBulananAPIController extends Controller {
                 $jm_kegiatan += $dt_reaksi;
             }
             $list_bawahan  = $pelaksana_list;       
-        //================================= JFU ===========================================//
+        //================================= JFT ===========================================//
         }else if ( $jenis_jabatan == 5 ){
             $jm_kegiatan = KegiatanSKPBulananJFT::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
 
@@ -299,7 +304,13 @@ class CapaianBulananAPIController extends Controller {
         }else if ( $jenis_jabatan == 4 ){
             $jm_kegiatan = KegiatanSKPBulanan::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
        
-            $list_bawahan = "";
+
+            $data_jabatan_id['jabatan']           = "Kegiatan Bulanan Personal";
+            $data_jabatan_id['jm_keg']            = $jm_kegiatan;
+            $data_jabatan_id['jm_realisasi']      = " 0 ";
+            $pelaksana_list[] = $data_jabatan_id ;
+            $list_bawahan  = $pelaksana_list;   
+
             $kegiatan_list = "";
 			$jm_realisasi = "";
         //================================= K A S U B I D ========================================// 
@@ -472,8 +483,10 @@ class CapaianBulananAPIController extends Controller {
                 'periode_label'			=>  Pustaka::bulan($skp_bulanan->bulan),
                 'tgl_mulai'			    =>  Pustaka::tgl_form($skp_bulanan->tgl_mulai),
                 'tgl_selesai'			=>  Pustaka::tgl_form($skp_bulanan->tgl_selesai),
-                'jm_kegiatan_bulanan'	=>  $jm_kegiatan,
+                'jm_kegiatan_bulanan'	=>  $jm_kegiatan + $jm_uraian_tugas_tambahan,
                 'jm_realisasi'	        =>  $jm_realisasi,
+
+                'jm_uraian_tugas_tambahan'	=>  $jm_uraian_tugas_tambahan,
 
                 'renja_id'	            =>  $skp_bulanan->SKPTahunan->Renja->id,
                 'waktu_pelaksanaan'	    =>  $skp_bulanan->bulan,
@@ -608,10 +621,19 @@ class CapaianBulananAPIController extends Controller {
 
         //HITUNG CAPAIAN KINERJA
         $data_kinerja               = $this->hitung_capaian($capaian_id); 
+
+        //return $data_kinerja;
+
         $jm_capaian                 = $data_kinerja['jm_capaian'];
         $jm_kegiatan_bulanan        = $data_kinerja['jm_kegiatan_bulanan'];
+        $jm_uraian_tugas_tambahan   = $data_kinerja['jm_uraian_tugas_tambahan'];
+        $jm_capaian_uraian_tugas_tambahan   = $data_kinerja['jm_capaian_uraian_tugas_tambahan'];
 
-        $capaian_kinerja_bulanan  = Pustaka::persen2($jm_capaian,$jm_kegiatan_bulanan);
+        $jm_kegiatan_skp            = $jm_kegiatan_bulanan + $jm_uraian_tugas_tambahan;
+        $jm_capaian_kegiatan_skp    = $jm_capaian + $jm_capaian_uraian_tugas_tambahan;
+
+
+        $capaian_kinerja_bulanan  = Pustaka::persen2($jm_capaian_kegiatan_skp,$jm_kegiatan_skp);
 
 
         //HITUNG PENILAIAN KODE ETIK
@@ -631,6 +653,7 @@ class CapaianBulananAPIController extends Controller {
         $response = array(
                 
                 'jm_kegiatan_bulanan'       => $jm_kegiatan_bulanan,
+                'jm_uraian_tugas_tambahan'  => $jm_uraian_tugas_tambahan,
                 'capaian_kinerja_bulanan'   => $capaian_kinerja_bulanan,
                 'capaian_skp_bulanan'       => Pustaka::persen_bulat($capaian_skp_bulanan).' %',
                 'penilaian_kode_etik_id'    => $capaian_bulanan->penilaian_kode_etik_id,

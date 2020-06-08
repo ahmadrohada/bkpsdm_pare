@@ -8,6 +8,8 @@ use App\Models\RencanaAksi;
 use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\KegiatanSKPBulananJFT;
+use App\Models\UraianTugasTambahan;
+
 
 
 use App\Helpers\Pustaka;
@@ -309,6 +311,33 @@ trait HitungCapaian
         $jabatan_id = ( $capaian_bulanan->PejabatYangDinilai ) ? $capaian_bulanan->PejabatYangDinilai->id_jabatan : 0 ;
 
 
+        //Uraian Tugas Jabatan pada skp bulanan
+        $jm_uraian_tugas_tambahan =  UraianTugasTambahan::WHERE('skp_bulanan_id',$skp_bulanan_id)->count();
+
+
+        $cdata = UraianTugasTambahan::
+                                    leftjoin('db_pare_2018.realisasi_uraian_tugas_tambahan AS realisasi', function($join) use($capaian_id){
+                                        $join   ->on('realisasi.uraian_tugas_tambahan_id','=','uraian_tugas_tambahan.id');
+                                        $join   ->where('realisasi.capaian_id','=',$capaian_id);
+                                    })
+                                    ->SELECT('uraian_tugas_tambahan.target','realisasi.realisasi')
+                                    ->WHERE('uraian_tugas_tambahan.skp_bulanan_id','=',$skp_bulanan_id)
+                                    ->get();
+
+        $jm_capaian_uraian_tugas_tambahan = 0 ;
+        $jm_uraian_tugas_tambahan = 0 ;
+
+        foreach ($cdata as $data) {
+            $jm_uraian_tugas_tambahan ++;
+            $jm_capaian_uraian_tugas_tambahan += Pustaka::persen($data->realisasi,$data->target);
+        }
+
+        $data_2 = array(
+                        'jm_uraian_tugas_tambahan'           => $jm_uraian_tugas_tambahan,
+                        'jm_capaian_uraian_tugas_tambahan'   => $jm_capaian_uraian_tugas_tambahan,
+                        );
+
+
         //JENIS JABATAN STAF AHLI
         $id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
         if ( ( $jenis_jabatan == 1 ) & ( in_array( $jabatan_id, $id_jabatan_staf_ahli) ) ){
@@ -341,7 +370,9 @@ trait HitungCapaian
                 'jm_capaian'                => 0,
             ); 
         }
-        return $data;
+
+        
+        return array_merge($data,$data_2);
     }
 
 

@@ -41,7 +41,6 @@
 
 						<div class="form-horizontal col-md-12" style="margin-top:20px;">
 							<div class="form-group form-group-sm header_list" hidden>
-									
 								<label>Bawahan Langsung </label> <label class="pull-right">Kegiatan / Realisasi</label>
 							</div>
 							
