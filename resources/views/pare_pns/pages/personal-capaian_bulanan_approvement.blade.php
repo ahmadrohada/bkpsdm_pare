@@ -15,13 +15,13 @@
 				{!! Breadcrumbs::render('approval_request-capaian_bulanan') !!}
       </section>
 	  
-	    <section class="content">
+	    <section class="content"> 
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="status"><a href="#status" data-toggle="tab">Status </a></li>
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan Bulanan Eselon {!! $capaian->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
-				
+				<li class="uraian_tugas_tambahan_tab"><a href="#uraian_tugas_tambahan_tab" data-toggle="tab">Uraian Tugas Tambahan</a></li>
 			</ul>
 
  
@@ -35,33 +35,33 @@
 						switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': // 1. Eselon II
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli)){ //JIKA IRBAN
-										?>@include('pare_pns.modules.timeline.capaian_bulanan_status_approvement')<?php
+										?>@include('pare_pns.modules.tab.capaian_bulanan_status_approvement')<?php
 									}else{
-										?>@include('pare_pns.modules.timeline.capaian_bulanan_status_approvement')<?php
+										?>@include('pare_pns.modules.tab.capaian_bulanan_status_approvement')<?php
 									}
 									
 									break;
 							case '2': //2. Eselon III
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
-										?>@include('pare_pns.modules.timeline.capaian_bulanan_status_approvement')<?php
+										?>@include('pare_pns.modules.tab.capaian_bulanan_status_approvement')<?php
 									}else{
-										?>@include('pare_pns.modules.timeline.capaian_bulanan_status_approvement')<?php
+										?>@include('pare_pns.modules.tab.capaian_bulanan_status_approvement')<?php
 									}
 									
 									break;
 							case '3':  //3. Eselon IV
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
-										?>@include('pare_pns.modules.timeline.capaian_bulanan_status_approvement')<?php
+										?>@include('pare_pns.modules.tab.capaian_bulanan_status_approvement')<?php
 									}else{
-										?>@include('pare_pns.modules.timeline.capaian_bulanan_status_approvement')<?php
+										?>@include('pare_pns.modules.tab.capaian_bulanan_status_approvement')<?php
 									}
 
 									break;
 							case '4':  //4. JFU 
-									?>@include('pare_pns.modules.timeline.capaian_bulanan_status_approvement')<?php
+									?>@include('pare_pns.modules.tab.capaian_bulanan_status_approvement')<?php
 									break;
 							case '5':   //5. JFT
-									?>@include('pare_pns.modules.timeline.capaian_bulanan_status_approvement')<?php
+									?>@include('pare_pns.modules.tab.capaian_bulanan_status_approvement')<?php
 									break;
 						}
 					?>
@@ -106,6 +106,9 @@
 									break;
 						}
 					?>
+				</div>
+				<div class="tab-pane fade " id="uraian_tugas_tambahan_tab">
+					@include('pare_pns.tables.capaian_bulanan-uraian_tugas_tambahan')
 				</div>
 				
 

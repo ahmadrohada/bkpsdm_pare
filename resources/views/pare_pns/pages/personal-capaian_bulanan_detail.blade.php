@@ -35,33 +35,33 @@
 						switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': // 1. Eselon II
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli)){ //JIKA IRBAN
-										?>@include('pare_pns.modules.timeline.capaian_bulanan_status_detail')<?php
+										?>@include('pare_pns.modules.tab.capaian_bulanan_status')<?php
 									}else{
-										?>@include('pare_pns.modules.timeline.capaian_bulanan_status_detail')<?php
+										?>@include('pare_pns.modules.tab.capaian_bulanan_status')<?php
 									}
 									
 									break;
 							case '2': //2. Eselon III
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
-										?>@include('pare_pns.modules.timeline.capaian_bulanan_status_detail')<?php
+										?>@include('pare_pns.modules.tab.capaian_bulanan_status')<?php
 									}else{
-										?>@include('pare_pns.modules.timeline.capaian_bulanan_status_detail')<?php
+										?>@include('pare_pns.modules.tab.capaian_bulanan_status')<?php
 									}
 									
 									break;
 							case '3':  //3. Eselon IV
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
-										?>@include('pare_pns.modules.timeline.capaian_bulanan_status_detail')<?php
+										?>@include('pare_pns.modules.tab.capaian_bulanan_status')<?php
 									}else{
-										?>@include('pare_pns.modules.timeline.capaian_bulanan_status_detail')<?php
+										?>@include('pare_pns.modules.tab.capaian_bulanan_status')<?php
 									}
 
 									break;
 							case '4':  //4. JFU 
-									?>@include('pare_pns.modules.timeline.capaian_bulanan_status_detail')<?php
+									?>@include('pare_pns.modules.tab.capaian_bulanan_status')<?php
 									break;
 							case '5':   //5. JFT
-									?>@include('pare_pns.modules.timeline.capaian_bulanan_status_detail')<?php
+									?>@include('pare_pns.modules.tab.capaian_bulanan_status')<?php
 									break;
 						}
 					?>

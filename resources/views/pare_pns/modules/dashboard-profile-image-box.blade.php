@@ -22,7 +22,7 @@
                     <li class="a"><a href="#a" data-toggle="tab">Profile </a></li>
                     <li class="c"><a href="#c" data-toggle="tab">Security</a></li>
                 </ul>
-                <div class="tab-content"  style=" min-height:400px; padding:0px;">
+                <div class="tab-content"  style=" min-height:400px;">
                     <div class="active tab-pane" id="a">
                         <div class="box-body" style="margin-top:20px;">
                 

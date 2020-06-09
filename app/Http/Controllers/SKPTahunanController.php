@@ -63,7 +63,7 @@ class SKPTahunanController extends Controller {
         $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
 
         //hanya user ysb yang bisa buka skp tahunan tsb
-        if ( $skp_tahunan->pegawai_id == $user->id_pegawai ){
+        if ( $skp_tahunan->pegawai_id == $user->id_pegawai ){ 
 
             if( ($skp_tahunan->status) == 0 ) {
                 return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
