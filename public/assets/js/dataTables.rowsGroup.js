@@ -41,9 +41,9 @@
 (function($){
 
     ShowedDataSelectorModifier = {
-        order: 'current',
-        page: 'current',
-        search: 'applied',
+        order   : 'current',
+        page    : 'current',
+        search  : 'applied',
     }
     
     GroupedColumnsOrderDir = 'asc';
@@ -91,6 +91,7 @@
         dt.on('page.dt', function ( e, settings) {
             self.mergeCellsNeeded = true;
         })
+
     
         dt.on('length.dt', function ( e, settings) {
             self.mergeCellsNeeded = true;
@@ -233,6 +234,7 @@
             this.order = this._getOrderWithGroupColumns(currentOrder)
             this.table.order($.extend(true, Array(), this.order))
             this.table.draw()
+            //this.table.draw('page')
         },
     };
     

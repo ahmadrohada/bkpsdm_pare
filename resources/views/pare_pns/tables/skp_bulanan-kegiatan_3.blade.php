@@ -28,7 +28,6 @@
 				searching      	: true,
 				paging          : true,
 				autoWidth		: false,
-				deferRender		: true,
 				//lengthChange	: false,
 				order 			: [ 0 , 'asc' ],
 				lengthMenu		: [10,20,50,100,200],

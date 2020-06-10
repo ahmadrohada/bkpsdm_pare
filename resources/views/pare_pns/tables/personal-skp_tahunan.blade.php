@@ -37,7 +37,6 @@
 					searching      	: false,
 					paging          : true,
 					autoWidth		: false,
-					deferRender		: true,
 					bInfo			: false,
 					bSort			: false,
 					lengthChange	: false,

@@ -45,12 +45,12 @@ class RealisasiUraianTugasTambahanAPIController extends Controller {
                                     'realisasi.realisasi',
                                     'realisasi.satuan AS realisasi_satuan'
                                 ])
-                                ->ORDERBY('tugas_tambahan.id','ASC')
+                                ->ORDERBY('uraian_tugas_tambahan.id','ASC')
                                 ->where('skp_bulanan_id', '=' ,$request->get('skp_bulanan_id'))
                                 ->get();
 
         $datatables = Datatables::of($dt)
-                                    ->addColumn('id', function ($x) {
+                                    ->addColumn('uraian_tugas_tambahan_id', function ($x) {
                                     return $x->uraian_tugas_tambahan_id;
                                     })
                                     ->addColumn('realisasi_uraian_tugas_tambahan_id', function ($x) {

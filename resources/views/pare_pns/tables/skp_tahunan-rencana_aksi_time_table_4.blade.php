@@ -1,11 +1,4 @@
-<div class="box box-primary " style="min-height:340px;">
-	<div class="box-header with-border">
-		<h1 class="box-title"> 
-			List Kegiatan Bulanan
-		</h1>
-
-	</div>
-	<div class="box-body table-responsive">
+	<div class="box-body table-responsive"  style="min-height:340px;">
 		<table id="rencana_aksi_time_table" class="table table-striped table-hover">
 			<thead>
 				<tr>
@@ -42,7 +35,6 @@
 			</thead>
 		</table>
 	</div>
-</div>
 
 <script type="text/javascript">
 
@@ -53,7 +45,7 @@
 			serverSide      : true,
 			searching      	: true,
 			paging          : true,
-			lengthMenu		: [50,100,200],
+			lengthMenu		: [25,75,200],
 			bInfo			: true,
 			bSort			: false,
 			columnDefs		: [

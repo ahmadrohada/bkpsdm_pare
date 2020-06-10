@@ -29,7 +29,7 @@
 
 			<div class="tab-content"  style="min-height:400px;">
 				<div class="active tab-pane fade" id="detail">
-					@include('pare_pns.modules.edit_forms.skp_bulanan_detail')
+					@include('pare_pns.modules.tab.skp_bulanan_detail')
 				</div>
 								
 				<div class=" tab-pane fade" id="kegiatan_bulanan_tab">
@@ -81,7 +81,7 @@ $(document).ready(function() {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
 		if ( id == 'kegiatan_bulanan_tab'){
-			load_kegiatan_bulanan();
+			LoadKegiatanBulananTable();
 		}else if ( id == 'detail'){
 			detail_show();
 		}else if ( id == 'uraian_tugas_tambahan_tab'){

@@ -2,7 +2,7 @@
 	<div class="box box-indikator_kegiatan">
 		<div class="box-header with-border">
 			<h1 class="box-title">
-				Detail Indikator Kegiatan
+				Detail Indikator Kegiatan 
 			</h1>
 
 			<div class="box-tools pull-right">

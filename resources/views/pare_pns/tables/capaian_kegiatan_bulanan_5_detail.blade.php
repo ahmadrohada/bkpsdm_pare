@@ -50,7 +50,7 @@
 
 	
 	
-  	function load_kegiatan_bulanan(){
+  	function LoadKegiatanBulananTable(){
 		
 		var table_skp_bulanan = $('#realisasi_kegiatan_bulanan_table').DataTable({
 				destroy			: true,

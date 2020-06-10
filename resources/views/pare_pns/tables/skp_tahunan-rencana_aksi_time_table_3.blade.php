@@ -48,7 +48,6 @@
 			searching      	: true,
 			paging          : true,
 			autoWidth		: false,
-			deferRender		: true,
 			bInfo			: true,
 			bSort			: false,
 			fixedHeader		: true,

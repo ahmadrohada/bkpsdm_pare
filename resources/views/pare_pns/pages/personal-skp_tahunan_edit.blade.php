@@ -70,7 +70,7 @@
 			<div class="tab-content"  style="min-height:400px;">
 				
 				<div class="active tab-pane fade" id="detail">
-					@include('pare_pns.modules.edit_forms.skp_tahunan_detail')			
+					@include('pare_pns.modules.tab.skp_tahunan_detail')			
 				</div>
 				<div class=" tab-pane fade" id="rencana_aksi_tab">
 					@include('pare_pns.modules.tab.rencana_aksi_time_table')

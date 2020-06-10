@@ -37,8 +37,9 @@
 			<div class="col-xs-6 col-md-6" style="padding-left:0px;">
 				<i class="fa fa-user"></i>
 				<span class="text-primary"> PEJABAT PENILAI</span>
-			</div>
+			</div> 
 
+			@if ( (request()->segment(4) == 'edit') | (request()->segment(4) == 'ralat')  )
 						
 			<div class="col-xs-6 col-md-6 no-padding" align="right" style="cursor:pointer;">
 				<span class="btn btn-xs btn-success btn_edit_pejabat " data-toggle="tooltip" data-placement="top" title="Edit Pejabat Penilai"> 
@@ -46,6 +47,8 @@
 				<span class="btn btn-xs btn-danger btn_batal_pejabat hidden" data-toggle="tooltip" data-placement="top" title="Batal"> 
 				<i class="fa fa-refresh" ></i>BATAL</span>
 			</div>
+			
+			@endif
 			<br>
 		</div>
 							

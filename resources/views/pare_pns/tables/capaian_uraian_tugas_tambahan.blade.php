@@ -29,21 +29,22 @@
 <script type="text/javascript">
 
 
-
-	LoadUraianTugasTambahanTable();
 	function LoadUraianTugasTambahanTable(){
 		$('#realisasi_uraian_tugas_tambahan_table').DataTable({
 					destroy			: true,
-					processing      : false,
-					serverSide      : false,
+					processing      : true,
+					serverSide      : true,
 					searching      	: true,
 					paging          : true,
+					autoWidth		: false,
 					bInfo			: false,
-					
+					bSort			: false,
+					lengthChange	: false,
+					//order 			: [ 5 , 'asc' ],
+					//lengthMenu		: [10,25,50],
 					columnDefs		: [
 										{ className: "text-center", targets: [ 0,3,4,5,6 ] },
-										/* { className: "text-right", targets: [ 6 ] }, */
-										{ "orderable": false, targets: [ 2,3,4,5,6 ]  },
+										{ orderable: false, targets: [ 0,1,3,4,5,6 ]  },
 										@if  ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' )  )
 											{ "visible": true, "targets": [6]}
 										@else
@@ -60,7 +61,7 @@
 									},
 					rowsGroup		: [2],
 					columns			: [
-										{ data: 'kegiatan_tahunan_id',width:"30px",
+										{ data: 'uraian_tugas_tambahan_id',name:"uraian_tugas_tambahan_id",width:"30px",
 											"render": function ( data, type, row ,meta) {
 												return meta.row + meta.settings._iDisplayStart + 1 ;
 											}

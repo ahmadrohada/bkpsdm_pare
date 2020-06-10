@@ -1,29 +1,28 @@
-<div class="box-body table-responsive">
+<div class="box-body table-responsive" style="min-height:330px;">
 	<div class="toolbar">
 	</div>
-		<table id="realisasi_kegiatan_bulanan_table" class="table table-striped table-hover" >
-			<thead>
-				<tr>
-					<th rowspan="2">No</th>
-					<th rowspan="2">RENCANA AKSI</th>
-					<th rowspan="2">PELAKSANA</th>
-					<th colspan="3">OUTPUT</th>
-				</tr>
-				<tr>
-					<th>TARGET</th>
-					<th>REALISASI</th>
-					<th>%</th>
-				</tr>
-			</thead>			
-		</table>
-	</div>
+	<table id="realisasi_kegiatan_bulanan_table" class="table table-striped table-hover" >
+		<thead>
+			<tr>
+				<th rowspan="2">No</th>
+				<th rowspan="2">RENCANA AKSI</th>
+				<th rowspan="2">PELAKSANA</th>
+				<th colspan="3">OUTPUT</th>
+			</tr>
+			<tr>
+				<th>TARGET</th>
+				<th>REALISASI</th>
+				<th>%</th>
+			</tr>
+		</thead>			
+	</table>
 </div>
 
 <script type="text/javascript">
 
 	
 	
-  	function load_kegiatan_bulanan(){
+  	function LoadKegiatanBulananTable(){
 		
 		var table_skp_bulanan = $('#realisasi_kegiatan_bulanan_table').DataTable({
 				destroy			: true,
@@ -32,7 +31,6 @@
 				searching      	: true,
 				paging          : true,
 				autoWidth		: false,
-				deferRender	: true,
 				bInfo			: false,
 				bSort			: false,
 				lengthChange	: false,

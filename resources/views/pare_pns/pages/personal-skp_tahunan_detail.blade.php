@@ -77,11 +77,8 @@
 					 
 				</div> --}}
 				<div class="active tab-pane fade" id="detail">
-					@include('pare_pns.modules.edit_forms.skp_tahunan_detail')				
-				</div>
-
-				
-								
+					@include('pare_pns.modules.tab.skp_tahunan_detail')				
+				</div>		
 				<div class=" tab-pane fade" id="kegiatan_tahunan_tab">
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {

@@ -1,48 +1,23 @@
-<div class="row">
-	<div class="col-md-12">
-
-<!--====================== KEGIATAN BULANAN LIST =========================================== -->
-		<div class="box box-primary" id='kegiatan_bulanan'>
-			<div class="box-header with-border">
-				<h1 class="box-title"> 
-					List Realisasi Kegiatan Bulanan 
-				</h1>
-
-				<div class="box-tools pull-right">
-				
-				</div>
-			</div>
-			<div class="box-body table-responsive">
-
-				<div class="toolbar">
-
-				</div>
-
-				<table id="realisasi_kegiatan_bulanan_table" class="table table-striped table-hover" >
-					<thead>
-						<tr>
-							<th rowspan="2">No</th>
-							<th rowspan="2">KEGIATAN BULANAN</th>
-							<th colspan="3">OUTPUT</th>
-							<th rowspan="2"><i class="fa fa-cog"></i></th>
-						</tr>
-						<tr>
-							<th>TARGET</th>
-							<th>REALISASI</th>
-							<th>%</th>
-						</tr>
-					</thead>
-							
-				</table>
-
-			</div>
-		</div>
-
+<div class="box-body table-responsive" style="min-height:330px;">
+	<div class="toolbar">
 	</div>
-
-
-
-	
+	<table id="realisasi_kegiatan_bulanan_table" class="table table-striped table-hover" >
+		<thead>
+			<tr>
+				<th rowspan="2">No</th>
+				<th rowspan="2">KEGIATAN BULANAN</th>
+				<th colspan="3">OUTPUT</th>
+				<th rowspan="2"><i class="fa fa-cog"></i></th>
+				
+				
+			</tr>
+			<tr>
+				<th>TARGET</th>
+				<th>REALISASI</th>
+				<th>%</th>
+			</tr>
+		</thead>
+	</table>
 </div>
 
 @include('pare_pns.modals.realisasi_kegiatan_bulanan')
@@ -51,17 +26,28 @@
 
 	
 	
-  	function load_kegiatan_bulanan(){
+  	function LoadKegiatanBulananTable(){
 		
 		var table_skp_bulanan = $('#realisasi_kegiatan_bulanan_table').DataTable({
 				destroy			: true,
-				processing      : false,
+				processing      : true,
 				serverSide      : true,
-				searching      	: false,
-				paging          : false,
-				order 			: [0 , 'asc' ],
+				searching      	: true,
+				paging          : true,
+				autoWidth		: false,
+				bInfo			: false,
+				bSort			: false,
+				lengthChange	: false,
+				//order 			: [ 5 , 'asc' ],
+				//lengthMenu		: [10,25,50],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3,4,5 ] }
+									{ className: "text-center", targets: [ 0,2,3,4,5 ] },
+									//{ "visible": false, "targets": [5]},
+									@if  ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' )  )
+										{ "visible": true, "targets": [5]}
+									@else
+										{ "visible": false, "targets": [5]}
+									@endif
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/realisasi_kegiatan_bulanan_4") }}',
@@ -72,6 +58,8 @@
 											"skp_bulanan_id" 	: {!! $capaian->SKPBulanan->id !!},
 											"capaian_id" 		: {!! $capaian->id !!},
 									 },
+									cache : true,
+									quietMillis: 500, 
 								},
 				columns			: [
 									{ data: 'kegiatan_bulanan_id' ,width:"30px",
@@ -79,7 +67,7 @@
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 									},
-									{ data: "label", name:"label",
+									{ data: "label", name:"kegiatan_bulanan_label",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_kegiatan_bulanan_id) <= 0 ){
 												return "<span class='text-danger'>"+row.kegiatan_bulanan_label+' / '+row.kegiatan_tahunan_label+"</span>";
@@ -88,7 +76,7 @@
 											}
 										}
 									},
-									{ data: "target", name:"target", width:"130px",
+									{ data: "target", name:"satuan", width:"130px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_kegiatan_bulanan_id) <= 0 ){
 												return "<span class='text-danger'>"+row.target + ' '+ row.satuan+"</span>";
@@ -97,7 +85,7 @@
 											}
 										}
 									},
-									{ data: "realisasi", name:"realisasi", width:"130px",
+									{ data: "realisasi", name:"realisasi_satuan", width:"130px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_kegiatan_bulanan_id) <= 0 ){
 												return "<span class='text-danger'>-</span>";

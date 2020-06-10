@@ -99,7 +99,7 @@
 
 									break;
 							case '4':  //4. PELAKSANA
-									?>@include('pare_pns.tables.capaian_kegiatan_bulanan_4_detail')<?php
+									?>@include('pare_pns.tables.capaian_kegiatan_bulanan_4')<?php
 									break;
 							case '5':   //5. JFT
 									?>@include('pare_pns.tables.capaian_kegiatan_bulanan_5_detail')<?php

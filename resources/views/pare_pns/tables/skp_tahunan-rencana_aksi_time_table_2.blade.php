@@ -41,13 +41,17 @@
 	function rencana_aksi_time_table(){ 
 		var table_rencana_aksi = $('#rencana_aksi_time_table').DataTable({
 			destroy			: true,
-			//processing      : false,
+			processing      : true,
 			serverSide      : true,
 			searching      	: true,
 			paging          : true,
-			lengthMenu		: [20,50,100,200],
+			autoWidth		: false,
 			bInfo			: true,
 			bSort			: false,
+			fixedHeader		: true,
+			lengthChange	: true,
+			//order 		: [ 0 , 'asc' ],
+			lengthMenu		: [25,50,100],
 			columnDefs		: [
 								{ className: "text-center", targets: [ 0,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21 ] },
 								{ className: "text-right", targets: [ 8 ] },

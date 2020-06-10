@@ -21,7 +21,7 @@
 						<strong>Uraian Tugas Tambahan  </strong>
 						<p class="text-info " style="margin-top:8px;">
 							<span class="uraian_tugas_tambahan_label"></span>
-						</p>
+						</p> 
 
 						<i class="fa fa-industry" ></i> <span class="uraian_tugas_tambahan_output" style="margin-right:10px;"></span>
 						{{-- <i class="fa fa-hourglass-start"></i> <span class="uraian_tugas_tambahan_waktu" style="margin-right:10px;"></span>
@@ -201,8 +201,6 @@
 				}).then(function () {
 					$('.modal-realisasi_uraian_tugas_tambahan').modal('hide');
 					$('#realisasi_uraian_tugas_tambahan_table').DataTable().ajax.reload(null,false);
-					
-					
 				},
 					
 					function (dismiss) {
