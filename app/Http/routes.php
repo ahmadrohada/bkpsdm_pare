@@ -1528,26 +1528,37 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'SKPTahunanController@SKPTahunanApproval'
 	]);
 
-	Route::get('capaian_bulanan_approval-request', [
-		'as' 			=> 'personal-capaian_bulanan_approvement',
-		'uses' 			=> 'CapaianBulananController@CapaianBulananApprovalRequestList'
+	
+	//========================================================================================//
+	//=============================       CAPAIAN BAWAHAN          ===========================//
+	//========================================================================================//
+	Route::get('capaian_tahunan_bawahan', [
+		'as' 			=> 'capaian_tahunan_bawahan',
+		'uses' 			=> 'CapaianTahunanController@CapaianTahunanBawahanList'
 	]);
 
-	Route::get('capaian_bulanan_approval-request/{capaian_bulanan_id}', [
+	Route::get('capaian_tahunan_bawahan/{capaian_tahunan_id}', [
 		'as' 			=> '',
-		'uses' 			=> 'CapaianBulananController@CapaianBulananApprovalRequest'
+		'uses' 			=> 'CapaianTahunanController@CapaianTahunanBawahanDetail'
 	]); 
 
 
-	Route::get('capaian_tahunan_approval-request', [
-		'as' 			=> 'personal-capaian_tahunan_approvement',
-		'uses' 			=> 'CapaianTahunanController@CapaianTahunanApprovalRequestList'
+	Route::get('capaian_bulanan_bawahan', [
+		'as' 			=> 'capaian_bulanan_bawahan',
+		'uses' 			=> 'CapaianBulananController@CapaianBulananBawahanList'
 	]);
 
-	Route::get('capaian_tahunan_approval-request/{capaian_tahunan_id}', [
+	Route::get('capaian_bulanan_bawahan_approvement/{capaian_bulanan_id}', [
 		'as' 			=> '',
-		'uses' 			=> 'CapaianTahunanController@CapaianTahunanApprovalRequest'
+		'uses' 			=> 'CapaianBulananController@CapaianBulananBawahanApprovement'
 	]); 
+
+
+	Route::get('capaian_bulanan_bawahan/{capaian_bulanan_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'CapaianBulananController@CapaianBulananBawahanDetail'
+	]); 
+
 
 	
 	//========================================================================================//

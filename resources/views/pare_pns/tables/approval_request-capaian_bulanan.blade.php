@@ -89,16 +89,14 @@
 	$(document).on('click','.approval_capaian_bulanan',function(e){
 		var capaian_bulanan_id = $(this).data('capaian_bulanan_id') ;
 		//alert(skp_tahunan_id);
-
-
-
-		window.location.assign("capaian_bulanan_approval-request/"+capaian_bulanan_id);
+		window.location.assign("capaian_bulanan_bawahan_approvement/"+capaian_bulanan_id);
 	});
 
 	$(document).on('click','.lihat_capaian_bulanan',function(e){
 		var capaian_bulanan_id = $(this).data('capaian_bulanan_id') ;
 		//alert(skp_tahunan_id);
-		window.location.assign("capaian_bulanan_approval-request/"+capaian_bulanan_id);
+		//window.location.assign("capaian_bulanan_approval-request/"+capaian_bulanan_id);
+		window.location.assign("capaian_bulanan_bawahan/"+capaian_bulanan_id);
 	});
 
 	

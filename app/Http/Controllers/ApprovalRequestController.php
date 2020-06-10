@@ -23,7 +23,7 @@ class ApprovalRequestController extends Controller {
 
     public function showDashoard(Request $request)
     {
-        return redirect('/personal/capaian_bulanan_approval-request');
+        return redirect('/personal/capaian_bulanan_bawahan');
     }
 
     

@@ -49,9 +49,9 @@
 		window.location.assign("renja_approval-request");
 	});
 	$(".capaian_bulanan").click(function(){
-		window.location.assign("capaian_bulanan_approval-request");
+		window.location.assign("capaian_bulanan_bawahan");
     });
 	$(".capaian_tahunan").click(function(){
-		window.location.assign("capaian_tahunan_approval-request");
+		window.location.assign("capaian_tahunan_bawahan");
     });
 </script>

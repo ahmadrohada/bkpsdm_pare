@@ -9,7 +9,7 @@
 	 <div class="content-wrapper" >
 	    <section class="content-header">
 			<h1>
-				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-capaian_bulanan_approvement') }}"><span class="fa fa-angle-left"></span></a>
+				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('capaian_bulanan_bawahan') }}"><span class="fa fa-angle-left"></span></a>
 				Capaian Bulanan Aprovement
 			</h1>
 				{!! Breadcrumbs::render('approval_request-capaian_bulanan') !!}

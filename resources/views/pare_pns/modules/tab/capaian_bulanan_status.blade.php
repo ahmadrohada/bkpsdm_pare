@@ -103,10 +103,19 @@
 </div>
 
 
-@if ( request()->segment(4) == 'edit' )
+@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )
+	<?php
+
+		$xd = request()->segment(4); 
+		$attr_name = ( $xd == 'ralat') ? ' kembali ' : '' ;
+					
+			
+
+
+	?>
 	<div class="row">
 		<div class="col-md-12 col-xs-12">
-			<a href="#" class="btn btn-primary btn-block kirim_capaian "><b>Kirim ke Atasan <i class="send_icon"></i></b></a>
+			<a href="#" class="btn btn-primary btn-block kirim_capaian "><b>Kirim {{$attr_name}}ke Atasan <i class="send_icon"></i></b></a>
 		</div>
 	</div>
 @endif

@@ -42,14 +42,14 @@ Use Alert;
 class CapaianTahunanController extends Controller {
 
 
-    public function CapaianTahunanApprovalRequestList(Request $request)
+    public function CapaianTahunanBawahanList(Request $request)
 	{
         
         $user      = \Auth::user();
         $pegawai   = $user->pegawai;       
         
 
-        return view('pare_pns.pages.approval_request-capaian_tahunan', [
+        return view('pare_pns.pages.bawahan-capaian_tahunan', [
                'pegawai' 		        => $pegawai,
                'nama_skpd'     	        => 'x',
                'h_box'                  => 'box-purple',

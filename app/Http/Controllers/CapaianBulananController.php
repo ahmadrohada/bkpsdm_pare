@@ -41,14 +41,14 @@ Use Alert;
 class CapaianBulananController extends Controller {
 
 
-    public function CapaianBulananApprovalRequestList(Request $request)
+    public function CapaianBulananBawahanList(Request $request)
 	{
         
         $user      = \Auth::user();
         $pegawai   = $user->pegawai;       
         
 
-        return view('pare_pns.pages.approval_request-capaian_bulanan', [
+        return view('pare_pns.pages.bawahan-capaian_bulanan', [
                'pegawai' 		        => $pegawai,
                'nama_skpd'     	        => 'x',
                'h_box'                  => 'box-teal',
@@ -58,7 +58,7 @@ class CapaianBulananController extends Controller {
 
     }
 
-    public function CapaianBulananApprovalRequest(Request $request)
+    public function CapaianBulananBawahanApprovement(Request $request)
 	{
 
         $user               = \Auth::user();
@@ -81,6 +81,22 @@ class CapaianBulananController extends Controller {
 
     }
 
+
+    public function CapaianBulananBawahanDetail(Request $request)
+	{
+        $user               = \Auth::user();
+        $capaian_bulanan    = CapaianBulanan::WHERE('id', $request->capaian_bulanan_id)->first();
+        //hanya atasan yang bisa lhat detai capaian bahwan nya
+        if ( $capaian_bulanan->PejabatPenilai->id_pegawai == $user->id_pegawai ){
+            return view('pare_pns.pages.personal-capaian_bulanan_detail', ['capaian'=> $capaian_bulanan]); 
+        }else{
+            return redirect('/dashboard');
+        }
+    }
+
+
+
+//========================= PERSONAL =============================================================================================================//
 
 
     public function PersonalCapaianBulananEdit(Request $request)

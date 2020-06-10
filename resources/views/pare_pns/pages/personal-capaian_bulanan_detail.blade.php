@@ -7,10 +7,16 @@
 
 @section('content')
 	 <div class="content-wrapper" >
-	    <section class="content-header">
+	    <section class="content-header"> 
+			<?php
+					$xd = request()->segment(2); 
+					$route_name = ( $xd == 'capaian_bulanan_bawahan') ? $xd : 'personal-capaian_bulanan' ;
+					$name_role = ( $xd == 'capaian_bulanan_bawahan') ? ' Bawahan ' : '' ;
+					
+			?>
 			<h1>
-				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-capaian_bulanan') }}"><span class="fa fa-angle-left"></span></a>
-				Capaian Bulanan Detail
+				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route($route_name) }}"><span class="fa fa-angle-left"></span></a>
+				Capaian Bulanan {{ $name_role}}Detail
 			</h1>
 				{!! Breadcrumbs::render('personal_detail_capaian_bulanan') !!}
       </section>

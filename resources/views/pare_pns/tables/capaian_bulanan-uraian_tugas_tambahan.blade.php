@@ -44,10 +44,10 @@
 										{ className: "text-center", targets: [ 0,3,4,5,6 ] },
 										/* { className: "text-right", targets: [ 6 ] }, */
 										{ "orderable": false, targets: [ 2,3,4,5,6 ]  },
-										@if ( request()->segment(4) != 'edit' )
-											{ "visible": false, "targets": [6]}
-										@else
+										@if  ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' )  )
 											{ "visible": true, "targets": [6]}
+										@else
+											{ "visible": false, "targets": [6]}
 										@endif
 									],
 					ajax			: {
