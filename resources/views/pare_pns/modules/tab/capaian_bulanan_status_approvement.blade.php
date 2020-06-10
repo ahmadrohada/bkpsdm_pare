@@ -40,7 +40,7 @@
 						<input type="hidden" class="penilaian_kode_etik_id">
 						Penilaian Kode Etik <span class="text-muted"> (bobot 30%)</span>
 						<?php if ( $capaian->status_approve == 0 ) { ?>
-							<a class="btn btn-success btn-xs edit_penilaian_kode_etik" ><i class="fa fa-pencil" ></i></a>
+							<a id="edit_pke" class="btn btn-success btn-xs edit_penilaian_kode_etik" ><i class="fa fa-pencil" ></i></a>
 						<?php } ?>
 						
 						<a class="pull-right st_penilaian_kode_etik" >-</a>
@@ -154,6 +154,13 @@
 						$('#btn_terima').removeClass('penilaian_kode_etik');
 						$('#btn_terima').addClass('terima_capaian_bulanan');
 						$('.penilaian_kode_etik_id').val(data['penilaian_kode_etik_id']);
+
+						$('#edit_pke').addClass('edit_penilaian_kode_etik');
+						$('#edit_pke').removeClass('penilaian_kode_etik');
+						
+					}else{
+						$('#edit_pke').removeClass('edit_penilaian_kode_etik');
+						$('#edit_pke').addClass('penilaian_kode_etik');
 						
 					}
 
