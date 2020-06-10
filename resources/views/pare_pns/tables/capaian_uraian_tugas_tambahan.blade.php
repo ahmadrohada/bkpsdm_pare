@@ -28,7 +28,7 @@
 
 <script type="text/javascript">
 
-
+	
 	function LoadUraianTugasTambahanTable(){
 		$('#realisasi_uraian_tugas_tambahan_table').DataTable({
 					destroy			: true,

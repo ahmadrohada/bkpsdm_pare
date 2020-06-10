@@ -97,9 +97,16 @@ $(document).ready(function() {
 		$(this).tab('show');
 	}); 
 
+	//LoadUraianTugasTambahanTable();
+	//LoadKegiatanBulananTable();
+
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
+		//destroy table agar hide kolom  tidak muncul duluan
+		$('#realisasi_kegiatan_bulanan_table').DataTable().clear().destroy();
+		$('#realisasi_uraian_tugas_tambahan_table').DataTable().clear().destroy();
+
 
 		if ( id == 'kegiatan_bulanan_tab'){
 			LoadKegiatanBulananTable();

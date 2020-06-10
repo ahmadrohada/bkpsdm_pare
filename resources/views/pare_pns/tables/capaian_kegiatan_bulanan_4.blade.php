@@ -24,11 +24,9 @@
 
 <script type="text/javascript">
 
-	
-	
-  	function LoadKegiatanBulananTable(){
+	function LoadKegiatanBulananTable(){
 		
-		var table_skp_bulanan = $('#realisasi_kegiatan_bulanan_table').DataTable({
+		$('#realisasi_kegiatan_bulanan_table').DataTable({
 				destroy			: true,
 				processing      : true,
 				serverSide      : true,
@@ -38,16 +36,16 @@
 				bInfo			: false,
 				bSort			: false,
 				lengthChange	: false,
+				deferRender: true,
 				//order 			: [ 5 , 'asc' ],
 				//lengthMenu		: [10,25,50],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2,3,4,5 ] },
-									//{ "visible": false, "targets": [5]},
 									@if  ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' )  )
 										{ "visible": true, "targets": [5]}
 									@else
 										{ "visible": false, "targets": [5]}
-									@endif
+									@endif 
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/realisasi_kegiatan_bulanan_4") }}',
@@ -58,8 +56,8 @@
 											"skp_bulanan_id" 	: {!! $capaian->SKPBulanan->id !!},
 											"capaian_id" 		: {!! $capaian->id !!},
 									 },
-									cache : true,
-									quietMillis: 500, 
+									cache : false,
+									//quietMillis: 500, 
 								},
 				columns			: [
 									{ data: 'kegiatan_bulanan_id' ,width:"30px",
@@ -103,7 +101,7 @@
 											}
 										}
 									},
-									{  data: 'action',width:"40px",
+									{  data: 'action',width:"50px",
 											"render": function ( data, type, row ) {
 
 											if ( (row.realisasi_kegiatan_bulanan_id) >= 1 ){
@@ -121,11 +119,12 @@
 									
 								
 								],
-								initComplete: function(settings, json) {
-								
-							}
+						initComplete: function() {
+               					 $(this).show();
+           				}
 		});	
 	}
+	
 
 
 
@@ -280,5 +279,4 @@
 			}
 		});
 	});
-
 </script>
