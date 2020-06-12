@@ -16,7 +16,7 @@
     </div>
        
     <div class="box-footer">
-        <section class="content">
+        <section class="content" style="padding:20px 2px !important;">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs" id="myTab">
                     <li class="a"><a href="#a" data-toggle="tab">Profile </a></li>

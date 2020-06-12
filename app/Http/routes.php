@@ -514,6 +514,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	
 
 	Route::post('simpan_kegiatan_bulanan','API\KegiatanSKPBulananAPIController@Store');
+	Route::post('update_kegiatan_bulanan','API\KegiatanSKPBulananAPIController@Update');
 	Route::post('hapus_kegiatan_bulanan','API\KegiatanSKPBulananAPIController@Destroy');
 
 	Route::get('kegiatan_bulanan_detail','API\KegiatanSKPBulananAPIController@KegiatanBulananDetail');

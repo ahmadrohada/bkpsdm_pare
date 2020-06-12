@@ -486,6 +486,57 @@ class KegiatanSKPBulananAPIController extends Controller {
     
     }
 
+    public function Update(Request $request)
+    {
+
+        $messages = [
+                'kegiatan_bulanan_id.required'   => 'Harus diisi',
+                
+                'target.required'                => 'Harus diisi',
+                'satuan.required'                => 'Harus diisi',
+               
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'kegiatan_bulanan_id'   => 'required',
+                           
+                            'target'                => 'required|numeric',
+                            'satuan'                => 'required',
+                           
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $st_kt    = KegiatanSKPBulanan::find(Input::get('kegiatan_bulanan_id'));
+        if (is_null($st_kt)) {
+            return $this->sendError('Kegiatan Bulanan tidak ditemukan.');
+        }
+
+       
+        $st_kt->target            = preg_replace('/[^0-9]/', '', Input::get('target'));
+        $st_kt->satuan            = Input::get('satuan');
+        
+        if ( $st_kt->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
+            
+
+    
+    }
+
     public function Destroy(Request $request)
     {
 
@@ -510,7 +561,7 @@ class KegiatanSKPBulananAPIController extends Controller {
         
         $st_kt    = KegiatanSKPBulanan::find(Input::get('kegiatan_bulanan_id'));
         if (is_null($st_kt)) {
-            return $this->sendError('Kegiatan Bulanan tidak ditemukan.');
+            //return $this->sendError('Kegiatan Bulanan tidak ditemukan.');
         }
 
 

@@ -7,13 +7,13 @@
 
 @section('content')
 	 <div class="content-wrapper" >
-	    <section class="content-header"> 
+	    <section class="content-header">  
 			<h1>
 				<?php
 					$middleware = request()->segment(1);
 				?>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route($middleware.'-skp_bulanan') }}"><span class="fa fa-angle-left"></span></a>
-				SKP Bulanan Periode {!! Pustaka::periode($skp->tgl_mulai) !!}
+				SKP Bulanan Periode {!! Pustaka::periode($skp->tgl_mulai) !!} [ Detail ]
 			</h1>
 				{!! Breadcrumbs::render('personal_detail_skp_bulanan') !!}
       </section>
@@ -33,26 +33,25 @@
 				</div>
 								
 				<div class=" tab-pane fade" id="kegiatan_bulanan_tab">
-				<!-- 1. KABAN -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
-						@include('pare_pns.tables.skp_bulanan-kegiatan_1_detail')
-					@endif
-
-					<!-- 2. KASUBID -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
-						@include('pare_pns.tables.skp_bulanan-kegiatan_2_detail')
-					@endif
-
-
-					<!-- 3. KASUBID -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
-						@include('pare_pns.tables.skp_bulanan-kegiatan_3')
-					@endif
-
-					<!-- 4. PELAKSANA -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
-						@include('pare_pns.tables.skp_bulanan-kegiatan_4_detail')		
-					@endif
+					<?php
+						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+							case '1': // 1. Eselon II
+									?>@include('pare_pns.tables.skp_bulanan-kegiatan_1_detail')<?php
+									break;
+							case '2': //2. Eselon III
+									?>@include('pare_pns.tables.skp_bulanan-kegiatan_2_detail')<?php
+									break;
+							case '3':  //3. Eselon IV
+									?>@include('pare_pns.tables.skp_bulanan-kegiatan_3')<?php
+									break;
+							case '4':  //4. JFU 
+									?>@include('pare_pns.tables.skp_bulanan-kegiatan_4')<?php
+									break;
+							case '5':   //5. JFT
+									?>@include('pare_pns.tables.skp_bulanan-kegiatan_5_detail')<?php
+									break;
+						}
+					?>
 				</div>
 				<div class="tab-pane fade" id="uraian_tugas_tambahan_tab">
 					@include('pare_pns.tables.skp_bulanan-uraian_tugas_tambahan')
@@ -79,6 +78,12 @@ $(document).ready(function() {
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
+		//destroy table agar hide kolom  tidak muncul duluan
+		$('#kegiatan_bulanan_table').DataTable().clear().destroy();
+		$('#uraian_tugas_tambahan_table').DataTable().clear().destroy();
+
+
+
 		if ( id == 'kegiatan_bulanan_tab'){
 			LoadKegiatanBulananTable();
 		}else if ( id == 'detail'){

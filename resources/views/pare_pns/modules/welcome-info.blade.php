@@ -1,7 +1,7 @@
 <div class="box box-warning">
     
         
-		<div class="box-body box-comments">
+		<div class="box-body box-comments" style="padding:15px 15px;">
            
             <img class="img-circle img-sm" src="{{asset('assets/images/form/logo.png')}}" alt="User Image">
 

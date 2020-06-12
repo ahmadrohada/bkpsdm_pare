@@ -570,7 +570,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                             'kegiatan_bulanan_id'   => 'required',
                             'capaian_id'            => 'required',
                             'target'                => 'required',
-                            'realisasi'             => 'required',
+                            'realisasi'             => 'required|numeric|max:'.$request->target,
                             'satuan'                => 'required',
                         ),
                         $messages
@@ -624,7 +624,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                         array(
                             'realisasi_kegiatan_bulanan_id'     => 'required',
                             'kegiatan_bulanan_id'               => 'required',
-                            'realisasi'                         => 'required',
+                            'realisasi'                         => 'required|numeric|max:'.$request->target,
                             'target'                            => 'required',
                         ),
                         $messages

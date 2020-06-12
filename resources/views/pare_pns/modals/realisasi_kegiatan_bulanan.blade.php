@@ -9,7 +9,7 @@
             </div>
 
             <form  id="realisasi_kegiatan_bulanan_form" method="POST" action="">
-			<input type="text"  name="kegiatan_bulanan_id" class="kegiatan_bulanan_id">
+			<input type="hidden"  name="kegiatan_bulanan_id" class="kegiatan_bulanan_id">
 			<input type="hidden"  name="skp_bulanan_id" class="skp_bulanan_id">
 			<input type="hidden"  name="capaian_id" class="capaian_id">
 			<input type="hidden"  name="realisasi_kegiatan_bulanan_id" class="realisasi_kegiatan_bulanan_id">

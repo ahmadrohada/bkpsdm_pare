@@ -99,7 +99,7 @@ class RealisasiUraianTugasTambahanAPIController extends Controller {
                             'uraian_tugas_tambahan_id'  => 'required',
                             'capaian_bulanan_id'        => 'required',
                             'target'                    => 'required',
-                            'realisasi'                 => 'required',
+                            'realisasi'                 => 'required|numeric|max:'.$request->target,
                             'satuan'                    => 'required',
                         ),
                         $messages
@@ -109,7 +109,9 @@ class RealisasiUraianTugasTambahanAPIController extends Controller {
             //$messages = $validator->messages();
             return response()->json(['errors'=>$validator->messages()],422);
             
-        }
+        }/* else if ( Input::get('realisasi') >  Input::get('target') ) {
+            return response()->json(['errors'=>"tes"],422);
+        } */
 
         //UPDATE dulu target nya
         $utt            = UraianTugasTambahan::find(Input::get('uraian_tugas_tambahan_id'));
@@ -201,7 +203,7 @@ class RealisasiUraianTugasTambahanAPIController extends Controller {
                             'realisasi_uraian_tugas_tambahan_id'    => 'required',
                             'uraian_tugas_tambahan_id'              => 'required',
                             'target'                                => 'required',
-                            'realisasi'                             => 'required',
+                            'realisasi'                             => 'required|numeric|max:'.$request->target,
                             'satuan'                                => 'required',
                         ),
                         $messages

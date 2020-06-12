@@ -21,7 +21,7 @@
 	    </section>
 	    <section class="content">
 
-			<div class="row">
+			<div class="row"> 
 
 				{{-- LEFT/TOP COLUMN --}}
 			    <div class="col-lg-5 col-md-5 col-sm-12">

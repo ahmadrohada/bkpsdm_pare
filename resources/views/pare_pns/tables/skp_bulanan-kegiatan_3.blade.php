@@ -20,7 +20,7 @@
 <script type="text/javascript">
 
 
-  	function load_kegiatan_bulanan(){
+  	function LoadKegiatanBulananTable(){
 		var table_skp_bulanan = $('#kegiatan_bulanan_table').DataTable({
 				destroy			: true,
 				processing      : true,

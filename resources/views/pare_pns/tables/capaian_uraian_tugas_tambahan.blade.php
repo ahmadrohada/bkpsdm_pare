@@ -30,7 +30,7 @@
 
 	
 	function LoadUraianTugasTambahanTable(){
-		$('#realisasi_uraian_tugas_tambahan_table').DataTable({
+		$('#realisasi_uraian_tugas_tambahan_table').DataTable({ 
 					destroy			: true,
 					processing      : true,
 					serverSide      : true,
@@ -61,16 +61,56 @@
 									},
 					rowsGroup		: [2],
 					columns			: [
-										{ data: 'uraian_tugas_tambahan_id',name:"uraian_tugas_tambahan_id",width:"30px",
+										{ data: 'uraian_tugas_tambahan_id',name:"uraian_tugas_tambahan_id",width:"20px",
 											"render": function ( data, type, row ,meta) {
 												return meta.row + meta.settings._iDisplayStart + 1 ;
 											}
 										},
-										{ data: "uraian_tugas_tambahan_label", name:"uraian_tugas_tambahan_label"},
-										{ data: "tugas_tambahan_label", name:"tugas_tambahan_label", width:"320px"},
-										{ data: "target", name:"target",width:"100px",},
-										{ data: "realisasi", name:"realisasi",width:"100px",},
-										{ data: "persen", name:"persen",width:"80px"},
+										{ data: "uraian_tugas_tambahan_label", name:"uraian_tugas_tambahan_label",
+											"render": function ( data, type, row ) {
+												if ( (row.realisasi_uraian_tugas_tambahan_id) <= 0 ){
+													return "<span class='text-danger'>"+row.uraian_tugas_tambahan_label+"</span>";
+												}else{
+													return row.uraian_tugas_tambahan_label;
+												}
+											}
+										},
+										{ data: "tugas_tambahan_label", name:"tugas_tambahan_label", width:"320px",
+											"render": function ( data, type, row ) {
+												if ( (row.realisasi_uraian_tugas_tambahan_id) <= 0 ){
+													return "<span class='text-danger'>"+row.tugas_tambahan_label+"</span>";
+												}else{
+													return row.tugas_tambahan_label;
+												}
+											}
+										},
+										{ data: "target", name:"target",width:"100px",
+											"render": function ( data, type, row ) {
+												if ( (row.realisasi_uraian_tugas_tambahan_id) <= 0 ){
+													return "<span class='text-danger'>"+row.target+"</span>";
+												}else{
+													return row.target;
+												}
+											}
+										},
+										{ data: "realisasi", name:"realisasi",width:"100px",
+											"render": function ( data, type, row ) {
+												if ( (row.realisasi_uraian_tugas_tambahan_id) <= 0 ){
+													return "<span class='text-danger'>"+row.realisasi+"</span>";
+												}else{
+													return row.realisasi;
+												}
+											}
+										},
+										{ data: "persen", name:"persen",width:"80px",
+											"render": function ( data, type, row ) {
+												if ( (row.realisasi_uraian_tugas_tambahan_id) <= 0 ){
+													return "<span class='text-danger'>-</span>";
+												}else{
+													return row.persen;
+												}
+											}
+										},
 										{  data: 'action',width:"60px",
 											"render": function ( data, type, row ) {
 											

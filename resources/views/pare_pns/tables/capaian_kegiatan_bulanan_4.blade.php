@@ -34,9 +34,9 @@
 				paging          : true,
 				autoWidth		: false,
 				bInfo			: false,
-				bSort			: false,
+				bSort			: false, 
 				lengthChange	: false,
-				deferRender: true,
+				deferRender		: true,
 				//order 			: [ 5 , 'asc' ],
 				//lengthMenu		: [10,25,50],
 				columnDefs		: [
@@ -60,7 +60,7 @@
 									//quietMillis: 500, 
 								},
 				columns			: [
-									{ data: 'kegiatan_bulanan_id' ,width:"30px",
+									{ data: 'kegiatan_bulanan_id' ,width:"20px",
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
@@ -74,7 +74,7 @@
 											}
 										}
 									},
-									{ data: "target", name:"satuan", width:"130px",
+									{ data: "target", name:"satuan", width:"100px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_kegiatan_bulanan_id) <= 0 ){
 												return "<span class='text-danger'>"+row.target + ' '+ row.satuan+"</span>";
@@ -83,7 +83,7 @@
 											}
 										}
 									},
-									{ data: "realisasi", name:"realisasi_satuan", width:"130px",
+									{ data: "realisasi", name:"realisasi_satuan", width:"100px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_kegiatan_bulanan_id) <= 0 ){
 												return "<span class='text-danger'>-</span>";

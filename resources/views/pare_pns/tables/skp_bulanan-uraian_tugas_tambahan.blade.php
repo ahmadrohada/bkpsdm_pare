@@ -37,7 +37,7 @@
 					autoWidth		: false,
 					bInfo			: true,
 					bSort			: false,
-					//lengthChange	: false,
+					lengthChange	: false,
 					//order 		: [ 0 , 'asc' ],
 					lengthMenu		: [20,50,100,200],
 					columnDefs		: [

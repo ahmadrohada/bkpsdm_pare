@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class KegiatanSKPBulanan extends Model
 {
     
-    use SoftDeletes;
+    //use SoftDeletes;
     protected $table = 'skp_bulanan_kegiatan';
-    protected $dates = ['deleted_at'];
+    //protected $dates = ['deleted_at'];
 
 
     public function RencanaAksi()
