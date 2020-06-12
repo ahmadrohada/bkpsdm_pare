@@ -163,7 +163,7 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
                             'rencana_aksi_id'   => 'required',
                             'capaian_id'        => 'required',
                             'target'            => 'required',
-                            'realisasi'         => 'required',
+                            'realisasi'         => 'required|numeric|max:'.$request->target,
                             'satuan'            => 'required',
                         ),
                         $messages
@@ -216,7 +216,7 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
                         array(
                             'realisasi_rencana_aksi_id'  => 'required',
                             'rencana_aksi_id'            => 'required',
-                            'realisasi'                  => 'required',
+                            'realisasi'                  => 'required|numeric|max:'.$request->target,
                             'satuan'                     => 'required',
                             'target'                     => 'required',
                         ),

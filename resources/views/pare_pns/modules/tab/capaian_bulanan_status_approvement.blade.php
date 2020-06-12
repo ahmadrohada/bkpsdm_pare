@@ -1,6 +1,6 @@
 
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-5">
 		<div class="box box-info">
 			<div class="box-body box-profile">
 			
@@ -56,7 +56,7 @@
 			
 		</div>
 	</div>
-	<div class="col-md-8">
+	<div class="col-md-7">
 		{{-- <div class="table-responsive"><div id="myTimeline"></div></div> --}}
 		<div class="box box-info">
 			{{--  <div class="box-header" style="height:40px;">

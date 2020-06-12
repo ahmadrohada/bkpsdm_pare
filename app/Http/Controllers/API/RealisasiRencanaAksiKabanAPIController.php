@@ -139,7 +139,7 @@ class RealisasiRencanaAksiKabanAPIController extends Controller {
                         array(
                             'rencana_aksi_id'   => 'required',
                             'capaian_id'        => 'required',
-                            'realisasi'        => 'required',
+                            'realisasi'        => 'required|numeric|max:'.$request->target,
                             'satuan'                => 'required',
                         ),
                         $messages
@@ -185,7 +185,7 @@ class RealisasiRencanaAksiKabanAPIController extends Controller {
                         Input::all(),
                         array(
                             'realisasi_rencana_aksi_id'  => 'required',
-                            'realisasi'                  => 'required',
+                            'realisasi'                  => 'required|numeric|max:'.$request->target,
                             'satuan'                     => 'required',
                         ),
                         $messages

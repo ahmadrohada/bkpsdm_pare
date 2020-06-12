@@ -39,7 +39,7 @@
 				bSort			: false,
 				//order 			: [ 1, 'desc' ],
 				//dom 			: '<"toolbar">frtip',
-				lengthMenu		: [50,100],
+				lengthMenu		: [12,24,48],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,2,3,5,] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
@@ -174,7 +174,7 @@
 				
 				if (data['status']==='pass'){
 
-
+ 
 					$('#periode_label').html(data['periode_label']); 
 					$('.mulai').val(data['tgl_mulai']); 
 					$('.selesai').val(data['tgl_selesai']); 

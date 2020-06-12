@@ -16,9 +16,9 @@
 					<tr class="success">
 						<th>NO</th>
 						<th>PERIODE</th>
-						<th>MASA PENILAIAN</th>
+						<th>BULAN</th>
+						<th>PELAKSANAAN</th>
 						<th>JABATAN</th>
-						<th>SKPD</th>
 						<th><i class="fa fa-cog"></i></th>
 					</tr>
 				</thead>
@@ -27,22 +27,20 @@
 	</div>
 </div>
 
-
+ 
 <script type="text/javascript">
 	$('#skp_bulanan_table').DataTable({
-					destroy			: true,
-					processing      : true,
-					serverSide      : true,
-					searching      	: false,
-					paging          : true,
-					autoWidth		: false,
-					bInfo			: false,
-					bSort			: false,
-					lengthChange	: false,
-					//order 			: [ 0 , 'desc' ],
-					lengthMenu		: [10,25,50],
+				processing      : true,
+				serverSide      : true,
+				searching      	: true,
+				paging          : true,
+				bInfo			: false,
+				bSort			: false,
+				//order 			: [ 1, 'desc' ],
+				//dom 			: '<"toolbar">frtip',
+				lengthMenu		: [12,24,48],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,2,5 ] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,2,3,5 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
@@ -52,18 +50,18 @@
 
 								},
 				
-
+				rowsGroup		: [1],
 				columns	:[
-								{ data: 'id' , orderable: false,searchable:false,
+								{ data: 'id' , orderable: false,searchable:false,width:"35px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
 								
-								{ data: "periode" ,  name:"periode", orderable: false, searchable: true},
-								{ data: "masa_penilaian" ,  name:"masa_penilaian", orderable: false, searchable: true},
+								{ data: "periode" ,  name:"periode", orderable: false, searchable: true,width:"90px"},
+								{ data: "bulan" ,  name:"bulan", orderable: false, searchable: true,width:"110px"},
+								{ data: "masa_penilaian" ,  name:"masa_penilaian", orderable: false, searchable: true,width:"220px"},
 								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true},
-								{ data: "skpd" ,  name:"skpd", orderable: true, searchable: true},
 								{ data: "skp_bulanan" , orderable: false,searchable:false,width:"100px",
 										"render": function ( data, type, row ) {
 										

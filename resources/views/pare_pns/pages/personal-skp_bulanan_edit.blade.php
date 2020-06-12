@@ -79,6 +79,10 @@ $(document).ready(function() {
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
+		//destroy table agar hide kolom  tidak muncul duluan
+		$('#kegiatan_bulanan_table').DataTable().clear().destroy();
+		$('#uraian_tugas_tambahan_table').DataTable().clear().destroy();
+
 		if ( id == 'kegiatan_bulanan_tab'){
 			LoadKegiatanBulananTable();
 		}else if ( id == 'detail'){

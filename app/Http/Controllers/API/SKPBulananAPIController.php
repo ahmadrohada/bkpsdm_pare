@@ -113,6 +113,7 @@ class SKPBulananAPIController extends Controller {
                         }) 
                         ->SELECT(   'skp_bulanan.tgl_mulai',
                                     'skp_bulanan.tgl_selesai',
+                                    'skp_bulanan.bulan',
                                     'skp_bulanan.u_jabatan_id',
                                     'skp_bulanan.id AS skp_bulanan_id',
                                     'skpd.skpd',
@@ -128,9 +129,12 @@ class SKPBulananAPIController extends Controller {
 
         $datatables = Datatables::of($SKPBulanan)
             ->addColumn('periode', function ($x) {
-                //return $x->label;
-                return Pustaka::periode($x->tgl_mulai);
+                //return $x->label; 
+                return  Pustaka::Tahun($x->tgl_mulai);
             }) 
+            ->addColumn('bulan', function ($x) {
+                return Pustaka::bulan($x->bulan);
+            })
             ->addColumn('masa_penilaian', function ($x) {
                 return Pustaka::tgl_form($x->tgl_mulai)." s.d ". Pustaka::tgl_form($x->tgl_selesai);
             })
