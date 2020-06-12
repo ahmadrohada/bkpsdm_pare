@@ -39,7 +39,7 @@
 								?>@include('pare_pns.tables.skp_bulanan-kegiatan_1_detail')<?php
 								break;
 						case '2': //2. Eselon III
-								?>@include('pare_pns.tables.skp_bulanan-kegiatan_2_detail')<?php
+								?>@include('pare_pns.tables.skp_bulanan-kegiatan_2')<?php
 								break;
 						case '3':  //3. Eselon IV
 								?>@include('pare_pns.tables.skp_bulanan-kegiatan_3')<?php

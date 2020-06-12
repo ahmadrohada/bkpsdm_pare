@@ -13,7 +13,7 @@
 					$middleware = request()->segment(1); 
 				?>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route($middleware.'-skp_tahunan') }}"><span class="fa fa-angle-left"></span></a>
-				SKP Tahunan  {!! $skp->PejabatYangDinilai->Eselon->eselon !!}
+				SKP Tahunan  {!! $skp->PejabatYangDinilai->Eselon->eselon !!} [ Detail ]
 			</h1>
 				{!! Breadcrumbs::render($role.'-skp_tahunan_detail') !!}
       </section>

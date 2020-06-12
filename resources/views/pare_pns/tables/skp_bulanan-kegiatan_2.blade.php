@@ -1,47 +1,35 @@
-<div class="row">
-	
-	<div class="col-md-12">
-
-		<div class="box-body table-responsive">
-
-			<div class="toolbar">
-
-			</div>
-
-			<table id="kegiatan_bulanan_table" class="table table-striped table-hover" >
-				<thead>
-					<tr>
-						<th>No</th>
-						<th>KEGIATAN BULANAN</th>
-						<th>TARGET</th>
-						<th>PENGAWAS</th>
-						<th>PELAKSANA</th>
-						
-							<!-- <th><i class="fa fa-cog"></i></th> -->
-					</tr>
-				</thead>
-							
-			</table>
-
-		</div>
+<div class="box-body table-responsive" >
+	<div class="toolbar">
 	</div>
-
-
-	
+	<table id="kegiatan_bulanan_table" class="table table-striped table-hover" >
+		<thead>
+			<tr>
+				<th>No</th>
+				<th>KEGIATAN BULANAN</th>
+				<th>TARGET</th>
+				<th>PENGAWAS</th>
+				<th>PELAKSANA</th>
+				<!-- <th><i class="fa fa-cog"></i></th> -->
+			</tr>
+		</thead>
+	</table>
 </div>
 
 <script type="text/javascript">
 
 
   	
-  	function load_kegiatan_bulanan(){
+  	function LoadKegiatanBulananTable(){
 		var table_skp_bulanan = $('#kegiatan_bulanan_table').DataTable({
 				destroy			: true,
-				processing      : false,
-				serverSide      : false,
+				processing      : true,
+				serverSide      : true,
 				searching      	: true,
 				paging          : true,
+				autoWidth		: false,
+				//lengthChange	: false,
 				order 			: [ 0 , 'asc' ],
+				lengthMenu		: [10,20,50,100,200],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2 ] }
 								],

@@ -10,7 +10,7 @@
 	    <section class="content-header">
 			<h1>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-skp_tahunan') }}"><span class="fa fa-angle-left"></span></a>
-				SKP Tahunan  {!! $skp->PejabatYangDinilai->Eselon->eselon !!} 
+				SKP Tahunan  {!! $skp->PejabatYangDinilai->Eselon->eselon !!} [ Edit ]
 				
 			</h1>
 				{!! Breadcrumbs::render('personal_edit_skp_tahunan') !!}
