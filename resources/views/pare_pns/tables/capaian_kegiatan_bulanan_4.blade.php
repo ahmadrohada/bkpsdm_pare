@@ -15,7 +15,7 @@
 				<th>TARGET</th>
 				<th>REALISASI</th>
 				<th>%</th>
-				<th>BUKTI</th>
+				<th>BUKTI </th>
 			</tr>
 		</thead>
 	</table>
