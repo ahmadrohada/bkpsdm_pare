@@ -44,9 +44,9 @@
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2,3,4,5,6 ] },
 									@if  ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' )  )
-										{ "visible": true, "targets": [5]}
+										{ "visible": true, "targets": [5,6]}
 									@else
-										{ "visible": false, "targets": [5]}
+										{ "visible": false, "targets": [5,6]}
 									@endif 
 								],
 				ajax			: {
