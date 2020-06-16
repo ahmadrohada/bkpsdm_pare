@@ -753,7 +753,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
 
         if ( $st_kt->delete()){
             //hapus file bukti lama nya
-            if ( $old_file_name != "" ){
+            if ( $old_file_name != null ){
                 File::delete($destinationPath.'/'.$old_file_name);
             }
             

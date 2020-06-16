@@ -96,6 +96,7 @@
 			type	: 'POST',
 			data	:  data,
 			success	: function(data) {
+				$('#realisasi_kegiatan_bulanan_table').DataTable().ajax.reload(null,false);
 				refresh();
 				//$('.pdf_file_area').hide();
         		//$('.image_file_area').hide();
