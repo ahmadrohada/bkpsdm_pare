@@ -12,11 +12,14 @@
 			<input type="hidden"  name="realisasi_kegiatan_bulanan_id" class="form-control realisasi_kegiatan_bulanan_id">
 			<div class="modal-body" style="min-height:340px;">
 					
-				<div class="row file_upload_area">
-					<div class="col-md-12 ">
-						<div class="dropzone"></div>
-					</div>
-				</div>
+				@if  ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' )  )
+					<div class="row file_upload_area">
+						<div class="col-md-12 ">
+							<div class="dropzone"></div>
+						</div>
+					</div>				
+				@endif 
+				
 
 				<div class="load_area" style=" margin: auto; width: 40%; min-height:340px; margin-top:10px;" hidden>
 					<img src='{{ asset('assets/images/loader/loading.gif')  }}'>
@@ -57,7 +60,7 @@
 		maxFilesize		: 2,  // 3 mb
 		acceptedFiles	: '.jpeg,.jpg,.png,.pdf',
 		uploadMultiple	: false,
-		//addRemoveLinks	: true,
+		addRemoveLinks	: true,
 		//dictRemoveFile	: "Hapus",
 		dictDefaultMessage: "<h5>Seret atau klik untuk upload file<h5>",
 		autoProcessQueue: true,
@@ -81,7 +84,7 @@
 									update_table(responseText);
 								}).on('error', function(file, response) {
 									
-								}).on('removedfile', function(file, responseText) {
+								}).on('maxfilesexceeded', function(file, responseText) {
 									
 								});
 							}

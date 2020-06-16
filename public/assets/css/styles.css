@@ -223,3 +223,7 @@ a.back_button {
 	vertical-align: baseline;
 	font-family: mainandra !important;
 }
+
+.dropzone .dz-preview .dz-error-message {
+    top: 150px!important;
+}

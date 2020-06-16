@@ -69,7 +69,7 @@ class CapaianBulananAPIController extends Controller {
 
         if ( $p_detail != null ){
             $data = array(
-                    'periode'	            => $capaian->SKPBulanan->SKPTahunan->Renja->Periode->label,
+                    'periode'	            => Pustaka::periode($capaian->SKPBulanan->tgl_mulai),
                     'date_created'	        => Pustaka::tgl_jam($capaian->created_at),
                     'masa_penilaian'        => Pustaka::tgl_form($capaian->tgl_mulai).' s.d  '.Pustaka::tgl_form($capaian->tgl_selesai),
 
@@ -101,7 +101,7 @@ class CapaianBulananAPIController extends Controller {
             );
         }else{
             $data = array(
-                    'periode'	        => $capaian->SKPBulanan->SKPTahunan->Renja->Periode->label,
+                    'periode'	        => Pustaka::periode($capaian->SKPBulanan->tgl_mulai),
                     'date_created'	    => Pustaka::tgl_jam($capaian->created_at),
                     'masa_penilaian'    => Pustaka::tgl_form($capaian->tgl_mulai).' s.d  '.Pustaka::tgl_form($capaian->tgl_selesai),
 

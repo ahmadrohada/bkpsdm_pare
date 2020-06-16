@@ -44,9 +44,9 @@
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2,3,4,5,6 ] },
 									@if  ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' )  )
-										{ "visible": true, "targets": [5,6]}
+										{ "visible": true, "targets": [6]}
 									@else
-										{ "visible": false, "targets": [5,6]}
+										{ "visible": false, "targets": [6]}
 									@endif 
 								],
 				ajax			: {
@@ -112,7 +112,12 @@
 													return  '<span  data-toggle="tooltip" title="Lihat" style="margin:2px;" ><a class="btn btn-success btn-xs file_view"  data-id="'+row.realisasi_kegiatan_bulanan_id+'"><i class="fa fa-eye" ></i></a></span>';
 														
 												}else{
-													return  '<span  data-toggle="tooltip" title="Upload Dokumen" style="margin:2px;" ><a class="btn btn-info btn-xs file_upload"  data-id="'+row.realisasi_kegiatan_bulanan_id+'"><i class="fa fa-upload" ></i></a></span>';
+													@if  ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' )  )
+														return  '<span  data-toggle="tooltip" title="Upload Dokumen" style="margin:2px;" ><a class="btn btn-info btn-xs file_upload"  data-id="'+row.realisasi_kegiatan_bulanan_id+'"><i class="fa fa-upload" ></i></a></span>';
+													@else
+														return '-';
+													@endif 
+													
 												
 												}
 											}
