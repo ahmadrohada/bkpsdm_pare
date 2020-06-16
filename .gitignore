@@ -5,6 +5,7 @@
 /bootstrap/compiled.php
 /public/assets/bower_components
 /storage
+/public/files_upload
 composer.phar
 composer.lock  # Remove this one after you create a project
 .env

@@ -739,6 +739,11 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             
         }
 
+        //mencari nama file  nya
+        $dt = RealisasiKegiatanBulanan::WHERE('id','=', $request->realisasi_kegiatan_bulanan_id )->SELECT('bukti')->first();
+        $old_file_name = $dt->bukti;
+        $destinationPath = 'files_upload';
+
         
         $st_kt    = RealisasiKegiatanBulanan::find(Input::get('realisasi_kegiatan_bulanan_id'));
         if (is_null($st_kt)) {
@@ -747,6 +752,11 @@ class RealisasiKegiatanBulananAPIController extends Controller {
 
 
         if ( $st_kt->delete()){
+            //hapus file bukti lama nya
+            if ( $old_file_name != "" ){
+                File::delete($destinationPath.'/'.$old_file_name);
+            }
+            
             return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);

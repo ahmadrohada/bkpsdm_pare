@@ -103,12 +103,12 @@
 											}
 										}
 									},
-									{ data: "persentase_realisasi", name:"persentase_realisasi", width:"30px",
+									{ data: "bukti", name:"bukti", width:"30px",
 										"render": function ( data, type, row ) {
 											if ( (row.realisasi_kegiatan_bulanan_id) <= 0 ){
 												return "<span class='text-danger'>-</span>";
 											}else{
-												if ( 1 == 1 ){
+												if ( row.bukti != ""){
 													return  '<span  data-toggle="tooltip" title="Lihat" style="margin:2px;" ><a class="btn btn-success btn-xs file_view"  data-id="'+row.realisasi_kegiatan_bulanan_id+'"><i class="fa fa-eye" ></i></a></span>';
 														
 												}else{

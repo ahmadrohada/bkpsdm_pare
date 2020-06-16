@@ -1,10 +1,10 @@
-<div class="modal fade modal-file_upload" id="" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade  modal-file_upload" id="" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    Upload File
+                    Bukti Realisasi Kegiatan
                 </h4>
             </div>
 
