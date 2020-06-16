@@ -427,7 +427,8 @@ class RealisasiKegiatanBulananAPIController extends Controller {
 
                                 'realisasi_rencana_aksi.id AS realisasi_rencana_aksi_id',
                                 'realisasi_rencana_aksi.realisasi AS realisasi_rencana_aksi',
-                                'realisasi_rencana_aksi.satuan AS satuan_rencana_aksi' 
+                                'realisasi_rencana_aksi.satuan AS satuan_rencana_aksi',
+                                'realisasi_rencana_aksi.bukti' 
 
                             ) 
                     ->GroupBy('skp_tahunan_rencana_aksi.id')

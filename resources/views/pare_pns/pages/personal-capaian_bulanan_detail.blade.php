@@ -57,7 +57,7 @@
 									break;
 							case '2': //2. Esl III 
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
-										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_3_detail')<?php
+										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_3')<?php
 									}else{
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2')<?php
 									}
@@ -66,7 +66,7 @@
 									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2')<?php
 									}else{
-										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_3_detail')<?php
+										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_3')<?php
 									}
 									break;
 							case '4':  //4. PELAKSANA JFU

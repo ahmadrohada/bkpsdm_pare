@@ -15,35 +15,46 @@
 			<input type="hidden"  name="skp_bulanan_id" class="skp_bulanan_id">
 			<input type="hidden"  name="capaian_id" class="realisasi_id">
 			<input type="hidden"  name="realisasi_rencana_aksi_id" class="realisasi_rencana_aksi_id">
+			<input type="hidden"  name="realisasi_bukti_file" class="realisasi_bukti_file">
 			<input type="hidden"  name="satuan" class="satuan">
 
 			
 			<div class="modal-body">
-					
-					<br>
+					<div class="row">
+						<div class="col-md-12 form-group label_kegiatan_tahunan">
+							<strong>Jabatan </strong>
+							<p style="margin-top:8px;">
+								<i class="fa fa-user"></i> <span class="penanggung_jawab" style="margin-right:10px;"></span>
+							</p>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-md-12 form-group label_kegiatan_tahunan">
 							<strong>Kegiatan Tahunan </strong>
 							<p class="text-info " style="margin-top:8px;">
 								<span class="kegiatan_tahunan_label"></span>
 							</p>
-							<p>
-								<i class="fa fa-user"></i> <span class="penanggung_jawab" style="margin-right:10px;"></span>
-							</p>
-
-							
 							<i class="fa fa-industry" ></i> <span class="kegiatan_tahunan_output" style="margin-right:10px;"></span>
 							<i class="fa fa-hourglass-start"></i> <span class="kegiatan_tahunan_waktu" style="margin-right:10px;"></span>
 							<i class="fa fa-money"></i> <span class="kegiatan_tahunan_cost" style="margin-right:10px;"></span>
 							<br>
-							
-
 						</div>
 					</div>
-					<br>
 					<div class="row">
 						<div class="col-md-12 form-group label_kegiatan ">
-							<strong>Kegiatan Bulanan  </strong>
+							<strong>Rencana Aksi / Kegiatan Bulanan  </strong>
+							<p class="text-info" style="margin-top:8px;">
+								<span class="rencana_aksi_label"></span>
+							</p>
+							<i class="fa fa-industry"></i> 
+								Target : <span class="target_rencana_aksi" style="margin-right:10px;"></span>
+								Realisasi : <span class="realisasi_rencana_aksi" style="margin-right:10px;"></span>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-md-12 form-group label_kegiatan ">
+							<strong>Kegiatan Bulanan Bawahan </strong>
 							<p class="text-muted " style="margin-top:8px;">
 								<span class="kegiatan_bulanan_label"></span>
 							</p>
@@ -54,15 +65,14 @@
 							<i class="fa fa-industry"></i> 
 								Target : <span class="kegiatan_bulanan_output" style="margin-right:10px;"></span>
 								Realisasi : <span class="realisasi_kegiatan_bulanan_output" style="margin-right:10px;"></span>
+								Bukti : <span class="realisasi_kegiatan_bulanan_bukti" style="margin-right:10px;"></span>
 						</div>
 					</div>
 					<hr>
 					<div class="row"> 
-
 						<div class="col-md-6 col-xs-6 form-group" style="margin-top:8px;">	
 							<label class="control-label">Target Quantity </label>
 							<div class="input-group">
-							{{-- <span type="text" class="form-control input-sm rencana_aksi_target"></span> --}}
 							<input type="text" name="target" id="target" required class="form-control input-sm rencana_aksi_target" placeholder="target">
 								<div class="input-group-addon">
 									<span class="satuan_target_rencana_aksi"></span>

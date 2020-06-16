@@ -675,8 +675,10 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('update_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@Update');
 	Route::post('update_bukti_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@UpdateBukti');
 
-	//=========================--- REALISASI  RENCANA AKSI KABID   ======================================//
 
+
+
+	//=========================--- REALISASI  UPLOAD BUKTI   ======================================//
 	Route::post('file_upload','API\UploadFileAPIController@FileUpload');
 
 
@@ -704,7 +706,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('hapus_realisasi_rencana_aksi_3','API\RealisasiRencanaAksiKasubidAPIController@Destroy');
 	Route::post('simpan_realisasi_rencana_aksi_3','API\RealisasiRencanaAksiKasubidAPIController@Store');
 	Route::post('update_realisasi_rencana_aksi_3','API\RealisasiRencanaAksiKasubidAPIController@Update');
-
+	Route::post('update_bukti_realisasi_rencana_aksi_3','API\RealisasiRencanaAksiKasubidAPIController@UpdateBukti');
 
 
 	//===================== REALISASI  RENCANA AKSI KABID   ======================================//

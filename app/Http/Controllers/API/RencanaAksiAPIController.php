@@ -1414,8 +1414,8 @@ class RencanaAksiAPIController extends Controller {
             'realisasi_satuan'              => $x->realisasi_satuan,
             'realisasi_output'              => $x->realisasi." ".$x->realisasi_satuan,
 
-            'realisasi_rencana_aksi'        => $x->realisasi_rencana_aksi,
-            'satuan_rencana_aksi'           => $x->satuan_rencana_aksi,
+            'realisasi_rencana_aksi'        => ($x->realisasi_rencana_aksi != '' )?$x->realisasi_rencana_aksi:'-',
+            'satuan_rencana_aksi'           => ($x->satuan_rencana_aksi != '' )?$x->satuan_rencana_aksi:'-',
 
 
 
@@ -1519,25 +1519,28 @@ class RencanaAksiAPIController extends Controller {
         return $rencana_aksi;
     }
 
-    public function RencanaAksiDetail3(Request $request)
+    public function RencanaAksiDetail3(Request $request) 
     {
-       
+        //RENCANA AKSI untuk eselon4
         $x = RencanaAksi::
                     WHERE('skp_tahunan_rencana_aksi.id', $request->rencana_aksi_id)
                     ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
                         $join   ->on('skp_tahunan_rencana_aksi.indikator_kegiatan_id','=','indikator_kegiatan.id');
                     })
-                    ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
-                        $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
-                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
-                    })
                     ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                         $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
                         //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
                     })
+                    //ini miliknya JFU/bawahan nya,
+                    ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
+                        $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
+                    })
+                    //ini realisasi miliknya JFU/bawahan nya,
                     ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
                         $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
                     })
+                    //realisasi rencana aksi pribadi/eselon 4
                     ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi_rencana_aksi', function($join){
                         $join   ->on('realisasi_rencana_aksi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                     })
@@ -1557,7 +1560,7 @@ class RencanaAksiAPIController extends Controller {
                                 'realisasi_kegiatan_bulanan.id AS realisasi_kegiatan_bulanan_id',
                                 'realisasi_kegiatan_bulanan.realisasi AS realisasi',
                                 'realisasi_kegiatan_bulanan.satuan AS realisasi_satuan',
-                                'realisasi_kegiatan_bulanan.bukti',
+                                'realisasi_kegiatan_bulanan.bukti AS realisasi_kegiatan_bulanan_bukti',
                                 'realisasi_kegiatan_bulanan.alasan_tidak_tercapai',
                                 'realisasi_rencana_aksi.id AS realisasi_rencana_aksi_id',
                                 'realisasi_rencana_aksi.realisasi AS realisasi_rencana_aksi',
@@ -1581,16 +1584,18 @@ class RencanaAksiAPIController extends Controller {
             'satuan_target_rencana_aksi'    => $x->satuan_target_rencana_aksi,
             'indikator_kegiatan_label'      => $x->indikator_kegiatan_label,
             'indikator_kegiatan_id'         => $x->indikator_kegiatan_id,
-            'kegiatan_bulanan_label'        => $x->kegiatan_bulanan_label,
+            'kegiatan_bulanan_label'        => ($x->kegiatan_bulanan_label != '' )?$x->kegiatan_bulanan_label:'-',
             'kegiatan_bulanan_target'       => $x->target_pelaksana,
             'kegiatan_bulanan_satuan'       => $x->satuan_pelaksana,
             'kegiatan_bulanan_output'       => $x->target_pelaksana." ".$x->satuan_pelaksana,
             'realisasi'                     => $x->realisasi,
             'realisasi_satuan'              => $x->realisasi_satuan,
             'realisasi_output'              => $x->realisasi." ".$x->realisasi_satuan,
+            'realisasi_bukti'               => ( $x->realisasi_kegiatan_bulanan_bukti != '')?'&#10004;':'&times;',
+            'realisasi_bukti_file'          => ( $x->realisasi_kegiatan_bulanan_bukti != '')?$x->realisasi_kegiatan_bulanan_bukti:'',
 
-            'realisasi_rencana_aksi'        => $x->realisasi_rencana_aksi,
-            'satuan_rencana_aksi'           => $x->satuan_rencana_aksi,
+            'realisasi_rencana_aksi'        => ($x->realisasi_rencana_aksi != '' )?$x->realisasi_rencana_aksi:'-',
+            'satuan_rencana_aksi'           => ($x->satuan_rencana_aksi != '' )?$x->satuan_rencana_aksi:'',
 
 
 

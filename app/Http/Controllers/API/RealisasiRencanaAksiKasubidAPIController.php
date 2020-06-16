@@ -8,6 +8,7 @@ use App\Models\PerjanjianKinerja;
 use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\RealisasiRencanaAksiKasubid;
+use App\Models\RealisasiKegiatanBulanan;
 
 
 
@@ -33,6 +34,7 @@ use Validator;
 use Gravatar;
 use Input;
 Use Alert;
+use File;
 
 class RealisasiRencanaAksiKasubidAPIController extends Controller {
 
@@ -80,7 +82,8 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
                                 'realisasi_rencana_aksi_kasubid.id AS realisasi_rencana_aksi_id',
                                 'realisasi_rencana_aksi_kasubid.rencana_aksi_id',
                                 'realisasi_rencana_aksi_kasubid.realisasi AS realisasi_rencana_aksi_target',
-                                'realisasi_rencana_aksi_kasubid.satuan AS realisasi_rencana_aksi_satuan'
+                                'realisasi_rencana_aksi_kasubid.satuan AS realisasi_rencana_aksi_satuan',
+                                'realisasi_rencana_aksi_kasubid.bukti AS realisasi_rencana_aksi_bukti'
 
                             ) 
                     ->first();
@@ -89,6 +92,14 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
             $pelaksana = Pustaka::capital_string($dt->skpd);
         }else{
             $pelaksana = "-";
+        }
+
+        //file extension
+        if ( $x->realisasi_rencana_aksi_bukti != "" ){
+            $dtx		    = explode('.', $x->realisasi_rencana_aksi_bukti);
+            $ext_bukti  	= $dtx[1];
+        }else{
+            $ext_bukti  	= "";
         }
 
         /* $x = RencanaAksi::
@@ -114,6 +125,8 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
             'label'                             => $x->rencana_aksi_label,
             'realisasi_rencana_aksi_target'     => $x->realisasi_rencana_aksi_target,
             'realisasi_rencana_aksi_satuan'     => $x->realisasi_rencana_aksi_satuan,
+            'realisasi_rencana_aksi_bukti'      => $x->realisasi_rencana_aksi_bukti,
+            'ext_bukti'                         => $ext_bukti,
 
             'target_rencana_aksi'               => $x->target_rencana_aksi,
             'satuan_target_rencana_aksi'        => $x->satuan_target_rencana_aksi,
@@ -187,7 +200,7 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
         $st_kt->realisasi               = Input::get('realisasi');
         $st_kt->satuan                  = Input::get('satuan');
         $st_kt->alasan_tidak_tercapai   = Input::get('alasan_tidak_tercapai');
-        $st_kt->bukti                   = "";
+        $st_kt->bukti                   = Input::get('realisasi_bukti_file');
        
 
         if ( $st_kt->save()){
@@ -242,7 +255,8 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
 
 
         $st_ra->realisasi          = Input::get('realisasi');
-        $st_ra->satuan                  = Input::get('satuan');
+        $st_ra->satuan             = Input::get('satuan');
+        $st_ra->bukti              = Input::get('realisasi_bukti_file');
 
         if ( $st_ra->save()){
             return \Response::make('sukses', 200);
@@ -252,6 +266,55 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
             
             
     
+    }
+
+    public function UpdateBukti(Request $request)
+    {
+
+        $messages = [
+                'realisasi_rencana_aksi_id.required'    => 'Harus diisi',
+                'bukti.required'                           => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'realisasi_rencana_aksi_id'     => 'required',
+                            'bukti'                             => 'required',
+                        ),
+                        $messages
+        );
+
+
+        //mencari nama file lama nya
+        $dt = RealisasiRencanaAksiKasubid::WHERE('id','=', $request->realisasi_rencana_aksi_id )->SELECT('bukti')->first();
+        $old_file_name = $dt->bukti;
+        $destinationPath = 'files_upload';
+
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        $st_kt                      = RealisasiRencanaAksiKasubid::find(Input::get('realisasi_rencana_aksi_id'));
+        $st_kt->bukti               = Input::get('bukti');
+        if ( $st_kt->save()){
+
+            //cari apakah di kegiatan bulanan realisasi ada yang menggunakan file tsb,
+            //jika tidak maka hapus file bukti lama nya
+            $dt2 = RealisasiKegiatanBulanan::WHERE('bukti','=', $old_file_name )->count();
+            if ( $dt2 === 0 ){
+                File::delete($destinationPath.'/'.$old_file_name);
+            }
+            
+            
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
     }
 
     public function Destroy(Request $request)
@@ -275,6 +338,11 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
             
         }
 
+        //mencari nama file lama nya
+        $dt = RealisasiRencanaAksiKasubid::WHERE('id','=', $request->realisasi_rencana_aksi_id )->SELECT('bukti')->first();
+        $old_file_name = $dt->bukti;
+        $destinationPath = 'files_upload';
+
         
         $st_ra    = RealisasiRencanaAksiKasubid::find(Input::get('realisasi_rencana_aksi_id'));
         if (is_null($st_ra)) {
@@ -283,6 +351,12 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
 
 
         if ( $st_ra->delete()){
+             //cari apakah di kegiatan bulanan realisasi ada yang menggunakan file tsb,
+            //jika tidak maka hapus file bukti lama nya
+            $dt2 = RealisasiKegiatanBulanan::WHERE('bukti','=', $old_file_name )->count();
+            if ( $dt2 === 0 ){
+                File::delete($destinationPath.'/'.$old_file_name);
+            }
             return \Response::make('sukses', 200);
         }else{
             return \Response::make('error', 500);

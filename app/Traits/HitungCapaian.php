@@ -42,8 +42,13 @@ trait HitungCapaian
         $jm_kegiatan_bulanan = 0 ;
 
         foreach ($xdata as $data) {
-            $jm_kegiatan_bulanan ++;
-            $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
+
+            if ( $data->target > 0 ){
+                $jm_kegiatan_bulanan ++;
+                $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
+            }
+
+           
         }
 
         return array(
@@ -67,9 +72,11 @@ trait HitungCapaian
         $jm_kegiatan_bulanan = 0 ;
 
         foreach ($xdata as $data) {
-        $jm_kegiatan_bulanan ++;
-
-        $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
+            if ( $data->target > 0 ){
+                $jm_kegiatan_bulanan ++;
+                $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
+            }
+            
 
         }
 
@@ -93,10 +100,10 @@ trait HitungCapaian
         $jm_kegiatan_bulanan = 0 ;
 
         foreach ($xdata as $data) {
-        $jm_kegiatan_bulanan ++;
-
-        $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
-
+            if ( $data->target > 0 ){
+                $jm_kegiatan_bulanan ++;
+                $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
+            }
         }
 
         return array(
@@ -144,8 +151,11 @@ trait HitungCapaian
         $jm_kegiatan_bulanan = 0 ;
 
         foreach ($xdata as $data) {
-            $jm_kegiatan_bulanan ++;
-            $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
+            if ( $data->target > 0 ){
+                $jm_kegiatan_bulanan ++;
+                $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
+            }
+           
         }
 
         return array(
@@ -189,8 +199,11 @@ trait HitungCapaian
         $jm_kegiatan_bulanan = 0 ;
 
         foreach ($xdata as $data) {
-            $jm_kegiatan_bulanan ++;
-            $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
+            if ( $data->target > 0 ){
+                $jm_kegiatan_bulanan ++;
+                $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
+            }
+            
         }
 
         return array(
@@ -251,8 +264,11 @@ trait HitungCapaian
         $jm_kegiatan_bulanan = 0 ;
 
         foreach ($xdata as $data) {
-            $jm_kegiatan_bulanan ++;
-            $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
+            if ( $data->target > 0 ){
+                $jm_kegiatan_bulanan ++;
+                $jm_capaian += Pustaka::persen($data->realisasi,$data->target);
+            }
+            
 
         }
 

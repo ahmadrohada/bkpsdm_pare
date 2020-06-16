@@ -5,9 +5,9 @@
 		<thead>
 			<tr>
 				<th rowspan="2">No</th>
-				<th rowspan="2">RENCANA AKSI</th>
+				<th rowspan="2">RENCANA AKSI/KEGIATAN TAHUNAN</th>
 				<th rowspan="2">PELAKSANA</th>
-				<th colspan="3">OUTPUT</th>
+				<th colspan="4">OUTPUT</th>
 						
 				<th rowspan="2"><i class="fa fa-cog"></i></th>
 			</tr>
@@ -15,13 +15,15 @@
 				<th>TARGET</th>
 				<th>REALISASI</th>
 				<th>%</th>
+				<th>BUKTI </th>
 			</tr>
 		</thead>			
 	</table>
 </div>
 	
 
-@include('pare_pns.modals.realisasi_rencana_aksi_kasubid')
+@include('pare_pns.modals.realisasi_rencana_aksi_3')
+@include('pare_pns.modals.realisasi_rencana_aksi_file_upload')
 
 <script type="text/javascript">
 
@@ -42,7 +44,12 @@
 				order 			: [ 0 , 'asc' ],
 				lengthMenu		: [10,25,50],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3,4,5,6 ] }
+									{ className: "text-center", targets: [ 0,2,3,4,5,6,7 ] },
+									@if  ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' )  )
+										{ "visible": true, "targets": [7]}
+									@else
+										{ "visible": false, "targets": [7]}
+									@endif 
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/realisasi_kegiatan_bulanan_3") }}', 
@@ -114,6 +121,26 @@
 											}
 										}
 									},
+									{ data: "bukti", name:"bukti", width:"30px",
+										"render": function ( data, type, row ) {
+											if ( (row.realisasi_rencana_aksi_id) <= 0 ){
+												return "<span class='text-danger'>-</span>";
+											}else{
+												if ( row.bukti != ""){
+													return  '<span  data-toggle="tooltip" title="Lihat" style="margin:2px;" ><a class="btn btn-success btn-xs file_view"  data-id="'+row.realisasi_rencana_aksi_id+'"><i class="fa fa-eye" ></i></a></span>';
+														
+												}else{
+													@if  ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' )  )
+														return  '<span  data-toggle="tooltip" title="Upload Dokumen" style="margin:2px;" ><a class="btn btn-info btn-xs file_upload"  data-id="'+row.realisasi_rencana_aksi_id+'"><i class="fa fa-upload" ></i></a></span>';
+													@else
+														return '-';
+													@endif 
+													
+												
+												}
+											}
+										}
+									},
 									{  data: 'action',width:"40px",
 											"render": function ( data, type, row ) {
 											
@@ -141,11 +168,57 @@
 
 
 	$(document).on('click','.create_realisasi_rencana_aksi',function(e){
-	
 		var rencana_aksi_id = $(this).data('id');
-
-
 		show_modal_create(rencana_aksi_id);
+	});
+
+
+	$(document).on('click','.file_upload',function(e){
+	
+		var realisasi_rencana_aksi_id = $(this).data('id');
+
+		$('.modal-file_upload').find('.realisasi_rencana_aksi_id').val(realisasi_rencana_aksi_id);
+		$('.modal-file_upload').modal('show');
+
+	}); 
+
+	$(document).on('click','.file_view',function(e){
+
+		var id = $(this).data('id');
+		$.ajax({
+			url		: '{{ url("api_resource/realisasi_rencana_aksi_detail_3") }}',
+			type	: 'GET',
+			data	:  {realisasi_rencana_aksi_id : id },
+			success	: function(data) {
+
+				//chek dulu file extension nya
+				if ( data['ext_bukti'] == 'pdf' ){
+					$('.pdf_file').attr('src', "<?php echo asset('files_upload/"+data["realisasi_rencana_aksi_bukti"]+"') ?>");
+					$('.pdf_file_area').show();
+					$('.image_file_area').hide();
+				}else{
+					$('.image_file').attr('src', "<?php echo asset('files_upload/"+data["realisasi_rencana_aksi_bukti"]+"') ?>");
+					$('.pdf_file_area').hide();
+					$('.image_file_area').show();
+				}
+
+
+
+				$('.modal-file_upload').find('.realisasi_rencana_aksi_id').val(id);
+
+				
+				
+				$('.modal-file_upload').modal('show');
+
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
+
+			}
+			
+		});
+
+
+		
 
 	});
 
@@ -168,14 +241,20 @@
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_tahunan_waktu').html(data['kegiatan_tahunan_waktu']+' bulan');
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_tahunan_cost').html('Rp. '+data['kegiatan_tahunan_cost']);
 
+					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_label').html(data['label']);
+					$('.modal-realisasi_rencana_aksi').find('.target_rencana_aksi').html(data['target_rencana_aksi']+' '+data['satuan_target_rencana_aksi']);
+					$('.modal-realisasi_rencana_aksi').find('.realisasi_rencana_aksi').html(data['realisasi_rencana_aksi']+' '+data['satuan_rencana_aksi']);
+
+
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_label').html(data['kegiatan_bulanan_label']);
 					$('.modal-realisasi_rencana_aksi').find('.pelaksana').html(data['pelaksana']);
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_output').html(data['kegiatan_bulanan_output']);
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
 					$('.modal-realisasi_rencana_aksi').find('.realisasi_kegiatan_bulanan_output').html(data['realisasi_output']);
+					$('.modal-realisasi_rencana_aksi').find('.realisasi_kegiatan_bulanan_bukti').html(data['realisasi_bukti']);
+					$('.modal-realisasi_rencana_aksi').find('.realisasi_bukti_file').val(data['realisasi_bukti_file']);
 
 					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['satuan_target_rencana_aksi']);
-					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').html(data['target_rencana_aksi']);
 					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').val(data['target_rencana_aksi']);
 
 					$('.modal-realisasi_rencana_aksi').find('h4').html('Add Realisasi Rencana Aksi');
