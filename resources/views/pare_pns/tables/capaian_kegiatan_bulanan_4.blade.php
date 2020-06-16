@@ -6,7 +6,7 @@
 			<tr>
 				<th rowspan="2">No</th>
 				<th rowspan="2">KEGIATAN BULANAN</th>
-				<th colspan="3">OUTPUT</th>
+				<th colspan="4">OUTPUT</th>
 				<th rowspan="2"><i class="fa fa-cog"></i></th>
 				
 				
@@ -15,12 +15,14 @@
 				<th>TARGET</th>
 				<th>REALISASI</th>
 				<th>%</th>
+				<th>BUKTI</th>
 			</tr>
 		</thead>
 	</table>
 </div>
 
 @include('pare_pns.modals.realisasi_kegiatan_bulanan')
+@include('pare_pns.modals.realisasi_kegiatan_bulanan_file_upload')
 
 <script type="text/javascript">
 
@@ -40,7 +42,7 @@
 				//order 			: [ 5 , 'asc' ],
 				//lengthMenu		: [10,25,50],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3,4,5 ] },
+									{ className: "text-center", targets: [ 0,2,3,4,5,6 ] },
 									@if  ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' )  )
 										{ "visible": true, "targets": [5]}
 									@else
@@ -101,6 +103,21 @@
 											}
 										}
 									},
+									{ data: "persentase_realisasi", name:"persentase_realisasi", width:"30px",
+										"render": function ( data, type, row ) {
+											if ( (row.realisasi_kegiatan_bulanan_id) <= 0 ){
+												return "<span class='text-danger'>-</span>";
+											}else{
+												if ( 1 == 1 ){
+													return  '<span  data-toggle="tooltip" title="Lihat" style="margin:2px;" ><a class="btn btn-success btn-xs file_view"  data-id="'+row.realisasi_kegiatan_bulanan_id+'"><i class="fa fa-eye" ></i></a></span>';
+														
+												}else{
+													return  '<span  data-toggle="tooltip" title="Upload Dokumen" style="margin:2px;" ><a class="btn btn-info btn-xs file_upload"  data-id="'+row.realisasi_kegiatan_bulanan_id+'"><i class="fa fa-upload" ></i></a></span>';
+												
+												}
+											}
+										}
+									},
 									{  data: 'action',width:"50px",
 											"render": function ( data, type, row ) {
 
@@ -134,6 +151,57 @@
 		show_modal_create(kegiatan_bulanan_id);
 
 	});
+
+	$(document).on('click','.file_upload',function(e){
+	
+		var realisasi_kegiatan_bulanan_id = $(this).data('id');
+
+		$('.modal-file_upload').find('.realisasi_kegiatan_bulanan_id').val(realisasi_kegiatan_bulanan_id);
+		$('.modal-file_upload').modal('show');
+
+	});
+
+	$(document).on('click','.file_view',function(e){
+	
+		var id = $(this).data('id');
+		$.ajax({
+			url		: '{{ url("api_resource/realisasi_kegiatan_bulanan_detail") }}',
+			type	: 'GET',
+			data	:  {realisasi_kegiatan_bulanan_id : id },
+			success	: function(data) {
+
+				//chek dulu file extension nya
+				if ( data['ext_bukti'] == 'pdf' ){
+					$('.pdf_file').attr('src', "<?php echo asset('files_upload/"+data["bukti"]+"') ?>");
+					$('.pdf_file_area').show();
+        			$('.image_file_area').hide();
+				}else{
+					$('.image_file').attr('src', "<?php echo asset('files_upload/"+data["bukti"]+"') ?>");
+					$('.pdf_file_area').hide();
+        			$('.image_file_area').show();
+				}
+
+
+
+				$('.modal-file_upload').find('.realisasi_kegiatan_bulanan_id').val(id);
+
+				
+				
+				$('.modal-file_upload').modal('show');
+
+			},
+			error: function(jqXHR , textStatus, errorThrown) {
+
+			}
+			
+		});
+
+
+		
+
+	});
+
+
 
 	function show_modal_create(kegiatan_bulanan_id){
 		$.ajax({

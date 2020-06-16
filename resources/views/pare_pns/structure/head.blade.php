@@ -16,6 +16,9 @@
 
 {!! HTML::style(asset('/assets/bower_components/jquery-datetimepicker/jquery.datetimepicker.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
 
+
+{!! HTML::style(asset('/assets/bower_components/dropzone/dist/dropzone.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
+
 {!! HTML::style(asset('/assets/css/styles.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
 
 

@@ -219,7 +219,8 @@
 					$('.modal-realisasi_rencana_aksi').find('.pelaksana').html(data['pelaksana']);
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_output').html(data['kegiatan_bulanan_output']);
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
-
+					$('.modal-realisasi_rencana_aksi').find('.realisasi_kegiatan_bulanan_output').html(data['realisasi_output']);
+					
 					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['realisasi_rencana_aksi_satuan']);
 					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').html(data['target_rencana_aksi']);
 					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').val(data['target_rencana_aksi']);

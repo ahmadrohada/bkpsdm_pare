@@ -673,6 +673,15 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('hapus_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@Destroy');
 	Route::post('simpan_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@Store');
 	Route::post('update_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@Update');
+	Route::post('update_bukti_realisasi_kegiatan_bulanan','API\RealisasiKegiatanBulananAPIController@UpdateBukti');
+
+	//=========================--- REALISASI  RENCANA AKSI KABID   ======================================//
+
+	Route::post('file_upload','API\UploadFileAPIController@FileUpload');
+
+
+
+
 
 
 	//===================== REALISASI  KEGIATAN BULANAN  JFT ======================================//

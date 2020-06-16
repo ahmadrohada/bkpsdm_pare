@@ -1,4 +1,4 @@
-<div class="modal fade modal-realisasi_kegiatan_bulanan" id="createIndikatorProgram" role="dialog"  aria-hidden="true">
+<div class="modal fade modal-realisasi_kegiatan_bulanan" id="" role="dialog"  aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +8,7 @@
                 </h4>
             </div>
 
-            <form  id="realisasi_kegiatan_bulanan_form" method="POST" action="">
+            <form  id="realisasi_kegiatan_bulanan_form" method="POST" action="" enctype="multipart/form-data">
 			<input type="hidden"  name="kegiatan_bulanan_id" class="kegiatan_bulanan_id">
 			<input type="hidden"  name="skp_bulanan_id" class="skp_bulanan_id">
 			<input type="hidden"  name="capaian_id" class="capaian_id">
@@ -81,25 +81,11 @@
 									<span class="kegiatan_bulanan_satuan"></span>
 								</div>
 							</div>
-
 							<input type="hidden"  name="alasan_tidak_tercapai" class="alasan_tidak_tercapai">
 						</div>
 
-
-						<div class="col-md-6 form-group bukti hidden" style="margin-top:8px;" >
-							<div class="form-group">
-								<label for="file_bukti">Bukti</label>
-								<input type="file" id="file_bukti" name="file_bukti">
-								<p class="help-block">Unggah Dokumen sebagai bukti kegiatan</p>
-							</div>
-						</div>
-				
-						
-
 					</div>
 					
-
-
 
 			</div>
 			<div class="modal-footer">
@@ -116,6 +102,8 @@
 
 
 <script type="text/javascript">
+
+
 
 	$('.modal-realisasi_kegiatan_bulanan').on('shown.bs.modal', function(){
 		$('#realisasi').focus();

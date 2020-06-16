@@ -6,11 +6,13 @@
 
 {!! HTML::script('/assets/js/sweetalert2.all.min.js', array('type' => 'text/javascript')) !!}
 
-{!! HTML::script('assets/js/dataTables.rowsGroup.js', array('type' => 'text/javascript')) !!}
+{!! HTML::script('/assets/js/dataTables.rowsGroup.js', array('type' => 'text/javascript')) !!}
 
 
 {!! HTML::script('/assets/bower_components/jquery-datetimepicker/jquery.datetimepicker.full.min.js', array('type' => 'text/javascript')) !!}
 {!! HTML::script('/assets/bower_components/select2/dist/js/select2.full.js', array('type' => 'text/javascript')) !!}
+
+{!! HTML::script('/assets/bower_components/dropzone/dist/dropzone.js', array('type' => 'text/javascript')) !!}
 
 
 
@@ -22,6 +24,10 @@
         }
       });
 
+     
+
+
+      
 
       function show_loader(){
         Swal.fire({

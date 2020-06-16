@@ -206,4 +206,20 @@ a.back_button {
 		border-radius: 50%;
   }
 
-  
+#my-dropzone .message {
+    font-family: "Segoe UI Light", "Arial", serif;
+    font-weight: 600;
+    color: #0087F7;
+    font-size: 1.5em;
+    letter-spacing: 0.05em;
+}
+ 
+.dropzone {
+    border: 1px solid rgb(196, 199, 202);
+    background: rgb(247, 244, 244);
+    border-radius: 5px;
+    min-height: 40px;
+    padding: 10px 0;
+	vertical-align: baseline;
+	font-family: mainandra !important;
+}

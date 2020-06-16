@@ -32,6 +32,7 @@ use Validator;
 use Gravatar;
 use Input;
 Use Alert;
+use File;
 
 class RealisasiKegiatanBulananAPIController extends Controller {
     use HitungCapaian;
@@ -49,7 +50,8 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                         'realisasi_kegiatan_bulanan.realisasi AS realisasi',
                                         'realisasi_kegiatan_bulanan.satuan',
                                         'kegiatan_skp_bulanan.id',
-                                        'realisasi_kegiatan_bulanan.kegiatan_bulanan_id'
+                                        'realisasi_kegiatan_bulanan.kegiatan_bulanan_id',
+                                        'realisasi_kegiatan_bulanan.bukti'
                                     ) 
                             ->WHERE('realisasi_kegiatan_bulanan.id', $request->realisasi_kegiatan_bulanan_id)
                             ->first();
@@ -59,6 +61,15 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         }else{
             $pelaksana = '-';
         }
+
+        //file extension
+        if ( $x->bukti != "" ){
+            $dtx		    = explode('.', $x->bukti);
+            $ext_bukti  	= $dtx[1];
+        }else{
+            $ext_bukti  	= "";
+        }
+        
 		
 		//return  $rencana_aksi;
         $rencana_aksi = array(
@@ -77,7 +88,9 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             'kegiatan_tahunan_cost'         => number_format($x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->cost,'0',',','.'),
             'kegiatan_tahunan_output'       => $x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->target.' '.$x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->satuan,
 
-            'realisasi'              => $x->realisasi,
+            'realisasi'                     => $x->realisasi,
+            'bukti'                         => $x->bukti,
+            'ext_bukti'                     => $ext_bukti,
             'realisasi_kegiatan_bulanan_id' => $x->realisasi_kegiatan_bulanan_id,
  
         );
@@ -658,6 +671,50 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             
 
     
+    }
+
+    public function UpdateBukti(Request $request)
+    {
+
+        $messages = [
+                'realisasi_kegiatan_bulanan_id.required'    => 'Harus diisi',
+                'bukti.required'                           => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'realisasi_kegiatan_bulanan_id'     => 'required',
+                            'bukti'                             => 'required',
+                        ),
+                        $messages
+        );
+
+
+        //mencari nama file lama nya
+        $dt = RealisasiKegiatanBulanan::WHERE('id','=', $request->realisasi_kegiatan_bulanan_id )->SELECT('bukti')->first();
+        $old_file_name = $dt->bukti;
+
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        $st_kt                      = RealisasiKegiatanBulanan::find(Input::get('realisasi_kegiatan_bulanan_id'));
+        $st_kt->bukti               = Input::get('bukti');
+        if ( $st_kt->save()){
+
+            //hapus file bukti lama nya
+            $destinationPath = 'files_upload';
+            File::delete($destinationPath.'/'.$old_file_name);
+            
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
     }
    
 
