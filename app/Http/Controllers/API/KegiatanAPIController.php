@@ -1144,7 +1144,13 @@ class KegiatanAPIController extends Controller {
                                        
             break;
             case 'ind_kegiatan':
-                $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$request->id)
+
+               
+                $keg_skp = KegiatanSKPTahunan::SELECT('id')->WHERE('skp_tahunan_id', $request->skp_tahunan_id )->get()->toArray(); 
+                           
+                
+                $ra = RencanaAksi::WHERE('skp_tahunan_rencana_aksi.indikator_kegiatan_id',$request->id)
+                                    ->WHEREIN('skp_tahunan_rencana_aksi.kegiatan_tahunan_id',$keg_skp)
                                     ->orderBy('skp_tahunan_rencana_aksi.waktu_pelaksanaan','ASC')
                                     ->orderBy('skp_tahunan_rencana_aksi.id','DESC')
                                     ->get();
