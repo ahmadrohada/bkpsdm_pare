@@ -27,7 +27,7 @@
 	<div class="box box-rencana_aksi list_rencana_aksi_div" style="min-height:100px;">
 		<div class="box-header with-border">
 			<h1 class="box-title"> 
-				List Rencana Aksi Eselon IV
+				List Rencana Aksi
 			</h1>
 
 		</div>
@@ -233,17 +233,14 @@
 									allowOutsideClick : false,
 									timer: 900
 									}).then(function () {
-										$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-										jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
+										$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
+										$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+										jQuery('#kegiatan_tahunan_3').jstree(true).refresh(true);
 										jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
-										$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
-											$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-											jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
-											jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
-											$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
+											
 											
 										}
 									}

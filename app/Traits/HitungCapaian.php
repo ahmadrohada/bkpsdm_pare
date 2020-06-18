@@ -361,7 +361,7 @@ trait HitungCapaian
         }
 
         //JENIS JABATAN UNTUK IRBAN ** 
-        $id_jabatan_irban = ['143','144','145','146'];
+        $id_jabatan_irban =  ['143','144','145','146','786','787'];
         if ( ( $jenis_jabatan == 2 ) & ( in_array( $jabatan_id, $id_jabatan_irban) ) ){
             $jenis_jabatan = 31 ; //irban
         }

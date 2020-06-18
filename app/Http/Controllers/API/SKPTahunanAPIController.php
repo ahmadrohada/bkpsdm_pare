@@ -1115,7 +1115,7 @@ class SKPTahunanAPIController extends Controller {
 
         //Untuk IRBAN pada SKPD Inspektorat mah pengecualian, eselon 3 bisa bikin skp langsung
         //untuk id jabatan irban yaitu [143,144,145,146]
-        $id_jabatan_irban = ['143','144','145','146'];
+        $id_jabatan_irban =  ['143','144','145','146','786','787'];
 
         //untuk Lurah di kec.karwang barat dan timur, eselon 4 namun diberikan perlakuan sebagai eselon 3
         $id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];

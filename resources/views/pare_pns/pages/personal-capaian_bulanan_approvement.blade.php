@@ -24,7 +24,7 @@
 				<li class="uraian_tugas_tambahan_tab"><a href="#uraian_tugas_tambahan_tab" data-toggle="tab">Uraian Tugas Tambahan</a></li>
 			</ul>
 			<?php
-				$id_jabatan_irban = ['143','144','145','146'];
+				$id_jabatan_irban =  ['143','144','145','146','786','787'];
 				$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
 				$id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
 			?>

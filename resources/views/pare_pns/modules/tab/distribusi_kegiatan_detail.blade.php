@@ -52,10 +52,8 @@
 				'check_callback' : true,
 				'themes' : { 'responsive' : false },
 				'plugins': ['search'] ,
-			/* 'contextmenu' : {
-					'items' : context_add_kegiatan
-				},
-			"plugins" : [ 'search','contextmenu','types','state' ],
+			
+			'plugins' : [ 'search','contextmenu','types','state' ],
 			'types' : {
 					'JPT' 				: { "disabled" : true },
 					'administrator' 	: { },
@@ -65,7 +63,7 @@
 					'ind_kegiatan'		: { },
 					'rencana_aksi'		: { },
 					'keg_bulanan'		: { },
-				} */
+				} 
 			
 		
 	    }).on("loaded.jstree", function(){

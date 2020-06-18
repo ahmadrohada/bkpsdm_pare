@@ -211,8 +211,11 @@
 				}).then(function () {
 					$('.modal-rencana_aksi').modal('hide');
 					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+					$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
 					jQuery('#kegiatan_tahunan_3').jstree(true).refresh(true);
 					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+
+					
 					
 					
 				},
@@ -280,6 +283,7 @@
 				}).then(function () {
 					$('.modal-rencana_aksi').modal('hide');
 					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+					$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
 					jQuery('#kegiatan_tahunan_3').jstree(true).refresh(true);
 					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 					

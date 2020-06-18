@@ -871,6 +871,14 @@ class KegiatanAPIController extends Controller {
        
         //Kegiatan nya KABID , cari KASUBID yang parent KABID ini
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
+        //mengantisipasi kabid yang memiliki kegiatan jiga
+        /* $child = Jabatan::SELECT('id')
+                            ->WHERE('parent_id', $request->jabatan_id )
+                            ->ORWHERE('id', $request->jabatan_id)
+                            ->get()
+                            ->toArray();  */
+
+
         $skp_tahunan_id = $request->skp_tahunan_id;
         $kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )

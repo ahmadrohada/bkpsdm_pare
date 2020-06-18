@@ -65,7 +65,7 @@
 			'contextmenu' : {
 					'items' : context_add_kegiatan
 				},
-			"plugins" : [ 'search','contextmenu','types','state' ],
+			'plugins' : [ 'search','contextmenu','types','state' ],
 			'types' : {
 					'JPT' 				: { },
 					'administrator' 	: { },
@@ -73,7 +73,7 @@
 					'pelaksana' 		: { },
 					'kegiatan' 			: { },
 					'ind_kegiatan'		: { },
-					'rencana_aksi'		: { },
+					'rencana_aksi'		: { }, 
 					'keg_bulanan'		: { },
 				} 
 			

@@ -252,7 +252,7 @@ class CapaianBulananAPIController extends Controller {
         }
 
         //jika irban
-        $id_jabatan_irban = ['143','144','145','146'];
+        $id_jabatan_irban =  ['143','144','145','146','786','787'];
         if ( ( $jenis_jabatan == 2 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_irban) ) ){
             $jenis_jabatan = 31 ; //irban
         }
