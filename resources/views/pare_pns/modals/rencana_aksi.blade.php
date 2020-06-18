@@ -222,7 +222,7 @@
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
-				
+				swal.close();
 				$('.modal-rencana_aksi').modal('hide');
 				$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
 				//$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
