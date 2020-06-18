@@ -79,6 +79,7 @@
 <script type="text/javascript">
 
 	$('.modal-kegiatan_tahunan').on('shown.bs.modal', function(){
+		$('textarea:visible:first').focus();
 		reset_submitx();
 	});
 
@@ -119,7 +120,7 @@
 	}
 
 	$(document).on('click','#submit-save',function(e){
-
+		show_loader();
 		on_submitx();
 		var data = $('#kegiatan_tahunan_form').serialize();
 
@@ -131,7 +132,7 @@
 			success	: function(data , textStatus, jqXHR) {
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
-               
+				swal.close();
 				reset_submitx();
 				Swal.fire({
 					title: "",
@@ -143,12 +144,14 @@
 					timer:1500
 				}).then(function () {
 					$('.modal-kegiatan_tahunan').modal('hide');
-					$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
+					/* $('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
 					jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
-
 					$("#kegiatan_tahunan").show();
 					$("#rencana_aksi").hide();
-					jQuery('#keg_tahunan_3_tree').jstree().deselect_all(true);
+					jQuery('#keg_tahunan_3_tree').jstree().deselect_all(true); */
+					$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
+					jQuery('#kegiatan_tahunan_3').jstree(true).refresh(true);
+					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 
 					
 					
@@ -162,24 +165,17 @@
 			)	
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
-
+				swal.close();
 				var test = $.parseJSON(jqXHR.responseText);
-				
 				var data= test.errors;
-
 				$.each(data, function(index,value){
-					//alert (index+":"+value);
-					
 					//error message
 					((index == 'label')?$('.label_kegiatan').addClass('has-error'):'');
 					((index == 'target')?$('.target').addClass('has-error'):'');
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					((index == 'quality')?$('.quality').addClass('has-error'):'');
 					((index == 'target_waktu')?$('.waktu').addClass('has-error'):'');
-					
 					reset_submitx();
-					
-				
 				});
 
 			
@@ -195,7 +191,7 @@
 
 
 	$(document).on('click','#submit-update',function(e){
-
+		show_loader();
 		on_submitx();
 		var data = $('#kegiatan_tahunan_form').serialize();
 
@@ -207,7 +203,7 @@
 			success	: function(data , textStatus, jqXHR) {
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
-			
+				swal.close();
 				reset_submitx();
 				Swal.fire({
 					title: "",
@@ -220,7 +216,9 @@
 				}).then(function () {
 					$('.modal-kegiatan_tahunan').modal('hide');
 					$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
-					jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
+					jQuery('#kegiatan_tahunan_3').jstree(true).refresh(true);
+					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+					
 					
 				},
 					

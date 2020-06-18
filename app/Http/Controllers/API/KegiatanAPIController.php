@@ -1098,7 +1098,7 @@ class KegiatanAPIController extends Controller {
                     if ( $x->kegiatan_tahunan_id >= 1 ){
                         $kegiatan_id                = $x->kegiatan_tahunan_id;
                         $data_kegiatan['data']	    = "kegiatan_tahunan";
-                        $kegiatan_label             = $x->kegiatan_label;
+                        $kegiatan_label             = $x->kegiatan_tahunan_label;
                         $data_kegiatan['icon']	    = 'jstree-kegiatan_tahunan';
                         $data_kegiatan['type']      = "kegiatan_tahunan";
                     }else{

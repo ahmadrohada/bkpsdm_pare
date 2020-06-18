@@ -55,7 +55,7 @@
 						</div>
 					</div>
 
-					<div class="row tp">
+					<div class="row">
 						<div class="col-md-12 form-group form-group-sm label_periode_skp_bulanan">
 							<label>Periode SKP Bulanan</label>
 							<select class="form-control  periode_skp_bulanan" multiple="multiple" name="periode_skp_bulanan[]" style="width: 100%;">
@@ -75,30 +75,6 @@
 							</select>
 						</div>
 					</div>
-
-					<!-- <div class="row tp_edit">
-						<div class="col-md-12 form-group form-group-sm label_periode_skp_tahunan">
-							<label>Waktu</label>
-							<select class="form-control  periode_skp_tahunan_edit" name="periode_skp_tahunan_edit" style="width: 100%;">
-								<option value="01">Januari</option>
-								<option value="02">Februari</option>
-								<option value="03">Maret</option>
-								<option value="04">April</option>
-								<option value="05">Mei</option>
-								<option value="06">Juni</option>
-								<option value="07">Juli</option>
-								<option value="08">Agustus</option>
-								<option value="09">September</option>
-								<option value="10">Oktober</option>
-								<option value="11">November</option>
-								<option value="12">Desember</option>
-
-							</select>
-						</div>
-					</div> -->
-
-
-
 			</div>
 			<div class="modal-footer">
                 {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> Batal', array('class' => 'btn btn-sm btn-default pull-left ', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}

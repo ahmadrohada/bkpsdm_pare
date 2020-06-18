@@ -83,7 +83,7 @@
 	}); 
 
 	$('.modal-tugas_tambahan').on('shown.bs.modal', function(){
-		
+		$('textarea:visible:first').focus();
 		reset_submitx();
 	});
 

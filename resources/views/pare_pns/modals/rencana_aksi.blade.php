@@ -14,15 +14,6 @@
 			<input type="hidden" required name="rencana_aksi_id" class="rencana_aksi_id">
 			<input type="hidden" required name="renja_id" class="renja_id" value="{!! $skp->renja_id !!}">
 			<div class="modal-body">
-					
-					
-					<!-- <div class="row">
-						<div class="col-md-12 form-group label_kegiatan_tahunan ">
-							<label class="control-label">Kegiatan Tahunan</label>
-							<p class="kegiatan_tahunan_label"></p>
-						</div>
-					</div> -->
-
 					<div class="row">
 						<div class="col-md-12 form-group label_indikator_kegiatan ">
 							<label class="control-label">Indikator Kegiatan</label>
@@ -35,16 +26,6 @@
 							<p class="txt_output_indikator_kegiatan"></p>
 						</div>
 					</div>
-
-					<!-- <div class="row">
-						<div class="col-md-12 form-group form-group-sm label_indikator_kegiatan">
-							<label>Indikator Kegiatan</label>
-							<select id= "ind_kegiatan" class="form-control" name="indikator_kegiatan_id" style="width: 100%;">
-								<option value = '0' > pilih Indikator Kegiatan </option>
-							</select>
-						</div>
-					</div> -->
-
 					<div class="row">
 						<div class="col-md-12 form-group label_rencana_aksi ">
 							<label class="control-label">Rencana Aksi :</label>
@@ -55,16 +36,7 @@
 					<div class="row">
 						<div class="col-md-12 form-group form-group-sm label_pelaksana">
 							<label>Pelaksana</label>
-							<select id= "pelaksana" class="form-control" name="pelaksana" style="width: 100%;">
-								<?php
-								
-								/* if (in_array( $skp->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
-									echo '<option value = '.$skp->PejabatYangDinilai->id_jabatan.' > Dilaksanakan Sendiri </option>';
-								}else{
-									echo '<option value = "0" > pilih pejabat pelaksana </option>';
-								} */
-								?>
-							</select>
+							<select id= "pelaksana" class="form-control" name="pelaksana" style="width: 100%;"></select>
 						</div>
 					</div>
 
@@ -168,7 +140,11 @@
 		},
 	});
 
+
 	$('.modal-rencana_aksi').on('shown.bs.modal', function(){
+		//$('input:text:visible:first').focus();
+		//$(this).find('input:text')[1].focus();
+		$('textarea:visible:first').focus();
 		reset_submit();
 	});
 
@@ -223,13 +199,6 @@
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
 				swal.close();
-				$('.modal-rencana_aksi').modal('hide');
-				$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-				//$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
-				jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
-				jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
-					
-               
 				reset_submit();
 				Swal.fire({
 					title: "",
@@ -240,7 +209,10 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					
+					$('.modal-rencana_aksi').modal('hide');
+					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+					jQuery('#kegiatan_tahunan_3').jstree(true).refresh(true);
+					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 					
 					
 				},
@@ -295,13 +267,7 @@
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
-				
-				$('.modal-rencana_aksi').modal('hide');
-				$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
-				//$('#rencana_aksi_time_table').DataTable().ajax.reload(null,false);
-				jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
-				jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
-			
+				swal.close();
 				reset_submit();
 				Swal.fire({
 					title: "",
@@ -312,6 +278,10 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
+					$('.modal-rencana_aksi').modal('hide');
+					$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
+					jQuery('#kegiatan_tahunan_3').jstree(true).refresh(true);
+					jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
 					
 				},
 					

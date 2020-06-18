@@ -19,14 +19,11 @@
 
 	</div>
 	<div class="col-md-6">
-
-
 		<div class="box box-skp_bulanan" id='skp_bulanan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
 					List SKP Bulanan
 				</h1>
-
 				<div class="box-tools pull-right">
 					
 				</div>
@@ -293,31 +290,7 @@
 												return row.pelaksana;
 											}
 										}
-									}/* ,
-									{  data: 'action',width:"40px",
-											"render": function ( data, type, row ) {
-
-											if ( row.status_skp != 1 ){
-												if ( (row.kegiatan_bulanan_id) >= 1 ){
-													//disabled jika sudah dilaksanakan/dia add pelaksana
-													return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-plus" ></i></a></span>'+
-														'<span style="margin:2px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-close " ></i></a></span>';
-												
-												}else{
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_bulanan"  data-id="'+row.kegiatan_bulanan_id+'" data-label="'+row.kegiatan_bulanan_label+'" ><i class="fa fa-close " ></i></a></span>';
-											
-												}
-											}else{ //SUDAH ADA CAPAIAN NYA
-												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-plus" ></i></a></span>'+
-														'<span style="margin:2px;" ><a class="btn btn-default btn-xs " disabled><i class="fa fa-close " ></i></a></span>';
-												
-											}		
-										
-										}
-									}, */
-									
-								
+									}
 								],
 								initComplete: function(settings, json) {
 								
@@ -414,12 +387,14 @@
 					$('.modal-skp_bulanan').find('[name=u_nama]').val(data['u_nama']);
 					$('.modal-skp_bulanan').find('[name=p_nama]').val(data['p_nama']);
 
+					//enable all bulan
+					$('.periode_skp_bulanan  option').prop('disabled',false);
+
 					//DISABLED BULAN YANG UDAH ADA
 					//data['skp_bulanan_list'][0]['bulan']
 					bln = data['skp_bulanan_list'];
 					$('.periode_skp_bulanan').children().each(function(index,element){
-					
-        		for (i = 0; i < bln.length ; i++){
+        			for (i = 0; i < bln.length ; i++){
 							if ( $(element).val() == data['skp_bulanan_list'][i]['bulan']){
 								$(this).prop('disabled',true);
 							}

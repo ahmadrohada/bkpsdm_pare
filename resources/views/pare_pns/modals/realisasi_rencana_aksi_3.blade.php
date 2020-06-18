@@ -90,17 +90,6 @@
 								</div>
 							</div>
 						</div>
-
-						<div class="col-md-6 form-group bukti hidden" style="margin-top:8px;">
-							<div class="form-group">
-								<label for="file_bukti">Bukti</label>
-								<input type="file" id="file_bukti" name="file_bukti">
-								<p class="help-block">Unggah Dokumen sebagai bukti kegiatan</p>
-							</div>
-						</div>
-				
-						
-
 					</div>
 					
 

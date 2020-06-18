@@ -711,8 +711,11 @@ class RencanaAksiAPIController extends Controller {
                             ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
                                 $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan.id');
                             })
-                            ->join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
-                                $join   ->on('rencana_aksi.indikator_kegiatan_id','=','indikator_kegiatan.id');
+                            ->rightjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                                //$join   ->on('rencana_aksi.indikator_kegiatan_id','=','indikator_kegiatan.id');
+                                //tambah join ke kegiatan tahunan nya, karena ada rencana aksi yang bukan dari keg tahunan
+                                $join   ->on('rencana_aksi.kegiatan_tahunan_id','=','skp_tahunan_kegiatan.id');
+                                
                                 
                             })
                             ->leftjoin('db_pare_2018.renja_program AS program', function($join){
@@ -731,10 +734,11 @@ class RencanaAksiAPIController extends Controller {
                                         'rencana_aksi.id AS rencana_aksi_id',
                                         'rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
                                         'rencana_aksi.waktu_pelaksanaan AS wapel',
-                                        'kegiatan.label AS kegiatan_label',
+                                        'kegiatan.label AS kegiatan_renja_label',
                                         'kegiatan.cost AS kegiatan_anggaran',
                                         'kegiatan.id AS kegiatan_id',
                                         'skp_tahunan_kegiatan.id AS kegiatan_tahunan_id',
+                                        'skp_tahunan_kegiatan.label AS kegiatan_tahunan_label',
                                         'program.label AS program_label',
                                         'program.id AS program_id',
                                         'sasaran.label AS sasaran_label',
@@ -770,6 +774,14 @@ class RencanaAksiAPIController extends Controller {
         })
         ->addColumn('rencana_aksi_target', function ($x) {
             return $x->rencana_aksi_target.' '.$x->rencana_aksi_satuan;
+        })
+        ->addColumn('kegiatan_label', function ($x) {
+            if ( $x->kegiatan_tahunan_id != null ){
+                return $x->kegiatan_tahunan_label;
+            }else{
+                return $x->kegiatan_renja_label;
+            }
+            
         })
         ->addColumn('kegiatan_anggaran', function ($x) {
             return  "Rp. ". number_format($x->kegiatan_anggaran,'0',',','.');

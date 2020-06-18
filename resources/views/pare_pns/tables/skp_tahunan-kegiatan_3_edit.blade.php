@@ -232,12 +232,13 @@
 									timer: 900
 									}).then(function () {
 										$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
-										jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
+										jQuery('#kegiatan_tahunan_3').jstree(true).refresh(true);
+										jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+
+										
 									},
 									function (dismiss) {
 										if (dismiss === 'timer') {
-											$('#kegiatan_tahunan_3_table').DataTable().ajax.reload(null,false);
-											jQuery('#keg_tahunan_3_tree').jstree(true).refresh(true);
 											
 										}
 									}
