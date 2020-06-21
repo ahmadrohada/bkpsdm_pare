@@ -11,7 +11,7 @@
 	</div>
 	<div class="row" style="padding:5px 30px; min-height:200px;">
 		<div class="box-body table-responsive">
-			<span data-toggle="tooltip" title="Create Report"><a class="btn btn-info btn-xs create_tpp_report "><i class="fa fa-plus"></i> Create TPP Report</a></span>
+			<span data-toggle="tooltip" title="Create Report"><a class="btn btn-info btn-md create_tpp_report "><i class="fa fa-plus"></i> Create TPP Report</a></span>
 			<div class="toolbar">
 				
 			</div>
@@ -83,7 +83,7 @@
 					bInfo			: false,
 					bSort			: true,
 					lengthChange	: false,
-					order 			: [ 2 , 'desc' ],
+					order 			: [ 4 , 'desc' ],
 					lengthMenu		: [10,25,50],
 					columnDefs: [
 									{className: "text-center",targets: [0,1,2,3,4,5,6]}

@@ -20,6 +20,7 @@ use App\Models\UnitKerja;
 
 use App\Helpers\Pustaka;
 
+use App\Traits\PJabatan;
 use App\Traits\HitungCapaian;
 use App\Traits\UpdateCapaian;
 
@@ -32,9 +33,10 @@ use PDF;
 
 class TPPReportAPIController extends Controller
 {
-
+    use PJabatan;
     use HitungCapaian;
     use UpdateCapaian;
+
 
     //============================= HITUNG CAPAIAN ==========================================//
     protected function penilaian_kode_etik($x)
