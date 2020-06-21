@@ -42,7 +42,7 @@
 
 					<div class="row">
 						<div class="tp col-md-6 col-xs-12 form-group form-group-sm label_waktu_pelaksanaan">
-							<label>Waktu</label>
+							<label>Waktu Pelaksanaan</label>
 							<select class="form-control  waktu_pelaksanaan" multiple="multiple" name="waktu_pelaksanaan[]" style="width: 100%;"  placeholder="pilih  bulan pengerjaan">
 								<option value="01">Januari</option>
 								<option value="02">Februari</option>
@@ -60,7 +60,7 @@
 						</div>
 
 						<div class="tp_edit col-md-6 col-xs-12 form-group form-group-sm label_waktu_pelaksanaan">
-							<label>Waktu</label>
+							<label>Waktu Pelaksanaan</label>
 							<select class="form-control  waktu_pelaksanaan_edit" name="waktu_pelaksanaan_edit" style="width: 100%;">
 								<option value="01">Januari</option>
 								<option value="02">Februari</option>
@@ -106,18 +106,13 @@
 <script type="text/javascript">
 
 	//disabled bulan yang kelewat
-
-	//$('.waktu_pelaksanaan  option[value="01"]').prop('disabled',true);
-	
-
 	$('.waktu_pelaksanaan,.waktu_pelaksanaan_edit,#pelaksana').select2();
 	
-
 	$('#pelaksana').select2({
 		ajax: {
 			url				: '{{ url("api_resource/select2_bawahan_list") }}',
 			dataType		: 'json',
-			quietMillis		: 500,
+			delay			: 200,
 			data			: function (params) {
 				var queryParameters = {
 					jabatan				: params.term,

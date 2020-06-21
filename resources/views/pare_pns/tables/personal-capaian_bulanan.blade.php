@@ -182,7 +182,13 @@
 					var kegiatan_list = document.getElementById('list_bawahan');
 					for(var i = 0 ; i < data['list_bawahan'].length; i++ ){
 						$('.header_list').show(); 
-						$("<li class='list-group-item' style='padding:3px 4px 3px 4px;;'>"+data['list_bawahan'][i].jabatan+" <a class='pull-right'>"+data['list_bawahan'][i].jm_keg+"/"+data['list_bawahan'][i].jm_realisasi+"</a> </li>").appendTo(kegiatan_list);
+						if ( data['list_bawahan'][i].jabatan == 'Dilaksanakan Sendiri'){
+							$("<li class='list-group-item' style='padding:1px 4px 1px 4px;;'>&nbsp;<a class='pull-right'></a> </li>").appendTo(kegiatan_list);
+							$("<li class='list-group-item' style='padding:3px 4px 3px 4px;;'>"+data['list_bawahan'][i].jabatan+" <a class='pull-right'>"+data['list_bawahan'][i].t_kegiatan+"</a> </li>").appendTo(kegiatan_list);
+						}else{
+							$("<li class='list-group-item' style='padding:3px 4px 3px 4px;;'>"+data['list_bawahan'][i].jabatan+" <a class='pull-right'>"+data['list_bawahan'][i].t_kegiatan+"</a> </li>").appendTo(kegiatan_list);
+						}
+					
 					}
 						$("<li class='list-group-item' style='padding:3px 4px 3px 4px;;'>Uraian Tugas Tambahan <a class='pull-right'>"+data['jm_uraian_tugas_tambahan']+"</a> </li>").appendTo(kegiatan_list);
 						$("<li class='list-group-item' style='background:#ededed; border-top:solid #3d3d3d 2px; padding:5px 4px 5px 4px;'><b>Total Kegiatan </b><a class='pull-right'>"+data['jm_kegiatan_bulanan']+"</a> </li>").appendTo(kegiatan_list);

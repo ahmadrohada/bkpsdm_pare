@@ -250,6 +250,7 @@ class CapaianBulananAPIController extends Controller {
         $jenis_jabatan  = $skp_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
         $renja_id       = $skp_bulanan->SKPTahunan->renja_id;
         $bulan          = $skp_bulanan->bulan;
+        $jabatan_id     = $skp_bulanan->PejabatYangDinilai->id_jabatan;
 
         //Uraian Tugas Jabatan pada skp bulanan
         $jm_uraian_tugas_tambahan =  UraianTugasTambahan::WHERE('skp_bulanan_id',$request->get('skp_bulanan_id'))->count();
@@ -260,7 +261,6 @@ class CapaianBulananAPIController extends Controller {
         }
 
         //jika irban
-        $id_jabatan_irban =  ['143','144','145','146','786','787'];
         if ( ( $jenis_jabatan == 2 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_irban ) ) ){
             $jenis_jabatan = 31 ; //irban
         }
@@ -271,7 +271,7 @@ class CapaianBulananAPIController extends Controller {
         //IRBAN
         if ( $jenis_jabatan == 31){
             //cari bawahan
-            $bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
+            $bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('id',$jabatan_id )->get();
 
             //list bawahan
             $jm_kegiatan = 0 ; 
@@ -289,16 +289,26 @@ class CapaianBulananAPIController extends Controller {
                 $dt_keg_bulanan = KegiatanSKPBulanan::WHEREIN('rencana_aksi_id',$ls_reaksi)->SELECT('id')->get()->toArray();
                 $jm_realisasi   = RealisasiKegiatanBulanan::WHEREIN('kegiatan_bulanan_id',$dt_keg_bulanan)->count();
 
-                $data_jabatan_id['jabatan']           = Pustaka::capital_string($x->jabatan);
-                $data_jabatan_id['jm_keg']            = $dt_reaksi;
-                $data_jabatan_id['jm_realisasi']      = $jm_realisasi;
 
+                if ( $x->id == $jabatan_id){
+                    $nm_jabatan     = 'Dilaksanakan Sendiri';
+                    $t_kegiatan    = $dt_reaksi;
+                }else{
+                    $nm_jabatan     = Pustaka::capital_string($x->jabatan);
+                    $t_kegiatan    =  $dt_reaksi.' / '.$jm_realisasi;
+                }
+               
+    
+                $data_jabatan_id['jabatan']             = $nm_jabatan;
+                $data_jabatan_id['jm_keg']              = $dt_reaksi;
+                $data_jabatan_id['jm_realisasi']        = $jm_realisasi;
+                $data_jabatan_id['t_kegiatan']          = $t_kegiatan;
 
-
+                
                 $pelaksana_list[] = $data_jabatan_id ;
                 $jm_kegiatan += $dt_reaksi;
             }
-            $list_bawahan  = $pelaksana_list;       
+            $list_bawahan  = array_reverse($pelaksana_list);      
         //================================= JFT ===========================================//
         }else if ( $jenis_jabatan == 5 ){
             $jm_kegiatan = KegiatanSKPBulananJFT::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
@@ -313,11 +323,14 @@ class CapaianBulananAPIController extends Controller {
             $jm_kegiatan = KegiatanSKPBulanan::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
        
 
-            $data_jabatan_id['jabatan']           = "Kegiatan Bulanan Personal";
-            $data_jabatan_id['jm_keg']            = $jm_kegiatan;
-            $data_jabatan_id['jm_realisasi']      = " 0 ";
-            $pelaksana_list[] = $data_jabatan_id ;
-            $list_bawahan  = $pelaksana_list;   
+            $data_jabatan_id['jabatan']             = "Kegiatan Bulanan Personal";
+            $data_jabatan_id['jm_keg']              = $jm_kegiatan;
+            $data_jabatan_id['jm_realisasi']        = " 0 ";
+            $t_kegiatan                             = $jm_kegiatan;
+
+
+            $pelaksana_list[]                       = $data_jabatan_id ;
+            $list_bawahan                           = array_reverse($pelaksana_list);
 
             $kegiatan_list = "";
 			$jm_realisasi = "";
@@ -329,15 +342,10 @@ class CapaianBulananAPIController extends Controller {
                             WHERE('id',$jabatan_id)
                             ->orwhere(function ($query) use($jabatan_id) {
                                 $query  ->where('parent_id',$jabatan_id )
-                                        //->Where('id_eselon', '=', 9 )
-                                        //->orWhere('id_eselon', '=', 10 );
                                         ->whereBetween('id_eselon', [9,10]);
                             })
                             ->SELECT('id','skpd AS jabatan')
                             ->get();
-
-            //return $bawahan;
-            //$bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
 
             //list bawahan
             $jm_kegiatan = 0 ; 
@@ -355,22 +363,38 @@ class CapaianBulananAPIController extends Controller {
                 $dt_keg_bulanan = KegiatanSKPBulanan::WHEREIN('rencana_aksi_id',$ls_reaksi)->SELECT('id')->get()->toArray();
                 $jm_realisasi   = RealisasiKegiatanBulanan::WHEREIN('kegiatan_bulanan_id',$dt_keg_bulanan)->count();
 
-                $data_jabatan_id['jabatan']           = Pustaka::capital_string($x->jabatan);
+                if ( $x->id == $jabatan_id){
+                    $nm_jabatan     = 'Dilaksanakan Sendiri';
+                    $t_kegiatan     = $dt_reaksi;
+                }else{
+                    $nm_jabatan     = Pustaka::capital_string($x->jabatan);
+
+                    if ( $dt_reaksi == 0 ){
+                        $t_kegiatan     =  0;
+                    }else{
+                        $t_kegiatan     =  $dt_reaksi.' / '.$jm_realisasi;
+                    }
+                }
+               
+
+                $data_jabatan_id['jabatan']           = $nm_jabatan;
                 $data_jabatan_id['jm_keg']            = $dt_reaksi;
                 $data_jabatan_id['jm_realisasi']      = $jm_realisasi;
+                $data_jabatan_id['t_kegiatan']       = $t_kegiatan;
 
 
 
                 $pelaksana_list[] = $data_jabatan_id ;
                 $jm_kegiatan += $dt_reaksi;
             }
-            $list_bawahan  = $pelaksana_list;    
+            $list_bawahan  = array_reverse($pelaksana_list);    
         //================================= K A B I D ========================================// 
         }else if ( $jenis_jabatan == 2){   //Eselon III
 
+            $jabatan_id = $skp_bulanan->PejabatYangDinilai->id_jabatan;
             //cari bawahan
-            $bawahan = Jabatan::SELECT('id','skpd AS jabatan' )->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get();
-            $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id',$skp_bulanan->PejabatYangDinilai->id_jabatan )->get()->toArray();
+            $bawahan = Jabatan::SELECT('id','skpd AS jabatan' )->WHERE('parent_id',$jabatan_id )->get();
+            $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray();
             //cari bawahan  , jabatanpelaksanan
             $pelaksana_list = Jabatan::
                                 SELECT('id')
@@ -397,9 +421,23 @@ class CapaianBulananAPIController extends Controller {
                 //realisasi bawahan
                 $jm_realisasi   = RealisasiRencanaAksiKasubid::WHEREIN('rencana_aksi_id',$ls_reaksi)->count();
 
-                $data_jabatan_id['jabatan']         = Pustaka::capital_string($x->jabatan);
-                $data_jabatan_id['jm_keg']          = $dt_reaksi;
-                $data_jabatan_id['jm_realisasi']    = $jm_realisasi;
+                if ( $x->id == $jabatan_id){
+                    $nm_jabatan     = 'Dilaksanakan Sendiri';
+                    $t_kegiatan    = $dt_reaksi;
+                }else{
+                    $nm_jabatan     = Pustaka::capital_string($x->jabatan);
+                    if ( $dt_reaksi == 0 ){
+                        $t_kegiatan     =  0;
+                    }else{
+                        $t_kegiatan     =  $dt_reaksi.' / '.$jm_realisasi;
+                    }
+                }
+               
+    
+                $data_jabatan_id['jabatan']             = $nm_jabatan;
+                $data_jabatan_id['jm_keg']              = $dt_reaksi;
+                $data_jabatan_id['jm_realisasi']        = $jm_realisasi;
+                $data_jabatan_id['t_kegiatan']          = $t_kegiatan;
 
 
 
