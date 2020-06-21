@@ -209,6 +209,10 @@
 	
 	$('.modal-create_capaian_bulanan_confirm').on('shown.bs.modal', function(){
 		$('#myTab a[href="#tab_a"]').tab('show');
+
+		Swal.close();
+
+
 	});
 
 	$('.modal-create_capaian_bulanan_confirm').on('hidden.bs.modal', function(){
@@ -217,6 +221,7 @@
 		$('.modal-create_capaian_bulanan_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
 		
 		document.getElementById('list_bawahan').innerHTML = "";
+		$('.sidebar-mini').attr("style", "padding-right:0px;");
 
 		
 	});

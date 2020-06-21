@@ -26,9 +26,11 @@ use App\Models\RealisasiKegiatanBulanan;
 use App\Models\TugasTambahan;
 use App\Models\UraianTugasTambahan;
 
+
 use App\Helpers\Pustaka;
 use App\Traits\HitungCapaian; 
 use App\Traits\BawahanList;
+use App\Traits\PJabatan;
 
 use Datatables;
 use Validator;
@@ -40,6 +42,7 @@ class CapaianBulananAPIController extends Controller {
 
     use HitungCapaian;
     use BawahanList;
+    use PJabatan;
 
     protected function jabatan($id_jabatan){ 
         $jabatan       = HistoryJabatan::WHERE('id',$id_jabatan)
@@ -211,6 +214,7 @@ class CapaianBulananAPIController extends Controller {
         
     }
 
+   
 
     public function CreateConfirm(Request $request)
 	{ 
@@ -221,6 +225,11 @@ class CapaianBulananAPIController extends Controller {
         //lihat kegiatan nya serta pelihatkan capaian kegia9tan nya juga ( capaian kegiatan dapat dibuat dibulan berjalaan)
         
         //lihat jenis jabatan, 1,2,3,4
+
+        $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
+        $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban'));
+        $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
+        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('jabatan_staf_ahli'));
 
       
         $skp_bulanan   = SKPBulanan::WHERE('skp_bulanan.id',$request->get('skp_bulanan_id'))
@@ -246,14 +255,13 @@ class CapaianBulananAPIController extends Controller {
         $jm_uraian_tugas_tambahan =  UraianTugasTambahan::WHERE('skp_bulanan_id',$request->get('skp_bulanan_id'))->count();
         
         //Jika STAF AHLI
-        $id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
-        if ( ( $jenis_jabatan == 1 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli) ) ){
+        if ( ( $jenis_jabatan == 1 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli ) ) ){
             $jenis_jabatan = 5 ; //STAFF AHLI DIANGGAP JFT
         }
 
         //jika irban
         $id_jabatan_irban =  ['143','144','145','146','786','787'];
-        if ( ( $jenis_jabatan == 2 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_irban) ) ){
+        if ( ( $jenis_jabatan == 2 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_irban ) ) ){
             $jenis_jabatan = 31 ; //irban
         }
 

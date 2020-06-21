@@ -41,6 +41,39 @@ Use Alert;
 
 class CapaianTahunanController extends Controller {
 
+    protected function jm_approval_request_cap_bulanan($jabatan_id){
+        $data_1 = CapaianBulanan::rightjoin('demo_asn.tb_history_jabatan AS atasan', function($join) use($jabatan_id){
+                                    $join   ->on('atasan.id','=','capaian_bulanan.p_jabatan_id');
+                                    $join   ->where('atasan.id_pegawai','=',$jabatan_id);
+                                }) 
+                                ->WHERE('capaian_bulanan.send_to_atasan','=','1')
+                                ->WHERE('capaian_bulanan.status_approve','=','0')
+                                ->count();
+        $data_2 = CapaianBulanan::rightjoin('demo_asn.tb_history_jabatan AS atasan', function($join) use($jabatan_id){
+                                    $join   ->on('atasan.id','=','capaian_bulanan.p_jabatan_id');
+                                    $join   ->where('atasan.id_pegawai','=',$jabatan_id);
+                                }) 
+                                ->WHERE('capaian_bulanan.send_to_atasan','=','1')
+                                ->count();
+        return $data_1.' / '.$data_2;
+    }
+
+    protected function jm_approval_request_cap_tahunan($jabatan_id){
+        $data_1 = CapaianTahunan::rightjoin('demo_asn.tb_history_jabatan AS atasan', function($join) use($jabatan_id){
+                                    $join   ->on('atasan.id','=','capaian_tahunan.p_jabatan_id');
+                                    $join   ->where('atasan.id_pegawai','=',$jabatan_id);
+                                }) 
+                                ->WHERE('capaian_tahunan.send_to_atasan','=','1')
+                                ->WHERE('status_approve','=','0')
+                                ->count();
+        $data_2 = CapaianTahunan::rightjoin('demo_asn.tb_history_jabatan AS atasan', function($join) use($jabatan_id){
+                                    $join   ->on('atasan.id','=','capaian_tahunan.p_jabatan_id');
+                                    $join   ->where('atasan.id_pegawai','=',$jabatan_id);
+                                }) 
+                                ->WHERE('capaian_tahunan.send_to_atasan','=','1')
+                                ->count();
+        return $data_1.' / '.$data_2;
+    }
 
     public function CapaianTahunanBawahanList(Request $request)
 	{
@@ -48,14 +81,20 @@ class CapaianTahunanController extends Controller {
         $user      = \Auth::user();
         $pegawai   = $user->pegawai;       
         
+        if ( $pegawai->JabatanAktif->Eselon->id_jenis_jabatan <= 3 ) {
+            return view('pare_pns.pages.bawahan-capaian_tahunan', [
+                'pegawai' 		        => $pegawai,
+                'nama_skpd'     	        => 'x',
+                'h_box'                  => 'box-purple',
+                'capaian_tahunan_app_req'    => $this->jm_approval_request_cap_tahunan($pegawai->id),
+                'capaian_bulanan_app_req'    => $this->jm_approval_request_cap_bulanan($pegawai->id),
+                
+            ]);     
+        }else{
+            return redirect('/dashboard');
+        } 
 
-        return view('pare_pns.pages.bawahan-capaian_tahunan', [
-               'pegawai' 		        => $pegawai,
-               'nama_skpd'     	        => 'x',
-               'h_box'                  => 'box-purple',
-               
-           ]
-        );   
+        
 
     }
 

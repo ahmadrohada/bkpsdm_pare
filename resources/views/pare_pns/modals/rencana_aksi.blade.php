@@ -43,7 +43,7 @@
 					<div class="row">
 						<div class="tp col-md-6 col-xs-12 form-group form-group-sm label_waktu_pelaksanaan">
 							<label>Waktu</label>
-							<select class="form-control  waktu_pelaksanaan" multiple="multiple" name="waktu_pelaksanaan[]" style="width: 100%;">
+							<select class="form-control  waktu_pelaksanaan" multiple="multiple" name="waktu_pelaksanaan[]" style="width: 100%;"  placeholder="pilih  bulan pengerjaan">
 								<option value="01">Januari</option>
 								<option value="02">Februari</option>
 								<option value="03">Maret</option>

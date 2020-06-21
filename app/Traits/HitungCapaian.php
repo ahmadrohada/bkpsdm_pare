@@ -281,6 +281,14 @@ trait HitungCapaian
 
     public function hitung_capaian($capaian_id){ 
 
+
+        //jenisd jabatan
+        $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
+        $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban'));
+        $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
+        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('jabatan_staf_ahli'));
+
+
         $capaian_bulanan = CapaianBulanan::
 
                 leftjoin('db_pare_2018.penilaian_kode_etik AS pke', function($join){
@@ -355,7 +363,6 @@ trait HitungCapaian
 
 
         //JENIS JABATAN STAF AHLI
-        $id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
         if ( ( $jenis_jabatan == 1 ) & ( in_array( $jabatan_id, $id_jabatan_staf_ahli) ) ){
             $jenis_jabatan = 5 ; //staf ahli sebagai JFT
         }

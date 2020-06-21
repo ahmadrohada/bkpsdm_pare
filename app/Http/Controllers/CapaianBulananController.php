@@ -13,6 +13,7 @@ use App\Models\Renja;
 use App\Models\SKPTahunan;
 use App\Models\SKPBulanan;
 use App\Models\CapaianBulanan;
+use App\Models\CapaianTahunan;
 
 
 use App\Models\Jabatan;
@@ -31,6 +32,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
 
+use App\Traits\PJabatan;
 
 use Datatables;
 use Validator;
@@ -40,21 +42,63 @@ Use Alert;
 
 class CapaianBulananController extends Controller {
 
+    use PJabatan; 
+
+
+    protected function jm_approval_request_cap_bulanan($jabatan_id){
+        $data_1 = CapaianBulanan::rightjoin('demo_asn.tb_history_jabatan AS atasan', function($join) use($jabatan_id){
+                                    $join   ->on('atasan.id','=','capaian_bulanan.p_jabatan_id');
+                                    $join   ->where('atasan.id_pegawai','=',$jabatan_id);
+                                }) 
+                                ->WHERE('capaian_bulanan.send_to_atasan','=','1')
+                                ->WHERE('capaian_bulanan.status_approve','=','0')
+                                ->count();
+        $data_2 = CapaianBulanan::rightjoin('demo_asn.tb_history_jabatan AS atasan', function($join) use($jabatan_id){
+                                    $join   ->on('atasan.id','=','capaian_bulanan.p_jabatan_id');
+                                    $join   ->where('atasan.id_pegawai','=',$jabatan_id);
+                                }) 
+                                ->WHERE('capaian_bulanan.send_to_atasan','=','1')
+                                ->count();
+        return $data_1.' / '.$data_2;
+    }
+
+    protected function jm_approval_request_cap_tahunan($jabatan_id){
+        $data_1 = CapaianTahunan::rightjoin('demo_asn.tb_history_jabatan AS atasan', function($join) use($jabatan_id){
+                                    $join   ->on('atasan.id','=','capaian_tahunan.p_jabatan_id');
+                                    $join   ->where('atasan.id_pegawai','=',$jabatan_id);
+                                }) 
+                                ->WHERE('capaian_tahunan.send_to_atasan','=','1')
+                                ->WHERE('status_approve','=','0')
+                                ->count();
+        $data_2 = CapaianTahunan::rightjoin('demo_asn.tb_history_jabatan AS atasan', function($join) use($jabatan_id){
+                                    $join   ->on('atasan.id','=','capaian_tahunan.p_jabatan_id');
+                                    $join   ->where('atasan.id_pegawai','=',$jabatan_id);
+                                }) 
+                                ->WHERE('capaian_tahunan.send_to_atasan','=','1')
+                                ->count();
+        return $data_1.' / '.$data_2;
+    }
 
     public function CapaianBulananBawahanList(Request $request)
 	{
         
         $user      = \Auth::user();
         $pegawai   = $user->pegawai;       
-        
+        //return $pegawai->JabatanAktif->Eselon->id_jenis_jabatan;
 
-        return view('pare_pns.pages.bawahan-capaian_bulanan', [
-               'pegawai' 		        => $pegawai,
-               'nama_skpd'     	        => 'x',
-               'h_box'                  => 'box-teal',
-               
-           ]
-        );   
+        if ( $pegawai->JabatanAktif->Eselon->id_jenis_jabatan <= 3 ) {
+            return view('pare_pns.pages.bawahan-capaian_bulanan', [
+                    'pegawai' 		             => $pegawai,
+                    'nama_skpd'     	         => 'x',
+                    'h_box'                      => 'box-teal',
+                    'capaian_tahunan_app_req'    => $this->jm_approval_request_cap_tahunan($pegawai->id),
+                    'capaian_bulanan_app_req'    => $this->jm_approval_request_cap_bulanan($pegawai->id),
+                    
+                ]);   
+        }else{
+            return redirect('/dashboard');
+        } 
+       
 
     }
 
@@ -68,17 +112,15 @@ class CapaianBulananController extends Controller {
         
         //hanya atasan yang bisa approve
         if ( $capaian_bulanan->PejabatPenilai->id_pegawai == $user->id_pegawai ){
-            return view('pare_pns.pages.personal-capaian_bulanan_approvement', ['capaian'=> $capaian_bulanan]);
+            return view('pare_pns.pages.personal-capaian_bulanan_approvement', ['capaian'                   => $capaian_bulanan,
+                                                                                'jabatan_sekda'             => $this->jenis_PJabatan('sekda'),
+                                                                                'jabatan_irban'             => $this->jenis_PJabatan('irban'),
+                                                                                'jabatan_lurah'             => $this->jenis_PJabatan('lurah'),
+                                                                                'jabatan_staf_ahli'         => $this->jenis_PJabatan('jabatan_staf_ahli'),
+                                                                                ]);
         }else{
             return redirect('/dashboard');
         }
-        /* if ( $capaian_bulanan->status_approve != '0' ){
-            return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'telah diterima/ditolak');
-        }else{ */
-            // view('pare_pns.pages.personal-capaian_bulanan_approvement', ['capaian'=> $capaian_bulanan]);
-        //}
-        
-
     }
 
 
@@ -88,7 +130,11 @@ class CapaianBulananController extends Controller {
         $capaian_bulanan    = CapaianBulanan::WHERE('id', $request->capaian_bulanan_id)->first();
         //hanya atasan yang bisa lhat detai capaian bahwan nya
         if ( $capaian_bulanan->PejabatPenilai->id_pegawai == $user->id_pegawai ){
-            return view('pare_pns.pages.personal-capaian_bulanan_detail', ['capaian'=> $capaian_bulanan]); 
+            return view('pare_pns.pages.personal-capaian_bulanan_detail', ['capaian'=> $capaian_bulanan,
+                                                                            'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
+                                                                            'jabatan_irban'     => $this->jenis_PJabatan('irban'),
+                                                                            'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
+                                                                            'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),]); 
         }else{
             return redirect('/dashboard');
         }
@@ -110,7 +156,11 @@ class CapaianBulananController extends Controller {
             if ( $capaian_bulanan->send_to_atasan != '0' ){
                 return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'terkirim');
             }else{
-                return view('pare_pns.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
+                return view('pare_pns.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan,
+                                                                            'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
+                                                                            'jabatan_irban'     => $this->jenis_PJabatan('irban'),
+                                                                            'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
+                                                                            'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),]);  
             } 
         }else{
             return redirect('/dashboard');
@@ -129,7 +179,11 @@ class CapaianBulananController extends Controller {
             if ( $capaian_bulanan->status_approve != '2' ){
                 return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id)->with('status', 'terkirim');
             }else{
-                return view('pare_pns.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan]);  
+                return view('pare_pns.pages.personal-capaian_bulanan_edit', ['capaian'=> $capaian_bulanan,
+                                                                            'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
+                                                                            'jabatan_irban'     => $this->jenis_PJabatan('irban'),
+                                                                            'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
+                                                                            'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),]);  
             }
         }else{
             return redirect('/dashboard');
@@ -150,7 +204,11 @@ class CapaianBulananController extends Controller {
             if ( $capaian_bulanan->send_to_atasan == '0' ){
                 return redirect('/personal/capaian-bulanan/'.$request->capaian_bulanan_id.'/edit')->with('status', 'terkirim');
             }else{
-                return view('pare_pns.pages.personal-capaian_bulanan_detail', ['capaian'=> $capaian_bulanan]);  
+                return view('pare_pns.pages.personal-capaian_bulanan_detail', ['capaian'=> $capaian_bulanan,
+                                                                                'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
+                                                                                'jabatan_irban'     => $this->jenis_PJabatan('irban'),
+                                                                                'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
+                                                                                'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),]);  
             }
         }else{
             return redirect('/dashboard');

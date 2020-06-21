@@ -1,7 +1,7 @@
 <div class="box {{ $h_box }}">
     <div class="box-header with-border">
         <h1 class="box-title">
-            Data SKP Tahunan
+            SKP Tahunan
         </h1>
 
         <div class="box-tools pull-right">
@@ -142,6 +142,9 @@
 					data    : {skp_tahunan_id:skp_tahunan_id},
 					cache   : false,
 					success:function(data){
+							$('.personal_jm_skp_tahunan').html(data['jm_skp_tahunan']);
+							$('.personal_jm_skp_bulanan').html(data['jm_skp_bulanan']);
+
 							Swal.fire({
 									title: "",
 									text: "Sukses",

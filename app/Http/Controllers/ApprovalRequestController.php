@@ -36,9 +36,9 @@ class ApprovalRequestController extends Controller {
         
 
         return view('pare_pns.pages.approval_request-renja', [
-               'pegawai' 		        => $pegawai,
-               'nama_skpd'     	        => 'x',
-               'h_box'                  => 'box-teal',
+               'pegawai' 		            => $pegawai,
+               'nama_skpd'     	            => 'x',
+               'h_box'                      => 'box-teal',
                
            ]
         );   
@@ -53,9 +53,9 @@ class ApprovalRequestController extends Controller {
         
 
         return view('pare_pns.pages.approval_request-skp_tahunan', [
-               'pegawai' 		        => $pegawai,
-               'nama_skpd'     	        => 'x',
-               'h_box'                  => 'box-purple',
+               'pegawai' 		            => $pegawai,
+               'nama_skpd'     	            => 'x',
+               'h_box'                      => 'box-purple',
                
            ]
         );   

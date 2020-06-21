@@ -1,7 +1,7 @@
 @extends('pare_pns.layouts.dashboard')
 
 @section('template_title')
-	{{ $nama_skpd }}
+	Capaian Bawahan
 @stop
 
 

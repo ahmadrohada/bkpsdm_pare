@@ -29,7 +29,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
-
+use App\Traits\PJabatan;
 
 use Datatables;
 use Validator;
@@ -39,12 +39,23 @@ Use Alert;
 
 class SKPTahunanController extends Controller {
 
+
+    use PJabatan;
+
     public function AdministratorSKPTahunanDetail(Request $request)
 	{
         $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
 
         
-        return view('pare_pns.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan,'role' =>'admin']);  
+        return view('pare_pns.pages.personal-skp_tahunan_detail', [
+                                                                    'skp'               => $skp_tahunan,
+                                                                    'role'              =>'admin',
+                                                                    'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
+                                                                    'jabatan_irban'     => $this->jenis_PJabatan('irban'),
+                                                                    'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
+                                                                    'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),
+                                                                    
+                                                                ]);  
        
     }
 
@@ -53,7 +64,15 @@ class SKPTahunanController extends Controller {
         $skp_tahunan    = SKPTahunan::WHERE('id', $request->skp_tahunan_id)->first();
 
         
-        return view('pare_pns.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan , 'role' =>'skpd']);  
+        return view('pare_pns.pages.personal-skp_tahunan_detail', [
+                                                                    'skp'               => $skp_tahunan,
+                                                                    'role'              =>'skpd',
+                                                                    'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
+                                                                    'jabatan_irban'     => $this->jenis_PJabatan('irban'),
+                                                                    'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
+                                                                    'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),
+                                                                    
+                                                                ]);  
        
     }
 
@@ -68,20 +87,20 @@ class SKPTahunanController extends Controller {
             if( ($skp_tahunan->status) == 0 ) {
                 return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
             }else{
-                return view('pare_pns.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan , 'role' =>'personal']);  
+                return view('pare_pns.pages.personal-skp_tahunan_detail', [
+                                                                            'skp'               => $skp_tahunan,
+                                                                            'role'              =>'personal',
+                                                                            'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
+                                                                            'jabatan_irban'     => $this->jenis_PJabatan('irban'),
+                                                                            'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
+                                                                            'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),
+                                                                            
+                                                                        ]);  
             }
         }else{
             return redirect('/dashboard');
         }
 
-        //APPROVAL MODE
-        /* if(  ( ($skp_tahunan->send_to_atasan) == 1 ) &  ( ($skp_tahunan->status_approve) == 2 ) ){
-            return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id.'/ralat')->with('status', 'SKP belum dikirm ke atasan');
-        }else if( ($skp_tahunan->send_to_atasan) == 0 ) {
-            return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
-        }else{
-            return view('pare_pns.pages.personal-skp_tahunan_detail', ['skp'=> $skp_tahunan]);  
-        } */
     }
 
 
@@ -96,7 +115,15 @@ class SKPTahunanController extends Controller {
             if ( $skp_tahunan->status != '0' ){
                 return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id)->with('status', 'SKP close ');
             }else{
-                return view('pare_pns.pages.personal-skp_tahunan_edit', ['skp'=> $skp_tahunan,'role' =>'personal']);  
+                return view('pare_pns.pages.personal-skp_tahunan_edit', [
+                                                                            'skp'               => $skp_tahunan,
+                                                                            'role'              =>'personal',
+                                                                            'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
+                                                                            'jabatan_irban'     => $this->jenis_PJabatan('irban'),
+                                                                            'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
+                                                                            'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),
+                                                                            
+                                                                        ]);  
             }
         }else{
             return redirect('/dashboard');
@@ -121,7 +148,15 @@ class SKPTahunanController extends Controller {
             }else if( ($skp_tahunan->send_to_atasan) == 0 ) {
                 return redirect('/personal/skp_tahunan/'.$request->skp_tahunan_id.'/edit')->with('status', 'SKP belum dikirm ke atasan');
             }else{
-                return view('pare_pns.pages.personal-skp_tahunan_ralat', ['skp'=> $skp_tahunan,'role' =>'personal']);  
+                return view('pare_pns.pages.personal-skp_tahunan_ralat', [
+                                                                            'skp'               => $skp_tahunan,
+                                                                            'role'              =>'personal',
+                                                                            'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
+                                                                            'jabatan_irban'     => $this->jenis_PJabatan('irban'),
+                                                                            'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
+                                                                            'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),
+                                                                            
+                                                                        ]);  
             }
         }else{
             return redirect('/dashboard');

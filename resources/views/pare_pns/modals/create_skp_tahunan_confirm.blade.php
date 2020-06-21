@@ -12,7 +12,7 @@
 <!-- ============================================================================================================= -->
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs" id="myTab">
-					<li class="active"><a href="#tab_a" data-toggle="tab"><i class="fa fa-tag"></i> Detail SKP Tahunan </a></li>
+					<li class=""><a href="#tab_a" data-toggle="tab"><i class="fa fa-tag"></i> Detail SKP Tahunan </a></li>
 					<li class=""><a href="#tab_b" data-toggle="tab" ><i class="fa fa-user"></i>  Detail Data Pribadi</a></li>
 					<li class=""><a href="#tab_c" data-toggle="tab"><i class="fa fa-user"></i>  Detail Data Atasan</a></li>
 				</ul>
@@ -203,9 +203,10 @@
 		format:'d-m-Y',
 		formatDate:'d-m-Y'
 	}); 
-
+ 
 	
 	$('.modal-create_skp_tahunan_confirm').on('shown.bs.modal', function(){
+		
 		
 	});
 
@@ -213,6 +214,9 @@
 		$('.u_jabatan, .p_jabatan, .masa_penilaian').removeClass('has-error');
 		$('.error_renja_id').hide();
 		$('.modal-create_skp_tahunan_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
+
+		$('.sidebar-mini').attr("style", "padding-right:0px;");
+
 	});
 
 	$('.tgl').on('click', function(){
@@ -224,18 +228,7 @@
 		var jabatan_id = $(this).data('jabatan_id') ;
 		var pegawai_id = $(this).data('pegawai_id') ;
 		
-
-
-		Swal.fire({
-                title: 'Pencarian data..!',
-                text: 'mohon tunggu..',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                allowEnterKey: false,
-                onOpen: () => {
-                    swal.showLoading()
-                }
-            })
+		show_loader();
 
 		$.ajax({
 			url		: '{{ url("api_resource/create_skp_tahunan_confirm") }}',
@@ -246,8 +239,9 @@
 							pegawai_id : pegawai_id
 						},
 			success	: function(data) {
-				
 				Swal.close();
+				$('#myTab a[href="#tab_a"]').tab('show');
+
 				if (data['status']==='pass'){
 					$('#periode_label').html(data['periode_label']); 
 					$('#u_nip').html(data['u_nip']); 
@@ -330,9 +324,10 @@
 			url		: '{{ url("api_resource/create_skp_tahunan") }}',
 			type	: 'POST',
 			data	:  data,
-			success	: function(data , textStatus, jqXHR) {
-				$('#skp_tahunan').DataTable().ajax.reload(null,false);
+			success	: function(data) {
 				
+				$('.personal_jm_skp_tahunan').html(data['jm_skp_tahunan']);
+				$('.personal_jm_skp_bulanan').html(data['jm_skp_bulanan']);
 
 				Swal.fire({
 					title: "",
@@ -345,7 +340,8 @@
 				}).then(function () {
 						$('.modal-create_skp_tahunan_confirm').modal('hide');
 						$('#skp_tahunan_table').DataTable().ajax.reload(null,false);
-						window.location.assign("skp_tahunan/"+data);
+						$('#skp_tahunan').DataTable().ajax.reload(null,false);
+						window.location.assign("skp_tahunan/"+data['skp_tahunan_id']);
 
 				},
 					function (dismiss) {

@@ -13,7 +13,7 @@
 				<div class="small-box bg-teal capaian_bulanan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							*
+							{{ $capaian_bulanan_app_req }}
 						</h3>
 						<p>
 							<strong>Capaian Bulanan</strong>
@@ -28,7 +28,7 @@
 				<div class="small-box bg-purple capaian_tahunan" style="cursor:pointer;" >
 					<div class="inner">
 						<h3>
-							*
+							{{ $capaian_tahunan_app_req }}
 						</h3>
 						<p>
 							<strong>Capaian Tahunan</strong>

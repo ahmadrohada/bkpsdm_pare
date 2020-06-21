@@ -29,7 +29,7 @@
 			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-red skp_tahunan" style="cursor:pointer;">
 					<div class="inner">
-						<h3>
+						<h3 class="personal_jm_skp_tahunan">
 							{{ $jm_skp_tahunan }}
 						</h3>
 						<p>
@@ -45,7 +45,7 @@
 			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-green skp_bulanan" style="cursor:pointer;">
 					<div class="inner">
-						<h3>
+						<h3 class="personal_jm_skp_bulanan">
 							{{ $jm_skp_bulanan }}
 						</h3>
 						<p>

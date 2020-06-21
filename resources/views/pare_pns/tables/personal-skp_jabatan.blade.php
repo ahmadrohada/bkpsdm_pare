@@ -108,7 +108,7 @@
 										if ( ( row.skp_tahunan == 0 ) & (row.jabatan_status == 'active') ){ 
 											return  '<span  data-toggle="tooltip" title="Create SKP Tahunan" style="margin:1px;" ><a class="btn btn-warning btn-xs create_skp_tahunan"  data-jabatan_id="'+row.jabatan_id+'" data-periode_id="'+row.periode_id+'" data-pegawai_id="'+row.pegawai_id+'">Create SKP</a></span>';
 										}else if (row.skp_tahunan == 1 ){
-											return  '<span class="btn btn-success btn-xs" style="width:68px;"><i class="fa fa-check"></i></i></span>';
+											return  '<span class="btn btn-success btn-xs" style="width:68px; cursor:default;"><i class="fa fa-check"></i></i></span>';
 
 										
 										}else if (row.skp_tahunan == 2 ){

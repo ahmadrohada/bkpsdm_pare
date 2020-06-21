@@ -160,7 +160,7 @@
 	});
 	
 	$(document).on('click','.create_capaian_bulanan',function(e){
-		//alert();
+		show_loader();
 		var skp_bulanan_id = $(this).data('skp_bulanan_id') ;
 		
 
@@ -174,7 +174,6 @@
 				
 				if (data['status']==='pass'){
 
- 
 					$('#periode_label').html(data['periode_label']); 
 					$('.mulai').val(data['tgl_mulai']); 
 					$('.selesai').val(data['tgl_selesai']); 

@@ -29,14 +29,6 @@
 				<li class="uraian_tugas_tambahan_tab"><a href="#uraian_tugas_tambahan_tab" data-toggle="tab">Uraian Tugas Tambahan</a></li>
 				
 			</ul>
-
- 
-			<?php
-				$id_jabatan_irban =  ['143','144','145','146','786','787']; 
-				$id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
-				$id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
-			?>
- 
 			<div class="tab-content"  style="min-height:400px;">
 				<div class="active tab-pane fade" id="status">
 					@include('pare_pns.modules.tab.capaian_bulanan_status')
@@ -49,21 +41,21 @@
 					<?php
 						switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': // 1. Eselon II 
-									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli)){ //JIKA IRBAN
+									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, json_decode($jabatan_staf_ahli))){ //JIKA IRBAN
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_5_detail')<?php
 									}else{
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_1_detail')<?php
 									}
 									break;
 							case '2': //2. Esl III 
-									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_irban)){ //JIKA IRBAN
+									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, json_decode($jabatan_irban))){ //JIKA IRBAN
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_3')<?php
 									}else{
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2')<?php
 									}
 									break;
 							case '3':  //3. ESL IV
-									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah)){ //JIKA LURAH
+									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, json_decode($jabatan_lurah))){ //JIKA LURAH
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2')<?php
 									}else{
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_3')<?php

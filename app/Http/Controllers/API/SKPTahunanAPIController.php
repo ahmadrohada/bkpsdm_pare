@@ -21,6 +21,7 @@ use App\Models\Jabatan;
 use App\Models\Kegiatan;
 use App\Models\Renja;
 use App\Models\Eselon;
+use App\Traits\PJabatan;
 
 
 use App\Helpers\Pustaka;
@@ -32,6 +33,7 @@ use Input;
 Use Alert;
 
 class SKPTahunanAPIController extends Controller {
+    use PJabatan;
 
     //=======================================================================================//
     protected function jabatan($id_jabatan){ 
@@ -1115,12 +1117,12 @@ class SKPTahunanAPIController extends Controller {
 
         //Untuk IRBAN pada SKPD Inspektorat mah pengecualian, eselon 3 bisa bikin skp langsung
         //untuk id jabatan irban yaitu [143,144,145,146]
-        $id_jabatan_irban =  ['143','144','145','146','786','787'];
-
         //untuk Lurah di kec.karwang barat dan timur, eselon 4 namun diberikan perlakuan sebagai eselon 3
-        $id_jabatan_lurah = ['1276','1281','1286','1291','1298','1301','1306','1311','1226','1221','1216','1211'];
 
-        $id_jabatan_staf_ahli = ['13','14','15','61068','61069'];
+        $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
+        $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban'));
+        $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
+        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('jabatan_staf_ahli'));
 
 
         $skpd_id = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))->SELECT('id','id_skpd')->first()->id_skpd;
@@ -1588,8 +1590,9 @@ class SKPTahunanAPIController extends Controller {
 
         if ( $skp_tahunan->save()){
 
-            SKPTahunanTimeline::INSERT(['skp_tahunan_id'=>$skp_tahunan->id]);
-            return \Response::make($skp_tahunan->id, 200);
+            $data_1       = SKPTahunan::WHERE('pegawai_id',$skp_tahunan->pegawai_id)->count();
+            $data_2       = SKPBulanan::WHERE('pegawai_id',$skp_tahunan->pegawai_id)->count();
+            return \Response::make(['skp_tahunan_id' => $skp_tahunan->id ,'jm_skp_tahunan' => $data_1, 'jm_skp_bulanan' => $data_2 ], 200);
         }else{
             return \Response::make('error', 500);
         } 
@@ -1795,17 +1798,22 @@ class SKPTahunanAPIController extends Controller {
             return $this->sendError('SKP Tahunan tidak ditemukan.');
         }
 
-
         if ( $st_skp->delete()){
 
             $tm    = SKPtahunanTimeline::
                         where('skp_tahunan_id',Input::get('skp_tahunan_id'))
                         ->delete();
 
-            return \Response::make('sukses', 200);
+            //cari jumlah skp
+            $data_1       = SKPTahunan::WHERE('pegawai_id',$st_skp->pegawai_id)->count();
+            $data_2       = SKPBulanan::WHERE('pegawai_id',$st_skp->pegawai_id)->count();
+             
+            
+
+            return \Response::make(['jm_skp_tahunan' => $data_1, 'jm_skp_bulanan' => $data_2 ], 200);
         }else{
             return \Response::make('error', 500);
-        } 
+        }  
             
             
     

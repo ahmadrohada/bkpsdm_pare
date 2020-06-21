@@ -1,8 +1,8 @@
+
 @extends('pare_pns.layouts.dashboard')
 
-@section('template_title')
-	{{ $nama_pegawai }}
-@stop
+
+@section('template_title','SKP Personal')
 
 
 @section('content')
@@ -15,8 +15,9 @@
       </section>
 	    <section class="content">
 				@include('pare_pns.modules.snapshots-boxes.personal-skp')
-
 				@include('pare_pns.tables.personal-skp_tahunan')
 	    </section>
 	</div>
 @stop
+
+
