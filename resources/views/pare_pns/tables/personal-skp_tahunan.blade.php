@@ -118,12 +118,13 @@
 	});
 
 	$(document).on('click','.hapus_skp_tahunan',function(e){
-		var skp_tahunan_id = $(this).data('id') ;
+		var skp_tahunan_id 	= $(this).data('id') ;
+		var periode 		= $(this).data('periode') ;
 		//alert(kegiatan_tahunan_id);
 
 		Swal.fire({
-			title: "Hapus  SKP Tahunan",
-			text:$(this).data('periode'),
+			title: "Hapus  SKP Tahunan "+periode,
+			text:"Semua Kegiatan Tahunan dan juga SKP bulanan beserta kegiatan bulanannya akan terhapus",
 			type: "warning",
 			//type: "question",
 			showCancelButton: true,

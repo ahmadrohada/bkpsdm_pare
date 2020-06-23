@@ -359,7 +359,7 @@
 	
 
 
-//======================== SKP BULANAN ==============================//
+//======================== SKP BULANAN ==============================// 
 	$(document).on('click','.create_skp_bulanan',function(e){
 		modal_create_skp_bulanan();
 	});
@@ -376,6 +376,7 @@
 					$('.modal-skp_bulanan').find('[name=u_jabatan]').html(data['u_jabatan']);
 					$('.modal-skp_bulanan').find('[name=p_nama]').html(data['p_nama']);
 					$('.modal-skp_bulanan').find('[name=p_jabatan]').html(data['p_jabatan']);
+					$('.modal-skp_bulanan').find('[name=masa_penilaian]').html(data['masa_penilaian']);
 
 					$('.modal-skp_bulanan').find('[name=skp_tahunan_id]').val({{ $skp->id}});
 					$('.modal-skp_bulanan').find('[name=tgl_mulai]').val(data['tgl_mulai']);
@@ -385,12 +386,24 @@
 					$('.modal-skp_bulanan').find('[name=u_nama]').val(data['u_nama']);
 					$('.modal-skp_bulanan').find('[name=p_nama]').val(data['p_nama']);
 
+					//HIDE BULAN YANG DILUAR MAA PENILAIAN SKP TAHUNAN
+					bln_1 = data['bln_skp_list'];
+					$('.periode_skp_bulanan').children().each(function(index,element){
+						$(this).prop('disabled',true);
+        				for (j = 0; j < bln_1.length ; j++){
+							if ( $(element).val() == data['bln_skp_list'][j]['bulan']){
+								$(this).prop('disabled',false);
+							}
+						}
+					})
+
+
 					//DISABLED BULAN YANG UDAH ADA
 					//data['skp_bulanan_list'][0]['bulan']
 					bln = data['skp_bulanan_list'];
 					$('.periode_skp_bulanan').children().each(function(index,element){
 					
-        		for (i = 0; i < bln.length ; i++){
+        				for (i = 0; i < bln.length ; i++){
 							if ( $(element).val() == data['skp_bulanan_list'][i]['bulan']){
 								$(this).prop('disabled',true);
 							}

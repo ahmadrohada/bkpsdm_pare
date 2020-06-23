@@ -245,8 +245,19 @@ class RencanaAksiAPIController extends Controller {
                         })
                         ->SELECT('pelaksana.id')
                         ->WHERE('m_skpd.parent_id', $request->jabatan_id )
-                        ->get()
-                        ->toArray(); 
+                        ->get();
+                        //->toArray(); 
+        //ada beberapa eselon 4 yang melaksanakan kegiatan sendiri, kasus kasi dan lurah nagasari 23/0/2020
+        //sehingga dicoba untuk kegiatan bawahan nya juga diikutsertakan
+        $penanggung_jawab_id = Jabatan::
+                                SELECT('m_skpd.id')
+                                ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                                ->get();
+                                //->toArray();
+        $pelaksana_id = $pelaksana_id->merge($penanggung_jawab_id);
+
+        //return  $pelaksana_id;
+
 
         $renja_id = SKPTahunan::find($request->skp_tahunan_id)->renja_id;
                
@@ -1173,14 +1184,18 @@ class RencanaAksiAPIController extends Controller {
                                         $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                        
                                     })
-                                    ->SELECT( 'kegiatan_tahunan.id AS kegiatan_tahunan_id') 
+                                    ->SELECT(   'kegiatan_tahunan.id AS kegiatan_tahunan_id',
+                                                'renja_kegiatan.jabatan_id AS jabatan_id_pengawas'
+                                                ) 
                                     ->WHERE('renja_indikator_kegiatan.id', $request->indikator_kegiatan_id)
                                     ->first();
         
         if ($keg_tahunan){
             $kegiatan_tahunan_id = $keg_tahunan->kegiatan_tahunan_id;
+            $jabatan_id_pengawas = $keg_tahunan->jabatan_id_pengawas;
         }else{
             $kegiatan_tahunan_id = 0 ;
+            $jabatan_id_pengawas = 0 ;
         }
        
         
@@ -1204,9 +1219,14 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('label', function ($x) {
             return $x->rencana_aksi_label;
         })
-        ->addColumn('kegiatan_bulanan', function ($x) {
+        ->addColumn('kegiatan_bulanan', function ($x) use ($jabatan_id_pengawas) {
             $kb =  KegiatanSKPBulanan::WHERE('rencana_aksi_id',$x->rencana_aksi_id)->SELECT('id')->count();
-            return $kb;
+            if ( $jabatan_id_pengawas == $x->jabatan_id ){
+                return 1 ;
+            }else{
+                return $kb;
+            }
+            
         })
         ->addColumn('target', function ($x) {
             
@@ -1243,6 +1263,7 @@ class RencanaAksiAPIController extends Controller {
     {
             
         $skp_tahunan_id = $request->skp_tahunan_id;
+        $jabatan_id = $request->jabatan_id;
         //CARI kegiatan _tahunan nya
         $keg_tahunan = IndikatorKegiatan::
                                     leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
@@ -1285,9 +1306,18 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('label', function ($x) {
             return $x->rencana_aksi_label;
         })
-        ->addColumn('kegiatan_bulanan', function ($x) {
+        ->addColumn('kegiatan_bulanan', function ($x) use($jabatan_id) {
             $kb =  KegiatanSKPBulanan::WHERE('rencana_aksi_id',$x->rencana_aksi_id)->SELECT('id')->count();
-            return $kb;
+
+            //jika rencana aksi dilaksanakan sendiri, maka dianggap 1
+            if ( $x->jabatan_id == $jabatan_id ){
+                return 1 ;
+            }else{
+                return $kb;
+            }
+
+
+            
         })
         ->addColumn('target', function ($x) {
             

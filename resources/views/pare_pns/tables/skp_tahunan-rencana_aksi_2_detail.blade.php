@@ -27,7 +27,7 @@
 	<div class="box box-rencana_aksi list_rencana_aksi_div" style="min-height:100px;">
 		<div class="box-header with-border">
 			<h1 class="box-title"> 
-				List Rencana Aksi
+				List Rencana Aksis
 			</h1>
 
 		</div>

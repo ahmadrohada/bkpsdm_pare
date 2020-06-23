@@ -253,7 +253,7 @@
 					$('#txt_u_jabatan').html(data['u_jabatan']); 
 					$('#txt_u_skpd').html(data['u_skpd']); 
 
-
+				
 					$('#p_nip').html(data['p_nip']); 
 					$('#p_nama').html(data['p_nama']); 
 					$('#p_golongan').html(data['p_pangkat']+' / '+data['p_golongan']); 
@@ -269,6 +269,9 @@
 					$('.p_nama').val(data['p_nama']); 
 					$('.p_jabatan_id').val(data['p_jabatan_id']); 
 					$('.p_golongan_id').val(data['p_golongan_id']); 
+
+					$('.mulai').val(data['tgl_mulai']); 
+					$('.selesai').val(data['tgl_selesai']); 
 
 
 					

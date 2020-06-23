@@ -859,11 +859,16 @@ class SKPBulananAPIController extends Controller {
                                 })
                                 ->SELECT('pelaksana.id')
                                 ->WHERE('m_skpd.parent_id', $request->jabatan_id )
-                                ->get()
-
-
-
-                                ->toArray(); 
+                                ->get();
+                                //->toArray(); 
+         //ada beberapa eselon 4 yang melaksanakan kegiatan sendiri, kasus kasi dan lurah nagasari 23/0/2020
+        //sehingga dicoba untuk kegiatan bawahan nya juga diikutsertakan
+        $penanggung_jawab_id = Jabatan::
+                                        SELECT('m_skpd.id')
+                                        ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                                        ->get();
+                                        //->toArray();
+        $pelaksana_id = $pelaksana_id->merge($penanggung_jawab_id);  
 
         $skp = SKPBulanan::
                         WHERE('skp_tahunan_id',$request->skp_tahunan_id)

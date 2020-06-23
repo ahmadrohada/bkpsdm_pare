@@ -209,7 +209,7 @@ class Pustaka {
 						break;
 				case 8 : $x='08';
 						break;
-				case 9 : $x='08';
+				case 9 : $x='09';
 						break;
 				case 10 : $x='10';
 						break;
@@ -602,6 +602,39 @@ class Pustaka {
 
 
 	public static function angka_bln($data){
+		$bulan = substr($data,5,2); 
+		switch($bulan)
+		{
+		case 01 : $nm_bulan=1;
+				break;
+		case 02 : $nm_bulan=2;
+				break;
+		case 03 : $nm_bulan=3;
+				break;
+		case 04 : $nm_bulan=4;
+				break;
+		case 05 : $nm_bulan=5;
+				break;
+		case 06 : $nm_bulan=6;
+				break;
+		case 07 : $nm_bulan=6;
+				break;
+		case 08 : $nm_bulan=8;
+				break;
+		case 09 : $nm_bulan=9;
+				break;
+		case 10 : $nm_bulan=10;
+				break;
+		case 11 : $nm_bulan=11;
+				break;
+		case 12 : $nm_bulan=12;
+				break;
+			}
+		return $bulan;
+
+	}
+
+	public static function angka_bln_tz($data){
 		$bulan = substr($data,5,2); 
 	
 		return $bulan;

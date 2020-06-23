@@ -265,6 +265,11 @@ class CapaianBulananAPIController extends Controller {
             $jenis_jabatan = 31 ; //irban
         }
 
+        //jika Lurah
+        if ( ( $jenis_jabatan == 3 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah ) ) ){
+            $jenis_jabatan = 2 ; //lurah
+        }
+
 
 
 
@@ -389,13 +394,17 @@ class CapaianBulananAPIController extends Controller {
             }
             $list_bawahan  = array_reverse($pelaksana_list);    
         //================================= K A B I D ========================================// 
-        }else if ( $jenis_jabatan == 2){   //Eselon III
+        }else if ( $jenis_jabatan == 2){   //Eselon III atau lurah
 
             $jabatan_id = $skp_bulanan->PejabatYangDinilai->id_jabatan;
             //cari bawahan
             $bawahan = Jabatan::SELECT('id','skpd AS jabatan' )->WHERE('parent_id',$jabatan_id )->get();
             $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray();
             //cari bawahan  , jabatanpelaksanan
+
+
+
+            
             $pelaksana_list = Jabatan::
                                 SELECT('id')
                                 ->WHEREIN('parent_id', $bawahan_ls)
@@ -408,7 +417,14 @@ class CapaianBulananAPIController extends Controller {
             $jm_kegiatan = 0 ; 
             foreach ($bawahan as $x) {
                 //list pelaksana
-                $child = Jabatan::SELECT('id')->WHERE('parent_id',$x->id )->get()->toArray();
+                //$child = Jabatan::SELECT('id')->WHERE('parent_id',$x->id )->get()->toArray();
+
+                //ada beberapa eselon 4 yang melaksanakan kegiatan sendiri, kasus kasi dan lurah nagasari 23/0/2020
+                //sehingga dicoba untuk kegiatan bawahan nya juga diikutsertakan
+                $child = Jabatan::SELECT('id')->WHERE('id',$x->id )->ORWHERE('parent_id',$x->id )->get()->toArray();
+
+
+
                 $dt_reaksi = RencanaAksi::WHEREIN('jabatan_id',$child)
                                             ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
                                             ->WHERE('renja_id',$renja_id)
@@ -739,6 +755,7 @@ class CapaianBulananAPIController extends Controller {
                  'tgl_selesai.required'                  => 'Harus diisi',
                  'u_nama.required'                       => 'Harus diisi',
                  'jenis_jabatan.required'                => 'Harus diisi',
+                 'jabatan_id.required'                   => 'Harus diisi',
                  'u_jabatan_id.required'                 => 'Harus diisi',
                  'jm_kegiatan_bulanan'                   => 'Harus Lebih dari nol'
 
@@ -753,7 +770,8 @@ class CapaianBulananAPIController extends Controller {
                             'tgl_selesai'           => 'required',
                             'u_nama'                => 'required',
                             'u_jabatan_id'          => 'required',
-                            'jenis_jabatan'       => 'required',
+                            'jenis_jabatan'         => 'required',
+                            'jabatan_id'            => 'required',
                             'jm_kegiatan_bulanan'   => 'required|integer|min:1'
                         ),
                         $messages
@@ -793,13 +811,48 @@ class CapaianBulananAPIController extends Controller {
     
             if ( $capaian_bulanan->save()){
                
+                // jabatn ID
+                $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
+                $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban'));
+                $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
+                $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('jabatan_staf_ahli'));
+
+                //bikin jadi colse skp bulanan nya
                 SKPBulanan::WHERE('id',Input::get('skp_bulanan_id'))->UPDATE(['status' => '1']);
 
-                //jika kabid, auto add kegiatan
-                if ( Input::get('jenis_jabatan') == '2'){
-                    $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id',Input::get('jabatan_id'))->get()->toArray();
+                
+                //cari jenis jabatan
+                //JENIS JABATAN STAF AHLI
+                if ( ( Input::get('jenis_jabatan') == 1 ) & ( in_array( Input::get('jabatan_id'), $id_jabatan_staf_ahli) ) ){
+                    $jenis_jabatan = 5 ; //staf ahli sebagai JFT
+                }
+                //lurah
+                else if ( ( Input::get('jenis_jabatan') == 3 ) & ( in_array( Input::get('jabatan_id'), $id_jabatan_lurah ) ) ){
+                    $jenis_jabatan = 2 ; //lurah
+                }else{
+                    $jenis_jabatan = Input::get('jenis_jabatan');
+                }
+
+
+
+
+
+
+
+                //jika kabid atau lurah, auto add kegiatan
+                if ( $jenis_jabatan == '2'){
+                    $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id',Input::get('jabatan_id'))->get(); //->toArray();
+
+
                     //cari bawahan  , jabatanpelaksanan
-                    $pelaksana_list = Jabatan::SELECT('id')->WHEREIN('parent_id', $bawahan_ls)->get()->toArray(); 
+                    $pelaksana_list = Jabatan::SELECT('id')->WHEREIN('parent_id', $bawahan_ls)->get(); //->toArray(); 
+
+                    //ada beberapa eselon 4 yang melaksanakan kegiatan sendiri, kasus kasi dan lurah nagasari 23/0/2020
+                    //sehingga dicoba untuk kegiatan bawahan nya juga diikutsertakan
+                    //mengantisipasi kegiatan eseon 4 nya dilaksakan oleh sendiri
+                    $pelaksana_list = $pelaksana_list->merge($bawahan_ls);
+
+
         
                     $kegiatan_list = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_list)
                                                 ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
@@ -826,7 +879,7 @@ class CapaianBulananAPIController extends Controller {
                         $st_ra   = new RealisasiRencanaAksiEselon3;
                         $st_ra -> insert($data);
                     }
-                }else if ( Input::get('jenis_jabatan') == '1'){ //jenis jabatajn eselon 2
+                }else if ( $jenis_jabatan == '1'){ //jenis jabatajn eselon 2
 
                     
                     $jenis_jabatan  = Input::get('jenis_jabatan');

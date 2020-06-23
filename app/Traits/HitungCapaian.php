@@ -177,8 +177,17 @@ trait HitungCapaian
                                 })
                                 ->SELECT('pelaksana.id')
                                 ->WHERE('m_skpd.parent_id', $jabatan_id )
-                                ->get()
-                                ->toArray();  
+                                ->get();
+                                //->toArray();  
+        //ada beberapa eselon 4 yang melaksanakan kegiatan sendiri, kasus kasi dan lurah nagasari 23/0/2020
+        //sehingga dicoba untuk kegiatan bawahan nya juga diikutsertakan
+        $penanggung_jawab_id = Jabatan::
+                                        SELECT('m_skpd.id')
+                                        ->WHERE('m_skpd.parent_id', $jabatan_id )
+                                        ->get();
+                                        //->toArray();
+        $pelaksana_id = $pelaksana_id->merge($penanggung_jawab_id);   
+
             
         //hitung capaian kinerja bulanan
         $xdata = RencanaAksi::
@@ -368,9 +377,13 @@ trait HitungCapaian
         }
 
         //JENIS JABATAN UNTUK IRBAN ** 
-        $id_jabatan_irban =  ['143','144','145','146','786','787'];
         if ( ( $jenis_jabatan == 2 ) & ( in_array( $jabatan_id, $id_jabatan_irban) ) ){
             $jenis_jabatan = 31 ; //irban
+        }
+
+        //jika Lurah
+        if ( ( $jenis_jabatan == 3 ) & ( in_array( $jabatan_id, $id_jabatan_lurah ) ) ){
+            $jenis_jabatan = 2 ; //lurah
         }
 
 

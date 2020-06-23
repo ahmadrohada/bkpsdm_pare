@@ -38,7 +38,7 @@
 				order 			: [0 , 'asc' ],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2,3,4,5,6,7 ] },
-									@if ( request()->segment(4) != 'edit' )
+									@if ( ( request()->segment(4) != 'edit' ) & ( request()->segment(4) != 'ralat' ) )
 											{ "visible": false, "targets": [7]}
 									@else
 											{ "visible": true, "targets": [7]}

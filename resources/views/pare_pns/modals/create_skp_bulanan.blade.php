@@ -1,3 +1,4 @@
+
 <div class="modal fade modal-skp_bulanan" id="CreateSKPBulanan" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -57,7 +58,7 @@
 
 					<div class="row">
 						<div class="col-md-12 form-group form-group-sm label_periode_skp_bulanan">
-							<label>Periode SKP Bulanan</label>
+							<label>Periode SKP Bulanan [ <span name="masa_penilaian"> - </span> ]</label>
 							<select class="form-control  periode_skp_bulanan" multiple="multiple" name="periode_skp_bulanan[]" style="width: 100%;">
 								<option value="01">Januari</option>
 								<option value="02">Februari</option>
@@ -93,7 +94,7 @@
 
 
 
-<script type="text/javascript">
+<script type="text/javascript"> 
 
 	$('.periode_skp_bulanan,.periode_skp_bulanan_edit').select2();
 	

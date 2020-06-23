@@ -261,9 +261,9 @@
 									{ data: "label", name:"label",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
-												return "<span class='text-danger'>"+row.rencana_aksi_label+"</span>";
+												return "<span class='text-danger'>"+row.label+"</span>";
 											}else{
-												return row.kegiatan_bulanan_label;
+												return row.label;
 											}
 										}
 									},
@@ -271,9 +271,9 @@
 									{ data: "output", name:"output", width:"90px",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
-												return "<span class='text-danger'>"+row.target + ' '+ row.satuan+"</span>";
+												return "<span class='text-danger'>"+row.output+"</span>";
 											}else{
-												return row.target + ' '+ row.satuan;
+												return row.output;
 											}
 										}
 									},

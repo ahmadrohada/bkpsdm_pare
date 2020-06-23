@@ -70,11 +70,17 @@ class SKPTahunanAPIController extends Controller {
                             ->first();
 
         $skp_bulanan_list = SKPBulanan::SELECT('bulan')->WHERE('skp_tahunan_id',$request->skp_tahunan_id)->get()->toArray();
+        //di mergedengan periode
 
         //Bulan penilaian range 
+        $bln_awal  = Pustaka::angka_bln_tz($skp->tgl_mulai);
+        $bln_akhir = Pustaka::angka_bln_tz($skp->tgl_selesai);
 
-        $bln_awal  = Pustaka::angka_bln($skp->tgl_mulai);
-        $bln_akhir = Pustaka::angka_bln($skp->tgl_selesai);
+        $bln_skp_list = array();
+        foreach (range($bln_awal, $bln_akhir) as $number) {
+            $z['bulan']	= Pustaka::nol($number);
+            array_push($bln_skp_list, $z);
+        }
 
         $renja      = $skp->Renja;
         $p_detail   = $skp->PejabatPenilai;
@@ -116,6 +122,7 @@ class SKPTahunanAPIController extends Controller {
                     'skp_bulanan_list'      => $skp_bulanan_list,
                     'bln_awal'              => $bln_awal,
                     'bln_akhir'             => $bln_akhir,
+                    'bln_skp_list'          => $bln_skp_list,
 
             );
         }else{
@@ -789,25 +796,39 @@ class SKPTahunanAPIController extends Controller {
         $no                 = 1;
 
         foreach ( $periode AS $x ){
-            
-
             $thn = substr($x->awal,0,4);
-
             if ( $thn == date('Y')){
                 $tahun_now = 1 ;
             }else{
                 $tahun_now = 0 ;
             }
-            
             $dt = HistoryJabatan::
                         WHERE('id_pegawai','=', $id_pegawai)
                         ->whereRAW('YEAR(tmt_jabatan) = ' .$thn )
                         ->SELECT('jabatan AS jabatan','id AS jabatan_id')
                         ->count(); 
 
-            if ( $dt >= 1 ){    //adakah jabatan id yang tmt nya sesuai tah
+            if ( $dt >= 1 ){    //adakah jabatan id yang tmt nya sesuai tah dan yg tmt jangan tgl 1 tapinya
 
-                
+                //cantumkan dulu skp di periode ini yang lalu lalu nya
+
+                $h['id']			    = $no;
+                $h['pegawai_id']		= $id_pegawai;
+                $h['periode']			= $x->label;
+                $h['periode_id']	    = $x->id;
+                $h['jabatan']			= $last_jabatan;
+                $h['jabatan_id']		= $last_jabatan_id;
+                $h['jabatan_status']	= $last_jabatan_status;
+                $h['tahun_now']         = $tahun_now;
+                $h['skpd']			    = $last_skpd;
+                $h['skpd_id']			= $last_skpd_id;
+                $h['tmt_jabatan']	    = $last_tmt_jabatan;
+                $h['renja_status']      = $this->status_renja($last_skpd_id,$x->id);
+                $h['skp_tahunan_id']    = $this->skp_tahunan_id( $last_skpd_id ,$x->id , $id_pegawai , $last_jabatan_id);
+                array_push($response, $h);
+                $no = $no+1;
+                //end
+
                 $xt = HistoryJabatan::
                                 WHERE('id_pegawai','=', $id_pegawai)
                                 ->whereRAW('YEAR(tmt_jabatan) = ' .$thn )
@@ -958,6 +979,36 @@ class SKPTahunanAPIController extends Controller {
         $periode    = Periode::WHERE('id',$periode_id)->first();
         //DETAIL data pribadi dan atasan
         $jab_pribadi = HistoryJabatan::WHERE('id',$jabatan_id)->first();
+
+
+        //tentukan masa penilaian SKP tahunan dari TMT jabatan nya
+        //return $jab_pribadi->tmt_jabatan;
+        //jika tahun TMT != thn ini,maka dianggap SKP norma -> mulai dari awal tahun s.d akhir tahun
+        //Jika tmt nya adalah tahun ini , maka skp nya mulai dari tgl bulan tmt tahun ini sd. akhir tahun
+
+        //return Pustaka::tahun($jab_pribadi->tmt_jabatan);
+
+
+        //return to isian tanggal mulai dan selesai skp tahunan
+        $thn_now = Pustaka::periode_tahun($periode->label);
+        $thn_tmt = Pustaka::tahun($jab_pribadi->tmt_jabatan);
+
+        $tgl_pertama = date('Y-m-01', strtotime(date($thn_now.'-01-d')));
+        $tgl_terakhir = date('Y-m-t', strtotime(date($thn_now.'-12-d')));
+
+        if ( $thn_tmt == $thn_now ){ //proses mutasi dipertengahan tahun
+
+            $tgl_mulai      = date('Y-m-d', strtotime('+1 day', strtotime($jab_pribadi->tmt_jabatan) ));
+            $tgl_selesai    = $tgl_terakhir ;
+        }else{
+            $tgl_mulai      = $tgl_pertama;
+            $tgl_selesai    = $tgl_terakhir;
+        }
+        
+
+
+
+
         //Golongan Aktif
         $gol_pribadi = HistoryGolongan::WHERE('id_pegawai', $jab_pribadi->id_pegawai)
                                     ->WHERE('status','active')
@@ -1021,6 +1072,8 @@ class SKPTahunanAPIController extends Controller {
                         'pegawai_id'			=> $jab_pribadi->id_pegawai,
                         'periode_label'	        => $periode->label,
                         'renja_id'	            => $renja_id,
+                        'tgl_mulai'             => Pustaka::tgl_form($tgl_mulai),
+                        'tgl_selesai'           => Pustaka::tgl_form($tgl_selesai),
 
                         'u_jabatan_id'	        => $jab_pribadi->id,
                         'u_golongan_id'         => $gol_pribadi->id,
