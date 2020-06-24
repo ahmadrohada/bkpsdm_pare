@@ -37,9 +37,12 @@ class SKPTahunanAPIController extends Controller {
 
     //=======================================================================================//
     protected function jabatan($id_jabatan){ 
-        $jabatan       = HistoryJabatan::WHERE('id',$id_jabatan)
-                        ->SELECT('jabatan')
-                        ->first();
+        $jabatan       = HistoryJabatan::WHERE('tb_history_jabatan.id',$id_jabatan)
+                                        ->leftjoin('demo_asn.m_skpd AS m_skpd', function($join){
+                                            $join   ->on('tb_history_jabatan.id_jabatan','=','m_skpd.id');
+                                        })
+                                        ->SELECT('m_skpd.skpd AS jabatan')
+                                        ->first();
         if ( $jabatan == null ){
             return $jabatan;
         }else{
