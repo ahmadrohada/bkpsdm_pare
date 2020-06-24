@@ -21,7 +21,11 @@ trait HitungCapaian
     protected function capaian_kinerja_irban($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id)
     {
         //cari bawahan
-        $child = Jabatan::SELECT('id')->WHERE('id',$jabatan_id )->get()->toArray(); 
+        //$child = Jabatan::SELECT('id')->WHERE('id',$jabatan_id )->get()->toArray();
+
+        //IRBAN DAN KAPUS sama, dicoba dengan kgeitan bawahan dan egiatan yang dilaksanakan sendiri,
+        //update 24/06/2020
+        $child = Jabatan::SELECT('id')->WHERE('parent_id',  $jabatan_id  )->ORWHERE('id',  $jabatan_id )->get()->toArray(); 
 
         //hitung capaian kinerja bulanan
         $xdata = RencanaAksi::

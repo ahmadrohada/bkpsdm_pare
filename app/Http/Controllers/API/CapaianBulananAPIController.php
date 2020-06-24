@@ -227,7 +227,7 @@ class CapaianBulananAPIController extends Controller {
         //lihat jenis jabatan, 1,2,3,4
 
         $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
-        $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban'));
+        $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban')); //kapus dan kaarsip
         $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
         $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('jabatan_staf_ahli'));
 
@@ -278,6 +278,10 @@ class CapaianBulananAPIController extends Controller {
             //cari bawahan
             $bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('id',$jabatan_id )->get();
 
+            //IRBAN DAN KAPUS sama, dicoba dengan kgeitan bawahan dan egiatan yang dilaksanakan sendiri,
+            //update 24/06/2020
+            $bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('parent_id',  $jabatan_id  )->ORWHERE('id',  $jabatan_id )->get(); 
+
             //list bawahan
             $jm_kegiatan = 0 ; 
             foreach ($bawahan as $x) {
@@ -313,7 +317,7 @@ class CapaianBulananAPIController extends Controller {
                 $pelaksana_list[] = $data_jabatan_id ;
                 $jm_kegiatan += $dt_reaksi;
             }
-            $list_bawahan  = array_reverse($pelaksana_list);      
+            $list_bawahan  = array_reverse($pelaksana_list);     
         //================================= JFT ===========================================//
         }else if ( $jenis_jabatan == 5 ){
             $jm_kegiatan = KegiatanSKPBulananJFT::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
