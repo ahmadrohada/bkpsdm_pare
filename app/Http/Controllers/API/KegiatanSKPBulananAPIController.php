@@ -174,16 +174,18 @@ class KegiatanSKPBulananAPIController extends Controller {
     public function KegiatanBulanan1(Request $request)
     {
             
-        $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan','status')->first();
+        $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan','status','skp_tahunan_id')->first();
 
+
+        
         //CARI KASUBID
         $child = Jabatan::
-                            
                             leftjoin('demo_asn.m_skpd AS kasubid', function($join){
                                 $join   ->on('kasubid.parent_id','=','m_skpd.id');
                             })
                             ->SELECT('kasubid.id')
                             ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                            ->ORWHERE('m_skpd.id','=',$request->jabatan_id)
                             ->get()
                             ->toArray(); 
 
@@ -195,10 +197,11 @@ class KegiatanSKPBulananAPIController extends Controller {
                         ->toArray(); 
 
         //return $pelaksana_id;
-
+        $renja_id = SKPTahunan::find($skp_bln->skp_tahunan_id)->renja_id;
         $dt = RencanaAksi::
                     WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
                     ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
+                    ->WHERE('skp_tahunan_rencana_aksi.renja_id',$renja_id)
                     ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
                         $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                         //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
@@ -211,13 +214,17 @@ class KegiatanSKPBulananAPIController extends Controller {
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
+                                'skp_tahunan_rencana_aksi.target',
+                                'skp_tahunan_rencana_aksi.satuan',
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
                                 'kegiatan_bulanan.target AS target_pelaksana',
-                                'kegiatan_bulanan.satuan AS satuan_pelaksana',
-                                'kegiatan_tahunan.target',
-                                'kegiatan_tahunan.satuan'
+                                'kegiatan_bulanan.satuan AS satuan_pelaksana'
+                                /* 'kegiatan_tahunan.target',
+                                'kegiatan_tahunan.satuan' */
                             ) 
+                    ->ORDERBY('skp_tahunan_rencana_aksi.label','ASC')
+                    ->GroupBY('kegiatan_tahunan.id')
                     ->get();
         
         $skp_id = $request->skp_bulanan_id;
@@ -262,56 +269,60 @@ class KegiatanSKPBulananAPIController extends Controller {
         
     } 
 
-    public function KegiatanBulanan2(Request $request)
+    public function KegiatanBulanan2(Request $request) 
     {
             
-        $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan','status')->first();
+        $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan','status','skp_tahunan_id')->first();
 
-        //cari bawahan  , jabatanpelaksanan
         $pelaksana_id = Jabatan::
-                        leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
-                            $join   ->on('pelaksana.parent_id','=','m_skpd.id');
-                        })
-                        ->SELECT('pelaksana.id')
-                        ->WHERE('m_skpd.parent_id', $request->jabatan_id )
-                        ->get();
-                        //->toArray(); 
+                            leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
+                                $join   ->on('pelaksana.parent_id','=','m_skpd.id');
+                            })
+                            ->SELECT('pelaksana.id')
+                            ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                            ->get();
+                            //->toArray(); 
 
-         //ada beberapa eselon 4 yang melaksanakan kegiatan sendiri, kasus kasi dan lurah nagasari 23/0/2020
+        //ada beberapa eselon 4 yang melaksanakan kegiatan sendiri, kasus kasi dan lurah nagasari 23/0/2020
         //sehingga dicoba untuk kegiatan bawahan nya juga diikutsertakan
         $penanggung_jawab_id = Jabatan::
-                                        SELECT('m_skpd.id')
-                                        ->WHERE('m_skpd.parent_id', $request->jabatan_id )
-                                        ->get();
-                                        //->toArray();
-        $pelaksana_id = $pelaksana_id->merge($penanggung_jawab_id);               
-         
+                                SELECT('m_skpd.id')
+                                ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                                ->get();
+                                //->toArray();
+        $pelaksana_id = $pelaksana_id->merge($penanggung_jawab_id);                 
+        $renja_id = SKPTahunan::find($skp_bln->skp_tahunan_id)->renja_id;
 
         $dt = RencanaAksi::
-                    WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
-                    ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
-                    ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
-                        $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
-                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
-                    })
-                    ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                        $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
-                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
-                    })
-                    ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
+                ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
+                ->WHERE('skp_tahunan_rencana_aksi.renja_id',$renja_id)
+                ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
+                    $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                    //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
+                })
+                ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                    $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
+                    //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
+                })
+                ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
+                    $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
+                })
+                ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
-                                'skp_tahunan_rencana_aksi.target AS target_rencana_aksi',
-                                'skp_tahunan_rencana_aksi.satuan AS satuan_rencana_aksi',
+                                'skp_tahunan_rencana_aksi.target AS target',
+                                'skp_tahunan_rencana_aksi.satuan AS satuan',
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
                                 'kegiatan_bulanan.target AS target_pelaksana',
-                                'kegiatan_bulanan.satuan AS satuan_pelaksana',
-                                'kegiatan_tahunan.target',
-                                'kegiatan_tahunan.satuan'
+                                'kegiatan_bulanan.satuan AS satuan_pelaksana'
+                                //'kegiatan_tahunan.target',
+                                //'kegiatan_tahunan.satuan'
                             ) 
-                    //->withTrashed()
+                    ->GroupBy('skp_tahunan_rencana_aksi.id')
+                    ->orderBY('skp_tahunan_rencana_aksi.label','ASC')
                     ->get();
         
         $skp_id = $request->skp_bulanan_id;

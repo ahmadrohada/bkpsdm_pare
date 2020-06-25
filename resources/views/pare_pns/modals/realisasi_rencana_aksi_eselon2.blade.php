@@ -73,7 +73,7 @@
 						<div class="col-md-6 col-xs-6 form-group" style="margin-top:8px;">	
 							<label class="control-label">Target Quantity </label>
 							<div class="input-group">
-							<span type="text" class="form-control input-sm rencana_aksi_target"></span>
+							<input type="text" name="target" id="target" required class="form-control input-sm rencana_aksi_target" placeholder="target">
 								<div class="input-group-addon">
 									<span class="satuan_target_rencana_aksi"></span>
 								</div>

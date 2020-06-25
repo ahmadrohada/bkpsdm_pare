@@ -18,7 +18,7 @@ use App\Models\Eselon;
 
 use App\Models\KegiatanSKPTahunan;
 use App\Models\RencanaAksi;
-use App\Models\RealisasiRencanaAksiKasubid;
+use App\Models\RealisasiRencanaAksiEselon4;
 use App\Models\RealisasiRencanaAksiEselon3;
 use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\KegiatanSKPBulanan;

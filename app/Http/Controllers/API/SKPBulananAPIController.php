@@ -324,7 +324,7 @@ class SKPBulananAPIController extends Controller {
 
     public function skp_bulanan_tree1(Request $request)
     {
-        //bawahan bawahan nya lagi
+        /* //bawahan bawahan nya lagi
         $pelaksana_id = Jabatan::
                         leftjoin('demo_asn.m_skpd AS pelaksana', function($join){
                             $join   ->on('pelaksana.parent_id','=','m_skpd.id');
@@ -332,18 +332,27 @@ class SKPBulananAPIController extends Controller {
                         ->SELECT('pelaksana.id')
                         ->WHERE('m_skpd.parent_id', $request->jabatan_id )
                         ->get()
-        
-        
-        
+                        ->toArray();  */
+        $skp_tahunan = SKPTahunan::where('id','=', $request->skp_tahunan_id )->select('id','renja_id')->get();
+        //CARI KASUBID
+        $child = Jabatan::
+                            leftjoin('demo_asn.m_skpd AS kasubid', function($join){
+                                $join   ->on('kasubid.parent_id','=','m_skpd.id');
+                            })
+                            ->SELECT('kasubid.id')
+                            ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                            ->get()
+                            ->toArray(); 
+
+        //cari bawahan  , jabatanpelaksanan
+        $pelaksana_id = Jabatan::
+                        SELECT('m_skpd.id')
+                        ->WHEREIN('m_skpd.parent_id', $child )
+                        ->get()
                         ->toArray(); 
 
 
         
-        $skp_tahunan = SKPTahunan::where('id','=', $request->skp_tahunan_id )
-                                    ->select('id','renja_id')
-                                    ->get();
-
-
 		foreach ($skp_tahunan as $x) {
             $data_skp['id']	            = "SKPTahunan|".$x->id;
 			$data_skp['text']			= $x->Renja->Periode->label;
@@ -361,7 +370,9 @@ class SKPBulananAPIController extends Controller {
 
                 $keg_skp = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id)
                                         ->WHERE('waktu_pelaksanaan','=',$y->bulan)
+                                        ->WHERE('renja_id','=',$x->renja_id)
                                         ->select('id','label')
+                                        ->ORDERBY('label','ASC')
                                         ->get();
 
                 foreach ($keg_skp as $z) {
@@ -401,7 +412,7 @@ class SKPBulananAPIController extends Controller {
         
     }
 
-    public function skp_bulanan_tree2(Request $request)
+    public function skp_bulanan_tree2(Request $request) 
     {
         //bawahan bawahan nya lagi
         $pelaksana_id = Jabatan::
@@ -441,6 +452,7 @@ class SKPBulananAPIController extends Controller {
                 $keg_skp = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id)
                                         ->WHERE('waktu_pelaksanaan','=',$y->bulan)
                                         ->select('id','label')
+                                        ->orderBY('label','ASC')
                                         ->get();
 
                 foreach ($keg_skp as $z) {
@@ -782,6 +794,7 @@ class SKPBulananAPIController extends Controller {
                             })
                             ->SELECT('kasubid.id')
                             ->WHERE('m_skpd.parent_id', $request->jabatan_id )
+                            ->ORWHERE('m_skpd.id','=',$request->jabatan_id)
                             ->get()
                             ->toArray(); 
 
@@ -807,7 +820,7 @@ class SKPBulananAPIController extends Controller {
                         ->orderBy('bulan')
                         ->get();
 
-       
+            $renja_id = SKPTahunan::find($request->skp_tahunan_id)->renja_id;
            $datatables = Datatables::of($skp)
            ->addColumn('periode', function ($x) {
                 return Pustaka::bulan($x->bulan) . ' '.Pustaka::tahun($x->tgl_mulai);
@@ -828,13 +841,27 @@ class SKPBulananAPIController extends Controller {
                     return "<font style='color:red'>Belum Ada</font>";
                 }
                 
-            })->addColumn('jm_kegiatan', function ($x) use($pelaksana_id) {
+            })->addColumn('jm_kegiatan', function ($x) use($pelaksana_id,$renja_id) {
                 
+                $dt = RencanaAksi::
+                                WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
+                                //yang dilaksanakan oleh kabid
+                                ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$x->bulan)
+                                ->WHERE('skp_tahunan_rencana_aksi.renja_id',$renja_id)
+                                ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
+                                    $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                                })
+                                ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                    $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
+                                })
+                                ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
+                                    $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
+                                })
+                                //->GroupBy('kegiatan_tahunan.id')
+                                
+                                ->distinct('kegiatan_tahunan.id')->count('skp_tahunan_rencana_aksi.id');
               
-                return  RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id )
-                                    ->WHERE('waktu_pelaksanaan','=',$x->bulan)
-                                    ->select('id')
-                                    ->count();
+                return  $dt;
 
 
                
@@ -911,11 +938,24 @@ class SKPBulananAPIController extends Controller {
             })->addColumn('jm_kegiatan', function ($x) use($pelaksana_id,$renja_id) {
                 
               
-                return  RencanaAksi::WHEREIN('jabatan_id',$pelaksana_id )
-                                    ->WHERE('waktu_pelaksanaan','=',$x->bulan)
-                                    ->WHERE('renja_id',$renja_id)
-                                    ->select('id')
-                                    ->count();
+                $dt = RencanaAksi::
+                                WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
+                                ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$x->bulan)
+                                ->WHERE('skp_tahunan_rencana_aksi.renja_id',$renja_id)
+                                ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
+                                    $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                                })
+                                ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                    $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
+                                })
+                                ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
+                                    $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
+                                })
+                                //->GroupBy('kegiatan_tahunan.id')
+                                
+                                ->distinct('kegiatan_tahunan.id')->count('skp_tahunan_rencana_aksi.id');
+
+                return $dt;
 
 
                

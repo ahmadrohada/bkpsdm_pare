@@ -235,11 +235,13 @@
   function load_kegiatan_bulanan(skp_bulanan_id){
 		var table_skp_bulanan = $('#kegiatan_bulanan_table').DataTable({
 				destroy			: true,
-				processing      : false,
+				processing      : true,
 				serverSide      : true,
-				searching      	: false,
-				paging          : false,
-				order 			: [ 0 , 'asc' ],
+				searching      	: true,
+				paging          : true,
+				bInfo			: false,
+				bSort			: false,
+				lengthMenu		: [25,50,100],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2 ] }
 								],

@@ -185,7 +185,9 @@
 					$('.modal-realisasi_rencana_aksi').find('.kegiatan_bulanan_satuan').html(data['kegiatan_bulanan_satuan']);
 
 					$('.modal-realisasi_rencana_aksi').find('.satuan_target_rencana_aksi').html(data['realisasi_rencana_aksi_satuan']);
-					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').html(data['kegiatan_bulanan_target']);
+					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').html(data['kegiatan_bulanan_target']); 
+					$('.modal-realisasi_rencana_aksi').find('.rencana_aksi_target').html(data['target_rencana_aksi']);
+					$('.modal-realisasi_rencana_aksi').find('.target').val(data['kegiatan_bulanan_target']);
 					
 					$('.modal-realisasi_rencana_aksi').find('h4').html('Edit realisasi Rencana Aksi');
 					$('.modal-realisasi_rencana_aksi').find('.btn-submit').attr('id', 'submit-update');

@@ -26,7 +26,7 @@ use App\Models\RealisasiKegiatanTahunan;
 use App\Models\RealisasiKegiatanTahunanJFT;
 use App\Models\PerilakuKerja;
 use App\Models\RencanaAksi;
-use App\Models\RealisasiRencanaAksiKasubid;
+use App\Models\RealisasiRencanaAksiEselon4;
 use App\Models\RealisasiRencanaAksiEselon3;
 use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\KegiatanSKPBulanan;

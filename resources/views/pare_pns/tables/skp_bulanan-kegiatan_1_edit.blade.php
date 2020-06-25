@@ -229,10 +229,12 @@
 		var table_skp_bulanan = $('#kegiatan_bulanan_table').DataTable({
 				destroy			: true,
 				processing      : true,
-				serverSide      : false,
-				searching      	: false,
-				paging          : false,
-				order 			: [ 0 , 'asc' ],
+				serverSide      : true,
+				searching      	: true,
+				paging          : true,
+				bInfo			: false,
+				bSort			: false,
+				lengthMenu		: [25,50,100],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2 ] }
 								],

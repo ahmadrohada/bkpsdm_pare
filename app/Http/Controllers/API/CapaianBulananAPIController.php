@@ -9,6 +9,8 @@ use App\Models\PerjanjianKinerja;
 use App\Models\SKPTahunan;
 use App\Models\SKPBulanan;
 use App\Models\CapaianBulanan;
+use App\Models\CapaianTriwulan;
+use App\Models\CapaianTahunan;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
 use App\Models\Jabatan;
@@ -17,7 +19,7 @@ use App\Models\Eselon;
 
 use App\Models\KegiatanSKPTahunan;
 use App\Models\RencanaAksi;
-use App\Models\RealisasiRencanaAksiKasubid;
+use App\Models\RealisasiRencanaAksiEselon4;
 use App\Models\RealisasiRencanaAksiEselon3;
 use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\KegiatanSKPBulanan;
@@ -266,7 +268,7 @@ class CapaianBulananAPIController extends Controller {
         //IRBAN
         if ( $jenis_jabatan == 31){
             //cari bawahan
-            $bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('id',$jabatan_id )->get();
+            //$bawahan = Jabatan::SELECT('id','skpd AS jabatan')->WHERE('id',$jabatan_id )->get();
 
             //IRBAN DAN KAPUS sama, dicoba dengan kgeitan bawahan dan egiatan yang dilaksanakan sendiri,
             //update 24/06/2020
@@ -394,22 +396,18 @@ class CapaianBulananAPIController extends Controller {
         //================================= K A B I D ========================================// 
         }else if ( $jenis_jabatan == 2){   //Eselon III atau lurah
 
+            
             $jabatan_id = $skp_bulanan->PejabatYangDinilai->id_jabatan;
             //cari bawahan
-            $bawahan = Jabatan::SELECT('id','skpd AS jabatan' )->WHERE('parent_id',$jabatan_id )->get();
-            $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray();
+            $bawahan        = Jabatan::SELECT('id','skpd AS jabatan' )->WHERE('parent_id',$jabatan_id )->get();
+            //$bawahan_ls     = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray();
             //cari bawahan  , jabatanpelaksanan
 
-
-
-            
-            $pelaksana_list = Jabatan::
+            /* $pelaksana_list = Jabatan::
                                 SELECT('id')
                                 ->WHEREIN('parent_id', $bawahan_ls)
                                 ->get()
-                                ->toArray(); 
-
-         
+                                ->toArray();  */
 
             //list bawahan
             $jm_kegiatan = 0 ; 
@@ -433,7 +431,7 @@ class CapaianBulananAPIController extends Controller {
                                             ->SELECT('id')
                                             ->get()->toArray();
                 //realisasi bawahan
-                $jm_realisasi   = RealisasiRencanaAksiKasubid::WHEREIN('rencana_aksi_id',$ls_reaksi)->count();
+                $jm_realisasi   = RealisasiRencanaAksiEselon4::WHEREIN('rencana_aksi_id',$ls_reaksi)->count();
 
                 if ( $x->id == $jabatan_id){
                     $nm_jabatan     = 'Dilaksanakan Sendiri';
@@ -497,10 +495,23 @@ class CapaianBulananAPIController extends Controller {
                                             )
                                     ->first();
 
-                //JUMLAH RENCANA AKSI YANG DIMILIKI OLEH BAWAHAN LANGSUNG / ESELON III
+                //JUMLAH RENCANA AKSI YANG DIMILIKI OLEH BAWAHAN LANGSUNG / ESELON III 
+                //atau setara eselon 4 untuk jabatan seperti irban
+
                 if ( $data != null ){
-                    $dt_reaksi      = RealisasiRencanaAksiEselon3::WHERE('capaian_id',$data->capaian_id)->count();
-                    $dt_realisasi   = RealisasiRencanaAksiEselon3::WHERE('capaian_id',$data->capaian_id)->WHERE('realisasi','!=',null)->count();
+                    //jika irban kapus atau ka arsip
+                    //maka rwalisasinya ada di eselon4
+                    if ( in_array( $jabatan_id, $id_jabatan_irban ) ){
+                        $dt_reaksi      = RealisasiRencanaAksiEselon4::WHERE('capaian_id',$data->capaian_id)->count();
+                        $dt_realisasi   = RealisasiRencanaAksiEselon4::WHERE('capaian_id',$data->capaian_id)->WHERE('realisasi','!=',null)->count();
+                    }else{
+                        //eselon3
+                        $dt_reaksi      = RealisasiRencanaAksiEselon3::WHERE('capaian_id',$data->capaian_id)->count();
+                        $dt_realisasi   = RealisasiRencanaAksiEselon3::WHERE('capaian_id',$data->capaian_id)->WHERE('realisasi','!=',null)->count();
+                    }
+
+                    
+
                 }else{
                     $dt_reaksi      = 0 ;
                     $dt_realisasi   = 0 ;
@@ -826,6 +837,12 @@ class CapaianBulananAPIController extends Controller {
                 if ( ( Input::get('jenis_jabatan') == 1 ) & ( in_array( Input::get('jabatan_id'), $id_jabatan_staf_ahli) ) ){
                     $jenis_jabatan = 5 ; //staf ahli sebagai JFT
                 }
+
+                 //jika irban ,kapus dll , walopun eslon 3, danggap sbg eselon 4
+                if ( ( Input::get('jenis_jabatan') == 2 ) & ( in_array( Input::get('jabatan_id') , $id_jabatan_irban ) ) ){
+                    $jenis_jabatan = 31 ; //irban
+                }
+
                 //lurah
                 else if ( ( Input::get('jenis_jabatan') == 3 ) & ( in_array( Input::get('jabatan_id'), $id_jabatan_lurah ) ) ){
                     $jenis_jabatan = 2 ; //lurah
@@ -888,6 +905,8 @@ class CapaianBulananAPIController extends Controller {
                     $bulan          = Input::get('waktu_pelaksanaan');
                     //BAwahan langsung
                     $bawahan = $this->BawahanListCapaianBulanan($jabatan_id,$jenis_jabatan); 
+
+                    //return \Response::make($bawahan, 500);
                     $i = 0 ;
                     foreach ($bawahan as $x) {
                         $jabatan_id = $x->jabatan_id;
@@ -913,12 +932,29 @@ class CapaianBulananAPIController extends Controller {
                                                     )
                                             ->first();
                         if ( $data != null ){
-                            $dt_reaksi      = RealisasiRencanaAksiEselon3::WHERE('capaian_id',$data->capaian_id)
+
+                            //ADA bawahan esl 2 yang esel nya esel 3 namun berperan jadi esl 4,
+                            //jadi capaian nya ada di capaian esl 4
+                            if ( in_array( $jabatan_id, $id_jabatan_irban ) ){
+                                $dt_reaksi      = RealisasiRencanaAksiEselon4::WHERE('capaian_id',$data->capaian_id)
+                                                                            ->SELECT(   'realisasi_rencana_aksi_kasubid.rencana_aksi_id AS rencana_aksi_id',
+                                                                                        'realisasi_rencana_aksi_kasubid.realisasi',
+                                                                                        'realisasi_rencana_aksi_kasubid.satuan'
+                                                                            )
+                                                                            ->get();
+                            }else{
+                                //eselon3
+                                $dt_reaksi      = RealisasiRencanaAksiEselon3::WHERE('capaian_id',$data->capaian_id)
                                                                             ->SELECT(   'realisasi_rencana_aksi_kabid.rencana_aksi_id AS rencana_aksi_id',
                                                                                         'realisasi_rencana_aksi_kabid.realisasi',
                                                                                         'realisasi_rencana_aksi_kabid.satuan'
-                                                                                    )
+                                                                            )
                                                                             ->get();
+                                
+                            }
+                           
+                            //$dt_reaksi = $dt_reaksi_2->merge($dt_reaksi_1);
+                            //$dt_reaksi = $dt_reaksi_1->unionAll($dt_reaksi_2)->get();
                             
                             foreach ($dt_reaksi as $y) {
                                 $data_realisasi[] = array(
@@ -927,14 +963,13 @@ class CapaianBulananAPIController extends Controller {
                                     'capaian_id'            => $capaian_bulanan->id,
                                     'rencana_aksi_id'       => $y->rencana_aksi_id,
                                     'realisasi'             => $y->realisasi,
-                                    'satuan'                => $y->satuan,
-                                    'created_at'            => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
+                                    'satuan'                => $y->satuan
                                 );
                                 $i++;
                             }
                             
                             
-                        }
+                        } 
                        
 
                     }  

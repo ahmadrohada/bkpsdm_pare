@@ -176,9 +176,10 @@ class RealisasiRencanaAksiKabanAPIController extends Controller {
     {
 
         $messages = [
-                'realisasi_rencana_aksi_id.required'  => 'Harus diisi',
-                'realisasi.required'           => 'Harus diisi',
-                'satuan.required'                   => 'Harus diisi',
+                'realisasi_rencana_aksi_id.required'    => 'Harus diisi',
+                'realisasi.required'                    => 'Harus diisi',
+                'satuan.required'                       => 'Harus diisi',
+                'target.required'                       => 'Harus diisi',
         ];
 
         $validator = Validator::make(

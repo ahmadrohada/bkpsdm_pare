@@ -1,24 +1,25 @@
 <div class="box-body table-responsive" >
 	<div class="toolbar">
 	</div>
-	<table id="kegiatan_bulanan_table" class="table table-striped table-hover" >
+	<table id="kegiatan_bulanan_table" class="table table-striped table-hover">
 		<thead>
 			<tr>
 				<th>No</th>
 				<th>KEGIATAN BULANAN</th>
 				<th>TARGET</th>
-				<th>PENGAWAS</th>
 				<th>PELAKSANA</th>
 				<!-- <th><i class="fa fa-cog"></i></th> -->
 			</tr>
 		</thead>
 	</table>
+	<p class="text-danger" style="margin-top:20px;">
+		**Kegiatan berwarna merah jika tidak dilaksanakan oleh staff
+	</p>
 </div>
 
 <script type="text/javascript">
 
 
-  	
   	function LoadKegiatanBulananTable(){
 		var table_skp_bulanan = $('#kegiatan_bulanan_table').DataTable({
 				destroy			: true,
@@ -27,21 +28,19 @@
 				searching      	: true,
 				paging          : true,
 				autoWidth		: false,
-				bInfo			: false,
-				bSort			: false,
 				//lengthChange	: false,
 				//order 			: [ 0 , 'asc' ],
 				lengthMenu		: [25,50,100,200],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2 ] }
+									{ className: "text-center", targets: [ 0,2] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_bulanan_2") }}',
+									url	: '{{ url("api_resource/kegiatan_bulanan_1") }}',
 									data: { 
 										
 											"renja_id" 			: {!! $skp->SKPTahunan->Renja->id !!} , 
 											"jabatan_id" 		: {!! $skp->PejabatYangDinilai->Jabatan->id !!},
-											"skp_bulanan_id" 	: {!! $skp->id !!} 
+											"skp_bulanan_id" 	: {!! $skp->id !!}
 									 },
 								},
 				columns			: [
@@ -60,24 +59,13 @@
 										}
 									},
 									
-									{ data: "output", name:"output", width:"90px",
+									{ data: "output", name:"output", width:"140px",
 										"render": function ( data, type, row ) {
 											if ( (row.kegiatan_bulanan_id) <= 0 ){
-												return "<span class='text-danger'>"+row.target + ' '+ row.satuan+"</span>";
+												return "<span class='text-danger'>"+row.target_pelaksana + ' '+ row.satuan_pelaksana+"</span>";
 											}else{
 												return row.target + ' '+ row.satuan;
 											}
-										}
-									},
-									{ data: "penanggung_jawab", name:"penanggung_jawab",
-										"render": function ( data, type, row ) {
-											
-											if ( (row.kegiatan_bulanan_id) <= 0 ){
-												return "<span class='text-danger'>"+row.penanggung_jawab+"</span>";
-											}else{
-												return row.penanggung_jawab;
-											}
-											
 										}
 									},
 									{ data: "pelaksana", name:"pelaksana",
@@ -89,16 +77,10 @@
 											}
 										}
 									}
-									
-								
 								],
 								initComplete: function(settings, json) {
 								
 							}
 		});	
 	}
-
-	
-	
-
 </script>

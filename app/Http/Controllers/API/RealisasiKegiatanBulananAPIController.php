@@ -15,6 +15,7 @@ use App\Models\KegiatanSKPBulananJFT;
 use App\Models\RealisasiKegiatanBulanan;
 use App\Models\RealisasiKegiatanBulananJFT;
 use App\Models\RealisasiRencanaAksiEselon3;
+use App\Models\RealisasiRencanaAksiEselon4;
 use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\IndikatorProgram;
 use App\Models\Skpd;
@@ -191,7 +192,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                     ->SELECT('capaian_bulanan.id AS capaian_id')
                                     ->get()->toArray();
 
-        $dt = RealisasiRencanaAksiKaban::
+        $dt1 = RealisasiRencanaAksiKaban::
                                         join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                                             $join   ->ON('rencana_aksi.id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
                                         }) 
@@ -214,10 +215,37 @@ class RealisasiKegiatanBulananAPIController extends Controller {
 
                                         ) 
                                        
-                                        ->WHERE('realisasi_rencana_aksi_eselon2.capaian_id',$capaian_id)
-                                        ->get();
+                                        ->WHERE('realisasi_rencana_aksi_eselon2.capaian_id',$capaian_id);
+                                        //->get(); 
 
-      
+        $dt2 = RealisasiRencanaAksiKaban::
+                                        join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                                            $join   ->ON('rencana_aksi.id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
+                                        }) 
+                                        ->join('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi_eselon3', function($join) use($capaian_id_bawahan){
+                                            $join   ->ON('realisasi_eselon3.rencana_aksi_id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
+                                            $join   ->WHEREIN('realisasi_eselon3.capaian_id',$capaian_id_bawahan);
+                                        }) 
+                                        ->join('db_pare_2018.capaian_bulanan AS capaian_bulanan_bawahan', function($join){
+                                            $join   ->ON('capaian_bulanan_bawahan.id','=','realisasi_eselon3.capaian_id');
+                                        })
+                                        ->SELECT(   'realisasi_rencana_aksi_eselon2.id AS realisasi_rencana_aksi_id',
+                                                    'realisasi_rencana_aksi_eselon2.realisasi AS realisasi_target',
+                                                    'realisasi_rencana_aksi_eselon2.satuan AS realisasi_satuan',
+                                                    'rencana_aksi.label',
+                                                    'rencana_aksi.target',
+                                                    'rencana_aksi.satuan',
+                                                    'realisasi_eselon3.realisasi AS realisasi_bawahan',
+                                                    'realisasi_eselon3.satuan AS satuan_bawahan',
+                                                    'capaian_bulanan_bawahan.u_jabatan_id'
+
+                                        ) 
+                                       
+                                        ->WHERE('realisasi_rencana_aksi_eselon2.capaian_id',$capaian_id);
+                                        
+
+        //$dt = $dt1->merge($dt2);
+        $dt = $dt1->unionAll($dt2)->get();
 
         $datatables = Datatables::of($dt)
         ->addColumn('realisasi_rencana_aksi_id', function ($x){
@@ -325,6 +353,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
 
                             ) 
                     ->GroupBy('skp_tahunan_rencana_aksi.id')
+                    ->orderBY('skp_tahunan_rencana_aksi.label','ASC')
                     ->get();
         
         $skp_id = $request->skp_bulanan_id;

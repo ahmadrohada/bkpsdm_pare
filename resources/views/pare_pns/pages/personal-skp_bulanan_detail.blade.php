@@ -36,7 +36,7 @@
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': // 1. Eselon II
-									?>@include('pare_pns.tables.skp_bulanan-kegiatan_1_detail')<?php
+									?>@include('pare_pns.tables.skp_bulanan-kegiatan_1')<?php
 									break;
 							case '2': //2. Eselon III
 									?>@include('pare_pns.tables.skp_bulanan-kegiatan_2')<?php

@@ -7,7 +7,7 @@ use App\Models\PeriodeTahunan;
 use App\Models\PerjanjianKinerja;
 use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPBulanan;
-use App\Models\RealisasiRencanaAksiKasubid;
+use App\Models\RealisasiRencanaAksiEselon4;
 use App\Models\RealisasiKegiatanBulanan;
 
 
@@ -44,7 +44,7 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
     {
        
  
-        $x = RealisasiRencanaAksiKasubid::WHERE('realisasi_rencana_aksi_kasubid.id', $request->realisasi_rencana_aksi_id)
+        $x = RealisasiRencanaAksiEselon4::WHERE('realisasi_rencana_aksi_kasubid.id', $request->realisasi_rencana_aksi_id)
                     ->leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS skp_tahunan_rencana_aksi', function($join){
                         $join   ->on('skp_tahunan_rencana_aksi.id','=','realisasi_rencana_aksi_kasubid.rencana_aksi_id');
                        
@@ -193,7 +193,7 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
         $rencana_aksi->target    = $request->target;
         $rencana_aksi->save();
 
-        $st_kt    = new RealisasiRencanaAksiKasubid;
+        $st_kt    = new RealisasiRencanaAksiEselon4;
 
         $st_kt->rencana_aksi_id         = Input::get('rencana_aksi_id');
         $st_kt->capaian_id              = Input::get('capaian_id');
@@ -248,7 +248,7 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
         $rencana_aksi->save();
 
         
-        $st_ra    = RealisasiRencanaAksiKasubid::find(Input::get('realisasi_rencana_aksi_id'));
+        $st_ra    = RealisasiRencanaAksiEselon4::find(Input::get('realisasi_rencana_aksi_id'));
         if (is_null($st_ra)) {
             return $this->sendError('Capaian Rencana Aksi tidak ditemukan.');
         }
@@ -288,7 +288,7 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
 
 
         //mencari nama file lama nya
-        $dt = RealisasiRencanaAksiKasubid::WHERE('id','=', $request->realisasi_rencana_aksi_id )->SELECT('bukti')->first();
+        $dt = RealisasiRencanaAksiEselon4::WHERE('id','=', $request->realisasi_rencana_aksi_id )->SELECT('bukti')->first();
         $old_file_name = $dt->bukti;
         $destinationPath = 'files_upload';
 
@@ -299,7 +299,7 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
             
         }
 
-        $st_kt                      = RealisasiRencanaAksiKasubid::find(Input::get('realisasi_rencana_aksi_id'));
+        $st_kt                      = RealisasiRencanaAksiEselon4::find(Input::get('realisasi_rencana_aksi_id'));
         $st_kt->bukti               = Input::get('bukti');
         if ( $st_kt->save()){
 
@@ -339,12 +339,12 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
         }
 
         //mencari nama file lama nya
-        $dt = RealisasiRencanaAksiKasubid::WHERE('id','=', $request->realisasi_rencana_aksi_id )->SELECT('bukti')->first();
+        $dt = RealisasiRencanaAksiEselon4::WHERE('id','=', $request->realisasi_rencana_aksi_id )->SELECT('bukti')->first();
         $old_file_name = $dt->bukti;
         $destinationPath = 'files_upload';
 
         
-        $st_ra    = RealisasiRencanaAksiKasubid::find(Input::get('realisasi_rencana_aksi_id'));
+        $st_ra    = RealisasiRencanaAksiEselon4::find(Input::get('realisasi_rencana_aksi_id'));
         if (is_null($st_ra)) {
             return $this->sendError('Capaian Rencana Aksi tidak ditemukan.');
         }
