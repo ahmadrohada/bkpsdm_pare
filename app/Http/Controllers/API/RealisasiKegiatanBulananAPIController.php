@@ -26,6 +26,7 @@ use App\Models\RencanaAksi;
 use App\Helpers\Pustaka;
 use App\Traits\HitungCapaian;
 use App\Traits\BawahanList;
+use App\Traits\PJabatan;
 
 use Datatables;
 use Validator;
@@ -37,6 +38,7 @@ use File;
 class RealisasiKegiatanBulananAPIController extends Controller {
     use HitungCapaian;
     use BawahanList;
+    use PJabatan;
     
     public function RealisasiKegiatanBulananDetail(Request $request)
     {

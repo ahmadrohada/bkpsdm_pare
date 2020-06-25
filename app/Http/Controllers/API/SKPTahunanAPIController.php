@@ -35,34 +35,7 @@ Use Alert;
 class SKPTahunanAPIController extends Controller {
     use PJabatan;
 
-    //=======================================================================================//
-    protected function jabatan($id_jabatan){ 
-        $jabatan       = HistoryJabatan::WHERE('tb_history_jabatan.id',$id_jabatan)
-                                        ->leftjoin('demo_asn.m_skpd AS m_skpd', function($join){
-                                            $join   ->on('tb_history_jabatan.id_jabatan','=','m_skpd.id');
-                                        })
-                                        ->SELECT('m_skpd.skpd AS jabatan')
-                                        ->first();
-        if ( $jabatan == null ){
-            return $jabatan;
-        }else{
-            return Pustaka::capital_string($jabatan->jabatan);
-        }
-        
-    }
-
-     //=======================================================================================//
-     protected function golongan($id_golongan){ 
-        $golongan       = HistoryGolongan::WHERE('id',$id_golongan)
-                        ->SELECT('jabatan')
-                        ->first();
-        if ( $golongan == null ){
-            return $golongan;
-        }else{
-            return Pustaka::capital_string($golongan->golongan);
-        }
-        
-    }
+    
 
 
     protected function SKPTahunandDetail(Request $request){
@@ -733,7 +706,7 @@ class SKPTahunanAPIController extends Controller {
 
         $datatables = Datatables::of($SKPTahunan)
             ->addColumn('periode', function ($x) {
-                return $x->label;
+                return  Pustaka::periode_tahun($x->label);
             }) 
             ->addColumn('masa_penilaian', function ($x) {
                 return Pustaka::balik($x->tgl_mulai)." s.d ". Pustaka::balik($x->tgl_selesai);
@@ -817,7 +790,7 @@ class SKPTahunanAPIController extends Controller {
 
                 $h['id']			    = $no;
                 $h['pegawai_id']		= $id_pegawai;
-                $h['periode']			= $x->label;
+                $h['periode']			= Pustaka::periode_tahun($x->label);
                 $h['periode_id']	    = $x->id;
                 $h['jabatan']			= $last_jabatan;
                 $h['jabatan_id']		= $last_jabatan_id;
@@ -843,7 +816,7 @@ class SKPTahunanAPIController extends Controller {
 
                     $h['id']			        = $no;
                     $h['pegawai_id']			= $id_pegawai;
-                    $h['periode']			    = $x->label;
+                    $h['periode']			    = Pustaka::periode_tahun($x->label);
                     $h['periode_id']	        = $x->id;
                     $h['jabatan']			    = Pustaka::capital_string($y->Jabatan ? $y->Jabatan->skpd : '');
                     $h['jabatan_id']			= $y->jabatan_id;
@@ -869,7 +842,7 @@ class SKPTahunanAPIController extends Controller {
             }else{
                     $h['id']			    = $no;
                     $h['pegawai_id']		= $id_pegawai;
-                    $h['periode']			= $x->label;
+                    $h['periode']			= Pustaka::periode_tahun($x->label);
                     $h['periode_id']	    = $x->id;
                     $h['jabatan']			= $last_jabatan;
                     $h['jabatan_id']		= $last_jabatan_id;

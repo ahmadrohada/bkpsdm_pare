@@ -513,8 +513,6 @@ class CapaianBulananAPIController extends Controller {
                 $data_jabatan_id['t_kegiatan']      = $dt_reaksi.' / '.$dt_realisasi;
 
 
-                
-
                 $kabid_list[] = $data_jabatan_id ;
                 $jm_kegiatan +=  $dt_reaksi;
                 $jm_realisasi +=  $dt_realisasi;

@@ -13,7 +13,7 @@
 			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-yellow capaian_bulanan" style="cursor:pointer;">
 					<div class="inner">
-						<h3>
+						<h3 class="personal_jm_capaian_bulanan">
 							{{$jm_capaian_bulanan}}
 						</h3>
 						<p>
@@ -30,7 +30,7 @@
 			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-aqua capaian_triwulan" style="cursor:pointer;">
 					<div class="inner">
-						<h3>
+						<h3 class="personal_jm_capaian_triwulan">
 							{{$jm_capaian_triwulan}}
 						</h3>
 						<p>
@@ -47,7 +47,7 @@
 				<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-red capaian_tahunan" style="cursor:pointer;">
 					<div class="inner">
-						<h3>
+						<h3 class="personal_jm_capaian_tahunan">
 							{{$jm_capaian_tahunan}}
 						</h3>
 						<p>

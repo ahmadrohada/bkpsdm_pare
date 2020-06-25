@@ -9,6 +9,7 @@ use App\Models\PerjanjianKinerja;
 use App\Models\SKPTahunan;
 use App\Models\SKPBulanan;
 use App\Models\CapaianBulanan;
+use App\Models\CapaianTriwulan;
 use App\Models\CapaianTahunan;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
@@ -30,6 +31,7 @@ use App\Models\RealisasiRencanaAksiEselon3;
 use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\RealisasiKegiatanBulanan;
+use App\Traits\PJabatan;
 
 use App\Helpers\Pustaka;
 
@@ -41,55 +43,11 @@ Use Alert;
 
 class CapaianTahunanAPIController extends Controller {
 
-    protected function jabatan($id_jabatan){ 
-        $jabatan       = HistoryJabatan::WHERE('id',$id_jabatan)
-                        ->SELECT('jabatan')
-                        ->first();
-        if ( $jabatan == null ){
-            return $jabatan;
-        }else{
-            return Pustaka::capital_string($jabatan->jabatan);
-        }
-        
-    }
+    use PJabatan;
 
-    //=======================================================================================//
-    protected function atasan_id($pegawai_id){
+    
 
-        $tes =  HistoryJabatan::WHERE('tb_history_jabatan.id_pegawai', $pegawai_id)
-                                //cari id jabatan nya
-                                ->leftjoin('demo_asn.m_skpd AS m_skpd', function($join){
-                                    $join   ->on('m_skpd.id','=','tb_history_jabatan.id_jabatan');
-                                })
-
-                                //
-                                ->leftjoin('demo_asn.tb_history_jabatan AS atasan', function($join){
-                                    $join   ->on('atasan.id_jabatan','=','m_skpd.parent_id');
-                                    $join   ->WHERE('atasan.status','=','active');
-                                })
-                                ->WHERE('tb_history_jabatan.status','active')
-                                ->SELECT('atasan.id_pegawai AS atasan_id')
-                                ->first();
-
-
-        return $tes->atasan_id;
-       
-    }
-
-    /* //=======================================================================================//
-    protected function golongan_aktif($pegawai_id){
-        $gol       = \DB::table('demo_asn.tb_history_golongan')
-                            ->leftjoin('demo_asn.m_golongan AS golongan', function($join){
-                                $join   ->on('tb_history_golongan.id_golongan','=','golongan.id');
-                            })
-                            ->WHERE('tb_history_golongan.id_pegawai',$pegawai_id)
-                            ->WHERE('tb_history_golongan.status','=','active')
-                            ->SELECT(['golongan.golongan'])
-                            ->first();
-        return $gol->golongan;
-    } */
-
-
+   
 
     public function PersonalCapaianTahunanList(Request $request)
     {
@@ -269,7 +227,11 @@ class CapaianTahunanAPIController extends Controller {
                                 )
                         ->first();
 
-        $jenis_jabatan = $skp_tahunan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
+        $jenis_jabatan  = $skp_tahunan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
+        $jabatan_id     = $skp_tahunan->PejabatYangDinilai->id_jabatan;
+        $renja_id     = $skp_tahunan->Renja->id;
+
+        //return $renja_id;
 
         /*  1 : KABAN     / ESELON 2
             2 : KABID     / ESELON 3
@@ -285,7 +247,14 @@ class CapaianTahunanAPIController extends Controller {
         //================================= PELAKSANA / JFU ================================================//
         }else if ( $jenis_jabatan == 4 ){
 
-            $jm_kegiatan = 1 ;
+            $jm_kegiatan = RencanaAksi::WHERE('jabatan_id',$jabatan_id)
+                            ->WHERE('renja_id',$renja_id)
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
+                            })
+                            ->groupBy('kegiatan_tahunan.id')
+                            ->count(); 
+
         //================================= KASUBID   / ESELON 4 ===========================================//
         }else if ( $jenis_jabatan == 3 ){
             $jm_kegiatan = KegiatanSKPTahunan::WHERE('skp_tahunan_id',$skp_tahunan->skp_tahunan_id)->count();
@@ -295,9 +264,9 @@ class CapaianTahunanAPIController extends Controller {
         }else if ( $jenis_jabatan == 2 ){
             //CARI BAWAHAN
             
-            $child = Jabatan::SELECT('id')->WHERE('parent_id', $skp_tahunan->PejabatYangDinilai->id_jabatan )->get()->toArray();
+            $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray();
             $jm_kegiatan = Kegiatan::SELECT('id','label')
-                            ->WHERE('renja_kegiatan.renja_id', $skp_tahunan->renja_id )
+                            ->WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
@@ -895,13 +864,31 @@ class CapaianTahunanAPIController extends Controller {
             
     
             
-    
+
+            
+
+               
+
+
             if ( $capaian_tahunan->save()){
                
                 //UPDATE TANGGAL SELSAI SAKP TAHUNAN SESUAI CAPAIAN
                 SKPTahunan::WHERE('id',Input::get('skp_tahunan_id'))->UPDATE( [ 'status' => '1',
                                                                                 'tgl_selesai' => Pustaka::tgl_sql(Input::get('cap_tgl_selesai'))
                                                                              ]);
+                
+                //HAPUS SKP bulanan setelah masa penilaian skp tahunan ini berakhir
+                //Bulan penilaian range 
+                $bln_awal  = Pustaka::angka_bln_tz(Pustaka::tgl_sql(Input::get('cap_tgl_mulai')));
+                $bln_akhir = Pustaka::angka_bln_tz(Pustaka::tgl_sql(Input::get('cap_tgl_selesai')));
+                $bln_skp_list = array();
+                foreach (range($bln_awal, $bln_akhir) as $number) {
+                    $z['bulan']	= Pustaka::nol($number);
+                    array_push($bln_skp_list, $z);
+                } 
+                SKPBulanan::WHERE('skp_tahunan_id',Input::get('skp_tahunan_id'))->whereNotIn('bulan', $bln_skp_list)->delete(); 
+
+
 
                 //ADD KEGIATAN TAHUNAN KE REALISASI CAPAIAN TAHUNAN
                 
@@ -1028,7 +1015,21 @@ class CapaianTahunanAPIController extends Controller {
 
             SKPTahunan::WHERE('id',$st_kt->skp_tahunan_id)->UPDATE(['status' => '0']);
 
-            return \Response::make($st_kt->skp_tahunan_id, 200);
+            //cari jumlah skp
+            $data_1       = CapaianTahunan::WHERE('pegawai_id',$st_kt->pegawai_id)->count();
+            $data_2       = CapaianBulanan::WHERE('pegawai_id',$st_kt->pegawai_id)->count();
+            $data_3       = CapaianTriwulan::WHERE('pegawai_id',$st_kt->pegawai_id)->count();
+             
+            
+
+
+            return \Response::make(['skp_tahunan_id'        => $st_kt->skp_tahunan_id, 
+                                    'jm_capaian_tahunan'    => $data_1,
+                                    'jm_capaian_bulanan'    => $data_2,
+                                    'jm_capaian_triwulan'   => $data_3,
+                                
+                                    
+                                ], 200);
         }else{
             return \Response::make('error', 500);
         } 

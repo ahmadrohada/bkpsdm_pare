@@ -40,7 +40,7 @@
 					bInfo			: false,
 					bSort			: false,
 					lengthChange	: false,
-					order 			: [ 0 , 'desc' ],
+					//order 			: [ 0 , 'desc' ],
 					lengthMenu		: [10,25,50],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,2,5 ] }/* ,
@@ -54,7 +54,7 @@
 
 								},
 				
-
+				rowsGroup		: [1],
 				columns	:[
 								{ data: 'id' , orderable: true,searchable:false,
 									"render": function ( data, type, row ,meta) {

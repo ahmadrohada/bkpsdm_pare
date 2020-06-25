@@ -37,7 +37,11 @@
 			<div class="box-body table-responsive">
 
 				<div class="toolbar">
-					<span  data-toggle="tooltip" title="Create SKP Bulanan"><a class="btn btn-info btn-xs create_skp_bulanan" ><i class="fa fa-plus" ></i> SKP Bulanan</a></span>
+					@if  ( request()->segment(4) == 'edit' )
+						<span  data-toggle="tooltip" title="Create SKP Bulanan"><a class="btn btn-info btn-xs create_skp_bulanan" ><i class="fa fa-plus" ></i> SKP Bulanan</a></span>	
+					@endif 
+
+					
 				</div>
 
 				<table id="skp_bulanan_table" class="table table-striped table-hover" >
@@ -216,18 +220,31 @@
 
 
 	}
-
+ 
 
   function load_kegiatan_bulanan(skp_bulanan_id){
+		$('#kegiatan_bulanan_table').DataTable().clear().destroy();
+		
+
 		var table_skp_bulanan = $('#kegiatan_bulanan_table').DataTable({
 				destroy			: true,
-				processing      : false,
+				processing      : true,
 				serverSide      : true,
-				searching      	: false,
-				paging          : false,
-				order 			    : [ 0 , 'asc' ],
+				searching      	: true,
+				paging          : true,
+				autoWidth		: false,
+				bInfo			: false,
+				bSort			: false,
+				lengthChange	: false,
+				deferRender		: true,
+				//order 			: [ 0 , 'asc' ],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3 ] }
+									{ className: "text-center", targets: [ 0,2,3 ] },
+									@if  ( request()->segment(4) == 'edit' )
+										{ "visible": true, "targets": [3]}
+									@else
+										{ "visible": false, "targets": [3]}
+									@endif 
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/kegiatan_bulanan_4") }}',
@@ -306,7 +323,12 @@
 				paging          : false,
 				//order 			    : [ 0 , 'asc' ],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,1,3,4 ] }
+									{ className: "text-center", targets: [ 0,1,3,4 ] },
+									@if  ( request()->segment(4) == 'edit' )
+										{ "visible": true, "targets": [4]}
+									@else
+										{ "visible": false, "targets": [4]}
+									@endif 
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/skp_bulanan_list_4") }}',

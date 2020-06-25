@@ -20,6 +20,7 @@ use App\Models\KegiatanSKPBulanan;
 
 use App\Models\KegiatanSKPTahunanJFT;
 use App\Models\KegiatanSKPBulananJFT;
+use App\Traits\PJabatan;
 
 use App\Helpers\Pustaka;
 
@@ -31,13 +32,7 @@ Use Alert;
 
 class SKPBulananAPIController extends Controller {
 
-    //=======================================================================================//
-    protected function jabatan($id_jabatan){
-        $jabatan       = HistoryJabatan::WHERE('id',$id_jabatan)
-                        ->SELECT('jabatan')
-                        ->first();
-        return Pustaka::capital_string($jabatan->jabatan);
-    }
+    use PJabatan;
 
     public function SKPBulanan_timeline_status( Request $request )
     {
@@ -118,9 +113,11 @@ class SKPBulananAPIController extends Controller {
                                     'skp_bulanan.id AS skp_bulanan_id',
                                     'skpd.skpd',
                                     'periode.label',
-                                    'skp_bulanan.status'
+                                    'skp_bulanan.status',
+                                    'skp_bulanan.skp_tahunan_id'
                                 )
-                        ->orderBy('skp_bulanan.tgl_mulai','desc')
+                        //->orderBy('skp_bulanan.tgl_mulai','desc')
+                        ->orderBy('skp_bulanan.skp_tahunan_id','desc')
                         ->get();
 
 
@@ -130,8 +127,12 @@ class SKPBulananAPIController extends Controller {
         $datatables = Datatables::of($SKPBulanan)
             ->addColumn('periode', function ($x) {
                 //return $x->label; 
-                return  Pustaka::Tahun($x->tgl_mulai);
+                return  Pustaka::Tahun($x->tgl_mulai).' [ '.$x->skp_tahunan_id.' ]';
             }) 
+            ->addColumn('periode_2', function ($x) {
+                //return $x->label; 
+                return  Pustaka::Tahun($x->tgl_mulai);
+            })
             ->addColumn('bulan', function ($x) {
                 return Pustaka::bulan($x->bulan);
             })

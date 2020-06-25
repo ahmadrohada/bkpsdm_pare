@@ -26,6 +26,8 @@ use App\Models\RealisasiKegiatanBulanan;
 
 use App\Helpers\Pustaka;
 
+use App\Traits\PJabatan;
+
 use Datatables;
 use Validator;
 use Gravatar;
@@ -34,18 +36,7 @@ Use Alert;
 
 class CapaianTriwulanAPIController extends Controller {
 
-     //=======================================================================================//
-    protected function jabatan($id_jabatan){ 
-        $jabatan       = HistoryJabatan::WHERE('id',$id_jabatan)
-                        ->SELECT('jabatan')
-                        ->first();
-        if ( $jabatan == null ){
-            return $jabatan;
-        }else{
-            return Pustaka::capital_string($jabatan->jabatan);
-        }
-        
-    }
+    use PJabatan;
 
     public function CreateConfirm(Request $request)
 	{

@@ -289,6 +289,9 @@
 					data    : { capaian_tahunan_id:capaian_tahunan_id },
 					cache   : false,
 					success:function(data){
+							$('.personal_jm_capaian_tahunan').html(data['jm_capaian_tahunan']);
+							$('.personal_jm_capaian_bulanan').html(data['jm_capaian_bulanan']);
+							$('.personal_jm_capaian_triwulan').html(data['jm_capaian_triwulan']);
 							Swal.fire({
 									title: "",
 									text: "Sukses",

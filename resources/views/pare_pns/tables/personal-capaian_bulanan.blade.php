@@ -131,10 +131,8 @@
 
 											
 										}else{
-
-											return row.remaining_time;
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px;cursor:default;">'+row.remaining_time+'</a></span>';
 											
-										
 										}
 									}
 								},
@@ -178,6 +176,10 @@
 					$('.mulai').val(data['tgl_mulai']); 
 					$('.selesai').val(data['tgl_selesai']); 
 					//$('#jm_kegiatan_bulanan').html(data['jm_kegiatan_bulanan']);
+					if ( data['jenis_jabatan'] == 4 ){
+						$('.label_bawahan').hide();
+					}
+
 
 					var kegiatan_list = document.getElementById('list_bawahan');
 					for(var i = 0 ; i < data['list_bawahan'].length; i++ ){
@@ -278,6 +280,9 @@
 					data    : { capaian_bulanan_id:capaian_bulanan_id },
 					cache   : false,
 					success:function(data){
+							$('.personal_jm_capaian_tahunan').html(data['jm_capaian_tahunan']);
+							$('.personal_jm_capaian_bulanan').html(data['jm_capaian_bulanan']);
+							$('.personal_jm_capaian_triwulan').html(data['jm_capaian_triwulan']);
 							Swal.fire({
 									title: "",
 									text: "Sukses",

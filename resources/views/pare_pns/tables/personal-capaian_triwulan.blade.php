@@ -106,7 +106,7 @@
 													
 												}
 											}else{
-												return row.remaining_time_triwulan1;
+												return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">'+row.remaining_time_triwulan1+'</a></span>';
 											}	
 										}
 
@@ -133,7 +133,7 @@
 													}
 												}
 											}else{
-												return row.remaining_time_triwulan2;
+												return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">'+row.remaining_time_triwulan2+'</a></span>';
 											}	
 										}
 
@@ -159,7 +159,8 @@
 													}
 												}
 											}else{
-												return row.remaining_time_triwulan3;
+												return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">'+row.remaining_time_triwulan3+'</a></span>';
+												
 											}	
 										}
 
@@ -185,7 +186,7 @@
 													}
 												}
 											}else{
-												return row.remaining_time_triwulan4;
+												return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">'+row.remaining_time_triwulan4+'</a></span>';
 											}	
 										}
 

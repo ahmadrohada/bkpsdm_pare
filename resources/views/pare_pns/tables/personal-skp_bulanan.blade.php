@@ -58,7 +58,11 @@
 									}
 								},
 								
-								{ data: "periode" ,  name:"periode", orderable: false, searchable: true,width:"90px"},
+								{ data: "periode" ,  name:"periode", orderable: false, searchable: true,width:"90px",
+									"render": function ( data, type, row ) {
+										return row.periode_2;
+									}
+								},
 								{ data: "bulan" ,  name:"bulan", orderable: false, searchable: true,width:"110px"},
 								{ data: "masa_penilaian" ,  name:"masa_penilaian", orderable: false, searchable: true,width:"220px"},
 								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true},

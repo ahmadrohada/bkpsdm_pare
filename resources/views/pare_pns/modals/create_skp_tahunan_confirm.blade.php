@@ -178,7 +178,7 @@
 					<input type="hidden" class="form-control p_golongan_id " name="p_golongan_id"  />
 
                	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left ', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-               	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right ', 'type' => 'button', 'id' => 'save_skp_tahunan' )) !!}
+               	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').' button_simpan" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right ', 'type' => 'button', 'id' => 'save_skp_tahunan' )) !!}
 			
 			
 				
@@ -207,10 +207,12 @@
 	
 	$('.modal-create_skp_tahunan_confirm').on('shown.bs.modal', function(){
 		
-		
+		reset_submit();
 	});
 
+
 	$('.modal-create_skp_tahunan_confirm').on('hidden.bs.modal', function(){
+		reset_submit();
 		$('.u_jabatan, .p_jabatan, .masa_penilaian').removeClass('has-error');
 		$('.error_renja_id').hide();
 		$('.modal-create_skp_tahunan_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
@@ -222,6 +224,17 @@
 	$('.tgl').on('click', function(){
 		$('.masa_penilaian').removeClass('has-error');
 	});
+
+	function on_submit(){
+		$('.modal-create_skp_tahunan_confirm').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('#save_skp_tahunan').prop('disabled',true);
+	}
+	function reset_submit(){
+		$('.modal-create_skp_tahunan_confirm').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-create_skp_tahunan_confirm').find('.button_simpan').addClass('fa-floppy-o');
+		$('#save_skp_tahunan').prop('disabled',false);
+	}
+
 
 	$(document).on('click','.create_skp_tahunan',function(e){
 		var periode_id = $(this).data('periode_id') ;
@@ -323,6 +336,7 @@
 	$(document).on('click', '#save_skp_tahunan', function(){
 		var data = $('#create-skp_tahunan_confirm-form').serialize();
 
+		on_submit();
 		$.ajax({
 			url		: '{{ url("api_resource/create_skp_tahunan") }}',
 			type	: 'POST',
@@ -331,7 +345,7 @@
 				
 				$('.personal_jm_skp_tahunan').html(data['jm_skp_tahunan']);
 				$('.personal_jm_skp_bulanan').html(data['jm_skp_bulanan']);
-
+				reset_submit();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -355,6 +369,7 @@
 			)	
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
+				reset_submit();
 				var test = $.parseJSON(jqXHR.responseText);
 				
 				var data= test.errors;

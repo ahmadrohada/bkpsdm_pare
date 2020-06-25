@@ -19,7 +19,7 @@
 						<th>TMT</th>
 						<th>JABATAN</th>
 						<th>SKPD</th>
-						<th>POHON KINERJA</th>
+						<th>PHN KINERJA</th>
 
 						<th>SKP TAHUNAN</th>
 					</tr>
@@ -48,7 +48,7 @@
 					lengthMenu		: [10,25,50],
 
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,2,5,6 ] }
+									{ 	className: "text-center", targets: [ 0,1,2,5,6 ] },
 								  ],
 				ajax			: {
 									url	: '{{ url("api_resource/personal_skp_jabatan_list") }}',
@@ -56,48 +56,60 @@
 									delay:3000
 
 								},
+				rowCallback		: function( row, data, index ) {
+									if ( data.jabatan_status == "active" ) {
+									$('td', row).attr("style","background: #d1f2eb ;");
+									}
+								},
 				//rowsGroup		: [4],
 				columns			:[
-								{ data: 'id' , orderable: true,searchable:false,
+								{ data: 'id' , orderable: true,searchable:false,width:"20px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true,
+								{ data: "periode" ,  name:"periode", orderable: false, searchable: true,
 									"render": function ( data, type, row ) {
 										if ( row.jabatan_status == 'active' ){
-											return  '<p class="text-success">'+row.periode+'</p>';
+											return  '<p class="text-info text-bold">'+row.periode+'</p>';
 										}else{
 											return  row.periode;
 										}
 									}
 								},
-								{ data: "tmt_jabatan" ,  name:"tmt_jabatan", orderable: true, searchable: true,
+								{ data: "tmt_jabatan" ,  name:"tmt_jabatan", orderable: false, searchable: true,
 									"render": function ( data, type, row ) {
 										if ( row.jabatan_status == 'active' ){
-											return  '<p class="text-success">'+row.tmt_jabatan+'</p>';
+											return  '<p class="text-info text-bold">'+row.tmt_jabatan+'</p>';
 										}else{
 											return  row.tmt_jabatan;
 										}
 									}
 								},
-								{ data: "jabatan" ,  name:"jabatan", orderable: true, searchable: true,
+								{ data: "jabatan" ,  name:"jabatan", orderable: false, searchable: true,
 									"render": function ( data, type, row ) {
 										if ( ( row.jabatan_status == 'active') & ( row.tahun_now == 1 ) ){
-											return  '<span class="btn btn-sm label-success">'+row.jabatan+'</span>';
+											return  '<p class="text-info text-bold">'+row.jabatan+'</p>';
 										}else{
 											return  row.jabatan;
 										}
 									}
 								
 								},
-								{ data: "skpd" ,  name:"skpd", orderable: true, searchable: true},
-								{ data: "renja" , orderable: false,searchable:false,width:"40px",
+								{ data: "skpd" ,  name:"skpd", orderable: false, searchable: true,
+									"render": function ( data, type, row ) {
+										if ( ( row.jabatan_status == 'active') & ( row.tahun_now == 1 ) ){
+											return  '<p class="text-info text-bold">'+row.skpd+'</p>';
+										}else{
+											return  row.skpd;
+										}
+									}},
+								{ data: "renja" , orderable: false,searchable:false,width:"90px",
 										"render": function ( data, type, row ) {
 										if (row.renja == true ){
-											return  '<span class="label label-success"><i class="fa fa-check"></i></span>';
+											return  '<span class="btn btn-success btn-xs" style="width:68px; cursor:default;"><i class="fa fa-check"></i></span>';
 										}else{
-											return  '<span class="label label-default"><i class="fa fa-close"></i></span>';
+											return  '<span class="btn btn-default btn-xs" style="width:68px; cursor:default;"><i class="fa fa-close"></i></span>';
 											
 										}
 										

@@ -17,27 +17,6 @@ trait BawahanList
 {
 
 
-
-
-    protected function JabatanFromHistoryId($history_jabatan_id ){
-        $data = HistoryJabatan::WHERE('tb_history_jabatan.id',$history_jabatan_id)
-                                ->leftjoin('demo_asn.m_skpd AS skpd', function($join){
-                                    $join   ->on('skpd.id','=','tb_history_jabatan.id_jabatan');
-                                })
-
-                                ->SELECT('skpd.skpd AS jabatan')
-                                ->first();
-        if ( $data != null ){
-            return $data->jabatan;
-        }else{
-            return "-";
-        }
-        
-    }
-
-
-
-
     protected function eselon2($jabatan_id){
         $data = Jabatan::WHERE('m_skpd.parent_id', $jabatan_id )
                         ->WHEREIN('m_skpd.id_eselon',[3,4,5])

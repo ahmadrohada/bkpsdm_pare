@@ -21,45 +21,52 @@
 				<div class="tab-content"  style="min-height:370px;">
 					<div class="active tab-pane fade" id="tab_a">
 <!-- ============================================================================================================= -->
+						<div class="row" style="padding:0px 10px;">
+							<div class="form-horizontal col-md-6 " style="margin-top:10px;">
+								<div class="form-group form-group-sm skp_tahunan_id">
+									<label>Periode SKP Tahunan</label>
+									<p class="text-muted periode_label" ></p>
+								</div>
+							</div>
+							<div class="form-horizontal col-md-6 " style="">
+								<div class="form-group form-group-sm">
+									<label>Jumlah Kegiatan Tahunan</label>
+									<p class="text-muted jm_kegiatan"></p>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="padding:0px 10px;">
+							<div class="form-horizontal col-md-6" style="">
+								<div class="form-group form-group-sm">
+									<label>Masa Penilaian SKP Tahunan</label>
+									<p class="text-muted masa_penilaian_skp_tahunan"></p>   
+								</div>
+							</div>
+							<div class="form-horizontal col-md-6 before_end" hidden>
+								<div class="form-group form-group-sm masa_penilaian">
+									<label>Masa Penilaian Capaian Tahunan</label>
+									<div class="input-group input-group-sm ">
+										<input type="text" class="form-control cap_tgl_mulai" name="cap_tgl_mulai" placeholder="Tanggal Mulai"/>
+										<span class="input-group-addon">s.d.</span>
+										<input type="text" class="form-control tgl cap_tgl_selesai" name="cap_tgl_selesai" placeholder="Tanggal Selesai"/>
+									</div>     
+								</div>
+							</div>
+						</div>
 						
-						<div class="form-horizontal col-md-6 " style="margin-top:10px;">
-							<div class="form-group form-group-sm skp_tahunan_id">
-								<label>Periode SKP Tahunan</label>
-								<p class="text-muted periode_label" ></p>
-							</div>
-						</div>
-						<div class="form-horizontal col-md-5 col-md-offset-1" style="margin-top:10px;">
-							<div class="form-group form-group-sm">
-								<label>Masa Penilaian SKP Tahunan</label>
-								<p class="text-muted masa_penilaian_skp_tahunan"></p>   
-							</div>
-						</div>
-						<div class="form-horizontal col-md-12 " style="">
-							<div class="form-group form-group-sm">
-								<label>Jumlah Kegiatan Tahunan</label>
-								<p class="text-muted jm_kegiatan"></p>
-							</div>
-						</div>
+						
 						
 						<hr>
 
 						<div class="form-horizontal col-md-12 before_end" style="padding-left:0px; " hidden>
-							<p class="text-danger">- Anda membuat Capaian Tahunan sebelum masa penilaian berakhir</p>
-							<p class="text-danger">- Silakan pilih <b>tanggal akhir masa penilaian</b> SKP Tahunan anda</p><span class="text-success masa_penilaian_baru"></span>
-							<p class="text-danger">- SKP bulanan setelah <b>tanggal akhir masa penilaian</b> yang baru akan dihapus secara permanen dan tidak dapat dikembalikan</p>
+							<p class="text-danger">- Capaian dibuat sebelum masa penilaian SKP berakhir</p>
+							<p class="text-danger">- Ubah tgl akhir masa penilaian menjadi 1 hari sebelum TMT Jabatan Baru</p><span class="text-success masa_penilaian_baru"></span>
+							<p class="text-danger">- Masa Penilaian SKP akan diubah sesuai masa penilaian capaian</p>
+							<p class="text-danger">- SKP Bulanan setelah masa penilaian akan dihapus</p>
 						</div>
 
 						
-						<div class="form-horizontal col-md-6 before_end" style="" hidden>
-							<div class="form-group form-group-sm masa_penilaian">
-								<label>Masa Penilaian SKP Tahunan dan Capaian Tahunan</label>
-								<div class="input-group input-group-sm ">
-									<input type="text" class="form-control cap_tgl_mulai" name="cap_tgl_mulai" placeholder="Tanggal Mulai"/>
-									<span class="input-group-addon">s.d.</span>
-									<input type="text" class="form-control tgl cap_tgl_selesai" name="cap_tgl_selesai" placeholder="Tanggal Selesai"/>
-								</div>     
-							</div>
-						</div>
+						
 					
 <!-- ============================================================================================================= -->
 					</div>
@@ -190,7 +197,7 @@
 					<input type="hidden" class="form-control jenis_jabatan" name="jenis_jabatan"  />
 
                	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left ', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-               	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right ', 'type' => 'button', 'id' => 'save_capaian_tahunan' )) !!}
+               	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').' button_simpan" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right ', 'type' => 'button', 'id' => 'save_capaian_tahunan' )) !!}
 			
 			
 				
@@ -219,10 +226,12 @@
 	}); 
 
 	$('.modal-create_capaian_tahunan_confirm').on('shown.bs.modal', function(){
+		reset_submit()
 		$('#myTab a[href="#tab_a"]').tab('show');
 	});
 
 	$('.modal-create_capaian_tahunan_confirm').on('hidden.bs.modal', function(){
+		reset_submit()
 		$('.u_jabatan, .p_jabatan, .masa_penilaian, .skp_tahunan_id, .jm_kegiatan_tahunan').removeClass('has-error');
 		
 		$('.modal-create_capaian_tahunan_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
@@ -231,19 +240,29 @@
 		
 	});
 
+	function on_submit(){
+		$('.modal-create_capaian_tahunan_confirm').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('#save_capaian_tahunan').prop('disabled',true);
+	}
+	function reset_submit(){
+		$('.modal-create_capaian_tahunan_confirm').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-create_capaian_tahunan_confirm').find('.button_simpan').addClass('fa-floppy-o');
+		$('#save_capaian_tahunan').prop('disabled',false);
+	}
+
 	
 		
 
 	$(document).on('click', '#save_capaian_tahunan', function(){
 		var data = $('#create-capaian_tahunan_confirm-form').serialize();
-
+		on_submit();
 		$.ajax({
 			url		: '{{ url("api_resource/simpan_capaian_tahunan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
 				$('#capaian_tahunan').DataTable().ajax.reload(null,false);
-				
+				reset_submit();
 
 				Swal.fire({
 					title: "",
@@ -252,7 +271,7 @@
 					width: "200px",
 					showConfirmButton: false,
 					allowOutsideClick : false,
-					timer: 1500
+					timer: 500
 				}).then(function () {
 						$('.modal-capaian_tahunan_confirm').modal('hide');
 						$('#capaian_tahunan_table').DataTable().ajax.reload(null,false);
@@ -267,6 +286,7 @@
 			)	
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
+				reset_submit();
 				var test = $.parseJSON(jqXHR.responseText);
 				
 				var data= test.errors;
