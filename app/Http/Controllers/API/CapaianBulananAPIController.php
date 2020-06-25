@@ -44,17 +44,7 @@ class CapaianBulananAPIController extends Controller {
     use BawahanList;
     use PJabatan;
 
-    protected function jabatan($id_jabatan){ 
-        $jabatan       = HistoryJabatan::WHERE('id',$id_jabatan)
-                        ->SELECT('jabatan')
-                        ->first();
-        if ( $jabatan == null ){
-            return $jabatan;
-        }else{
-            return Pustaka::capital_string($jabatan->jabatan);
-        }
-        
-    }
+  
   
     protected function CapaianBulananDetail(Request $request){
      
@@ -331,12 +321,16 @@ class CapaianBulananAPIController extends Controller {
         }else if ( $jenis_jabatan == 4 ){
             $jm_kegiatan = KegiatanSKPBulanan::WHERE('skp_bulanan_id','=',$request->get('skp_bulanan_id'))->count();
        
+            
+            $nm_jabatan     = 'Dilaksanakan Sendiri';
+            $t_kegiatan     = $jm_kegiatan;
+            
+           
 
-            $data_jabatan_id['jabatan']             = "Kegiatan Bulanan Personal";
-            $data_jabatan_id['jm_keg']              = $jm_kegiatan;
-            $data_jabatan_id['jm_realisasi']        = " 0 ";
-            $t_kegiatan                             = $jm_kegiatan;
-
+            $data_jabatan_id['jabatan']           = $nm_jabatan;
+            $data_jabatan_id['jm_keg']            = $jm_kegiatan;
+            $data_jabatan_id['jm_realisasi']      = 0;
+            $data_jabatan_id['t_kegiatan']        = $t_kegiatan;
 
             $pelaksana_list[]                       = $data_jabatan_id ;
             $list_bawahan                           = array_reverse($pelaksana_list);
@@ -516,6 +510,10 @@ class CapaianBulananAPIController extends Controller {
                 $data_jabatan_id['jabatan']         = Pustaka::capital_string($x->jabatan)." / ".$x->eselon;
                 $data_jabatan_id['jm_keg']          = $dt_reaksi;
                 $data_jabatan_id['jm_realisasi']    = $dt_realisasi;
+                $data_jabatan_id['t_kegiatan']      = $dt_reaksi.' / '.$dt_realisasi;
+
+
+                
 
                 $kabid_list[] = $data_jabatan_id ;
                 $jm_kegiatan +=  $dt_reaksi;
@@ -1260,8 +1258,21 @@ class CapaianBulananAPIController extends Controller {
         if ( $st_kt->delete()){
 
             SKPBulanan::WHERE('id',$st_kt->skp_bulanan_id)->UPDATE(['status' => '0']);
+            //cari jumlah skp
+            $data_1       = CapaianTahunan::WHERE('pegawai_id',$st_kt->pegawai_id)->count();
+            $data_2       = CapaianBulanan::WHERE('pegawai_id',$st_kt->pegawai_id)->count();
+            $data_3       = CapaianTriwulan::WHERE('pegawai_id',$st_kt->pegawai_id)->count();
+             
+            
 
-            return \Response::make($st_kt->skp_bulanan_id, 200);
+
+            return \Response::make(['skp_bulanan_id'        => $st_kt->skp_bulanan_id, 
+                                    'jm_capaian_tahunan'    => $data_1,
+                                    'jm_capaian_bulanan'    => $data_2,
+                                    'jm_capaian_triwulan'   => $data_3,
+                                
+                                    
+                                ], 200);
         }else{
             return \Response::make('error', 500);
         } 
