@@ -445,7 +445,27 @@ class KegiatanAPIController extends Controller {
                                     ->select('id','skpd','id_eselon')->get();
 
                     $level3 = $level3a->merge($level3b);
-                }else{
+                }else if ( $request->id == 61857 ){  //675 UTDP Diskominfo 
+                    $level3a = SKPD::where('parent_id','=',$request->id)
+                                   ->where(function ($query) {
+                                       $query->where('id_eselon', '=' , null )
+                                           ->orWhere('id_eselon', '<=', 8 );
+                                   })
+                                   ->select('id','skpd','id_eselon')->get();
+                   $kapus_list = [];
+                   foreach ($level3a as $x) {
+                       $kapus_list[] = array( 'id' => $x->id );
+                   }
+
+                   $level3b = SKPD::WHEREIN('parent_id',$kapus_list)
+                                   ->where(function ($query) {
+                                       $query->where('id_eselon', '=' , null )
+                                           ->orWhere('id_eselon', '<=', 8 );
+                                   })
+                                   ->select('id','skpd','id_eselon')->get();
+
+                   $level3 = $level3a->merge($level3b);
+               }else{
                     $level3 = SKPD::where('parent_id','=',$request->id)
                                     ->where(function ($query) {
                                         $query->where('id_eselon', '=' , null )
