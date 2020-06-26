@@ -2521,6 +2521,7 @@ a:focus {
 .alert a {
   color: #fff;
   text-decoration: underline;
+  margin-top:6px;
 }
 .alert-success {
   border-color: #008d4c;
@@ -3383,19 +3384,21 @@ a:focus {
 .login-box,
 .register-box {
   width: 360px;
-  margin: 7% auto;
+  margin: 0px auto;
+  
 }
-@media (max-width: 768px) {
+@media (max-width: 468px) {
   .login-box,
   .register-box {
-    width: 90%;
-    margin-top: 20px;
+    width: 100%;
+    margin-top: 0px;
+    padding:20px 8px !important;
   }
 }
 .login-box-body,
 .register-box-body {
-  background: #fff;
-  padding: 20px;
+  background: rgb(7, 5, 5);
+  padding: 20px 15px;
   border-top: 0;
   color: #666;
 }
@@ -3407,7 +3410,7 @@ a:focus {
 .register-box-msg {
   margin: 0;
   text-align: center;
-  padding: 0 20px 20px 20px;
+  padding: 0 20px 0px 20px;
 }
 .social-auth-links {
   margin: 10px 0;
@@ -4590,6 +4593,7 @@ a:focus {
 .label-danger,
 .modal-danger .modal-body {
   background-color: #dd4b39 !important;
+  padding:5px 35px 5px 10px;
 }
 .bg-yellow,
 .callout.callout-warning,
