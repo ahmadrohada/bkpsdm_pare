@@ -3,12 +3,15 @@
 namespace App\Traits;
 
 use App\Models\CapaianBulanan;
+use App\Models\CapaianTahunan;
 use App\Models\Jabatan;
 use App\Models\RencanaAksi;
 use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\KegiatanSKPBulanan;
+use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPBulananJFT;
 use App\Models\UraianTugasTambahan;
+use App\Models\RealisasiKegiatanTahunan;
 
 
 
@@ -291,7 +294,6 @@ trait HitungCapaian
         );
     }
 
-
     public function hitung_capaian($capaian_id){ 
 
 
@@ -413,6 +415,147 @@ trait HitungCapaian
 
         
         return array_merge($data,$data_2);
+    }
+
+
+//==================================== CAPAIAN TAHUNAN AREA ===========================================================//
+    protected function capaian_tahunan_jfu($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id)
+    {
+
+        //Jumlah kegiatan 
+        $jm_kegiatan = RencanaAksi::WHERE('jabatan_id',$jabatan_id)
+                            ->WHERE('renja_id',$renja_id)
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
+                            })
+                            ->distinct('kegiatan_tahunan.id')->count('kegiatan_tahunan.id');
+        $jm_realisasi = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->count();
+
+        //cari nilai_capaian Kegiatan tahunan
+        $xdata = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->get();
+       
+        $nilai_capaian_kegiatan_tahunan = 0 ;
+        foreach ($xdata as $x) {
+            $nilai_capaian_kegiatan_tahunan =  $nilai_capaian_kegiatan_tahunan + $x->hitung_quantity;
+        }
+
+        return array(
+            'jm_kegiatan_bulanan'       => $jm_kegiatan,
+            'jm_capaian'                => $nilai_capaian_kegiatan_tahunan,
+        );
+
+    }
+
+    public function hitung_capaian_tahunan($capaian_id){ 
+
+
+        //jenis jabatan
+        $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
+        $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban'));
+        $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
+        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('jabatan_staf_ahli'));
+
+
+        $capaian_tahunan = CapaianTahunan::
+                                leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
+                                    $join   ->on('a.id','=','capaian_tahunan.u_jabatan_id');
+                                })
+                                ->leftjoin('demo_asn.m_skpd AS jabatan', function($join){
+                                    $join   ->on('jabatan.id','=','a.id_jabatan');
+                                })  
+                                //eselon
+                                ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
+                                            $join   ->on('eselon.id','=','a.id_eselon');
+                                })  
+                                ->SELECT(
+                                    'capaian_tahunan.id AS capaian_tahunan_id',
+                                    'capaian_tahunan.skp_tahunan_id',
+                                    'capaian_tahunan.created_at',
+                                    'capaian_tahunan.status_approve',
+                                    'capaian_tahunan.send_to_atasan',
+                                    'capaian_tahunan.alasan_penolakan',
+                                    'capaian_tahunan.p_jabatan_id',
+                                    'capaian_tahunan.u_jabatan_id',
+                                    'eselon.id_jenis_jabatan AS id_jenis_jabatan'
+                                )
+                                ->where('capaian_tahunan.id','=', $capaian_id )
+                                ->first();
+
+       
+                
+
+        //$jenis_jabatan = $capaian_tahunan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
+        $jenis_jabatan = $capaian_tahunan->id_jenis_jabatan;
+        $renja_id = $capaian_tahunan->SKPTahunan->renja_id;
+        $skp_tahunan_id = $capaian_tahunan->skp_tahunan_id;
+        $jabatan_id = ( $capaian_tahunan->PejabatYangDinilai ) ? $capaian_tahunan->PejabatYangDinilai->id_jabatan : 0 ;
+
+         
+
+        //Tugas Tambahan pada skp tahunan
+        /* $jm_uraian_tugas_tambahan =  TugasTambahan::WHERE('skp_tahunan_id',$skp_tahunan_id)->count();
+        $cdata = TugasTambahan::
+                                    leftjoin('db_pare_2018.realisasi_tugas_tambahan AS realisasi', function($join) use($capaian_id){
+                                        $join   ->on('realisasi.tugas_tambahan_id','=','tugas_tambahan.id');
+                                        $join   ->where('realisasi.capaian_id','=',$capaian_id);
+                                    })
+                                    ->SELECT('tugas_tambahan.target','realisasi.realisasi')
+                                    ->WHERE('tugas_tambahan.skp_bulanan_id','=',$skp_bulanan_id)
+                                    ->get();
+
+        $jm_capaian_uraian_tugas_tambahan = 0 ;
+        $jm_uraian_tugas_tambahan = 0 ;
+
+        foreach ($cdata as $data) {
+            $jm_uraian_tugas_tambahan ++;
+            $jm_capaian_uraian_tugas_tambahan += Pustaka::persen($data->realisasi,$data->target);
+        }
+
+        $data_2 = array(
+                        'jm_uraian_tugas_tambahan'           => $jm_uraian_tugas_tambahan,
+                        'jm_capaian_uraian_tugas_tambahan'   => $jm_capaian_uraian_tugas_tambahan,
+                        ); */
+
+
+        //JENIS JABATAN STAF AHLI
+        if ( ( $jenis_jabatan == 1 ) & ( in_array( $jabatan_id, $id_jabatan_staf_ahli) ) ){
+            $jenis_jabatan = 5 ; //staf ahli sebagai JFT
+        }
+
+        //JENIS JABATAN UNTUK IRBAN ** 
+        if ( ( $jenis_jabatan == 2 ) & ( in_array( $jabatan_id, $id_jabatan_irban) ) ){
+            $jenis_jabatan = 31 ; //irban
+        }
+
+        //jika Lurah
+        if ( ( $jenis_jabatan == 3 ) & ( in_array( $jabatan_id, $id_jabatan_lurah ) ) ){
+            $jenis_jabatan = 2 ; //lurah
+        }
+
+
+        if ( $jenis_jabatan == 31){  //IRBAN
+            //CAPAIAN KINERJA UNTUK IRBAN
+            $data = $this->capaian_tahunan_irban($capaian_id,$skp_bulanan_id,$renja_id,$jabatan_id);
+        }else if ( $jenis_jabatan == 5 ){//jm kegiatan JFT
+            $data = $this->capaian_tahunan_jft($capaian_id,$skp_bulanan_id,$bulan,$renja_id);
+        }else if ( $jenis_jabatan == 4 ){ //jm kegiatan pelaksana JFU
+            $data = $this->capaian_tahunan_jfu($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);
+        }else if ( $jenis_jabatan == 3 ){  //kasubid ESELON IV
+            $data =  $this->capaian_tahunan_eselon4($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);
+        }else if ( $jenis_jabatan == 2){ //kabid ESELON III
+            $data =  $this->capaian_tahunan_eselon3($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);
+        }else if ( $jenis_jabatan == 1){ //KABAN ESELON II
+            $data =  $this->capaian_tahunan_eselon2($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);
+        }else{
+            $data = array(
+                'jm_kegiatan_bulanan'       => 0,
+                'jm_capaian'                => 0,
+            ); 
+        }
+
+        return $data;
+        
+        //return array_merge($data,$data_2);
     }
 
 

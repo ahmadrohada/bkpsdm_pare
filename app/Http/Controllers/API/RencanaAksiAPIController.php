@@ -1355,17 +1355,18 @@ class RencanaAksiAPIController extends Controller {
             
        
         $dt = RencanaAksi::WHERE('kegiatan_tahunan_id','=', $request->kegiatan_tahunan_id )
-                ->WHERE('jabatan_id',$request->jabatan_id)
+                        ->WHERE('jabatan_id',$request->jabatan_id)
 
-                ->select([   
-                    'id AS rencana_aksi_id',
-                    'label',
-                    'waktu_pelaksanaan',
-                    'jabatan_id'
-                    
-                    ])
-                
-                ->get();
+                        ->select([   
+                            'id AS rencana_aksi_id',
+                            'label',
+                            'waktu_pelaksanaan',
+                            'jabatan_id' 
+                            
+                            ])
+                        ->orderBY('waktu_pelaksanaan')
+                        ->orderBY('id','DESC')
+                        ->get();
 
                 
                 

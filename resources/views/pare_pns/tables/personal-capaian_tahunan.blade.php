@@ -39,9 +39,9 @@
 				paging          : true,
 				autoWidth		: false,
 				bInfo			: false,
-				bSort			: true,
+				bSort			: false,
 				lengthChange	: true,
-				order 			: [ 1 , 'asc' ],
+				//order 			: [ 1 , 'asc' ],
 				lengthMenu		: [20,45,80],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,2,4,5] }/* ,
@@ -53,9 +53,9 @@
 									delay:3000
 
 								},
-				
-
-				columns	:[
+				 
+				rowsGroup		: [1],
+				columns			:[
 								{ data: 'capaian_id' , orderable: true,searchable:false,
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;

@@ -101,11 +101,11 @@
 	});
 
  
-	function on_submitx(){
+	function on_submit_kegiatan_bulanan(){
 		$('.modal-kegiatan_bulanan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
 		$('#submit-save').prop('disabled',true);
 	}
-	function reset_submitx(){
+	function reset_submit_kegiatan_bulanan(){
 		$('.modal-kegiatan_bulanan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
 		$('.modal-kegiatan_bulanan').find('.button_simpan').addClass('fa-floppy-o');
 		$('#submit-save').prop('disabled',false);
@@ -113,7 +113,7 @@
 
 	$(document).on('click','#submit-save',function(e){
 
-		on_submitx();
+		on_submit_kegiatan_bulanan();
 		var data = $('#kegiatan_bulanan_form').serialize();
 
 		//alert(data);
@@ -125,7 +125,7 @@
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
                
-				reset_submitx();
+				reset_submit_kegiatan_bulanan();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -167,7 +167,7 @@
 					((index == 'quality')?$('.quality').addClass('has-error'):'');
 					((index == 'target_waktu')?$('.waktu').addClass('has-error'):'');
 					
-					reset_submitx();
+					reset_submit_kegiatan_bulanan();
 					
 				
 				});
@@ -186,7 +186,7 @@
 
 	$(document).on('click','#submit-update',function(e){
 
-		on_submitx();
+		on_submit_kegiatan_bulanan();
 		var data = $('#kegiatan_bulanan_form').serialize();
 
 		//alert(data);
@@ -198,7 +198,7 @@
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
 			
-				reset_submitx();
+				reset_submit_kegiatan_bulanan();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -237,7 +237,7 @@
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					((index == 'quality')?$('.quality').addClass('has-error'):'');
 					((index == 'target_waktu')?$('.waktu').addClass('has-error'):'');
-					reset_submitx();
+					reset_submit_kegiatan_bulanan();
 
 					
 				

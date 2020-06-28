@@ -737,7 +737,7 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	//========================================================================================================//
 	
 	Route::get('realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan');
-
+	Route::get('realisasi_kegiatan_tahunan_4','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan4');
 	Route::get('realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan5');
 
 	Route::get('add_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@AddRealisasiKegiatanTahunan');
@@ -781,6 +781,15 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::get('tugas_tambahan_detail','API\TugasTambahanAPIController@Detail');
 	Route::post('update_tugas_tambahan','API\TugasTambahanAPIController@Update');
 
+	//======================  REALISASI   URAIAN    TUGAS TAMBAHAN   ===========================//
+	//==========================================================================================//
+	Route::get('realisasi_tugas_tambahan_list','API\RealisasiTugasTambahanAPIController@RealisasiTugasTambahanList');
+	Route::post('simpan_realisasi_tugas_tambahan','API\RealisasiTugasTambahanAPIController@Store');
+	Route::get('realisasi_tugas_tambahan_detail','API\RealisasiTugasTambahanAPIController@Detail');
+	Route::post('update_realisasi_tugas_tambahan','API\RealisasiTugasTambahanAPIController@Update');
+	Route::post('hapus_realisasi_tugas_tambahan','API\RealisasiTugasTambahanAPIController@Destroy');
+	
+
 	//======================      URAIAN    TUGAS TAMBAHAN   ==================================//
 	//==========================================================================================//
 	Route::get('uraian_tugas_tambahan_list','API\UraianTugasTambahanAPIController@UraianTugasTambahanList');
@@ -799,14 +808,23 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('hapus_realisasi_uraian_tugas_tambahan','API\RealisasiUraianTugasTambahanAPIController@Destroy');
 	
 
-	//=================================         K R E A T I V I T A S     = ==================================//
+	//===============================  UNSUR PENUNJANG  / TUGAS TAMBAHAN = ==================================//
 	//========================================================================================================//
-	Route::get('kreativitas_list','API\KreativitasAPIController@KreativitasList');
-	Route::get('kreativitas_detail','API\KreativitasAPIController@Detail');
+	Route::get('unsur_penunjang_tugas_tambahan_list','API\UnsurPenunjangAPIController@TugasTambahanList');
+	Route::get('unsur_penunjang_tugas_tambahan_detail','API\UnsurPenunjangAPIController@TugasTambahanDetail');
 	
-	Route::post('simpan_kreativitas','API\KreativitasAPIController@Store');
-	Route::post('update_kreativitas','API\KreativitasAPIController@Update');
-	Route::post('hapus_kreativitas','API\KreativitasAPIController@Destroy');
+	Route::post('simpan_unsur_penunjang_tugas_tambahan','API\UnsurPenunjangAPIController@TugasTambahanStore');
+	Route::post('update_unsur_penunjang_tugas_tambahan','API\UnsurPenunjangAPIController@TugasTambahanUpdate');
+	Route::post('hapus_unsur_penunjang_tugas_tambahan','API\UnsurPenunjangAPIController@TugasTambahanDestroy');
+
+	//===============================  UNSUR PENUNJANG  / TUGAS TAMBAHAN = ==================================//
+	//========================================================================================================//
+	Route::get('unsur_penunjang_kreativitas_list','API\UnsurPenunjangAPIController@KreativitasList');
+	Route::get('unsur_penunjang_kreativitas_detail','API\UnsurPenunjangAPIController@KreativitasDetail');
+	
+	Route::post('simpan_unsur_penunjang_kreativitas','API\UnsurPenunjangAPIController@KreativitasStore');
+	Route::post('update_unsur_penunjang_kreativitas','API\UnsurPenunjangAPIController@KreativitasUpdate');
+	Route::post('hapus_unsur_penunjang_kreativitas','API\UnsurPenunjangAPIController@KreativitasDestroy');
 
 	//========================================================================================================//
 	//======================================= RENCANA AKSI  SKP THAUNAN ======================================//

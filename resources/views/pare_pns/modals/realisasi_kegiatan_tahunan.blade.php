@@ -11,7 +11,7 @@
             <form  id="realisasi_tahunan_form" method="POST" action="">
 
 			<input type="hidden"  name="capaian_id">
-			<input type="hidden"  name="ind_kegiatan_id">
+			<input type="hidden"  name="ind_kegiatan_id"> 
 			<input type="hidden"  name="kegiatan_tahunan_id">
 			<input type="hidden"  name="realisasi_indikator_kegiatan_tahunan_id">
 			<input type="hidden"  name="realisasi_kegiatan_tahunan_id">
@@ -36,20 +36,9 @@
 								<span class="kegiatan_tahunan_label"></span>
 							</p>
 						</div>
-
-						@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  != '5')
-							<div class="col-md-12 form-group label_kegiatan_tahunan" style="margin-top:-10px !important;">
-								<strong>Indikator </strong>
-								<p class="text-info " style="margin-top:1px;">
-									<span class="indikator_label"></span>
-								</p>
-							</div>
-						@endif
 					</div>
-
-
-
-					<div class="row" style="margin-top:10px;"> 
+						
+					<div class="row" style="margin-top:-10px;"> 
 						<div class="col-md-6 col-xs-6 form-group">	
 							<label class="control-label">Target AK </label>
 							<span type="text" class="form-control input-sm target_angka_kredit"></span>
@@ -59,28 +48,6 @@
 							<input type="text" name="realisasi_angka_kredit" required class="form-control input-sm realisasi_angka_kredit" placeholder="realisasi">
 						</div>
 					</div>
-
-					<div class="row" style="margin-top:10px;"> 
-						<div class="col-md-6 col-xs-6 form-group">	
-							<label class="control-label">Target Quantity </label>
-							<div class="input-group">
-							<span type="text" class="form-control input-sm target_quantity"></span>
-								<div class="input-group-addon">
-									<span class="satuan"></span>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6 col-xs-6 form-group quantity">	
-							<label class="control-label">Realisasi Quantity</label>
-							<div class="input-group">
-								<input type="text" name="realisasi_quantity" required class="form-control input-sm realisasi_quantity" placeholder="realisasi">
-								<div class="input-group-addon">
-									<span class="satuan"></span>
-								</div>
-							</div>
-						</div>
-					</div>
-
 					<div class="row" style="margin-top:-20px;" > 
 						<div class="col-md-6 col-xs-6 form-group">	
 							<label class="control-label">Target Quality </label>
@@ -141,10 +108,43 @@
 								<div class="input-group-addon">
 									<span class="">Rp.</span>
 								</div>
-								<input type="text" name="realisasi_cost"  required class="form-control input-sm realisasi_cost" placeholder="cost realisasi">
+								<input type="text" id="rupiah" name="realisasi_cost"  required class="form-control input-sm realisasi_cost" placeholder="cost realisasi">
 							</div>
 						</div>
 					</div>
+
+					<hr>
+
+					<div class="row">
+						<div class="col-md-12 form-group label_kegiatan_tahunan">
+								<strong>Indikator </strong>
+								<p class="text-info " style="margin-top:1px;">
+									<span class="indikator_label"></span>
+								</p>
+						</div>
+					</div>
+					<div class="row" style="margin-top:-10px;"> 
+						<div class="col-md-6 col-xs-6 form-group">	
+							<label class="control-label">Target Quantity </label>
+							<div class="input-group">
+							<span type="text" class="form-control input-sm target_quantity"></span>
+								<div class="input-group-addon">
+									<span class="satuan"></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-xs-6 form-group quantity">	
+							<label class="control-label">Realisasi Quantity</label>
+							<div class="input-group">
+								<input type="text" name="realisasi_quantity" required class="form-control input-sm realisasi_quantity" placeholder="realisasi">
+								<div class="input-group-addon">
+									<span class="satuan"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					
 
 			</div>
 			<div class="modal-footer">
@@ -160,11 +160,27 @@
 
 
 
-<script type="text/javascript">
+<script type="text/javascript"> 
+
+	var cost_format = document.getElementById('rupiah');
+	cost_format.addEventListener('keyup', function(e)
+	{
+        cost_format.value = formatRupiah(this.value);
+        
+	}); 
 
 	$('.modal-realisasi_tahunan').on('shown.bs.modal', function(){
 		
-		$('#qty_realisasi').focus();
+
+		if ( $('.realisasi_angka_kredit').val() == ""  ){
+			$(this).find('input:text')[0].focus();
+		}else{
+			$(this).find('input:text')[4].focus();
+		}
+		
+
+
+		$('.modal-realisasi_tahunan').find('[name=realisasi_quality]').val(100);
 		reset_submitx();
 	});
 

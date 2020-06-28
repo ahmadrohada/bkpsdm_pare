@@ -1,7 +1,7 @@
 
 <div class="row">
-	<div class="col-md-4">
-		<div class="box box-default">
+	<div class="col-md-5">
+		<div class="box box-info">
 			<div class="box-body box-profile">
 			
 				<h1 class="profile-username text-center text-success" style="font-size:16px;">
@@ -9,24 +9,39 @@
 				</h1>
 
 				<ul class="list-group list-group-unbordered">
-					<li class="list-group-item ">
+					<li class="list-group-item " style="padding:8px 10px;">
 						Tanggal dibuat<a class="pull-right st_created_at">-</a>
 					</li>
-					<li class="list-group-item">
+					<li class="list-group-item" style="padding:8px 10px;">
 						Pejabat Penilai <a class="pull-right st_pejabat_penilai">-</a>
 					</li>
-					<li class="list-group-item hidden">
-						Jumlah Kegiatan <a class="pull-right st_jm_kegiatan_tahunan" >-</a>
+					<li class="list-group-item" style="padding:8px 10px;">
+						Jumlah Kegiatan SKP <a class="pull-right st_jm_kegiatan_bulanan" >-</a>
 					</li>
-					<li class="list-group-item  hidden">
-						Capaian Kinerja <a class="pull-right st_capaian_kinerja" >-</a>
+					<li class="list-group-item" style="padding:8px 10px;">
+						Jumlah Tugas Tambahan <a class="pull-right st_jm_uraian_tugas_tambahan" >-</a>
 					</li>
-					<li class="list-group-item st_status_approve_div hidden">
+					@if ( request()->segment(4) != 'edit' )
+					<li class="list-group-item st_status_approve_div" style="padding:8px 10px;">
 						Status Approve <a class="pull-right st_status_approve" >-</a>
 					</li>
-					<li class="list-group-item st_alasan_penolakan_div hidden">
+					@endif
+					<li class="list-group-item st_alasan_penolakan_div hidden" style="padding:8px 10px;">
 						Alasan Penolakan <a class="pull-right st_alasan_penolakan" >-</a>
 					</li>
+					<li class="list-group-item" style="padding:8px 10px;">
+						Capaian Kinerja Bulanan <span class="text-muted"> (bobot 70%)</span><a class="pull-right st_capaian_kinerja_bulanan" >-</a>
+					</li>
+					<li class="list-group-item" style="padding:8px 10px;">
+						<input type="hidden" class="penilaian_kode_etik_id">
+						Penilaian Kode Etik <span class="text-muted"> (bobot 30%)</span>
+						<a class="pull-right st_penilaian_kode_etik" >-</a>
+					</li>
+					@if ( request()->segment(4) != 'edit' )
+					<li class="list-group-item" style="background:#efeff0; border-top: solid #615e68 !important; border-top-width: 2px; padding:8px 10px;">
+						<strong>Capaian SKP Tahunan</strong> <a class="pull-right st_capaian_skp_bulanan" style="font-weight: bold;" >-</a>
+					</li>
+					@endif
 					
 				</ul>
 				<a href="#" class="btn btn-primary btn-block kirim_capaian "><b>Kirim ke Atasan <i class="send_icon"></i></b></a>
@@ -49,7 +64,9 @@
 <script type="text/javascript">
 
 
-	
+	function status_show(){
+		status_pengisian();	
+	}
 
 	function status_pengisian(){
 		$.ajax({

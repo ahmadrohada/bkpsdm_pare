@@ -58,17 +58,17 @@
 
 								},
 				
-
-				columns	:[
+				rowsGroup		: [1],
+				columns			:[
 								{ data: 'capaian_id' , orderable: true,searchable:false,width:"35px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
 								
-								{ data: "periode_SKP_tahunan" ,  name:"periode_SKP_tahunan", orderable: true, searchable: true,width:"125px",
+								{ data: "periode" ,  name:"periode", orderable: true, searchable: true,width:"125px",
 									"render": function ( data, type, row ) {
-										return row.periode_SKP_tahunan;
+										return row.periode;
 									}	
 								},
 								

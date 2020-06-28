@@ -123,6 +123,7 @@ class CapaianTriwulanAPIController extends Controller {
                                     'triwulan4.status AS capaian_triwulan4_status'
                                 )
                         ->orderBy('periode.id','DESC')
+                        ->orderBy('skp_tahunan.id','desc')
                         ->get(); 
 
        
@@ -135,6 +136,9 @@ class CapaianTriwulanAPIController extends Controller {
             ->addColumn('periode_SKP_tahunan', function ($x) {
                 return $x->label;
             }) 
+            ->addColumn('periode', function ($x) {
+                return Pustaka::periode_tahun($x->label);
+            })
             ->addColumn('id_jenis_jabatan', function ($x) {
                 return ($x->PejabatYangDinilai->Eselon)?($x->PejabatYangDinilai->Eselon->id_jenis_jabatan):'';
             })

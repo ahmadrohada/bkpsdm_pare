@@ -4586,7 +4586,11 @@ a:focus {
 .bg-black {
   background-color: #111111 !important;
 }
-.bg-red,
+
+.bg-red {
+  background-color: #dd4b39 !important;
+}
+
 .callout.callout-danger,
 .alert-danger,
 .alert-error,

@@ -8,7 +8,7 @@
                     </h4>
 			</div> -->
 			<form  id="create-capaian_bulanan_confirm-form" method="POST" action="">
-			<div class="modal-body">
+			<div class="modal-body"> 
 <!-- ============================================================================================================= -->
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs" id="myTab">

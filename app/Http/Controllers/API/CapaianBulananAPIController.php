@@ -158,17 +158,22 @@ class CapaianBulananAPIController extends Controller {
             
                          )
                         ->WHERE('skp_bulanan.pegawai_id',$request->pegawai_id)
-                        ->orderBy('skp_bulanan.tgl_mulai','DESC')
+                        //->orderBy('skp_bulanan.tgl_mulai','DESC')
+                        ->orderBy('skp_bulanan.skp_tahunan_id','desc')
                         //->orderBy('skp_bulanan.bulan','ASC')
                         //->orderBy('skp_bulanan.skp_tahunan_id')
                         ->get();
 
        
            $datatables = Datatables::of($skp)
-             ->addColumn('periode', function ($x) {
-                return  Pustaka::Tahun($x->tgl_mulai);
-                //return $x->bulan;
+            ->addColumn('periode', function ($x) {
+                //return $x->label; 
+                return  Pustaka::Tahun($x->tgl_mulai).' [ '.$x->skp_tahunan_id.' ]';
             }) 
+            ->addColumn('periode_2', function ($x) {
+                //return $x->label; 
+                return  Pustaka::Tahun($x->tgl_mulai);
+            })
             ->addColumn('bulan', function ($x) {
                 return Pustaka::bulan($x->bulan);
             }) 
@@ -217,7 +222,6 @@ class CapaianBulananAPIController extends Controller {
         //lihat kegiatan nya serta pelihatkan capaian kegia9tan nya juga ( capaian kegiatan dapat dibuat dibulan berjalaan)
         
         //lihat jenis jabatan, 1,2,3,4
-
         $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
         $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban')); //kapus dan kaarsip
         $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
@@ -550,7 +554,7 @@ class CapaianBulananAPIController extends Controller {
                 'renja_id'              =>  $renja_id,
                 'jenis_jabatan'         =>  $jenis_jabatan,
                 'list_bawahan'          =>  $list_bawahan,
-                'jabatan_id'            => $skp_bulanan->PejabatYangDinilai->id_jabatan,
+                'jabatan_id'            =>  $skp_bulanan->PejabatYangDinilai->id_jabatan,
                 'pegawai_id'            =>  $skp_bulanan->pegawai_id,
                 'skp_bulanan_id'        =>  $skp_bulanan->skp_bulanan_id,
                 'periode_label'			=>  Pustaka::bulan($skp_bulanan->bulan),
@@ -669,18 +673,11 @@ class CapaianBulananAPIController extends Controller {
                             )
                             ->where('capaian_bulanan.id','=', $capaian_id )->first();
     
-        //$jenis_jabatan = $capaian_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
         $bulan = $capaian_bulanan->SKPBulanan->bulan;
-        //$renja_id = $capaian_bulanan->SKPBulanan->SKPTahunan->renja_id;
-        //$skp_bulanan_id = $capaian_bulanan->skp_bulanan_id;
-        //$jabatan_id = $capaian_bulanan->PejabatYangDinilai->id_jabatan;
-                   
-
-      
         $p_detail   = $capaian_bulanan->PejabatPenilai;
         $u_detail   = $capaian_bulanan->PejabatYangDinilai;
         //STATUS APPROVE
-        if ( ($capaian_bulanan->status_approve) == 1 ){
+        if ( ($capaian_bulanan->status_approve) == 1 ){ 
             $persetujuan_atasan = 'disetujui';
             $alasan_penolakan   = "";
         }else if ( ($capaian_bulanan->status_approve) == 2 ){
@@ -697,13 +694,13 @@ class CapaianBulananAPIController extends Controller {
 
         //return $data_kinerja;
 
-        $jm_capaian                 = $data_kinerja['jm_capaian'];
-        $jm_kegiatan_bulanan        = $data_kinerja['jm_kegiatan_bulanan'];
-        $jm_uraian_tugas_tambahan   = $data_kinerja['jm_uraian_tugas_tambahan'];
+        $jm_capaian                         = $data_kinerja['jm_capaian'];
+        $jm_kegiatan_bulanan                = $data_kinerja['jm_kegiatan_bulanan'];
+        $jm_uraian_tugas_tambahan           = $data_kinerja['jm_uraian_tugas_tambahan'];
         $jm_capaian_uraian_tugas_tambahan   = $data_kinerja['jm_capaian_uraian_tugas_tambahan'];
 
-        $jm_kegiatan_skp            = $jm_kegiatan_bulanan + $jm_uraian_tugas_tambahan;
-        $jm_capaian_kegiatan_skp    = $jm_capaian + $jm_capaian_uraian_tugas_tambahan;
+        $jm_kegiatan_skp                    = $jm_kegiatan_bulanan + $jm_uraian_tugas_tambahan;
+        $jm_capaian_kegiatan_skp            = $jm_capaian + $jm_capaian_uraian_tugas_tambahan;
 
 
         $capaian_kinerja_bulanan  = Pustaka::persen2($jm_capaian_kegiatan_skp,$jm_kegiatan_skp);

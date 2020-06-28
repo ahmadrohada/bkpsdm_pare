@@ -11,7 +11,7 @@
 			<div class="modal-body">
 <!-- ============================================================================================================= -->
 			<div class="nav-tabs-custom">
-				<ul class="nav nav-tabs" id="myTab">
+				<ul class="nav nav-tabs" id="myTab"> 
 					<li class=""><a href="#tab_a" data-toggle="tab"><i class="fa fa-tag"></i> Capaian Tahunan </a></li>
 					<li class=""><a href="#tab_b" data-toggle="tab" ><i class="fa fa-user"></i> Data Pribadi</a></li>
 					<li class=""><a href="#tab_c" data-toggle="tab"><i class="fa fa-user"></i> Data Atasan</a></li>
@@ -22,27 +22,19 @@
 					<div class="active tab-pane fade" id="tab_a">
 <!-- ============================================================================================================= -->
 						<div class="row" style="padding:0px 10px;">
-							<div class="form-horizontal col-md-6 " style="margin-top:10px;">
+							<div class="form-horizontal col-xs-6 " style="">
 								<div class="form-group form-group-sm skp_tahunan_id">
-									<label>Periode SKP Tahunan</label>
+									<label>Periode</label>
 									<p class="text-muted periode_label" ></p>
 								</div>
 							</div>
-							<div class="form-horizontal col-md-6 " style="">
+							<div class="form-horizontal col-xs-6" style="">
 								<div class="form-group form-group-sm">
-									<label>Jumlah Kegiatan Tahunan</label>
-									<p class="text-muted jm_kegiatan"></p>
-								</div>
-							</div>
-						</div>
-						<div class="row" style="padding:0px 10px;">
-							<div class="form-horizontal col-md-6" style="">
-								<div class="form-group form-group-sm">
-									<label>Masa Penilaian SKP Tahunan</label>
+									<label>Masa Penilaian</label>
 									<p class="text-muted masa_penilaian_skp_tahunan"></p>   
 								</div>
 							</div>
-							<div class="form-horizontal col-md-6 before_end" hidden>
+							<div class="form-horizontal col-xs-6 before_end" hidden>
 								<div class="form-group form-group-sm masa_penilaian">
 									<label>Masa Penilaian Capaian Tahunan</label>
 									<div class="input-group input-group-sm ">
@@ -52,6 +44,16 @@
 									</div>     
 								</div>
 							</div>
+							
+						</div>
+						<div class="row" style="padding:0px 10px;">
+							<div class="form-horizontal col-md-6 " style="">
+								<div class="form-group form-group-sm">
+									<label>Jumlah Kegiatan Tahunan</label>
+									<p class="text-muted jm_kegiatan"></p>
+								</div>
+							</div>
+							
 						</div>
 						
 						

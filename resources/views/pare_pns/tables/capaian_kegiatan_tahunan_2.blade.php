@@ -1,91 +1,66 @@
-<div class="row">
-	<div class="col-md-12">
-
-<!--====================== KEGIATAN BULANAN LIST =========================================== -->
-		<div class="box box-primary" id='kegiatan_tahunan'>
-			<div class="box-header with-border">
-				<h1 class="box-title">
-					List Realisasi Kegiatan Tahunan  / {!! $capaian->PejabatYangDinilai->Eselon->eselon !!}
-				</h1>
-
-				<div class="box-tools pull-right">
-				
-				</div>
-			</div>
-			<div class="box-body table-responsive">
-
-				<div class="toolbar"> 
-
-				</div> 
-
-				<table id="realisasi_kegiatan_tahunan_table" class="table table-striped table-hover display" style="width:100%">
-					<thead>
-						<tr>
-							<th rowspan="2">ID</th>
-							<th rowspan="2">KEGIATAN TAHUNAN</th>
-							<th rowspan="2">INDIKATOR</th>
-							<th colspan="4" >TARGET</th>
-							<th colspan="3">REALISASI</th>
-							<th rowspan="2"><i class="fa fa-cog"></i></th>
-						</tr>
-						<tr>
-							<th>QUANTITY</th>
-							<th>QUALITY</th>
-							<th>WAKTU</th>
-							<th>ANGGARAN</th>
-							<th>QUANTITY</th>
-							<th>WAKTU</th>
-							<th>ANGGARAN</th>
-						</tr>
-					</thead>
-							
-				</table>
-
-			</div>
-		</div>
-
+<div class="box-body table-responsive" style="min-height:330px;">
+	<div class="toolbar">
 	</div>
-
-	
+	<div class="box-body table-responsive">
+		<table id="realisasi_kegiatan_tahunan_table" class="table table-striped table-hover display" style="width:100%">
+			<thead>
+				<tr>
+					<th rowspan="2">ID</th>
+					<th rowspan="2">KEGIATAN TAHUNAN</th>
+					<th rowspan="2">INDIKATOR</th>
+					<th colspan="4" >TARGET</th>
+					<th colspan="3">REALISASI</th>
+					<th rowspan="2"><i class="fa fa-cog"></i></th>
+				</tr>
+				<tr>
+					<th>QUANTITY</th>
+					<th>QUALITY</th>
+					<th>WAKTU</th>
+					<th>ANGGARAN</th>
+					<th>QUANTITY</th>
+					<th>WAKTU</th>
+					<th>ANGGARAN</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
 </div>
+{{-- 
 <style>
 table.dataTable tbody td {
   vertical-align: middle;
 }
 </style>
-
+ --}}
 @include('pare_pns.modals.realisasi_kegiatan_tahunan')
-
-
-<script src="{{asset('assets/js/dataTables.rowsGroup.js')}}"></script>
-
 
 <script type="text/javascript">
 
-		
-	
-  	function load_kegiatan_tahunan(){
+  	function LoadKegiatanTahunanTable(){
 		
 		var table_kegiatan_tahunan = $('#realisasi_kegiatan_tahunan_table').DataTable({
 				destroy			: true,
-				processing      : false,
+				processing      : true,
 				serverSide      : true,
-				searching      	: false,
-				paging          : false,
+				searching      	: true,
+				paging          : true,
+				autoWidth		: false,
 				bInfo			: false,
-				//fixedColumns	: true,
-				//order 			: [0 , 'asc' ],
+				bSort			: false, 
+				//targets			: 'no-sort',
+				lengthChange	: false,
+				deferRender		: true,
+				//order 			: [ 5 , 'asc' ],
+				//lengthMenu		: [10,25,50],
 				columnDefs		: [
 									{ "orderable": false, className: "text-center", targets: [ 0,3,4,5,7,8,10 ] },
 									{ className: "text-right", targets: [ 6,9] },
 									@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
 										{ className: "hide", targets: [ 2 ] },
 									@endif
-									
-									
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_kegiatan_tahunan") }}',
+									url	: '{{ url("api_resource/realisasi_kegiatan_tahunan_4") }}',
 									data: { 
 										
 											"renja_id" 				: {!! $capaian->SKPTahunan->Renja->id !!} , 
@@ -94,8 +69,7 @@ table.dataTable tbody td {
 											"jenis_jabatan"			: {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan !!},
 									 },
 								},
-				targets			: 'no-sort',
-				bSort			: false,
+				
 				rowsGroup		: [ 0,1,4,5,6,8,9 ],
 				columns			: [
 									{ data: 'id' ,width:"10px",

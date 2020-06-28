@@ -275,12 +275,18 @@ $.ajax({
 
 	var table_rencana_aksi = $('#rencana_aksi_table').DataTable({
 			destroy			: true,
-			processing      : false,
+			processing      : true,
 			serverSide      : true,
-			searching      	: false,
-			paging          : false,
-			
-			order 			    : [ 2 , 'asc' ],
+			searching      	: true,
+			paging          : true,
+			autoWidth		: false,
+			bInfo			: false,
+			bSort			: false, 
+			//targets			: 'no-sort',
+			lengthChange	: false,
+			deferRender		: true,
+			//order 			: [ 5 , 'asc' ],
+			//lengthMenu		: [10,25,50],
 			columnDefs		  : [
 								{ className: "text-center", targets: [ 0,2] },
 								{ 'orderable': false , targets: [ ]  }

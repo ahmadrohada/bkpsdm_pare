@@ -1332,7 +1332,11 @@ class KegiatanAPIController extends Controller {
                         //$data_kegiatan['state']     = $state;
                         
                         //RENCANA AKSI
-                        $ra = RencanaAksi::WHERE('kegiatan_tahunan_id',$x->kegiatan_tahunan_id)->WHERE('jabatan_id',$request->jabatan_id)->orderBY('waktu_pelaksanaan')->orderBY('id','DESC')->get();
+                        $ra = RencanaAksi::WHERE('kegiatan_tahunan_id',$x->kegiatan_tahunan_id)
+                                            ->WHERE('jabatan_id',$request->jabatan_id)
+                                            ->orderBY('waktu_pelaksanaan')
+                                            ->orderBY('id','DESC')
+                                            ->get();
                         foreach ($ra as $y) {
                             $data_rencana_aksi['id']	        = "KegiatanBulanan|".$y->id;
                             $data_rencana_aksi['text']			= Pustaka::capital_string($y->label).' ['. Pustaka::bulan($y->waktu_pelaksanaan).']';

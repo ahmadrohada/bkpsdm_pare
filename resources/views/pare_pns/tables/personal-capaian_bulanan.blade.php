@@ -16,7 +16,7 @@
 					<tr class="success">
 						<th>NO</th>
 						<th>PERIODE</th>
-						<th>BULAN</th>
+						<th>BULAN</th> 
 						<th>PELAKSANAAN</th>
 						<th>JABATAN</th>
 						<th>CAPAIAN</th> 
@@ -62,9 +62,9 @@
 								{ data: "periode" , name:"periode",searchable: true,width:"90px",
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
-											return "<span class='text-danger'>"+row.periode+"</span>";
+											return "<span class='text-danger'>"+row.periode_2+"</span>";
 										}else{
-											return row.periode;
+											return row.periode_2;
 										}
 
 									}	

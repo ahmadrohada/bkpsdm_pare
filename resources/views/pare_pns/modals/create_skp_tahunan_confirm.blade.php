@@ -27,7 +27,7 @@
 								<label>Periode SKP</label>
 								<span id="periode_label" class="form-control"> TEXT PERIODE</span>
 							</div>
-						</div>
+						</div> 
 						<div class="form-horizontal col-md-6" style="margin-top:10px;">
 							<div class="form-group form-group-sm masa_penilaian">
 								<label>Masa Penilaian</label>
