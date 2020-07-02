@@ -58,7 +58,7 @@ class SKPTahunanAPIController extends Controller {
             array_push($bln_skp_list, $z);
         }
 
-        $renja      = $skp->Renja;
+        $renja      = $skp->Renja; 
         $p_detail   = $skp->PejabatPenilai;
         $u_detail   = $skp->PejabatYangDinilai;
 
