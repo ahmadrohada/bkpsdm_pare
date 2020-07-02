@@ -87,7 +87,7 @@
 
 
 
-		window.location.assign("capaian_tahunan_approval-request/"+capaian_tahunan_id);
+		window.location.assign("capaian_tahunan_bawahan_approvement/"+capaian_tahunan_id);
 	});
 
 	$(document).on('click','.lihat_capaian_tahunan',function(e){

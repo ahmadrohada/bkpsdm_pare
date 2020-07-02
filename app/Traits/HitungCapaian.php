@@ -12,6 +12,8 @@ use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPBulananJFT;
 use App\Models\UraianTugasTambahan;
 use App\Models\RealisasiKegiatanTahunan;
+use App\Models\TugasTambahan;
+use App\Models\RealisasiTugasTambahan;
 
 
 
@@ -440,7 +442,7 @@ trait HitungCapaian
         }
 
         return array(
-            'jm_kegiatan_bulanan'       => $jm_kegiatan,
+            'jm_kegiatan_tahunan'       => $jm_kegiatan,
             'jm_capaian'                => $nilai_capaian_kegiatan_tahunan,
         );
 
@@ -493,28 +495,28 @@ trait HitungCapaian
          
 
         //Tugas Tambahan pada skp tahunan
-        /* $jm_uraian_tugas_tambahan =  TugasTambahan::WHERE('skp_tahunan_id',$skp_tahunan_id)->count();
+        $jm_tugas_tambahan =  TugasTambahan::WHERE('skp_tahunan_id',$skp_tahunan_id)->count();
         $cdata = TugasTambahan::
                                     leftjoin('db_pare_2018.realisasi_tugas_tambahan AS realisasi', function($join) use($capaian_id){
-                                        $join   ->on('realisasi.tugas_tambahan_id','=','tugas_tambahan.id');
+                                        $join   ->on('realisasi.tugas_tambahan_id','=','skp_tahunan_tugas_tambahan.id');
                                         $join   ->where('realisasi.capaian_id','=',$capaian_id);
                                     })
-                                    ->SELECT('tugas_tambahan.target','realisasi.realisasi')
-                                    ->WHERE('tugas_tambahan.skp_bulanan_id','=',$skp_bulanan_id)
+                                    ->SELECT('skp_tahunan_tugas_tambahan.target','realisasi.realisasi')
+                                    ->WHERE('skp_tahunan_tugas_tambahan.skp_tahunan_id','=',$skp_tahunan_id)
                                     ->get();
 
-        $jm_capaian_uraian_tugas_tambahan = 0 ;
-        $jm_uraian_tugas_tambahan = 0 ;
+        $jm_capaian_tugas_tambahan = 0 ;
+        $jm_tugas_tambahan = 0 ;
 
         foreach ($cdata as $data) {
-            $jm_uraian_tugas_tambahan ++;
-            $jm_capaian_uraian_tugas_tambahan += Pustaka::persen($data->realisasi,$data->target);
+            $jm_tugas_tambahan ++;
+            $jm_capaian_tugas_tambahan += Pustaka::persen($data->realisasi,$data->target);
         }
 
         $data_2 = array(
-                        'jm_uraian_tugas_tambahan'           => $jm_uraian_tugas_tambahan,
-                        'jm_capaian_uraian_tugas_tambahan'   => $jm_capaian_uraian_tugas_tambahan,
-                        ); */
+                        'jm_tugas_tambahan'           => $jm_tugas_tambahan,
+                        'jm_capaian_tugas_tambahan'   => $jm_capaian_tugas_tambahan,
+                        );
 
 
         //JENIS JABATAN STAF AHLI
@@ -553,7 +555,7 @@ trait HitungCapaian
             ); 
         }
 
-        return $data;
+        return array_merge($data,$data_2);
         
         //return array_merge($data,$data_2);
     }

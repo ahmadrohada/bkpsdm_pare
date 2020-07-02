@@ -188,3 +188,15 @@
         display: none;
     }
 }
+
+
+
+.label_rating{
+    padding:3px 0px;
+    display: inline-block;
+    width:110px;
+    text-align: center;
+    border-radius: 3px;
+    margin-top:5px;
+    margin-left:20px;
+}

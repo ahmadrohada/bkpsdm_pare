@@ -28,7 +28,7 @@
 </div>
 
 
-@include('pare_pns.modals.create_capaian_tahunan')
+@include('pare_pns.modals.create_capaian_tahunan_confirm')
 
 <script type="text/javascript">
 	$('#capaian_tahunan_table').DataTable({

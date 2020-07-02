@@ -381,7 +381,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
         }
 
 
-        public function RealisasiKegiatanTahunan4(Request $request){
+        public function RealisasiKegiatanTahunan4(Request $request){ 
             
             //JFU tidak memiliki kegiatan tahunan, kegiatan tahunan nya adalah milik atasan nya yg eselon 4
             //jadi
@@ -452,6 +452,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                                         'realisasi_kegiatan.hitung_quality',
                                         'realisasi_kegiatan.hitung_waktu',
                                         'realisasi_kegiatan.hitung_cost',
+
                                         'realisasi_kegiatan.akurasi',
                                         'realisasi_kegiatan.ketelitian',
                                         'realisasi_kegiatan.kerapihan',
@@ -495,14 +496,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                                 return  ($x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_realisasi_waktu." bln" : "-" );
                             })->addColumn('realisasi_cost', function ($x) {
                                 return ($x->realisasi_kegiatan_id ? "Rp. ". number_format($x->realisasi_kegiatan_realisasi_cost,'0',',','.') : "-" );
-                            })->addColumn('jumlah', function ($x) {
-                                return  ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost );
-                            })->addColumn('capaian_skp', function ($x) {
-                                if ( $x->hitung_cost <=0 ){
-                                    return number_format(($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/3 ,2) ;
-                                }else{
-                                    return number_format(($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/4 ,2);
-                                }
+                            
                             })->addColumn('hitung_quantity', function ($x) {
                                 return Pustaka::persen_bulat($x->hitung_quantity);
                             })->addColumn('hitung_quality', function ($x) {
@@ -511,11 +505,16 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                                 return Pustaka::persen_bulat($x->hitung_waktu);
                             })->addColumn('hitung_cost', function ($x) {
                                 return Pustaka::persen_bulat($x->hitung_cost);
+                            })->addColumn('total_hitung', function ($x) {
+                                return $x->hitung_quantity+$x->hitung_quality+$x->hitung_waktu;
+                            })->addColumn('capaian_skp', function ($x) {
+                                if ( $x->hitung_cost <=0 ){
+                                    return Pustaka::persen_bulat(number_format(($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/3 ,2) ) ;
+                                }else{
+                                    return Pustaka::persen_bulat(number_format(($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/4 ,2) );
+                                }
                             })->addColumn('realisasi_kegiatan_id', function ($x) {
-                            
                                 return $x->realisasi_kegiatan_id;
-                    
-                                
                             })->addColumn('penilaian', function ($x) {
                                 if ( ($x->akurasi + $x->ketelitian + $x->kerapihan + $x->keterampilan ) == 0) {
                                     return 0;

@@ -181,7 +181,7 @@
 
 
 		$('.modal-realisasi_tahunan').find('[name=realisasi_quality]').val(100);
-		reset_submitx();
+		reset_submit_kt();
 	});
 
 	$('.modal-realisasi_tahunan').on('hidden.bs.modal', function(){
@@ -208,11 +208,11 @@
 	});
 
 
-	function on_submitx(){
+	function on_submit_kt(){
 		$('.modal-realisasi_tahunan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
 		$('#submit-save').prop('disabled',true);
 	}
-	function reset_submitx(){
+	function reset_submit_kt(){
 		$('.modal-realisasi_tahunan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
 		$('.modal-realisasi_tahunan').find('.button_simpan').addClass('fa-floppy-o');
 		$('#submit-save').prop('disabled',false);
@@ -230,7 +230,7 @@
 	});
 
 	function save_eselon(){
-		on_submitx();
+		on_submit_kt();
 		var data = $('#realisasi_tahunan_form').serialize();
 
 		//alert(data);
@@ -242,7 +242,7 @@
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
                
-				reset_submitx();
+				reset_submit_kt();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -281,7 +281,7 @@
 					((index == 'realisasi_waktu')?$('.waktu').addClass('has-error'):'');
 					((index == 'realisasi_cost')?$('.cost').addClass('has-error'):'');
 					
-					reset_submitx();
+					reset_submit_kt();
 					
 				
 				});
@@ -293,7 +293,7 @@
 	}
 
 	function save_jft(){
-		on_submitx();
+		on_submit_kt();
 		var data = $('#realisasi_tahunan_form').serialize();
 
 		//alert(data);
@@ -305,7 +305,7 @@
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
                
-				reset_submitx();
+				reset_submit_kt();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -368,7 +368,7 @@
 	});
 
 	function update_eselon(){
-		on_submitx();
+		on_submit_kt();
 		var data = $('#realisasi_tahunan_form').serialize();
 
 		//alert(data);
@@ -379,7 +379,7 @@
 			success	: function(data , textStatus, jqXHR) {
 				
 			
-				reset_submitx();
+				reset_submit_kt();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -428,7 +428,7 @@
 	}
 
 	function update_jft(){
-		on_submitx();
+		on_submit_kt();
 		var data = $('#realisasi_tahunan_form').serialize();
 
 		//alert(data);
@@ -439,7 +439,7 @@
 			success	: function(data , textStatus, jqXHR) {
 				
 			
-				reset_submitx();
+				reset_submit_kt();
 				Swal.fire({
 					title: "",
 					text: "Sukses",

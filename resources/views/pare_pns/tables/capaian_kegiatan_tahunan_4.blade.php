@@ -2,7 +2,7 @@
 	<div class="toolbar">
 	</div>
 	<div class="box-body table-responsive">
-		<table id="realisasi_kegiatan_tahunan_table" class="table table-striped table-hover display" style="width:100%">
+		<table id="realisasi_kegiatan_tahunan_table" class="table table-striped table-bordered nowrap" style="width:100%">
 			<thead>
 				<tr>
 					<th rowspan="2">ID</th>
@@ -10,6 +10,9 @@
 					<th rowspan="2">INDIKATOR</th>
 					<th colspan="5" >TARGET</th>
 					<th colspan="5">REALISASI</th>
+					<th colspan="4">HITUNG CAPAIAN</th>
+					<th rowspan="2">TOTAL<br> HITUNG</th>
+					<th rowspan="2">CAPAIAN <br>SKP</th>
 					<th rowspan="2"><i class="fa fa-cog"></i></th>
 				</tr>
 				<tr>
@@ -24,17 +27,26 @@
 					<th>QUALITY</th>
 					<th>WAKTU</th>
 					<th>ANGGARAN</th>
+
+					<th>QUANTITY</th>
+					<th>QUALITY</th>
+					<th>WAKTU</th>
+					<th>ANGGARAN</th>
 				</tr>
 			</thead>
 		</table>
 	</div>
 </div>
 
-{{-- <style>
+<style>
 table.dataTable tbody td {
   vertical-align: middle;
+  
 }
-</style> --}}
+.big-col {
+  width: 400px !important;
+}
+</style>
 @include('pare_pns.modals.realisasi_kegiatan_tahunan')
 
 <script type="text/javascript">
@@ -45,19 +57,25 @@ table.dataTable tbody td {
 				destroy			: true,
 				processing      : true,
 				serverSide      : true,
-				searching      	: true,
-				paging          : true,
-				autoWidth		: false,
-				bInfo			: true,
+				searching      	: false,
+				paging          : false,
+				autoWidth		: true,
+				bInfo			: false,
 				bSort			: false,
-				fixedHeader		: true,
+				//fixedHeader		: true,
 				lengthChange	: false,
 				//order 		: [ 0 , 'asc' ],
 				lengthMenu		: [25,50,100],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,3,4,5,6,8,9,11,13 ] },
+									{ className: "text-center", targets: [ 0,3,4,5,6,8,9,10,11,13,14,15,16,17,18,19 ] },
 									{ className: "text-right", targets: [ 7,12] },
-									{ visible: false, "targets": [10]}
+									/* { visible: false, "targets": [10]}, */
+									{ "width": "150px", "targets": [0,1] },     
+									@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )  
+										{ visible: true, "targets": [19]}
+									@else
+										{ visible: false, "targets": [19]}
+									@endif
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/realisasi_kegiatan_tahunan_4") }}',
@@ -69,15 +87,37 @@ table.dataTable tbody td {
 											"jenis_jabatan"			: {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan !!},
 									 },
 								},
-				
-				rowsGroup		: [ 0,1,3,5,6,7,8,10,11,12 ],
+				rowCallback		: function(row, data, index){
+									
+										$(row).find('td:eq(3)').css('background-color', '#FFF8DC');
+										$(row).find('td:eq(4)').css('background-color', '#FFF8DC');
+										$(row).find('td:eq(5)').css('background-color', '#FFF8DC');
+										$(row).find('td:eq(6)').css('background-color', '#FFF8DC');
+										$(row).find('td:eq(7)').css('background-color', '#FFF8DC');
+
+										$(row).find('td:eq(8)').css('background-color', '#F0F8FF');
+										$(row).find('td:eq(9)').css('background-color', '#F0F8FF');
+										$(row).find('td:eq(10)').css('background-color', '#F0F8FF');
+										$(row).find('td:eq(11)').css('background-color', '#F0F8FF');
+										$(row).find('td:eq(12)').css('background-color', '#F0F8FF');
+
+										$(row).find('td:eq(13)').css('background-color', '#FFF0F5');
+										$(row).find('td:eq(14)').css('background-color', '#FFF0F5');
+										$(row).find('td:eq(15)').css('background-color', '#FFF0F5');
+										$(row).find('td:eq(16)').css('background-color', '#FFF0F5');
+
+										$(row).find('td:eq(18)').css('background-color', '#B0E0E6');
+										$(row).find('td:eq(18)').css('font-weight', 'bold');
+									
+									},
+				rowsGroup		: [ 0,1,3,5,6,7,8,10,11,12,14,15,16,17,18 ],
 				columns			: [ 
 									{ data: 'kegiatan_tahunan_id' ,width:"10px",
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 										}
 									},
-									{ data: "kegiatan_tahunan_label", name:"kegiatan_tahunan_label",width:"20%",
+									{ data: "kegiatan_tahunan_label", name:"kegiatan_tahunan_label",width:"420px",
 										"render": function ( data, type, row ) {
 											return row.kegiatan_tahunan_label;
 											
@@ -140,6 +180,36 @@ table.dataTable tbody td {
 											return row.realisasi_cost ;
 										}
 									},
+									{ data: "hitung_quantity", name:"hitung_quantity", width:"100px",
+										"render": function ( data, type, row ) {
+											return  row.hitung_quantity;
+										}
+									},
+									{ data: "hitung_quality", name:"hitung_quality", width:"100px",
+										"render": function ( data, type, row ) {
+											return  row.realisasi_quality;
+										}
+									},
+									{ data: "hitung_waktu", name:"hitung_waktu", width:"50px",
+										"render": function ( data, type, row ) {
+											return row.hitung_waktu ;
+										}
+									},
+									{ data: "hitung_cost", name:"hitung_cost", width:"50px",
+										"render": function ( data, type, row ) {
+											return row.hitung_cost ;
+										}
+									},
+									{ data: "total_hitung", name:"total_hitung", width:"50px",
+										"render": function ( data, type, row ) {
+											return row.total_hitung ;
+										}
+									},
+									{ data: "capaian_skp", name:"capaian_skp", width:"50px",
+										"render": function ( data, type, row ) {
+											return row.capaian_skp ;
+										}
+									},
 									{  data: 'action',width:"6%",
 											"render": function ( data, type, row ) {
 
@@ -186,9 +256,11 @@ table.dataTable tbody td {
 							}
 		});	
 
+		
+
 
 		
-		
+		 
 	}
 
 	

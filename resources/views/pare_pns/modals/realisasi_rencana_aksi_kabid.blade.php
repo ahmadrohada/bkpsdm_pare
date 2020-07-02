@@ -112,7 +112,7 @@
 
 	$('.modal-realisasi_rencana_aksi').on('shown.bs.modal', function(){
 		$('#realisasi').focus();
-		reset_submitx();
+		reset_submit_rak();
 	});
 
 	$('.modal-realisasi_rencana_aksi').on('hidden.bs.modal', function(){
@@ -134,11 +134,11 @@
 		$('.bukti').removeClass('has-error');
 	});
 
-	function on_submitx(){
+	function on_submit_rak(){
 		$('.modal-realisasi_rencana_aksi').find('.button_simpan').addClass('fa-spinner faa-spin animated');
 		$('#submit-save').prop('disabled',true);
 	}
-	function reset_submitx(){
+	function reset_submit_rak(){
 		$('.modal-realisasi_rencana_aksi').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
 		$('.modal-realisasi_rencana_aksi').find('.button_simpan').addClass('fa-floppy-o');
 		$('#submit-save').prop('disabled',false);
@@ -146,7 +146,7 @@
 
 	$(document).on('click','#submit-save',function(e){
 
-		on_submitx();
+		on_submit_rak();
 		var data = $('#realisasi_rencana_aksi_form').serialize();
 
 		//alert(data);
@@ -158,7 +158,7 @@
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
                
-				reset_submitx();
+				reset_submit_rak();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -196,7 +196,7 @@
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					((index == 'bukti')?$('.bukti').addClass('has-error'):'');
 					
-					reset_submitx();
+					reset_submit_rak();
 					
 				
 				});
@@ -215,7 +215,7 @@
 
 	$(document).on('click','#submit-update',function(e){
 
-		on_submitx();
+		on_submit_rak();
 		var data = $('#realisasi_rencana_aksi_form').serialize();
 
 		//alert(data);
@@ -227,7 +227,7 @@
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
 			
-				reset_submitx();
+				reset_submit_rak();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -262,7 +262,7 @@
 					((index == 'realisasi')?$('.realisasi').addClass('has-error'):'');
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
 					((index == 'bukti')?$('.bukti').addClass('has-error'):'');
-					reset_submitx();
+					reset_submit_rak();
 
 					
 				

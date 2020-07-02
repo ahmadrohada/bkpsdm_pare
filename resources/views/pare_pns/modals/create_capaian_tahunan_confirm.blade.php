@@ -235,11 +235,8 @@
 	$('.modal-create_capaian_tahunan_confirm').on('hidden.bs.modal', function(){
 		reset_submit()
 		$('.u_jabatan, .p_jabatan, .masa_penilaian, .skp_tahunan_id, .jm_kegiatan_tahunan').removeClass('has-error');
-		
 		$('.modal-create_capaian_tahunan_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
-		
-	
-		
+		$('.sidebar-mini').attr("style", "padding-right:0px;");
 	});
 
 	function on_submit(){

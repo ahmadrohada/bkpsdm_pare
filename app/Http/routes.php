@@ -994,6 +994,8 @@ Route::get('/', function () {
 
 
 
+
+
 // USER PAGE ROUTES - RUNNING THROUGH AUTH MIDDLEWARE
 Route::group(['middleware' => 'auth'], function () {
 
@@ -1570,6 +1572,11 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	Route::get('capaian_tahunan_bawahan/{capaian_tahunan_id}', [
 		'as' 			=> '',
 		'uses' 			=> 'CapaianTahunanController@CapaianTahunanBawahanDetail'
+	]); 
+
+	Route::get('capaian_tahunan_bawahan_approvement/{capaian_tahunan_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'CapaianTahunanController@CapaianTahunanBawahanApprovement'
 	]); 
 
 

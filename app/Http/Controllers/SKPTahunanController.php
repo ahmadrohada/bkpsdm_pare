@@ -98,7 +98,7 @@ class SKPTahunanController extends Controller {
                                                                         ]);  
             }
         }else{
-            return redirect('/dashboard');
+            return view('pare_pns.errors.users403');
         }
 
     }
@@ -126,7 +126,7 @@ class SKPTahunanController extends Controller {
                                                                         ]);  
             }
         }else{
-            return redirect('/dashboard');
+            return view('pare_pns.errors.users403');
         }
 
         
@@ -159,22 +159,25 @@ class SKPTahunanController extends Controller {
                                                                         ]);  
             }
         }else{
-            return redirect('/dashboard');
+            return view('pare_pns.errors.users403');
         }
     }
 
     public function SKPTahunanApproval(Request $request)
 	{
-        $skp_tahunan	= SKPTahunan::where('id', '=', $request->skp_tahunan_id)->first();
+        $user               = \Auth::user();
+        $skp_tahunan	    = SKPTahunan::where('id', '=', $request->skp_tahunan_id)->first();
 
-
-        if(  $skp_tahunan->status_approve == '0'   ){
-        
-            return view('pare_pns.pages.personal-skp_tahunan_approval', ['skp'=> $skp_tahunan,'pegawai'=>\Auth::user()->pegawai]);  
-        }else if(  $skp_tahunan->status_approve == '1'   ){
-            return redirect('/personal/skp_tahunan/'.$skp_tahunan->id)->with('status', 'SKP Tahunan Sudah disetujui/ditolak');
-        }else if(  $skp_tahunan->status_approve == '2'   ){
-            return redirect('/personal/skp_tahunan_approval-request')->with('status', 'SKP Tahunan Sudah disetujui/ditolak');
+        if ( $skp_tahunan->PejabatPenilai->id_pegawai == $user->id_pegawai ){
+            if(  $skp_tahunan->status_approve == '0'   ){
+                return view('pare_pns.pages.personal-skp_tahunan_approval', ['skp'=> $skp_tahunan,'pegawai'=>\Auth::user()->pegawai]);  
+            }else if(  $skp_tahunan->status_approve == '1'   ){
+                return redirect('/personal/skp_tahunan/'.$skp_tahunan->id)->with('status', 'SKP Tahunan Sudah disetujui/ditolak');
+            }else if(  $skp_tahunan->status_approve == '2'   ){
+                return redirect('/personal/skp_tahunan_approval-request')->with('status', 'SKP Tahunan Sudah disetujui/ditolak');
+            }
+        }else{
+            return view('pare_pns.errors.users403');
         }
     }
 

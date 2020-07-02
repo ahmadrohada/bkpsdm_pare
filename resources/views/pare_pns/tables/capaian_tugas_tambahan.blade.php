@@ -42,7 +42,7 @@
 					//order 			: [ 5 , 'asc' ],
 					//lengthMenu		: [10,25,50],
 					columnDefs		: [
-										{ className: "text-center", targets: [ 0,3,4,5 ] },
+										{ className: "text-center", targets: [ 0,2,3,4,5 ] },
 										{ orderable: false, targets: [ 0,1,3,4,5 ]  },
 										@if  ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' )  )
 											{ "visible": true, "targets": [5]}

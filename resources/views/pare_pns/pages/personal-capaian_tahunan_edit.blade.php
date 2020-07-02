@@ -8,9 +8,13 @@
 @section('content')
 	 <div class="content-wrapper" >
 	    <section class="content-header">
+			<?php
+				$xd = request()->segment(4); 
+				$label_name = ( $xd == 'ralat') ? ' [ Ralat ] ' : ' [ Edit ] ' ;
+			?>
 			<h1>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-capaian_tahunan') }}"><span class="fa fa-angle-left"></span></a>
-				Edit Capaian Tahunan Eselon {{ $capaian->PejabatYangDinilai->Eselon->eselon }}
+				Edit Capaian Tahunan Eselon {{ $capaian->PejabatYangDinilai->Eselon->eselon }}  {{$label_name}}
 			</h1>
 				{!! Breadcrumbs::render('personal_edit_capaian_tahunan') !!}
       </section>
@@ -60,7 +64,7 @@
 				</div>
 				<div class=" tab-pane fade" id="tugas_tambahan_tab">
 					@include('pare_pns.tables.capaian_tugas_tambahan')
-				</div>
+				</div> 
 
 			</div>			
 		</div>
@@ -90,7 +94,7 @@ $(document).ready(function() {
 		//destroy table agar hide kolom  tidak muncul duluan
 		$('#realisasi_kegiatan_tahunan_table').DataTable().clear().destroy();
 		$('#realisasi_tugas_tambahan_table').DataTable().clear().destroy();
-		$('#up_kreativas_table').DataTable().clear().destroy();
+		$('#up_kreativitas_table').DataTable().clear().destroy();
 		$('#up_tugas_tambahan_table').DataTable().clear().destroy();
 
 		$('#tugas_tambahan_table').DataTable().clear().destroy();

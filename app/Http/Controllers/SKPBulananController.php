@@ -40,30 +40,6 @@ Use Alert;
 
 class SKPBulananController extends Controller {
 
-
-   
- /*    protected function skpd()
-	{
-        $data =  \Auth::user()->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
-        return Skpd::where('id_skpd', $data)->first();
-	}
-
-    protected function user()
-	{
-        return  \Auth::user();
-	}
-
-    public function SKPTahunanPersonal()
-	{
-        
-       return view('pare_pns.pages.personal-skp_tahunan', [
-                'skpd'      => $this->skpd(),
-        		'user' 		=> $this->user()
-	  			]
-        );    
-    } */
-
-    
     public function PersonalSKPBulananDetail(Request $request)
 	{
         $skp_bulanan = SKPBulanan::where('id', $request->skp_bulanan_id )->first();
@@ -75,14 +51,21 @@ class SKPBulananController extends Controller {
         }
     }
 
-    public function PersonalSKPBulananEdit(Request $request)
+    public function PersonalSKPBulananEdit(Request $request) 
 	{
-        $skp_bulanan = SKPBulanan::where('id', $request->skp_bulanan_id )->first();
+        $user           = \Auth::user();
+        $skp_bulanan    = SKPBulanan::where('id', $request->skp_bulanan_id )->first();
 
-        if( ($skp_bulanan->status) == 1 ) {
-            return redirect('/personal/skp_bulanan/'.$request->skp_bulanan_id)->with('status', 'SKP sudah dikirm ke atasan');
+        //hanya user ysb yang bisa buka skp bulanan tsb
+        if ( $skp_bulanan->pegawai_id == $user->id_pegawai ){ 
+
+            if( ($skp_bulanan->status) == 1 ) {
+                return redirect('/personal/skp_bulanan/'.$request->skp_bulanan_id)->with('status', 'SKP sudah dikirm ke atasan');
+            }else{
+                return view('pare_pns.pages.personal-skp_bulanan_edit', ['skp'=> $skp_bulanan]);  
+            }
         }else{
-            return view('pare_pns.pages.personal-skp_bulanan_edit', ['skp'=> $skp_bulanan]);  
+            return view('pare_pns.errors.users403');
         }
     }
 
@@ -92,18 +75,20 @@ class SKPBulananController extends Controller {
     public function SKPBulananDetail(Request $skp_bulanan_id)
 	{
         
-    
+        $user           = \Auth::user();
         $skp_bulanan	= SKPBulanan::where('id', '=', $skp_bulanan_id->id )
                                     ->first();
 
 
-
-        return view('pare_pns.pages.skpd-skp_bulanan', [
-                    
-                    'skp'                   => $skp_bulanan,
-                    ]
-        );    
-
+        //hanya user ysb yang bisa buka skp bulanan tsb
+        if ( $skp_bulanan->pegawai_id == $user->id_pegawai ){ 
+            return view('pare_pns.pages.skpd-skp_bulanan', [
+                                                            'skp'   => $skp_bulanan,
+                                                        ]
+                    );    
+        }else{
+            return view('pare_pns.errors.users403');
+        }
     }
 
 }

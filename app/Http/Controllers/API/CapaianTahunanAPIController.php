@@ -810,36 +810,58 @@ class CapaianTahunanAPIController extends Controller {
             $alasan_penolakan   = "";
         }
 
+        //KInerja
         $data_kinerja               = $this->hitung_capaian_tahunan($capaian_id); 
+        //return $data_kinerja;
 
-        return $data_kinerja;
+        $jm_capaian_kegiatan_tahunan        = $data_kinerja['jm_capaian'];
+        $jm_kegiatan_tahunan                = $data_kinerja['jm_kegiatan_tahunan'];
+        $jm_tugas_tambahan                  = $data_kinerja['jm_tugas_tambahan'];
+        $jm_capaian_tugas_tambahan          = $data_kinerja['jm_capaian_tugas_tambahan'];
+
+        $jm_kegiatan_skp                    = $jm_kegiatan_tahunan + $jm_tugas_tambahan;
+        $jm_capaian_kegiatan_skp            = $jm_capaian_kegiatan_tahunan + $jm_capaian_tugas_tambahan;
+
+
+        $capaian_kinerja_tahunan  = Pustaka::persen2($jm_capaian_kegiatan_skp,$jm_kegiatan_skp);
+
+        $nilai_prestasi_kerja = number_format( ($capaian_kinerja_tahunan * 60 / 100)+( $ave * 40 / 100 ) , 2 );
+        //return $data_kinerja;
       
-        /* $response = array(
+        $response = array(
                 
-                'jm_kegiatan_tahunan'           => $jm_kegiatan,
-                'jm_realisasi_kegiatan_tahunan' => $jm_realisasi,
+                'jm_kegiatan_tahunan'           => $jm_kegiatan_tahunan,  //A
+                'jm_tugas_tambahan'             => $jm_tugas_tambahan, //B
+                'jm_kegiatan_skp'               => $jm_kegiatan_skp, //A+B
 
-                'nilai_capaian_kegiatan_tahunan'=> $nilai_capaian_kegiatan_tahunan,
-                'penilaian_perilaku_kerja'  => Pustaka::persen_bulat($ave),
+                'jm_capaian_kegiatan_tahunan'   => $jm_capaian_kegiatan_tahunan,  //A
+                'jm_capaian_tugas_tambahan'     => $jm_capaian_tugas_tambahan, //B
+                'jm_capaian_kegiatan_skp'       => $jm_capaian_kegiatan_skp, //A+B
+
+               
+                'capaian_kinerja_tahunan'       => $capaian_kinerja_tahunan,
+                'penilaian_perilaku_kerja'      => Pustaka::persen_bulat($ave),
+
+                'nilai_prestasi_kerja'          => Pustaka::persen_bulat($nilai_prestasi_kerja),
 
 
-                'capaian_kinerja_tahunan'   => "0",
-                'capaian_skp_tahunan'       => $capaian_skp_tahunan,
                 
-                'status_approve'            => $persetujuan_atasan,
-                'send_to_atasan'            => $capaian_tahunan->send_to_atasan,
-                'alasan_penolakan'          => $alasan_penolakan,
-                'skp_tahunan_id'            => $capaian_tahunan->skp_tahunan_id,
-                'tgl_dibuat'                => Pustaka::balik2($capaian_tahunan->created_at),
-                'p_nama'                    => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
-                'u_nama'                    => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
+                //'capaian_skp_tahunan'         => $capaian_skp_tahunan,
+                
+                'status_approve'                => $persetujuan_atasan,
+                'send_to_atasan'                => $capaian_tahunan->send_to_atasan,
+                'alasan_penolakan'              => $alasan_penolakan,
+                'skp_tahunan_id'                => $capaian_tahunan->skp_tahunan_id,
+                'tgl_dibuat'                    => Pustaka::balik2($capaian_tahunan->created_at),
+                'p_nama'                        => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
+                'u_nama'                        => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
                 
 
 
 
         );
        
-        return $response; */
+        return $response; 
 
 
     }

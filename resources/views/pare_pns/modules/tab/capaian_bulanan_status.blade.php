@@ -14,24 +14,26 @@
 					<li class="list-group-item" style="padding:8px 10px;">
 						Pejabat Penilai <a class="pull-right st_pejabat_penilai">-</a>
 					</li>
-					<li class="list-group-item" style="padding:8px 10px;">
+					@if ( request()->segment(4) != 'edit' )
+					<li class="list-group-item st_status_approve_div" style="padding:8px 10px;">
+						Status Approve <a class="pull-right st_status_approve" >-</a>
+					</li>
+					@endif
+
+					<li class="list-group-item" style="padding:8px 10px; border-top: solid 1px #615e68 !important;">
 						Jumlah Kegiatan SKP <a class="pull-right st_jm_kegiatan_bulanan" >-</a>
 					</li>
 					<li class="list-group-item" style="padding:8px 10px;">
 						Jumlah Uraian Tugas Tambahan <a class="pull-right st_jm_uraian_tugas_tambahan" >-</a>
 					</li>
 					
-					@if ( request()->segment(4) != 'edit' )
-					<li class="list-group-item st_status_approve_div" style="padding:8px 10px;">
-						Status Approve <a class="pull-right st_status_approve" >-</a>
-					</li>
-					@endif
+					
 					
 					<li class="list-group-item st_alasan_penolakan_div hidden" style="padding:8px 10px;">
 						Alasan Penolakan <a class="pull-right st_alasan_penolakan" >-</a>
 					</li>
 
-					<li class="list-group-item" style="padding:8px 10px;">
+					<li class="list-group-item" style="padding:8px 10px; border-top: solid 1px #615e68 !important;">
 						Capaian Kinerja Bulanan <span class="text-muted"> (bobot 70%)</span><a class="pull-right st_capaian_kinerja_bulanan" >-</a>
 					</li>
 
@@ -65,36 +67,40 @@
 					Penilaian Kode Etik
 				</h1>
               <table class="table table-condensed">
-               
+				<tr>
+					<td style="width: 8%; padding-left:10px;">NO</td>
+					<td style="width: *%">LABEL</td>
+					<td style="text-align:center; width: 20%">NILAI</td>
+				</tr>
                 <tr>
-                  <td style="width: 10px">1.</td>
+                  <td style="padding-left:10px;">1.</td>
                   <td>Santun</td>
-                  <td style="width: 80px"><span class="badge bg-light-blue santun">0 %</span></td>
+                  <td style="text-align:center;"><span class="text-info santun">0 %</span></td>
                 </tr>
                 <tr>
-                  <td>2.</td>
+                  <td style="padding-left:10px;">2.</td>
                   <td>Amanah</td>
-                  <td><span class="badge bg-light-blue amanah">0 %</span></td>
+                  <td style="text-align:center;"><span class="text-info amanah">0 %</span></td>
                 </tr>
                 <tr>
-                  <td>3.</td>
+                  <td style="padding-left:10px;">3.</td>
                   <td>Harmonis</td>
-                  <td><span class="badge bg-light-blue harmonis">0 %</span></td>
+                  <td style="text-align:center;"><span class="text-info harmonis">0 %</span></td>
                 </tr>
                 <tr>
-                  <td>4.</td>
+                  <td style="padding-left:10px;">4.</td>
                   <td>Adaptif</td>
-                  <td><span class="badge bg-light-blue adaptif">0 %</span></td>
+                  <td style="text-align:center;"><span class="text-info adaptif">0 %</span></td>
 				</tr>
 				<tr>
-                  <td>5.</td>
+                  <td style="padding-left:10px;">5.</td>
                   <td>Terbuka</td>
-                  <td><span class="badge bg-light-blue terbuka">0 %</span></td>
+                  <td style="text-align:center;"><span class="text-info terbuka">0 %</span></td>
 				</tr>
 				<tr>
-                  <td>6.</td>
+                  <td style="padding-left:10px;">6.</td>
                   <td>Efektif</td>
-                  <td><span class="badge bg-light-blue efektif">0 %</span></td>
+                  <td style="text-align:center;"><span class="text-info efektif">0 %</span></td>
                 </tr>
               </table>
             </div>

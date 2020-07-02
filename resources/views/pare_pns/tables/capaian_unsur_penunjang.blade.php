@@ -2,7 +2,9 @@
 	<div class="col-md-6">
 		<div class="box-body table-responsive">
 			<div class="toolbar">
+				@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )  
 				<span><a class="btn btn-info btn-sm add_unsur_penunjang_tugas_tambahan" ><i class="fa fa-plus" ></i> Add Tugas Tambahan</a></span>
+				@endif
 			</div>
 			<table id="up_tugas_tambahan_table" class="table table-striped table-hover">
 				<thead>
@@ -19,7 +21,9 @@
 	<div class="col-md-6">
 		<div class="box-body table-responsive">
 			<div class="toolbar">
+				@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )  
 				<span><a class="btn btn-info btn-sm add_unsur_penunjang_kreativitas" ><i class="fa fa-plus" ></i> Add Kreativitas</a></span>
+				@endif
 			</div>
 			<table id="up_kreativitas_table" class="table table-striped table-hover">
 				<thead>
@@ -54,7 +58,14 @@
 				//order 			: [ 1 , 'asc' ],
 				//lengthMenu		: [20,45,80],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3 ] }
+									{ className: "text-center", targets: [ 0,2,3 ] },
+									@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )  
+										{ visible: true, "targets": [3]},
+										{ visible: false,"targets": [2]},
+									@else
+										{ visible: false, "targets": [3]},
+										{ visible: true, "targets": [2]},
+									@endif
 								  ],
 				ajax			: {
 									url	: '{{ url("api_resource/unsur_penunjang_tugas_tambahan_list") }}',
@@ -108,11 +119,18 @@
 				autoWidth		: false,
 				bInfo			: false,
 				bSort			: false,
-				lengthChange	: false,
+				lengthChange	: false, 
 				//order 			: [ 1 , 'asc' ],
 				//lengthMenu		: [20,45,80],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,3,4 ] }
+									{ className: "text-center", targets: [ 0,3,4 ] },
+									@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )  
+										{ visible: true, "targets": [4]},
+										{ visible: false,"targets": [3]},
+									@else
+										{ visible: false, "targets": [4]},
+										{ visible: true, "targets": [3]},
+									@endif
 								  ],
 				ajax			: {
 									url	: '{{ url("api_resource/unsur_penunjang_kreativitas_list") }}',

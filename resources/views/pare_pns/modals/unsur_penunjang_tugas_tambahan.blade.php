@@ -43,7 +43,7 @@
 <script type="text/javascript">
 	$('.modal-unsur_penunjang_tugas_tambahan').on('shown.bs.modal', function(){
 		$('textarea:visible:first').focus();
-		reset_submitx();
+		reset_submit_tt();
 	});
 
 	$('.modal-unsur_penunjang_tugas_tambahan').on('hidden.bs.modal', function(){
@@ -59,12 +59,12 @@
 	});
 
 
-	function on_submitx(){
+	function on_submit_tt(){
 		$('.modal-unsur_penunjang_tugas_tambahan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
 		$('#submit-save_unsur_penunjang_tugas_tambahan').prop('disabled',true);
 		$('#submit-update_unsur_penunjang_tugas_tambahan').prop('disabled',true);
 	}
-	function reset_submitx(){
+	function reset_submit_tt(){
 		$('.modal-unsur_penunjang_tugas_tambahan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
 		$('.modal-unsur_penunjang_tugas_tambahan').find('.button_simpan').addClass('fa-floppy-o');
 		$('#submit-save_unsur_penunjang_tugas_tambahan').prop('disabled',false);
@@ -73,14 +73,14 @@
 
     $(document).on('click', '#submit-save_unsur_penunjang_tugas_tambahan', function(){
 		
-		on_submitx()
+		on_submit_tt()
         var data = $('#unsur_penunjang_tugas_tambahan-form').serialize();
 		$.ajax({
 			url		: '{{ url("api_resource/simpan_unsur_penunjang_tugas_tambahan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
-				reset_submitx();
+				reset_submit_tt();
 				$('#up_tugas_tambahan_table').DataTable().ajax.reload(null,false);
                
 				Swal.fire({
@@ -104,7 +104,7 @@
 			)	
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
-				reset_submitx();
+				reset_submit_tt();
 				var test = $.parseJSON(jqXHR.responseText);
 				
 				var data= test.errors;
@@ -130,14 +130,14 @@
 
 	$(document).on('click', '#submit-update_unsur_penunjang_tugas_tambahan', function(){
 		
-		on_submitx()
+		on_submit_tt()
         var data = $('#unsur_penunjang_tugas_tambahan-form').serialize();
 		$.ajax({
 			url		: '{{ url("api_resource/update_unsur_penunjang_tugas_tambahan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
-				reset_submitx();
+				reset_submit_tt();
 				$('#up_tugas_tambahan_table').DataTable().ajax.reload(null,false);
                
 				Swal.fire({
@@ -161,7 +161,7 @@
 			)	
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
-				reset_submitx();
+				reset_submit_tt();
 				var test = $.parseJSON(jqXHR.responseText);
 				
 				var data= test.errors;

@@ -39,14 +39,17 @@
 				<span class="text-primary"> PEJABAT PENILAI</span>
 			</div>
 
-						
+						 
 			<div class="col-xs-6 col-md-6 no-padding" align="right" style="cursor:pointer;">
+				@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )
 				<span class="btn btn-xs btn-success btn_edit_pejabat " data-toggle="tooltip" data-placement="top" title="Edit Pejabat Penilai"> 
 				<i class="fa fa-pencil" ></i>EDIT</span>
 				<span class="btn btn-xs btn-danger btn_batal_pejabat hidden" data-toggle="tooltip" data-placement="top" title="Batal"> 
 				<i class="fa fa-refresh" ></i>BATAL</span>
+				@endif
 			</div>
 			<br>
+			
 		</div>
 							
 		<div class="form-group form-group-sm form_nip"  style="margin-top:10px !important;">

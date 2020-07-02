@@ -180,7 +180,7 @@
 					<input type="hidden" class="form-control waktu_pelaksanaan" name="waktu_pelaksanaan"  />
 
                	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-               	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right', 'type' => 'button', 'id' => 'save_capaian_bulanan' )) !!}
+               	 	{!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').' button_simpan" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right', 'type' => 'button', 'id' => 'save_capaian_bulanan' )) !!}
 			
 			
 				
@@ -230,11 +230,22 @@
 		$('.masa_penilaian').removeClass('has-error');
 	});
 
+
+	function on_submit_cbc(){
+		$('.modal-create_capaian_bulanan_confirm').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('#save_capaian_bulanan').prop('disabled',true);
+	}
+	function reset_submit_cbc(){
+		$('.modal-create_capaian_bulanan_confirm').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-create_capaian_bulanan_confirm').find('.button_simpan').addClass('fa-floppy-o');
+		$('#save_capaian_bulanan').prop('disabled',false);
+	}
 	
 
 	$(document).on('click', '#save_capaian_bulanan', function(){
 		var data = $('#create-capaian_bulanan_confirm-form').serialize();
 		show_loader();
+		on_submit_cbc();
 
 		$.ajax({
 			url		: '{{ url("api_resource/simpan_capaian_bulanan") }}',
@@ -242,7 +253,7 @@
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
 				$('#capaian_bulanan').DataTable().ajax.reload(null,false);
-				
+				reset_submit_cbc();
 
 				Swal.fire({
 					title: "",
@@ -267,7 +278,7 @@
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
 				var test = $.parseJSON(jqXHR.responseText);
-				
+				reset_submit_cbc();
 				var data= test.errors;
 				swal.close();
 				$.each(data, function(index,value){

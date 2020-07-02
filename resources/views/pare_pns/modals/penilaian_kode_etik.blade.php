@@ -49,7 +49,7 @@
 
 			<div class="modal-footer">
                 {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left ', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right  btn-submit', 'type' => 'button', 'id' => 'simpan_penilaian_kode_etik' )) !!}
+                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').' button_simpan" aria-hidden="true"></i> <span name="text_button_submit"></span>', array('class' => 'btn btn-sm btn-primary pull-right  btn-submit', 'type' => 'button', 'id' => 'simpan_penilaian_kode_etik' )) !!}
             </div>
 			</form>
         </div>
@@ -71,13 +71,13 @@
 			step: 1, 
 			size: "xs", 
 			stars: "5",
-			'starCaptions': {
-								0: '   kosong    ', 
+			starCaptions: {
+								0: 'kosong', 
 								1: 'Sangat Kurang', 
-								2: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kurang&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 
-								3: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cukup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-								4: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Baik&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-								5: '&nbsp;&nbsp;Sangat Baik &nbsp;&nbsp;'}
+								2: 'Kurang', 
+								3: 'Cukup',
+								4: 'Baik',
+								5: 'Sangat Baik'}
 	});
 
 	
@@ -88,7 +88,14 @@
 
 	$('.modal-penilaian_kode_etik').on('shown.bs.modal', function(){
 		hitung_capaian_bulanan_kode_etik();
+		Swal.close();
 	});
+
+	$('.modal-penilaian_kode_etik').on('hidden.bs.modal', function(){
+		$('.sidebar-mini').attr("style", "padding-right:0px;");
+	});
+
+	
 	
 	function hitung_capaian_bulanan_kode_etik(){
 		a = parseInt($(".santun").val() ? $(".santun").val() : 0);
@@ -113,9 +120,22 @@
 		$(".cbke").html(gx+' %');
 	}
 
+	function on_submit_ke(){
+		$('.modal-penilaian_kode_etik').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('#simpan_penilaian_kode_etik').prop('disabled',true);
+		$('#submit-update').prop('disabled',true);
+	}
+	function reset_submit_ke(){
+		$('.modal-penilaian_kode_etik').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-penilaian_kode_etik').find('.button_simpan').addClass('fa-floppy-o');
+		$('#simpan_penilaian_kode_etik').prop('disabled',false);
+		$('#submit-update').prop('disabled',false);
+	}
+
+
 
 	$(document).on('click', '#simpan_penilaian_kode_etik', function(){
-		
+		on_submit_ke();
         var data = $('.penilaian_kode_etik_form').serialize();
 		$.ajax({
 			url		: '{{ url("api_resource/simpan_penilaian_kode_etik") }}',
@@ -124,7 +144,7 @@
 			success	: function(data , textStatus, jqXHR) {
 				
 				//$('#indikator_sasaran_table').DataTable().ajax.reload(null,false);
-
+				reset_submit_ke();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -145,7 +165,7 @@
 			)	
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
-
+				reset_submit_ke();
 				var test = $.parseJSON(jqXHR.responseText);
 				
 				var data= test.errors;
@@ -161,7 +181,7 @@
     });
 
 	$(document).on('click', '#submit-update', function(){
-		
+		on_submit_ke();
         var data = $('.penilaian_kode_etik_form').serialize();
 		$.ajax({
 			url		: '{{ url("api_resource/update_penilaian_kode_etik") }}',
@@ -170,7 +190,7 @@
 			success	: function(data , textStatus, jqXHR) {
 				
 				//$('#indikator_sasaran_table').DataTable().ajax.reload(null,false);
-
+				reset_submit_ke();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -191,7 +211,7 @@
 			)	
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
-
+				reset_submit_ke();
 				var test = $.parseJSON(jqXHR.responseText);
 				
 				var data= test.errors;
