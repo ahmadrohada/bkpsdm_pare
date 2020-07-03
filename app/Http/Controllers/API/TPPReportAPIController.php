@@ -1142,7 +1142,7 @@ class TPPReportAPIController extends Controller
                 $bulan = $x->skp_bulanan_bulan;
                 $tahun = Pustaka::tahun($x->skp_bulanan_tgl_mulai);
 
-                $month = $tahun.'-'.$bulan;
+                $month = '2020-05';
                 $nip = $x->nip;
                 $skor_kehadiran = $this->skor_kehadiran($month,$nip);
 
