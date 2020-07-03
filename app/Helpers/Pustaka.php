@@ -675,13 +675,6 @@ class Pustaka {
 
 	}
 
-	public static function periode_lalu($bulan){
-		
-		
-
-	}
-
-
 	public static function tahun($data){
 		$tanggal = substr($data,8,2); 
 		$bulan = substr($data,5,2); 

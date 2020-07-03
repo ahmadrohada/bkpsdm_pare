@@ -1,7 +1,7 @@
 
 <div class="row">
 	<div class="col-md-5">
-		<div class="box box-info">
+		<div class="box box-primary">
 			<div class="box-body box-profile">
 			
 				<h1 class="profile-username text-center text-success" style="font-size:16px;">
@@ -77,7 +77,7 @@
 	<div class="col-md-7">
 		<!-- Only show when detail or approvement -->
 		@if ( ( request()->segment(4) != 'edit' )&( request()->segment(4) != 'ralat' ) )
-			<div class="box box-info">
+			<div class="box box-primary">
 				<div class="box-body no-padding">
 					<h1 class="profile-username text-center text-success" style="font-size:16px;">
 						Penilaian Perilaku Kerja

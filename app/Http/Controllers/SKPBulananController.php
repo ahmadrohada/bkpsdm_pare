@@ -65,7 +65,8 @@ class SKPBulananController extends Controller {
                 return view('pare_pns.pages.personal-skp_bulanan_edit', ['skp'=> $skp_bulanan]);  
             }
         }else{
-            return view('pare_pns.errors.users403');
+            //return view('pare_pns.errors.users403');
+            return redirect('/dashboard');
         }
     }
 
@@ -87,7 +88,8 @@ class SKPBulananController extends Controller {
                                                         ]
                     );    
         }else{
-            return view('pare_pns.errors.users403');
+            //return view('pare_pns.errors.users403');
+            return redirect('/dashboard');
         }
     }
 

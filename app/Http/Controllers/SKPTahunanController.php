@@ -98,7 +98,8 @@ class SKPTahunanController extends Controller {
                                                                         ]);  
             }
         }else{
-            return view('pare_pns.errors.users403');
+            //return view('pare_pns.errors.users403');
+            return redirect('/dashboard');
         }
 
     }
@@ -126,7 +127,8 @@ class SKPTahunanController extends Controller {
                                                                         ]);  
             }
         }else{
-            return view('pare_pns.errors.users403');
+            //return view('pare_pns.errors.users403');
+            return redirect('/dashboard');
         }
 
         
@@ -159,7 +161,8 @@ class SKPTahunanController extends Controller {
                                                                         ]);  
             }
         }else{
-            return view('pare_pns.errors.users403');
+            //return view('pare_pns.errors.users403');
+            return redirect('/dashboard');
         }
     }
 
@@ -177,7 +180,8 @@ class SKPTahunanController extends Controller {
                 return redirect('/personal/skp_tahunan_approval-request')->with('status', 'SKP Tahunan Sudah disetujui/ditolak');
             }
         }else{
-            return view('pare_pns.errors.users403');
+            //return view('pare_pns.errors.users403');
+            return redirect('/dashboard');
         }
     }
 

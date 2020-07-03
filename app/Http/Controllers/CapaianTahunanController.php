@@ -95,6 +95,7 @@ class CapaianTahunanController extends Controller {
                 
             ]);     
         }else{
+            //return view('pare_pns.errors.users403');
             return redirect('/dashboard');
         } 
 
@@ -116,7 +117,8 @@ class CapaianTahunanController extends Controller {
                                                                                 'jabatan_lurah'             => $this->jenis_PJabatan('lurah'),
                                                                                 'jabatan_staf_ahli'         => $this->jenis_PJabatan('jabatan_staf_ahli')]);
         }else{
-            return view('pare_pns.errors.users403');
+            //return view('pare_pns.errors.users403');
+            return redirect('/dashboard');
         }
     }
 
@@ -135,7 +137,8 @@ class CapaianTahunanController extends Controller {
                 return view('pare_pns.pages.personal-capaian_tahunan_edit', ['capaian'=> $capaian_tahunan]);  
             }
         }else{
-            return view('pare_pns.errors.users403');
+            //return view('pare_pns.errors.users403');
+            return redirect('/dashboard');
         }
 
           
@@ -154,7 +157,8 @@ class CapaianTahunanController extends Controller {
                 return view('pare_pns.pages.personal-capaian_tahunan_edit', ['capaian'=> $capaian_tahunan]);  
             }
         }else{
-            return view('pare_pns.errors.users403');
+            //return view('pare_pns.errors.users403');
+            return redirect('/dashboard');
         }
           
 

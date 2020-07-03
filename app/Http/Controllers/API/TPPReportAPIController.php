@@ -24,6 +24,8 @@ use App\Traits\PJabatan;
 use App\Traits\HitungCapaian;
 use App\Traits\UpdateCapaian;
 
+use GuzzleHttp\Client;
+
 use Datatables;
 use Validator;
 use Gravatar;
@@ -36,6 +38,34 @@ class TPPReportAPIController extends Controller
     use PJabatan;
     use HitungCapaian;
     use UpdateCapaian;
+ 
+
+    //============================= AMBIL DATA ABSENSI SIAP ==========================================//
+    protected function skor_kehadiran($month,$nip){
+        
+
+        $client = new Client([
+            // Base URI is used with relative requests
+            'base_uri' => 'https://apiv2-siap.silk.bkpsdm.karawangkab.go.id',
+        ]);
+          
+        $response = $client->request('GET', '/absensi/'.$nip.'/monthly-report', [
+            'form_params' => [
+                'access_token'  => 'MjIzNTZmZjItNTJmOS00NjA1LTk5YWEtOGQwN2VhNmIwNjVm',
+                'approvedOnly'  => true
+             ],
+            'query' =>       [
+                            'month'         => $month ,
+                        ]
+        ]);
+         
+        //get status code using $response->getStatusCode();
+        $body = $response->getBody();
+        $arr_body = json_decode($body,true); 
+
+        return  $arr_body['summary']['percentage'];
+
+    }
 
 
     //============================= HITUNG CAPAIAN ==========================================//
@@ -382,7 +412,7 @@ class TPPReportAPIController extends Controller
                 return "Rp. " . number_format($x->tpp_kehadiran , '0', ',', '.');
             })
             ->addColumn('skor_kehadiran', function ($x) {
-                if ( $x->skor_kehadiran > 0  ){
+                if ( $x->skor_kehadiran < 0  ){
                     return "-" ;
                 }else{
                     return Pustaka::persen_bulat($x->skor_kehadiran)." %";
@@ -972,6 +1002,7 @@ class TPPReportAPIController extends Controller
             ->leftjoin('db_pare_2018.skp_bulanan AS skp', function ($join) use($bulan_lalu){
                 $join->on('skp.pegawai_id', '=', 'tb_pegawai.id');
                 $join->where('skp.bulan', '=', $bulan_lalu) ;
+                //$join->where('skp.skp_tahunan_id', '=', 'skp_tahunan.id') ;
             })
             //SKP TAHUNAN 
             ->leftjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function ($join) use($periode_id){
@@ -1003,10 +1034,12 @@ class TPPReportAPIController extends Controller
             ->SELECT(
                 'tb_pegawai.id AS pegawai_id',
                 'tb_pegawai.nama AS nama',
+                'tb_pegawai.nip AS nip',
                 'tb_pegawai.gelardpn AS gelardpn',
                 'tb_pegawai.gelarblk AS gelarblk',
                 'skp.id AS skp_bulanan_id',
                 'skp.bulan AS skp_bulanan_bulan',
+                'skp.tgl_mulai AS skp_bulanan_tgl_mulai',
                 'capaian.id AS capaian_id',
                 'a.id_skpd AS skpd_id',
                 'renja.periode_id AS periode_id',
@@ -1092,20 +1125,28 @@ class TPPReportAPIController extends Controller
                         $cap_skp = 0 ;
                     } 
 
-
                     if ( $cap_skp >= 85 ){
                         $skor_cap = 100 ;
                     }else if ( $cap_skp < 50 ){
                         $skor_cap = 0 ;
                     }else{
                         $skor_cap	= number_format( (50 + (1.43*($cap_skp-50))),2 );
-                        
                     }
 
                 }else{
                     $cap_skp  = 0 ;
                     $skor_cap = 0 ;
                 }
+
+                //hitung skor kehadiran from SIAP
+                $bulan = $x->skp_bulanan_bulan;
+                $tahun = Pustaka::tahun($x->skp_bulanan_tgl_mulai);
+
+                $month = $tahun.'-'.$tahun;
+                $nip = $x->nip;
+                $skor_kehadiran = $this->skor_kehadiran($month,$nip);
+
+
 
                 $report_data    = new TPPReportData;
 
@@ -1128,7 +1169,7 @@ class TPPReportAPIController extends Controller
 
                 //KEHADIRAN
                 $report_data->tpp_kehadiran         = ( $x->tpp_rupiah != null ) ? $x->tpp_rupiah * $kehadiran/100 : $x->tpp_rupiah_now * $kehadiran/100 ;
-                $report_data->skor_kehadiran        = 100;
+                $report_data->skor_kehadiran        = $skor_kehadiran;
                 $report_data->pot_kehadiran         = 0;
 
                 //DATA TAMBAHAN

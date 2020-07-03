@@ -1,36 +1,40 @@
 <div class="row">
 	<div class="col-md-4">
-		<div class="box box-default">
-			<div class="box-body box-profile">
+		<div class="box box-primary">
+			<div class="box-body box-profile"> 
 
 				<h4 class=" text-center">TPP Report </h4>
 				<p class="text-muted text-center"></p>
 
 				<ul class="list-group list-group-unbordered">
-					<li class="list-group-item">
+					<li class="list-group-item " style="padding:8px 10px;">
 						<b>Periode</b> <a class="pull-right st_periode">-</a>
 					</li>
-					<li class="list-group-item">
+					<li class="list-group-item " style="padding:8px 10px;">
 						<b>Create</b> <a class="pull-right st_created_at">-</a>
 					</li>
-					<li class="list-group-item">
+					<li class="list-group-item " style="padding:8px 10px;">
 						<b>Nama Kepala SKPD</b> <a class="pull-right st_ka_skpd">-</a>
 					</li>
-					<li class="list-group-item">
+					<li class="list-group-item " style="padding:8px 10px;">
 						<b>Admin SKPD</b> <a class="pull-right st_admin_skpd">-</a>
 					</li>
-					<li class="list-group-item">
+					<li class="list-group-item " style="padding:8px 10px;">
 						<b>Jumlah Data Pegawai</b> <a class="pull-right st_jm_data_pegawai">-</a>
 					</li>
-					<li class="list-group-item">
+					<li class="list-group-item " style="padding:8px 10px;">
 						<b>Jumlah Data Capaian</b> <a class="pull-right st_jm_data_capaian">-</a>
 					</li>
-					<li class="list-group-item ">
+					<li class="list-group-item " style="padding:8px 10px;">
 						<b>Status</b> <a class="pull-right st_status">-</a>
 					</li>
 				</ul>
 
-				<a href="#" class="btn btn-primary btn-block tutup_tpp_report hidden"><b>Tutup <i class="send_icon"></i></b></a>
+				@if ( request()->segment(5) == 'edit' )
+					<a href="#" class="btn btn-primary btn-block tutup_tpp_report hidden"><b>Tutup <i class="send_icon"></i></b></a>
+				@endif
+
+				
 
 			</div>
 		</div>

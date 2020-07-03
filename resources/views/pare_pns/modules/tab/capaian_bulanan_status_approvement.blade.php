@@ -1,7 +1,7 @@
 
 <div class="row">
 	<div class="col-md-5">
-		<div class="box box-info">
+		<div class="box box-primary">
 			<div class="box-body box-profile">
 			
 				<h1 class="profile-username text-center text-success" style="font-size:16px;">
@@ -59,7 +59,7 @@
 	</div>
 	<div class="col-md-7">
 		{{-- <div class="table-responsive"><div id="myTimeline"></div></div> --}}
-		<div class="box box-info">
+		<div class="box box-primary">
 			{{--  <div class="box-header" style="height:40px;">
 			   <h1 class="box-title text-success" style="font-size:16px;">Penilaian Kode Etik</h1>
 			 </div> --}}
