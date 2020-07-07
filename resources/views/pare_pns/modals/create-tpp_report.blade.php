@@ -13,7 +13,7 @@
 
 				<div class="modal-body">
 
-					<input type="hidden" name="skpd_id" class="form-control skpd_id">
+					<input type="hidden" name="skpd_id" class="form-control skpd_id"> 
 					<input type="hidden" name="periode_id" class="form-control periode_id">
 					<input type="hidden" name="formula_hitung_id" class="form-control formula_hitung_id">
 					<input type="hidden" name="ka_skpd" class="form-control ka_skpd">
@@ -114,16 +114,17 @@
 				)
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
+				$('#skpd_tpp_report_list_table').DataTable().ajax.reload(null, false);
 				swal.close();
-				var test = $.parseJSON(jqXHR.responseText);
-				var data = test.errors;
+				//var test = $.parseJSON(jqXHR.responseText);
+				//var data = test.errors;
 
 				Swal.fire({
-						title: "Create TPP Report",
-						text: data,
-						type: "warning",
-						confirmButtonText: "Close",
-						confirmButtonColor: "btn btn-success",
+						title				: "Create TPP Report",
+						text				: "Terjadi Kesalahan",
+						type				: "warning",
+						confirmButtonText	: "Close",
+						confirmButtonColor	: "btn btn-success",
 					});
 			}
 

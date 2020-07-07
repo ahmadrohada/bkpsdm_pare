@@ -103,13 +103,14 @@ class DashboardController extends Controller
                 $join->where('a.status', '=', 'active');
             })
 
-            //unit_kerja
-            ->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id', '=', 'a.id_unit_kerja')
-            ->leftjoin('demo_asn.m_unit_kerja AS b', 's_skpd.parent_id', '=', 'b.id')
+            
 
             //skpd
             ->leftjoin('demo_asn.m_skpd AS c', 'a.id_skpd', '=', 'c.id')
 
+            //unit_kerja
+            //->leftjoin('demo_asn.m_skpd AS s_skpd', 's_skpd.id', '=', 'a.id_unit_kerja')
+            ->leftjoin('demo_asn.m_unit_kerja AS b', 'c.id_unit_kerja', '=', 'b.id')
 
             //eselon
             ->leftjoin('demo_asn.m_eselon AS d', 'a.id_eselon', '=', 'd.id')

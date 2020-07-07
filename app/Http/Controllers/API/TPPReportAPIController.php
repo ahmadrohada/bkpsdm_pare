@@ -40,7 +40,7 @@ class TPPReportAPIController extends Controller
     use UpdateCapaian;
  
 
-    //============================= AMBIL DATA ABSENSI SIAP ==========================================//
+    //============================= AMBIL DATA ABSENSI SIAP PER NIP==========================================//
     protected function skor_kehadiran($month,$nip){
         
 
@@ -64,6 +64,35 @@ class TPPReportAPIController extends Controller
         $arr_body = json_decode($body,true); 
 
         return  $arr_body['summary']['percentage'];
+
+    }
+
+    //============================= AMBIL DATA ABSENSI SIAP PER SKPD ==========================================//
+    protected function data_kehadiran($month,$skpd_id){
+        
+
+        $client = new Client([
+            // Base URI is used with relative requests
+            'base_uri' => 'https://apiv2-siap.silk.bkpsdm.karawangkab.go.id',
+        ]);
+          
+        $response = $client->request('GET', '/absensi-monthly-report/', [
+            'form_params' => [
+                'access_token'  => 'MjIzNTZmZjItNTJmOS00NjA1LTk5YWEtOGQwN2VhNmIwNjVm',
+                'approvedOnly'  => true
+             ],
+            'query' =>       [
+                            'month'         => $month ,
+                            'skpdId'        => $skpd_id,
+                            'limit'         => 100,
+                        ]
+        ]);
+         
+        //get status code using $response->getStatusCode();
+        $body = $response->getBody();
+        $arr_body = json_decode($body,true); 
+
+        return  $arr_body['data'];
 
     }
 
@@ -956,6 +985,11 @@ class TPPReportAPIController extends Controller
         $st_kt->ka_skpd             = Input::get('ka_skpd');
         $st_kt->admin_skpd          = Input::get('admin_skpd');
 
+        //CAri formulasi perhitungan nya
+        $formula    = FormulaHitungTPP::WHERE('id',Input::get('formula_hitung_id'))->first();
+        $kinerja    = $formula->kinerja;
+        $kehadiran  = $formula->kehadiran;
+
         //Save data untuk TPP report ini
         if ($st_kt->save()) {
 
@@ -963,20 +997,26 @@ class TPPReportAPIController extends Controller
             $tpp_report_id = $st_kt->id; 
 
             //ambil data periode skp bulanan, jikatpp report januari, maka skp bulanan nya adalah skp bulan sebelumnya
-            $bulan_lalu = Pustaka::bulan_lalu(Input::get('bulan'));
+            $bulan_lalu = Pustaka::bulan_lalu($st_kt->bulan);
             
 
             //jika bulan januari, maka periode nya cari yang periode sebelumnya
             if ( Input::get('bulan') == 01 ){
-                $dt = Periode::WHERE('periode.id',Input::get('periode_id'))->first();
+                $dt = Periode::WHERE('periode.id',$st_kt->periode_id)->first();
                 $periode_akhir = date('Y-m-d', strtotime("-1 day", strtotime(date($dt->awal))));
 
                 $data = Periode::WHERE('periode.akhir',$periode_akhir)->first();
                 $periode_id = $data->id;
 
             }else{
-                $periode_id = Input::get('periode_id');
+                $periode_id = $st_kt->periode_id;
             }
+
+
+            //AMBIL DATA KEHADIRAN   from SIAP WITH ID SKPD AND BULAN TAHUN
+            $dt = Periode::WHERE('periode.id',$st_kt->periode_id)->first();
+            $month = Pustaka::periode_tahun($dt->label).'-'.$bulan_lalu;
+            //$data_kehadiran = $this->data_kehadiran($month,$st_kt->skpd_id);
 
             
 
@@ -1068,15 +1108,7 @@ class TPPReportAPIController extends Controller
             
             ->get(); 
 
-           //return $tpp_data;
-                
             foreach ($tpp_data as $x) {
-
-                //CAri formulasi perhitungan nya
-                $formula    = FormulaHitungTPP::WHERE('id',Input::get('formula_hitung_id'))->first();
-                $kinerja    = $formula->kinerja;
-                $kehadiran  = $formula->kehadiran;
-
                 //nilai capaian ..capaian_skp
                 if (  $x->capaian_id != null ){
 
@@ -1138,13 +1170,17 @@ class TPPReportAPIController extends Controller
                     $skor_cap = 0 ;
                 }
 
+
+
+
                 //hitung skor kehadiran from SIAP
                 $bulan = $x->skp_bulanan_bulan;
                 $tahun = Pustaka::tahun($x->skp_bulanan_tgl_mulai);
 
                 $month = $tahun.'-'.$bulan;
                 $nip = $x->nip;
-                $skor_kehadiran = $this->skor_kehadiran($month,$nip);
+                //$skor_kehadiran = $this->skor_kehadiran($month,$nip);
+                $skor_kehadiran = 100 ;
 
 
 
@@ -1173,7 +1209,7 @@ class TPPReportAPIController extends Controller
                 $report_data->pot_kehadiran         = 0;
 
                 //DATA TAMBAHAN
-                /* $report_data->jm_capaian                = $jm_capaian;
+                /* $report_data->jm_capaian             = $jm_capaian;
                 $report_data->jm_kegiatan_bulanan       = $jm_kegiatan_bulanan;
                 $report_data->capaian_kinerja_bulanan   = $capaian_kinerja_bulanan;
                 $report_data->penilaian_kode_etik       = $penilaian_kode_etik; */
@@ -1189,7 +1225,7 @@ class TPPReportAPIController extends Controller
             return \Response::make('sukses', 200);
             
         } else {
-            return \Response::make('error', 500);
+            return response()->json(['errors' => "Terjadi Kesalahan saat inset Data"], 500);
         } 
 
         }else{
