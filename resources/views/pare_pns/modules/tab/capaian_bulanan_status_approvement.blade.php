@@ -55,7 +55,7 @@
 				</ul>
 			</div>
 		</div>
-	</div>
+	</div> 
 	<div class="col-md-7">
 		{{-- <div class="table-responsive"><div id="myTimeline"></div></div> --}}
 		<div class="box box-primary">
@@ -66,7 +66,7 @@
 			 
 			 <div class="box-body no-padding">
 				 <h1 class="profile-username text-center text-success" style="font-size:16px;">
-					 Penilaian Kode Etik
+					 Penilaian Kode Etik c
 				 </h1>
 				 <table class="table table-condensed">
 					<tr>
