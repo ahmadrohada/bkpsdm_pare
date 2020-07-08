@@ -1306,6 +1306,14 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('label', function ($x) {
             return $x->rencana_aksi_label;
         })
+        ->addColumn('dilaksanakan_sendiri', function ($x) use($jabatan_id) {
+            if ( $x->jabatan_id == $jabatan_id ){
+                return 1 ;
+            }else{
+                return 0 ;
+            }
+            
+        })
         ->addColumn('kegiatan_bulanan', function ($x) use($jabatan_id) {
             $kb =  KegiatanSKPBulanan::WHERE('rencana_aksi_id',$x->rencana_aksi_id)->SELECT('id')->count();
 
@@ -1315,8 +1323,6 @@ class RencanaAksiAPIController extends Controller {
             }else{
                 return $kb;
             }
-
-
             
         })
         ->addColumn('target', function ($x) {

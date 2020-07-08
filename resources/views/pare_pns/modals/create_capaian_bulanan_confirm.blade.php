@@ -221,7 +221,7 @@
 		$('.modal-create_capaian_bulanan_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
 		
 		document.getElementById('list_bawahan').innerHTML = "";
-		$('.sidebar-mini').attr("style", "padding-right:0px;");
+		$('.sidebar-mini').attr("style", "padding-right:0px;"); 
 
 		
 	});

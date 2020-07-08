@@ -212,12 +212,13 @@
 
 
 	$('.modal-create_skp_tahunan_confirm').on('hidden.bs.modal', function(){
+		$('.sidebar-mini').attr("style", "padding-right:0px;"); 
 		reset_submit();
 		$('.u_jabatan, .p_jabatan, .masa_penilaian').removeClass('has-error');
 		$('.error_renja_id').hide();
 		$('.modal-create_skp_tahunan_confirm').find('[name=tgl_mulai],[name=tgl_selesai]').val('');
 
-		$('.sidebar-mini').attr("style", "padding-right:0px;");
+		
 
 	});
 

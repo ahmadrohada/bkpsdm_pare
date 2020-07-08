@@ -124,7 +124,7 @@
 								
 								{  data: 'action',width:"6%",
 										"render": function ( data, type, row ) {
-											if (row.kegiatan_bulanan >= 1){
+											if ( ( row.kegiatan_bulanan >= 1) & ( row.dilaksanakan_sendiri == 0 ) ){
 												return  '<span  data-toggle="tooltip" title="" style="margin:1px;" ><a class="btn btn-default btn-xs "  ><i class="fa fa-pencil" ></i></a></span>'+
 															'<span  data-toggle="tooltip" title="" style="margin:1px;" ><a class="btn btn-default btn-xs " ><i class="fa fa-close " ></i></a></span>';
 										
