@@ -66,7 +66,7 @@
 			 
 			 <div class="box-body no-padding">
 				 <h1 class="profile-username text-center text-success" style="font-size:16px;">
-					 Penilaian Kode Etik c
+					 Penilaian Kode Etik
 				 </h1>
 				 <table class="table table-condensed">
 					<tr>
