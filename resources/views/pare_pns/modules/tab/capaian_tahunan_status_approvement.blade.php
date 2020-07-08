@@ -73,7 +73,7 @@
 
 			</div>
 		</div>
-	</div>
+	</div> 
 	<div class="col-md-7">
 		<!-- Only show when detail or approvement -->
 		@if ( ( request()->segment(4) != 'edit' )&( request()->segment(4) != 'ralat' ) )

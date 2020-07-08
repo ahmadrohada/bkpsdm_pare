@@ -54,7 +54,6 @@
 					@endif
 				</ul>
 			</div>
-			
 		</div>
 	</div>
 	<div class="col-md-7">
@@ -78,32 +77,32 @@
 					<tr>
 					  <td style="padding-left:10px;">1.</td>
 					  <td>Santun</td>
-					  <td style="text-align:center;"><span class="text-info santun">0 %</span></td>
+					  <td style="text-align:center;"><span class="text-info txt_santun">0 %</span></td>
 					</tr>
 					<tr>
 					  <td style="padding-left:10px;">2.</td>
 					  <td>Amanah</td>
-					  <td style="text-align:center;"><span class="text-info amanah">0 %</span></td>
+					  <td style="text-align:center;"><span class="text-info txt_amanah">0 %</span></td>
 					</tr>
 					<tr>
 					  <td style="padding-left:10px;">3.</td>
 					  <td>Harmonis</td>
-					  <td style="text-align:center;"><span class="text-info harmonis">0 %</span></td>
+					  <td style="text-align:center;"><span class="text-info txt_harmonis">0 %</span></td>
 					</tr>
 					<tr>
 					  <td style="padding-left:10px;">4.</td>
 					  <td>Adaptif</td>
-					  <td style="text-align:center;"><span class="text-info adaptif">0 %</span></td>
+					  <td style="text-align:center;"><span class="text-info txt_adaptif">0 %</span></td>
 					</tr>
 					<tr>
 					  <td style="padding-left:10px;">5.</td>
 					  <td>Terbuka</td>
-					  <td style="text-align:center;"><span class="text-info terbuka">0 %</span></td>
+					  <td style="text-align:center;"><span class="text-info txt_terbuka">0 %</span></td>
 					</tr>
 					<tr>
 					  <td style="padding-left:10px;">6.</td>
 					  <td>Efektif</td>
-					  <td style="text-align:center;"><span class="text-info efektif">0 %</span></td>
+					  <td style="text-align:center;"><span class="text-info txt_efektif">0 %</span></td>
 					</tr>
 				  </table>
 			 </div>
