@@ -25,6 +25,7 @@ use App\Traits\HitungCapaian;
 use App\Traits\UpdateCapaian;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 use Datatables;
 use Validator;
@@ -61,42 +62,40 @@ class TPPReportAPIController extends Controller
          
         //get status code using $response->getStatusCode();
         $body = $response->getBody();
-        $arr_body = json_decode($body,true); 
+        $arr_body = json_decode($body); 
 
-        return  $arr_body['summary']['percentage'];
+        return  $arr_body->summary->percentage;
 
     }
 
+
+    
     //============================= AMBIL DATA ABSENSI SIAP PER SKPD ==========================================//
     protected function data_kehadiran($month,$skpd_id){
         
+            $client = new Client([ 'base_uri' => 'https://apiv2-siap.silk.bkpsdm.karawangkab.go.id']);
+            $response = $client->request('GET', '/absensi-monthly-report/', [
+                'form_params' => [
+                    'access_token'  => 'MjIzNTZmZjItNTJmOS00NjA1LTk5YWEtOGQwN2VhNmIwNjVm',
+                    'approvedOnly'  => true
+                 ],
+                'query' =>       [
+                                'month'         => $month ,
+                                'skpdId'        => $skpd_id,
+                                'limit'         => 10000,
+                            ]
+            ]);   
+            $statuscode = $response->getStatusCode();
+            $body = $response->getBody();
+            $arr_body = json_decode($body); 
 
-        $client = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => 'https://apiv2-siap.silk.bkpsdm.karawangkab.go.id',
-        ]);
-          
-        $response = $client->request('GET', '/absensi-monthly-report/', [
-            'form_params' => [
-                'access_token'  => 'MjIzNTZmZjItNTJmOS00NjA1LTk5YWEtOGQwN2VhNmIwNjVm',
-                'approvedOnly'  => true
-             ],
-            'query' =>       [
-                            'month'         => $month ,
-                            'skpdId'        => $skpd_id,
-                            'limit'         => 100,
-                        ]
-        ]);
-         
-        //get status code using $response->getStatusCode();
-        $body = $response->getBody();
-        $arr_body = json_decode($body,true); 
+            return  $arr_body->data;  
 
-        return  $arr_body['data'];
-
+        
     }
 
 
+    
     //============================= HITUNG CAPAIAN ==========================================//
     protected function penilaian_kode_etik($x)
     {
@@ -939,6 +938,9 @@ class TPPReportAPIController extends Controller
        
     }
 
+
+   
+
     public function Store(Request $request)
     {
 
@@ -1016,13 +1018,12 @@ class TPPReportAPIController extends Controller
             //AMBIL DATA KEHADIRAN   from SIAP WITH ID SKPD AND BULAN TAHUN
             $dt = Periode::WHERE('periode.id',$st_kt->periode_id)->first();
             $month = Pustaka::periode_tahun($dt->label).'-'.$bulan_lalu;
-            //$data_kehadiran = $this->data_kehadiran($month,$st_kt->skpd_id);
+            $data_kehadiran = $this->data_kehadiran($month,$st_kt->skpd_id);
 
             
-
             //insert data pegawai to  tpp_report_data
             //dari data pegawai
-        $tpp_data = Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
+            $tpp_data = Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
                 $join->on('a.id_pegawai', '=', 'tb_pegawai.id');
                 $join->where('a.status', '=', 'active');
             })
@@ -1178,11 +1179,16 @@ class TPPReportAPIController extends Controller
                 $tahun = Pustaka::tahun($x->skp_bulanan_tgl_mulai);
 
                 $month = $tahun.'-'.$bulan;
-                $nip = $x->nip;
-                //$skor_kehadiran = $this->skor_kehadiran($month,$nip);
-                $skor_kehadiran = 100 ;
+                $skor_kehadiran = 0 ;
 
+                $findWith = (object)['nip' => $x->nip ];
 
+                foreach ( $data_kehadiran AS $dataPegawai ){
+                    if ( $dataPegawai->user->nip === $findWith->nip ){
+                        $skor_kehadiran = $dataPegawai->summary->percentage;
+                    }
+                }
+        
 
                 $report_data    = new TPPReportData;
 
