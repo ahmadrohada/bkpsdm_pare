@@ -53,8 +53,9 @@ trait UpdateCapaian
                 $join->on('skp.skp_tahunan_id', '=', 'skp_tahunan.id');
             })
             //RENJA
-            ->leftjoin('db_pare_2018.renja AS renja', function ($join) use ($periode_id) {
+            ->rightjoin('db_pare_2018.renja AS renja', function ($join) use ($periode_id) {
                 $join->on('skp_tahunan.renja_id', '=', 'renja.id');
+                $join->where('renja.periode_id', '=', $periode_id);
             })
             //CAPAIAN
             ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
@@ -86,7 +87,8 @@ trait UpdateCapaian
 
             ->get();
 
-            //return $tpp_data;
+        //return $tpp_data;
+
         foreach ($tpp_data as $x) {
 
             //CAri formulasi perhitungan nya

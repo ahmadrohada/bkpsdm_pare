@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    TPP Report Data 
+                    TPP Report Data  
                 </h4>
             </div>
 			<div class="modal-body">
@@ -154,9 +154,15 @@
 
 
 <script type="text/javascript">
-	$(document).ready(function() {
 
-		$(document).on('click','#simpan',function(e){
+	$('.modal-tpp_report_data').on('hidden.bs.modal', function(){
+	
+		$('.sidebar-mini').attr("style", "padding-right:0px;"); 
+
+	});
+
+
+	$(document).on('click','#simpan',function(e){
 			var data = $('#update_tpp').serialize();
 			show_loader();
 			$.ajax({
@@ -196,10 +202,7 @@
 				}
 			});
 
-		});
-
-
-
 	});
+
 
 </script>

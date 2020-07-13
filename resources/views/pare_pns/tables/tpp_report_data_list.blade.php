@@ -86,9 +86,28 @@
 										data: { tpp_report_id: {{ $tpp_report->id }}},
 
 										},
+						rowCallback	: function(row, data, index){
+									
+										
+											$(row).find('td:eq(6)').css('background-color', '#FFF8DC');
+										
+											$(row).find('td:eq(7)').css('background-color', '#F0F8FF');
+											$(row).find('td:eq(8)').css('background-color', '#F0F8FF');
+											$(row).find('td:eq(9)').css('background-color', '#F0F8FF');
+											$(row).find('td:eq(10)').css('background-color', '#F0F8FF');
+											$(row).find('td:eq(11)').css('background-color', '#F0F8FF');
+											
+											$(row).find('td:eq(12)').css('background-color', '#FFF0F5');
+											$(row).find('td:eq(13)').css('background-color', '#FFF0F5');
+											$(row).find('td:eq(14)').css('background-color', '#FFF0F5');
+											$(row).find('td:eq(15)').css('background-color', '#FFF0F5');
+											
+											$(row).find('td:eq(16)').css('background-color', '#FFF8DC');
+											$(row).find('td:eq(16)').css('font-weight', 'bold');
+								
+									},
 
-
-						columns		: [{
+						columns		: [{ 
 											data: 'tpp_report_data_id',
 											orderable: false,
 											searchable: false,
@@ -272,6 +291,7 @@
 					$('.new_tpp_kehadiran').val(data['data_baru'].ntpp_kehadiran); 
 					$('.new_skor_kehadiran').val(data['data_baru'].nskor_kehadiran); 
 					$('.new_pot_kehadiran').val(data['data_baru'].pot_kehadiran); 
+
 
 					if ( ( ( data['tpp_rupiah'] != data['data_baru'].tpp_rupiah )|( data['capaian'] != data['data_baru'].capaian ) ) && ( data['data_baru'].capaian_bulanan_id != null ) ){
 						$('.data_baru').removeClass('hidden');

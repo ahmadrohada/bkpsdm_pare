@@ -766,7 +766,7 @@ class TPPReportAPIController extends Controller
         $formula    = FormulaHitungTPP::WHERE('id',$x->formula_hitung_id)->first();
 
 
-        //CARI CAPAIAN BULANAN TERBARU
+        
         $tpp = array(
             'tpp_report_data_id'    => $x->tpp_report_data_id,
             'nama_pegawai'          => $x->nama_pegawai,
@@ -791,6 +791,7 @@ class TPPReportAPIController extends Controller
             
             'capaian_id'            => $x->capaian_id,
 
+            //CARI CAPAIAN BULANAN TERBARU
             'data_baru'             => $this->update_capaian($x->bulan,$x->periode_id,$x->pegawai_id,$x->skpd_id,$x->formula_hitung_id,$x->pot_kinerja,$x->skor_kehadiran,$x->pot_kehadiran),
 
 
