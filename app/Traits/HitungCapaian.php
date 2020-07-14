@@ -303,7 +303,7 @@ trait HitungCapaian
         $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
         $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban'));
         $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
-        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('jabatan_staf_ahli'));
+        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('staf_ahli'));
 
 
         $capaian_bulanan = CapaianBulanan::
@@ -455,7 +455,7 @@ trait HitungCapaian
         $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
         $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban'));
         $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
-        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('jabatan_staf_ahli'));
+        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('staf_ahli'));
 
 
         $capaian_tahunan = CapaianTahunan::

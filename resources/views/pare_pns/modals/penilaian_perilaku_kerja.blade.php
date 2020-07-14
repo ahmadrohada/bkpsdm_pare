@@ -13,7 +13,7 @@
 			<input type="hidden" class="perilaku_kerja_id" name="perilaku_kerja_id" >
 			
 
-					<table class="table penilaian">
+					<table class="table table-condensed penilaian">
 						<thead>
 						<tr class='bg-primary'>
 							<th data-halign="center"  data-valign="middle" data-align="center" data-valign="middle" width="17%">Indikator</th>
@@ -23,11 +23,8 @@
 						
 						</tr>
 						</thead>
-						
 						<!-- DATA QUESIONER -->
-						
-						
-						<tr>
+						<tr style="background:rgb(239, 254, 255);">
 							<td rowspan="3" style="valign:middle;" >Orientasi Pelayanan</td>
 							<td>Sopan</td>
 							<td>
@@ -35,20 +32,20 @@
 							</td>
 							<td rowspan="3" ><span class="skor_pelayanan">0</span></td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(239, 254, 255);">
 							<td>Hormat</td>
 							<td> 
 								<input  value="1" class="rating-pk pelayanan_02" name="pelayanan_02">
 							</td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(239, 254, 255);">
 							<td>Mampu Menyelesaikan Tugas</td>
 							<td> 
 								<input   value="1" class="rating-pk pelayanan_03" name="pelayanan_03">
 							</td>
 						</tr>
 						
-						<tr>
+						<tr style="background:rgb(255, 255, 239);">
 							<td rowspan="4" >Integritas</td>
 							<td>Jujur</td>
 							<td>
@@ -56,26 +53,26 @@
 							</td>
 							<td rowspan="4" ><span class="skor_integritas">0</span></td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(255, 255, 239);">
 							<td>Ikhlas</td>
 							<td> 
 								<input  value="1" class="rating-pk integritas_02" name="integritas_02" >
 							</td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(255, 255, 239);">
 							<td>Tidak menyalahgunakan mewenang</td>
 							<td> 
 								<input  value="1" class="rating-pk integritas_03" name="integritas_03" >
 							</td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(255, 255, 239);">
 							<td>Berani menanggung resiko</td>
 							<td> 
 								<input  value="1" class="rating-pk integritas_04" name="integritas_04" >
 							</td>
 						</tr>
 						
-						<tr>
+						<tr style="background:rgb(250, 208, 248);">
 							<td rowspan="3" >Komitmen</td>
 							<td>Menegakan ideologi pancasila / UUD’45 dan NKRI</td>
 							<td>
@@ -83,20 +80,20 @@
 							</td>
 							<td rowspan="3" ><span class="skor_komitmen">0</span></td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(250, 208, 248);">
 							<td>Berusaha menjalankan rencana dan tujuan organisasi</td>
 							<td> 
 								<input  value="1" class="rating-pk komitmen_02" name="komitmen_02" >
 							</td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(250, 208, 248);">
 							<td>Mengutamakan kepentingan kedinasan dari pada kepentingan pribadi dan golongan</td>
 							<td> 
 								<input  value="1" class="rating-pk komitmen_03" name="komitmen_03">
 							</td>
 						</tr>
 						
-						<tr>
+						<tr style="background:rgb(208, 250, 221);">
 							<td rowspan="4" >Disiplin</td>
 							<td>Taat pada aturan</td>
 							<td>
@@ -104,19 +101,19 @@
 							</td>
 							<td rowspan="4" ><span class="skor_disiplin">0</span></td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(208, 250, 221);">
 							<td>Tanggungjawab</td>
 							<td> 
 								<input  value="1" class="rating-pk disiplin_02" name="disiplin_02">
 							</td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(208, 250, 221);">
 							<td>Mentaati ketentuan jam kerja</td>
 							<td> 
 								<input  value="1" class="rating-pk disiplin_03" name="disiplin_03">
 							</td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(208, 250, 221);">
 							<td>Mampu menyimpan / memelihara barang milik negara / daerah</td>
 							<td> 
 								<input  value="1" class="rating-pk disiplin_04" name="disiplin_04" >
@@ -161,7 +158,7 @@
 						@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  < 4 )
 					
 						
-						<tr>
+						<tr style="background:rgb(240, 208, 250);">
 							<td rowspan="6" >Kepemimpinan</td>
 							<td>Tegas</td>
 							<td>
@@ -169,31 +166,31 @@
 							</td>
 							<td rowspan="6" ><span class="skor_kepemimpinan">0</span></td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(240, 208, 250);">
 							<td>Tidak Memihak</td>
 							<td> 
 								<input  value="1" class="rating-pk kepemimpinan_02" name="kepemimpinan_02">
 							</td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(240, 208, 250);">
 							<td>Memberikan teladan</td>
 							<td> 
 								<input  value="1" class="rating-pk kepemimpinan_03" name="kepemimpinan_03">
 							</td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(240, 208, 250);">
 							<td>Mampu menggerakan tim kerja</td>
 							<td> 
 								<input  value="1" class="rating-pk kepemimpinan_04" name="kepemimpinan_04">
 							</td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(240, 208, 250);">
 							<td>Mampu menggugah semangat dan menggerakan bawahan</td>
 							<td> 
 								<input  value="1" class="rating-pk kepemimpinan_05" name="kepemimpinan_05">
 							</td>
 						</tr>
-						<tr>
+						<tr style="background:rgb(240, 208, 250);">
 							<td>Mampu mengambil keputusan dengan cepat dan tepat</td>
 							<td> 
 								<input  value="1" class="rating-pk kepemimpinan_06" name="kepemimpinan_06">

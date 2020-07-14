@@ -25,7 +25,8 @@ class UnsurPenunjangAPIController extends Controller {
                                 ->select([   
                                     'id AS tugas_tambahan_id',
                                     'label AS tugas_tambahan_label',
-                                    'nilai AS tugas_tambahan_nilai'
+                                    'nilai AS tugas_tambahan_nilai',
+                                    'approvement'
                                 ])
                                 ->get();
 
@@ -191,6 +192,75 @@ class UnsurPenunjangAPIController extends Controller {
             
     
     }
+
+    public function TugasTambahanApprove(Request $request)
+    {
+        $messages = [
+                'tugas_tambahan_id.required'        => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'tugas_tambahan_id'     => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);  
+        }
+
+        $sr    = UnsurPenunjangTugasTambahan::find(Input::get('tugas_tambahan_id'));
+        if (is_null($sr)) {
+            return $this->sendError('Tugas Tambahan Tidak ditemukan.');
+        }
+
+
+        $sr->approvement   = '1';
+        $sr->nilai         = 1;
+
+        if ( $sr->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+    }
+    public function TugasTambahanReject(Request $request)
+    {
+        $messages = [
+                'tugas_tambahan_id.required'        => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'tugas_tambahan_id'     => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);  
+        }
+
+        $sr    = UnsurPenunjangTugasTambahan::find(Input::get('tugas_tambahan_id'));
+        if (is_null($sr)) {
+            return $this->sendError('Tugas Tambahan Tidak ditemukan.');
+        }
+
+
+        $sr->approvement    = '0';
+        $sr->nilai          = 0;
+
+        if ( $sr->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+    }
    
 
     //========================== K ERE ATIVITAS ==============================================//
@@ -205,6 +275,7 @@ class UnsurPenunjangAPIController extends Controller {
                                     'label AS kreativitas_label',
                                     'nilai AS kreativitas_nilai',
                                     'manfaat_id',
+                                    'approvement'
                                 ])
                                 ->get();
 
@@ -391,5 +462,83 @@ class UnsurPenunjangAPIController extends Controller {
             
             
     
+    }
+
+    public function KreativitasApprove(Request $request)
+    {
+
+        $messages = [
+                'kreativitas_id.required'       => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'kreativitas_id'    => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $sr    = UnsurPenunjangKreativitas::find(Input::get('kreativitas_id'));
+        if (is_null($sr)) {
+            return $this->sendError('Kreativitas Tidak ditemukan.');
+        }
+
+
+        $sr->approvement            = '1';
+        $sr->nilai                  = 1;
+
+
+        if ( $sr->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
+    }
+
+    public function KreativitasReject(Request $request)
+    {
+
+        $messages = [
+                'kreativitas_id.required'       => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'kreativitas_id'    => 'required',
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $sr    = UnsurPenunjangKreativitas::find(Input::get('kreativitas_id'));
+        if (is_null($sr)) {
+            return $this->sendError('Kreativitas Tidak ditemukan.');
+        }
+
+
+        $sr->approvement            = '0';
+        $sr->nilai                  = 0;
+
+
+        if ( $sr->save()){
+            return \Response::make('sukses', 200);
+        }else{
+            return \Response::make('error', 500);
+        } 
     }
 }

@@ -57,66 +57,62 @@
 		</div>
 	</div> 
 	<div class="col-md-7">
-		{{-- <div class="table-responsive"><div id="myTimeline"></div></div> --}}
-		<div class="box box-primary">
-			{{--  <div class="box-header" style="height:40px;">
-			   <h1 class="box-title text-success" style="font-size:16px;">Penilaian Kode Etik</h1>
-			 </div> --}}
-			 <!-- /.box-header -->
-			 
-			 <div class="box-body no-padding">
-				 <h1 class="profile-username text-center text-success" style="font-size:16px;">
-					 Penilaian Kode Etik
-				 </h1>
-				 <table class="table table-condensed">
-					<tr>
-						<td style="width: 8%; padding-left:10px;">NO</td>
-						<td style="width: *%">LABEL</td>
-						<td style="text-align:center; width: 20%">NILAI</td>
-					</tr>
-					<tr>
-					  <td style="padding-left:10px;">1.</td>
-					  <td>Santun</td>
-					  <td style="text-align:center;"><span class="text-info txt_santun">0 %</span></td>
-					</tr>
-					<tr>
-					  <td style="padding-left:10px;">2.</td>
-					  <td>Amanah</td>
-					  <td style="text-align:center;"><span class="text-info txt_amanah">0 %</span></td>
-					</tr>
-					<tr>
-					  <td style="padding-left:10px;">3.</td>
-					  <td>Harmonis</td>
-					  <td style="text-align:center;"><span class="text-info txt_harmonis">0 %</span></td>
-					</tr>
-					<tr>
-					  <td style="padding-left:10px;">4.</td>
-					  <td>Adaptif</td>
-					  <td style="text-align:center;"><span class="text-info txt_adaptif">0 %</span></td>
-					</tr>
-					<tr>
-					  <td style="padding-left:10px;">5.</td>
-					  <td>Terbuka</td>
-					  <td style="text-align:center;"><span class="text-info txt_terbuka">0 %</span></td>
-					</tr>
-					<tr>
-					  <td style="padding-left:10px;">6.</td>
-					  <td>Efektif</td>
-					  <td style="text-align:center;"><span class="text-info txt_efektif">0 %</span></td>
-					</tr>
-				  </table>
-			 </div>
-		 </div>
+		@if ( ( request()->segment(4) != 'edit' )&( request()->segment(4) != 'ralat' ) )
+			<div class="box box-primary">
+				<div class="box-body no-padding">
+					<h1 class="profile-username text-center text-success" style="font-size:16px;">
+						Penilaian Kode Etik
+					</h1>
+					<table class="table table-condensed">
+						<tr>
+							<td style="width: 8%; padding-left:10px;">NO</td>
+							<td style="width: *%">LABEL</td>
+							<td style="text-align:center; width: 20%">NILAI</td>
+						</tr>
+						<tr>
+						<td style="padding-left:10px;">1.</td>
+						<td>Santun</td>
+						<td style="text-align:center;"><span class="text-info txt_santun">0 %</span></td>
+						</tr>
+						<tr>
+						<td style="padding-left:10px;">2.</td>
+						<td>Amanah</td>
+						<td style="text-align:center;"><span class="text-info txt_amanah">0 %</span></td>
+						</tr>
+						<tr>
+						<td style="padding-left:10px;">3.</td>
+						<td>Harmonis</td>
+						<td style="text-align:center;"><span class="text-info txt_harmonis">0 %</span></td>
+						</tr>
+						<tr>
+						<td style="padding-left:10px;">4.</td>
+						<td>Adaptif</td>
+						<td style="text-align:center;"><span class="text-info txt_adaptif">0 %</span></td>
+						</tr>
+						<tr>
+						<td style="padding-left:10px;">5.</td>
+						<td>Terbuka</td>
+						<td style="text-align:center;"><span class="text-info txt_terbuka">0 %</span></td>
+						</tr>
+						<tr>
+						<td style="padding-left:10px;">6.</td>
+						<td>Efektif</td>
+						<td style="text-align:center;"><span class="text-info txt_efektif">0 %</span></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		@endif
 	</div>
 </div>
 <div class="row">
 	<div class="col-md-4 col-xs-12">
-		<?php if ( $capaian->status_approve == 0 ) { ?>
+		@if ( $capaian->status_approve == 0 )
 			
 				<a href="#" class="btn  btn-sm btn-danger tolak_capaian_bulanan">TOLAK</a>
 				<a href="#" id="btn_terima" class="btn  btn-sm btn-primary  penilaian_kode_etik">TERIMA</a>
 			
-			<?php } ?>
+		@endif
 	</div>
 </div>
 

@@ -1,3 +1,11 @@
+<div class="row badge_persetujuan" hidden>
+	<div class="col-md-12">
+		<div class="alert alert-danger bg-maroon alert-dismissible">
+			<h4><i class="icon fa fa-info"></i> Status Capaian Tahunan</h4>
+			Menunggu Persetujuan Dari Atasan
+		</div>
+	</div>
+</div>
 
 <div class="row">
 	<div class="col-md-5">
@@ -48,6 +56,7 @@
 						</span><a class="pull-right st_capaian_skp" >-</a>
 					</li>
 
+					@if ( request()->segment(4) != 'edit' )
 					<li class="list-group-item" style="padding:8px 10px; ">
 						D. Penilaian Perilaku Kerja
 						<a class="pull-right st_penilaian_perilaku_kerja" >-</a>
@@ -58,6 +67,7 @@
 						<span class="text-muted st_formula_perhitungan"> ( C x 60% ) + ( D x 40% )</span>
 						<a class="pull-right st_nilai_prestasi_kerja" style="font-weight: bold;" >-</a>
 					</li>
+					@endif
 					
 				</ul>
 			</div>
@@ -185,7 +195,10 @@
 					$('.st_penilaian_perilaku_kerja').html(data['penilaian_perilaku_kerja']);
 					$('.st_nilai_prestasi_kerja').html(data['nilai_prestasi_kerja']);
 					
-					
+					if ( data['status_approve'] == "Menunggu Persetujuan"){
+						$('.badge_persetujuan').show(500);
+					}
+
 					if (data['penilaian_perilaku_kerja'] >= 1 ){
 						$('#btn_terima').removeClass('penilaian_perilaku_kerja');
 						$('#btn_terima').addClass('terima_capaian_tahunan');

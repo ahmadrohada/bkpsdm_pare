@@ -37,13 +37,14 @@
 						Capaian Kinerja Bulanan <span class="text-muted"> (bobot 70%)</span><a class="pull-right st_capaian_kinerja_bulanan" >-</a>
 					</li>
 
+					@if ( request()->segment(4) != 'edit' )
 					<li class="list-group-item" style="padding:8px 10px;">
 						<input type="hidden" class="penilaian_kode_etik_id">
 						Penilaian Kode Etik <span class="text-muted"> (bobot 30%)</span>
 						<a class="pull-right st_penilaian_kode_etik" >-</a>
 					</li>
 
-					@if ( request()->segment(4) != 'edit' )
+					
 					<li class="list-group-item" style="background:#efeff0; border-top: solid #615e68 !important; border-top-width: 2px; padding:8px 10px;">
 						<strong>Capaian SKP Bulanan</strong> <a class="pull-right st_capaian_skp_bulanan" style="font-weight: bold;" >-</a>
 					</li>
@@ -55,56 +56,54 @@
 		</div>
 	</div>
 	<div class="col-md-7">
-		{{-- <div class="table-responsive"><div id="myTimeline"></div></div> --}}
-		<div class="box box-primary">
-           {{--  <div class="box-header" style="height:40px;">
-              <h1 class="box-title text-success" style="font-size:16px;">Penilaian Kode Etik</h1>
-            </div> --}}
-			<!-- /.box-header -->
-			
-            <div class="box-body no-padding">
-				<h1 class="profile-username text-center text-success" style="font-size:16px;">
-					Penilaian Kode Etik
-				</h1>
-              <table class="table table-condensed">
-				<tr>
-					<td style="width: 8%; padding-left:10px;">NO</td>
-					<td style="width: *%">LABEL</td>
-					<td style="text-align:center; width: 20%">NILAI</td>
-				</tr>
-                <tr>
-                  <td style="padding-left:10px;">1.</td>
-                  <td>Santun</td>
-                  <td style="text-align:center;"><span class="text-info santun">0 %</span></td>
-                </tr>
-                <tr>
-                  <td style="padding-left:10px;">2.</td>
-                  <td>Amanah</td>
-                  <td style="text-align:center;"><span class="text-info amanah">0 %</span></td>
-                </tr>
-                <tr>
-                  <td style="padding-left:10px;">3.</td>
-                  <td>Harmonis</td>
-                  <td style="text-align:center;"><span class="text-info harmonis">0 %</span></td>
-                </tr>
-                <tr>
-                  <td style="padding-left:10px;">4.</td>
-                  <td>Adaptif</td>
-                  <td style="text-align:center;"><span class="text-info adaptif">0 %</span></td>
-				</tr>
-				<tr>
-                  <td style="padding-left:10px;">5.</td>
-                  <td>Terbuka</td>
-                  <td style="text-align:center;"><span class="text-info terbuka">0 %</span></td>
-				</tr>
-				<tr>
-                  <td style="padding-left:10px;">6.</td>
-                  <td>Efektif</td>
-                  <td style="text-align:center;"><span class="text-info efektif">0 %</span></td>
-                </tr>
-              </table>
-            </div>
-        </div>
+		
+		<!-- Only show when detail or approvement -->
+		@if ( ( request()->segment(4) != 'edit' )&( request()->segment(4) != 'ralat' ) )
+			<div class="box box-primary">
+				<div class="box-body no-padding">
+					<h1 class="profile-username text-center text-success" style="font-size:16px;">
+						Penilaian Kode Etik
+					</h1>
+				<table class="table table-condensed">
+					<tr>
+						<td style="width: 8%; padding-left:10px;">NO</td>
+						<td style="width: *%">LABEL</td>
+						<td style="text-align:center; width: 20%">NILAI</td>
+					</tr>
+					<tr>
+					<td style="padding-left:10px;">1.</td>
+					<td>Santun</td>
+					<td style="text-align:center;"><span class="text-info santun">0 %</span></td>
+					</tr>
+					<tr>
+					<td style="padding-left:10px;">2.</td>
+					<td>Amanah</td>
+					<td style="text-align:center;"><span class="text-info amanah">0 %</span></td>
+					</tr>
+					<tr>
+					<td style="padding-left:10px;">3.</td>
+					<td>Harmonis</td>
+					<td style="text-align:center;"><span class="text-info harmonis">0 %</span></td>
+					</tr>
+					<tr>
+					<td style="padding-left:10px;">4.</td>
+					<td>Adaptif</td>
+					<td style="text-align:center;"><span class="text-info adaptif">0 %</span></td>
+					</tr>
+					<tr>
+					<td style="padding-left:10px;">5.</td>
+					<td>Terbuka</td>
+					<td style="text-align:center;"><span class="text-info terbuka">0 %</span></td>
+					</tr>
+					<tr>
+					<td style="padding-left:10px;">6.</td>
+					<td>Efektif</td>
+					<td style="text-align:center;"><span class="text-info efektif">0 %</span></td>
+					</tr>
+				</table>
+				</div>
+			</div>
+		@endif
 	</div>
 </div>
 

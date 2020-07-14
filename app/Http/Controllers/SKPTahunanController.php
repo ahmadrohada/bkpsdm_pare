@@ -53,7 +53,7 @@ class SKPTahunanController extends Controller {
                                                                     'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
                                                                     'jabatan_irban'     => $this->jenis_PJabatan('irban'),
                                                                     'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
-                                                                    'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),
+                                                                    'jabatan_staf_ahli' => $this->jenis_PJabatan('staf_ahli'),
                                                                     
                                                                 ]);  
        
@@ -70,7 +70,7 @@ class SKPTahunanController extends Controller {
                                                                     'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
                                                                     'jabatan_irban'     => $this->jenis_PJabatan('irban'),
                                                                     'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
-                                                                    'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),
+                                                                    'jabatan_staf_ahli' => $this->jenis_PJabatan('staf_ahli'),
                                                                     
                                                                 ]);  
        
@@ -93,7 +93,7 @@ class SKPTahunanController extends Controller {
                                                                             'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
                                                                             'jabatan_irban'     => $this->jenis_PJabatan('irban'),
                                                                             'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
-                                                                            'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),
+                                                                            'jabatan_staf_ahli' => $this->jenis_PJabatan('staf_ahli'),
                                                                             
                                                                         ]);  
             }
@@ -122,7 +122,7 @@ class SKPTahunanController extends Controller {
                                                                             'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
                                                                             'jabatan_irban'     => $this->jenis_PJabatan('irban'),
                                                                             'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
-                                                                            'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),
+                                                                            'jabatan_staf_ahli' => $this->jenis_PJabatan('staf_ahli'),
                                                                             
                                                                         ]);  
             }
@@ -156,7 +156,7 @@ class SKPTahunanController extends Controller {
                                                                             'jabatan_sekda'     => $this->jenis_PJabatan('sekda'),
                                                                             'jabatan_irban'     => $this->jenis_PJabatan('irban'),
                                                                             'jabatan_lurah'     => $this->jenis_PJabatan('lurah'),
-                                                                            'jabatan_staf_ahli' => $this->jenis_PJabatan('jabatan_staf_ahli'),
+                                                                            'jabatan_staf_ahli' => $this->jenis_PJabatan('staf_ahli'),
                                                                             
                                                                         ]);  
             }

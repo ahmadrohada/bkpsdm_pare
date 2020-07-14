@@ -238,7 +238,7 @@ class CapaianTahunanAPIController extends Controller {
         $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
         $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban')); //kapus dan kaarsip
         $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
-        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('jabatan_staf_ahli'));
+        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('staf_ahli'));
 
         $jenis_jabatan  = $skp_tahunan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
         $jabatan_id     = $skp_tahunan->PejabatYangDinilai->id_jabatan;
@@ -799,16 +799,25 @@ class CapaianTahunanAPIController extends Controller {
         $p_detail   = $capaian_tahunan->PejabatPenilai;
         $u_detail   = $capaian_tahunan->PejabatYangDinilai;
         //STATUS APPROVE
-        if ( ($capaian_tahunan->status_approve) == 1 ){
-            $persetujuan_atasan = 'disetujui';
-            $alasan_penolakan   = "";
-        }else if ( ($capaian_tahunan->status_approve) == 2 ){
-            $persetujuan_atasan = '<span class="text-danger">ditolak</span>';
-            $alasan_penolakan   = $capaian_tahunan->alasan_penolakan;
+        if ( ($capaian_tahunan->send_to_atasan) == 1 ){
+            if ( ($capaian_tahunan->status_approve) == 0 ){
+                $persetujuan_atasan = 'Menunggu Persetujuan';
+                $alasan_penolakan   = "";
+            }else if ( ($capaian_tahunan->status_approve) == 1 ){
+                $persetujuan_atasan = 'disetujui';
+                $alasan_penolakan   = "";
+            }else if ( ($capaian_tahunan->status_approve) == 2 ){
+                $persetujuan_atasan = '<span class="text-danger">ditolak</span>';
+                $alasan_penolakan   = $capaian_tahunan->alasan_penolakan;
+            }else{
+                $persetujuan_atasan = '';
+                $alasan_penolakan   = "";
+            }
         }else{
-            $persetujuan_atasan = 'Menunggu Persetujuan';
+            $persetujuan_atasan = '';
             $alasan_penolakan   = "";
         }
+        
 
         //KInerja
         $data_kinerja               = $this->hitung_capaian_tahunan($capaian_id); 

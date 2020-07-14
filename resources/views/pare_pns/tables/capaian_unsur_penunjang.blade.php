@@ -13,6 +13,7 @@
 						<th>TUGAS TAMBAHAN</th>
 						<th>NILAI</th>
 						<th><i class="fa fa-cog"></i></th>
+						<th>APPROVED</th>
 					</tr>
 				</thead>	
 			</table>
@@ -33,12 +34,15 @@
 						<th>MANFAAT</th>
 						<th>NILAI</th>
 						<th><i class="fa fa-cog"></i></th>
+						<th>APPROVED</th>
 					</tr>
 				</thead>	
 			</table>
 		</div>
 	</div> 
 </div>
+
+
 
 @include('pare_pns.modals.unsur_penunjang_tugas_tambahan')
 @include('pare_pns.modals.unsur_penunjang_kreativitas')
@@ -58,7 +62,7 @@
 				//order 			: [ 1 , 'asc' ],
 				//lengthMenu		: [20,45,80],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2,3 ] },
+									{ className: "text-center", targets: [ 0,2,3,4 ] },
 									@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )  
 										{ visible: true, "targets": [3]},
 										{ visible: false,"targets": [2]},
@@ -66,6 +70,14 @@
 										{ visible: false, "targets": [3]},
 										{ visible: true, "targets": [2]},
 									@endif
+
+									@if ( request()->segment(2) == 'capaian_tahunan_bawahan_approvement'  )  
+										{ visible: true, "targets": [4]},
+									@else
+										{ visible: false, "targets": [4]},
+									@endif
+
+
 								  ],
 				ajax			: {
 									url	: '{{ url("api_resource/unsur_penunjang_tugas_tambahan_list") }}',
@@ -99,6 +111,16 @@
 											
 										}
 									},
+									{  data: 'approvement',width:"20px",
+											"render": function ( data, type, row ) {
+											if ( row.approvement == 1 ){
+												return  '<span  data-toggle="tooltip" title="" style="cursor:pointer;" ><a class="fa fa-check-square-o fa-lg reject_unsur_penunjang_tugas_tambahan"  data-id="'+row.tugas_tambahan_id+'"></a></span>';
+											}else{
+												return  '<span  data-toggle="tooltip" title="" style="cursor:pointer;" ><a class="fa fa-minus-square-o fa-lg approve_unsur_penunjang_tugas_tambahan"  data-id="'+row.tugas_tambahan_id+'"></a></span>';
+											}
+											
+										}
+									},
 									
 								
 								],
@@ -123,13 +145,19 @@
 				//order 			: [ 1 , 'asc' ],
 				//lengthMenu		: [20,45,80],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,3,4 ] },
+									{ className: "text-center", targets: [ 0,3,4,5 ] },
 									@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )  
 										{ visible: true, "targets": [4]},
 										{ visible: false,"targets": [3]},
 									@else
 										{ visible: false, "targets": [4]},
 										{ visible: true, "targets": [3]},
+									@endif
+
+									@if ( request()->segment(2) == 'capaian_tahunan_bawahan_approvement'  )  
+										{ visible: true, "targets": [5]},
+									@else
+										{ visible: false, "targets": [5]},
 									@endif
 								  ],
 				ajax			: {
@@ -170,6 +198,16 @@
 
 											return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_unsur_penunjang_kreativitas"  data-id="'+row.kreativitas_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 													'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_unsur_penunjang_kreativitas"  data-id="'+row.kreativitas_id+'" data-label="'+row.kreativitas_label+'" ><i class="fa fa-close " ></i></a></span>';
+											
+										}
+									},
+									{  data: 'approvement',width:"20px",
+											"render": function ( data, type, row ) {
+											if ( row.approvement == 1 ){
+												return  '<span  data-toggle="tooltip" title="" style="cursor:pointer;" ><a class="fa fa-check-square-o fa-lg reject_unsur_penunjang_kreativitas"  data-id="'+row.kreativitas_id+'"></a></span>';
+											}else{
+												return  '<span  data-toggle="tooltip" title="" style="cursor:pointer;" ><a class="fa fa-minus-square-o fa-lg approve_unsur_penunjang_kreativitas"  data-id="'+row.kreativitas_id+'"></a></span>';
+											}
 											
 										}
 									},
@@ -282,6 +320,97 @@
 		});
 	});
 
+
+	$(document).on('click','.approve_unsur_penunjang_tugas_tambahan',function(e){
+		var tugas_tambahan_id = $(this).data('id') ;
+	
+			$.ajax({
+					url		: '{{ url("api_resource/approve_unsur_penunjang_tugas_tambahan") }}',
+					type	: 'POST',
+					data    : { tugas_tambahan_id:tugas_tambahan_id },
+					cache   : false,
+					success:function(data){
+							Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										$('#up_tugas_tambahan_table').DataTable().ajax.reload(null,false);
+										
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$('#up_tugas_tambahan_table').DataTable().ajax.reload(null,false);
+											
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+			});	
+			
+	});
+
+	$(document).on('click','.reject_unsur_penunjang_tugas_tambahan',function(e){
+		var tugas_tambahan_id = $(this).data('id') ;
+	
+			$.ajax({
+					url		: '{{ url("api_resource/reject_unsur_penunjang_tugas_tambahan") }}',
+					type	: 'POST',
+					data    : { tugas_tambahan_id:tugas_tambahan_id },
+					cache   : false,
+					success:function(data){
+							Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										$('#up_tugas_tambahan_table').DataTable().ajax.reload(null,false);
+										
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$('#up_tugas_tambahan_table').DataTable().ajax.reload(null,false);
+											
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+			});	
+			
+	});
+
 //===================================== kereatipitads ==============================================//
 
 	$(document).on('click','.add_unsur_penunjang_kreativitas',function(e){
@@ -384,7 +513,95 @@
 		}); 
 	});
 
+	$(document).on('click','.approve_unsur_penunjang_kreativitas',function(e){
+		var kreativitas_id = $(this).data('id') ;
+	
+			$.ajax({
+					url		: '{{ url("api_resource/approve_unsur_penunjang_kreativitas") }}',
+					type	: 'POST',
+					data    : { kreativitas_id:kreativitas_id },
+					cache   : false,
+					success:function(data){
+							Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										$('#up_kreativitas_table').DataTable().ajax.reload(null,false);
+										
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$('#up_kreativitas_table').DataTable().ajax.reload(null,false);
+											
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+			});	
+			
+	});
 
+	$(document).on('click','.reject_unsur_penunjang_kreativitas',function(e){
+		var kreativitas_id = $(this).data('id') ;
+	
+			$.ajax({
+					url		: '{{ url("api_resource/reject_unsur_penunjang_kreativitas") }}',
+					type	: 'POST',
+					data    : { kreativitas_id:kreativitas_id },
+					cache   : false,
+					success:function(data){
+							Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										$('#up_kreativitas_table').DataTable().ajax.reload(null,false);
+										
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$('#up_kreativitas_table').DataTable().ajax.reload(null,false);
+											
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+			});	
+			
+	});
 		
 	
 </script>

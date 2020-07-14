@@ -2536,6 +2536,10 @@ a:focus {
 .alert-info {
   border-color: #00acd6;
 }
+
+.alert-info_2 {
+  border-color: #ecbe75;
+}
 /*
  * Component: Nav
  * --------------

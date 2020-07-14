@@ -821,6 +821,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('simpan_unsur_penunjang_tugas_tambahan','API\UnsurPenunjangAPIController@TugasTambahanStore');
 	Route::post('update_unsur_penunjang_tugas_tambahan','API\UnsurPenunjangAPIController@TugasTambahanUpdate');
 	Route::post('hapus_unsur_penunjang_tugas_tambahan','API\UnsurPenunjangAPIController@TugasTambahanDestroy');
+	Route::post('approve_unsur_penunjang_tugas_tambahan','API\UnsurPenunjangAPIController@TugasTambahanApprove');
+	Route::post('reject_unsur_penunjang_tugas_tambahan','API\UnsurPenunjangAPIController@TugasTambahanReject');
 
 	//===============================  UNSUR PENUNJANG  / TUGAS TAMBAHAN = ==================================//
 	//========================================================================================================//
@@ -830,7 +832,8 @@ Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], funct
 	Route::post('simpan_unsur_penunjang_kreativitas','API\UnsurPenunjangAPIController@KreativitasStore');
 	Route::post('update_unsur_penunjang_kreativitas','API\UnsurPenunjangAPIController@KreativitasUpdate');
 	Route::post('hapus_unsur_penunjang_kreativitas','API\UnsurPenunjangAPIController@KreativitasDestroy');
-
+	Route::post('approve_unsur_penunjang_kreativitas','API\UnsurPenunjangAPIController@KreativitasApprove');
+	Route::post('reject_unsur_penunjang_kreativitas','API\UnsurPenunjangAPIController@KreativitasReject');
 	//========================================================================================================//
 	//======================================= RENCANA AKSI  SKP THAUNAN ======================================//
 	//========================================================================================================//

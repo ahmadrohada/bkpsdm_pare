@@ -225,7 +225,7 @@ class CapaianBulananAPIController extends Controller {
         $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
         $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban')); //kapus dan kaarsip
         $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
-        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('jabatan_staf_ahli'));
+        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('staf_ahli'));
 
       
         $skp_bulanan   = SKPBulanan::WHERE('skp_bulanan.id',$request->get('skp_bulanan_id'))
@@ -823,7 +823,7 @@ class CapaianBulananAPIController extends Controller {
                 $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
                 $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban'));
                 $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
-                $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('jabatan_staf_ahli'));
+                $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('staf_ahli'));
 
                 //bikin jadi colse skp bulanan nya
                 SKPBulanan::WHERE('id',Input::get('skp_bulanan_id'))->UPDATE(['status' => '1']);

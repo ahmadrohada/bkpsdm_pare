@@ -1151,7 +1151,7 @@ class SKPTahunanAPIController extends Controller {
         $id_jabatan_sekda       = json_decode($this->jenis_PJabatan('sekda'));
         $id_jabatan_irban       = json_decode($this->jenis_PJabatan('irban'));
         $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
-        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('jabatan_staf_ahli'));
+        $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('staf_ahli'));
 
 
         $skpd_id = HistoryJabatan::WHERE('id',$request->get('jabatan_id'))->SELECT('id','id_skpd')->first()->id_skpd;

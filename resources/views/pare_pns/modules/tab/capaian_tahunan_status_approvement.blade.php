@@ -63,14 +63,6 @@
 					</li>
 					
 				</ul>
-				<?php if ( $capaian->status_approve == 0 ) { ?>
-				<div class="pull-right">
-					<a href="#" class="btn btn-sm btn-danger tolak_capaian_tahunan">TOLAK</a>
-					<a href="#" id="btn_terima" class="btn btn-sm btn-primary  penilaian_perilaku_kerja">TERIMA</a>
-				</div>
-				<?php } ?>
-
-
 			</div>
 		</div>
 	</div> 
@@ -148,10 +140,15 @@
 			</div>
 		@endif
 	</div>
-
-
 </div>
-
+<div class="row">
+	<div class="col-md-4 col-xs-12">
+		@if ( $capaian->status_approve == 0 )
+			<a href="#" class="btn btn-sm btn-danger tolak_capaian_tahunan">TOLAK</a>
+			<a href="#" id="btn_terima" class="btn btn-sm btn-primary  penilaian_perilaku_kerja">TERIMA</a>
+		@endif
+	</div>
+</div>
 
 
 @include('pare_pns.modals.penilaian_perilaku_kerja')
