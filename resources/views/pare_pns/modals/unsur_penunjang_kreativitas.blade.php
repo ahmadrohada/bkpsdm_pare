@@ -24,9 +24,10 @@
 						<div class="form-group manfaat ">
                             <label>Manfaat Kreativitas</label>
 							<select class="form-control input-sm" id="manfaat" name="manfaat_id" style="width:100%">
-								<option value="1">Untuk Unit Kerja</option>
-								<option value="2">Untuk Organisasi</option>
-								<option value="3">Untuk Pemerintah</option>
+								<option value="3">Untuk Unit Kerja</option>
+								<option value="6">Untuk Organisasi</option>
+								<option value="12">Untuk Pemerintah</option>
+								
 							</select>
 							
                         </div>

@@ -111,16 +111,39 @@ class CapaianTahunanController extends Controller {
         $capaian_tahunan    = CapaianTahunan::WHERE('id', $request->capaian_tahunan_id)->first();
 
         if ( $capaian_tahunan->PejabatPenilai->id_pegawai == $user->id_pegawai ){
-            return view('pare_pns.pages.personal-capaian_tahunan_approvement', ['capaian'                   => $capaian_tahunan,
-                                                                                'jabatan_sekda'             => $this->jenis_PJabatan('sekda'),
-                                                                                'jabatan_irban'             => $this->jenis_PJabatan('irban'),
-                                                                                'jabatan_lurah'             => $this->jenis_PJabatan('lurah'),
-                                                                                'jabatan_staf_ahli'         => $this->jenis_PJabatan('staf_ahli')]);
+            if ( $capaian_tahunan->status_approve == '0' ){
+                return view('pare_pns.pages.personal-capaian_tahunan_approvement', ['capaian'                   => $capaian_tahunan,
+                                                                                    'jabatan_sekda'             => $this->jenis_PJabatan('sekda'),
+                                                                                    'jabatan_irban'             => $this->jenis_PJabatan('irban'),
+                                                                                    'jabatan_lurah'             => $this->jenis_PJabatan('lurah'),
+                                                                                    'jabatan_staf_ahli'         => $this->jenis_PJabatan('staf_ahli')]);
+            } else {
+                return redirect('/personal/capaian_tahunan_bawahan/'.$request->capaian_tahunan_id)->with('status', 'approved');
+            }                                                                       
         }else{
             //return view('pare_pns.errors.users403');
             return redirect('/dashboard');
         }
     }
+
+
+    public function CapaianTahunanBawahanDetail(Request $request)
+	{
+        $user               = \Auth::user();
+        $capaian_tahunan    = CapaianTahunan::WHERE('id', $request->capaian_tahunan_id)->first();
+        //hanya atasan yang bisa lhat detai capaian bahwan nya
+        if ( $capaian_tahunan->PejabatPenilai->id_pegawai == $user->id_pegawai ){
+            if ( $capaian_tahunan->send_to_atasan == '0' ){
+                return redirect('/personal/capaian-tahunan/'.$request->capaian_tahunan_id.'/edit')->with('status', 'terkirim');
+            }else{
+                return view('pare_pns.pages.personal-capaian_tahunan_detail', ['capaian'=> $capaian_tahunan]);  
+            }
+        }else{
+            //return view('pare_pns.errors.users403');
+            return redirect('/dashboard');
+        }
+    }
+
 
 
 
@@ -166,16 +189,21 @@ class CapaianTahunanController extends Controller {
 
     public function PersonalCapaianTahunanDetail(Request $request)
 	{
-        
+         
+        $user           = \Auth::user();
         $capaian_tahunan    = CapaianTahunan::WHERE('id', $request->capaian_tahunan_id)->first();
 
-        if ( $capaian_tahunan->send_to_atasan == '0' ){
-            return redirect('/personal/capaian-tahunan/'.$request->capaian_tahunan_id.'/edit')->with('status', 'terkirim');
-        }else{
-            return view('pare_pns.pages.personal-capaian_tahunan_detail', ['capaian'=> $capaian_tahunan]);  
-        }
+        if ( $capaian_tahunan->pegawai_id == $user->id_pegawai ){
+            if ( $capaian_tahunan->send_to_atasan == '0' ){
+                return redirect('/personal/capaian-tahunan/'.$request->capaian_tahunan_id.'/edit')->with('status', 'terkirim');
+            }else{
+                return view('pare_pns.pages.personal-capaian_tahunan_detail', ['capaian'=> $capaian_tahunan]);  
+            }
 
-          
+        }else{
+            //return view('pare_pns.errors.users403');
+            return redirect('/dashboard');
+        }
 
     }
 

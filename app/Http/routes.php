@@ -1737,7 +1737,10 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	
 
 
-
+	Route::get('capaian-tahunan/{capaian_tahunan_id}/ralat',[
+		'as' 			=> '',
+		'uses' 			=> 'CapaianTahunanController@PersonalCapaianTahunanRalat'
+	]);
 	
 
 

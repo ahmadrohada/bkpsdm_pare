@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		<div class="alert alert-danger bg-maroon alert-dismissible">
 			<h4><i class="icon fa fa-info"></i> Status Capaian Tahunan</h4>
-			Menunggu Persetujuan Dari Atasan
+			<span class="text-badge_persetujuan"></span>
 		</div>
 	</div>
 </div>
@@ -38,33 +38,33 @@
 						II. Jumlah Tugas Tambahan <a class="pull-right st_jumlah_tugas_tambahan" >-</a>
 					</li>
 					<li class="list-group-item" style="padding:8px 10px; border-top: solid 1px #615e68 !important;">
-						Jumlah Kegiatan SKP ( I + II) <a class="pull-right st_jumlah_kegiatan_skp" >-</a>
+						A. Jumlah Kegiatan SKP ( I + II) <a class="pull-right st_jumlah_kegiatan_skp" >-</a>
 					</li>
 					<li class="list-group-item" style="padding:8px 10px;">
-						A. Nilai Capaian Kegiatan SKP + Tugas Tambahan
+						B. Nilai Capaian Kegiatan SKP + Tugas Tambahan
 						<a class="pull-right st_capaian_kegiatan_skp" >-</a>
 					</li>
 					<li class="list-group-item" style="padding:8px 10px;">
-						B. Nilai Unsur Penunjang
+						C. Nilai Unsur Penunjang
 						<a class="pull-right st_nilai_unsur_penunjang" >-</a>
 					</li>
 		
 					
 
 					<li class="list-group-item" style="padding:8px 10px; border-top: solid 1px #615e68 !important; ">
-						D. Capaian SKP<span class="text-muted"> (A+B)/n + C
+						D. Capaian SKP<span class="text-muted"> (B/A) + C
 						</span><a class="pull-right st_capaian_skp" >-</a>
 					</li>
 
 					@if ( request()->segment(4) != 'edit' )
 					<li class="list-group-item" style="padding:8px 10px; ">
-						D. Penilaian Perilaku Kerja
+						E. Penilaian Perilaku Kerja
 						<a class="pull-right st_penilaian_perilaku_kerja" >-</a>
 					</li>
 
 					<li class="list-group-item" style="background:#efeff0; border-top: solid #615e68 !important; border-top-width: 2px; padding:8px 10px;">
 						<strong>Nilai Prestasi Kerja</strong> 
-						<span class="text-muted st_formula_perhitungan"> ( C x 60% ) + ( D x 40% )</span>
+						<span class="text-muted st_formula_perhitungan"> ( D x 60% ) + ( E x 40% )</span>
 						<a class="pull-right st_nilai_prestasi_kerja" style="font-weight: bold;" >-</a>
 					</li>
 					@endif
@@ -190,13 +190,22 @@
 					$('.st_capaian_kegiatan_skp').html(data['jm_capaian_kegiatan_tahunan']+' + '+data['jm_capaian_tugas_tambahan']);
 					
 
-					$('.st_capaian_skp').html(data['capaian_kinerja_tahunan']);
+
+					$('.st_capaian_skp').html(data['capaian_skp']);
+					$('.st_nilai_unsur_penunjang').html(data['nilai_unsur_penunjang']);
+
+					
 
 					$('.st_penilaian_perilaku_kerja').html(data['penilaian_perilaku_kerja']);
 					$('.st_nilai_prestasi_kerja').html(data['nilai_prestasi_kerja']);
 					
 					if ( data['status_approve'] == "Menunggu Persetujuan"){
 						$('.badge_persetujuan').show(500);
+						$('.text-badge_persetujuan').html('Menunggu persetujuan atasan');
+					}
+					if ( data['status_approve'] == "ditolak"){
+						$('.badge_persetujuan').show(500);
+						$('.text-badge_persetujuan').html('Ditolak oleh atasan<br>Alasan : '+data['alasan_penolakan']);
 					}
 
 					if (data['penilaian_perilaku_kerja'] >= 1 ){

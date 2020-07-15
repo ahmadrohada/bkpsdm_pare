@@ -807,7 +807,7 @@ class CapaianTahunanAPIController extends Controller {
                 $persetujuan_atasan = 'disetujui';
                 $alasan_penolakan   = "";
             }else if ( ($capaian_tahunan->status_approve) == 2 ){
-                $persetujuan_atasan = '<span class="text-danger">ditolak</span>';
+                $persetujuan_atasan = 'ditolak';
                 $alasan_penolakan   = $capaian_tahunan->alasan_penolakan;
             }else{
                 $persetujuan_atasan = '';
@@ -823,18 +823,28 @@ class CapaianTahunanAPIController extends Controller {
         $data_kinerja               = $this->hitung_capaian_tahunan($capaian_id); 
         //return $data_kinerja;
 
-        $jm_capaian_kegiatan_tahunan        = $data_kinerja['jm_capaian'];
+        //kegiatan tahunan
+        $jm_capaian_kegiatan_tahunan        = $data_kinerja['jm_capaian_kegiatan_tahunan'];
         $jm_kegiatan_tahunan                = $data_kinerja['jm_kegiatan_tahunan'];
+        $ave_capaian_kegiatan_tahunan       = $data_kinerja['ave_capaian_kegiatan_tahunan'];
+        //tugas tambahan
         $jm_tugas_tambahan                  = $data_kinerja['jm_tugas_tambahan'];
         $jm_capaian_tugas_tambahan          = $data_kinerja['jm_capaian_tugas_tambahan'];
+        $ave_capaian_tugas_tambahan         = $data_kinerja['ave_capaian_tugas_tambahan'];
+        //unsur penunjang
+        $nilai_unsur_penunjang_tugas_tambahan   = $data_kinerja['nilai_unsur_penunjang_tugas_tambahan'];
+        $nilai_unsur_penunjang_kreativitas      = $data_kinerja['nilai_unsur_penunjang_kreativitas'];
+        $nilai_unsur_penunjang              = $nilai_unsur_penunjang_tugas_tambahan + $nilai_unsur_penunjang_kreativitas;
 
         $jm_kegiatan_skp                    = $jm_kegiatan_tahunan + $jm_tugas_tambahan;
         $jm_capaian_kegiatan_skp            = $jm_capaian_kegiatan_tahunan + $jm_capaian_tugas_tambahan;
 
+        //unseu
 
-        $capaian_kinerja_tahunan  = Pustaka::persen2($jm_capaian_kegiatan_skp,$jm_kegiatan_skp);
+        $capaian_kinerja_tahunan  = Pustaka::ave($jm_capaian_kegiatan_skp,$jm_kegiatan_skp);
+        $capaian_skp              = $capaian_kinerja_tahunan +  $nilai_unsur_penunjang ;
 
-        $nilai_prestasi_kerja = number_format( ($capaian_kinerja_tahunan * 60 / 100)+( $ave * 40 / 100 ) , 2 );
+        $nilai_prestasi_kerja = number_format( ($capaian_skp * 60 / 100)+( $ave * 40 / 100 ) , 2 );
         //return $data_kinerja;
       
         $response = array(
@@ -847,8 +857,11 @@ class CapaianTahunanAPIController extends Controller {
                 'jm_capaian_tugas_tambahan'     => $jm_capaian_tugas_tambahan, //B
                 'jm_capaian_kegiatan_skp'       => $jm_capaian_kegiatan_skp, //A+B
 
+                'nilai_unsur_penunjang'         => $nilai_unsur_penunjang,
+
                
                 'capaian_kinerja_tahunan'       => $capaian_kinerja_tahunan,
+                'capaian_skp'                   => $capaian_skp,
                 'penilaian_perilaku_kerja'      => Pustaka::persen_bulat($ave),
 
                 'nilai_prestasi_kerja'          => Pustaka::persen_bulat($nilai_prestasi_kerja),

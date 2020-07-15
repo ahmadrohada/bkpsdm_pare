@@ -113,12 +113,16 @@ class CapaianBulananController extends Controller {
         
         //hanya atasan yang bisa approve
         if ( $capaian_bulanan->PejabatPenilai->id_pegawai == $user->id_pegawai ){
-            return view('pare_pns.pages.personal-capaian_bulanan_approvement', ['capaian'                   => $capaian_bulanan,
-                                                                                'jabatan_sekda'             => $this->jenis_PJabatan('sekda'),
-                                                                                'jabatan_irban'             => $this->jenis_PJabatan('irban'),
-                                                                                'jabatan_lurah'             => $this->jenis_PJabatan('lurah'),
-                                                                                'jabatan_staf_ahli'         => $this->jenis_PJabatan('staf_ahli'),
-                                                                                ]);
+            if ( $capaian_bulanan->status_approve == '0' ){
+                return view('pare_pns.pages.personal-capaian_bulanan_approvement', ['capaian'                   => $capaian_bulanan,
+                                                                                    'jabatan_sekda'             => $this->jenis_PJabatan('sekda'),
+                                                                                    'jabatan_irban'             => $this->jenis_PJabatan('irban'),
+                                                                                    'jabatan_lurah'             => $this->jenis_PJabatan('lurah'),
+                                                                                    'jabatan_staf_ahli'         => $this->jenis_PJabatan('staf_ahli'),
+                                                                                    ]);
+            } else {
+                return redirect('/personal/capaian_bulanan_bawahan/'.$request->capaian_bulanan_id)->with('status', 'approved');
+            }
         }else{
            //return view('pare_pns.errors.users403');
            return redirect('/dashboard');

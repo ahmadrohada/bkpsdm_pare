@@ -11,9 +11,9 @@
 					<tr>
 						<th>No</th>
 						<th>TUGAS TAMBAHAN</th>
+						<th>APPROVED</th>
 						<th>NILAI</th>
 						<th><i class="fa fa-cog"></i></th>
-						<th>APPROVED</th>
 					</tr>
 				</thead>	
 			</table>
@@ -64,20 +64,16 @@
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2,3,4 ] },
 									@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )  
-										{ visible: true, "targets": [3]},
-										{ visible: false,"targets": [2]},
-									@else
-										{ visible: false, "targets": [3]},
-										{ visible: true, "targets": [2]},
-									@endif
-
-									@if ( request()->segment(2) == 'capaian_tahunan_bawahan_approvement'  )  
+										{ visible: false, "targets": [2]},
+										{ visible: false,"targets": [3]},
 										{ visible: true, "targets": [4]},
 									@else
+										{ visible: true, "targets": [2]},
+										{ visible: true, "targets": [3]},
 										{ visible: false, "targets": [4]},
 									@endif
 
-
+									 
 								  ],
 				ajax			: {
 									url	: '{{ url("api_resource/unsur_penunjang_tugas_tambahan_list") }}',
@@ -85,8 +81,9 @@
 									quietMillis: 500,
 
 								  },
+				rowsGroup		: [ 3 ],
 				columns			: [
-									{ data: 'tugas_tambahan_id' ,width:"20px",
+									{ data: 'tugas_tambahan_id' ,width:"10%",
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 										}
@@ -97,13 +94,31 @@
 											
 										}
 									},
+									{  data: 'approvement',width:"20px",
+											"render": function ( data, type, row ) {
+											@if ( request()->segment(2) == 'capaian_tahunan_bawahan_approvement'  )	
+												if ( row.approvement == 1 ){
+													return  '<span  data-toggle="tooltip" title="" style="cursor:pointer;" ><a class="fa fa-check-square-o fa-lg reject_unsur_penunjang_tugas_tambahan"  data-id="'+row.tugas_tambahan_id+'"></a></span>';
+												}else{
+													return  '<span  data-toggle="tooltip" title="" style="cursor:pointer;" ><a class="text-danger fa fa-minus-square-o fa-lg approve_unsur_penunjang_tugas_tambahan"  data-id="'+row.tugas_tambahan_id+'"></a></span>';
+												}
+											@else
+												if ( row.approvement == 1 ){
+													return  '<span  style="cursor:default;" ><a class=" fa fa-check-square-o fa-lg"></a></span>';
+												}else{
+													return  '<span  title="" style="cursor:default;" ><a class="text-danger fa fa-minus-square-o fa-lg"></a></span>';
+												}
+											@endif
+											
+										}
+									},
 									{ data: "tugas_tambahan_nilai", name:"tugas_tambahan_nilai",
 										"render": function ( data, type, row ) {
 											return row.tugas_tambahan_nilai;
 											
 										}
 									},
-									{  data: 'action',width:"60px",
+									{  data: 'action',width:"30px",
 											"render": function ( data, type, row ) {
 
 											return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_unsur_penunjang_tugas_tambahan"  data-id="'+row.tugas_tambahan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
@@ -111,16 +126,8 @@
 											
 										}
 									},
-									{  data: 'approvement',width:"20px",
-											"render": function ( data, type, row ) {
-											if ( row.approvement == 1 ){
-												return  '<span  data-toggle="tooltip" title="" style="cursor:pointer;" ><a class="fa fa-check-square-o fa-lg reject_unsur_penunjang_tugas_tambahan"  data-id="'+row.tugas_tambahan_id+'"></a></span>';
-											}else{
-												return  '<span  data-toggle="tooltip" title="" style="cursor:pointer;" ><a class="fa fa-minus-square-o fa-lg approve_unsur_penunjang_tugas_tambahan"  data-id="'+row.tugas_tambahan_id+'"></a></span>';
-											}
-											
-										}
-									},
+									
+									
 									
 								
 								],
@@ -149,16 +156,14 @@
 									@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )  
 										{ visible: true, "targets": [4]},
 										{ visible: false,"targets": [3]},
+										{ visible: false, "targets": [5]},
 									@else
 										{ visible: false, "targets": [4]},
 										{ visible: true, "targets": [3]},
+										{ visible: true, "targets": [5]},
 									@endif
 
-									@if ( request()->segment(2) == 'capaian_tahunan_bawahan_approvement'  )  
-										{ visible: true, "targets": [5]},
-									@else
-										{ visible: false, "targets": [5]},
-									@endif
+									
 								  ],
 				ajax			: {
 									url	: '{{ url("api_resource/unsur_penunjang_kreativitas_list") }}',
@@ -167,7 +172,7 @@
 
 								  },
 				columns			: [
-									{ data: 'kreativitas_id' ,width:"20px",
+									{ data: 'kreativitas_id' ,width:"10%",
 										"render": function ( data, type, row ,meta) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
 										}
@@ -193,7 +198,7 @@
 											
 										}
 									},
-									{  data: 'action',width:"70px",
+									{  data: 'action',width:"30px",
 											"render": function ( data, type, row ) {
 
 											return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_unsur_penunjang_kreativitas"  data-id="'+row.kreativitas_id+'"><i class="fa fa-pencil" ></i></a></span>'+
@@ -203,11 +208,20 @@
 									},
 									{  data: 'approvement',width:"20px",
 											"render": function ( data, type, row ) {
-											if ( row.approvement == 1 ){
-												return  '<span  data-toggle="tooltip" title="" style="cursor:pointer;" ><a class="fa fa-check-square-o fa-lg reject_unsur_penunjang_kreativitas"  data-id="'+row.kreativitas_id+'"></a></span>';
-											}else{
-												return  '<span  data-toggle="tooltip" title="" style="cursor:pointer;" ><a class="fa fa-minus-square-o fa-lg approve_unsur_penunjang_kreativitas"  data-id="'+row.kreativitas_id+'"></a></span>';
-											}
+											@if ( request()->segment(2) == 'capaian_tahunan_bawahan_approvement'  )  
+												if ( row.approvement == 1 ){
+													return  '<span  data-toggle="tooltip" title="" style="cursor:pointer;" ><a class="fa fa-check-square-o fa-lg reject_unsur_penunjang_kreativitas"  data-id="'+row.kreativitas_id+'"></a></span>';
+												}else{
+													return  '<span  data-toggle="tooltip" title="" style="cursor:pointer;" ><a class="text-danger fa fa-minus-square-o fa-lg approve_unsur_penunjang_kreativitas"  data-id="'+row.kreativitas_id+'"></a></span>';
+												}
+											@else
+												if ( row.approvement == 1 ){
+													return  '<span  data-toggle="" title="" style="cursor:default;" ><a class="fa fa-check-square-o fa-lg" ></a></span>';
+												}else{
+													return  '<span  data-toggle="" title="" style="cursor:default;" ><a class="text-danger fa fa-minus-square-o fa-lg" ></a></span>';
+												}
+											@endif
+											
 											
 										}
 									},

@@ -14,6 +14,8 @@ use App\Models\UraianTugasTambahan;
 use App\Models\RealisasiKegiatanTahunan;
 use App\Models\TugasTambahan;
 use App\Models\RealisasiTugasTambahan;
+use App\Models\UnsurPenunjangTugasTambahan;
+use App\Models\UnsurPenunjangKreativitas;
 
 
 
@@ -436,14 +438,22 @@ trait HitungCapaian
         //cari nilai_capaian Kegiatan tahunan
         $xdata = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->get();
        
-        $nilai_capaian_kegiatan_tahunan = 0 ;
+        $jm_capaian_kegiatan_tahunan = 0 ;
         foreach ($xdata as $x) {
-            $nilai_capaian_kegiatan_tahunan =  $nilai_capaian_kegiatan_tahunan + $x->hitung_quantity;
+
+            if ( $x->hitung_cost <=0 ){
+                $capaian_kegiatan_tahunan = ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/3;
+            }else{
+                $capaian_kegiatan_tahunan = ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/4;
+            }
+
+            $jm_capaian_kegiatan_tahunan =  $jm_capaian_kegiatan_tahunan + $capaian_kegiatan_tahunan;
         }
 
         return array(
-            'jm_kegiatan_tahunan'       => $jm_kegiatan,
-            'jm_capaian'                => $nilai_capaian_kegiatan_tahunan,
+            'jm_kegiatan_tahunan'           => $jm_kegiatan,
+            'jm_capaian_kegiatan_tahunan'   => number_format($jm_capaian_kegiatan_tahunan,2),
+            'ave_capaian_kegiatan_tahunan'  => Pustaka::ave($jm_capaian_kegiatan_tahunan,$jm_kegiatan),
         );
 
     }
@@ -516,7 +526,34 @@ trait HitungCapaian
         $data_2 = array(
                         'jm_tugas_tambahan'           => $jm_tugas_tambahan,
                         'jm_capaian_tugas_tambahan'   => $jm_capaian_tugas_tambahan,
+                        'ave_capaian_tugas_tambahan'  => Pustaka::ave($jm_capaian_tugas_tambahan,$jm_tugas_tambahan),
                         );
+
+        //Unsur penunjang pada capaian
+        $n_tt = UnsurPenunjangTugasTambahan::WHERE('capaian_tahunan_id', '=' ,$capaian_id)->WHERE('approvement', '=' , '1' )->count();
+
+        if ( $n_tt < 1){
+            $n_nilai_tt = 0;
+        }else if ( $n_tt <= 3 ){
+            $n_nilai_tt = 1;
+        }else if ( $n_tt <= 6 ){
+            $n_nilai_tt = 2;
+        }else if ( $n_tt >= 7 ){
+            $n_nilai_tt = 3;
+        }
+
+        $n_kreativitas = UnsurPenunjangKreativitas::WHERE('capaian_tahunan_id', '=' ,$capaian_id)
+                                            ->WHERE('approvement', '=' , '1' )
+                                            ->sum('nilai');
+        
+
+
+        
+        $data_3 = array(
+            'nilai_unsur_penunjang_tugas_tambahan'      => $n_nilai_tt,
+            'nilai_unsur_penunjang_kreativitas'         => $n_kreativitas,
+            );
+
 
 
         //JENIS JABATAN STAF AHLI
@@ -550,12 +587,13 @@ trait HitungCapaian
             $data =  $this->capaian_tahunan_eselon2($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);
         }else{
             $data = array(
-                'jm_kegiatan_bulanan'       => 0,
-                'jm_capaian'                => 0,
+                'jm_kegiatan_bulanan'           => 0,
+                'jm_capaian_kegiatan_bulanan'   => 0,
+                'ave_capaian_kegiatan_bulanan'  => 0,
             ); 
         }
 
-        return array_merge($data,$data_2);
+        return array_merge($data,$data_2,$data_3);
         
         //return array_merge($data,$data_2);
     }

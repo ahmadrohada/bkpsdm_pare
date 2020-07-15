@@ -25,10 +25,24 @@ class UnsurPenunjangAPIController extends Controller {
                                 ->select([   
                                     'id AS tugas_tambahan_id',
                                     'label AS tugas_tambahan_label',
-                                    'nilai AS tugas_tambahan_nilai',
                                     'approvement'
                                 ])
                                 ->get();
+
+        //nilai tugas tambahan
+        $n_tt = UnsurPenunjangTugasTambahan::WHERE('capaian_tahunan_id', '=' ,$request->get('capaian_tahunan_id'))
+                                            ->WHERE('approvement', '=' , '1' )
+                                            ->count();
+
+        if ( $n_tt < 1){
+            $n_nilai = 0;
+        }else if ( $n_tt <= 3 ){
+            $n_nilai = 1;
+        }else if ( $n_tt <= 6 ){
+            $n_nilai = 2;
+        }else if ( $n_tt >= 7 ){
+            $n_nilai = 3;
+        }
 
         $datatables = Datatables::of($dt)
                     ->addColumn('tugas_tambahan_label', function ($x) {
@@ -36,6 +50,9 @@ class UnsurPenunjangAPIController extends Controller {
                     })
                     ->addColumn('action', function ($x) {
                         return $x->tugas_tambahan_id;
+                    })
+                    ->addColumn('tugas_tambahan_nilai', function ($x) use($n_nilai) {
+                        return $n_nilai;
                     });
 
                     if ($keyword = $request->get('search')['value']) {
@@ -219,7 +236,6 @@ class UnsurPenunjangAPIController extends Controller {
 
 
         $sr->approvement   = '1';
-        $sr->nilai         = 1;
 
         if ( $sr->save()){
             return \Response::make('sukses', 200);
@@ -253,7 +269,6 @@ class UnsurPenunjangAPIController extends Controller {
 
 
         $sr->approvement    = '0';
-        $sr->nilai          = 0;
 
         if ( $sr->save()){
             return \Response::make('sukses', 200);
@@ -285,13 +300,13 @@ class UnsurPenunjangAPIController extends Controller {
                     })
                     ->addColumn('kreativitas_manfaat', function ($x) {
                         switch ($x->manfaat_id) {
-                            case "1":
+                            case "3":
                               return "Untuk Unit Kerja";
                               break;
-                            case "2":
+                            case "6":
                                 return "Untuk Organisasi";
                               break;
-                            case "3":
+                            case "12":
                                 return "Untuk Pemerintah";
                               break;
                             default:
@@ -363,6 +378,7 @@ class UnsurPenunjangAPIController extends Controller {
         $sr->capaian_tahunan_id         = Input::get('capaian_tahunan_id');
         $sr->label                      = Input::get('label');
         $sr->manfaat_id                 = Input::get('manfaat_id');
+        $sr->nilai                      = Input::get('manfaat_id');
 
         if ( $sr->save()){
             return \Response::make('sukses', 200);
@@ -411,6 +427,7 @@ class UnsurPenunjangAPIController extends Controller {
 
         $sr->label                = Input::get('label');
         $sr->manfaat_id           = Input::get('manfaat_id');
+        $sr->nilai                = Input::get('manfaat_id');
 
 
         if ( $sr->save()){
@@ -493,7 +510,6 @@ class UnsurPenunjangAPIController extends Controller {
 
 
         $sr->approvement            = '1';
-        $sr->nilai                  = 1;
 
 
         if ( $sr->save()){
@@ -532,7 +548,6 @@ class UnsurPenunjangAPIController extends Controller {
 
 
         $sr->approvement            = '0';
-        $sr->nilai                  = 0;
 
 
         if ( $sr->save()){

@@ -31,34 +31,34 @@
 						II. Jumlah Tugas Tambahan <a class="pull-right st_jumlah_tugas_tambahan" >-</a>
 					</li>
 					<li class="list-group-item" style="padding:8px 10px; border-top: solid 1px #615e68 !important;">
-						Jumlah Kegiatan SKP ( I + II) <a class="pull-right st_jumlah_kegiatan_skp" >-</a>
+						A. Jumlah Kegiatan SKP ( I + II) <a class="pull-right st_jumlah_kegiatan_skp" >-</a>
 					</li>
 					<li class="list-group-item" style="padding:8px 10px;">
-						A. Nilai Capaian Kegiatan SKP + Tugas Tambahan
+						B. Nilai Capaian Kegiatan SKP + Tugas Tambahan
 						<a class="pull-right st_capaian_kegiatan_skp" >-</a>
 					</li>
 					<li class="list-group-item" style="padding:8px 10px;">
-						B. Nilai Unsur Penunjang
+						C. Nilai Unsur Penunjang
 						<a class="pull-right st_nilai_unsur_penunjang" >-</a>
 					</li>
 		
 					
 
 					<li class="list-group-item" style="padding:8px 10px; border-top: solid 1px #615e68 !important; ">
-						D. Capaian SKP<span class="text-muted"> (A+B)/n + C
+						D. Capaian SKP<span class="text-muted"> (B/A) + C
 						</span><a class="pull-right st_capaian_skp" >-</a>
 					</li>
 
 					<li class="list-group-item" style="padding:8px 10px; ">
 						<input type="hidden" class="penilaian_kode_etik_id">
-						D. Penilaian Perilaku Kerja
+						E. Penilaian Perilaku Kerja
 						<a class="btn btn-success btn-xs edit_penilaian_perilaku" style="margin-top:-1px;"><i class="fa fa-pencil" ></i></a>
 						<a class="pull-right st_penilaian_perilaku_kerja" >-</a>
 					</li>
 
 					<li class="list-group-item" style="background:#efeff0; border-top: solid #615e68 !important; border-top-width: 2px; padding:8px 10px;">
 						<strong>Nilai Prestasi Kerja</strong> 
-						<span class="text-muted st_formula_perhitungan"> ( C x 60% ) + ( D x 40% )</span>
+						<span class="text-muted st_formula_perhitungan"> ( D x 60% ) + ( E x 40% )</span>
 						<a class="pull-right st_nilai_prestasi_kerja" style="font-weight: bold;" >-</a>
 					</li>
 					
@@ -176,7 +176,8 @@
 					$('.st_capaian_kegiatan_skp').html(data['jm_capaian_kegiatan_tahunan']+' + '+data['jm_capaian_tugas_tambahan']);
 					
 
-					$('.st_capaian_skp').html(data['capaian_kinerja_tahunan']);
+					$('.st_capaian_skp').html(data['capaian_skp']);
+					$('.st_nilai_unsur_penunjang').html(data['nilai_unsur_penunjang']);
 
 					$('.st_penilaian_perilaku_kerja').html(data['penilaian_perilaku_kerja']);
 					$('.st_nilai_prestasi_kerja').html(data['nilai_prestasi_kerja']);
@@ -233,10 +234,77 @@
 
 	}
 
+
+	$(document).on('click','.tolak_capaian_tahunan',function(e){
+		Swal.fire({
+			title				: 'Tolak Capaian Tahunan',
+			text				: 'Berikan alasan penolakan',
+			input				: 'text',
+			type				: "question",
+			showCancelButton	: true,
+			confirmButtonText	: 'Tolak',
+			showLoaderOnConfirm	: true,
+			inputAttributes: {
+				autocapitalize: 'off'
+			},
+
+			inputValidator: (value) => {
+				return !value && 'wajib mencantumkan alasan penolakan!'
+			},
+			allowOutsideClick: false
+			}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/tolak_capaian_tahunan") }}',
+					type	: 'POST',
+					data    : { capaian_tahunan_id:{!! $capaian->id !!} ,
+								alasan:result.value
+							   },
+					cache   : false,
+					success:function(data){
+						Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										location.reload();
+
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+						Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+					});	
+				
+
+					
+			}
+		});
+	});
+
 	$(document).on('click','.terima_capaian_tahunan',function(e){
 		Swal.fire({
 				title: "Terima",
-				text: "Anda akan menerima dan menyetujui Laporan Capaian Bulanan",
+				text: "Anda akan menerima dan menyetujui Laporan Capaian Tahunan",
 				type: "question",
 				showCancelButton: true,
 				cancelButtonText: "Batal",
