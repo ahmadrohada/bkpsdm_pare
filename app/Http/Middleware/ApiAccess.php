@@ -3,42 +3,44 @@
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class ApiAccess
-{
-    /**
-     * The Guard implementation.
-     *
-     * @var Guard
-     */
-    protected $auth;
+class ApiAccess {
 
-    /**
-     * Create a new filter instance.
-     *
-     * @param  Guard  $auth
-     * @return void
-     */
-    public function __construct(Guard $auth)
-    {
-        $this->auth = $auth;
-    }
+	/**
+	 * The Guard implementation.
+	 *
+	 * @var Guard
+	 */
+	protected $auth;
 
-    /**
-     * C
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
-        $auth = auth()->guard('api');
-     
-        if ($auth->check()) {
+	/**
+	 * Create a new filter instance.
+	 *
+	 * @param  Guard  $auth
+	 * @return void
+	 */
+	public function __construct(Guard $auth)
+	{
+		$this->auth = $auth;
+	}
+
+	/**
+	 * Handle an incoming request.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Closure  $next
+	 * @return mixed
+	 */
+	public function handle($request, Closure $next)
+	{
+
+		if ( $request['access_token'] === '12345' )
+		{
             return $next($request);
-        };
-     
-        abort(403, "You're not authorized to access this public REST API.");
-    }
-    
+			
+		}else{
+            return response()->json(['message'     => 'Token is not valid',],401);
+        }
+
+	}
+
 }

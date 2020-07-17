@@ -16,10 +16,18 @@
 | http://socialiteproviders.github.io/
 
 */
-//tes route
 
 
-//===================== AJAX REQUEST WITH API CONTROLLER =================//
+//===================== AJAX REQUEST CONTROLLER =================//
+Route::group(['prefix' => 'pare_api','middleware'=> 'auth.api:tes' ], function () {
+
+	Route::get('tpp-report','PARE_API\TPPReportController@TTPReport');
+
+});
+
+
+
+//===================== AJAX REQUEST CONTROLLER =================//
 Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 
 	Route::resource('periode_tahunan','API\PeriodeTahunanAPIController');
@@ -1774,16 +1782,21 @@ Route::group(['prefix' => 'non_pns','middleware' => 'non_pns'], function () {
 
 // CATCH ALL ERROR FOR USERS AND NON USERS
 Route::any('/{page?}',function(){
-	if (Auth::check()) {
+	if ( ( Auth::check() ) & ( Request::segment(1) != 'pare_api' ) ) {
 		/* return view('pare_pns.errors.users404'); */
+
 		$data['title'] = '404';
 		$data['name'] = 'Page not found';
 		return response()->view('pare_pns.errors.users404',$data,404);
 		
 	} else {
-		return View('errors.404');
+		//return View('errors.404');
+		//return response()->json(["productQuanties" => "tes"]);
+		return response("<pre>Not found</pre>");
 	}
 })->where('page','.*');
+
+
 
 
 
