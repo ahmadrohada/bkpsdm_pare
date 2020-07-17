@@ -266,7 +266,7 @@
 	$(document).on('click','.kirim_capaian',function(e){
 		Swal.fire({
 				title: "Kirim Capaian",
-				text: "Capaian Tahunan akan dikirim ke atasan untuk, edit pada capaian tidak bisa dilakukan",
+				text: "Capaian Tahunan akan dikirim ke atasan untuk mendapatkan persetujuan, edit pada capaian tidak bisa dilakukan",
 				type: "question",
 				showCancelButton: true,
 				cancelButtonText: "Batal",

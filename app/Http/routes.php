@@ -20,7 +20,7 @@
 
 
 //===================== AJAX REQUEST WITH API CONTROLLER =================//
-Route::group(['prefix' => 'api_resource'/* ,'middleware'=> 'auth.api' */], function () {
+Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 
 	Route::resource('periode_tahunan','API\PeriodeTahunanAPIController');
 

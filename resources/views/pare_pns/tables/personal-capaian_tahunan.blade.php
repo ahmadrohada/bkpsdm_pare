@@ -18,7 +18,7 @@
 						<th>PERIODE</th>
 						<th>PELAKSANAAN</th>
 						<th>JABATAN</th>
-						<th>CAPAIAN</th>
+						<th>CAPAIAN SKP</th>
 						<th><i class="fa fa-cog"></i></th> 
 					</tr>
 				</thead>
@@ -94,14 +94,14 @@
 								},
 								{ data: "capaian_skp" ,  name:"capaian_skp", orderable: true, searchable: true,
 									"render": function ( data, type, row ) {
-										return "";
+										return row.capaian_skp;
 
 									}	
 								},
 								
-								{ data: "capaian" , orderable: false,searchable:false,width:"120px",
+								{ data: "capaian_id" , orderable: false,searchable:false,width:"120px",
 										"render": function ( data, type, row ) {
-										if (row.capaian >= 1 ){ 
+										if (row.capaian_id >= 1 ){ 
 
 
 												if (row.capaian_send_to_atasan == 1 ){

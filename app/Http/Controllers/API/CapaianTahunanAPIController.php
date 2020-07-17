@@ -95,8 +95,34 @@ class CapaianTahunanAPIController extends Controller {
                     return  $this->jabatan($x->u_jabatan_id);
                 }
             })
-            ->addColumn('capaian', function ($x) {
-                return $x->capaian_id;
+            ->addColumn('capaian_skp', function ($x) {
+
+                if ( $x->capaian_id != null ){
+                    $data_kinerja               = $this->hitung_capaian_tahunan($x->capaian_id); 
+                
+                    //kegiatan tahunan
+                    $jm_capaian_kegiatan_tahunan        = $data_kinerja['jm_capaian_kegiatan_tahunan'];
+                    $jm_kegiatan_tahunan                = $data_kinerja['jm_kegiatan_tahunan'];
+                    $ave_capaian_kegiatan_tahunan       = $data_kinerja['ave_capaian_kegiatan_tahunan'];
+                    //tugas tambahan
+                    $jm_tugas_tambahan                  = $data_kinerja['jm_tugas_tambahan'];
+                    $jm_capaian_tugas_tambahan          = $data_kinerja['jm_capaian_tugas_tambahan'];
+                    $ave_capaian_tugas_tambahan         = $data_kinerja['ave_capaian_tugas_tambahan'];
+                    //unsur penunjang
+                    $nilai_unsur_penunjang_tugas_tambahan   = $data_kinerja['nilai_unsur_penunjang_tugas_tambahan'];
+                    $nilai_unsur_penunjang_kreativitas      = $data_kinerja['nilai_unsur_penunjang_kreativitas'];
+                    $nilai_unsur_penunjang              = $nilai_unsur_penunjang_tugas_tambahan + $nilai_unsur_penunjang_kreativitas;
+            
+                    $jm_kegiatan_skp                    = $jm_kegiatan_tahunan + $jm_tugas_tambahan;
+                    $jm_capaian_kegiatan_skp            = $jm_capaian_kegiatan_tahunan + $jm_capaian_tugas_tambahan;
+            
+                    $capaian_kinerja_tahunan  = Pustaka::ave($jm_capaian_kegiatan_skp,$jm_kegiatan_skp);
+                    $capaian_skp              = $capaian_kinerja_tahunan +  $nilai_unsur_penunjang ;
+                    return $capaian_skp;
+                }else{
+                    return '-';
+                }
+                
              
             })
             ->addColumn('remaining_time', function ($x) {
