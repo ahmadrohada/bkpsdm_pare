@@ -46,15 +46,35 @@ class TPPReportController extends Controller
                                     ->first();
         if ( $tpp_report_detail ){
             $tpp_report_data = TPPReportData::
-                                            WHERE('tpp_report_data.tpp_report_id', $tpp_report_detail->tpp_report_id)
+                                            //JABATAN
+                                            leftjoin('demo_asn.m_skpd AS jabatan', function ($join) {
+                                                $join->on('jabatan.id', '=', 'tpp_report_data.jabatan_id');
+                                            }) 
+                                            //ESELON
+                                            ->leftjoin('demo_asn.m_eselon AS eselon', function ($join) {
+                                                $join->on('eselon.id', '=', 'tpp_report_data.eselon_id');
+                                            }) 
+                                            //UNIT KERJA 
+                                            ->leftjoin('demo_asn.m_unit_kerja AS unit_kerja', function ($join) {
+                                                $join->on('unit_kerja.id', '=', 'tpp_report_data.unit_kerja_id');
+                                            })
+                                            //Golongan
+                                            ->leftjoin('demo_asn.m_golongan AS golongan', function ($join) {
+                                                $join->on('golongan.id', '=', 'tpp_report_data.golongan_id');
+                                            })
+                                            
                                             ->select([
-                                                'tpp_report_data.nama_pegawai',
+                                                'tpp_report_data.nama_pegawai AS nama',
+                                                'golongan.pangkat AS pangkat',
+                                                'golongan.golongan AS golongan',
+                                                'jabatan.skpd AS jabatan',
                                                 'tpp_report_data.tpp_rupiah AS tpp',
-                                                'tpp_report_data.cap_skp AS capaian_skp',
-                                                'tpp_report_data.skor_cap AS skor_capaian',
+                                                'tpp_report_data.skor_cap AS skor_skp',
                                                 'tpp_report_data.skor_kehadiran AS skor_kehadiran'
 
                                             ])
+                                            ->WHERE('tpp_report_data.tpp_report_id', $tpp_report_detail->tpp_report_id)
+                                            ->ORDERBY('tpp_report_data.eselon_id','ASC')
                                             ->get()->toArray();
         }else{
             $tpp_report_data = [];
