@@ -36,12 +36,18 @@
 		//alert();
 		
 		$('#user_table').DataTable({
+				destroy			: true,
 				processing      : true,
 				serverSide      : true,
 				searching      	: true,
-				paging          : false,
-				//dom 			: '<"toolbar">frtip',
-				lengthMenu		: [20,50,100],
+				paging          : true,
+				autoWidth		: false,
+				bInfo			: false,
+				bSort			: false, 
+				lengthChange	: false,
+				deferRender		: true,
+				//order 			: [ 5 , 'asc' ],
+				lengthMenu		: [20,50],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,2,3,4 ] }/* ,
 									{	className: "hidden", targets: [5] } */
@@ -54,7 +60,7 @@
 			
 
 				columns	:[
-								{ data: 'id' , orderable: true,searchable:false,
+								{ data: 'id' , orderable: true,searchable:false,width:"30px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}

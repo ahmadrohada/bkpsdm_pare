@@ -92,6 +92,18 @@
 				</div>
 			</div>
 
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-maroon puskesmas" style="cursor:pointer;">
+					<div class="inner">
+						<h3>{{$total_puskesmas}}</h3>
+						<p>PUSKESMAS</p>
+					</div>
+					<div class="icon">
+						<i class="fa fa-hospital-o"></i>
+					</div>
+				</div>
+			</div>
+
 
 		</div>
 	</div>
@@ -127,6 +139,10 @@ $(document).ready(function(){
 
 	$(".tpp_report").click(function(){
 		window.location.assign("tpp_report");
+	});
+	
+	$(".puskesmas").click(function(){
+		window.location.assign("puskesmas");
     });
 
 

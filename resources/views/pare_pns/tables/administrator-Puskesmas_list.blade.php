@@ -1,7 +1,7 @@
 <div class="box {{ $h_box }}">
     <div class="box-header with-border">
         <h1 class="box-title">
-            SKP Tahunan
+            Data PUSKESMAS 
         </h1>
 
         <div class="box-tools pull-right">
@@ -11,15 +11,12 @@
 	</div>
 	<div class="row" style="padding:5px 30px; min-height:200px;">
 		<div class="box-body table-responsive">
-			<table id="rkpd_table" class="table table-striped table-hover table-condensed">
+			<table id="puskesmas_table" class="table table-striped table-hover table-condensed">
 				<thead>
 					<tr class="success">
 						<th>NO</th>
-						<th>PERIODE</th>
-						<th>NIP</th>
-						<th>NAMA</th>
-						<th>JABATAN</th>
-						<th>ESELON</th>
+						<th>NAMA PUSKESMAS</th>
+						<th>JM PEGAWAI</th>
 						<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 					</tr>
 				</thead>
@@ -29,10 +26,15 @@
 </div>
 
 
+@section('template_scripts')
 
-<script type="text/javascript">
+    @include('pare_pns.structure.dashboard-scripts')
 
-	$('#rkpd_table').DataTable({
+	<script type="text/javascript">
+	$(document).ready(function() {
+		//alert();
+		
+		$('#puskesmas_table').DataTable({
 				destroy			: true,
 				processing      : true,
 				serverSide      : true,
@@ -46,47 +48,38 @@
 				//order 			: [ 5 , 'asc' ],
 				lengthMenu		: [20,50],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,2,5,6 ] }/* ,
-									//{ 	className: "hidden-xs", targets: [ 5 ] } */
+									{ 	className: "text-center", targets: [ 0,2,3 ] }/* ,
+									{	className: "hidden", targets: [5] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_skp_tahunan_list") }}',
+									url	: '{{ url("api_resource/administrator_puskesmas_list") }}',
 									
 									delay:3000
 								},
-				
+			
 
 				columns	:[
-								{ data: 'skp_tahunan_id' , orderable: true,searchable:false,
+								{ data: 'puskesmas_id' , orderable: true,searchable:false,width:"30px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: false},
-								{ data: "nip_pegawai" ,  name:"pejabat.nip", orderable: true, searchable: true},
-								{ data: "nama_pegawai" ,  name:"skp_tahunan.u_nama", orderable: true, searchable: true},
-								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true},
-								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true},
-							{ data: "status" , orderable: false,searchable:false,width:"50px",
+								{ data: "nama_puskesmas" , name:"nama_puskesmas", orderable: true, searchable: true},
+								{ data: "jm_pegawai" , orderable: false, searchable: false,width:"120px"},
+								{ data: "action" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
-
-											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-eye" ></i></a></span>';
+											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="../admin/puskesmas/'+row.puskesmas_id+'/pegawai" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';
 										
 									}
 								},
 								
 							]
 			
-	});
+		});
 	
-	
-	$(document).on('click','.lihat_skp_tahunan',function(e){
-		var skp_tahunan_id = $(this).data('id') ;
-		//alert(skp_tahunan_id);
+		
+		
+		});
+    </script>
 
-
-
-		window.location.assign("skp_tahunan/"+skp_tahunan_id);
-	});
-</script>
+@endsection

@@ -33,7 +33,7 @@ class ApiAccess {
 	public function handle($request, Closure $next)
 	{
 
-		if ( $request['access_token'] === '12345' )
+		if ( $request['access_token'] === '0pMroLcGdpj2FqxBn7NKK4ZB4UynqkjkQNtDrUf4redo50f1u0SOtpShazUm' )
 		{
             return $next($request);
 			

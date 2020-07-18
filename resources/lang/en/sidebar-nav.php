@@ -213,6 +213,11 @@ return [
 	'link_icon_tpp_report_cetak'     		=> 'fa-print',
 
 
+	// PUSKESDAMS
+	'link_title_puskesmas'    		=> 'Puskesmas',
+	'link_icon_puskesmas'     		=> 'fa-hospital-o',
+
+
 	// PETA JABATAN LINKS
 	
 	'link_title_peta_jabatan'   => 'Peta Jabatan',

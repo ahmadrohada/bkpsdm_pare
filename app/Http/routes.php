@@ -49,10 +49,15 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	//========================================================================================================//
 	
 	Route::get('administrator_skpd_list','API\SKPDAPIController@administrator_skpd_list');
-
-	
- 
 	Route::get('administrator_unit_kerja_skpd_list','API\SKPDAPIController@administrator_unit_kerja_skpd_list');
+
+	//========================================================================================================//
+	//=======================================   P U S K E S M A S     ========================================//
+	//========================================================================================================//
+	
+	Route::get('administrator_puskesmas_list','API\PuskesmasAPIController@AdministratorPuskesmasList');
+
+
 	
 	//========================================================================================================//
 	//===========================================     MASA PEMERINTAHAN          =============================//
@@ -890,20 +895,14 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	//==================================  P E G A W A I =================================================//
 	//========================================================================================================//
 	Route::get('administrator_pegawai_list','API\PegawaiAPIController@administrator_pegawai_list');
-	Route::get('skpd_pegawai_list','API\PegawaiAPIController@skpd_pegawai_list');
-	
-	
+	Route::get('skpd_pegawai_list','API\PegawaiAPIController@SKPDPegawaiList');
 	Route::get('select_pegawai_list','API\PegawaiAPIController@select_pejabat_penilai_list');
 	Route::get('select_ka_skpd_list','API\PegawaiAPIController@select_ka_skpd_list');
-
 	Route::get('pegawai_list','API\PegawaiAPIController@select_pegawai_list');
-
 	Route::get('ganti_atasan_capaian_bulanan','API\PegawaiAPIController@selectAtasanCapaianBulanan');
 
-
-	
-
-	Route::get('administrator_pegawai_skpd_list','API\PegawaiAPIController@skpd_pegawai_list');
+	Route::get('administrator_pegawai_skpd_list','API\PegawaiAPIController@SKPDPegawaiList');
+	Route::get('administrator_pegawai_puskesmas_list','API\PegawaiAPIController@PuskesmasPegawaiList');
 
 	//========================================================================================================//
 	//============================  PEJABATA PENILAI SKP TAHUNAN ================================================//
@@ -940,6 +939,12 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	//========================================================================================================//
 	Route::post('add_admin_skpd','API\RoleUserAPIController@AddAdminSKPD');
 	Route::post('remove_admin_skpd','API\RoleUserAPIController@RemoveAdminSKPD');
+
+	//========================================================================================================//
+	//==================================  ADMIN PUSKESMAS USER ROLE  ==============================================//
+	//========================================================================================================//
+	Route::post('add_admin_puskesmas','API\RoleUserAPIController@AddAdminPuskesmas');
+	Route::post('remove_admin_puskesmas','API\RoleUserAPIController@RemoveAdminPuskesmas');
 
 
 
@@ -1104,11 +1109,16 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'HomeAdminController@showTPPReport'
 	]);
 
+	Route::get('admin/puskesmas', [
+		'as' 			=> 'admin-puskesmas',
+		'uses' 			=> 'HomeAdminController@showPuskesmas'
+	]);
 
-	Route::get('admin/update_table', [
+
+	/* Route::get('admin/update_table', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeAdminController@UpdateTable'
-	]);
+	]); */
 
 
 	//========================================================================================//
@@ -1234,6 +1244,33 @@ Route::group(['middleware' => 'administrator'], function () {
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@addPegawai'
 	]); 
+
+	//============================================================================================//
+	//============================= PEGAWAI    PUSKESMAS  ========================================//
+	//============================================================================================//
+	
+
+	Route::get('admin/puskesmas/{puskesmas_id}', [
+		'as' 			=> 'pegawai_puskesmas',
+		'uses' 			=> 'HomeAdminController@AdministratorPuskesmasPegawai'
+	]);
+
+	Route::get('admin/puskesmas/{puskesmas_id}/pegawai', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'HomeAdminController@AdministratorPuskesmasPegawai'
+	]); 
+
+	Route::get('admin/puskesmas/pegawai/{pegawai_id}', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'PegawaiController@detailPegawai'
+	]); 
+
+	/* 
+	
+	Route::get('admin/skpd/pegawai/{pegawai_id}/add', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'PegawaiController@addPegawai'
+	]);  */
 
 
 	//============================================================================================//

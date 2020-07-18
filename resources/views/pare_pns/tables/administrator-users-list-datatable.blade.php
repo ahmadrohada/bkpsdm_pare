@@ -39,17 +39,18 @@
 		//alert();
 		
 		$('#user_table').DataTable({
-					destroy			: true,
-					processing      : true,
-					serverSide      : true,
-					searching      	: true,
-					paging          : true,
-					autoWidth		: false,
-					bInfo			: false,
-					bSort			: true,
-					lengthChange	: false,
-					//order 			: [ 0 , 'desc' ],
-					lengthMenu		: [10,25,50],
+				destroy			: true,
+				processing      : true,
+				serverSide      : true,
+				searching      	: true,
+				paging          : true,
+				autoWidth		: false,
+				bInfo			: false,
+				bSort			: false, 
+				lengthChange	: false,
+				deferRender		: true,
+				//order 			: [ 5 , 'asc' ],
+				lengthMenu		: [20,50],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,3,5,7] }/* ,
 									{	className: "hidden", targets: [5] } */

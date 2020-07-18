@@ -40,10 +40,11 @@
 				paging          : true,
 				autoWidth		: false,
 				bInfo			: false,
-				bSort			: true,
+				bSort			: false, 
 				lengthChange	: false,
-				order 			: [ 0 , 'desc' ],
-				lengthMenu		: [10,25,50],
+				deferRender		: true,
+				//order 			: [ 5 , 'asc' ],
+				lengthMenu		: [10,20],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,4,5 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */

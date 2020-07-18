@@ -163,6 +163,19 @@ Breadcrumbs::register('admin-tpp_report_cetak', function($breadcrumbs)
 });
 
 
+// DASHBOARD > ADMIN > Puskesmas
+Breadcrumbs::register('admin-puskesmas', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_puskesmas'), '/public/admin/puskesmas', ['icon' => Lang::get('sidebar-nav.link_icon_puskesmas')]);
+});
+
+// DASHBOARD > ADMIN > Puskesmas > PEGAWAI
+Breadcrumbs::register('admin-puskesmas-pegawai', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin-puskesmas');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_pegawai'), '/pegawai', ['icon' => Lang::get('sidebar-nav.link_icon_pegawai')]);
+});
 
 //==========================================================================================================//
 //================================== ES KA PE DE ===========================================================//
