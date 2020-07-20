@@ -160,6 +160,7 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	//========================================================================================================//
 
 	Route::get('skpd_skp_tahunan_list','API\SKPTahunanAPIController@SKPDSKPTahunanList');
+	Route::get('puskesmas_skp_tahunan_list','API\SKPTahunanAPIController@PuskesmasSKPTahunanList');
 	Route::get('administrator_skp_tahunan_list','API\SKPTahunanAPIController@AdminSKPTahunanList');
 	Route::get('skp_tahunan_timeline_status','API\SKPTahunanAPIController@SKPTahunanTimelineStatus');
 	Route::get('skp_tahunan_general_timeline','API\SKPTahunanAPIController@SKPTahunanGeneralTimeline');
@@ -572,6 +573,7 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	Route::get('create_tpp_report_confirm','API\TPPReportAPIController@CreateConfirm');
 
 	Route::get('tpp_report_detail','API\TPPReportAPIController@TPPReportDetail');
+	Route::get('puskesmas_tpp_report_detail','API\TPPReportAPIController@PuskesmasTPPReportDetail');
 
 	Route::post('simpan_tpp_report','API\TPPReportAPIController@Store');
 	Route::post('close_tpp_report','API\TPPReportAPIController@TPPClose');
@@ -583,6 +585,8 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	Route::post('hapus_tpp_report','API\TPPReportAPIController@Destroy');
 
 	Route::get('skpd_tpp_report_list','API\TPPReportAPIController@SKPDTTPReportList');
+
+	Route::get('puskesmas_tpp_report_list','API\TPPReportAPIController@PuskesmasTTPReportList');
 
 
 
@@ -598,6 +602,7 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	
 	
 	Route::get('skpd_tpp_report_data_list','API\TPPReportAPIController@TPPReportDataList');
+	Route::get('puskesmas_tpp_report_data_list','API\TPPReportAPIController@PuskesmasTPPReportDataList');
 
 
 	//============================= TPP REPORT DATA =====================================================//
@@ -904,6 +909,9 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	Route::get('administrator_pegawai_skpd_list','API\PegawaiAPIController@SKPDPegawaiList');
 	Route::get('administrator_pegawai_puskesmas_list','API\PegawaiAPIController@PuskesmasPegawaiList');
 
+	Route::get('puskesmas_pegawai_list','API\PegawaiAPIController@PuskesmasPegawaiList');
+	
+
 	//========================================================================================================//
 	//============================  PEJABATA PENILAI SKP TAHUNAN ================================================//
 	//========================================================================================================//
@@ -932,6 +940,7 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	//================================== STRUKTUR ORGANISASI  ================================================//
 	//========================================================================================================//
 	Route::get('skpd_struktur_organisasi','API\StrukturOrganisasiAPIController@skpd_struktur_organisasi');
+	Route::get('puskesmas_struktur_organisasi','API\StrukturOrganisasiAPIController@puskesmas_struktur_organisasi');
 
 
 	//========================================================================================================//
@@ -1509,6 +1518,82 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]);
 
 
+
+
+	//----------------------------------------------------------------------------------------//
+	//================================= SKP BULANAN      =====================================//
+	//----------------------------------------------------------------------------------------//
+	Route::get('skp_bulanan/{id}',[
+		'as' 			=> '',
+		'uses' 			=> 'SKPBulananController@SKPBulananDetail'
+	]);
+
+	
+
+
+});
+
+
+Route::group(['prefix' => 'puskesmas','middleware' => 'puskesmas'], function () {
+		
+	
+	//========================================================================================//
+	//=======================   Puskesmas HOME / PUSKESMAS SNAPSHOTS =========================//
+	//========================================================================================//
+	Route::get('', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePuskesmasController@showHomePuskesmas'
+	]);
+	Route::get('pegawai', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePuskesmasController@showPegawai'
+	]);
+	Route::get('struktur_organisasi', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePuskesmasController@ShowStrukturOrganisasi'
+	]);
+	Route::get('skp_tahunan', [
+		'as' 			=> 'puskesmas-skp_tahunan',
+		'uses' 			=> 'HomePuskesmasController@showSKPTahunan'
+	]);
+	Route::get('skp_bulanan', [
+		'as' 			=> 'puskesmas-skp_bulanan',
+		'uses' 			=> 'HomePuskesmasController@showSKPBulanan'
+	]);
+	Route::get('tpp_report', [
+		'as' 			=> 'puskesmas-tpp_report',
+		'uses' 			=> 'HomePuskesmasController@showPuskesmasTPPReport'
+	]);
+
+	//=======================   TPP R E P O R T   ==================================//
+
+	Route::get('tpp_report/{tpp_report_id}/puskesmas/{puskesmas_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'TPPReportController@PuskesmasTPPReport'
+	]);
+	
+	/* Route::post('tpp_report/cetak', [
+		'as' 			=> '',
+		'uses' 			=> 'API\TPPReportAPIController@cetakTPPReportData'
+	]); */
+
+	
+	//=========================== P E G A W A I  =============================================//
+	Route::get('pegawai/{pegawai_id}', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'PegawaiController@detailPegawai'
+	]);
+
+	
+
+	
+	//----------------------------------------------------------------------------------------//
+	//========================      SKP TAHUNAN SKPD       ================================//
+	//----------------------------------------------------------------------------------------//
+	Route::get('skp_tahunan/{skp_tahunan_id}',[
+		'as' 			=> '',
+		'uses' 			=> 'SKPTahunanController@SKPDSKPTahunanDetail'
+	]);
 
 
 	//----------------------------------------------------------------------------------------//

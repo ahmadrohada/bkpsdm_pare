@@ -25,8 +25,12 @@
 		  
           @if (Auth::user()->hasRole('admin_skpd'))
             @include('pare_pns.menus.admin-skpd-menu')
-			    @endif
-		  
+		@endif
+
+        @if (Auth::user()->hasRole('admin_puskesmas'))
+            @include('pare_pns.menus.admin-puskesmas-menu')
+        @endif
+        
           @if (Auth::user()->hasRole('personal'))
 			      @include('pare_pns.menus.personal-menu')
 			    @endif

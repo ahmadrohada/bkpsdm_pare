@@ -266,6 +266,72 @@ Breadcrumbs::register('skpd-tpp_report_detail', function($breadcrumbs)
 
 
 
+//==========================================================================================================//
+//=================================         PUS KES MAS          ===========================================//
+//==========================================================================================================//
+
+// DASHBOARD > puskesmas >
+Breadcrumbs::register('puskesmas', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_puskesmas'), '/public/puskesmas', ['icon' => Lang::get('sidebar-nav.link_icon_puskesmas')]);
+});
+
+// DASHBOARD > PUSKESMAS > PEGAWAI >
+Breadcrumbs::register('puskesmas-pegawai', function($breadcrumbs)
+{
+    $breadcrumbs->parent('puskesmas');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_pegawai'), '/pegawai', ['icon' => Lang::get('sidebar-nav.link_icon_pegawai')]);
+});
+
+
+// DASHBOARD > PUSKESMAS > STRUKTUR ORGANISASI >
+Breadcrumbs::register('puskesmas-struktur_organisasi', function($breadcrumbs)
+{
+    $breadcrumbs->parent('puskesmas');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_struktur_organisasi'), '/struktur-organisasi', ['icon' => Lang::get('sidebar-nav.link_icon_struktur_organisasi')]);
+});
+
+
+// DASHBOARD > PUSKESMAS > SKP TAHUNAN >
+Breadcrumbs::register('puskesmas-skp_tahunan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('puskesmas');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skp_tahunan'), '/public/puskesmas/skp_tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_skp_tahunan')]);
+});
+// DASHBOARD > PUSKESMAS > SKP TAHUNAN > DETAIL
+Breadcrumbs::register('puskesmas-skp_tahunan_detail', function($breadcrumbs)
+{
+    $breadcrumbs->parent('puskesmas-skp_tahunan');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_detail_skp_tahunan'), '/public/skp_tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_detail_skp_tahunan')]);
+});
+
+
+// DASHBOARD > PUSKESMAS > TPP REPORT >
+Breadcrumbs::register('puskesmas-tpp_report', function($breadcrumbs)
+{
+    $breadcrumbs->parent('puskesmas');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_tpp_report'), '/public/puskesmas/tpp_report', ['icon' => Lang::get('sidebar-nav.link_icon_tpp_report')]);
+});
+// DASHBOARD > PUSKESMAS > TPP REPORT > EDIT
+Breadcrumbs::register('puskesmas-tpp_report_edit', function($breadcrumbs)
+{
+    $breadcrumbs->parent('puskesmas-tpp_report');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_edit'), '/tpp_report_edit', ['icon' => Lang::get('sidebar-nav.link_icon_edit')]);
+});
+// DASHBOARD > PUSKESMAS > TPP REPORT > DETAIL
+Breadcrumbs::register('puskesmas-tpp_report_detail', function($breadcrumbs)
+{
+    $breadcrumbs->parent('puskesmas-tpp_report');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_detail'), '/tpp_report_detail', ['icon' => Lang::get('sidebar-nav.link_icon_detail')]);
+});
+
+
+
+
+
+
+
 
 // DASHBOARD > MASA PEMRITYAHAN >
 Breadcrumbs::register('masa_pemerintahan', function($breadcrumbs)

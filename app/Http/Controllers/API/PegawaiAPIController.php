@@ -454,8 +454,11 @@ class PegawaiAPIController extends Controller {
         
         $dt = \DB::table('demo_asn.tb_pegawai AS pegawai')
                 ->rightjoin('demo_asn.tb_history_jabatan AS a', function($join) use($puskesmas_id){
-                    $join   ->on('a.id_pegawai','=','pegawai.id');
-                    $join   ->where('a.id_unit_kerja','=', $puskesmas_id);
+                    $join   ->on('a.id_pegawai','=','pegawai.id')
+                    ->where(function ($query) use($puskesmas_id) {
+                        $query  ->where('a.id_unit_kerja','=', $puskesmas_id)
+                                ->orwhere('a.id_jabatan','=', $puskesmas_id);
+                    });
                     $join   ->where('a.status', '=', 'active');
                 })
                 //SKPD

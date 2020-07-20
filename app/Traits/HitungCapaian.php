@@ -458,6 +458,41 @@ trait HitungCapaian
 
     }
 
+    protected function capaian_tahunan_jft($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id)
+    {
+
+        //Jumlah kegiatan 
+        $jm_kegiatan = RencanaAksi::WHERE('jabatan_id',$jabatan_id)
+                            ->WHERE('renja_id',$renja_id)
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
+                            })
+                            ->distinct('kegiatan_tahunan.id')->count('kegiatan_tahunan.id');
+        $jm_realisasi = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->count();
+
+        //cari nilai_capaian Kegiatan tahunan
+        $xdata = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->get();
+       
+        $jm_capaian_kegiatan_tahunan = 0 ;
+        foreach ($xdata as $x) {
+
+            if ( $x->hitung_cost <=0 ){
+                $capaian_kegiatan_tahunan = ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/3;
+            }else{
+                $capaian_kegiatan_tahunan = ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/4;
+            }
+
+            $jm_capaian_kegiatan_tahunan =  $jm_capaian_kegiatan_tahunan + $capaian_kegiatan_tahunan;
+        }
+
+        return array(
+            'jm_kegiatan_tahunan'           => $jm_kegiatan,
+            'jm_capaian_kegiatan_tahunan'   => number_format($jm_capaian_kegiatan_tahunan,2),
+            'ave_capaian_kegiatan_tahunan'  => Pustaka::ave($jm_capaian_kegiatan_tahunan,$jm_kegiatan),
+        );
+
+    }
+
     public function hitung_capaian_tahunan($capaian_id){ 
 
 

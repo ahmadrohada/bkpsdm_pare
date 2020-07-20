@@ -109,11 +109,14 @@ class HomeAdminController extends Controller {
 
     protected function total_pegawai_puskesmas( $puskesmas_id){
         
-        return 	Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function($join){
-                                            $join   ->on('a.id_pegawai','=','tb_pegawai.id');
+        return 	Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function($join) use($puskesmas_id){ 
+                                            $join   ->on('a.id_pegawai','=','tb_pegawai.id')
+                                            ->where(function ($query) use($puskesmas_id) {
+                                                $query  ->where('a.id_unit_kerja','=', $puskesmas_id)
+                                                        ->orwhere('a.id_jabatan','=', $puskesmas_id);
+                                            });
                                             $join   ->where('a.status','=', 'active');
                                     })
-                                    ->WHERE('a.id_unit_kerja','=', $puskesmas_id)
                                     ->WHERE('tb_pegawai.nip','!=','admin')
                                     ->WHERE('tb_pegawai.status','active')
                                     ->count();

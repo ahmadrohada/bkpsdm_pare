@@ -270,11 +270,12 @@ class PegawaiController extends Controller {
        
 
 
-        $user           = \Auth::user();
-        $pegawaix        = Pegawai::WHERE('id',$pegawai_id)->first();
-        $userRole       = $user->hasRole('pegawai');
-        $admin_skpdRole = $user->hasRole('admin_skpd');
-        $adminRole      = $user->hasRole('administrator');
+        $user                   = \Auth::user();
+        $pegawaix               = Pegawai::WHERE('id',$pegawai_id)->first();
+        $userRole               = $user->hasRole('pegawai');
+        $admin_skpdRole         = $user->hasRole('admin_skpd');
+        $admin_puskesmasRole    = $user->hasRole('admin_puskesmas');
+        $adminRole              = $user->hasRole('administrator');
 
         if($userRole)
         {
@@ -282,11 +283,12 @@ class PegawaiController extends Controller {
 			$dashboard = 'pegawai';
         } elseif ($admin_skpdRole) {
             $access = 'Admin SKPD';
-            //$dashboard = 'admin-skpd';
+            $dashboard = 'pegawai';
+        }elseif ($admin_puskesmasRole) {
+            $access = 'Admin Puskesmas';
             $dashboard = 'pegawai';
         } elseif ($adminRole) {
             $access = 'Administrator';
-            //$dashboard = 'administrator';
             $dashboard = 'pegawai';
         }
 
