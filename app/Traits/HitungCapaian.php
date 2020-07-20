@@ -576,7 +576,7 @@ trait HitungCapaian
             //CAPAIAN KINERJA UNTUK IRBAN
             $data = $this->capaian_tahunan_irban($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 5 ){//jm kegiatan JFT
-            $data = $this->capaian_tahunan_jft($capaian_id,$skp_tahunan_id,$bulan,$renja_id);
+            $data = $this->capaian_tahunan_jft($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 4 ){ //jm kegiatan pelaksana JFU
             $data = $this->capaian_tahunan_jfu($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 3 ){  //kasubid ESELON IV
