@@ -574,17 +574,17 @@ trait HitungCapaian
 
         if ( $jenis_jabatan == 31){  //IRBAN
             //CAPAIAN KINERJA UNTUK IRBAN
-            $data = $this->capaian_tahunan_irban($capaian_id,$skp_bulanan_id,$renja_id,$jabatan_id);
+            $data = $this->capaian_tahunan_irban($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 5 ){//jm kegiatan JFT
-            $data = $this->capaian_tahunan_jft($capaian_id,$skp_bulanan_id,$bulan,$renja_id);
+            $data = $this->capaian_tahunan_jft($capaian_id,$skp_tahunan_id,$bulan,$renja_id);
         }else if ( $jenis_jabatan == 4 ){ //jm kegiatan pelaksana JFU
             $data = $this->capaian_tahunan_jfu($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 3 ){  //kasubid ESELON IV
-            $data =  $this->capaian_tahunan_eselon4($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);
+            $data =  $this->capaian_tahunan_eselon4($capaian_id,$skp_tahunan_id,$bulan,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 2){ //kabid ESELON III
-            $data =  $this->capaian_tahunan_eselon3($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);
+            $data =  $this->capaian_tahunan_eselon3($capaian_id,$skp_tahunan_id,$bulan,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 1){ //KABAN ESELON II
-            $data =  $this->capaian_tahunan_eselon2($capaian_id,$skp_bulanan_id,$bulan,$renja_id,$jabatan_id);
+            $data =  $this->capaian_tahunan_eselon2($capaian_id,$skp_tahunan_id,$bulan,$renja_id,$jabatan_id);
         }else{
             $data = array(
                 'jm_kegiatan_bulanan'           => 0,
