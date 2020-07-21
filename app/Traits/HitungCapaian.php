@@ -9,9 +9,11 @@ use App\Models\RencanaAksi;
 use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\KegiatanSKPTahunan;
+use App\Models\KegiatanSkpTahunanJFT;
 use App\Models\KegiatanSKPBulananJFT;
 use App\Models\UraianTugasTambahan;
 use App\Models\RealisasiKegiatanTahunan;
+use App\Models\RealisasiKegiatanTahunanJFT;
 use App\Models\TugasTambahan;
 use App\Models\RealisasiTugasTambahan;
 use App\Models\UnsurPenunjangTugasTambahan;
@@ -462,16 +464,11 @@ trait HitungCapaian
     {
 
         //Jumlah kegiatan 
-        $jm_kegiatan = RencanaAksi::WHERE('jabatan_id',$jabatan_id)
-                            ->WHERE('renja_id',$renja_id)
-                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
-                            })
-                            ->distinct('kegiatan_tahunan.id')->count('kegiatan_tahunan.id');
-        $jm_realisasi = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->count();
+        $jm_kegiatan = KegiatanSkpTahunanJFT::WHERE('skp_tahunan_id',$skp_tahunan_id)->count();
+        $jm_realisasi = RealisasiKegiatanTahunanJFT::WHERE('capaian_id',$capaian_id)->count();
 
         //cari nilai_capaian Kegiatan tahunan
-        $xdata = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->get();
+       /*  $xdata = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->get();
        
         $jm_capaian_kegiatan_tahunan = 0 ;
         foreach ($xdata as $x) {
@@ -483,12 +480,12 @@ trait HitungCapaian
             }
 
             $jm_capaian_kegiatan_tahunan =  $jm_capaian_kegiatan_tahunan + $capaian_kegiatan_tahunan;
-        }
+        } */
 
         return array(
             'jm_kegiatan_tahunan'           => $jm_kegiatan,
-            'jm_capaian_kegiatan_tahunan'   => number_format($jm_capaian_kegiatan_tahunan,2),
-            'ave_capaian_kegiatan_tahunan'  => Pustaka::ave($jm_capaian_kegiatan_tahunan,$jm_kegiatan),
+            'jm_capaian_kegiatan_tahunan'   => '',
+            'ave_capaian_kegiatan_tahunan'  => '',
         );
 
     }
@@ -607,7 +604,7 @@ trait HitungCapaian
         }
 
 
-        if ( $jenis_jabatan == 31){  //IRBAN
+        if ( $jenis_jabatan == 31){  //IRBAN 
             //CAPAIAN KINERJA UNTUK IRBAN
             $data = $this->capaian_tahunan_irban($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 5 ){//jm kegiatan JFT
@@ -622,9 +619,9 @@ trait HitungCapaian
             $data =  $this->capaian_tahunan_eselon2($capaian_id,$skp_tahunan_id,$bulan,$renja_id,$jabatan_id);
         }else{
             $data = array(
-                'jm_kegiatan_bulanan'           => 0,
-                'jm_capaian_kegiatan_bulanan'   => 0,
-                'ave_capaian_kegiatan_bulanan'  => 0,
+                'jm_kegiatan_tahunan'           => 0,
+                'jm_capaian_kegiatan_tahunan'   => 0,
+                'ave_capaian_kegiatan_tahunan'  => 0,
             ); 
         }
 
