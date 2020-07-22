@@ -32,7 +32,7 @@
 	</div>
 </div>
 @include('pare_pns.modals.create-tpp_report')
-@include('pare_pns.modals.cetak-tpp_report')
+@include('pare_pns.modals.cetak-puskesmas_tpp_report')
 
 <script type="text/javascript">
 
@@ -114,8 +114,8 @@
 								},
 					{data: "status",orderable: false,searchable: false,width: "50px",
 						"render": function(data, type, row) {
-							return 	'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_tpp_report_data"  data-id="' + row.tpp_report_id + '"><i class="fa fa-eye" ></i></a></span>';
-								/* if (row.status == '1' ) {
+							//return 	'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_tpp_report_data"  data-id="' + row.tpp_report_id + '"><i class="fa fa-eye" ></i></a></span>';
+								if (row.status == '1' ) {
 									//close
 									return 	'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_tpp_report_data"  data-id="' + row.tpp_report_id + '"><i class="fa fa-eye" ></i></a></span>' +
 											
@@ -125,7 +125,7 @@
 									return 	'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_tpp_report_data" data-id="' + row.tpp_report_id + '"><i class="fa fa-pencil" ></i></a></span>' +
 											
 											'<span  data-toggle="tooltip" title="Cetak" style="margin:2px;" ><a class="btn btn-warning btn-xs cetak_tpp_report_data" data-id="' + row.tpp_report_id + '"><i class="fa fa-print" ></i></a></span>';
-								} */
+								} 
 						}
 					},
 
@@ -134,10 +134,13 @@
 	});
 
 
-	/* $(document).on('click', '.edit_tpp_report_data', function(e) {
+	$(document).on('click', '.edit_tpp_report_data', function(e) {
+		//var tpp_report_id = $(this).data('id');
+		//window.location.assign("report/tpp/" + tpp_report_id + "/edit");
 		var tpp_report_id = $(this).data('id');
-		window.location.assign("report/tpp/" + tpp_report_id + "/edit");
-	}); */
+		var puskesmas_id =  {{ $puskesmas_id}};
+		window.location.assign("tpp_report/" + tpp_report_id+"/puskesmas/"+puskesmas_id);
+	}); 
 
 	
 
@@ -147,20 +150,20 @@
 		window.location.assign("tpp_report/" + tpp_report_id+"/puskesmas/"+puskesmas_id);
 	});
 
-	/* $(document).on('click', '.cetak_tpp_report_data', function(e) {
+	$(document).on('click', '.cetak_tpp_report_data', function(e) { 
 		var tpp_report_id = $(this).data('id');
 		$.ajax({
-				url		: '{{ url("api_resource/tpp_report_detail") }}',
+				url		: '{{ url("api_resource/puskesmas_tpp_report_detail") }}',
 				type	: 'GET',
-				data	:  	{ tpp_report_id : tpp_report_id },
+				data	:  	{ tpp_report_id : tpp_report_id ,puskesmas_id : {{ $puskesmas_id}} },
 				success	: function(data) {
 							
 							$('.tpp_report_id').val(tpp_report_id); 
-							$('.nama_skpd').html(data['nama_skpd']); 
+							$('.nama_puskesmas').html(data['nama_puskesmas']); 
 							$('.jumlah_pegawai').html(data['jm_data_pegawai']);
 							$('.periode').html(data['periode']); 
 							
-							$('.cetak-tpp_report_modal').modal('show'); 
+							$('.cetak-puskesmas_tpp_report_modal').modal('show'); 
 				
 				},
 				error: function(jqXHR , textStatus, errorThrown) {
@@ -177,7 +180,7 @@
 	});
 
 	
-
+	/*
 	$(document).on('click', '.hapus_tpp_report_data', function(e) {
 		var tpp_report_id = $(this).data('id');
 

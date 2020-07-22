@@ -41,6 +41,7 @@ class TPPReportAPIController extends Controller
     use UpdateCapaian;
  
 
+
     //============================= AMBIL DATA ABSENSI SIAP PER NIP==========================================//
     protected function skor_kehadiran($month,$nip){
         
@@ -170,6 +171,30 @@ class TPPReportAPIController extends Controller
             ->count();
     }
 
+    //=======================================================================================//
+    protected function nama_puskesmas($puskesmas_id){
+        //nama puskesmas 
+        $nama_puskesmas  = UnitKerja::WHERE('m_unit_kerja.id',$puskesmas_id)
+                                    ->SELECT(['m_unit_kerja.unit_kerja AS puskesmas'])
+                                    ->first();
+        return $nama_puskesmas->puskesmas;
+    }
+
+    
+    protected function total_pegawai_puskesmas( $puskesmas_id){
+        
+        return 	Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function($join) use($puskesmas_id){
+                                            $join   ->on('a.id_pegawai','=','tb_pegawai.id')
+                                            ->where(function ($query) use($puskesmas_id) {
+                                                $query  ->where('a.id_unit_kerja','=', $puskesmas_id)
+                                                        ->orwhere('a.id_jabatan','=', $puskesmas_id);
+                                            });
+                                            $join   ->where('a.status','=', 'active');
+                                    })
+                                    ->WHERE('tb_pegawai.nip','!=','admin')
+                                    ->WHERE('tb_pegawai.status','active')
+                                    ->count();
+    }
    
 
     //=======================================================================================//
@@ -769,6 +794,130 @@ class TPPReportAPIController extends Controller
         //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
     }
 
+    public function cetakPuskesmasTPPReportData(Request $request)
+    {
+
+        $tpp_report_id = $request->tpp_report_id;
+        $unit_kerja_id = $request->puskesmas_id;
+
+        $data = TPPReportData::
+            rightjoin('demo_asn.tb_pegawai AS pegawai', function ($join) {
+                $join->on('pegawai.id', '=', 'tpp_report_data.pegawai_id');
+            })
+            ->rightjoin('demo_asn.tb_history_jabatan AS a', function ($join) {
+                $join->on('a.id_pegawai', '=', 'pegawai.id');
+            })
+            
+            ->leftjoin('demo_asn.m_skpd AS skpd ', function ($join) {
+                $join->on('a.id_jabatan', '=', 'skpd.id');
+            })
+            //eselon
+            ->leftjoin('demo_asn.m_eselon AS eselon ', function ($join) {
+                $join->on('tpp_report_data.eselon_id', '=', 'eselon.id');
+            })
+            //golongan
+            ->leftjoin('demo_asn.m_golongan AS golongan ', function ($join) {
+                $join->on('tpp_report_data.golongan_id', '=', 'golongan.id');
+            })
+
+
+            ->select([
+                'pegawai.nama',
+                'pegawai.id AS pegawai_id',
+                'pegawai.nip',
+                'pegawai.gelardpn',
+                'pegawai.gelarblk',
+                'tpp_report_data.capaian_bulanan_id AS capaian_id',
+                'tpp_report_data.unit_kerja_id',
+                'tpp_report_data.id AS tpp_report_data_id',
+                'tpp_report_data.tpp_rupiah AS tunjangan',
+                'tpp_report_data.tpp_kinerja AS tpp_kinerja',
+                'tpp_report_data.cap_skp AS capaian',
+                'tpp_report_data.skor_cap AS skor',
+                'tpp_report_data.pot_kinerja AS pot_kinerja',
+                'tpp_report_data.tpp_kehadiran AS tpp_kehadiran',
+                'tpp_report_data.skor_kehadiran AS skor_kehadiran',
+                'tpp_report_data.pot_kehadiran AS pot_kehadiran',
+                'eselon.eselon AS eselon',
+                'golongan.golongan AS golongan',
+                'skpd.skpd AS jabatan'
+                
+
+
+            ])
+            ->WHERE('tpp_report_data.tpp_report_id', $tpp_report_id)
+            ->WHERE('tpp_report_data.unit_kerja_id',$unit_kerja_id)
+            ->ORDERBY('tpp_report_data.eselon_id','ASC')
+            ->where('pegawai.status', '=', 'active')
+            ->where('a.status', '=', 'active')
+            ->get();
+
+      
+    
+
+        //TPP report detail
+        $p = TPPReport::WHERE('tpp_report.id', $tpp_report_id)
+            ->join('db_pare_2018.periode AS periode', function ($join) {
+                $join->on('periode.id', '=', 'tpp_report.periode_id');
+            })
+            ->join('db_pare_2018.formula_hitung_tpp AS frm', function ($join) {
+                $join->on('frm.id', '=', 'tpp_report.formula_hitung_id');
+            })
+            ->select([
+                'tpp_report.id AS tpp_report_id',
+                'tpp_report.periode_id',
+                'tpp_report.bulan',
+                'tpp_report.skpd_id',
+                'tpp_report.ka_skpd',
+                'tpp_report.admin_skpd',
+                'tpp_report.status',
+                'tpp_report.created_at',
+                'periode.label AS periode_label',
+                'periode.awal AS tahun_periode',
+                'frm.kinerja AS kinerja',
+                'frm.kehadiran AS kehadiran'
+
+
+            ])
+            ->first();
+
+        //NAMA ADMIN
+    
+        $user_x    = \Auth::user();
+        $profil  = Pegawai::WHERE('tb_pegawai.id',  $user_x->id_pegawai)->first();
+        
+
+       $pdf = PDF::loadView('pare_pns.printouts.cetak_tpp_report', [  'data'            =>  $data , 
+                                                        'nama_unit_kerja'               =>  $this->nama_puskesmas($request->puskesmas_id),
+                                                        'periode'                       =>  strtoupper(Pustaka::bulan($p->bulan)) . "  " . Pustaka::tahun($p->tahun_periode), 
+                                                        'kinerja'                       =>  $p->kinerja,
+                                                        'kehadiran'                     =>  $p->kehadiran,
+                                                        'nama_skpd'                     =>  $this::nama_skpd($p->skpd_id),
+                                                        'waktu_cetak'                   =>  Pustaka::balik(date('Y'."-".'m'."-".'d'))." / ". date('H'.":".'i'.":".'s'),
+                                                        'pic'                           =>  Pustaka::nama_pegawai($profil->gelardpn, $profil->nama, $profil->gelarblk),
+
+
+                                                     ], [], [
+                                                     'format' => 'A4-L'
+          ]);
+       
+        $pdf->getMpdf()->shrink_tables_to_fit = 1;
+        $pdf->getMpdf()->setWatermarkImage('assets/images/form/watermark.png');
+        $pdf->getMpdf()->showWatermarkImage = true;
+        
+        $pdf->getMpdf()->SetHTMLFooter('
+		<table width="100%">
+			<tr>
+				<td width="33%"></td>
+				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
+				<td width="33%" style="text-align: right;"></td>
+			</tr>
+        </table>');
+        //"tpp".$bulan_depan."_".$skpd."
+        return $pdf->download('TPP'.$p->bulan.Pustaka::tahun($p->tahun_periode).'_'.$this::nama_skpd($p->skpd_id).'.pdf');
+        //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
+    }
+
 
     protected function TPPReportDetail(Request $request)
     {
@@ -842,6 +991,8 @@ class TPPReportAPIController extends Controller
             'ka_skpd'           => $x->ka_skpd,
             'admin_skpd'        => $x->admin_skpd,
             'nama_skpd'         => Pustaka::capital_string($x->SKPD->nama_skpd),
+
+            'nama_puskesmas'    => Pustaka::capital_string($this->nama_puskesmas($request->puskesmas_id)),
 
 
             'jm_data_pegawai'   => TPPReportData::WHERE('tpp_report_id', $x->tpp_report_id)->WHERE('unit_kerja_id', $request->puskesmas_id)->count(),

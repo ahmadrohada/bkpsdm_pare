@@ -22,7 +22,7 @@
 						<th>PERIODE</th>
 						<th>NAMA ADMIN</th>
 						<th>JUMLAH DATA</th>
-						<th>CREATED AT</th>
+						<th>CREATED AT</th> 
 						<th>STATUS</th>
 						<th><i class="fa fa-cog"></i></th>
 					</tr>

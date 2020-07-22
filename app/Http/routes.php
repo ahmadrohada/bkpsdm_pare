@@ -1572,10 +1572,15 @@ Route::group(['prefix' => 'puskesmas','middleware' => 'puskesmas'], function () 
 		'uses' 			=> 'TPPReportController@PuskesmasTPPReport'
 	]);
 	
-	/* Route::post('tpp_report/cetak', [
+	/* Route::get('report/tpp/{tpp_report_id}/edit', [
 		'as' 			=> '',
-		'uses' 			=> 'API\TPPReportAPIController@cetakTPPReportData'
+		'uses' 			=> 'TPPReportController@editSKPDTPPReport'
 	]); */
+	
+	Route::post('tpp_report/cetak', [
+		'as' 			=> '',
+		'uses' 			=> 'API\TPPReportAPIController@cetakPuskesmasTPPReportData'
+	]);
 
 	
 	//=========================== P E G A W A I  =============================================//
