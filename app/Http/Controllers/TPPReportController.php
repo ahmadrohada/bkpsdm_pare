@@ -153,6 +153,28 @@ class TPPReportController extends Controller
         );
     }
 
+    public function editPuskesmasTPPReport(Request $request)
+    {
+        $user           = \Auth::user();
+        $pegawai        = $user->pegawai;
+        $tpp_report     = TPPreport::where('id', $request->tpp_report_id)->first();
+        $puskesmas_id   = $request->puskesmas_id;
+
+        return view(
+            'pare_pns.pages.puskesmas-tpp_report_edit',
+            [
+                'nama_puskesmas'      => $this->nama_puskesmas($puskesmas_id),
+                'skpd'                => $pegawai->JabatanAktif->SKPD,
+                'tpp_report'          => $tpp_report,
+                'puskesmas_id'        => $puskesmas_id,
+                'kinerja'             => $tpp_report->FormulaHitung->kinerja,
+                'kehadiran'           => $tpp_report->FormulaHitung->kehadiran,
+                'nama_pegawai'        => Pustaka::nama_pegawai($pegawai->gelardpn, $pegawai->nama, $pegawai->gelarblk),
+                'h_box'               => 'box-danger',
+
+            ]
+        );
+    }
 
     public function AdministratorTPPReport(Request $request)
     {

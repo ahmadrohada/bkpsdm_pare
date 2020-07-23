@@ -135,11 +135,9 @@
 
 
 	$(document).on('click', '.edit_tpp_report_data', function(e) {
-		//var tpp_report_id = $(this).data('id');
-		//window.location.assign("report/tpp/" + tpp_report_id + "/edit");
 		var tpp_report_id = $(this).data('id');
 		var puskesmas_id =  {{ $puskesmas_id}};
-		window.location.assign("tpp_report/" + tpp_report_id+"/puskesmas/"+puskesmas_id);
+		window.location.assign("tpp_report/" + tpp_report_id+"/puskesmas/"+puskesmas_id+"/edit");
 	}); 
 
 	

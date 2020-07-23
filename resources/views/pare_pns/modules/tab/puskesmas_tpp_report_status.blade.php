@@ -56,7 +56,7 @@
 		$.ajax({
 			url: '{{ url("api_resource/puskesmas_tpp_report_detail") }}',
 			data: {
-				tpp_report_id: {{ $tpp_report->id }}, puskesmas_id : {{ $puskesmas_id}}
+				tpp_report_id: {{ $tpp_report->id }}, puskesmas_id : {{ $puskesmas_id }}
 			},
 			method: "GET",
 			dataType: "json",

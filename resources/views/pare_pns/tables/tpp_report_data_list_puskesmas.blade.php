@@ -48,7 +48,6 @@
 	</table>
 </div>
 
-
 @include('pare_pns.modals.tpp_report_data')
 
 
@@ -74,7 +73,7 @@
 						columnDefs	: [	{ className: "text-center",targets: [0, 2,3,5,8,9,10,13,14,17]},
 										{className: "text-right",targets: [6,7,11,12,15,16]},
 										{ className: "dt-nowrap", "targets": [6,7,11,12,15,16 ] },
-										@if ( request()->segment(5) == 'edit' )
+										@if ( request()->segment(6) == 'edit' )
 											{ "visible": true, "targets": [17]}
 										@else
 											{ "visible": false, "targets": [17]}
