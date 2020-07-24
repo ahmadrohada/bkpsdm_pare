@@ -48,7 +48,7 @@
 									?>@include('pare_pns.tables.skp_bulanan-kegiatan_4')<?php
 									break;
 							case '5':   //5. JFT
-									?>@include('pare_pns.tables.skp_bulanan-kegiatan_5_detail')<?php
+									?>@include('pare_pns.tables.skp_bulanan-kegiatan_5')<?php
 									break;
 						}
 					?>

@@ -105,9 +105,9 @@
 				'data' : {
 						"url" 	: "{{ url("api_resource/skp_bulanan_tree5") }}",
 						"data" 	: function (node) {
-							return { "renja_id" : {!! $skp->Renja->id !!} , 
-                          "jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
-													"skp_tahunan_id" : {!! $skp->id !!} };
+							return { 	"renja_id" 			: {!! $skp->Renja->id !!} , 
+                          				"jabatan_id" 		: {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+										"skp_tahunan_id" 	: {!! $skp->id !!} },
 						},
 						"dataType" : "json"
 				},'check_callback' : true,
