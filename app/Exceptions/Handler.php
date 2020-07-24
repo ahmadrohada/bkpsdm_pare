@@ -46,9 +46,6 @@ class Handler extends ExceptionHandler {
 		/* if ($exception instanceof ModelNotFoundException && $request->wantsJson()) {
 			return response()->json(['message' => 'Not Found!'], 404);
 		} */
-		if ($exception instanceof ModelNotFoundException ) {
-			return response()->json(['message' => 'Not Found!'], 404);
-		}
 		return parent::render($request, $exception);
 	}
 }
