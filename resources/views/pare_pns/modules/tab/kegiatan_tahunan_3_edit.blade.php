@@ -1,5 +1,3 @@
-
-
 <div class="row">
 	<div class="col-md-5">
 		<div class="box box-primary ">
@@ -7,7 +5,6 @@
 				<h1 class="box-title">
 					Kegiatan Tahunan
 				</h1>
-		
 				<div class="box-tools pull-right">
 					{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
 				</div>

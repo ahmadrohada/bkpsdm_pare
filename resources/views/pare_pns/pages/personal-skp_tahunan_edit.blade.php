@@ -102,7 +102,7 @@
 				</div>		
 				<div class=" tab-pane fade" id="kegiatan_tahunan_tab">
 					<?php
-						echo $jabatan_staf_ahli;
+						//echo $jabatan_staf_ahli;
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': 
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan,  json_decode($jabatan_staf_ahli))){ //JIKA STAF AHLI

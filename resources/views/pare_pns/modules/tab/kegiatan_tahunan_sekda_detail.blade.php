@@ -1,5 +1,4 @@
 <!-- ========================== edit form URAIAN TUGAS JABATAN ESELON SEKDA , PADA SKP TAHUNAN  ======================================= -->
-
 <div class="row">
 	<div class="col-md-5" >
 		<div class="box box-primary ">
