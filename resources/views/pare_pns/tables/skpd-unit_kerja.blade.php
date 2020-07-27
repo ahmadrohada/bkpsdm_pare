@@ -9,7 +9,7 @@
             {!! Form::button('<i class="fa fa-times"></i>', array('class' => 'btn btn-box-tool','title' => 'close', 'data-widget' => 'remove', 'data-toggle' => 'tooltip')) !!}
         </div>
     </div>
-	<div class="box-body table-responsive">
+	<div class="row" style="padding:5px 30px; min-height:200px;">
 
 		<table id="unit_kerja_table" class="table table-striped table-hover table-condensed">
 			<thead>

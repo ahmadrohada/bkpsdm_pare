@@ -15,13 +15,13 @@
 				Administrator - PUSKESMAS
 			</h1>
 
-			{!! Breadcrumbs::render('admin-puskesmas-pegawai') !!}
+			{!! Breadcrumbs::render('skpd-puskesmas-pegawai') !!}
 
 	    </section>
 	    <section class="content">
 
 			
-				@include('pare_pns.modules.snapshots-boxes.administrator-puskesmas')
+				@include('pare_pns.modules.snapshots-boxes.skpd-puskesmas')
 
  				@include('pare_pns.tables.administrator-puskesmas-pegawai')
 		 

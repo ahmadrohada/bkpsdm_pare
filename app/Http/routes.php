@@ -1257,8 +1257,6 @@ Route::group(['middleware' => 'administrator'], function () {
 	//============================================================================================//
 	//============================= PEGAWAI    PUSKESMAS  ========================================//
 	//============================================================================================//
-	
-
 	Route::get('admin/puskesmas/{puskesmas_id}', [
 		'as' 			=> 'pegawai_puskesmas',
 		'uses' 			=> 'HomeAdminController@AdministratorPuskesmasPegawai'
@@ -1273,14 +1271,6 @@ Route::group(['middleware' => 'administrator'], function () {
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@detailPegawai'
 	]); 
-
-	/* 
-	
-	Route::get('admin/skpd/pegawai/{pegawai_id}/add', [
-		'as' 			=> '{username}',
-		'uses' 			=> 'PegawaiController@addPegawai'
-	]);  */
-
 
 	//============================================================================================//
 	Route::get('admin/skpd/{skpd_id}/struktur-organisasi', [
@@ -1313,7 +1303,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	//========================================================================//
 	
 	
-	// EDIT USERS PAGE ROUTE
+	/* // EDIT USERS PAGE ROUTE
 	Route::get('edit-users', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'UsersManagementController@editUsersMainPanel'
@@ -1333,7 +1323,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('/about', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'UsersManagementController@editUsersMainPanel'
-	]);
+	]); */
 	
 
 });
@@ -1362,6 +1352,11 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	Route::get('unit_kerja', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeSKPDController@showUnitKerja'
+	]);
+
+	Route::get('puskesmas', [
+		'as' 			=> 'skpd-puskesmas',
+		'uses' 			=> 'HomeSKPDController@showPuskesmas'
 	]);
 
 	Route::get('peta-jabatan', [
@@ -1471,6 +1466,23 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]);
 
 
+	//============================================================================================//
+	//============================= PEGAWAI    PUSKESMAS  ========================================//
+	//============================================================================================//
+	Route::get('puskesmas/{puskesmas_id}', [
+		'as' 			=> 'pegawai_puskesmas',
+		'uses' 			=> 'HomeSKPDController@SKPDPuskesmasPegawai'
+	]);
+
+	Route::get('puskesmas/{puskesmas_id}/pegawai', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeSKPDController@SKPDPuskesmasPegawai'
+	]); 
+
+	Route::get('puskesmas/pegawai/{pegawai_id}', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'PegawaiController@detailPegawai'
+	]); 
 
 	//----------------------------------------------------------------------------------------//
 	//======================== RENCANA KERJA PERANGKAT DAERAH ================================//

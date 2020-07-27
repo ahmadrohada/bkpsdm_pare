@@ -1,7 +1,7 @@
 @extends('pare_pns.layouts.dashboard')
 
 @section('template_title')
-	Administrator
+{{ Pustaka::capital_string($nama_skpd) }}
 @endsection
 
 @section('template_fastload_css')
@@ -12,19 +12,19 @@
 	    <section class="content-header">
 
 			<h1>
-				Administrator - PUSKESMAS
+				{{ Pustaka::capital_string($nama_skpd) }}
 			</h1>
 
-			{!! Breadcrumbs::render('admin-puskesmas-pegawai') !!}
+			{!! Breadcrumbs::render('skpd-puskesmas') !!}
 
 	    </section>
 	    <section class="content">
 
 			
-				@include('pare_pns.modules.snapshots-boxes.administrator-puskesmas')
+				@include('pare_pns.modules.snapshots-boxes.skpd-home')
 
- 				@include('pare_pns.tables.administrator-puskesmas-pegawai')
-		 
+ 				@include('pare_pns.tables.skpd-puskesmas')
+		
 	    </section>
 	</div>
 @endsection

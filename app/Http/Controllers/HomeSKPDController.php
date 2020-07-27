@@ -14,6 +14,7 @@ use App\Models\HistoryJabatan;
 use App\Models\Skpd;
 use App\Models\Renja;
 use App\Models\TPPReport;
+use App\Models\UnitKerja;
 
 use App\Models\SKPTahunan;
 use App\Models\Sasaran;
@@ -59,10 +60,19 @@ class HomeSKPDController extends Controller {
             return $nama_skpd->skpd;
     }
 
+    protected function nama_puskesmas($puskesmas_id){
+        //nama puskesmas 
+        $nama_puskesmas  = UnitKerja::WHERE('m_unit_kerja.id',$puskesmas_id)
+                                    ->SELECT(['m_unit_kerja.unit_kerja AS puskesmas'])
+                                    ->first();
+        return $nama_puskesmas->puskesmas;
+    }
+
     protected function total_pegawai(){
         
         return 	Pegawai::WHERE('status','active')->WHERE('nip','!=','admin')->count();
     } 
+    
     
     protected function total_users(){
         return 	\DB::table('db_pare_2018.users AS users')
@@ -84,6 +94,25 @@ class HomeSKPDController extends Controller {
                                             $join   ->where('a.status','=', 'active');
                                     })
                                     ->WHERE('a.id_skpd','=', $skpd_id)
+                                    ->WHERE('tb_pegawai.nip','!=','admin')
+                                    ->WHERE('tb_pegawai.status','active')
+                                    ->count();
+    }
+
+    protected function total_puskesmas(){
+        return 	SKPD::WHERE('parent_id','=', 168 )->count();
+    }
+
+    protected function total_pegawai_puskesmas( $puskesmas_id){
+        
+        return 	Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function($join) use($puskesmas_id){ 
+                                            $join   ->on('a.id_pegawai','=','tb_pegawai.id')
+                                            ->where(function ($query) use($puskesmas_id) {
+                                                $query  ->where('a.id_unit_kerja','=', $puskesmas_id)
+                                                        ->orwhere('a.id_jabatan','=', $puskesmas_id);
+                                            });
+                                            $join   ->where('a.status','=', 'active');
+                                    })
                                     ->WHERE('tb_pegawai.nip','!=','admin')
                                     ->WHERE('tb_pegawai.status','active')
                                     ->count();
@@ -144,6 +173,7 @@ class HomeSKPDController extends Controller {
                'total_pohon_kinerja' 	=> $this->total_pohon_kinerja($skpd_id),
                'total_skp_tahunan' 	    => $this->total_skp_tahunan($skpd_id),
                'total_tpp_report' 	    => $this->total_tpp_report($skpd_id),
+               'total_puskesmas'        => $this->total_puskesmas(),
 
                'h_box'                  => 'box-fuchsia',
                
@@ -169,6 +199,7 @@ class HomeSKPDController extends Controller {
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
+                'total_puskesmas'        => $this->total_puskesmas(),
 
 
                 'h_box'                   => 'box-teal',
@@ -198,6 +229,7 @@ class HomeSKPDController extends Controller {
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
+                'total_puskesmas'        => $this->total_puskesmas(),
 
                 'h_box'                  => 'box-light-blue',
                
@@ -226,6 +258,7 @@ class HomeSKPDController extends Controller {
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
+                'total_puskesmas'        => $this->total_puskesmas(),
 
 
                 'h_box'                  => 'box-green',
@@ -254,6 +287,7 @@ class HomeSKPDController extends Controller {
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
+                'total_puskesmas'        => $this->total_puskesmas(),
 
                 'h_box'                  => 'box-green',
                
@@ -279,6 +313,7 @@ class HomeSKPDController extends Controller {
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
+                'total_puskesmas'        => $this->total_puskesmas(),
 
                 'h_box'                  => 'box-aqua',
                
@@ -304,6 +339,7 @@ class HomeSKPDController extends Controller {
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
+                'total_puskesmas'        => $this->total_puskesmas(),
 
                 'h_box'                  => 'box-red',
                
@@ -329,6 +365,7 @@ class HomeSKPDController extends Controller {
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
+                'total_puskesmas'        => $this->total_puskesmas(),
 
 
                 'h_box'                  => 'box-green',
@@ -362,6 +399,7 @@ class HomeSKPDController extends Controller {
                 'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
                 'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
                 'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
+                'total_puskesmas'        => $this->total_puskesmas(),
 
             ]
         ); 
@@ -370,5 +408,58 @@ class HomeSKPDController extends Controller {
 
         
     }
+
+
+    public function showPuskesmas(Request $request)
+    {
+        $user      = \Auth::user();
+        //CARI id skpd nya
+        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+        
+       
+		return view('pare_pns.pages.skpd-home-puskesmas', [
+            'skpd_id'                => $skpd_id,
+            'nama_skpd'     	     => $this->nama_skpd($skpd_id),
+            'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
+            'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
+            'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
+            'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+            'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
+            'total_puskesmas'        => $this->total_puskesmas(),
+
+
+            'h_box'                   => 'box-maroon',
+            
+        ]
+    );   
+
+        
+    }
+
+    public function SKPDPuskesmasPegawai(Request $request)
+    {
+            
+        $puskesmas_id     = $request->puskesmas_id;
+        
+       
+
+		return view('pare_pns.pages.skpd-puskesmas-pegawai', [
+                //'users' 		          => $users,
+                'puskesmas_id'            => $puskesmas_id,
+                'nama_puskesmas'     	  => $this->nama_puskesmas($puskesmas_id),
+                'total_pegawai' 	      => $this->total_pegawai_puskesmas($puskesmas_id),
+                'total_unit_kerja' 	      => $this->total_unit_kerja($puskesmas_id),
+                'total_tpp_report' 	      => $this->total_tpp_report($puskesmas_id),
+                'total_puskesmas'         => $this->total_puskesmas(),
+                'total_jabatan'           => 'x',
+                'total_renja'             => 'x',
+                'h_box'                   => 'box-maroon',
+                
+        	]
+        );   
+
+        
+    }
+
     
 }

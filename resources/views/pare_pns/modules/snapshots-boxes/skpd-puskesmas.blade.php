@@ -10,14 +10,14 @@
 	<div class="box-body" style="padding:20px 20px 0px 20px;">
 		<div class="row">
 			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
-				<div class="small-box bg-fuchsia pegawai" style="cursor:pointer;" >
+				<div class="small-box bg-aqua pegawai" style="cursor:pointer;" >
 					<div class="inner">
 						<h3>
 							{{$total_pegawai}}
 							
 						</h3>
 						<p>
-							TOTAL PEGAWAI
+							<strong>Total Pegawai</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -25,14 +25,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
-				<div class="small-box bg-teal unit_kerja_box" style="cursor:pointer;">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12 hidden">
+				<div class="small-box bg-red unit_kerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							{{$total_unit_kerja}}
 						</h3>
 						<p>
-							UNIT KERJA
+							<strong>Unit Kerja</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -40,25 +40,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
-				<div class="small-box bg-maroon puskesmas" style="cursor:pointer;">
-					<div class="inner">
-						<h3>{{$total_puskesmas}}</h3>
-						<p>PUSKESMAS</p>
-					</div>
-					<div class="icon">
-						<i class="fa fa-hospital-o"></i>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12 hidden">
 				<div class="small-box bg-green struktur_organisasi" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							&nbsp;
 						</h3>
 						<p>
-							STRUKTUR ORGANISASI
+							<strong>Struktur Organisasi</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -66,14 +55,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
-				<div class="small-box bg-light-blue rencana_kerja" style="cursor:pointer;">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12 hidden">
+				<div class="small-box bg-yellow rencana_kerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							{{$total_pohon_kinerja}}
+							*
 						</h3>
 						<p>
-							POHON KINERJA
+							<strong>Renja</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -83,14 +72,14 @@
 			</div>
 
 
-			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12" hidden>
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12 hidden">
 				<div class="small-box bg-aqua perjanjian_kinerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
 							*
 						</h3>
 						<p>
-							PERJANJIAN KINERJA
+							<strong>Perjanjian Kinerja</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -99,14 +88,14 @@
 				</div>
 			</div>
 
-			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12 hidden">
 				<div class="small-box bg-red skp_tahunan" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
-							{{$total_skp_tahunan}}
+							*
 						</h3>
 						<p>
-							SKP TAHUNAN
+							<strong>SKP Tahunan</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -123,7 +112,7 @@
 							*
 						</h3>
 						<p>
-							SKP BULANAN
+							<strong>SKP Bulanan</strong>
 						</p>
 					</div>
 					<div class="icon">
@@ -131,24 +120,6 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
-				<div class="small-box bg-purple tpp_report" style="cursor:pointer;">
-					<div class="inner">
-						<h3>
-							{{$total_tpp_report}}
-						</h3>
-						<p>
-							TPP REPORT
-						</p>
-					</div>
-					<div class="icon">
-						<i class="fa  fa-money"></i>
-					</div>
-				</div>
-			</div>
-
-		
 
 
 		</div>
@@ -160,19 +131,19 @@
 $(document).ready(function(){
 
     $(".pegawai").click(function(){
-		window.location.assign("pegawai");
+		window.location.assign("./pegawai");
     });
 
-	$(".unit_kerja_box").click(function(){
-		window.location.assign("unit_kerja");
+	$(".unit_kerja").click(function(){
+		window.location.assign("unit-kerja");
     });
 
 	$(".struktur_organisasi").click(function(){
-		window.location.assign("struktur_organisasi");
+		window.location.assign("struktur-organisasi");
     });
 
 	$(".rencana_kerja").click(function(){
-		window.location.assign("pohon_kinerja");
+		window.location.assign("renja");
     });
 
 	$(".perjanjian_kinerja").click(function(){
@@ -187,13 +158,6 @@ $(document).ready(function(){
 		window.location.assign("skp_bulanan");
     });
 
-	$(".tpp_report").click(function(){
-		window.location.assign("tpp_report");
-    });
-
-	$(".puskesmas").click(function(){
-		window.location.assign("puskesmas");
-    });
 
 });
 </script>

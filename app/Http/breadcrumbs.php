@@ -202,6 +202,20 @@ Breadcrumbs::register('skpd-unit_kerja', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_unit_kerja'), '/unit_kerja', ['icon' => Lang::get('sidebar-nav.link_icon_unit_kerja')]);
 });
 
+// DASHBOARD > SKPD > PUSKESMAS >
+Breadcrumbs::register('skpd-puskesmas', function($breadcrumbs)
+{
+    $breadcrumbs->parent('skpd');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_puskesmas'), '/puskesmas', ['icon' => Lang::get('sidebar-nav.link_icon_puskesmas')]);
+});
+
+// DASHBOARD > SKPD > PUSKESMAS > PEGAWAI
+Breadcrumbs::register('skpd-puskesmas-pegawai', function($breadcrumbs)
+{
+    $breadcrumbs->parent('skpd-puskesmas');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_pegawai'), '/pegawai', ['icon' => Lang::get('sidebar-nav.link_icon_pegawai')]);
+});
+
 
 // DASHBOARD > SKPD > POHON KINERJA >
 Breadcrumbs::register('skpd-pohon_kinerja', function($breadcrumbs)
