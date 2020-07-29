@@ -504,12 +504,14 @@ class TPPReportAPIController extends Controller
         
     }
 
-    public function PuskesmasTPPReportDataList(Request $request)
+    public function PuskesmasTPPReportDataList(Request $request) 
     {
 
         $tpp_report_id = $request->tpp_report_id;
-        $unit_kerja_id = $request->unit_kerja_id;
         $puskesmas_id = $request->puskesmas_id;
+
+        //data tpp nya adalah yang unit kerja_id nya adalah puskes ini or unit_kerja_id = ka uptd puskes ini
+        //cari parent nya
 
         $dt = TPPReportData::
             rightjoin('demo_asn.tb_pegawai AS pegawai', function ($join) {
@@ -557,16 +559,10 @@ class TPPReportAPIController extends Controller
 
             ])
             ->WHERE('tpp_report_data.tpp_report_id', $tpp_report_id)
-            ->ORDERBY('tpp_report_data.eselon_id','ASC')
+            ->WHERE('tpp_report_data.unit_kerja_id',$puskesmas_id)
+            ->ORDERBY('tpp_report_data.jabatan_id','ASC')
             ->where('pegawai.status', '=', 'active')
             ->where('a.status', '=', 'active');
-
-
-        //JIKA UNIT KERJA BUKAN ALL
-        //if ( $unit_kerja_id != 0 ){
-            $dt->WHERE('tpp_report_data.unit_kerja_id',$puskesmas_id);
-        //}
-        
 
 
         $datatables = Datatables::of($dt)
@@ -711,7 +707,6 @@ class TPPReportAPIController extends Controller
 
             ])
             ->WHERE('tpp_report_data.tpp_report_id', $tpp_report_id)
-            ->ORDERBY('tpp_report_data.eselon_id','ASC')
             ->where('pegawai.status', '=', 'active')
             ->where('a.status', '=', 'active');
 
@@ -720,10 +715,14 @@ class TPPReportAPIController extends Controller
         if ( $unit_kerja_id != 0 ){
             $dt->WHERE('tpp_report_data.unit_kerja_id',$unit_kerja_id);
 
+
+            $dt->ORDERBY('tpp_report_data.jabatan_id','ASC');
+
             //NAMA UNIT KERJA UNTUK PRINTOUT
             $dt_uk = UnitKerja::WHERE('id',$unit_kerja_id)->SELECT('unit_kerja')->first();
             $nama_unit_kerja = $dt_uk->unit_kerja;
         }else{
+            $dt->ORDERBY('tpp_report_data.eselon_id','ASC');
             $nama_unit_kerja = "";
         }
 
@@ -790,8 +789,8 @@ class TPPReportAPIController extends Controller
 			</tr>
         </table>');
         //"tpp".$bulan_depan."_".$skpd."
+        //stream or download
         return $pdf->download('TPP'.$p->bulan.Pustaka::tahun($p->tahun_periode).'_'.$this::nama_skpd($p->skpd_id).'.pdf');
-        //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
     }
 
     public function cetakPuskesmasTPPReportData(Request $request)
@@ -847,7 +846,7 @@ class TPPReportAPIController extends Controller
             ])
             ->WHERE('tpp_report_data.tpp_report_id', $tpp_report_id)
             ->WHERE('tpp_report_data.unit_kerja_id',$unit_kerja_id)
-            ->ORDERBY('tpp_report_data.eselon_id','ASC')
+            ->ORDERBY('tpp_report_data.jabatan_id','ASC')
             ->where('pegawai.status', '=', 'active')
             ->where('a.status', '=', 'active')
             ->get();
@@ -915,7 +914,7 @@ class TPPReportAPIController extends Controller
         </table>');
         //"tpp".$bulan_depan."_".$skpd."
         return $pdf->download('TPP'.$p->bulan.Pustaka::tahun($p->tahun_periode).'_'.$this::nama_skpd($p->skpd_id).'.pdf');
-        //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
+       
     }
 
 

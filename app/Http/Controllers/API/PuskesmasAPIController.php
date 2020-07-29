@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 
 use App\Models\HistoryJabatan;
+use App\Models\Pegawai;
 use App\Models\Skpd;
 
 use App\Helpers\Pustaka;
@@ -30,11 +31,22 @@ class PuskesmasAPIController extends Controller {
         
 
         $datatables = Datatables::of($dt)
-        ->addColumn('jm_pegawai', function ($x) {
-            $jm_p = HistoryJabatan::WHERE('status','active')
-                            ->WHERE('id_unit_kerja',$x->puskesmas_id)
+        ->addColumn('jm_pegawai', function ($x) { 
+            $puskesmas_id = $x->puskesmas_id;
+            $jm_p = Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function($join) use($puskesmas_id){
+                            $join   ->on('a.id_pegawai','=','tb_pegawai.id')
+                                    ->where(function ($query) use($puskesmas_id) {
+                                        $query  ->where('a.id_unit_kerja','=', $puskesmas_id)
+                                                ->orwhere('a.id_jabatan','=', $puskesmas_id);
+                                    });
+                                    $join   ->where('a.status','=', 'active');
+                            })
+                            ->WHERE('tb_pegawai.nip','!=','admin')
+                            ->WHERE('tb_pegawai.status','active')
                             ->count();
-            return $jm_p;
+            return $jm_p; 
+
+
         })->addColumn('nama_puskesmas', function ($x) {
 
             if ( $x->unit_kerja_id == null ){
