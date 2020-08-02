@@ -533,6 +533,31 @@ class HomeAdminController extends Controller {
 
         
     }
+
+    public function AdministratorPuskesmasPegawaiError(Request $request)
+    {
+            
+        $puskesmas_id     = $request->puskesmas_id;
+        
+       
+
+		return view('pare_pns.pages.administrator-puskesmas-pegawai_error', [
+                //'users' 		          => $users,
+                'puskesmas_id'            => $puskesmas_id,
+                'nama_puskesmas'     	  => $this->nama_puskesmas($puskesmas_id),
+                'total_pegawai' 	      => $this->total_pegawai_puskesmas($puskesmas_id),
+                'total_unit_kerja' 	      => $this->total_unit_kerja($puskesmas_id),
+                'total_TPP_report'        => $this->total_TPP_report(),
+                'total_puskesmas'         => $this->total_puskesmas(),
+                'total_jabatan'           => 'x',
+                'total_renja'             => 'x',
+                'h_box'                   => 'box-purple',
+                
+        	]
+        );   
+
+        
+    }
    
     
     public function AdministratorSKPDPegawai(Request $request)

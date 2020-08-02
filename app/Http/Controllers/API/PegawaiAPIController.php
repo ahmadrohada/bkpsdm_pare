@@ -13,6 +13,8 @@ use App\Models\CapaianTriwulan;
 use App\Models\CapaianTahunan;
 use App\Models\Jabatan;
 use App\Models\HistoryJabatan;
+use App\Models\TPPReport;
+use App\Models\PegawaiPuskesmas;
 use App\Models\User;
 use App\Models\RoleUser;
 
@@ -544,6 +546,86 @@ class PegawaiAPIController extends Controller {
             }
            
         });
+
+        
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+    } 
+
+    public function PuskesmasPegawaiListError(Request $request)
+    {
+        $puskesmas_id = $request->puskesmas_id ;
+        $month = date('m');
+
+        //pencarian TPP report bulanan Dinkes pada bulan ini, SKPD_ID = 19
+        $tpp = TPPReport::
+                                    SELECT([
+                                        'tpp_report.id'
+                                    ])
+                                    ->WHERE('tpp_report.skpd_id', 19)
+                                    ->WHERE('tpp_report.bulan', $month)
+                                    ->first();
+        if ( $tpp ){
+            $tpp_report_id = $tpp->id;
+        }else{
+            $tpp_report_id = 0 ;
+        }
+
+
+        
+        $dt = PegawaiPuskesmas::
+                leftjoin('demo_asn.tb_history_jabatan AS hijab', function($join) use($puskesmas_id){
+                    $join   ->on('hijab.nip','=','pegawai_puskesmas.nip');
+                    /* ->where(function ($query) use($puskesmas_id) {
+                        $query  ->where('a.id_unit_kerja','=', $puskesmas_id)
+                                ->orwhere('a.id_jabatan','=', $puskesmas_id);
+                    }); */
+                    $join   ->where('hijab.status', '=', 'active');
+                })
+                //jabatan pada Hijab
+                ->leftjoin('demo_asn.m_skpd AS jabatan', function($join){
+                    $join   ->on('jabatan.id','=','hijab.id_jabatan');
+                })  
+                //jabatan pada Hijab
+                ->leftjoin('db_pare_2018.tpp_report_data AS tpp', function($join) use($tpp_report_id){
+                    $join   ->on('tpp.pegawai_id','=','hijab.id_pegawai');
+                    $join   ->WHERE('tpp.tpp_report_id','=',$tpp_report_id);
+                }) 
+                
+                
+                ->select([  'pegawai_puskesmas.id AS pp_id',
+                            'pegawai_puskesmas.nip AS pp_nip',
+                            'pegawai_puskesmas.nama AS pp_nama',
+                            'pegawai_puskesmas.gol AS pp_gol',
+                            'pegawai_puskesmas.jabatan AS pp_jabatan',
+                            'pegawai_puskesmas.unit_kerja_id AS pp_unit_kerja_id',
+                            'hijab.id_jabatan AS hijab_jabatan_id',
+                            'hijab.id_unit_kerja AS hijab_unit_kerja_id',
+                            'jabatan.skpd AS hijab_jabatan',
+                            'tpp.id AS tpp_id',
+                            'tpp.unit_kerja_id AS tpp_unit_kerja_id',
+                            'tpp.cap_skp AS tpp_capaian'
+                
+                        ])
+
+                ->WHERE('pegawai_puskesmas.unit_kerja_id',$puskesmas_id)
+                ->get();
+               
+        
+        //unit kerja pegawai yaitu history_jabatan(id_unit_kerja)->m_skpd(parent_id)->m_unit_kerja(unit_kerja)
+
+
+        $datatables = Datatables::of($dt);
+        /* ->addColumn('nama_pegawai', function ($x) {
+            return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
+        })->addColumn('nama_unit_kerja', function ($x) {
+            return Pustaka::capital_string($x->unit_kerja);
+        })->addColumn('jabatan', function ($x) {
+            return Pustaka::capital_string($x->jabatan);
+        }); */
 
         
         if ($keyword = $request->get('search')['value']) {

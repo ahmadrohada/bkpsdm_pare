@@ -908,6 +908,7 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 
 	Route::get('administrator_pegawai_skpd_list','API\PegawaiAPIController@SKPDPegawaiList');
 	Route::get('administrator_pegawai_puskesmas_list','API\PegawaiAPIController@PuskesmasPegawaiList');
+	Route::get('administrator_pegawai_puskesmas_list_error','API\PegawaiAPIController@PuskesmasPegawaiListError');
 
 	Route::get('puskesmas_pegawai_list','API\PegawaiAPIController@PuskesmasPegawaiList');
 	
@@ -1270,6 +1271,11 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/puskesmas/pegawai/{pegawai_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@detailPegawai'
+	]); 
+
+	Route::get('admin/puskesmas/{puskesmas_id}/data_error', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'HomeAdminController@AdministratorPuskesmasPegawaiError'
 	]); 
 
 	//============================================================================================//

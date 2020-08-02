@@ -25,6 +25,21 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-purple data_error" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							<strong>Data Perbaikan Pegawai</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa  fa-user"></i>
+					</div>
+				</div>
+			</div>
 			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12 hidden">
 				<div class="small-box bg-red unit_kerja" style="cursor:pointer;">
 					<div class="inner">
@@ -132,6 +147,10 @@ $(document).ready(function(){
 
     $(".pegawai").click(function(){
 		window.location.assign("./pegawai");
+    });
+
+	$(".data_error").click(function(){
+		window.location.assign("./data_error");
     });
 
 	$(".unit_kerja").click(function(){
