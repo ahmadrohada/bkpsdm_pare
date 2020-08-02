@@ -16,7 +16,7 @@
 					<tr class="success">
 						<th rowspan="2">NO</th>
 						<th colspan="4">DATA DARI ADMIN</th>
-						<th colspan="3">DATA HISTORY JABATAN</th>
+						<th colspan="4">DATA HISTORY JABATAN</th>
 						<th colspan="3">DATA TPP REPORT</th>
 						{{-- <th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th> --}}
 					</tr>
@@ -27,8 +27,9 @@
 						<th>JABATAN</th>
 
 						<th>JABATAN</th>
-						<th>M_SKPD ID</th>
 						<th>UNIT KERJA ID</th>
+						<th>M_SKPD ID</th>
+						<th>M_SKPD UK ID</th>
 						
 						<th>UNIT KERJA ID</th>
 						<th>CAP</th>
@@ -57,7 +58,7 @@
 				order 			: [ 0 , 'asc' ],
 				lengthMenu		: [50],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,3,6,7,8,9,10] },
+									{ 	className: "text-center", targets: [ 0,1,3,6,7,8,9,10,11] },
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/administrator_pegawai_puskesmas_list_error") }}',
@@ -79,8 +80,9 @@
 								{ data: "pp_jabatan" ,  name:"pegawai_puskesmas.jabatan"},
 
 								{ data: "hijab_jabatan" ,  name:"jabatan.skpd"},
-								{ data: "hijab_jabatan_id", name:"hijab.id_jabatan"},
 								{ data: "hijab_unit_kerja_id", name:"hijab.unit_kerja_id"},
+								{ data: "hijab_jabatan_id", name:"hijab.id_jabatan"},
+								{ data: "m_skpd_id_uk" ,  name:"jabatan.id_unit_kerja"},
 			
 								{ data: "tpp_unit_kerja_id" , name:"tpp.unit_kerja_id"},
 								{ data: "tpp_capaian" , name:"tpp.cap_skp"},

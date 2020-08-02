@@ -605,6 +605,7 @@ class PegawaiAPIController extends Controller {
                             'hijab.id_jabatan AS hijab_jabatan_id',
                             'hijab.id_unit_kerja AS hijab_unit_kerja_id',
                             'jabatan.skpd AS hijab_jabatan',
+                            'jabatan.id_unit_kerja AS m_skpd_id_uk',
                             'tpp.id AS tpp_id',
                             'tpp.unit_kerja_id AS tpp_unit_kerja_id',
                             'tpp.cap_skp AS tpp_capaian'
