@@ -1598,7 +1598,7 @@ class TPPReportAPIController extends Controller
                 $report_data->pegawai_id            = $x->pegawai_id;
                 $report_data->capaian_bulanan_id    = $x->capaian_id;
                 $report_data->skpd_id               = $x->skpd_id;
-                $report_data->unit_kerja_id         = ( $x->unit_kerja_id != null ) ? $x->unit_kerja_id : $x->unit_kerja_id_now;
+                $report_data->unit_kerja_id         = ( $x->unit_kerja_id != null ) ? $x->unit_kerja_id : $x->id_unit_kerja_now;
                 $report_data->eselon_id             = ( $x->eselon_id != null ) ? $x->eselon_id : $x->eselon_id_now ;
                 $report_data->jabatan_id            = ( $x->jabatan_id != null ) ? $x->jabatan_id : $x->jabatan_id_now;
                 $report_data->golongan_id           = ( $x->golongan_id != null ) ? $x->golongan_id : $x->golongan_id_now;
