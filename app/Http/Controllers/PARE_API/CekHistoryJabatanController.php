@@ -14,7 +14,7 @@ class CekHistoryJabatanController extends Controller
     public function HistoryJabatan(Request $request)
     {
 
-        
+        //mang basir
         $id    = $request->id ? $request->id : 0 ;
 
 
