@@ -23,6 +23,8 @@ Route::group(['prefix' => 'pare_api','middleware'=> 'auth.api:tes' ], function (
 
 	Route::get('tpp-report','PARE_API\TPPReportController@TTPReport');
 
+	Route::get('history-jabatan','PARE_API\CekHistoryJabatanController@HistoryJabatan');
+
 });
 
 

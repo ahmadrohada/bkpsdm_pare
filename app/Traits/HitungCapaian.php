@@ -9,7 +9,7 @@ use App\Models\RencanaAksi;
 use App\Models\RealisasiRencanaAksiKaban;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\KegiatanSKPTahunan;
-use App\Models\KegiatanSkpTahunanJFT;
+use App\Models\KegiatanSKPTahunanJFT;
 use App\Models\KegiatanSKPBulananJFT;
 use App\Models\UraianTugasTambahan;
 use App\Models\RealisasiKegiatanTahunan;
@@ -464,7 +464,7 @@ trait HitungCapaian
     {
 
         //Jumlah kegiatan 
-        $jm_kegiatan = KegiatanSkpTahunanJFT::WHERE('skp_tahunan_id',$skp_tahunan_id)->count();
+        $jm_kegiatan = KegiatanSKPTahunanJFT::WHERE('skp_tahunan_id',$skp_tahunan_id)->count();
         $jm_realisasi = RealisasiKegiatanTahunanJFT::WHERE('capaian_id',$capaian_id)->count();
 
         //cari nilai_capaian Kegiatan tahunan
