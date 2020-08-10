@@ -490,6 +490,36 @@ trait HitungCapaian
 
     }
 
+    protected function capaian_tahunan_eselon4($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id)
+    {
+
+        //Jumlah kegiatan 
+        $jm_kegiatan = KegiatanSKPTahunanJFT::WHERE('skp_tahunan_id',$skp_tahunan_id)->count();
+        $jm_realisasi = RealisasiKegiatanTahunanJFT::WHERE('capaian_id',$capaian_id)->count();
+
+        //cari nilai_capaian Kegiatan tahunan
+       /*  $xdata = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->get();
+       
+        $jm_capaian_kegiatan_tahunan = 0 ;
+        foreach ($xdata as $x) {
+
+            if ( $x->hitung_cost <=0 ){
+                $capaian_kegiatan_tahunan = ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/3;
+            }else{
+                $capaian_kegiatan_tahunan = ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/4;
+            }
+
+            $jm_capaian_kegiatan_tahunan =  $jm_capaian_kegiatan_tahunan + $capaian_kegiatan_tahunan;
+        } */
+
+        return array(
+            'jm_kegiatan_tahunan'           => $jm_kegiatan,
+            'jm_capaian_kegiatan_tahunan'   => '',
+            'ave_capaian_kegiatan_tahunan'  => '',
+        );
+
+    }
+
     public function hitung_capaian_tahunan($capaian_id){ 
 
 
@@ -612,7 +642,7 @@ trait HitungCapaian
         }else if ( $jenis_jabatan == 4 ){ //jm kegiatan pelaksana JFU
             $data = $this->capaian_tahunan_jfu($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 3 ){  //kasubid ESELON IV
-            $data =  $this->capaian_tahunan_eselon4($capaian_id,$skp_tahunan_id,$bulan,$renja_id,$jabatan_id);
+            $data =  $this->capaian_tahunan_eselon4($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 2){ //kabid ESELON III
             $data =  $this->capaian_tahunan_eselon3($capaian_id,$skp_tahunan_id,$bulan,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 1){ //KABAN ESELON II
