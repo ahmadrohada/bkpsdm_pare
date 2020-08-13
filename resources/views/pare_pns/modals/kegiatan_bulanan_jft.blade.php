@@ -135,8 +135,8 @@
 		});	 
 	}
 
-	$('.modal-kegiatan_bulanan').on('shown.bs.modal', function(){
-		reset_submitx();
+	$('.modal-kegiatan_bulanan_jft').on('shown.bs.modal', function(){
+		reset_submit_kb();
 	});
 
 	/* $('.modal-kegiatan_bulanan').on('hidden.bs.modal', function(){
@@ -144,8 +144,8 @@
 		$('.modal-kegiatan_bulanan').find('[name=kegiatan_bulanan_id],[name=label],[name=angka_kredit],[name=target],[name=quality],[name=satuan],[name=target_waktu],[name=cost]').val('');
 	}); */
 
-	$('.label_sasaran').on('click', function(){
-		$('.label_sasaran').removeClass('has-error');
+	$('.label_kegiatan_tahunan').on('click', function(){
+		$('.label_kegiatan_tahunan').removeClass('has-error');
 	});
 
 	$('.label_kegiatan_bulanan_jft').on('click', function(){
@@ -177,19 +177,19 @@
 	});
 
  
-	function on_submitx(){
-		$('.modal-kegiatan_bulanan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+	function on_submit_kb(){
+		$('.modal-kegiatan_bulanan_jft').find('.button_simpan').addClass('fa-spinner faa-spin animated');
 		$('#submit-save_jft').prop('disabled',true);
 	}
-	function reset_submitx(){
-		$('.modal-kegiatan_bulanan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
-		$('.modal-kegiatan_bulanan').find('.button_simpan').addClass('fa-floppy-o');
+	function reset_submit_kb(){
+		$('.modal-kegiatan_bulanan_jft').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-kegiatan_bulanan_jft').find('.button_simpan').addClass('fa-floppy-o');
 		$('#submit-save_jft').prop('disabled',false);
 	}
 
 	$(document).on('click','#submit-save_jft',function(e){
 
-		on_submitx();
+		on_submit_kb();
 		var data = $('#kegiatan_bulanan_jft_form').serialize();
 
 		//alert(data);
@@ -201,7 +201,7 @@
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
                
-				reset_submitx();
+				reset_submit_kb();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -239,7 +239,7 @@
 					//alert (index+":"+value);
 					
 					//error message
-					((index == 'sasaran_id')?$('.label_sasaran').addClass('has-error'):'');
+					((index == 'kegiatan_tahunan_id')?$('.label_kegiatan_tahunan').addClass('has-error'):'');
 					((index == 'label')?$('.label_kegiatan_bulanan_jft').addClass('has-error'):'');
 					((index == 'target')?$('.target').addClass('has-error'):'');
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
@@ -248,7 +248,7 @@
 					((index == 'angka_kredit')?$('.angka_kredit').addClass('has-error'):'');
 					((index == 'cost')?$('.cost').addClass('has-error'):'');
 					
-					reset_submitx();
+					reset_submit_kb();
 					
 				
 				});
@@ -267,7 +267,7 @@
 
 	$(document).on('click','#submit-update_jft',function(e){
 
-		on_submitx();
+		on_submit_kb();
 		var data = $('#kegiatan_bulanan_jft_form').serialize();
 
 		//alert(data);
@@ -279,7 +279,7 @@
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
 			
-				reset_submitx();
+				reset_submit_kb();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -314,7 +314,7 @@
 					//alert (index+":"+value);
 					
 					//error message
-					((index == 'sasaran_id')?$('.label_sasaran').addClass('has-error'):'');
+					((index == 'kegiatan_tahunan_id')?$('.label_kegiatan_tahunan').addClass('has-error'):'');
 					((index == 'label')?$('.label_kegiatan_bulanan_jft').addClass('has-error'):'');
 					((index == 'target')?$('.target').addClass('has-error'):'');
 					((index == 'satuan')?$('.satuan').addClass('has-error'):'');
@@ -322,7 +322,7 @@
 					((index == 'target_waktu')?$('.waktu').addClass('has-error'):'');
 					((index == 'angka_kredit')?$('.angka_kredit').addClass('has-error'):'');
 					((index == 'cost')?$('.cost').addClass('has-error'):'');
-					reset_submitx();
+					reset_submit_kb();
 
 					
 				

@@ -19,7 +19,7 @@
 		</div>	
 	</div>
 	<div class="col-md-7">
-		@include('pare_pns.tables.skp_tahunan-kegiatan_5_edit')
+		@include('pare_pns.tables.skp_tahunan-kegiatan_5')
 	</div>
 </div>
 

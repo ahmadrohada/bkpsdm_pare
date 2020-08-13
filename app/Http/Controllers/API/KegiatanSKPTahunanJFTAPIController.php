@@ -71,13 +71,15 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
     }
 
 
-    public function KegiatanTahunan5(Request $request)
+    public function KegiatanTahunan5(Request $request) 
     {
              
        //KEGIATAN Tahunan JFT
 
-        $rencana_aksi = KegiatanSKPTahunanJFT::WHERE('skp_tahunan_id',$request->skp_tahunan_id)
-                          
+        $rencana_aksi = KegiatanSKPTahunanJFT::
+                            leftjoin('db_pare_2018.skp_bulanan_kegiatan_jft AS kegiatan_bulanan', function($join){
+                                $join   ->on('kegiatan_bulanan.kegiatan_tahunan_id','=','skp_tahunan_kegiatan_jft.id');
+                            })
                             ->SELECT(   'skp_tahunan_kegiatan_jft.id AS kegiatan_tahunan_id',
                                         'skp_tahunan_kegiatan_jft.label',
                                         'skp_tahunan_kegiatan_jft.target',
@@ -85,10 +87,12 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
                                         'skp_tahunan_kegiatan_jft.angka_kredit',
                                         'skp_tahunan_kegiatan_jft.quality',
                                         'skp_tahunan_kegiatan_jft.cost',
-                                        'skp_tahunan_kegiatan_jft.target_waktu'
+                                        'skp_tahunan_kegiatan_jft.target_waktu',
+                                        'kegiatan_bulanan.id AS kegiatan_bulanan_id'
 
                                     ) 
-                            
+                            ->WHERE('skp_tahunan_kegiatan_jft.skp_tahunan_id',$request->skp_tahunan_id)
+                            ->GROUPBY('skp_tahunan_kegiatan_jft.id')
                             ->get(); 
              
                 

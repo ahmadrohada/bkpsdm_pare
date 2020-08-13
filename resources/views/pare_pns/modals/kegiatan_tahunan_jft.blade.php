@@ -73,7 +73,7 @@
                 {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').' button_simpan" aria-hidden="true"></i> <span name="text_button_submit"></span>', array('class' => 'btn btn-primary btn-sm pull-right  btn-submit', 'type' => 'button', 'id' => 'simpan' )) !!}
             </div>
 
-            </form>
+            </form> 
         </div>
     </div>
 </div>
@@ -136,7 +136,7 @@
 	}
 
 	$('.modal-kegiatan_tahunan').on('shown.bs.modal', function(){
-		reset_submitx();
+		reset_submit_kt();
 	});
 
 	/* $('.modal-kegiatan_tahunan').on('hidden.bs.modal', function(){
@@ -177,19 +177,19 @@
 	});
 
  
-	function on_submitx(){
-		$('.modal-kegiatan_tahunan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+	function on_submit_kt(){
+		$('.modal-kegiatan_tahunan_jft').find('.button_simpan').addClass('fa-spinner faa-spin animated');
 		$('#submit-save').prop('disabled',true);
 	}
-	function reset_submitx(){
-		$('.modal-kegiatan_tahunan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
-		$('.modal-kegiatan_tahunan').find('.button_simpan').addClass('fa-floppy-o');
+	function reset_submit_kt(){
+		$('.modal-kegiatan_tahunan_jft').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-kegiatan_tahunan_jft').find('.button_simpan').addClass('fa-floppy-o');
 		$('#submit-save').prop('disabled',false);
 	}
 
 	$(document).on('click','#submit-save',function(e){
-
-		on_submitx();
+		//show_loader();
+		on_submit_kt();
 		var data = $('#kegiatan_tahunan_form').serialize();
 
 		//alert(data);
@@ -200,8 +200,8 @@
 			success	: function(data , textStatus, jqXHR) {
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
-               
-				reset_submitx();
+				//swal.close();
+				reset_submit_kt();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -228,7 +228,7 @@
 			)	
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
-
+				//swal.close();
 				var test = $.parseJSON(jqXHR.responseText);
 				
 				var data= test.errors;
@@ -246,7 +246,7 @@
 					((index == 'angka_kredit')?$('.angka_kredit').addClass('has-error'):'');
 					((index == 'cost')?$('.cost').addClass('has-error'):'');
 					
-					reset_submitx();
+					reset_submit_kt();
 					
 				
 				});
@@ -264,8 +264,8 @@
 
 
 	$(document).on('click','#submit-update',function(e){
-
-		on_submitx();
+		//show_loader();
+		on_submit_kt();
 		var data = $('#kegiatan_tahunan_form').serialize();
 
 		//alert(data);
@@ -276,8 +276,8 @@
 			success	: function(data , textStatus, jqXHR) {
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
-			
-				reset_submitx();
+				//swal.close();
+				reset_submit_kt();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -301,7 +301,7 @@
 			)	
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
-
+				//swal.close();
 				var test = $.parseJSON(jqXHR.responseText);
 				
 				var data= test.errors;
@@ -318,7 +318,7 @@
 					((index == 'target_waktu')?$('.waktu').addClass('has-error'):'');
 					((index == 'angka_kredit')?$('.angka_kredit').addClass('has-error'):'');
 					((index == 'cost')?$('.cost').addClass('has-error'):'');
-					reset_submitx();
+					reset_submit_kt();
 
 					
 				

@@ -18,7 +18,7 @@
 		</div>	
 	</div>
 	<div class="col-md-7">
-		@include('pare_pns.tables.skp_tahunan-kegiatan_5_detail')
+		@include('pare_pns.tables.skp_tahunan-kegiatan_5')
 	</div>
 </div>
 

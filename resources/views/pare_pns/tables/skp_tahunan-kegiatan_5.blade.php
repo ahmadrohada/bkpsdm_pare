@@ -2,7 +2,7 @@
 <div class="box box-kegiatan_tahunan" id='kegiatan_tahunan'>
 	<div class="box-header with-border">
 		<h1 class="box-title">
-			List Kegiatan SKP Tahunan 
+			List Kegiatan SKP Tahunan JFT
 		</h1>
 
 		<div class="box-tools pull-right">
@@ -11,8 +11,11 @@
 		</div>
 	</div>
 	<div class="box-body table-responsive" style="min-height:330px;">
+		
 		<div class="toolbar"> 
-			<span  data-toggle="tooltip" title="Tambah Kegiatan"><a class="btn btn-info btn-xs create_kegiatan" ><i class="fa fa-plus" ></i> Tambah Kegiatan</a></span>
+			@if ( ( request()->segment(4) == 'edit' ) | ( request()->segment(4) == 'ralat' ) )
+				<span  data-toggle="tooltip" title="Tambah Kegiatan"><a class="btn btn-info btn-xs create_kegiatan" ><i class="fa fa-plus" ></i> Tambah Kegiatan</a></span>
+			@endif
 		</div>
 
 		<table id="kegiatan_tahunan_5_table" class="table table-striped table-hover" >
@@ -39,20 +42,30 @@
 
 
 
+
 <script type="text/javascript">
 
 	$('#kegiatan_tahunan_5_table').DataTable({
-				destroy			: true,
-				processing      : false,
+		destroy			: true,
+				processing      : true,
 				serverSide      : true,
 				searching      	: false,
-				paging          : false,
-				paging          : false,
+				paging          : true,
+				autoWidth		: false,
 				bInfo			: false,
+				bSort			: false,
+				lengthChange	: false,
+				//order 		: [ 0 , 'asc' ],
+				lengthMenu		: [10,20,50],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,2,3,4,7 ] },
 									{ className: "text-right", targets: [ 6 ] },
-									{ "orderable": false, targets: [ 0,1,2,3,4,5,6,7 ]  }
+									{ orderable: false, targets: [ 0,1,2,3,4,5,6,7 ]  },
+									@if ( ( request()->segment(4) != 'edit' ) & ( request()->segment(4) != 'ralat' ) )
+											{ "visible": false, "targets": [7]}
+									@else
+											{ "visible": true, "targets": [7]}
+									@endif
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/kegiatan_tahunan_5") }}',
@@ -61,17 +74,14 @@
 											"renja_id" : {!! $skp->Renja->id !!} , 
 											"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
 											"skp_tahunan_id" : {!! $skp->id !!}
-									 },
+									},
+									cache : false,
+									quietMillis: 500, 
 								},
 				columns			: [
 									{ data: 'kegiatan_tahunan_id' ,
 										"render": function ( data, type, row ,meta) {
-											if ( (row.kegiatan_tahunan_id) <= 0 ){
-												return "<p class='text-danger'>"+(meta.row + meta.settings._iDisplayStart + 1 )+"</p>" ;
-											}else{
-												return meta.row + meta.settings._iDisplayStart + 1 ;
-											}
-											
+											return meta.row + meta.settings._iDisplayStart + 1 ;
 										}
 									},
 									{ data: "label", name:"label", width:"220px"},
@@ -82,8 +92,15 @@
 									{ data: "biaya", name:"biaya"},
 									{  data: 'action',width:"60px",
 										"render": function ( data, type, row ) {
-											return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-													'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
+											if ( row.kegiatan_bulanan_id >= 1 ){
+												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+														'<span  style="margin:2px;" ><a class="btn btn-default btn-xs" disabled><i class="fa fa-close " ></i></a></span>';
+											
+											}else{
+												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+														'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_tahunan"  data-id="'+row.kegiatan_tahunan_id+'" data-label="'+row.label+'" ><i class="fa fa-close " ></i></a></span>';
+											
+											}
 											
 										}
 									},
