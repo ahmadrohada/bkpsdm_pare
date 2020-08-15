@@ -761,7 +761,8 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	//=====================          REALISASI   KEGIATAN TAHUNAN      = =====================================//
 	//========================================================================================================//
 	
-	Route::get('realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan');
+	//Route::get('realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan');
+	Route::get('realisasi_kegiatan_tahunan_3','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan3');
 	Route::get('realisasi_kegiatan_tahunan_4','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan4');
 	Route::get('realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan5');
 

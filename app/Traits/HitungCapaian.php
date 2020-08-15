@@ -494,27 +494,23 @@ trait HitungCapaian
     {
 
         //Jumlah kegiatan 
-        $jm_kegiatan = KegiatanSKPTahunanJFT::WHERE('skp_tahunan_id',$skp_tahunan_id)->count();
-        $jm_realisasi = RealisasiKegiatanTahunanJFT::WHERE('capaian_id',$capaian_id)->count();
+        $jm_kegiatan = KegiatanSKPTahunan::WHERE('skp_tahunan_id',$skp_tahunan_id)->count();
+        $jm_realisasi = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->count();
 
         //cari nilai_capaian Kegiatan tahunan
-       /*  $xdata = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->get();
-       
-        $jm_capaian_kegiatan_tahunan = 0 ;
-        foreach ($xdata as $x) {
-
+        $data_cap = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->get();
+        $nilai_capaian_kegiatan_tahunan = 0 ;
+        foreach ($data_cap as $x) {
             if ( $x->hitung_cost <=0 ){
-                $capaian_kegiatan_tahunan = ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/3;
+                $nilai_capaian_kegiatan_tahunan =  $nilai_capaian_kegiatan_tahunan + ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/3 ;
             }else{
-                $capaian_kegiatan_tahunan = ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/4;
+                $nilai_capaian_kegiatan_tahunan =  $nilai_capaian_kegiatan_tahunan + ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/4 ;
             }
-
-            $jm_capaian_kegiatan_tahunan =  $jm_capaian_kegiatan_tahunan + $capaian_kegiatan_tahunan;
-        } */
+        }
 
         return array(
             'jm_kegiatan_tahunan'           => $jm_kegiatan,
-            'jm_capaian_kegiatan_tahunan'   => '',
+            'jm_capaian_kegiatan_tahunan'   => number_format($nilai_capaian_kegiatan_tahunan,2),
             'ave_capaian_kegiatan_tahunan'  => '',
         );
 
@@ -634,8 +630,8 @@ trait HitungCapaian
         }
 
 
+        //Cari capaian Kinerja
         if ( $jenis_jabatan == 31){  //IRBAN 
-            //CAPAIAN KINERJA UNTUK IRBAN
             $data = $this->capaian_tahunan_irban($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 5 ){//jm kegiatan JFT
             $data = $this->capaian_tahunan_jft($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);

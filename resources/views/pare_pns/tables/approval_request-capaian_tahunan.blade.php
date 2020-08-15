@@ -69,7 +69,7 @@
 										}else if ( row.status_approve == 1 ){
 											return  '<span  data-toggle="tooltip" title="Detail Capaian Tahunan" style="margin:1px;" ><a class="btn btn-success btn-xs lihat_capaian_tahunan"  data-capaian_tahunan_id="'+row.capaian_tahunan_id+'"> Lihat </a></span>';
 										}else if ( row.status_approve == 2 ){
-											return  '<span  data-toggle="tooltip" title="Capaian Bulanan telah ditolak" style="margin:1px;" ><a class="btn btn-danger btn-xs lihat_capaian_tahunan"  data-capaian_tahunan_id="'+row.capaian_tahunan_id+'"> Ditolak </a></span>';
+											return  '<span  data-toggle="tooltip" title="Capaian Tahunan telah ditolak" style="margin:1px;" ><a class="btn btn-danger btn-xs lihat_capaian_tahunan"  data-capaian_tahunan_id="'+row.capaian_tahunan_id+'"> Ditolak </a></span>';
 										}
 									}
 								},
@@ -83,20 +83,12 @@
 
 	$(document).on('click','.approval_capaian_tahunan',function(e){
 		var capaian_tahunan_id = $(this).data('capaian_tahunan_id') ;
-		//alert(skp_tahunan_id);
-
-
-
 		window.location.assign("capaian_tahunan_bawahan_approvement/"+capaian_tahunan_id);
 	});
 
 	$(document).on('click','.lihat_capaian_tahunan',function(e){
 		var capaian_tahunan_id = $(this).data('capaian_tahunan_id') ;
-		//alert(skp_tahunan_id);
-
-
-
-		window.location.assign("capaian-tahunan/"+capaian_tahunan_id);
+		window.location.assign("capaian_tahunan_bawahan/"+capaian_tahunan_id);
 	});
 
 	

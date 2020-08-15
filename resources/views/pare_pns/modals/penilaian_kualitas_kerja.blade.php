@@ -4,10 +4,10 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    Penilaian Kode Etik Pegawai
+                    Penilaian Kode Etik Pegawai 
                 </h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body table-responsive">
 			<form class="penilaian_kualitas_kerja_form">
 			<input type="hidden" class="realisasi_kegiatan_tahunan_id" name="realisasi_kegiatan_tahunan_id" >
 

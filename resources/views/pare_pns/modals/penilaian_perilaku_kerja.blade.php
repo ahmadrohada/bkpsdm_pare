@@ -7,7 +7,7 @@
 					Penilaian Perilaku Kerja 
                 </h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body table-responsive"> 
 			<form class="penilaian_perilaku_kerja_form">
 			<input type="hidden" class="capaian_tahunan_id" name="capaian_tahunan_id" >
 			<input type="hidden" class="perilaku_kerja_id" name="perilaku_kerja_id" >

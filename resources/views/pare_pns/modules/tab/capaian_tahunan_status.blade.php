@@ -40,6 +40,9 @@
 					<li class="list-group-item" style="padding:8px 10px; border-top: solid 1px #615e68 !important;">
 						A. Jumlah Kegiatan SKP ( I + II) <a class="pull-right st_jumlah_kegiatan_skp" >-</a>
 					</li>
+
+					@if ( ( request()->segment(4) != 'edit' )&( request()->segment(4) != 'ralat' ) )
+					
 					<li class="list-group-item" style="padding:8px 10px;">
 						B. Nilai Capaian Kegiatan SKP + Tugas Tambahan
 						<a class="pull-right st_capaian_kegiatan_skp" >-</a>
@@ -48,15 +51,12 @@
 						C. Nilai Unsur Penunjang
 						<a class="pull-right st_nilai_unsur_penunjang" >-</a>
 					</li>
-		
-					
-
 					<li class="list-group-item" style="padding:8px 10px; border-top: solid 1px #615e68 !important; ">
 						D. Capaian SKP<span class="text-muted"> (B/A) + C
 						</span><a class="pull-right st_capaian_skp" >-</a>
 					</li>
 
-					@if ( request()->segment(4) != 'edit' )
+					
 					<li class="list-group-item" style="padding:8px 10px; ">
 						E. Penilaian Perilaku Kerja
 						<a class="pull-right st_penilaian_perilaku_kerja" >-</a>
