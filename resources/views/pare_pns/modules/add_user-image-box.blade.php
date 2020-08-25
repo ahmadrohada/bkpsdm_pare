@@ -1,6 +1,6 @@
 <div class="box box-widget widget-user ">
     <!-- Add the bg color to the header using any of the bg-* classes -->
-    <div class="widget-user-header bg-black" style="background: url('{{asset('assets/images/bg_profile.png')}}') center center;">
+    <div class="widget-user-header bg-black" style="background: url('{{asset('public/assets/images/bg_profile.png')}}') center center;">
         <h3 class="widget-user-username">
         <font style="font-size:18px; color:white; text-shadow: 1px 1px 1px #000, 3px 3px 5px #000;">
             {{ $nama  }}

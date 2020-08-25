@@ -52,7 +52,7 @@
 @section('content')
     <div class="login-box box-login-style">
 		<div class="login-logo">
-			<img src="{{asset('assets/images/form/logo.png')}}" >
+			<img src="{{asset('public/assets/images/form/logo.png')}}" >
 			<h3 class="visible-lg visible-md  login-header" style="color:#077821; text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px white;">Performance Agreement Report by Electronic</h3>
 			<h4 class="visible-sm visible-xs  login-header" style="color:#077821; text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px white;">Performance Agreement Report by Electronic</h4>
 		
@@ -71,7 +71,7 @@
 
 @section('template_scripts')
 
-	{!! HTML::script('/assets/js/login.js', array('type' => 'text/javascript')) !!}
+	{!! HTML::script('public/assets/js/login.js', array('type' => 'text/javascript')) !!}
 	@include('scripts.checkbox')
 	@include('scripts.show-hide-passwords')
 
