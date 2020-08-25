@@ -94,7 +94,7 @@ table.dataTable tbody td {
 									 },
 								},
 				rowCallback		: function(row, data, dataIndex){
-									
+										
 										/* $(row).find('td:eq(3)').css('background-color', '#FFF8DC');
 										$(row).find('td:eq(4)').css('background-color', '#FFF8DC');
 										$(row).find('td:eq(5)').css('background-color', '#FFF8DC');
@@ -117,14 +117,14 @@ table.dataTable tbody td {
 									
 									},
 				rowsGroup		: [ 0,1,3,5,6,7,8,10,11,12,13,14,15,16,17,18,20 ],
+			
 				columns			: [ 
 									{ data: "kegiatan_tahunan_id",searchable:false,
-										/* "render": function ( data, type, row ,meta) {
+										"render": function ( data, type, row ,meta ,group ) {
 											return meta.row + meta.settings._iDisplayStart + 1 ;
-										} */
-										endRender: function ( rows, group ) {
-											return group +' ('+rows.count()+' rows)';
+											
 										}
+										
 									},
 									{ data: "kegiatan_tahunan_label", name:"kegiatan_tahunan_label",
 										"render": function ( data, type, row ) {
@@ -276,7 +276,8 @@ table.dataTable tbody td {
 							}
 		});	
 
-		
+			
+			
 
 
 		

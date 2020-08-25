@@ -7,6 +7,7 @@ use App\Models\CapaianTahunan;
 use App\Models\Jabatan;
 use App\Models\RencanaAksi;
 use App\Models\RealisasiRencanaAksiKaban;
+use App\Models\Kegiatan;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPTahunanJFT;
@@ -516,6 +517,43 @@ trait HitungCapaian
 
     }
 
+    protected function capaian_tahunan_eselon3($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id)
+    {
+
+        //Jumlah kegiatan 
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray();
+        $jm_kegiatan = Kegiatan::SELECT('id','label')
+                            ->WHERE('renja_kegiatan.renja_id', $renja_id )
+                            ->WHEREIN('renja_kegiatan.jabatan_id',$child )
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                
+                            })
+                            ->count();
+
+
+       
+        $jm_realisasi = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->count();
+
+        //cari nilai_capaian Kegiatan tahunan
+        $data_cap = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->get();
+        $nilai_capaian_kegiatan_tahunan = 0 ;
+        foreach ($data_cap as $x) {
+            if ( $x->hitung_cost <=0 ){
+                $nilai_capaian_kegiatan_tahunan =  $nilai_capaian_kegiatan_tahunan + ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/3 ;
+            }else{
+                $nilai_capaian_kegiatan_tahunan =  $nilai_capaian_kegiatan_tahunan + ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/4 ;
+            }
+        }
+
+        return array(
+            'jm_kegiatan_tahunan'           => $jm_kegiatan,
+            'jm_capaian_kegiatan_tahunan'   => number_format($nilai_capaian_kegiatan_tahunan,2),
+            'ave_capaian_kegiatan_tahunan'  => '',
+        );
+
+    }
+
     public function hitung_capaian_tahunan($capaian_id){ 
 
 
@@ -640,7 +678,7 @@ trait HitungCapaian
         }else if ( $jenis_jabatan == 3 ){  //kasubid ESELON IV
             $data =  $this->capaian_tahunan_eselon4($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 2){ //kabid ESELON III
-            $data =  $this->capaian_tahunan_eselon3($capaian_id,$skp_tahunan_id,$bulan,$renja_id,$jabatan_id);
+            $data =  $this->capaian_tahunan_eselon3($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id);
         }else if ( $jenis_jabatan == 1){ //KABAN ESELON II
             $data =  $this->capaian_tahunan_eselon2($capaian_id,$skp_tahunan_id,$bulan,$renja_id,$jabatan_id);
         }else{

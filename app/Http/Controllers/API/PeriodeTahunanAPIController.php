@@ -1,15 +1,23 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\API\APIBaseController as APIBaseController;
 
-use App\Models\Periode;
+
+use App\Models\PeriodeTahunan;
+
+use App\Helpers\Pustaka;
+
+
+use Datatables;
 use Validator;
+use Gravatar;
+use Input;
+Use PDF;
 
 
-class PeriodeTahunanAPIController extends APIBaseController
+class PeriodeTahunanAPIController extends Controller 
 
 {
 
