@@ -11,7 +11,7 @@
 
 @section('template_fastload_css')
 .tes{
-	background-image:url({{asset('assets/images/pare_bg.jpg')}} ) ;
+	background-image:url({{asset('public/assets/images/pare_bg.jpg')}} ) ;
 	-webkit-background-size: cover;
   	-moz-background-size: cover;
   	-o-background-size: cover;
