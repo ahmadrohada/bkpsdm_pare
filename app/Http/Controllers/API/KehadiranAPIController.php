@@ -20,7 +20,7 @@ class KehadiranAPIController extends Controller {
 
         $client = new Client([
             // Base URI is used with relative requests
-            'base_uri' => 'https://apiv2-siap.silk.bkpsdm.karawangkab.go.id',
+            'base_uri' => 'https://api-siap.silk.bkpsdm.karawangkab.go.id',
         ]);
           
         $response = $client->request('GET', '/absensi/'.$nip.'/monthly-report', [
