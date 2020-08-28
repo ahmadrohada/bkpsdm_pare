@@ -66,7 +66,7 @@
 						</div>
 						-->
 						<div class="pull-right">
-						  <a href="/public/logout" class="btn btn-default ">Sign out</a>
+						  <a href="./../logout" class="btn btn-default ">Sign out</a>
 						</div>
 					  </li>
 					</ul>
