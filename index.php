@@ -17,8 +17,15 @@
 | loading any of our classes later on. It feels nice to relax.
 |
 */
+<<<<<<< HEAD:public/index.php
 //tes pake public lagi
 require __DIR__.'/../bootstrap/autoload.php';
+=======
+
+//tes by admin
+
+require __DIR__.'/bootstrap/autoload.php';
+>>>>>>> c46bb81d6b2543049bc38fbc368603fffa23a145:index.php
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +39,7 @@ require __DIR__.'/../bootstrap/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+$app = require_once __DIR__.'/bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------

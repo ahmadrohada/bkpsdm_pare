@@ -3,7 +3,7 @@
         
 		<div class="box-body box-comments" style="padding:15px 15px;">
            
-            <img class="img-circle img-sm" src="{{asset('assets/images/form/logo.png')}}" alt="User Image">
+            <img class="img-circle img-sm" src="{{asset('public/assets/images/form/logo.png')}}" alt="User Image">
 
          	<div class="comment-text">
                 <span class="username">
@@ -23,13 +23,13 @@
         <div id="myCarousel" class="carousel slide"> <!-- slider -->
 			<div class="carousel-inner">
 							<div class="active item"><!-- item 2 -->
-								<img src="{{asset('assets/images/pare_a.jpg')}}" class="img-slide" alt="">
+								<img src="{{asset('public/assets/images/pare_a.jpg')}}" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
-								<img src="{{asset('assets/images/pare_b.jpg')}}" class="img-slide" alt="">
+								<img src="{{asset('public/assets/images/pare_b.jpg')}}" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
-								<img src="{{asset('assets/images/pare_c.jpg')}}" class="img-slide" alt="">
+								<img src="{{asset('public/assets/images/pare_c.jpg')}}" class="img-slide" alt="">
 							</div> <!-- end item -->
 							<div class="item"> <!-- item 2 -->
 								<img src="https://bkpsdm.karawangkab.go.id/wp-content/uploads/2019/08/WhatsApp-Image-2019-08-30-at-14.01.55-1024x576.jpeg" class="img-slide" alt="">

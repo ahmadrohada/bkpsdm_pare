@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="BKPSDM Karawang">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{{ asset('assets/images/favicon.png') }}}">
+    <link rel="shortcut icon" href="{{{ asset('public/assets/images/favicon.png') }}}">
 
 
 
