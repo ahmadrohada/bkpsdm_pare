@@ -17,7 +17,7 @@
 | loading any of our classes later on. It feels nice to relax.
 |
 */
-
+//tes pake public lagi
 require __DIR__.'/../bootstrap/autoload.php';
 
 /*
