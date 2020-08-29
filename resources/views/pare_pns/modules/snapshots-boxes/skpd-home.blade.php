@@ -40,6 +40,8 @@
 					</div>
 				</div>
 			</div>
+
+			@if ( $skpd_id == 19 )
 			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-maroon puskesmas" style="cursor:pointer;">
 					<div class="inner">
@@ -51,6 +53,9 @@
 					</div>
 				</div>
 			</div>
+			@endif
+
+			
 			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-green struktur_organisasi" style="cursor:pointer;">
 					<div class="inner">
