@@ -134,6 +134,8 @@ Breadcrumbs::register('admin-pohon_kinerja-detail', function($breadcrumbs)
 });
 
 
+
+
 // DASHBOARD > ADMIN > SKP TAHUNAN >
 Breadcrumbs::register('admin-skp_tahunan', function($breadcrumbs)
 {
@@ -207,6 +209,20 @@ Breadcrumbs::register('skpd-puskesmas', function($breadcrumbs)
 {
     $breadcrumbs->parent('skpd');
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_puskesmas'), '/puskesmas', ['icon' => Lang::get('sidebar-nav.link_icon_puskesmas')]);
+});
+
+// DASHBOARD > ADMIN > CAPAIAN PK Trwieulan>
+Breadcrumbs::register('skpd-capaian_pk_triwulan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('skpd');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_pk_triwulan'), '/public/skpd/capaian_pk_triwulan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_pk_triwulan')]);
+});
+
+// DASHBOARD > ADMIN > CAPAIAN PK TAHUNAN >
+Breadcrumbs::register('skpd-capaian_pk_tahunan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('skpd');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_pk_tahunan'), '/public/skpd/capaian_pk_tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_pk_tahunan')]);
 });
 
 // DASHBOARD > SKPD > PUSKESMAS > PEGAWAI

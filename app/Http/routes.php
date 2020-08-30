@@ -708,6 +708,19 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 
 
 
+	//========================================================================================================//
+	//==============================  SKPD CAPAIAN  PK TRIWULAN ==============================================//
+	//========================================================================================================//
+	
+	Route::get('skpd_capaian_pk_triwulan_list','API\CapaianPKTriwulanAPIController@SKPDCapaianPKTriwulanList');
+
+
+	//========================================================================================================//
+	//==============================  SKPD CAPAIAN  PK TAHUNAN  ==============================================//
+	//========================================================================================================//
+	
+	Route::get('skpd_capaian_pk_tahunan_list','API\CapaianPKTahunanAPIController@SKPDCapaianPKTahunanList');
+
 
 
 
@@ -1407,6 +1420,23 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'as' 			=> 'skpd-tpp_report',
 		'uses' 			=> 'HomeSKPDController@showSKPDTPPReport'
 	]);
+
+	Route::get('capaian_pk', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeSKPDController@showCapaianTriwulanPK'
+	]);
+
+	Route::get('capaian_pk-triwulan', [
+		'as' 			=> 'skpd-capaian_pk_triwulan',
+		'uses' 			=> 'HomeSKPDController@showCapaianTriwulanPK'
+	]);
+
+	Route::get('capaian_pk-tahunan', [
+		'as' 			=> 'skpd-capaian_pk_tahunan',
+		'uses' 			=> 'HomeSKPDController@showCapaianTahunanPK'
+	]);
+
+
 
 	//=======================   TPP R E P O R T   ==================================//
 	Route::get('report/tpp', [

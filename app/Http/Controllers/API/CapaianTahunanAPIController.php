@@ -4,8 +4,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Periode;
-use App\Models\PerjanjianKinerja;
 use App\Models\SKPTahunan;
 use App\Models\SKPBulanan;
 use App\Models\CapaianBulanan;
@@ -15,22 +13,13 @@ use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
 use App\Models\HistoryGolongan;
 use App\Models\Jabatan;
-use App\Models\Golongan;
-use App\Models\Eselon; 
 
 use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPTahunanJFT;
 
 use App\Models\Kegiatan;
-use App\Models\RealisasiKegiatanTahunan;
-use App\Models\RealisasiKegiatanTahunanJFT;
 use App\Models\PerilakuKerja;
 use App\Models\RencanaAksi;
-use App\Models\RealisasiRencanaAksiEselon4;
-use App\Models\RealisasiRencanaAksiEselon3;
-use App\Models\RealisasiRencanaAksiKaban;
-use App\Models\KegiatanSKPBulanan;
-use App\Models\RealisasiKegiatanBulanan;
 
 
 use App\Helpers\Pustaka;
@@ -40,9 +29,7 @@ use App\Traits\PJabatan;
 
 use Datatables;
 use Validator;
-use Gravatar;
 use Input;
-Use Alert;
 
 class CapaianTahunanAPIController extends Controller {
 

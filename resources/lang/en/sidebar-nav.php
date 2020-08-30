@@ -186,6 +186,14 @@ return [
 	'link_title_capaian_tahunan'    		=> 'Capaian Tahunan',
 	'link_icon_capaian_tahunan'     		=> 'fa-bar-chart',
 
+
+	// CAPAIAN PK
+	'link_title_capaian_pk_triwulan'=> 'Capaian PK Triwulan',
+	'link_icon_capaian_pk'     		=> 'fa-bar-chart',
+
+	// CAPAIAN PK
+	'link_title_capaian_pk_tahunan' => 'Capaian PK Tahunan',
+	'link_icon_capaian_pk'     		=> 'fa-bar-chart',
 	
 
 	'link_title_edit_capaian_tahunan'    		=> 'Edit',

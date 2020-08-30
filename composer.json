@@ -14,7 +14,7 @@
 		"socialiteproviders/37signals": "^2.0",
         "creativeorange/gravatar": "~1.0",
         "davejamesmiller/laravel-breadcrumbs": "^3.0",
-        "intervention/image": "^2.3",
+        "intervention/image": "^2.5",
         "patricktalmadge/bootstrapper": "~5",
         "cviebrock/eloquent-sluggable": "^3.0",
         "guzzlehttp/guzzle": "^6.5",
