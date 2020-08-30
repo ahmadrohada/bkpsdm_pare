@@ -217,7 +217,7 @@ $(document).ready(function(){
     });
 
 	$(".capaian_pohon_kinerja").click(function(){
-		window.location.assign("capaian_pohon_kinerja");
+		window.location.assign("capaian_pk");
     });
 	
 
