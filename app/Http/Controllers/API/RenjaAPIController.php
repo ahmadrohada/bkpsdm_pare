@@ -273,6 +273,43 @@ class RenjaAPIController extends Controller {
 
     }
 
+    public function RenjaDetail( Request $request )
+    {
+       $renja = Renja::
+                            leftjoin('demo_asn.tb_history_jabatan AS kaban', function($join){
+                                $join   ->on('kaban.id','=','renja.kepala_skpd_id');
+                            })
+                            ->leftjoin('db_pare_2018.periode AS periode', function($join){
+                                $join   ->on('periode.id','=','renja.periode_id');
+                            })
+                            ->SELECT('kaban.id AS kaban_id',
+                                    'renja.created_at AS created',
+                                    'renja.id AS renja_id',
+                                    'renja.status_approve',
+                                    'renja.nama_kepala_skpd',
+                                    'periode.label AS periode_label'
+                                    )
+
+                            ->where('renja.id','=', $request->renja_id )
+                            ->first();
+
+      
+       
+        $administrator = \Auth::user()->hasRole('administrator');
+        $response = array(
+                'created'                 => $renja->created,
+                'periode'                 => $renja->periode_label,
+                'nama_kepala_skpd'        => $renja->nama_kepala_skpd,
+                'administrator'           => $administrator
+
+
+        );
+       
+        return $response;
+
+
+    }
+
 
     public function AdministratorPohonKinerjaList(Request $request)
     {

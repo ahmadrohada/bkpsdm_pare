@@ -218,6 +218,12 @@ Breadcrumbs::register('skpd-capaian_pk_triwulan', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_pk_triwulan'), '/public/skpd/capaian_pk_triwulan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_pk_triwulan')]);
 });
 
+Breadcrumbs::register('skpd-capaian_pk_triwulan_edit', function($breadcrumbs)
+{
+    $breadcrumbs->parent('skpd-capaian_pk_triwulan');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_pk_triwulan'), '/public/skpd/capaian_pk_triwulan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_pk_triwulan')]);
+});
+
 // DASHBOARD > ADMIN > CAPAIAN PK TAHUNAN >
 Breadcrumbs::register('skpd-capaian_pk_tahunan', function($breadcrumbs)
 {

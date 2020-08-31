@@ -851,6 +851,27 @@ class Pustaka {
 
 		return $trimester;
 
+	}
+	
+	public static function triwulan($data) {
+       
+	
+		switch($data)
+					{
+						
+				case 1 : $triwulan='Triwulan I ( Januari - Maret )';
+						break;
+				case 2 : $triwulan='Triwulan II ( April - Juni )';
+						break;
+				case 3 : $triwulan='Triwulan III ( Juli - September )';
+						break;
+				case 4 : $triwulan='Triwulan IV ( Oktober - Desember )';
+						break;
+						
+					}
+
+		return $triwulan;
+
     }
 
 	public static function triwulan_lalu($data) {

@@ -12,7 +12,7 @@ use App\Models\IndikatorTujuan;
 use App\Models\Sasaran;
 use App\Models\Skpd;
 use App\Models\Renja;
-use App\Models\Pegawai;
+use App\Models\CapaianPKTriwulan;
 
 
 use App\Helpers\Pustaka;
@@ -24,7 +24,25 @@ use Input;
 class CapaianPKTriwulanAPIController extends Controller {
 
   
-    public function SKPDCapaianPKTriwulanList(Request $request)
+    public function CreateConfirm(Request $request)
+	{
+
+        //data yang harus diterima yaitu Renja  ID dan triwulan
+        $renja_id     = $request->renja_id;
+        $triwulan     = $request->triwulan;
+
+        $cp_status = Renja::WHERE('renja.id',$renja_id)
+                            //CAPAIAN TRIWULAN I
+                            ->rightjoin('db_pare_2018.capaian_pk_triwulan AS triwulan', function($join)  use($triwulan){
+                                $join   ->on('triwulan.renja_id','=','renja.id');
+                                $join   ->where('triwulan.triwulan','=',$triwulan);
+                            })
+                            ->count();
+
+        return $cp_status;
+    }
+
+    public function SKPDCapaianPKTriwulanList(Request $request) 
     {
         $skpd_id = $request->skpd_id;
         $dt = Renja::
@@ -58,7 +76,16 @@ class CapaianPKTriwulanAPIController extends Controller {
                                 'renja.nama_kepala_skpd',
                                 'renja.status_approve',
                                 'periode.label AS periode_label',
-                                'periode.awal AS awal'
+                                'periode.awal AS awal',
+
+                                'triwulan1.id AS capaian_pk_triwulan1_id',
+                                'triwulan2.id AS capaian_pk_triwulan2_id',
+                                'triwulan3.id AS capaian_pk_triwulan3_id',
+                                'triwulan4.id AS capaian_pk_triwulan4_id',
+                                'triwulan1.status AS capaian_pk_triwulan1_status',
+                                'triwulan2.status AS capaian_pk_triwulan2_status',
+                                'triwulan3.status AS capaian_pk_triwulan3_status',
+                                'triwulan4.status AS capaian_pk_triwulan4_status'
                             )
                     ->WHERE('renja.skpd_id',$skpd_id)
                     ->ORDERBY('renja_id','DESC')
@@ -105,10 +132,39 @@ class CapaianPKTriwulanAPIController extends Controller {
         
 
     return $datatables->make(true);
-                    
-       
-           
-        
     }
+
+
+    public function Store(Request $request)
+	{
+        $messages = [
+                 'renja_id.required'                   => 'Harus diisi',
+                 'triwulan.required'                   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'renja_id'            => 'required',
+                            'triwulan'            => 'required',
+                        ),
+                        $messages
+        );
+    
+        if ( $validator->fails() ){
+            return response()->json(['errors'=>$validator->messages()],422);
+        }
+
+            $capaian_pk_triwulan                         = new CapaianPKTriwulan;
+            $capaian_pk_triwulan->renja_id               = Input::get('renja_id');
+            $capaian_pk_triwulan->triwulan               = Input::get('triwulan');
+            
+    
+            if ( $capaian_pk_triwulan->save()){
+                return \Response::make($capaian_pk_triwulan->id, 200);
+            }else{
+                return \Response::make('error', 500);
+            } 
+    } 
 
 }

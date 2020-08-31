@@ -87,6 +87,7 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	
 	Route::get('renja_timeline_status','API\RenjaAPIController@RenjaTimelineStatus');
 	Route::get('renja_status_pengisian','API\RenjaAPIController@RenjaStatusPengisian');
+	Route::get('renja_detail','API\RenjaAPIController@RenjaDetail');
 
 	
 
@@ -709,15 +710,18 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 
 
 	//========================================================================================================//
-	//==============================  SKPD CAPAIAN  PK TRIWULAN ==============================================//
+	//=================  SKPD CAPAIAN  PERJANJIAN KINERJA TRIWULAN ===========================================//
 	//========================================================================================================//
-	
+	Route::get('capaian_pk_triwulan_create_confirm','API\CapaianPKTriwulanAPIController@CreateConfirm');
 	Route::get('skpd_capaian_pk_triwulan_list','API\CapaianPKTriwulanAPIController@SKPDCapaianPKTriwulanList');
+	Route::post('simpan_capaian_pk_triwulan','API\CapaianPKTriwulanAPIController@Store');
+	
 
 
 	//========================================================================================================//
 	//==============================  SKPD CAPAIAN  PK TAHUNAN  ==============================================//
 	//========================================================================================================//
+	
 	
 	Route::get('skpd_capaian_pk_tahunan_list','API\CapaianPKTahunanAPIController@SKPDCapaianPKTahunanList');
 
@@ -1431,6 +1435,8 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'HomeSKPDController@showCapaianTriwulanPK'
 	]);
 
+	
+
 	Route::get('capaian_pk-tahunan', [
 		'as' 			=> 'skpd-capaian_pk_tahunan',
 		'uses' 			=> 'HomeSKPDController@showCapaianTahunanPK'
@@ -1493,6 +1499,11 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]);
 
 
+	//========================== CAPAIAN PK TRIWULAN =======================================//
+	Route::get('capaian_pk-triwulan/{capaian_pk_triwulan_id}/edit', [
+		'as' 			=> '',
+		'uses' 			=> 'CapaianPKTriwulanController@SKPDCapaianPKTriwulanEdit'
+	]);
 	
 	//=========================== P E G A W A I  =============================================//
 	Route::get('pegawai/{pegawai_id}', [
