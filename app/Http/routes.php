@@ -727,6 +727,14 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 
 
 
+	//======================   REALISASI SASARAN ====================================================//
+	Route::get('realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@RealisasiSasaranTriwulan');
+
+	//======================   REALISASI PROGRAM ====================================================//
+	Route::get('realisasi_program_triwulan','API\RealisasiProgramTriwulanAPIController@RealisasiProgramTriwulan');
+
+
+
 
 	//===================== REALISASI  KEGIATAN BULANAN  JFT ======================================//
 	//========================================================================================================//

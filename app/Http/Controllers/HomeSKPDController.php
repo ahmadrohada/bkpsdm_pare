@@ -389,6 +389,7 @@ class HomeSKPDController extends Controller {
         return view(
             'pare_pns.pages.skpd-home-tpp_report',
             [
+                'skpd_id'                => $skpd_id,
                 'skpd'                   => $pegawai->JabatanAktif->SKPD,
                 'pegawai_id'             => $pegawai->id,
                 'nama_pegawai'           => Pustaka::nama_pegawai($pegawai->gelardpn, $pegawai->nama, $pegawai->gelarblk),
