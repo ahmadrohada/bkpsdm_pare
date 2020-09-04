@@ -25,7 +25,7 @@ table.dataTable tbody td {
 </style>
 
 
-@include('pare_pns.modals.realisasi_kegiatan_tahunan_triwulan')
+@include('pare_pns.modals.realisasi_program_triwulan')
 
 <script src="{{asset('assets/js/dataTables.rowsGroup.js')}}"></script>
 

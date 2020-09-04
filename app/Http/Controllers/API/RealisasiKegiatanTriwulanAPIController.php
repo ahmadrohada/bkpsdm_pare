@@ -730,7 +730,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
         }
 
 
-        $st_kt    = new RealisasiIndikatorKegiatanTriwulan;
+        $st_kt    = new RealisasiIndikatorKegiatanTriwulan; 
 
         $st_kt->indikator_kegiatan_id   = Input::get('ind_kegiatan_id');
         $st_kt->capaian_id              = Input::get('capaian_triwulan_id');
