@@ -727,7 +727,7 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 
 
 
-	//======================   REALISASI SASARAN ====================================================//
+	//======================   REALISASI SASARAN TRIWULAN      ==================================//
 	Route::get('realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@RealisasiSasaranTriwulan');
 
 	Route::get('add_realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@AddRealisasiSasaranTriwulan');
@@ -737,13 +737,14 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	Route::post('update_realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@Update');
 
 
-	/*
-	Route::post('simpan_realisasi_kegiatan_triwulan','API\RealisasiKegiatanTriwulanAPIController@Store');
- */
-
-
-	//======================   REALISASI PROGRAM ====================================================//
+	//======================   REALISASI PROGRAM TRIWULAN      ==================================//
 	Route::get('realisasi_program_triwulan','API\RealisasiProgramTriwulanAPIController@RealisasiProgramTriwulan');
+
+	Route::get('add_realisasi_program_triwulan','API\RealisasiProgramTriwulanAPIController@AddRealisasiProgramTriwulan');
+	Route::post('simpan_realisasi_program_triwulan','API\RealisasiProgramTriwulanAPIController@Store');
+
+	Route::post('hapus_realisasi_program_triwulan','API\RealisasiProgramTriwulanAPIController@Destroy');
+	Route::post('update_realisasi_program_triwulan','API\RealisasiProgramTriwulanAPIController@Update');
 
 
 

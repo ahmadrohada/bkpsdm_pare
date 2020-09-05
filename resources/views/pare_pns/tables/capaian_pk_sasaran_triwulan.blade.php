@@ -27,8 +27,6 @@ table.dataTable tbody td {
 
 @include('pare_pns.modals.realisasi_sasaran_triwulan')
 
-<script src="{{asset('assets/js/dataTables.rowsGroup.js')}}"></script>
-
 <script type="text/javascript">
 
 	

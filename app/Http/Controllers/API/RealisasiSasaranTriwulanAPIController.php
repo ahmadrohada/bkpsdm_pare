@@ -198,7 +198,7 @@ class RealisasiSasaranTriwulanAPIController extends Controller {
                             'indikator_sasaran_id'  => 'required',
 
                             'target_quantity'       => 'required|numeric|min:0',
-                            'realisasi_quantity'    => 'required|numeric|min:0',
+                            'realisasi_quantity'    => 'required|numeric|min:0|max:'.$request->target_quantity,
                         ),
                         $messages
         );
