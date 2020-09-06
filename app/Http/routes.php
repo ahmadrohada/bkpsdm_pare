@@ -721,31 +721,41 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	//========================================================================================================//
 	//==============================  SKPD CAPAIAN  PK TAHUNAN  ==============================================//
 	//========================================================================================================//
-	
-	
+	Route::get('capaian_pk_tahunan_create_confirm','API\CapaianPKTahunanAPIController@CreateConfirm');
 	Route::get('skpd_capaian_pk_tahunan_list','API\CapaianPKTahunanAPIController@SKPDCapaianPKTahunanList');
-
+	Route::post('simpan_capaian_pk_tahunan','API\CapaianPKTahunanAPIController@Store');
 
 
 	//======================   REALISASI SASARAN TRIWULAN      ==================================//
 	Route::get('realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@RealisasiSasaranTriwulan');
-
 	Route::get('add_realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@AddRealisasiSasaranTriwulan');
 	Route::post('simpan_realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@Store');
-
 	Route::post('hapus_realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@Destroy');
 	Route::post('update_realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@Update');
 
 
 	//======================   REALISASI PROGRAM TRIWULAN      ==================================//
 	Route::get('realisasi_program_triwulan','API\RealisasiProgramTriwulanAPIController@RealisasiProgramTriwulan');
-
 	Route::get('add_realisasi_program_triwulan','API\RealisasiProgramTriwulanAPIController@AddRealisasiProgramTriwulan');
 	Route::post('simpan_realisasi_program_triwulan','API\RealisasiProgramTriwulanAPIController@Store');
-
 	Route::post('hapus_realisasi_program_triwulan','API\RealisasiProgramTriwulanAPIController@Destroy');
 	Route::post('update_realisasi_program_triwulan','API\RealisasiProgramTriwulanAPIController@Update');
 
+
+	//======================   REALISASI SASARAN TAHUNAN      ==================================//
+	Route::get('realisasi_sasaran_tahunan','API\RealisasiSasaranTahunanAPIController@RealisasiSasaranTahunan');
+	Route::get('add_realisasi_sasaran_tahunan','API\RealisasiSasaranTahunanAPIController@AddRealisasiSasaranTahunan');
+	Route::post('simpan_realisasi_sasaran_tahunan','API\RealisasiSasaranTahunanAPIController@Store');
+	Route::post('hapus_realisasi_sasaran_tahunan','API\RealisasiSasaranTahunanAPIController@Destroy');
+	Route::post('update_realisasi_sasaran_tahunan','API\RealisasiSasaranTahunanAPIController@Update');
+
+
+	//======================   REALISASI PROGRAM TAHUNAN      ==================================//
+	Route::get('realisasi_program_tahunan','API\RealisasiProgramTahunanAPIController@RealisasiProgramTahunan');
+	Route::get('add_realisasi_program_tahunan','API\RealisasiProgramTahunanAPIController@AddRealisasiProgramTahunan');
+	Route::post('simpan_realisasi_program_tahunan','API\RealisasiProgramTahunanAPIController@Store');
+	Route::post('hapus_realisasi_program_tahunan','API\RealisasiProgramTahunanAPIController@Destroy');
+	Route::post('update_realisasi_program_tahunan','API\RealisasiProgramTahunanAPIController@Update');
 
 
 
@@ -1524,6 +1534,12 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	Route::get('capaian_pk-triwulan/{capaian_pk_triwulan_id}/edit', [
 		'as' 			=> '',
 		'uses' 			=> 'CapaianPKTriwulanController@SKPDCapaianPKTriwulanEdit'
+	]);
+
+	//========================== CAPAIAN PK TAHUNAN =======================================//
+	Route::get('capaian_pk-tahunan/{capaian_pk_tahunan_id}/edit', [
+		'as' 			=> '',
+		'uses' 			=> 'CapaianPKTahunanController@SKPDCapaianPKTahunanEdit'
 	]);
 	
 	//=========================== P E G A W A I  =============================================//

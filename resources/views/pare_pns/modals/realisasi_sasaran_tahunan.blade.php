@@ -1,20 +1,20 @@
-<div class="modal fade modal-realisasi_program_triwulan" id="" role="dialog"  aria-hidden="true">
+<div class="modal fade modal-realisasi_sasaran_tahunan" id="" role="dialog"  aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-					Add Realisasi Program Triwulan
+					Add Realisasi Sasaran Tahunan
                 </h4>
             </div>
 
-            <form  id="realisasi_program_triwulan_form" method="POST" action="">
+            <form  id="realisasi_sasaran_tahunan_form" method="POST" action="">
 
-			<input type="hidden"  name="capaian_triwulan_id">
-			<input type="hidden"  name="program_id">
-			<input type="hidden"  name="indikator_program_id">
-			<input type="hidden"  name="realisasi_program_triwulan_id">
-			<input type="hidden"  name="realisasi_indikator_program_triwulan_id">
+			<input type="hidden"  name="capaian_tahunan_id">
+			<input type="hidden"  name="sasaran_id">
+			<input type="hidden"  name="indikator_sasaran_id">
+			<input type="hidden"  name="realisasi_sasaran_tahunan_id">
+			<input type="hidden"  name="realisasi_indikator_sasaran_tahunan_id">
 			<input type="hidden"  name="jumlah_indikator">
 			<input type="hidden"  name="satuan">
 
@@ -23,9 +23,9 @@
 					
 					<div class="row">
 						<div class="col-md-12 form-group label_kegiatan_tahunan">
-							<strong>Program  </strong>
+							<strong>Sasaran  </strong>
 							<p class="text-info " style="margin-top:1px;">
-								<span class="program_label"></span>
+								<span class="sasaran_label"></span>
 							</p>
 						</div>
 						
@@ -34,9 +34,9 @@
 
 					<div class="row">
 						<div class="col-md-12 form-group label_kegiatan_tahunan">
-							<strong>Indikator Program  </strong>
+							<strong>Indikator Sasaran  </strong>
 							<p class="text-info " style="margin-top:1px;">
-								<span class="indikator_program_label"></span>
+								<span class="indikator_sasaran_label"></span>
 							</p>
 						</div>
 						
@@ -65,7 +65,7 @@
 			</div>
 			<div class="modal-footer">
                 {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> Batal', array('class' => 'btn btn-sm btn-default pull-left ', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').' button_simpan" aria-hidden="true"></i> <span name="text_button_submit"></span>', array('class' => 'btn btn-primary btn-sm pull-right  btn-submit', 'type' => 'button', 'id' => 'simpan_pt' )) !!}
+                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').' button_simpan" aria-hidden="true"></i> <span name="text_button_submit"></span>', array('class' => 'btn btn-primary btn-sm pull-right  btn-submit', 'type' => 'button', 'id' => 'simpan_st' )) !!}
             </div>
 
             </form>
@@ -80,14 +80,14 @@
 
 
 
-	$('.modal-realisasi_program_triwulan').on('shown.bs.modal', function(){
+	$('.modal-realisasi_sasaran_tahunan').on('shown.bs.modal', function(){
 		$(this).find('input:text')[1].focus();
-		reset_submitpt();
+		reset_submitst();
 	});
 
-	$('.modal-realisasi_program_triwulan').on('hidden.bs.modal', function(){
+	$('.modal-realisasi_sasaran_tahunan').on('hidden.bs.modal', function(){
 		$('.quantity').removeClass('has-error');
-		$('.modal-realisasi_program_triwulan').find('[name=realisasi_quantity]').val('');
+		$('.modal-realisasi_sasaran_tahunan').find('[name=realisasi_quantity]').val('');
 	});
 
 
@@ -98,31 +98,31 @@
 
 
 
-	function on_submitpt(){
-		$('.modal-realisasi_program_triwulan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
-		$('#submit-save_pt').prop('disabled',true);
+	function on_submitst(){
+		$('.modal-realisasi_sasaran_tahunan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('#submit-save_st').prop('disabled',true);
 	}
-	function reset_submitpt(){
-		$('.modal-realisasi_program_triwulan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
-		$('.modal-realisasi_program_triwulan').find('.button_simpan').addClass('fa-floppy-o');
-		$('#submit-save_pt').prop('disabled',false);
+	function reset_submitst(){
+		$('.modal-realisasi_sasaran_tahunan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-realisasi_sasaran_tahunan').find('.button_simpan').addClass('fa-floppy-o');
+		$('#submit-save_st').prop('disabled',false);
 	}
 
-	$(document).on('click','#submit-save_pt',function(e){
+	$(document).on('click','#submit-save_st',function(e){
 
-		on_submitpt();
-		var data = $('#realisasi_program_triwulan_form').serialize();
+		on_submitst();
+		var data = $('#realisasi_sasaran_tahunan_form').serialize();
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_realisasi_program_triwulan") }}',
+			url		: '{{ url("api_resource/simpan_realisasi_sasaran_tahunan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
 				
 				//$('#program_table').DataTable().ajax.reload(null,false);
                
-				reset_submitpt();
+				reset_submitst();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -132,8 +132,8 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-realisasi_program_triwulan').modal('hide');
-					$('#realisasi_program_triwulan_table').DataTable().ajax.reload(null,false);
+					$('.modal-realisasi_sasaran_tahunan').modal('hide');
+					$('#realisasi_sasaran_tahunan_table').DataTable().ajax.reload(null,false);
 					
 					
 					
@@ -158,7 +158,7 @@
 					//error message
 					((index == 'realisasi_quantity')?$('.quantity').addClass('has-error'):'');
 					
-					reset_submitpt();
+					reset_submitst();
 					
 				
 				});
@@ -175,20 +175,20 @@
 	});
 
 
-	$(document).on('click','#submit-update_pt',function(e){
+	$(document).on('click','#submit-update_st',function(e){
 
-		on_submitpt();
-		var data = $('#realisasi_program_triwulan_form').serialize();
+		on_submitst();
+		var data = $('#realisasi_sasaran_tahunan_form').serialize();
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_realisasi_program_triwulan") }}',
+			url		: '{{ url("api_resource/update_realisasi_sasaran_tahunan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
 				
 			
-				reset_submitpt();
+				reset_submitst();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -198,8 +198,8 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-realisasi_program_triwulan').modal('hide');
-					$('#realisasi_program_triwulan_table').DataTable().ajax.reload(null,false);
+					$('.modal-realisasi_sasaran_tahunan').modal('hide');
+					$('#realisasi_sasaran_tahunan_table').DataTable().ajax.reload(null,false);
 					
 				},
 					
@@ -221,7 +221,7 @@
 					
 					//error message
 					((index == 'realisasi_quantity')?$('.quantity').addClass('has-error'):'');
-					reset_submitpt();
+					reset_submitst();
 
 					
 				

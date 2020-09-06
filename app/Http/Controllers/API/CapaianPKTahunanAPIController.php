@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Periode;
 use App\Models\Renja;
+use App\Models\CapaianPKTahunan;
 
 
 
@@ -17,6 +18,23 @@ use Input;
 
 class CapaianPKTahunanAPIController extends Controller {
 
+
+
+    public function CreateConfirm(Request $request)
+	{
+
+        //data yang harus diterima yaitu Renja  ID dan triwulan
+        $renja_id     = $request->renja_id;
+
+        $cp_status = Renja::WHERE('renja.id',$renja_id)
+                            ->rightjoin('db_pare_2018.capaian_pk_tahunan AS capaian_pk', function($join){
+                                $join   ->on('capaian_pk.renja_id','=','renja.id');
+                            })
+                            ->count();
+
+        return $cp_status;
+    }
+
     public function SKPDCapaianPKTahunanList(Request $request)
     {
 
@@ -25,7 +43,7 @@ class CapaianPKTahunanAPIController extends Controller {
                         LEFTJOIN('db_pare_2018.capaian_pk_tahunan AS capaian_tahunan', function($join){
                             $join   ->on('capaian_tahunan.renja_id','=','renja.id');
                         })
-                        ->leftjoin('db_pare_2018.periode AS periode', function($join){
+                        ->LEFTJOIN('db_pare_2018.periode AS periode', function($join){
                             $join   ->on('renja.periode_id','=','periode.id');
                         }) 
                         ->SELECT(
@@ -35,7 +53,7 @@ class CapaianPKTahunanAPIController extends Controller {
                                 'renja.kepala_skpd_id',
                                 'renja.nama_kepala_skpd',
                                 'renja.status_approve',
-                                'capaian_tahunan.id AS capaian_pk_id',
+                                'capaian_tahunan.id AS capaian_pk_tahunan_id',
                                 'periode.label AS periode_label',
                                 'periode.awal AS awal'
 
@@ -95,6 +113,35 @@ class CapaianPKTahunanAPIController extends Controller {
         return $datatables->make(true);
         
     }
+
+    public function Store(Request $request)
+	{
+        $messages = [
+                 'renja_id.required'                   => 'Harus diisi',
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'renja_id'            => 'required',
+                        ),
+                        $messages
+        );
+    
+        if ( $validator->fails() ){
+            return response()->json(['errors'=>$validator->messages()],422);
+        }
+
+            $capaian_pk_tahunan                         = new CapaianPKTahunan;
+            $capaian_pk_tahunan->renja_id               = Input::get('renja_id');
+            
+    
+            if ( $capaian_pk_tahunan->save()){
+                return \Response::make($capaian_pk_tahunan->id, 200);
+            }else{
+                return \Response::make('error', 500);
+            } 
+    } 
 
    
 }

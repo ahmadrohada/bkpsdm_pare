@@ -231,6 +231,12 @@ Breadcrumbs::register('skpd-capaian_pk_tahunan', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_pk_tahunan'), '/public/skpd/capaian_pk_tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_pk_tahunan')]);
 });
 
+Breadcrumbs::register('skpd-capaian_pk_tahunan_edit', function($breadcrumbs)
+{
+    $breadcrumbs->parent('skpd-capaian_pk_tahunan');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_pk_tahunan'), '/public/skpd/capaian_pk_tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_pk_tahunan')]);
+});
+
 // DASHBOARD > SKPD > PUSKESMAS > PEGAWAI
 Breadcrumbs::register('skpd-puskesmas-pegawai', function($breadcrumbs)
 {

@@ -1,7 +1,7 @@
 @extends('pare_pns.layouts.dashboard')
 
 @section('template_title')
-Capaian PK {{ Pustaka::capital_string($nama_skpd) }}
+Capaian PK {{ Pustaka::capital_string($nama_skpd) }} 
 @endsection
 
 @section('template_fastload_css')

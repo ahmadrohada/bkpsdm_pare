@@ -1,20 +1,20 @@
-<div class="modal fade modal-realisasi_program_triwulan" id="" role="dialog"  aria-hidden="true">
+<div class="modal fade modal-realisasi_program_tahunan" id="" role="dialog"  aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-					Add Realisasi Program Triwulan
+					Add Realisasi Program Tahunan
                 </h4>
             </div>
 
-            <form  id="realisasi_program_triwulan_form" method="POST" action="">
+            <form  id="realisasi_program_tahunan_form" method="POST" action="">
 
-			<input type="hidden"  name="capaian_triwulan_id">
+			<input type="hidden"  name="capaian_tahunan_id">
 			<input type="hidden"  name="program_id">
 			<input type="hidden"  name="indikator_program_id">
-			<input type="hidden"  name="realisasi_program_triwulan_id">
-			<input type="hidden"  name="realisasi_indikator_program_triwulan_id">
+			<input type="hidden"  name="realisasi_program_tahunan_id">
+			<input type="hidden"  name="realisasi_indikator_program_tahunan_id">
 			<input type="hidden"  name="jumlah_indikator">
 			<input type="hidden"  name="satuan">
 
@@ -80,14 +80,14 @@
 
 
 
-	$('.modal-realisasi_program_triwulan').on('shown.bs.modal', function(){
+	$('.modal-realisasi_program_tahunan').on('shown.bs.modal', function(){
 		$(this).find('input:text')[1].focus();
 		reset_submitpt();
 	});
 
-	$('.modal-realisasi_program_triwulan').on('hidden.bs.modal', function(){
+	$('.modal-realisasi_program_tahunan').on('hidden.bs.modal', function(){
 		$('.quantity').removeClass('has-error');
-		$('.modal-realisasi_program_triwulan').find('[name=realisasi_quantity]').val('');
+		$('.modal-realisasi_program_tahunan').find('[name=realisasi_quantity]').val('');
 	});
 
 
@@ -99,23 +99,23 @@
 
 
 	function on_submitpt(){
-		$('.modal-realisasi_program_triwulan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('.modal-realisasi_program_tahunan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
 		$('#submit-save_pt').prop('disabled',true);
 	}
 	function reset_submitpt(){
-		$('.modal-realisasi_program_triwulan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
-		$('.modal-realisasi_program_triwulan').find('.button_simpan').addClass('fa-floppy-o');
+		$('.modal-realisasi_program_tahunan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-realisasi_program_tahunan').find('.button_simpan').addClass('fa-floppy-o');
 		$('#submit-save_pt').prop('disabled',false);
 	}
 
 	$(document).on('click','#submit-save_pt',function(e){
 
 		on_submitpt();
-		var data = $('#realisasi_program_triwulan_form').serialize();
+		var data = $('#realisasi_program_tahunan_form').serialize();
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_realisasi_program_triwulan") }}',
+			url		: '{{ url("api_resource/simpan_realisasi_program_tahunan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -132,8 +132,8 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-realisasi_program_triwulan').modal('hide');
-					$('#realisasi_program_triwulan_table').DataTable().ajax.reload(null,false);
+					$('.modal-realisasi_program_tahunan').modal('hide');
+					$('#realisasi_program_tahunan_table').DataTable().ajax.reload(null,false);
 					
 					
 					
@@ -178,11 +178,11 @@
 	$(document).on('click','#submit-update_pt',function(e){
 
 		on_submitpt();
-		var data = $('#realisasi_program_triwulan_form').serialize();
+		var data = $('#realisasi_program_tahunan_form').serialize();
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_realisasi_program_triwulan") }}',
+			url		: '{{ url("api_resource/update_realisasi_program_tahunan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -198,8 +198,8 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-realisasi_program_triwulan').modal('hide');
-					$('#realisasi_program_triwulan_table').DataTable().ajax.reload(null,false);
+					$('.modal-realisasi_program_tahunan').modal('hide');
+					$('#realisasi_program_tahunan_table').DataTable().ajax.reload(null,false);
 					
 				},
 					
