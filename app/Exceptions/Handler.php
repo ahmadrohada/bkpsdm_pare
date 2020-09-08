@@ -35,18 +35,36 @@ class Handler extends ExceptionHandler {
 	 * @param  \Exception  $e
 	 * @return \Illuminate\Http\Response
 	 */
-	public function render($request, Exception $e)
+	/* public function render($request, Exception $e)
 	{
 		
 		return parent::render($request, $e);
 	}
 
 	//hadler error untuk ambil data dari SIAP
-	/* public function render($request, Exception $exception)
+	public function render($request, Exception $exception)
 	{
 		if ($exception instanceof ModelNotFoundException && $request->wantsJson()) {
 			return response()->json(['message' => 'Not Found!'], 404);
 		}
 		return parent::render($request, $exception);
-	} */
+	}  */
+
+	public function render($request, Exception $exception)
+{
+    if($this->isHttpException($exception)){
+        switch ($exception->getStatusCode()) {
+			case 500:
+                return response()->view('errors.500', [], $exception->getStatusCode());
+                break;
+            case 404:
+                return response()->view('errors.404', [], $exception->getStatusCode());
+                break;
+            case 405:
+                return response()->view('errors.405', [], $exception->getStatusCode());
+                break;
+        }
+    }        
+    return parent::render($request, $exception);
+}
 }
