@@ -92,15 +92,15 @@
 										
 											if (row.remaining_time_triwulan1 >= 0 ){
 												if (row.capaian_triwulan1_id == null ){
-													return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-trimester="1" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
+													return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-triwulan="1" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
 												}else{
 													if ( row.capaian_triwulan1_status == 0 ){
-														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-trimester="1" data-id="'+row.capaian_triwulan1_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-triwulan="1" data-id="'+row.capaian_triwulan1_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-trimester="1" data-id="'+row.capaian_triwulan1_id+'"><i class="fa fa-close " ></i></a></span>';
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-triwulan="1" data-id="'+row.capaian_triwulan1_id+'"><i class="fa fa-close " ></i></a></span>';
 													}else{
 														return  '<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-trimester="1" data-id="'+row.capaian_triwulan1_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-triwulan="1" data-id="'+row.capaian_triwulan1_id+'"><i class="fa fa-eye" ></i></a></span>'+
 																'<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-close " ></i></a></span>';
 													}
 													
@@ -120,15 +120,15 @@
 										}else{
 											if (row.remaining_time_triwulan2 >= 0 ){
 												if (row.capaian_triwulan2_id == null ){
-													return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-trimester="2" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
+													return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-triwulan="2" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
 												}else{
 													if ( row.capaian_triwulan2_status == 0 ){
-														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-trimester="2" data-id="'+row.capaian_triwulan2_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-triwulan="2" data-id="'+row.capaian_triwulan2_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-trimester="2" data-id="'+row.capaian_triwulan2_id+'"><i class="fa fa-close " ></i></a></span>';
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-triwulan="2" data-id="'+row.capaian_triwulan2_id+'"><i class="fa fa-close " ></i></a></span>';
 													}else{
 														return  '<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-trimester="2" data-id="'+row.capaian_triwulan2_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-triwulan="2" data-id="'+row.capaian_triwulan2_id+'"><i class="fa fa-eye" ></i></a></span>'+
 																'<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-close " ></i></a></span>';
 													}
 												}
@@ -146,15 +146,15 @@
 										}else{
 											if (row.remaining_time_triwulan3 >= 0 ){
 												if (row.capaian_triwulan3_id == null ){
-													return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-trimester="3" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
+													return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-triwulan="3" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
 												}else{
 													if ( row.capaian_triwulan3_status == 0 ){
-														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-trimester="3" data-id="'+row.capaian_triwulan3_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-triwulan="3" data-id="'+row.capaian_triwulan3_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-trimester="3" data-id="'+row.capaian_triwulan3_id+'"><i class="fa fa-close " ></i></a></span>';
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-triwulan="3" data-id="'+row.capaian_triwulan3_id+'"><i class="fa fa-close " ></i></a></span>';
 													}else{
 														return  '<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-trimester="3" data-id="'+row.capaian_triwulan3_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-triwulan="3" data-id="'+row.capaian_triwulan3_id+'"><i class="fa fa-eye" ></i></a></span>'+
 																'<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-close " ></i></a></span>';
 													}
 												}
@@ -173,15 +173,15 @@
 										}else{
 											if (row.remaining_time_triwulan4 >= 0 ){
 												if (row.capaian_triwulan4_id == null ){
-													return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-trimester="4" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
+													return  '<span style="margin:1px;" ><a class="btn btn-warning btn-xs create_capaian_triwulan"  data-triwulan="4" data-skp_tahunan_id="'+row.skp_tahunan_id+'" style="width:75px;">Capaian</a></span>';
 												}else{
 													if ( row.capaian_triwulan4_status == 0 ){
-														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-trimester="4" data-id="'+row.capaian_triwulan4_id+'"><i class="fa fa-pencil" ></i></a></span>'+
+														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_triwulan" data-triwulan="4" data-id="'+row.capaian_triwulan4_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-trimester="4" data-id="'+row.capaian_triwulan4_id+'"><i class="fa fa-close " ></i></a></span>';
+																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_triwulan" data-triwulan="4" data-id="'+row.capaian_triwulan4_id+'"><i class="fa fa-close " ></i></a></span>';
 													}else{
 														return  '<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
-																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-trimester="4" data-id="'+row.capaian_triwulan4_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs edit_capaian_triwulan" data-triwulan="4" data-id="'+row.capaian_triwulan4_id+'"><i class="fa fa-eye" ></i></a></span>'+
 																'<span  style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-close " ></i></a></span>';
 													}
 												}
@@ -205,10 +205,10 @@
 
 	$(document).on('click','.hapus_capaian_triwulan',function(e){
 		var capaian_triwulan_id = $(this).data('id') ;
-		var trimester = $(this).data('trimester') ;
+		var triwulan = $(this).data('triwulan') ;
 
 		Swal.fire({
-			title: "Hapus  Capaian Triwulan "+trimester,
+			title: "Hapus  Capaian Triwulan "+triwulan,
 			text:$(this).data('label'),
 			type: "warning",
 			//type: "question",
@@ -271,16 +271,16 @@
 	$(document).on('click','.create_capaian_triwulan',function(e){
 		
 		var skp_tahunan_id = $(this).data('skp_tahunan_id') ;
-		var trimester = $(this).data('trimester') ;
+		var triwulan = $(this).data('triwulan') ;
 
 		$.ajax({
 				url			: '{{ url("api_resource/capaian_triwulan_create_confirm") }}',
-				data 		: { skp_tahunan_id:skp_tahunan_id,trimester:trimester },
+				data 		: { skp_tahunan_id:skp_tahunan_id,triwulan:triwulan },
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
 					if ( data == 0 ){
-						modal_create_capaian_triwulan(skp_tahunan_id,trimester);
+						modal_create_capaian_triwulan(skp_tahunan_id,triwulan);
 					}else{
 						alert("capaian sudah ada");
 					}
@@ -302,23 +302,23 @@
 		
 	});
 
-	function modal_create_capaian_triwulan(skp_tahunan_id,trimester){
+	function modal_create_capaian_triwulan(skp_tahunan_id,triwulan){
 
-		switch (trimester){
+		switch (triwulan){
 			case 1:
-				trimester_text = "Triwulan I ( Januari - Maret )";
+				triwulan_text = "Triwulan I ( Januari - Maret )";
 				break;
 			case 2:
-				trimester_text = "Triwulan II ( April - Juni )";
+				triwulan_text = "Triwulan II ( April - Juni )";
 				break;
 			case 3:
-				trimester_text = "Triwulan III ( Juli - September )";
+				triwulan_text = "Triwulan III ( Juli - September )";
 				break;
 			case 4:
-				trimester_text = "Triwulan IV ( Oktober - Desember ) ";
+				triwulan_text = "Triwulan IV ( Oktober - Desember ) ";
 				break;
 			default:
-				trimester_text = "error";
+				triwulan_text = "error";
 		}		
 		
 
@@ -332,10 +332,10 @@
 
 					$('.modal-create_capaian_triwulan').find('[name=periode_skp_tahunan]').html(data['periode']);
 					$('.modal-create_capaian_triwulan').find('[name=masa_penilaian_skp_tahunan]').html(data['masa_penilaian']);
-					$('.modal-create_capaian_triwulan').find('[name=periode_capaian_triwulan]').html(trimester_text);
+					$('.modal-create_capaian_triwulan').find('[name=periode_capaian_triwulan]').html(triwulan_text);
 
 					$('.modal-create_capaian_triwulan').find('[name=pegawai_id]').val(data['pegawai_id']);
-					$('.modal-create_capaian_triwulan').find('[name=trimester]').val(trimester);
+					$('.modal-create_capaian_triwulan').find('[name=triwulan]').val(triwulan);
 					$('.modal-create_capaian_triwulan').find('[name=skp_tahunan_id]').val(skp_tahunan_id);
 
 

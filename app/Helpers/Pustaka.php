@@ -832,26 +832,26 @@ class Pustaka {
 
 	}
 	
-	public static function trimester($data) {
+	/* public static function triwulan($data) {
        
 	
 		switch($data)
 					{
 						
-				case 1 : $trimester='Triwulan I ( Januari - Maret )';
+				case 1 : $triwulan='Triwulan I ( Januari - Maret )';
 						break;
-				case 2 : $trimester='Triwulan II ( April - Juni )';
+				case 2 : $triwulan='Triwulan II ( April - Juni )';
 						break;
-				case 3 : $trimester='Triwulan III ( Juli - September )';
+				case 3 : $triwulan='Triwulan III ( Juli - September )';
 						break;
-				case 4 : $trimester='Triwulan IV ( Oktober - Desember )';
+				case 4 : $triwulan='Triwulan IV ( Oktober - Desember )';
 						break;
 						
 					}
 
-		return $trimester;
+		return $triwulan;
 
-	}
+	} */
 	
 	public static function triwulan($data) {
        

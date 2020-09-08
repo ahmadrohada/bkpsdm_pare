@@ -5,7 +5,7 @@
 		<div class="box box-primary" id='kegiatan_triwulan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					List Realisasi Kegiatan Tahunan Triwulan {!! $capaian_triwulan->trimester !!} [ Eselon {!! $capaian_triwulan->PejabatYangDinilai->Eselon->eselon !!}  ]
+					List Realisasi Kegiatan Tahunan Triwulan {!! $capaian_triwulan->triwulan !!} [ Eselon {!! $capaian_triwulan->PejabatYangDinilai->Eselon->eselon !!}  ]
 				</h1>
 
 				<div class="box-tools pull-right">

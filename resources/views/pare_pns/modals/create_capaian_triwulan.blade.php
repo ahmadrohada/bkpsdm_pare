@@ -163,7 +163,7 @@
 				
 
 					<input type="hidden" class="form-control pegawai_id" name="pegawai_id"  />
-					<input type="hidden" class="form-control trimester" name="trimester"  />
+					<input type="hidden" class="form-control triwulan" name="triwulan"  />
 					<input type="hidden" class="form-control skp_tahunan_id" name="skp_tahunan_id"  />
 					<input type="hidden" class="form-control u_nama	" name="u_nama"  />
 					<input type="hidden" class="form-control u_jabatan_id " name="u_jabatan_id"  />

@@ -5,7 +5,7 @@
 		<div class="box box-primary" id='kegiatan_triwulan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					List Realisasi Kegiatan Tahunan Triwulan {!! $capaian_triwulan->trimester !!} [ Eselon {!! $capaian_triwulan->PejabatYangDinilai->Eselon->eselon !!}  ]
+					List Realisasi Kegiatan Tahunan Triwulan {!! $capaian_triwulan->triwulan !!} [ Eselon {!! $capaian_triwulan->PejabatYangDinilai->Eselon->eselon !!}  ]
 				</h1>
 
 				<div class="box-tools pull-right">
@@ -170,7 +170,7 @@ table.dataTable tbody td {
 	
 		
 		var indikator_kegiatan_id = $(this).data('indikator_id');
-		$('.modal-realisasi_tahunan').find('h4').html('Add Realisasi Kegiatan Tahunan Triwulan '+ {!! $capaian_triwulan->trimester !!});
+		$('.modal-realisasi_tahunan').find('h4').html('Add Realisasi Kegiatan Tahunan Triwulan '+ {!! $capaian_triwulan->triwulan !!});
 		$('.modal-realisasi_tahunan').find('.btn-submit').attr('id', 'submit-save');
 		$('.modal-realisasi_tahunan').find('[name=text_button_submit]').html('Simpan Data');
 		show_modal_create(indikator_kegiatan_id);
@@ -182,7 +182,9 @@ table.dataTable tbody td {
 				url			  	: '{{ url("api_resource/add_realisasi_kegiatan_triwulan") }}',
 				data 		  	: { 
 									indikator_kegiatan_id : indikator_kegiatan_id ,
-									capaian_id : {!! $capaian_triwulan->id !!} },
+									capaian_id : {!! $capaian_triwulan->id !!} ,
+									jenis_jabatan : {!! $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan !!},
+								 },
 				method			: "GET",
 				dataType		: "json",
 				success	: function(data) {
@@ -233,7 +235,7 @@ table.dataTable tbody td {
 
 		
 		var indikator_kegiatan_id = $(this).data('indikator_id');
-		$('.modal-realisasi_tahunan').find('h4').html('Edit Realisasi Kegiatan Tahunan Triwulan '+ {!! $capaian_triwulan->trimester !!});
+		$('.modal-realisasi_tahunan').find('h4').html('Edit Realisasi Kegiatan Tahunan Triwulan '+ {!! $capaian_triwulan->triwulan !!});
 		$('.modal-realisasi_tahunan').find('.btn-submit').attr('id', 'submit-update');
 		$('.modal-realisasi_tahunan').find('[name=text_button_submit]').html('Update Data');
 		show_modal_create(indikator_kegiatan_id);

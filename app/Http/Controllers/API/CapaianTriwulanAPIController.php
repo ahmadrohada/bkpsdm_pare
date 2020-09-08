@@ -41,15 +41,15 @@ class CapaianTriwulanAPIController extends Controller {
     public function CreateConfirm(Request $request)
 	{
 
-        //data yang harus diterima yaitu SKP tahunan ID dan trimester
+        //data yang harus diterima yaitu SKP tahunan ID dan triwulan
         $skp_tahunan_id = $request->skp_tahunan_id;
-        $trimester = $request->trimester;
+        $triwulan = $request->triwulan;
 
         $cp_status = SKPTahunan::WHERE('skp_tahunan.id',$skp_tahunan_id)
                             //CAPAIAN TRIWULAN I
-                            ->rightjoin('db_pare_2018.capaian_triwulan AS triwulan', function($join)  use($trimester){
+                            ->rightjoin('db_pare_2018.capaian_triwulan AS triwulan', function($join)  use($triwulan){
                                 $join   ->on('triwulan.skp_tahunan_id','=','skp_tahunan.id');
-                                $join   ->where('triwulan.trimester','=',$trimester);
+                                $join   ->where('triwulan.triwulan','=',$triwulan);
                             })
                             ->count();
       
@@ -85,22 +85,22 @@ class CapaianTriwulanAPIController extends Controller {
                         //CAPAIAN TRIWULAN I
                         ->leftjoin('db_pare_2018.capaian_triwulan AS triwulan1', function($join){
                             $join   ->on('triwulan1.skp_tahunan_id','=','skp_tahunan.id');
-                            $join   ->where('triwulan1.trimester','=','1');
+                            $join   ->where('triwulan1.triwulan','=','1');
                         })
                          //CAPAIAN TRIWULAN II
                         ->leftjoin('db_pare_2018.capaian_triwulan AS triwulan2', function($join){
                             $join   ->on('triwulan2.skp_tahunan_id','=','skp_tahunan.id');
-                            $join   ->where('triwulan2.trimester','=','2');
+                            $join   ->where('triwulan2.triwulan','=','2');
                         })
                         //CAPAIAN TRIWULAN III
                         ->leftjoin('db_pare_2018.capaian_triwulan AS triwulan3', function($join){
                             $join   ->on('triwulan3.skp_tahunan_id','=','skp_tahunan.id');
-                            $join   ->where('triwulan3.trimester','=','3');
+                            $join   ->where('triwulan3.triwulan','=','3');
                         })
                          //CAPAIAN TRIWULAN IV
                         ->leftjoin('db_pare_2018.capaian_triwulan AS triwulan4', function($join){
                             $join   ->on('triwulan4.skp_tahunan_id','=','skp_tahunan.id');
-                            $join   ->where('triwulan4.trimester','=','4');
+                            $join   ->where('triwulan4.triwulan','=','4');
                         })
                         ->SELECT(   
                             
@@ -225,7 +225,7 @@ class CapaianTriwulanAPIController extends Controller {
 
             $capaian_triwulan                              = new CapaianTriwulan;
             $capaian_triwulan->pegawai_id                  = Input::get('pegawai_id');
-            $capaian_triwulan->trimester                   = Input::get('trimester');
+            $capaian_triwulan->triwulan                   = Input::get('triwulan');
             $capaian_triwulan->skp_tahunan_id              = Input::get('skp_tahunan_id');
             $capaian_triwulan->u_nama                      = Input::get('u_nama');
             $capaian_triwulan->u_jabatan_id                = Input::get('u_jabatan_id');
@@ -272,7 +272,7 @@ class CapaianTriwulanAPIController extends Controller {
         if ( $p_detail != null ){
             $data = array(
                     'date_created'	        => Pustaka::tgl_jam($capaian->created_at),
-                    'periode_triwulan'	    => Pustaka::trimester($capaian->trimester),
+                    'periode_triwulan'	    => Pustaka::triwulan($capaian->triwulan),
 
                     'periode_skp_tahunan'	=> $capaian->SKPTahunan->Renja->Periode->label,
                     'masa_penilaian_skp_tahunan'=> Pustaka::tgl_form($capaian->SKPTahunan->tgl_mulai).' s.d  '.Pustaka::tgl_form($capaian->SKPTahunan->tgl_selesai),

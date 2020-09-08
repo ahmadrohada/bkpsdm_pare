@@ -10,7 +10,7 @@
 	    <section class="content-header">
 			<h1>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-capaian_triwulan') }}"><span class="fa fa-angle-left"></span></a>
-				Edit Capaian [ {!! Pustaka::trimester($capaian_triwulan->trimester) !!} ]
+				Edit Capaian [ {!! Pustaka::triwulan($capaian_triwulan->triwulan) !!} ]
 			</h1>
 				{!! Breadcrumbs::render('personal_edit_capaian_triwulan') !!}
       </section>
@@ -18,7 +18,7 @@
 	    <section class="content">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
-				<li class="status active"><a href="#status" data-toggle="tab">Status </a></li>
+				{{--  <li class="status"><a href="#status" data-toggle="tab">Status </a></li>  --}}
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<li class="kegiatan_triwulan_tab"><a href="#kegiatan_triwulan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian_triwulan->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				
@@ -26,7 +26,7 @@
 
  
 			<div class="tab-content"  style="min-height:400px;">
-				<div class="active tab-pane fade" id="status">
+				{{--  <div class="tab-pane fade" id="status">
 					<!-- 2. KABID -->
 					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
 						@include('pare_pns.modules.timeline.capaian_triwulan_status_edit')
@@ -47,12 +47,12 @@
 						@include('pare_pns.modules.timeline.capaian_triwulan_status_edit')
 					@endif
 					
-				</div>
-				<div class="tab-pane fade" id="detail">
+				</div>  --}}
+				<div class="tab-pane fade active" id="detail">
 					@include('pare_pns.modules.edit_forms.capaian_triwulan_detail')		
 				</div>
 								
-				<div class=" tab-pane fade" id="kegiatan_triwulan_tab">
+				<div class="tab-pane fade" id="kegiatan_triwulan_tab">
 
 					<!-- 2. KABID -->
 					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
@@ -106,8 +106,8 @@ $(document).ready(function() {
 
 		if ( id == 'kegiatan_triwulan_tab'){
 			load_kegiatan_triwulan();
-		}else if ( id == 'status'){
-			status_pengisian();
+		}else if ( id == 'detail'){
+			cap_triwulan_detail();
 		}
 		$('html, body').animate({scrollTop:0}, 0);
 	});
@@ -120,7 +120,7 @@ $(document).ready(function() {
 	if ( hash != ''){
 		$('#myTab a[href="' + hash + '"]').tab('show');
 	}else{
-		$('#myTab a[href="#status"]').tab('show');
+		$('#myTab a[href="#detail"]').tab('show');
 	}
 	
 

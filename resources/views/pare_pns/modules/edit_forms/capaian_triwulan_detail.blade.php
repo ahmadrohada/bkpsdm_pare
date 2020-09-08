@@ -179,41 +179,44 @@
 <script type="text/javascript">
 
 
+	cap_triwulan_detail();
 	
+	function cap_triwulan_detail(){
 
-	$.ajax({
-		url     	: '{{ url("api_resource/capaian_triwulan_detail") }}',
-		type    	: "GET",
-		data    	: { capaian_triwulan_id: {{ $capaian_triwulan->id }} },
-		success		: function (data) {
+		$.ajax({
+			url     	: '{{ url("api_resource/capaian_triwulan_detail") }}',
+			type    	: "GET",
+			data    	: { capaian_triwulan_id: {{ $capaian_triwulan->id }} },
+			success		: function (data) {
 
-				$("#date_created").html(data['date_created']);
-				$("#periode_triwulan").html(data['periode_triwulan']);
+					$("#date_created").html(data['date_created']);
+					$("#periode_triwulan").html(data['periode_triwulan']);
 
-				$("#periode_skp_tahunan").html(data['periode_skp_tahunan']);
-				$("#masa_penilaian_skp_tahunan").html(data['masa_penilaian_skp_tahunan']);
+					$("#periode_skp_tahunan").html(data['periode_skp_tahunan']);
+					$("#masa_penilaian_skp_tahunan").html(data['masa_penilaian_skp_tahunan']);
 
 
-				$("#u_nama").html(data['u_nama']);
-				$("#u_nip").html(data['u_nip']);
-				$("#u_golongan").html(data['u_pangkat']+' / '+data['u_golongan']);
-				$("#u_jabatan").html(data['u_jabatan']);
-				$("#u_eselon").html(data['u_eselon']);
-				$("#u_unit_kerja").html(data['u_unit_kerja']);
+					$("#u_nama").html(data['u_nama']);
+					$("#u_nip").html(data['u_nip']);
+					$("#u_golongan").html(data['u_pangkat']+' / '+data['u_golongan']);
+					$("#u_jabatan").html(data['u_jabatan']);
+					$("#u_eselon").html(data['u_eselon']);
+					$("#u_unit_kerja").html(data['u_unit_kerja']);
 
-				$("#p_nama").html(data['p_nama']);
-				$("#p_nip").html(data['p_nip']);
-				$("#p_golongan").html(data['p_pangkat']+' / '+data['p_golongan']);
-				$("#p_jabatan").html(data['p_jabatan']);
-				$("#p_eselon").html(data['p_eselon']);
-				$("#p_unit_kerja").html(data['p_unit_kerja']);
+					$("#p_nama").html(data['p_nama']);
+					$("#p_nip").html(data['p_nip']);
+					$("#p_golongan").html(data['p_pangkat']+' / '+data['p_golongan']);
+					$("#p_jabatan").html(data['p_jabatan']);
+					$("#p_eselon").html(data['p_eselon']);
+					$("#p_unit_kerja").html(data['p_unit_kerja']);
 
-			},
-			error: function (data) {
-				
-			}
+				},
+				error: function (data) {
+					
+				}
 
-	}); 
+		}); 
+	}
 
 	/** ============== ----------------------- ================= **/	
 	/** ============== FUNGSI EDIT Atasan ================= **/

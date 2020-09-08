@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-					Add Realisasi Kegiatan Tahunan
+					Add Realisasi Kegiatan Tahunan 
                 </h4>
             </div>
 
@@ -136,7 +136,7 @@
 
 	$('.modal-realisasi_tahunan').on('shown.bs.modal', function(){
 		
-		$('#qty_realisasi').focus();
+		$(this).find('input:text')[1].focus();
 		reset_submitx();
 	});
 
