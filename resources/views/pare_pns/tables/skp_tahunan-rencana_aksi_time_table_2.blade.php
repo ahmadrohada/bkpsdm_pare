@@ -42,7 +42,7 @@
 		var table_rencana_aksi = $('#rencana_aksi_time_table').DataTable({
 			destroy			: true,
 			processing      : true,
-			serverSide      : true,
+			serverSide      : false,
 			searching      	: true,
 			paging          : true,
 			autoWidth		: false,
