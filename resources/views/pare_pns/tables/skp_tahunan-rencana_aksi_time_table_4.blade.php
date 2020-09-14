@@ -58,8 +58,8 @@
 										jabatan_id: {!! $skp->PejabatYangDinilai->id_jabatan !!},
 										renja_id: {!! $skp->Renja->id !!}
 								},
-								cache : false,
-								quietMillis: 500,
+								//cache : false,
+								//quietMillis: 500,
 							},
 			rowsGroup		: [1,2,3,4,5,8],				
 			columns			: [

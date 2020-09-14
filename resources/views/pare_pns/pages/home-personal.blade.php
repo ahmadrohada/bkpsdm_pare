@@ -1,7 +1,7 @@
 @extends('pare_pns.layouts.dashboard')
 
 @section('template_title')
-	Welcome's {{ $user->username }}
+	Welcome {{ $user->username }}
 @endsection
 
 @section('template_fastload_css')

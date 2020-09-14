@@ -62,8 +62,8 @@
 								data: { skp_tahunan_id: {!! $skp->id !!} ,
 										jabatan_id    : {!! $skp->PejabatYangDinilai->id_jabatan !!}
 									 },
-								cache : false,
-								quietMillis: 800,
+								//cache : false,
+								//quietMillis: 800,
 							},
 			rowsGroup		: [1,2,3,4,5,8],
 			columns			: [
