@@ -41,12 +41,12 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
     protected function hitung_quantity($capaian_id,$kegiatan_tahunan_id,$jm_indikator){
         $data_uing = KegiatanSKPTahunan::
                 //LEFT JOIN ke INDIKATOR KEGIATAN
-                leftjoin('pare_2018_demo.renja_indikator_kegiatan AS renja_indikator_kegiatan', function($join){
+                leftjoin('db_pare_2018.renja_indikator_kegiatan AS renja_indikator_kegiatan', function($join){
                     $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','skp_tahunan_kegiatan.kegiatan_id');
                     
                 })
                 //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
-                ->join('pare_2018_demo.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
+                ->join('db_pare_2018.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
                     $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
                     $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
                     
@@ -116,29 +116,29 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
     $kegiatan = Kegiatan::WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHERE('renja_kegiatan.jabatan_id','=',  $jabatan_id  )
                             //LEFT JOIN ke Kegiatan SKP TAHUNAN
-                            ->JOIN('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->JOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 
                             })
                             //LEFT JOIN ke INDIKATOR KEGIATAN
-                            ->leftjoin('pare_2018_demo.renja_indikator_kegiatan AS renja_indikator_kegiatan', function($join){
+                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS renja_indikator_kegiatan', function($join){
                                 $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
                                 
                             })
                              //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
-                             ->leftjoin('pare_2018_demo.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
+                             ->leftjoin('db_pare_2018.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
                                 $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
                                 $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
                                 
                             })
                             //LEFT JOIN TERHADAP REALISASI TAHUNAN tahunan
-                            ->leftjoin('pare_2018_demo.realisasi_kegiatan_tahunan AS realisasi_kegiatan', function($join) use ( $capaian_id ){
+                            ->leftjoin('db_pare_2018.realisasi_kegiatan_tahunan AS realisasi_kegiatan', function($join) use ( $capaian_id ){
                                 $join   ->on('realisasi_kegiatan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                                 $join   ->WHERE('realisasi_kegiatan.capaian_id','=',  $capaian_id );
                                 
                             })
                             //LEFT JOIN KE CAPAIAN TAHUNAN
-                            ->leftjoin('pare_2018_demo.capaian_tahunan AS capaian_tahunan', function($join){
+                            ->leftjoin('db_pare_2018.capaian_tahunan AS capaian_tahunan', function($join){
                                 $join   ->on('capaian_tahunan.id','=','realisasi_kegiatan.capaian_id');
                             })
 
@@ -261,14 +261,14 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
         \DB::statement(\DB::raw('set @rownum=0'));
         $kegiatan = CapaianTahunan::
                                 WHERE('capaian_tahunan.id', $capaian_id )
-                                ->leftjoin('pare_2018_demo.skp_tahunan AS skp_tahunan', function($join){
+                                ->leftjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function($join){
                                     $join   ->on('skp_tahunan.id','=','capaian_tahunan.skp_tahunan_id');
                                 })
-                                ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan_jft AS skp_tahunan_kegiatan_jft', function($join){
+                                ->leftjoin('db_pare_2018.skp_tahunan_kegiatan_jft AS skp_tahunan_kegiatan_jft', function($join){
                                     $join   ->on('skp_tahunan_kegiatan_jft.skp_tahunan_id','=','skp_tahunan.id');
                                 })
                                 //LEFT JOIN TERHADAP REALISASI TAHUNAN JFT
-                                ->leftjoin('pare_2018_demo.realisasi_kegiatan_tahunan_jft AS realisasi_kegiatan', function($join) use ( $capaian_id ){
+                                ->leftjoin('db_pare_2018.realisasi_kegiatan_tahunan_jft AS realisasi_kegiatan', function($join) use ( $capaian_id ){
                                     $join   ->on('realisasi_kegiatan.kegiatan_tahunan_id','=','skp_tahunan_kegiatan_jft.id');
                                     $join   ->WHERE('realisasi_kegiatan.capaian_id','=',  $capaian_id );
                                     
@@ -392,29 +392,29 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
             $kegiatan = Kegiatan::WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id', $bawahan  )
                             //LEFT JOIN ke Kegiatan SKP TAHUNAN
-                            ->JOIN('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->JOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 
                             })
                             //LEFT JOIN ke INDIKATOR KEGIATAN
-                            ->leftjoin('pare_2018_demo.renja_indikator_kegiatan AS renja_indikator_kegiatan', function($join){
+                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS renja_indikator_kegiatan', function($join){
                                 $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
                                 
                             })
                              //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
-                             ->leftjoin('pare_2018_demo.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
+                             ->leftjoin('db_pare_2018.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
                                 $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
                                 $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
                                 
                             })
                             //LEFT JOIN TERHADAP REALISASI TAHUNAN tahunan
-                            ->leftjoin('pare_2018_demo.realisasi_kegiatan_tahunan AS realisasi_kegiatan', function($join) use ( $capaian_id ){
+                            ->leftjoin('db_pare_2018.realisasi_kegiatan_tahunan AS realisasi_kegiatan', function($join) use ( $capaian_id ){
                                 $join   ->on('realisasi_kegiatan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                                 $join   ->WHERE('realisasi_kegiatan.capaian_id','=',  $capaian_id );
                                 
                             })
                             //LEFT JOIN KE CAPAIAN TAHUNAN
-                            ->leftjoin('pare_2018_demo.capaian_tahunan AS capaian_tahunan', function($join){
+                            ->leftjoin('db_pare_2018.capaian_tahunan AS capaian_tahunan', function($join){
                                 $join   ->on('capaian_tahunan.id','=','realisasi_kegiatan.capaian_id');
                             })
 
@@ -539,29 +539,29 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
             $kegiatan = Kegiatan::WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHERE('renja_kegiatan.jabatan_id','=',  $jabatan_id  )
                             //LEFT JOIN ke Kegiatan SKP TAHUNAN
-                            ->JOIN('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->JOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 
                             })
                             //LEFT JOIN ke INDIKATOR KEGIATAN
-                            ->leftjoin('pare_2018_demo.renja_indikator_kegiatan AS renja_indikator_kegiatan', function($join){
+                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS renja_indikator_kegiatan', function($join){
                                 $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
                                 
                             })
                              //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
-                             ->leftjoin('pare_2018_demo.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
+                             ->leftjoin('db_pare_2018.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
                                 $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
                                 $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
                                 
                             })
                             //LEFT JOIN TERHADAP REALISASI TAHUNAN tahunan
-                            ->leftjoin('pare_2018_demo.realisasi_kegiatan_tahunan AS realisasi_kegiatan', function($join) use ( $capaian_id ){
+                            ->leftjoin('db_pare_2018.realisasi_kegiatan_tahunan AS realisasi_kegiatan', function($join) use ( $capaian_id ){
                                 $join   ->on('realisasi_kegiatan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                                 $join   ->WHERE('realisasi_kegiatan.capaian_id','=',  $capaian_id );
                                 
                             })
                             //LEFT JOIN KE CAPAIAN TAHUNAN
-                            ->leftjoin('pare_2018_demo.capaian_tahunan AS capaian_tahunan', function($join){
+                            ->leftjoin('db_pare_2018.capaian_tahunan AS capaian_tahunan', function($join){
                                 $join   ->on('capaian_tahunan.id','=','realisasi_kegiatan.capaian_id');
                             })
 
@@ -686,33 +686,33 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
             $jabatan_id = $request->jabatan_id;
 
             $rencana_aksi = RencanaAksi::WHERE('skp_tahunan_rencana_aksi.jabatan_id',$jabatan_id)
-                            ->LEFTJOIN('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->LEFTJOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->ON('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                             })
                             //LEFT JOIN ke KEGIATAN RENJA
-                            ->leftjoin('pare_2018_demo.renja_kegiatan AS renja_kegiatan', function($join){
+                            ->leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join){
                                 $join   ->on('renja_kegiatan.id','=','kegiatan_tahunan.kegiatan_id');
                                 
                             })
                             //LEFT JOIN ke INDIKATOR KEGIATAN
-                            ->LEFTJOIN('pare_2018_demo.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
+                            ->LEFTJOIN('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
                                 $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan_tahunan.kegiatan_id');
                                 
                             })
                             //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
-                            ->leftjoin('pare_2018_demo.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
+                            ->leftjoin('db_pare_2018.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
                                 $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','indikator_kegiatan.id');
                                 $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
                                 
                             })
                             //LEFT JOIN TERHADAP REALISASI TAHUNAN tahunan
-                            ->leftjoin('pare_2018_demo.realisasi_kegiatan_tahunan AS realisasi_kegiatan', function($join) use ( $capaian_id ){
+                            ->leftjoin('db_pare_2018.realisasi_kegiatan_tahunan AS realisasi_kegiatan', function($join) use ( $capaian_id ){
                                 $join   ->on('realisasi_kegiatan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                                 $join   ->WHERE('realisasi_kegiatan.capaian_id','=',  $capaian_id );
                                 
                             })
                             //LEFT JOIN KE CAPAIAN TAHUNAN
-                            ->leftjoin('pare_2018_demo.capaian_tahunan AS capaian_tahunan', function($join){
+                            ->leftjoin('db_pare_2018.capaian_tahunan AS capaian_tahunan', function($join){
                                 $join   ->on('capaian_tahunan.id','=','realisasi_kegiatan.capaian_id');
                             })
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
@@ -845,12 +845,12 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
 
                             //LEFT JOIN ke Kegiatan SKP TAHUNAN
-                            ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 
                             })
                             //LEFT JOIN TERHADAP REALISASI TRIWULAN NYA
-                            ->leftjoin('pare_2018_demo.realisasi_triwulan_kegiatan_tahunan AS realisasi_triwulan', function($join) use ( $capaian_triwulan_id ){
+                            ->leftjoin('db_pare_2018.realisasi_triwulan_kegiatan_tahunan AS realisasi_triwulan', function($join) use ( $capaian_triwulan_id ){
                                 $join   ->on('realisasi_triwulan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                                 //$join   ->WHERE('realisasi_triwulan.capaian_id','=',  $capaian_triwulan_id);
                                 
@@ -961,18 +961,18 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
         $indikator_kegiatan_id = $request->indikator_kegiatan_id;
 
         $x = IndikatorKegiatan::
-                            leftjoin('pare_2018_demo.renja_kegiatan AS renja_kegiatan', function($join) {
+                            leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
                                 $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
                             })
-                            ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) {
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) {
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                             })
                             //REALISASINYA
-                            ->leftjoin('pare_2018_demo.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use($capaian_id) {
+                            ->leftjoin('db_pare_2018.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use($capaian_id) {
                                 $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
                                 $join   ->WHERE('realisasi_indikator.capaian_id','=', $capaian_id );
                             })
-                            ->leftjoin('pare_2018_demo.realisasi_kegiatan_tahunan AS realisasi_kegiatan', function($join) use($capaian_id) {
+                            ->leftjoin('db_pare_2018.realisasi_kegiatan_tahunan AS realisasi_kegiatan', function($join) use($capaian_id) {
                                 $join   ->on('realisasi_kegiatan.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                                 $join   ->WHERE('realisasi_kegiatan.capaian_id','=', $capaian_id );
                             })
@@ -1061,7 +1061,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
         $x = KegiatanSKPTahunanJFT::
                            
                             //REALISASINYA
-                            leftjoin('pare_2018_demo.realisasi_kegiatan_tahunan_jft AS realisasi_kegiatan', function($join) use($capaian_id) {
+                            leftjoin('db_pare_2018.realisasi_kegiatan_tahunan_jft AS realisasi_kegiatan', function($join) use($capaian_id) {
                                 $join   ->on('realisasi_kegiatan.kegiatan_tahunan_id','=','skp_tahunan_kegiatan_jft.id');
                                 $join   ->WHERE('realisasi_kegiatan.capaian_id','=', $capaian_id );
                             })
@@ -1736,7 +1736,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
             $capaian_id = $st_kt->capaian_id ;
             $data_uing = IndikatorKegiatan::WHERE('kegiatan_id',Input::get('kegiatan_id'))
                                             //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
-                                            ->join('pare_2018_demo.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use($capaian_id) {
+                                            ->join('db_pare_2018.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use($capaian_id) {
                                                 $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
                                                 $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
                                                 

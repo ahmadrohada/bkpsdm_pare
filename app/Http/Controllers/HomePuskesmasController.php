@@ -78,7 +78,7 @@ class HomePuskesmasController extends Controller {
 
     protected function total_skp_tahunan($skpd_id){
         return 	Renja::WHERE('renja.skpd_id',$skpd_id)
-                            ->leftjoin('pare_2018_demo.skp_tahunan AS skp', function($join){
+                            ->leftjoin('db_pare_2018.skp_tahunan AS skp', function($join){
                                 $join   ->on('skp.renja_id','=','renja.id');
                             })->count();
     }

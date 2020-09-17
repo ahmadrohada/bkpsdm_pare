@@ -45,19 +45,19 @@ class RealisasiRencanaAksiKasubidAPIController extends Controller {
        
  
         $x = RealisasiRencanaAksiEselon4::WHERE('realisasi_rencana_aksi_kasubid.id', $request->realisasi_rencana_aksi_id)
-                    ->leftjoin('pare_2018_demo.skp_tahunan_rencana_aksi AS skp_tahunan_rencana_aksi', function($join){
+                    ->leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS skp_tahunan_rencana_aksi', function($join){
                         $join   ->on('skp_tahunan_rencana_aksi.id','=','realisasi_rencana_aksi_kasubid.rencana_aksi_id');
                        
                     })
-                    ->leftjoin('pare_2018_demo.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
+                    ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
                         $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                         //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
                     })
-                    ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                    ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                         $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
                         //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
                     })
-                    ->leftjoin('pare_2018_demo.realisasi_kegiatan_bulanan', function($join){
+                    ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
                         $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
                     })
                    

@@ -97,7 +97,7 @@ class UserController extends Controller {
 
 
     protected function total_users(){
-        return 	\DB::table('pare_2018_demo.users AS users')
+        return 	\DB::table('db_pare_2018.users AS users')
                                 ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
                                     $join   ->on('users.id_pegawai','=','pegawai.id');
                                     $join   ->where('pegawai.status','=', 'active');
@@ -305,7 +305,7 @@ class UserController extends Controller {
        
         \DB::statement(\DB::raw('set @rownum=0'));
       
-        $dt = \DB::table('pare_2018_demo.users AS user')
+        $dt = \DB::table('db_pare_2018.users AS user')
         ->join('demo_asn.tb_pegawai AS pegawai', 'user.id_pegawai', '=', 'pegawai.id')
         ->join('demo_asn.tb_history_jabatan AS a', 'a.id_pegawai','=','pegawai.id')
         ->where('a.status', '=', 'active')

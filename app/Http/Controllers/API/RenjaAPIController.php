@@ -283,7 +283,7 @@ class RenjaAPIController extends Controller {
                             leftjoin('demo_asn.tb_history_jabatan AS kaban', function($join){
                                 $join   ->on('kaban.id','=','renja.kepala_skpd_id');
                             })
-                            ->leftjoin('pare_2018_demo.periode AS periode', function($join){
+                            ->leftjoin('db_pare_2018.periode AS periode', function($join){
                                 $join   ->on('periode.id','=','renja.periode_id');
                             })
                             ->SELECT('kaban.id AS kaban_id',
@@ -377,7 +377,7 @@ class RenjaAPIController extends Controller {
         $skpd_id = $request->skpd_id;
         $dt = Periode::
                 
-                        leftjoin('pare_2018_demo.renja AS renja', function($join) use($skpd_id) { 
+                        leftjoin('db_pare_2018.renja AS renja', function($join) use($skpd_id) { 
                             $join   ->on('renja.periode_id','=','periode.id');
                             $join   ->WHERE('renja.skpd_id','=',$skpd_id);
                             
@@ -449,7 +449,7 @@ class RenjaAPIController extends Controller {
         $pegawai_id = $request->pegawai_id;
        
         $dt = Renja::
-                    leftjoin('pare_2018_demo.periode AS periode', function($join){ 
+                    leftjoin('db_pare_2018.periode AS periode', function($join){ 
                         $join   ->on('renja.periode_id','=','periode.id');
                         
                     })

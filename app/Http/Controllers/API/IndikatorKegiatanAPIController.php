@@ -127,10 +127,10 @@ class IndikatorKegiatanAPIController extends Controller {
         $skp_tahunan_id = $request->skp_tahunan_id;
         
         $x = IndikatorKegiatan::
-                leftjoin('pare_2018_demo.renja_kegiatan AS renja_kegiatan', function($join) {
+                leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
                     $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
                 })
-                ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use($skp_tahunan_id) {
+                ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use($skp_tahunan_id) {
                     $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                     $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id);
                 })
