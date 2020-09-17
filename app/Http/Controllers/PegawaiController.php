@@ -66,7 +66,7 @@ class PegawaiController extends Controller {
     } 
     
     protected function total_users(){
-        return 	\DB::table('db_pare_2018_demo.users AS users')
+        return 	\DB::table('db_pare_2018.users AS users')
                                 ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
                                     $join   ->on('users.id_pegawai','=','pegawai.id');
                                     $join   ->where('pegawai.status','=', 'active');
@@ -165,7 +165,7 @@ class PegawaiController extends Controller {
                             ->leftjoin('demo_asn.foto AS foto ','a.nip','=','foto.nipbaru')
 
                             //user_id
-                            ->leftjoin('db_pare_2018_demo.users AS users ','a.id_pegawai','=','users.id_pegawai')
+                            ->leftjoin('db_pare_2018.users AS users ','a.id_pegawai','=','users.id_pegawai')
                             
                              ->select([ 'tb_pegawai.nama AS nama',
                                         'tb_pegawai.id AS pegawai_id',
@@ -322,7 +322,7 @@ class PegawaiController extends Controller {
                             ->leftjoin('demo_asn.foto AS foto ','a.nip','=','foto.nipbaru')
 
                             //User
-                            ->leftjoin('db_pare_2018_demo.users AS user', 'tb_pegawai.id', '=' ,'user.id_pegawai')
+                            ->leftjoin('db_pare_2018.users AS user', 'tb_pegawai.id', '=' ,'user.id_pegawai')
                             
                              ->select([ 'tb_pegawai.nama AS nama',
                                         'tb_pegawai.id AS pegawai_id',

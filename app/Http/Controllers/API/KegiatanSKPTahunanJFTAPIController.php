@@ -29,7 +29,7 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
         
         $x = KegiatanSKPTahunanJFT::
 
-                            join('db_pare_2018_demo.renja_sasaran AS sasaran', function($join){
+                            join('db_pare_2018.renja_sasaran AS sasaran', function($join){
                                 $join   ->on('sasaran.id','=','skp_tahunan_kegiatan_jft.sasaran_id');
                                 
                             })
@@ -77,7 +77,7 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
        //KEGIATAN Tahunan JFT
 
         $rencana_aksi = KegiatanSKPTahunanJFT::
-                            leftjoin('db_pare_2018_demo.skp_bulanan_kegiatan_jft AS kegiatan_bulanan', function($join){
+                            leftjoin('db_pare_2018.skp_bulanan_kegiatan_jft AS kegiatan_bulanan', function($join){
                                 $join   ->on('kegiatan_bulanan.kegiatan_tahunan_id','=','skp_tahunan_kegiatan_jft.id');
                             })
                             ->SELECT(   'skp_tahunan_kegiatan_jft.id AS kegiatan_tahunan_id',

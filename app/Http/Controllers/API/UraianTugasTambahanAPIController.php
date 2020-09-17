@@ -26,7 +26,7 @@ class UraianTugasTambahanAPIController extends Controller {
     {
             
         $dt = UraianTugasTambahan::
-                                leftjoin('db_pare_2018_demo.skp_tahunan_tugas_tambahan AS tugas_tambahan', function($join){
+                                leftjoin('db_pare_2018.skp_tahunan_tugas_tambahan AS tugas_tambahan', function($join){
                                     $join   ->on('tugas_tambahan.id','=','uraian_tugas_tambahan.tugas_tambahan_id');
                                 })
                                 ->select([   
@@ -116,7 +116,7 @@ class UraianTugasTambahanAPIController extends Controller {
        
         
         $x = UraianTugasTambahan::
-                            leftjoin('db_pare_2018_demo.skp_tahunan_tugas_tambahan AS tugas_tambahan', function($join){
+                            leftjoin('db_pare_2018.skp_tahunan_tugas_tambahan AS tugas_tambahan', function($join){
                                 $join   ->on('tugas_tambahan.id','=','uraian_tugas_tambahan.tugas_tambahan_id');
                             })
                             ->SELECT(   'uraian_tugas_tambahan.id AS uraian_tugas_tambahan_id',

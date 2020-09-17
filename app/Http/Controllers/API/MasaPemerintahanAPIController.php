@@ -86,9 +86,9 @@ class MasaPemerintahanAPIController extends Controller {
     public function SKPDPerjanjianKinerja_list(Request $request)
     {
             
-        $dt = \DB::table('db_pare_2018_demo.renja AS renja')
+        $dt = \DB::table('db_pare_2018.renja AS renja')
                    
-                    ->rightjoin('db_pare_2018_demo.perjanjian_kinerja AS pk', function($join){
+                    ->rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
                         $join   ->on('pk.renja_id','=','renja.id');
                     }) //ID KEPALA SKPD
                     ->leftjoin('demo_asn.tb_history_jabatan AS id_mp', function($join){
@@ -98,7 +98,7 @@ class MasaPemerintahanAPIController extends Controller {
                     ->leftjoin('demo_asn.tb_pegawai AS kepala_skpd', function($join){
                         $join   ->on('kepala_skpd.id','=','id_mp.id_pegawai');
                     })//PERIODE
-                    ->join('db_pare_2018_demo.periode AS periode', function($join){
+                    ->join('db_pare_2018.periode AS periode', function($join){
                         $join   ->on('periode.id','=','renja.periode_id');
                         
                     })
@@ -207,7 +207,7 @@ class MasaPemerintahanAPIController extends Controller {
 
 
                 $renja = Renja::where('periode_id','=',$y->id)
-                                    ->rightjoin('db_pare_2018_demo.perjanjian_kinerja AS pk', function($join){
+                                    ->rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
                                         $join   ->on('pk.renja_id','=','renja.id');
                                         
                                     })

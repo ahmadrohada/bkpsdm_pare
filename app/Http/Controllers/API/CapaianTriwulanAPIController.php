@@ -47,7 +47,7 @@ class CapaianTriwulanAPIController extends Controller {
 
         $cp_status = SKPTahunan::WHERE('skp_tahunan.id',$skp_tahunan_id)
                             //CAPAIAN TRIWULAN I
-                            ->rightjoin('db_pare_2018_demo.capaian_triwulan AS triwulan', function($join)  use($triwulan){
+                            ->rightjoin('db_pare_2018.capaian_triwulan AS triwulan', function($join)  use($triwulan){
                                 $join   ->on('triwulan.skp_tahunan_id','=','skp_tahunan.id');
                                 $join   ->where('triwulan.triwulan','=',$triwulan);
                             })
@@ -71,10 +71,10 @@ class CapaianTriwulanAPIController extends Controller {
         
         $SKPTahunan = SKPTahunan::WHERE('skp_tahunan.pegawai_id',$id_pegawai)
                         //PERIODE
-                        ->leftjoin('db_pare_2018_demo.renja AS renja', function($join){
+                        ->leftjoin('db_pare_2018.renja AS renja', function($join){
                             $join   ->on('renja.id','=','skp_tahunan.renja_id');
                         }) 
-                        ->leftjoin('db_pare_2018_demo.periode AS periode', function($join){
+                        ->leftjoin('db_pare_2018.periode AS periode', function($join){
                             $join   ->on('renja.periode_id','=','periode.id');
                         }) 
                         //SKPD
@@ -83,22 +83,22 @@ class CapaianTriwulanAPIController extends Controller {
                         }) 
 
                         //CAPAIAN TRIWULAN I
-                        ->leftjoin('db_pare_2018_demo.capaian_triwulan AS triwulan1', function($join){
+                        ->leftjoin('db_pare_2018.capaian_triwulan AS triwulan1', function($join){
                             $join   ->on('triwulan1.skp_tahunan_id','=','skp_tahunan.id');
                             $join   ->where('triwulan1.triwulan','=','1');
                         })
                          //CAPAIAN TRIWULAN II
-                        ->leftjoin('db_pare_2018_demo.capaian_triwulan AS triwulan2', function($join){
+                        ->leftjoin('db_pare_2018.capaian_triwulan AS triwulan2', function($join){
                             $join   ->on('triwulan2.skp_tahunan_id','=','skp_tahunan.id');
                             $join   ->where('triwulan2.triwulan','=','2');
                         })
                         //CAPAIAN TRIWULAN III
-                        ->leftjoin('db_pare_2018_demo.capaian_triwulan AS triwulan3', function($join){
+                        ->leftjoin('db_pare_2018.capaian_triwulan AS triwulan3', function($join){
                             $join   ->on('triwulan3.skp_tahunan_id','=','skp_tahunan.id');
                             $join   ->where('triwulan3.triwulan','=','3');
                         })
                          //CAPAIAN TRIWULAN IV
-                        ->leftjoin('db_pare_2018_demo.capaian_triwulan AS triwulan4', function($join){
+                        ->leftjoin('db_pare_2018.capaian_triwulan AS triwulan4', function($join){
                             $join   ->on('triwulan4.skp_tahunan_id','=','skp_tahunan.id');
                             $join   ->where('triwulan4.triwulan','=','4');
                         })

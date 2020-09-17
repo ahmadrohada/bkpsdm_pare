@@ -22,7 +22,7 @@ class UpdateAPIController extends Controller {
     {
         //ini ada    
         $dt = Sasaran::
-                        leftjoin('db_pare_2018_demo.renja_indikator_tujuan AS ind_tujuan', function($join){
+                        leftjoin('db_pare_2018.renja_indikator_tujuan AS ind_tujuan', function($join){
                             $join   ->on('ind_tujuan.id','=','renja_sasaran.indikator_tujuan_id');
                         })
                         ->select([   
@@ -52,7 +52,7 @@ class UpdateAPIController extends Controller {
     {
             
         $dt = Program::
-                        leftjoin('db_pare_2018_demo.renja_indikator_sasaran AS ind_sasaran', function($join){
+                        leftjoin('db_pare_2018.renja_indikator_sasaran AS ind_sasaran', function($join){
                             $join   ->on('ind_sasaran.id','=','renja_program.indikator_sasaran_id');
                         })
                         ->select([   
@@ -91,7 +91,7 @@ class UpdateAPIController extends Controller {
     {
             
         $dt = Kegiatan::
-                        leftjoin('db_pare_2018_demo.renja_indikator_program AS ind_program', function($join){
+                        leftjoin('db_pare_2018.renja_indikator_program AS ind_program', function($join){
                             $join   ->on('ind_program.id','=','renja_kegiatan.indikator_program_id');
                         })
                         ->select([   

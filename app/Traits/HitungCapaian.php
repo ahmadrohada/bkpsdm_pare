@@ -39,10 +39,10 @@ trait HitungCapaian
 
         //hitung capaian kinerja bulanan
         $xdata = RencanaAksi::
-            leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan', function($join){
+            leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
                 $join   ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan.id');
             })
-            ->leftjoin('db_pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi', function($join) use($capaian_id){
+            ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join) use($capaian_id){
                 $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                 $join   ->where('realisasi.capaian_id','=',$capaian_id);
             })
@@ -75,7 +75,7 @@ trait HitungCapaian
     {
         //hitung capaian kinerja bulanan
         $xdata = KegiatanSKPBulananJFT::
-                            leftjoin('db_pare_2018_demo.realisasi_kegiatan_bulanan_jft AS realisasi', function($join) use($capaian_id){
+                            leftjoin('db_pare_2018.realisasi_kegiatan_bulanan_jft AS realisasi', function($join) use($capaian_id){
                                 $join   ->on('realisasi.kegiatan_bulanan_id','=','skp_bulanan_kegiatan_jft.id');
                                 $join   ->where('realisasi.capaian_id','=',$capaian_id);
                             })
@@ -103,7 +103,7 @@ trait HitungCapaian
     protected function capaian_kinerja_jfu($capaian_id,$skp_bulanan_id,$bulan,$renja_id)
     {
         $xdata = KegiatanSKPBulanan::
-                            leftjoin('db_pare_2018_demo.realisasi_kegiatan_bulanan AS realisasi', function($join) use($capaian_id){
+                            leftjoin('db_pare_2018.realisasi_kegiatan_bulanan AS realisasi', function($join) use($capaian_id){
                                 $join   ->on('realisasi.kegiatan_bulanan_id','=','skp_bulanan_kegiatan.id');
                                 $join   ->where('realisasi.capaian_id','=',$capaian_id);
                             })
@@ -148,10 +148,10 @@ trait HitungCapaian
 
         //hitung capaian kinerja bulanan
         $xdata = RencanaAksi::
-            leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan', function($join){
+            leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
                 $join   ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan.id');
             })
-            ->leftjoin('db_pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi', function($join) use($capaian_id){
+            ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join) use($capaian_id){
                 $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                 $join   ->where('realisasi.capaian_id','=',$capaian_id);
             })
@@ -205,10 +205,10 @@ trait HitungCapaian
             
         //hitung capaian kinerja bulanan
         $xdata = RencanaAksi::
-                                leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan', function($join){
+                                leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
                                     $join   ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan.id');
                                 })
-                                ->leftjoin('db_pare_2018_demo.realisasi_rencana_aksi_kabid AS realisasi', function($join) use($capaian_id){
+                                ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kabid AS realisasi', function($join) use($capaian_id){
                                     $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                                     $join   ->where('realisasi.capaian_id','=',$capaian_id);
                                 })
@@ -258,10 +258,10 @@ trait HitungCapaian
 
         //hitung capaian kinerja bulanan
         /* $xdata = RencanaAksi::
-                            leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan', function($join){
+                            leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
                                 $join   ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan.id');
                             })
-                            ->leftjoin('db_pare_2018_demo.realisasi_rencana_aksi_kabid AS realisasi', function($join) use($capaian_id){
+                            ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kabid AS realisasi', function($join) use($capaian_id){
                                 $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                                 //$join   ->where('realisasi.capaian_id','=',$capaian_id); //untuk eselon2 mah capain nya pake yang pelaksana aja
                             })
@@ -271,7 +271,7 @@ trait HitungCapaian
                             ->WHERE('skp_tahunan_rencana_aksi.renja_id', $renja_id)
                             ->get(); */
         $xdata = RealisasiRencanaAksiKaban::
-                            leftjoin('db_pare_2018_demo.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                            leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                                 $join   ->on('rencana_aksi.id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
                             })
                             ->SELECT(   
@@ -313,7 +313,7 @@ trait HitungCapaian
 
         $capaian_bulanan = CapaianBulanan::
 
-                leftjoin('db_pare_2018_demo.penilaian_kode_etik AS pke', function($join){
+                leftjoin('db_pare_2018.penilaian_kode_etik AS pke', function($join){
                     $join   ->on('pke.capaian_bulanan_id','=','capaian_bulanan.id');
                 })
                 ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
@@ -362,7 +362,7 @@ trait HitungCapaian
 
 
         $cdata = UraianTugasTambahan::
-                                    leftjoin('db_pare_2018_demo.realisasi_uraian_tugas_tambahan AS realisasi', function($join) use($capaian_id){
+                                    leftjoin('db_pare_2018.realisasi_uraian_tugas_tambahan AS realisasi', function($join) use($capaian_id){
                                         $join   ->on('realisasi.uraian_tugas_tambahan_id','=','uraian_tugas_tambahan.id');
                                         $join   ->where('realisasi.capaian_id','=',$capaian_id);
                                     })
@@ -432,7 +432,7 @@ trait HitungCapaian
         //Jumlah kegiatan 
         $jm_kegiatan = RencanaAksi::WHERE('jabatan_id',$jabatan_id)
                             ->WHERE('renja_id',$renja_id)
-                            ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                             })
                             ->distinct('kegiatan_tahunan.id')->count('kegiatan_tahunan.id');
@@ -525,7 +525,7 @@ trait HitungCapaian
         $jm_kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
-                            ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 
                             })
@@ -603,7 +603,7 @@ trait HitungCapaian
         //Tugas Tambahan pada skp tahunan
         $jm_tugas_tambahan =  TugasTambahan::WHERE('skp_tahunan_id',$skp_tahunan_id)->count();
         $cdata = TugasTambahan::
-                                    leftjoin('db_pare_2018_demo.realisasi_tugas_tambahan AS realisasi', function($join) use($capaian_id){
+                                    leftjoin('db_pare_2018.realisasi_tugas_tambahan AS realisasi', function($join) use($capaian_id){
                                         $join   ->on('realisasi.tugas_tambahan_id','=','skp_tahunan_tugas_tambahan.id');
                                         $join   ->where('realisasi.capaian_id','=',$capaian_id);
                                     })

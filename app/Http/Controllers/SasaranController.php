@@ -103,9 +103,9 @@ class SasaranController extends Controller {
         \DB::statement(\DB::raw('set @rownum='.$request->get('start')));
         //\DB::statement(\DB::raw('set @rownum=0'));
       
-        $dt = \DB::table('db_pare_2018_demo.sasaran AS sasaran')
+        $dt = \DB::table('db_pare_2018.sasaran AS sasaran')
 				->where('sasaran.skpd_id', '=',  $this->id_skpd_admin() )
-				->leftjoin('db_pare_2018_demo.periode_tahunan AS periode', 'periode.id','=','sasaran.periode_tahunan_id')
+				->leftjoin('db_pare_2018.periode_tahunan AS periode', 'periode.id','=','sasaran.periode_tahunan_id')
 				->select([   
                            
                             \DB::raw('@rownum  := @rownum  + 1 AS rownum'),

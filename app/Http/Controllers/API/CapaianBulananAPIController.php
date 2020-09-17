@@ -138,7 +138,7 @@ class CapaianBulananAPIController extends Controller {
     public function PersonalCapaianBulananList(Request $request) 
     {
         $skp = SKPBulanan::
-                        leftjoin('db_pare_2018_demo.capaian_bulanan', function($join){
+                        leftjoin('db_pare_2018.capaian_bulanan', function($join){
                             $join   ->on('capaian_bulanan.skp_bulanan_id','=','skp_bulanan.id');
                         })
                          
@@ -483,11 +483,11 @@ class CapaianBulananAPIController extends Controller {
                                         $join   ->ON('jabatan.id','=','skp_tahunan.u_jabatan_id');
                                         $join   ->WHERE('jabatan.id_jabatan','=',$jabatan_id);
                                     })
-                                    ->join('db_pare_2018_demo.skp_bulanan AS skp_bulanan', function($join) use($bulan) {
+                                    ->join('db_pare_2018.skp_bulanan AS skp_bulanan', function($join) use($bulan) {
                                         $join   ->ON('skp_tahunan.id','=','skp_bulanan.skp_tahunan_id');
                                         $join   ->WHERE('skp_bulanan.bulan','=',$bulan);
                                     }) 
-                                    ->join('db_pare_2018_demo.capaian_bulanan AS capaian_bulanan', function($join) use($bulan){
+                                    ->join('db_pare_2018.capaian_bulanan AS capaian_bulanan', function($join) use($bulan){
                                         $join   ->ON('capaian_bulanan.skp_bulanan_id','=','skp_bulanan.id');
                                         $join   ->WHERE('skp_bulanan.bulan','=',$bulan);
                                     }) 
@@ -650,7 +650,7 @@ class CapaianBulananAPIController extends Controller {
 
         $capaian_bulanan = CapaianBulanan::
 
-                            leftjoin('db_pare_2018_demo.penilaian_kode_etik AS pke', function($join){
+                            leftjoin('db_pare_2018.penilaian_kode_etik AS pke', function($join){
                                 $join   ->on('pke.capaian_bulanan_id','=','capaian_bulanan.id');
                             })
                             
@@ -869,7 +869,7 @@ class CapaianBulananAPIController extends Controller {
 
         
                     $kegiatan_list = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_list)
-                                                ->leftjoin('db_pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
+                                                ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
                                                     $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                                                 })
                                                 ->SELECT('skp_tahunan_rencana_aksi.id','realisasi.realisasi','skp_tahunan_rencana_aksi.satuan')
@@ -913,11 +913,11 @@ class CapaianBulananAPIController extends Controller {
                                                 $join   ->ON('jabatan.id','=','skp_tahunan.u_jabatan_id');
                                                 $join   ->WHERE('jabatan.id_jabatan','=',$jabatan_id);
                                             })
-                                            ->join('db_pare_2018_demo.skp_bulanan AS skp_bulanan', function($join) use($bulan){
+                                            ->join('db_pare_2018.skp_bulanan AS skp_bulanan', function($join) use($bulan){
                                                 $join   ->ON('skp_tahunan.id','=','skp_bulanan.skp_tahunan_id');
                                                 $join   ->WHERE('skp_bulanan.bulan','=',$bulan);
                                             }) 
-                                            ->join('db_pare_2018_demo.capaian_bulanan AS capaian_bulanan', function($join) use($bulan){
+                                            ->join('db_pare_2018.capaian_bulanan AS capaian_bulanan', function($join) use($bulan){
                                                 $join   ->ON('capaian_bulanan.skp_bulanan_id','=','skp_bulanan.id');
                                                 $join   ->WHERE('skp_bulanan.bulan','=',$bulan);
                                             }) 

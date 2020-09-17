@@ -30,7 +30,7 @@ class RealisasiTugasTambahanAPIController extends Controller {
             
         $dt = TugasTambahan::
                                
-                                leftjoin('db_pare_2018_demo.realisasi_tugas_tambahan AS realisasi', function($join){
+                                leftjoin('db_pare_2018.realisasi_tugas_tambahan AS realisasi', function($join){
                                     $join   ->on('realisasi.tugas_tambahan_id','=','skp_tahunan_tugas_tambahan.id');
                                 })
                                 ->select([   
@@ -144,7 +144,7 @@ class RealisasiTugasTambahanAPIController extends Controller {
        
         
         $x = RealisasiTugasTambahan::
-                            leftjoin('db_pare_2018_demo.skp_tahunan_tugas_tambahan AS tugas_tambahan', function($join){
+                            leftjoin('db_pare_2018.skp_tahunan_tugas_tambahan AS tugas_tambahan', function($join){
                                 $join   ->on('tugas_tambahan.id','=','realisasi_tugas_tambahan.tugas_tambahan_id');
                             })
                             ->SELECT(   'realisasi_tugas_tambahan.id AS realisasi_tugas_tambahan_id',
