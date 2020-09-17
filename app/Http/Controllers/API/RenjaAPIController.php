@@ -15,6 +15,7 @@ use App\Models\Skpd;
 use App\Models\Renja;
 use App\Models\Periode;
 use App\Models\Pegawai;
+use App\Models\Jabatan;
 
 
 use App\Models\SasaranPerjanjianKinerja;
@@ -55,10 +56,20 @@ class RenjaAPIController extends Controller {
             //ADMIN
             $admin = Pegawai::WHERE('id',$request->admin_id)->first();
 
+
+
+           /*  if ( $kaban->PejabatAktif != null ){
+                $pegawai =  $kaban->PejabatAktif->pegawai;
+                return Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+            }else{
+                return "Kepala SKPD tidak ditemukan";
+            } */
+
+
             //KABAN
-            $kaban = SKPD::WHERE('parent_id', '=',$request->skpd_id )->first();
-            if ( $kaban->pejabat != null ){
-                $pegawai            = $kaban->pejabat->pegawai;
+            $kaban = Jabatan::WHERE('parent_id', '=',$request->skpd_id )->first();
+            if ( $kaban->PejabatAktif != null ){
+                $pegawai            = $kaban->PejabatAktif->pegawai;
                 $kaban_jabatan_id   = $pegawai->JabatanAktif->id;
                 $kaban_nip          = $pegawai->nip;
                 $kaban_nama         = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
@@ -405,17 +416,17 @@ class RenjaAPIController extends Controller {
         })->addColumn('kepala_skpd', function ($x) use($skpd_id) {
             if ( $x->renja_id == null ){
                 //Tampilkan nama kaban yang aktif
-                $kaban = SKPD::WHERE('parent_id', $skpd_id)->first();
-
-                if ( $kaban->pejabat != null ){
-                    $pegawai =  $kaban->pejabat->pegawai;
+                $kaban = Jabatan::WHERE('parent_id', $skpd_id)->first();
+                //return $kaban->PejabatAktif->pegawai;
+                if ( $kaban->PejabatAktif != null ){
+                    $pegawai =  $kaban->PejabatAktif->pegawai;
                     return Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
                 }else{
                     return "Kepala SKPD tidak ditemukan";
                 }
-                
-            }else{
-                return $x->kaban_nama;
+                 
+           }else{
+               return $x->kaban_nama;
             }
             
         

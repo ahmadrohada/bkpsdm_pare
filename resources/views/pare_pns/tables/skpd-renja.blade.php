@@ -25,7 +25,7 @@
 				
 			</table>
 		</div>
-	</div>
+	</div> 
 </div>
 
 @include('pare_pns.modals.create_renja_confirm')

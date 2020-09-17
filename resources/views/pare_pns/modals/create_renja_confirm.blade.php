@@ -7,7 +7,7 @@
 <!-- ============================================================================================================= -->
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs" id="myTab">
-					<li class="active"><a href="#tab_a" data-toggle="tab"><i class="fa fa-tag"></i> Detail Rencana Kerja </a></li>
+					<li class=""><a href="#tab_a" data-toggle="tab"><i class="fa fa-tag"></i> Detail Pohon Kinerja </a></li>
 					<li class=""><a href="#tab_b" data-toggle="tab" ><i class="fa fa-user"></i>  Detail Kepala SKPD</a></li>
 				</ul>
 
@@ -124,7 +124,7 @@
 	
 	
 	$('.modal-create_renja_confirm').on('shown.bs.modal', function(){
-		
+		$('#myTab a[href="#tab_a"]').tab('show');
 	});
 
 	$('.modal-create_renja_confirm').on('hidden.bs.modal', function(){
