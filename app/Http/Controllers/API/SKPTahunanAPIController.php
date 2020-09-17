@@ -436,13 +436,13 @@ class SKPTahunanAPIController extends Controller {
     public function SKPDSKPTahunanList(Request $request)
     {
             
-        $dt = \DB::table('db_pare_2018_demo.renja AS renja')
+        $dt = \DB::table('pare_2018_demo.renja AS renja')
                    
-                    ->rightjoin('db_pare_2018_demo.skp_tahunan AS skp_tahunan', function($join){
+                    ->rightjoin('pare_2018_demo.skp_tahunan AS skp_tahunan', function($join){
                         $join   ->on('renja.id','=','skp_tahunan.renja_id');
                     }) 
                     //PERIODE
-                    ->leftjoin('db_pare_2018_demo.periode AS periode', function($join){
+                    ->leftjoin('pare_2018_demo.periode AS periode', function($join){
                         $join   ->on('renja.periode_id','=','periode.id');
                     }) 
                     //PEJABAT YANG DINILAI
@@ -511,11 +511,11 @@ class SKPTahunanAPIController extends Controller {
                        
                     }) 
                     //RENJA
-                    ->leftjoin('db_pare_2018_demo.renja AS renja', function($join){
+                    ->leftjoin('pare_2018_demo.renja AS renja', function($join){
                         $join   ->on('skp_tahunan.renja_id','=','renja.id');
                     }) 
                     //PERIODE
-                    ->leftjoin('db_pare_2018_demo.periode AS periode', function($join){
+                    ->leftjoin('pare_2018_demo.periode AS periode', function($join){
                         $join   ->on('renja.periode_id','=','periode.id');
                     }) 
                     //ESELON PEJABAT YANG DINILAI
@@ -572,12 +572,12 @@ class SKPTahunanAPIController extends Controller {
     public function AdminSKPTahunanList(Request $request)
     {
             
-        $dt = \DB::table('db_pare_2018_demo.renja AS renja')
-                    ->rightjoin('db_pare_2018_demo.skp_tahunan AS skp_tahunan', function($join){
+        $dt = \DB::table('pare_2018_demo.renja AS renja')
+                    ->rightjoin('pare_2018_demo.skp_tahunan AS skp_tahunan', function($join){
                         $join   ->on('renja.id','=','skp_tahunan.renja_id');
                     }) 
                     //PERIODE
-                    ->leftjoin('db_pare_2018_demo.periode AS periode', function($join){
+                    ->leftjoin('pare_2018_demo.periode AS periode', function($join){
                         $join   ->on('renja.periode_id','=','periode.id');
                     }) 
                     //PEJABAT YANG DINILAI
@@ -645,7 +645,7 @@ class SKPTahunanAPIController extends Controller {
                             ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
                                 $join   ->on('pegawai.id','=','bawahan.id_pegawai');
                             })
-                            ->leftjoin('db_pare_2018_demo.skp_tahunan AS skp_tahunan', function($join) use($renja_id){
+                            ->leftjoin('pare_2018_demo.skp_tahunan AS skp_tahunan', function($join) use($renja_id){
                                 $join   ->on('skp_tahunan.u_jabatan_id','=','bawahan.id');
                                 $join   ->where('skp_tahunan.renja_id','=',$renja_id);
                                 //$join   ->where('skp_tahunan.status_approve','=','1');
@@ -748,10 +748,10 @@ class SKPTahunanAPIController extends Controller {
 
         $SKPTahunan = SKPTahunan::WHERE('pegawai_id',$id_pegawai)
                         //PERIODE
-                        ->leftjoin('db_pare_2018_demo.renja AS renja', function($join){
+                        ->leftjoin('pare_2018_demo.renja AS renja', function($join){
                             $join   ->on('renja.id','=','skp_tahunan.renja_id');
                         }) 
-                        ->leftjoin('db_pare_2018_demo.periode AS periode', function($join){
+                        ->leftjoin('pare_2018_demo.periode AS periode', function($join){
                             $join   ->on('renja.periode_id','=','periode.id');
                         }) 
                         //SKPD

@@ -44,7 +44,7 @@ class CapaianTahunanAPIController extends Controller {
     public function PersonalCapaianTahunanList(Request $request)
     {
         $skp = SKPTahunan::
-                        leftjoin('db_pare_2018_demo.capaian_tahunan', function($join){
+                        leftjoin('pare_2018_demo.capaian_tahunan', function($join){
                             $join   ->on('capaian_tahunan.skp_tahunan_id','=','skp_tahunan.id');
                         })
                         ->WHERE('skp_tahunan.pegawai_id',$request->pegawai_id)
@@ -294,14 +294,14 @@ class CapaianTahunanAPIController extends Controller {
 
         /*     $jm_kegiatan = RencanaAksi::WHERE('jabatan_id',$jabatan_id)
                             ->WHERE('renja_id',$renja_id)
-                            ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                             })
                             ->groupBy('kegiatan_tahunan.id')
                             ->count();  */
             $jm_kegiatan = RencanaAksi::WHERE('jabatan_id',$jabatan_id)
                             ->WHERE('renja_id',$renja_id)
-                            ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                             })
                             ->distinct('kegiatan_tahunan.id')->count('kegiatan_tahunan.id');
@@ -321,7 +321,7 @@ class CapaianTahunanAPIController extends Controller {
             $jm_kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
-                            ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 
                             })
@@ -711,10 +711,10 @@ class CapaianTahunanAPIController extends Controller {
         $capaian_id = $request->capaian_tahunan_id;
 
         $capaian_tahunan = CapaianTahunan::
-                            leftjoin('db_pare_2018_demo.realisasi_kegiatan_tahunan AS rkt', function($join){
+                            leftjoin('pare_2018_demo.realisasi_kegiatan_tahunan AS rkt', function($join){
                                 $join   ->on('rkt.capaian_id','=','capaian_tahunan.id');
                             })
-                            ->leftjoin('db_pare_2018_demo.penilaian_perilaku_kerja AS pke', function($join){
+                            ->leftjoin('pare_2018_demo.penilaian_perilaku_kerja AS pke', function($join){
                                 $join   ->on('pke.capaian_tahunan_id','=','capaian_tahunan.id');
                             })
                             
@@ -998,7 +998,7 @@ class CapaianTahunanAPIController extends Controller {
                     $pelaksana_list = Jabatan::SELECT('id')->WHEREIN('parent_id', $bawahan_ls)->get()->toArray(); 
         
                     $kegiatan_list = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_list)
-                                                ->leftjoin('db_pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
+                                                ->leftjoin('pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
                                                     $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                                                 })
                                                 ->SELECT('skp_tahunan_rencana_aksi.id','realisasi.realisasi','skp_tahunan_rencana_aksi.satuan')
@@ -1038,7 +1038,7 @@ class CapaianTahunanAPIController extends Controller {
                     $pelaksana_list = Jabatan::SELECT('id')->WHEREIN('parent_id', $kasubid_ls)->get()->toArray(); 
         
                     $kegiatan_list = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_list)
-                                                ->leftjoin('db_pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
+                                                ->leftjoin('pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
                                                     $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                                                 })
                                                 ->SELECT('skp_tahunan_rencana_aksi.id','realisasi.realisasi','skp_tahunan_rencana_aksi.satuan')

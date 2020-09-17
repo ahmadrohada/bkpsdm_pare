@@ -27,7 +27,7 @@ class CapaianPKTahunanAPIController extends Controller {
         $renja_id     = $request->renja_id;
 
         $cp_status = Renja::WHERE('renja.id',$renja_id)
-                            ->rightjoin('db_pare_2018_demo.capaian_pk_tahunan AS capaian_pk', function($join){
+                            ->rightjoin('pare_2018_demo.capaian_pk_tahunan AS capaian_pk', function($join){
                                 $join   ->on('capaian_pk.renja_id','=','renja.id');
                             })
                             ->count();
@@ -40,10 +40,10 @@ class CapaianPKTahunanAPIController extends Controller {
 
         $skpd_id = $request->skpd_id;
         $skp = Renja::
-                        LEFTJOIN('db_pare_2018_demo.capaian_pk_tahunan AS capaian_tahunan', function($join){
+                        LEFTJOIN('pare_2018_demo.capaian_pk_tahunan AS capaian_tahunan', function($join){
                             $join   ->on('capaian_tahunan.renja_id','=','renja.id');
                         })
-                        ->LEFTJOIN('db_pare_2018_demo.periode AS periode', function($join){
+                        ->LEFTJOIN('pare_2018_demo.periode AS periode', function($join){
                             $join   ->on('renja.periode_id','=','periode.id');
                         }) 
                         ->SELECT(

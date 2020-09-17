@@ -29,10 +29,10 @@ class RealisasiUraianTugasTambahanAPIController extends Controller {
     {
             
         $dt = UraianTugasTambahan::
-                                leftjoin('db_pare_2018_demo.skp_tahunan_tugas_tambahan AS tugas_tambahan', function($join){
+                                leftjoin('pare_2018_demo.skp_tahunan_tugas_tambahan AS tugas_tambahan', function($join){
                                     $join   ->on('tugas_tambahan.id','=','uraian_tugas_tambahan.tugas_tambahan_id');
                                 })
-                                ->leftjoin('db_pare_2018_demo.realisasi_uraian_tugas_tambahan AS realisasi', function($join){
+                                ->leftjoin('pare_2018_demo.realisasi_uraian_tugas_tambahan AS realisasi', function($join){
                                     $join   ->on('realisasi.uraian_tugas_tambahan_id','=','uraian_tugas_tambahan.id');
                                 })
                                 ->select([   
@@ -146,7 +146,7 @@ class RealisasiUraianTugasTambahanAPIController extends Controller {
        
         
         $x = RealisasiUraianTugasTambahan::
-                            leftjoin('db_pare_2018_demo.uraian_tugas_tambahan AS uraian_tugas_tambahan', function($join){
+                            leftjoin('pare_2018_demo.uraian_tugas_tambahan AS uraian_tugas_tambahan', function($join){
                                 $join   ->on('uraian_tugas_tambahan.id','=','realisasi_uraian_tugas_tambahan.uraian_tugas_tambahan_id');
                             })
                             ->SELECT(   'realisasi_uraian_tugas_tambahan.id AS realisasi_uraian_tugas_tambahan_id',

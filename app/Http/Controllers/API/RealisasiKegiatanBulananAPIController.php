@@ -46,7 +46,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
        
         
         $x = RealisasiKegiatanBulanan::
-                            leftjoin('db_pare_2018_demo.skp_bulanan_kegiatan AS kegiatan_skp_bulanan', function($join){
+                            leftjoin('pare_2018_demo.skp_bulanan_kegiatan AS kegiatan_skp_bulanan', function($join){
                                 $join   ->on('kegiatan_skp_bulanan.id','=','realisasi_kegiatan_bulanan.kegiatan_bulanan_id');
                             })
                             ->SELECT(   'realisasi_kegiatan_bulanan.id AS realisasi_kegiatan_bulanan_id',
@@ -106,10 +106,10 @@ class RealisasiKegiatanBulananAPIController extends Controller {
        
         
         $x = RealisasiKegiatanBulananJFT::
-                            leftjoin('db_pare_2018_demo.skp_bulanan_kegiatan_jft AS kegiatan_skp_bulanan', function($join){
+                            leftjoin('pare_2018_demo.skp_bulanan_kegiatan_jft AS kegiatan_skp_bulanan', function($join){
                                 $join   ->on('kegiatan_skp_bulanan.id','=','realisasi_kegiatan_bulanan_jft.kegiatan_bulanan_id');
                             })
-                            ->join('db_pare_2018_demo.skp_tahunan_kegiatan_jft AS kegiatan_tahunan', function($join){
+                            ->join('pare_2018_demo.skp_tahunan_kegiatan_jft AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.id','=','kegiatan_skp_bulanan.kegiatan_tahunan_id');
                                 
                             })
@@ -181,11 +181,11 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                         $join   ->ON('jabatan.id','=','skp_tahunan.u_jabatan_id');
                                         $join   ->WHEREIN('jabatan.id_jabatan',$bawahan_id_list);
                                     })
-                                    ->join('db_pare_2018_demo.skp_bulanan AS skp_bulanan', function($join) use($bulan) {
+                                    ->join('pare_2018_demo.skp_bulanan AS skp_bulanan', function($join) use($bulan) {
                                         $join   ->ON('skp_tahunan.id','=','skp_bulanan.skp_tahunan_id');
                                         $join   ->WHERE('skp_bulanan.bulan','=',$bulan);
                                     }) 
-                                    ->join('db_pare_2018_demo.capaian_bulanan AS capaian_bulanan', function($join) use($bulan){
+                                    ->join('pare_2018_demo.capaian_bulanan AS capaian_bulanan', function($join) use($bulan){
                                         $join   ->ON('capaian_bulanan.skp_bulanan_id','=','skp_bulanan.id');
                                         $join   ->WHERE('skp_bulanan.bulan','=',$bulan);
                                     }) 
@@ -193,14 +193,14 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                     ->get()->toArray();
 
         $dt1 = RealisasiRencanaAksiKaban::
-                                        join('db_pare_2018_demo.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                                        join('pare_2018_demo.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                                             $join   ->ON('rencana_aksi.id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
                                         }) 
-                                        ->join('db_pare_2018_demo.realisasi_rencana_aksi_kabid AS realisasi_eselon3', function($join) use($capaian_id_bawahan){
+                                        ->join('pare_2018_demo.realisasi_rencana_aksi_kabid AS realisasi_eselon3', function($join) use($capaian_id_bawahan){
                                             $join   ->ON('realisasi_eselon3.rencana_aksi_id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
                                             $join   ->WHEREIN('realisasi_eselon3.capaian_id',$capaian_id_bawahan);
                                         }) 
-                                        ->join('db_pare_2018_demo.capaian_bulanan AS capaian_bulanan_bawahan', function($join){
+                                        ->join('pare_2018_demo.capaian_bulanan AS capaian_bulanan_bawahan', function($join){
                                             $join   ->ON('capaian_bulanan_bawahan.id','=','realisasi_eselon3.capaian_id');
                                         })
                                         ->SELECT(   'realisasi_rencana_aksi_eselon2.id AS realisasi_rencana_aksi_id',
@@ -219,14 +219,14 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                         //->get(); 
 
         $dt2 = RealisasiRencanaAksiKaban::
-                                        join('db_pare_2018_demo.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                                        join('pare_2018_demo.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                                             $join   ->ON('rencana_aksi.id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
                                         }) 
-                                        ->join('db_pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi_eselon3', function($join) use($capaian_id_bawahan){
+                                        ->join('pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi_eselon3', function($join) use($capaian_id_bawahan){
                                             $join   ->ON('realisasi_eselon3.rencana_aksi_id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
                                             $join   ->WHEREIN('realisasi_eselon3.capaian_id',$capaian_id_bawahan);
                                         }) 
-                                        ->join('db_pare_2018_demo.capaian_bulanan AS capaian_bulanan_bawahan', function($join){
+                                        ->join('pare_2018_demo.capaian_bulanan AS capaian_bulanan_bawahan', function($join){
                                             $join   ->ON('capaian_bulanan_bawahan.id','=','realisasi_eselon3.capaian_id');
                                         })
                                         ->SELECT(   'realisasi_rencana_aksi_eselon2.id AS realisasi_rencana_aksi_id',
@@ -307,24 +307,24 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                     WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
                     ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
                     ->WHERE('skp_tahunan_rencana_aksi.renja_id',$skp_bln->SKPTahunan->renja_id)
-                    ->leftjoin('db_pare_2018_demo.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
+                    ->leftjoin('pare_2018_demo.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
                         $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                         //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
                     })
-                    ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                    ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                         $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
                         //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
                     })
-                    ->leftjoin('db_pare_2018_demo.realisasi_kegiatan_bulanan', function($join){
+                    ->leftjoin('pare_2018_demo.realisasi_kegiatan_bulanan', function($join){
                         $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
                     })
                     //realisasi bawahan
-                    ->leftjoin('db_pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi_rencana_aksi', function($join) use($capaian_id){
+                    ->leftjoin('pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi_rencana_aksi', function($join) use($capaian_id){
                         $join   ->on('realisasi_rencana_aksi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                         $join   ->where('realisasi_rencana_aksi.capaian_id','!=', $capaian_id);
                     })
                     //self rencana aksi
-                    ->leftjoin('db_pare_2018_demo.realisasi_rencana_aksi_kabid AS realisasi_kabid', function($join) use($capaian_id){
+                    ->leftjoin('pare_2018_demo.realisasi_rencana_aksi_kabid AS realisasi_kabid', function($join) use($capaian_id){
                         $join   ->on('realisasi_kabid.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                         $join   ->where('realisasi_kabid.capaian_id','=', $capaian_id);
                     })
@@ -433,18 +433,18 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                     //->WHEREIN('skp_tahunan_rencana_aksi.kegiatan_tahunan_id',$keg_tahunan )
                     ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan','=',$skp_bln->bulan)
                     ->WHERE('skp_tahunan_rencana_aksi.renja_id','=',$renja_id)
-                    ->leftjoin('db_pare_2018_demo.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join) use($skp_tahunan_id){
+                    ->leftjoin('pare_2018_demo.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join) use($skp_tahunan_id){
                         $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                         //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
                     })
-                    ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                    ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                         $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
                         //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
                     })
-                    ->leftjoin('db_pare_2018_demo.realisasi_kegiatan_bulanan AS realisasi_bawahan ', function($join){
+                    ->leftjoin('pare_2018_demo.realisasi_kegiatan_bulanan AS realisasi_bawahan ', function($join){
                         $join   ->on('realisasi_bawahan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
                     })
-                    ->leftjoin('db_pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi_rencana_aksi', function($join) use($capaian_id){
+                    ->leftjoin('pare_2018_demo.realisasi_rencana_aksi_kasubid AS realisasi_rencana_aksi', function($join) use($capaian_id){
                         $join   ->on('realisasi_rencana_aksi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                         $join   ->where('realisasi_rencana_aksi.capaian_id','=', $capaian_id);
                     }) 
@@ -518,7 +518,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
 
         $dt = KegiatanSKPBulanan::
                     WHERE('skp_bulanan_kegiatan.skp_bulanan_id','=', $request->skp_bulanan_id )
-                    ->leftjoin('db_pare_2018_demo.realisasi_kegiatan_bulanan', function($join){
+                    ->leftjoin('pare_2018_demo.realisasi_kegiatan_bulanan', function($join){
                         $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','skp_bulanan_kegiatan.id');
                     })
                     ->SELECT(   'skp_bulanan_kegiatan.id AS kegiatan_bulanan_id',
@@ -568,7 +568,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
 
         $dt = KegiatanSKPBulananJFT::
                     WHERE('skp_bulanan_kegiatan_jft.skp_bulanan_id','=', $request->skp_bulanan_id )
-                    ->leftjoin('db_pare_2018_demo.realisasi_kegiatan_bulanan_jft', function($join){
+                    ->leftjoin('pare_2018_demo.realisasi_kegiatan_bulanan_jft', function($join){
                         $join   ->on('realisasi_kegiatan_bulanan_jft.kegiatan_bulanan_id','=','skp_bulanan_kegiatan_jft.id');
                     })
                     ->SELECT(   'skp_bulanan_kegiatan_jft.id AS kegiatan_bulanan_id',

@@ -48,11 +48,11 @@ class SasaranAPIController extends Controller {
     {
             
         $sasaran = Tujuan::
-                            /* leftjoin('db_pare_2018_demo.renja_indikator_tujuan AS ind_tujuan', function($join){
+                            /* leftjoin('pare_2018_demo.renja_indikator_tujuan AS ind_tujuan', function($join){
                                 $join   ->on('renja_tujuan.id','=','ind_tujuan.tujuan_id');
                                 
                             })  */
-                            join('db_pare_2018_demo.renja_sasaran AS sasaran', function($join){
+                            join('pare_2018_demo.renja_sasaran AS sasaran', function($join){
                                 $join   ->on('sasaran.tujuan_id','=','renja_tujuan.id');
                                 
                             }) 

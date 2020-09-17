@@ -28,23 +28,23 @@ class RealisasiProgramTahunanAPIController extends Controller {
         $renja_id       = $request->renja_id;
 
         $dt = Tujuan:: 
-                        leftjoin('db_pare_2018_demo.renja_sasaran AS sasaran', function($join){
+                        leftjoin('pare_2018_demo.renja_sasaran AS sasaran', function($join){
                             $join   ->on('sasaran.tujuan_id','=','renja_tujuan.id');
                         })
-                        ->leftjoin('db_pare_2018_demo.renja_program AS program', function($join){
+                        ->leftjoin('pare_2018_demo.renja_program AS program', function($join){
                             $join   ->on('program.sasaran_id','=','sasaran.id');
                         })
-                        ->leftjoin('db_pare_2018_demo.renja_indikator_program AS indikator_program', function($join){
+                        ->leftjoin('pare_2018_demo.renja_indikator_program AS indikator_program', function($join){
                             $join   ->on('indikator_program.program_id','=','program.id');
                         })
 
                         //LEFT JOIN TERHADAP REALISASI PROGRAM
-                        ->leftjoin('db_pare_2018_demo.realisasi_program_tahunan AS realisasi_program', function($join) use ( $capaian_id ){
+                        ->leftjoin('pare_2018_demo.realisasi_program_tahunan AS realisasi_program', function($join) use ( $capaian_id ){
                             $join   ->on('realisasi_program.program_id','=','program.id');
                             $join   ->WHERE('realisasi_program.capaian_id','=',  $capaian_id );
                         })
                         //LEFT JOIN TERHADAP REALISASI INDIKATOR PROGRAM
-                        ->leftjoin('db_pare_2018_demo.realisasi_indikator_program_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
+                        ->leftjoin('pare_2018_demo.realisasi_indikator_program_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
                             $join   ->on('realisasi_indikator.indikator_program_id','=','indikator_program.id');
                             $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
                             
@@ -104,16 +104,16 @@ class RealisasiProgramTahunanAPIController extends Controller {
         $indikator_program_id = $request->indikator_program_id;
 
         $x = IndikatorProgram::
-                            leftjoin('db_pare_2018_demo.renja_program AS renja_program', function($join) {
+                            leftjoin('pare_2018_demo.renja_program AS renja_program', function($join) {
                                 $join   ->on('renja_indikator_program.program_id','=','renja_program.id');
                             })
                            
                             //REALISASINYA SASARAN
-                            ->leftjoin('db_pare_2018_demo.realisasi_program_tahunan AS realisasi_program', function($join) use($capaian_id) {
+                            ->leftjoin('pare_2018_demo.realisasi_program_tahunan AS realisasi_program', function($join) use($capaian_id) {
                                 $join   ->on('realisasi_program.program_id','=','renja_program.id');
                                 $join   ->WHERE('realisasi_program.capaian_id','=', $capaian_id );
                             }) 
-                            ->leftjoin('db_pare_2018_demo.realisasi_indikator_program_tahunan AS realisasi_indikator', function($join) use($capaian_id) {
+                            ->leftjoin('pare_2018_demo.realisasi_indikator_program_tahunan AS realisasi_indikator', function($join) use($capaian_id) {
                                 $join   ->on('realisasi_indikator.indikator_program_id','=','renja_indikator_program.id');
                                 $join   ->WHERE('realisasi_indikator.capaian_id','=', $capaian_id );
                             })
@@ -359,7 +359,7 @@ class RealisasiProgramTahunanAPIController extends Controller {
             $capaian_id = $st_kt->capaian_id ;
             $data_uing = IndikatorProgram::WHERE('program_id',Input::get('program_id'))
                                             //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
-                                            ->join('db_pare_2018_demo.realisasi_indikator_program_tahunan AS realisasi_indikator', function($join) use($capaian_id) {
+                                            ->join('pare_2018_demo.realisasi_indikator_program_tahunan AS realisasi_indikator', function($join) use($capaian_id) {
                                                 $join   ->on('realisasi_indikator.indikator_program_id','=','renja_indikator_program.id');
                                                 $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
                                                 

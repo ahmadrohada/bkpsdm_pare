@@ -35,7 +35,7 @@ class KegiatanAPIController extends Controller {
         $skp_tahunan_id = $request->skp_tahunan_id;
         $kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
-                            ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
+                            ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                             })
@@ -642,7 +642,7 @@ class KegiatanAPIController extends Controller {
         $kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
-                            ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                             })
@@ -718,7 +718,7 @@ class KegiatanAPIController extends Controller {
                 $kegiatan = Kegiatan::SELECT('id','label')
                                 ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                                 ->WHEREIN('renja_kegiatan.jabatan_id',$child )
-                                ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                     $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                     //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                                 })
@@ -837,7 +837,7 @@ class KegiatanAPIController extends Controller {
                 $kegiatan = Kegiatan::SELECT('id','label')
                                 ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                                 ->WHEREIN('renja_kegiatan.jabatan_id',$child )
-                                ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                     $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                     //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                                 })
@@ -948,7 +948,7 @@ class KegiatanAPIController extends Controller {
         $kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
-                            ->join('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
+                            ->join('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                             })
@@ -1052,7 +1052,7 @@ class KegiatanAPIController extends Controller {
         $kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
-                            ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
+                            ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                             })
@@ -1158,7 +1158,7 @@ class KegiatanAPIController extends Controller {
                 $kegiatan = Kegiatan::SELECT('id','label')
                                     ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                                     ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
-                                    ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
+                                    ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
                                         $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                         $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                                     })
@@ -1240,7 +1240,7 @@ class KegiatanAPIController extends Controller {
                     //$data_rencana_aksi['children']      = true ;
                     //$data_rencana_aksi['state']         = $state;
                     $kb = KegiatanSKPBulanan::
-                            leftjoin('db_pare_2018_demo.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                            leftjoin('pare_2018_demo.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                                             $join   ->on('rencana_aksi.id','=','skp_bulanan_kegiatan.rencana_aksi_id');
                                         })
                                         ->leftjoin('demo_asn.m_skpd AS skpd', function($join){
@@ -1316,7 +1316,7 @@ class KegiatanAPIController extends Controller {
             case 'kegiatan':
                 $data = RencanaAksi::WHERE('jabatan_id',$request->jabatan_id)
                             ->WHERE('renja_id',$request->renja_id)
-                            ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
                             })
                            
@@ -1435,7 +1435,7 @@ class KegiatanAPIController extends Controller {
         $skp_tahunan_id = $request->skp_tahunan_id;
         $sasaran = Tujuan::
                            
-                            join('db_pare_2018_demo.renja_sasaran AS sasaran', function($join){
+                            join('pare_2018_demo.renja_sasaran AS sasaran', function($join){
                                 $join   ->on('sasaran.tujuan_id','=','renja_tujuan.id');
                                 
                             }) 
@@ -1672,7 +1672,7 @@ class KegiatanAPIController extends Controller {
     public function PohonKinerjaKegiatanKegiatanList(Request $request)
     {
         $dt = Kegiatan::where('renja_id', '=' ,$request->get('renja_id'))
-                        ->leftjoin('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                        ->leftjoin('pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                             $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                             
                         })

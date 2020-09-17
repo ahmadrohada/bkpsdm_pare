@@ -33,7 +33,7 @@ class CapaianPKTriwulanAPIController extends Controller {
 
         $cp_status = Renja::WHERE('renja.id',$renja_id)
                             //CAPAIAN TRIWULAN I
-                            ->rightjoin('db_pare_2018_demo.capaian_pk_triwulan AS triwulan', function($join)  use($triwulan){
+                            ->rightjoin('pare_2018_demo.capaian_pk_triwulan AS triwulan', function($join)  use($triwulan){
                                 $join   ->on('triwulan.renja_id','=','renja.id');
                                 $join   ->where('triwulan.triwulan','=',$triwulan);
                             })
@@ -46,26 +46,26 @@ class CapaianPKTriwulanAPIController extends Controller {
     {
         $skpd_id = $request->skpd_id;
         $dt = Renja::
-                    leftjoin('db_pare_2018_demo.periode AS periode', function($join){
+                    leftjoin('pare_2018_demo.periode AS periode', function($join){
                         $join   ->on('renja.periode_id','=','periode.id');
                     }) 
                     //CAPAIAN TRIWULAN I
-                    ->leftjoin('db_pare_2018_demo.capaian_pk_triwulan AS triwulan1', function($join){
+                    ->leftjoin('pare_2018_demo.capaian_pk_triwulan AS triwulan1', function($join){
                         $join   ->on('triwulan1.renja_id','=','renja.id');
                         $join   ->where('triwulan1.triwulan','=','1');
                     })
                      //CAPAIAN TRIWULAN II
-                    ->leftjoin('db_pare_2018_demo.capaian_pk_triwulan AS triwulan2', function($join){
+                    ->leftjoin('pare_2018_demo.capaian_pk_triwulan AS triwulan2', function($join){
                         $join   ->on('triwulan2.renja_id','=','renja.id');
                         $join   ->where('triwulan2.triwulan','=','2');
                     })
                     //CAPAIAN TRIWULAN III
-                    ->leftjoin('db_pare_2018_demo.capaian_pk_triwulan AS triwulan3', function($join){
+                    ->leftjoin('pare_2018_demo.capaian_pk_triwulan AS triwulan3', function($join){
                         $join   ->on('triwulan3.renja_id','=','renja.id');
                         $join   ->where('triwulan3.triwulan','=','3');
                     })
                      //CAPAIAN TRIWULAN IV
-                    ->leftjoin('db_pare_2018_demo.capaian_pk_triwulan AS triwulan4', function($join){
+                    ->leftjoin('pare_2018_demo.capaian_pk_triwulan AS triwulan4', function($join){
                         $join   ->on('triwulan4.renja_id','=','renja.id');
                         $join   ->where('triwulan4.triwulan','=','4');
                     })

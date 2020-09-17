@@ -26,7 +26,7 @@ class TPPReportController extends Controller
 
 
         $tpp_report_detail = TPPReport::
-                                    rightjoin('db_pare_2018_demo.periode AS periode', function ($join) use($periode) {
+                                    rightjoin('pare_2018_demo.periode AS periode', function ($join) use($periode) {
                                         $join->on('periode.id', '=', 'tpp_report.periode_id');
                                         $join->WHERE('periode.label', '=', $periode);
                                     })

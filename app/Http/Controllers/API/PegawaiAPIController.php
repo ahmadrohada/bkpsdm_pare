@@ -390,10 +390,10 @@ class PegawaiAPIController extends Controller {
                 })  
                 
                 //LEFT JOIN ke user
-                ->leftjoin('db_pare_2018_demo.users', 'users.id_pegawai','=','pegawai.id')
+                ->leftjoin('pare_2018_demo.users', 'users.id_pegawai','=','pegawai.id')
 
                 //LEFT JOIN ke roles admin SKPD
-                ->leftjoin('db_pare_2018_demo.role_user AS role', function($join){
+                ->leftjoin('pare_2018_demo.role_user AS role', function($join){
                             $join   ->on('role.user_id','=','users.id');
                             $join   ->where('role.role_id','=','2');
                 })
@@ -486,10 +486,10 @@ class PegawaiAPIController extends Controller {
                 })  
                 
                 //LEFT JOIN ke user
-                ->leftjoin('db_pare_2018_demo.users', 'users.id_pegawai','=','pegawai.id')
+                ->leftjoin('pare_2018_demo.users', 'users.id_pegawai','=','pegawai.id')
 
                 //LEFT JOIN ke roles admin SKPD
-                ->leftjoin('db_pare_2018_demo.role_user AS role', function($join){
+                ->leftjoin('pare_2018_demo.role_user AS role', function($join){
                             $join   ->on('role.user_id','=','users.id');
                             $join   ->where('role.role_id','=','4');
                 })
@@ -590,7 +590,7 @@ class PegawaiAPIController extends Controller {
                     $join   ->on('jabatan.id','=','hijab.id_jabatan');
                 })  
                 //jabatan pada Hijab
-                ->leftjoin('db_pare_2018_demo.tpp_report_data AS tpp', function($join) use($tpp_report_id){
+                ->leftjoin('pare_2018_demo.tpp_report_data AS tpp', function($join) use($tpp_report_id){
                     $join   ->on('tpp.pegawai_id','=','hijab.id_pegawai');
                     $join   ->WHERE('tpp.tpp_report_id','=',$tpp_report_id);
                 }) 

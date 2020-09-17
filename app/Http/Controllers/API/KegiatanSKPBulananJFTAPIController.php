@@ -24,7 +24,7 @@ class KegiatanSKPBulananJFTAPIController extends Controller {
         
         $x = KegiatanSKPBulananJFT::
 
-                            join('db_pare_2018_demo.skp_tahunan_kegiatan_jft AS kegiatan_tahunan', function($join){
+                            join('pare_2018_demo.skp_tahunan_kegiatan_jft AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.id','=','skp_bulanan_kegiatan_jft.kegiatan_tahunan_id');
                                 
                             })

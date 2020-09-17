@@ -44,21 +44,21 @@ trait UpdateCapaian
                 $join->where('a.status', '=', 'active');
             })
             //SKP Bulanan 
-            ->leftjoin('db_pare_2018_demo.skp_bulanan AS skp', function ($join) use ($bulan_lalu) {
+            ->leftjoin('pare_2018_demo.skp_bulanan AS skp', function ($join) use ($bulan_lalu) {
                 $join->on('skp.pegawai_id', '=', 'tb_pegawai.id');
                 $join->where('skp.bulan', '=', $bulan_lalu);
             })
             //SKP TAHUNAN 
-            ->leftjoin('db_pare_2018_demo.skp_tahunan AS skp_tahunan', function ($join) use ($periode_id) {
+            ->leftjoin('pare_2018_demo.skp_tahunan AS skp_tahunan', function ($join) use ($periode_id) {
                 $join->on('skp.skp_tahunan_id', '=', 'skp_tahunan.id');
             })
             //RENJA
-            ->rightjoin('db_pare_2018_demo.renja AS renja', function ($join) use ($periode_id) {
+            ->rightjoin('pare_2018_demo.renja AS renja', function ($join) use ($periode_id) {
                 $join->on('skp_tahunan.renja_id', '=', 'renja.id');
                 $join->where('renja.periode_id', '=', $periode_id);
             })
             //CAPAIAN
-            ->leftjoin('db_pare_2018_demo.capaian_bulanan AS capaian', function ($join) {
+            ->leftjoin('pare_2018_demo.capaian_bulanan AS capaian', function ($join) {
                 $join->on('capaian.skp_bulanan_id', '=', 'skp.id');
                 $join->where('capaian.status_approve', '=', 1);
             })
@@ -99,7 +99,7 @@ trait UpdateCapaian
             //nilai capaian ..capaian_skp
             if ($x->capaian_id != null) {
 
-                $capaian_bulanan = CapaianBulanan::leftjoin('db_pare_2018_demo.penilaian_kode_etik AS pke', function ($join) {
+                $capaian_bulanan = CapaianBulanan::leftjoin('pare_2018_demo.penilaian_kode_etik AS pke', function ($join) {
                         $join->on('pke.capaian_bulanan_id', '=', 'capaian_bulanan.id');
                     })
 

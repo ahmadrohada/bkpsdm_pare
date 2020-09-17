@@ -177,7 +177,7 @@ class DashboardController extends Controller
         }
 
 
-        $d_info             =  $dt = \DB::table('db_pare_2018_demo.dashboard_info AS info')
+        $d_info             =  $dt = \DB::table('pare_2018_demo.dashboard_info AS info')
             ->WHERE('status', '1')
             ->first();
 
