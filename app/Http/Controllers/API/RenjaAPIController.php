@@ -500,6 +500,72 @@ class RenjaAPIController extends Controller {
         
     }
 
+
+
+    public function SKPDMonitoringKinerja(Request $request)
+    {
+       
+        
+        $renja = Tujuan::
+                            leftjoin('db_pare_2018.renja_indikator_tujuan AS indikator_tujuan', function($join) { 
+                                $join   ->on('indikator_tujuan.tujuan_id','=','renja_tujuan.id');
+                                
+                            })
+                            ->leftjoin('db_pare_2018.renja_sasaran AS sasaran', function($join) { 
+                                $join   ->on('sasaran.tujuan_id','=','renja_tujuan.id');
+                                
+                            }) 
+                            ->leftjoin('db_pare_2018.renja_indikator_sasaran AS indikator_sasaran', function($join) { 
+                                $join   ->on('indikator_sasaran.sasaran_id','=','sasaran.id');
+                                
+                            }) 
+                            ->leftjoin('db_pare_2018.renja_program AS program', function($join) { 
+                                $join   ->on('program.sasaran_id','=','sasaran.id');
+                                
+                            }) 
+                            ->leftjoin('db_pare_2018.renja_indikator_program AS indikator_program', function($join) { 
+                                $join   ->on('indikator_program.program_id','=','program.id');
+                                
+                            })  
+                            ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join) { 
+                                $join   ->on('kegiatan.program_id','=','program.id');
+                                
+                            }) 
+                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join) { 
+                                $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan.id');
+                                
+                            })                
+                            ->SELECT(
+                                 'renja_tujuan.label AS tujuan_label',
+                                 'indikator_tujuan.label AS indikator_tujuan_label',
+                                 'sasaran.label AS sasaran_label',
+                                 'indikator_sasaran.label AS indikator_sasaran_label',
+                                 'program.label AS program_label',
+                                 'indikator_program.label AS indikator_program_label',
+                                 'kegiatan.label AS kegiatan_label',
+                                 'indikator_kegiatan.label AS indikator_kegiatan_label'
+
+
+                                )
+                            ->WHERE('renja_tujuan.renja_id','=',$request->renja_id)
+                            ->get();
+                            
+    
+        $datatables = Datatables::of($renja)
+        ->addColumn('periode', function ($x) {
+            return "";
+        })->addColumn('renja_id', function ($x) {
+            return "";
+        });
+
+        
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
     
 
 

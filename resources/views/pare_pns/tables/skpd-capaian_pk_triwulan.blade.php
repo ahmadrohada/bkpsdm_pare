@@ -21,6 +21,7 @@
 						<th rowspan="2">PERIODE PK</th>
 						<th rowspan="2">NAMA KEPALA SKPD</th>
 						<th colspan="4">CAPAIAN PK - TRIWULAN</th>
+						<th rowspan="2"><i class="fa fa-cog"></i></th>
 					</tr>
 					<tr>
 						<th>TRIWULAN I</th>
@@ -48,7 +49,7 @@
 				//dom 			: '<"toolbar">frtip',
 				lengthMenu		: [50,100],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,3,4,5,6 ] }
+									{ 	className: "text-center", targets: [ 0,1,3,4,5,6,7 ] }
 								],
 				ajax			: {
 									url	: '{{ url("api_resource/skpd_capaian_pk_triwulan_list") }}',
@@ -161,10 +162,21 @@
 										}
 
 									}
-								}
+								},
+								{  data: 'action',width:"20px",
+									"render": function ( data, type, row ) {
+										return  '<span  data-toggle="tooltip" title="Monitoring Kinerja" style="margin:2px;" ><a class="btn btn-info btn-xs monitoring_kinerja"  data-id="'+row.renja_id+'"><i class="fa fa-eye" ></i></a></span>';
+									}
+								},
 								
 							]
 			
+	});
+
+
+	$(document).on('click','.monitoring_kinerja',function(e){
+		var renja_id = $(this).data('id') ;
+		window.location.assign("monitoring_kinerja/"+renja_id);
 	});
 
 	$(document).on('click','.edit_capaian_triwulan',function(e){

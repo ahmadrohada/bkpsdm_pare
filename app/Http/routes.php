@@ -703,6 +703,10 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 
 
 
+	//=========================--- MOLNITORING KINERJA  ======================================//
+	Route::get('skpd_monitoring_kinerja','API\RenjaAPIController@SKPDMonitoringKinerja');
+
+
 
 	//=========================--- REALISASI  UPLOAD BUKTI   ======================================//
 	Route::post('file_upload','API\UploadFileAPIController@FileUpload');
@@ -730,7 +734,7 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	Route::get('realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@RealisasiSasaranTriwulan');
 	Route::get('add_realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@AddRealisasiSasaranTriwulan');
 	Route::post('simpan_realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@Store');
-	Route::post('hapus_realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@Destroy');
+	Route::post('hadpus_realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@Destroy');
 	Route::post('update_realisasi_sasaran_triwulan','API\RealisasiSasaranTriwulanAPIController@Update');
 
 
@@ -1542,6 +1546,17 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'CapaianPKTahunanController@SKPDCapaianPKTahunanEdit'
 	]);
 	
+
+
+	//=======================  MONITORING KINERJA  ==================================//
+	Route::get('monitoring_kinerja/{renja_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'RenjaController@SKPDMonitoringKinerja'
+	]);
+
+
+
+
 	//=========================== P E G A W A I  =============================================//
 	Route::get('pegawai/{pegawai_id}', [
 		'as' 			=> '{username}',

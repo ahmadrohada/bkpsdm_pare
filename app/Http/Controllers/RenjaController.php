@@ -63,7 +63,7 @@ class RenjaController extends Controller {
         return view('pare_pns.pages.administrator-pohon_kinerja_detail', ['renja'=> $renja, 'role' => 'administrator' ]);  
        
     }
-
+ 
 
     public function SKPDRenjaDetail(Request $request)
 	{
@@ -147,6 +147,15 @@ class RenjaController extends Controller {
         
     }
 
+
+    public function SKPDMonitoringKinerja(Request $request)
+	{
+        $renja_id = $request->renja_id;
+        $renja	= Renja::where('id', '=', $request->renja_id)->first();
+
+        return view('pare_pns.pages.skpd-monitoring_kinerja', ['renja'=> $renja , 'role' =>'skpd' ,'h_box'=> 'box-info' ,'skpd_id' =>  $renja->skpd_id ]);  
+       
+    }
 
     
     
