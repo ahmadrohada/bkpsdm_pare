@@ -50,7 +50,7 @@ class ProgramController extends Controller {
 	  
 		$indikator_sasaran_id = $_GET['indikator_sasaran_id'];
 	  
-        $dt = \DB::table('db_pare_2018.program AS program')
+        $dt = \DB::table('db_pare_2018_demo.program AS program')
 				->where('program.indikator_sasaran_id', '=',  $indikator_sasaran_id)
 				->select([   
                            

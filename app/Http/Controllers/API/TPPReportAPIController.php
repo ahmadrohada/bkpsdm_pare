@@ -109,7 +109,7 @@ class TPPReportAPIController extends Controller
 
         $capaian_bulanan = CapaianBulanan::
 
-                            leftjoin('db_pare_2018.penilaian_kode_etik AS pke', function($join){
+                            leftjoin('db_pare_2018_demo.penilaian_kode_etik AS pke', function($join){
                                 $join   ->on('pke.capaian_bulanan_id','=','capaian_bulanan.id');
                             })
                             
@@ -212,7 +212,7 @@ class TPPReportAPIController extends Controller
 
         $data       = Periode::
         
-                        rightjoin('db_pare_2018.tpp_report AS tpp', function ($join) {
+                        rightjoin('db_pare_2018_demo.tpp_report AS tpp', function ($join) {
                             $join->on('tpp.periode_id', '=', 'periode.id');
                         })
                         ->SELECT('periode.label', 'periode.id')
@@ -732,10 +732,10 @@ class TPPReportAPIController extends Controller
 
         //TPP report detail
         $p = TPPReport::WHERE('tpp_report.id', $tpp_report_id)
-            ->join('db_pare_2018.periode AS periode', function ($join) {
+            ->join('db_pare_2018_demo.periode AS periode', function ($join) {
                 $join->on('periode.id', '=', 'tpp_report.periode_id');
             })
-            ->join('db_pare_2018.formula_hitung_tpp AS frm', function ($join) {
+            ->join('db_pare_2018_demo.formula_hitung_tpp AS frm', function ($join) {
                 $join->on('frm.id', '=', 'tpp_report.formula_hitung_id');
             })
             ->select([
@@ -856,10 +856,10 @@ class TPPReportAPIController extends Controller
 
         //TPP report detail
         $p = TPPReport::WHERE('tpp_report.id', $tpp_report_id)
-            ->join('db_pare_2018.periode AS periode', function ($join) {
+            ->join('db_pare_2018_demo.periode AS periode', function ($join) {
                 $join->on('periode.id', '=', 'tpp_report.periode_id');
             })
-            ->join('db_pare_2018.formula_hitung_tpp AS frm', function ($join) {
+            ->join('db_pare_2018_demo.formula_hitung_tpp AS frm', function ($join) {
                 $join->on('frm.id', '=', 'tpp_report.formula_hitung_id');
             })
             ->select([
@@ -921,7 +921,7 @@ class TPPReportAPIController extends Controller
     protected function TPPReportDetail(Request $request)
     {
         $x = TPPReport::WHERE('tpp_report.id', $request->tpp_report_id)
-            ->join('db_pare_2018.periode AS periode', function ($join) {
+            ->join('db_pare_2018_demo.periode AS periode', function ($join) {
                 $join->on('periode.id', '=', 'tpp_report.periode_id');
             })
             ->select([
@@ -963,7 +963,7 @@ class TPPReportAPIController extends Controller
     protected function PuskesmasTPPReportDetail(Request $request)
     {
         $x = TPPReport::WHERE('tpp_report.id', $request->tpp_report_id)
-            ->join('db_pare_2018.periode AS periode', function ($join) {
+            ->join('db_pare_2018_demo.periode AS periode', function ($join) {
                 $join->on('periode.id', '=', 'tpp_report.periode_id');
             })
             ->select([
@@ -1026,7 +1026,7 @@ class TPPReportAPIController extends Controller
                 $join->on('golongan.id', '=', 'tpp_report_data.golongan_id');
             })
             //CAPAIAN SKP
-            ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
+            ->leftjoin('db_pare_2018_demo.capaian_bulanan AS capaian', function ($join) {
                 $join->on('capaian.id', '=', 'tpp_report_data.capaian_bulanan_id');
             })
             ->select([
@@ -1082,11 +1082,11 @@ class TPPReportAPIController extends Controller
                 $join->on('golongan.id', '=', 'tpp_report_data.golongan_id');
             })
             //CAPAIAN SKP
-            ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
+            ->leftjoin('db_pare_2018_demo.capaian_bulanan AS capaian', function ($join) {
                 $join->on('capaian.id', '=', 'tpp_report_data.capaian_bulanan_id');
             })
             //TPP Report
-            ->leftjoin('db_pare_2018.tpp_report AS tpp_report', function ($join) {
+            ->leftjoin('db_pare_2018_demo.tpp_report AS tpp_report', function ($join) {
                 $join->on('tpp_report.id', '=', 'tpp_report_data.tpp_report_id');
             })
             ->select([
@@ -1159,7 +1159,7 @@ class TPPReportAPIController extends Controller
 
 
         $tpp_report = TPPReport::
-                                join('db_pare_2018.periode AS periode', function ($join) {
+                                join('db_pare_2018_demo.periode AS periode', function ($join) {
                                     $join->on('periode.id', '=', 'tpp_report.periode_id');
                                 })
                                 ->join('demo_asn.m_skpd AS skpd', function ($join) {
@@ -1208,7 +1208,7 @@ class TPPReportAPIController extends Controller
 
 
         $tpp_report = TPPReport::WHERE('skpd_id', $request->skpd_id)
-            ->join('db_pare_2018.periode AS periode', function ($join) {
+            ->join('db_pare_2018_demo.periode AS periode', function ($join) {
                 $join->on('periode.id', '=', 'tpp_report.periode_id');
             })
             ->select([
@@ -1250,7 +1250,7 @@ class TPPReportAPIController extends Controller
         $puskesmas_id = $request->puskesmas_id;
 
         $tpp_report = TPPReport::WHERE('skpd_id', $request->skpd_id)
-            ->join('db_pare_2018.periode AS periode', function ($join) {
+            ->join('db_pare_2018_demo.periode AS periode', function ($join) {
                 $join->on('periode.id', '=', 'tpp_report.periode_id');
             })
             ->select([
@@ -1438,21 +1438,21 @@ class TPPReportAPIController extends Controller
             })
             
             //SKP Bulanan 
-            ->leftjoin('db_pare_2018.skp_bulanan AS skp', function ($join) use($bulan_lalu){
+            ->leftjoin('db_pare_2018_demo.skp_bulanan AS skp', function ($join) use($bulan_lalu){
                 $join->on('skp.pegawai_id', '=', 'tb_pegawai.id');
                 $join->where('skp.bulan', '=', $bulan_lalu) ;
                 //$join->where('skp.skp_tahunan_id', '=', 'skp_tahunan.id') ;
             })
             //SKP TAHUNAN 
-            ->leftjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function ($join) use($periode_id){
+            ->leftjoin('db_pare_2018_demo.skp_tahunan AS skp_tahunan', function ($join) use($periode_id){
                 $join->on('skp.skp_tahunan_id', '=', 'skp_tahunan.id');
             })
              //RENJA
-             ->leftjoin('db_pare_2018.renja AS renja', function ($join) use($periode_id){
+             ->leftjoin('db_pare_2018_demo.renja AS renja', function ($join) use($periode_id){
                 $join->on('skp_tahunan.renja_id', '=', 'renja.id');
             })
             //CAPAIAN
-            ->leftjoin('db_pare_2018.capaian_bulanan AS capaian', function ($join) {
+            ->leftjoin('db_pare_2018_demo.capaian_bulanan AS capaian', function ($join) {
                 $join->on('capaian.skp_bulanan_id', '=', 'skp.id');
                 $join->where('capaian.status_approve', '=', 1   );
             })
@@ -1513,7 +1513,7 @@ class TPPReportAPIController extends Controller
 
                     $capaian_bulanan = CapaianBulanan::
 
-                    leftjoin('db_pare_2018.penilaian_kode_etik AS pke', function($join){
+                    leftjoin('db_pare_2018_demo.penilaian_kode_etik AS pke', function($join){
                         $join   ->on('pke.capaian_bulanan_id','=','capaian_bulanan.id');
                     })
                     

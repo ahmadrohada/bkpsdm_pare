@@ -44,10 +44,10 @@ class PerjanjianKinerjaAPIController extends Controller {
     {
             
         $dt = Tujuan::
-                    rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
+                    rightjoin('db_pare_2018_demo.renja_sasaran AS sasaran', function ($join) {
                         $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
                     })
-                    ->leftjoin('db_pare_2018.renja_indikator_sasaran AS ind_sasaran', function ($join) {
+                    ->leftjoin('db_pare_2018_demo.renja_indikator_sasaran AS ind_sasaran', function ($join) {
                         $join->on('ind_sasaran.sasaran_id', '=', 'sasaran.id');
                     })
                     ->where('renja_tujuan.renja_id', '=' ,$request->get('renja_id'))
@@ -92,11 +92,11 @@ class PerjanjianKinerjaAPIController extends Controller {
     {
             
         $dt = Tujuan::
-                    rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
+                    rightjoin('db_pare_2018_demo.renja_sasaran AS sasaran', function ($join) {
                         $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
                         $join->WHERE('sasaran.pk_status', '=', '1');
                     })
-                    ->rightjoin('db_pare_2018.renja_program AS program', function ($join) {
+                    ->rightjoin('db_pare_2018_demo.renja_program AS program', function ($join) {
                         $join->on('program.sasaran_id', '=', 'sasaran.id');
                     })
                     ->where('renja_tujuan.renja_id', '=' ,$request->get('renja_id'))
@@ -277,11 +277,11 @@ class PerjanjianKinerjaAPIController extends Controller {
     public function TotalAnggaranSKPD(Request $request)
     {
         $dt = Tujuan::
-                    rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
+                    rightjoin('db_pare_2018_demo.renja_sasaran AS sasaran', function ($join) {
                         $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
                         $join->WHERE('sasaran.pk_status', '=', '1');
                     })
-                    ->rightjoin('db_pare_2018.renja_program AS program', function ($join) {
+                    ->rightjoin('db_pare_2018_demo.renja_program AS program', function ($join) {
                         $join->on('program.sasaran_id', '=', 'sasaran.id');
                     })
                     ->where('renja_tujuan.renja_id', '=' ,$request->get('renja_id'))
@@ -503,11 +503,11 @@ class PerjanjianKinerjaAPIController extends Controller {
         $skp_tahunan_id = $request->get('skp_tahunan_id');
 
         $data = Tujuan::
-                    rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
+                    rightjoin('db_pare_2018_demo.renja_sasaran AS sasaran', function ($join) {
                         $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
                         $join->WHERE('sasaran.pk_status', '=', '1');
                     })
-                    ->leftjoin('db_pare_2018.renja_indikator_sasaran AS ind_sasaran', function ($join) {
+                    ->leftjoin('db_pare_2018_demo.renja_indikator_sasaran AS ind_sasaran', function ($join) {
                         $join->on('ind_sasaran.sasaran_id', '=', 'sasaran.id');
                     })
                     ->where('renja_tujuan.renja_id', '=' ,$renja_id )
@@ -547,14 +547,14 @@ class PerjanjianKinerjaAPIController extends Controller {
             //return $data_x;
 
         $data_2 = Tujuan:: 
-                    rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
+                    rightjoin('db_pare_2018_demo.renja_sasaran AS sasaran', function ($join) {
                         $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
                         $join->WHERE('sasaran.pk_status', '=', '1');
                     })
-                    ->rightjoin('db_pare_2018.renja_program AS program', function ($join) {
+                    ->rightjoin('db_pare_2018_demo.renja_program AS program', function ($join) {
                         $join->on('program.sasaran_id', '=', 'sasaran.id');
                     })
-                    ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function ($join) {
+                    ->leftjoin('db_pare_2018_demo.renja_kegiatan AS kegiatan', function ($join) {
                         $join->on('kegiatan.program_id', '=', 'program.id');
                         $join->WHERE('kegiatan.esl2_pk_status','=','1');
                     })
@@ -568,14 +568,14 @@ class PerjanjianKinerjaAPIController extends Controller {
                     ->get();
 
         $dt_3 = Tujuan::
-                    rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
+                    rightjoin('db_pare_2018_demo.renja_sasaran AS sasaran', function ($join) {
                         $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
                         $join->WHERE('sasaran.pk_status', '=', '1');
                     })
-                    ->rightjoin('db_pare_2018.renja_program AS program', function ($join) {
+                    ->rightjoin('db_pare_2018_demo.renja_program AS program', function ($join) {
                         $join->on('program.sasaran_id', '=', 'sasaran.id');
                     })
-                    ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function ($join) {
+                    ->leftjoin('db_pare_2018_demo.renja_kegiatan AS kegiatan', function ($join) {
                         $join->on('kegiatan.program_id', '=', 'program.id');
                         $join->WHERE('kegiatan.esl2_pk_status','=','1');
                     })
@@ -597,10 +597,10 @@ class PerjanjianKinerjaAPIController extends Controller {
                 ->leftjoin('demo_asn.m_jenis_jabatan AS j_jabatan', function ($join) {
                     $join->on('j_jabatan.id', '=', 'eselon.id_jenis_jabatan');
                 })
-                ->leftjoin('db_pare_2018.periode AS periode', function ($join) {
+                ->leftjoin('db_pare_2018_demo.periode AS periode', function ($join) {
                     $join->on('periode.id', '=', 'renja.periode_id');
                 })
-                ->leftjoin('db_pare_2018.masa_pemerintahan AS masa_pemerintahan', function ($join) {
+                ->leftjoin('db_pare_2018_demo.masa_pemerintahan AS masa_pemerintahan', function ($join) {
                     $join->on('masa_pemerintahan.id', '=', 'periode.masa_pemerintahan_id');
                 })
                 ->SELECT(   'renja.periode_id',
@@ -674,11 +674,11 @@ class PerjanjianKinerjaAPIController extends Controller {
         $renja_id       = $request->get('renja_id');
 
         $data = Tujuan::
-                        rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
+                        rightjoin('db_pare_2018_demo.renja_sasaran AS sasaran', function ($join) {
                             $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
                             $join->WHERE('sasaran.pk_status', '=', '1');
                         })
-                        ->leftjoin('db_pare_2018.renja_indikator_sasaran AS ind_sasaran', function ($join) {
+                        ->leftjoin('db_pare_2018_demo.renja_indikator_sasaran AS ind_sasaran', function ($join) {
                             $join->on('ind_sasaran.sasaran_id', '=', 'sasaran.id');
                         })
                         ->where('renja_tujuan.renja_id', '=' ,$renja_id )
@@ -715,14 +715,14 @@ class PerjanjianKinerjaAPIController extends Controller {
         $data_x = json_encode($data_x);
 
         $data_2 = Tujuan:: 
-                    rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
+                    rightjoin('db_pare_2018_demo.renja_sasaran AS sasaran', function ($join) {
                         $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
                         $join->WHERE('sasaran.pk_status', '=', '1');
                     })
-                    ->rightjoin('db_pare_2018.renja_program AS program', function ($join) {
+                    ->rightjoin('db_pare_2018_demo.renja_program AS program', function ($join) {
                         $join->on('program.sasaran_id', '=', 'sasaran.id');
                     })
-                    ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function ($join) {
+                    ->leftjoin('db_pare_2018_demo.renja_kegiatan AS kegiatan', function ($join) {
                         $join->on('kegiatan.program_id', '=', 'program.id');
                     })
                     ->where('renja_tujuan.renja_id', '=' ,$renja_id )
@@ -735,14 +735,14 @@ class PerjanjianKinerjaAPIController extends Controller {
                     ->get();
 
         $dt_3 = Tujuan::
-                    rightjoin('db_pare_2018.renja_sasaran AS sasaran', function ($join) {
+                    rightjoin('db_pare_2018_demo.renja_sasaran AS sasaran', function ($join) {
                         $join->on('sasaran.tujuan_id', '=', 'renja_tujuan.id');
                         $join->WHERE('sasaran.pk_status', '=', '1');
                     })
-                    ->rightjoin('db_pare_2018.renja_program AS program', function ($join) {
+                    ->rightjoin('db_pare_2018_demo.renja_program AS program', function ($join) {
                         $join->on('program.sasaran_id', '=', 'sasaran.id');
                     })
-                    ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function ($join) {
+                    ->leftjoin('db_pare_2018_demo.renja_kegiatan AS kegiatan', function ($join) {
                         $join->on('kegiatan.program_id', '=', 'program.id');
                     })
                     ->where('renja_tujuan.renja_id', '=' ,$renja_id )
@@ -763,10 +763,10 @@ class PerjanjianKinerjaAPIController extends Controller {
                 ->leftjoin('demo_asn.m_jenis_jabatan AS j_jabatan', function ($join) {
                     $join->on('j_jabatan.id', '=', 'eselon.id_jenis_jabatan');
                 })
-                ->leftjoin('db_pare_2018.periode AS periode', function ($join) {
+                ->leftjoin('db_pare_2018_demo.periode AS periode', function ($join) {
                     $join->on('periode.id', '=', 'renja.periode_id');
                 })
-                ->leftjoin('db_pare_2018.masa_pemerintahan AS masa_pemerintahan', function ($join) {
+                ->leftjoin('db_pare_2018_demo.masa_pemerintahan AS masa_pemerintahan', function ($join) {
                     $join->on('masa_pemerintahan.id', '=', 'periode.masa_pemerintahan_id');
                 })
                 ->SELECT(   'renja.periode_id',
@@ -848,16 +848,16 @@ class PerjanjianKinerjaAPIController extends Controller {
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
         $dt = Kegiatan::
                             
-                            /* join('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            /* join('db_pare_2018_demo.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                             }) */
-                            join('db_pare_2018.renja_program AS program', function($join){
+                            join('db_pare_2018_demo.renja_program AS program', function($join){
                                 $join   ->on('renja_kegiatan.program_id','=','program.id');
                             })
-                            ->join('db_pare_2018.renja_indikator_program AS ind_program', function($join){
+                            ->join('db_pare_2018_demo.renja_indikator_program AS ind_program', function($join){
                                 $join   ->on('ind_program.program_id','=','program.id');
                             })
-                            ->join('db_pare_2018.renja_sasaran AS sasaran', function($join){
+                            ->join('db_pare_2018_demo.renja_sasaran AS sasaran', function($join){
                                 $join   ->on('program.sasaran_id','=','sasaran.id');
                             })
                             ->SELECT(   'sasaran.label AS sasaran_label',
@@ -913,11 +913,11 @@ class PerjanjianKinerjaAPIController extends Controller {
         //cari bawahan nya, karena eselon 3 tidak punya kegiatan tahunan,yang punya nya adalah  bawahan nya
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
         $dt = Kegiatan::
-                            rightjoin('db_pare_2018.renja_program AS program', function($join){
+                            rightjoin('db_pare_2018_demo.renja_program AS program', function($join){
                                 $join   ->on('renja_kegiatan.program_id','=','program.id');
                                 //$join   ->WHERE('program.pk_status','=','1');
                             })
-                            ->rightjoin('db_pare_2018.renja_indikator_program AS ind_program', function($join){
+                            ->rightjoin('db_pare_2018_demo.renja_indikator_program AS ind_program', function($join){
                                 $join   ->on('ind_program.program_id','=','program.id');
                                 $join   ->WHERE('ind_program.pk_status','=','1');
                             })
@@ -972,11 +972,11 @@ class PerjanjianKinerjaAPIController extends Controller {
         //cari bawahan nya, karena eselon 3 tidak punya kegiatan tahunan,yang punya nya adalah  bawahan nya
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
         $dt = Kegiatan::
-                            rightjoin('db_pare_2018.renja_program AS program', function($join){
+                            rightjoin('db_pare_2018_demo.renja_program AS program', function($join){
                                 $join   ->on('renja_kegiatan.program_id','=','program.id');
                                 //$join   ->WHERE('program.pk_status','=','1');
                             })
-                            ->rightjoin('db_pare_2018.renja_indikator_program AS ind_program', function($join){
+                            ->rightjoin('db_pare_2018_demo.renja_indikator_program AS ind_program', function($join){
                                 $join   ->on('ind_program.program_id','=','program.id');
                                 $join   ->WHERE('ind_program.pk_status','=','1');
                             })
@@ -1013,15 +1013,15 @@ class PerjanjianKinerjaAPIController extends Controller {
         //cari bawahan nya, karena eselon 3 tidak punya kegiatan tahunan,yang punya nya adalah  bawahan nya
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
         $data_1 = Kegiatan::
-                            rightjoin('db_pare_2018.renja_program AS program', function($join){
+                            rightjoin('db_pare_2018_demo.renja_program AS program', function($join){
                                 $join   ->ON('renja_kegiatan.program_id','=','program.id');
                                 $join   ->WHERE('renja_kegiatan.esl3_pk_status','=','1');
                             })
-                            ->join('db_pare_2018.renja_indikator_program AS ind_program', function($join){
+                            ->join('db_pare_2018_demo.renja_indikator_program AS ind_program', function($join){
                                 $join   ->on('ind_program.program_id','=','program.id');
                                 $join   ->WHERE('ind_program.pk_status','=','1');
                             })
-                            ->join('db_pare_2018.renja_sasaran AS sasaran', function($join){
+                            ->join('db_pare_2018_demo.renja_sasaran AS sasaran', function($join){
                                 $join   ->on('program.sasaran_id','=','sasaran.id');
                             })
                             ->SELECT(   'sasaran.label AS sasaran_label',
@@ -1038,11 +1038,11 @@ class PerjanjianKinerjaAPIController extends Controller {
                             ->OrderBY('ind_program.id','ASC')
                             ->get();
         $data_2 = Kegiatan::
-                            rightjoin('db_pare_2018.renja_program AS program', function($join){
+                            rightjoin('db_pare_2018_demo.renja_program AS program', function($join){
                                 $join   ->ON('renja_kegiatan.program_id','=','program.id');
                                 $join   ->WHERE('renja_kegiatan.esl3_pk_status','=','1');
                             })
-                            ->join('db_pare_2018.renja_indikator_program AS ind_program', function($join){
+                            ->join('db_pare_2018_demo.renja_indikator_program AS ind_program', function($join){
                                 $join   ->on('ind_program.program_id','=','program.id');
                                 $join   ->WHERE('ind_program.pk_status','=','1');
                             })
@@ -1057,11 +1057,11 @@ class PerjanjianKinerjaAPIController extends Controller {
                             ->get();
 
         /* $data_3 = Kegiatan::
-                            rightjoin('db_pare_2018.renja_program AS program', function($join){
+                            rightjoin('db_pare_2018_demo.renja_program AS program', function($join){
                                 $join   ->ON('renja_kegiatan.program_id','=','program.id');
                                 //$join   ->WHERE('program.pk_status','=','1');
                             })
-                            ->join('db_pare_2018.renja_indikator_program AS ind_program', function($join){
+                            ->join('db_pare_2018_demo.renja_indikator_program AS ind_program', function($join){
                                 $join   ->on('ind_program.program_id','=','program.id');
                                 $join   ->WHERE('ind_program.pk_status','=','1');
                             })
@@ -1087,10 +1087,10 @@ class PerjanjianKinerjaAPIController extends Controller {
                 ->leftjoin('demo_asn.m_jenis_jabatan AS j_jabatan', function ($join) {
                     $join->on('j_jabatan.id', '=', 'eselon.id_jenis_jabatan');
                 })
-                ->leftjoin('db_pare_2018.periode AS periode', function ($join) {
+                ->leftjoin('db_pare_2018_demo.periode AS periode', function ($join) {
                     $join->on('periode.id', '=', 'renja.periode_id');
                 })
-                ->leftjoin('db_pare_2018.masa_pemerintahan AS masa_pemerintahan', function ($join) {
+                ->leftjoin('db_pare_2018_demo.masa_pemerintahan AS masa_pemerintahan', function ($join) {
                     $join->on('masa_pemerintahan.id', '=', 'periode.masa_pemerintahan_id');
                 })
                 ->SELECT(   'renja.periode_id',
@@ -1166,7 +1166,7 @@ class PerjanjianKinerjaAPIController extends Controller {
        
         $dt = Kegiatan::
                             
-                            join('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
+                            join('db_pare_2018_demo.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
                                 $join   ->on('indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
                             })
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
@@ -1339,7 +1339,7 @@ class PerjanjianKinerjaAPIController extends Controller {
 
         $data_1 = Kegiatan::
                             
-                            join('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
+                            join('db_pare_2018_demo.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
                                 $join   ->on('indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
                             })
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
@@ -1383,10 +1383,10 @@ class PerjanjianKinerjaAPIController extends Controller {
                 ->leftjoin('demo_asn.m_jenis_jabatan AS j_jabatan', function ($join) {
                     $join->on('j_jabatan.id', '=', 'eselon.id_jenis_jabatan');
                 })
-                ->leftjoin('db_pare_2018.periode AS periode', function ($join) {
+                ->leftjoin('db_pare_2018_demo.periode AS periode', function ($join) {
                     $join->on('periode.id', '=', 'renja.periode_id');
                 })
-                ->leftjoin('db_pare_2018.masa_pemerintahan AS masa_pemerintahan', function ($join) {
+                ->leftjoin('db_pare_2018_demo.masa_pemerintahan AS masa_pemerintahan', function ($join) {
                     $join->on('masa_pemerintahan.id', '=', 'periode.masa_pemerintahan_id');
                 })
                 ->SELECT(   'renja.periode_id',
@@ -1513,9 +1513,9 @@ class PerjanjianKinerjaAPIController extends Controller {
     public function SKPDPerjanjianKinerja_list(Request $request)
     {
             
-        $dt = \DB::table('db_pare_2018.renja AS renja')
+        $dt = \DB::table('db_pare_2018_demo.renja AS renja')
                    
-                    ->rightjoin('db_pare_2018.perjanjian_kinerja AS pk', function($join){
+                    ->rightjoin('db_pare_2018_demo.perjanjian_kinerja AS pk', function($join){
                         $join   ->on('pk.renja_id','=','renja.id');
                     }) //ID KEPALA SKPD
                     ->leftjoin('demo_asn.tb_history_jabatan AS id_ka_skpd', function($join){
@@ -1525,7 +1525,7 @@ class PerjanjianKinerjaAPIController extends Controller {
                     ->leftjoin('demo_asn.tb_pegawai AS kepala_skpd', function($join){
                         $join   ->on('kepala_skpd.id','=','id_ka_skpd.id_pegawai');
                     })//PERIODE
-                    ->join('db_pare_2018.periode AS periode', function($join){
+                    ->join('db_pare_2018_demo.periode AS periode', function($join){
                         $join   ->on('periode.id','=','renja.periode_id');
                         
                     })
