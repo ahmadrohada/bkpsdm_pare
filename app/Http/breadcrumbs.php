@@ -76,7 +76,7 @@ Breadcrumbs::register('create_user_admin_view', function($breadcrumbs)
 Breadcrumbs::register('admin', function($breadcrumbs)
 {
     $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_admin'), '/public/admin', ['icon' => Lang::get('sidebar-nav.link_icon_admin')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_admin'), '/admin', ['icon' => Lang::get('sidebar-nav.link_icon_admin')]);
 });
 
 
@@ -85,7 +85,7 @@ Breadcrumbs::register('admin', function($breadcrumbs)
 Breadcrumbs::register('admin-pegawai', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_pegawai'), '/public/admin/pegawai', ['icon' => Lang::get('sidebar-nav.link_icon_pegawai')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_pegawai'), '/admin/pegawai', ['icon' => Lang::get('sidebar-nav.link_icon_pegawai')]);
 });
 
 
@@ -93,7 +93,7 @@ Breadcrumbs::register('admin-pegawai', function($breadcrumbs)
 Breadcrumbs::register('admin-users', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_users'), '/public/admin/user', ['icon' => Lang::get('sidebar-nav.link_icon_users')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_users'), '/admin/user', ['icon' => Lang::get('sidebar-nav.link_icon_users')]);
 });
 
 
@@ -101,7 +101,7 @@ Breadcrumbs::register('admin-users', function($breadcrumbs)
 Breadcrumbs::register('admin-skpd', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skpd'), '/public/admin/skpd', ['icon' => Lang::get('sidebar-nav.link_icon_skpd')]);
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_skpd'), '/admin/skpd', ['icon' => Lang::get('sidebar-nav.link_icon_skpd')]);
 });
 
 // DASHBOARD > ADMIN > SKPD > PEGAWAI
