@@ -331,7 +331,8 @@ class RenjaAPIController extends Controller {
                                  'skpd.skpd AS skpd'
 
 
-                                );
+                                )
+                            ->ORDERBY('renja.created_at','DESC');
 
 
     
