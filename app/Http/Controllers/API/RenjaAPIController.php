@@ -58,13 +58,6 @@ class RenjaAPIController extends Controller {
 
 
 
-           /*  if ( $kaban->PejabatAktif != null ){
-                $pegawai =  $kaban->PejabatAktif->pegawai;
-                return Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
-            }else{
-                return "Kepala SKPD tidak ditemukan";
-            } */
-
 
             //KABAN
             $kaban = Jabatan::WHERE('parent_id', '=',$request->skpd_id )->first();
