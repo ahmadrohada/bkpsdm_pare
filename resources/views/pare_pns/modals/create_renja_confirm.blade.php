@@ -26,7 +26,7 @@
 
 						<div class="form-horizontal col-md-12" >
 							<div class="form-group form-group-sm">
-								<label>Periode SKP</label>
+								<label>Nama Admin SKPD</label>
 								<span id="admin_nama" class="form-control"> TEXT PERIODE</span>
 							</div>
 						</div>
