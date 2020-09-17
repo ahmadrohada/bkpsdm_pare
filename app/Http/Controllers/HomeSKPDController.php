@@ -75,7 +75,7 @@ class HomeSKPDController extends Controller {
     
     
     protected function total_users(){
-        return 	\DB::table('db_pare_2018.users AS users')
+        return 	\DB::table('db_pare_2018_demo.users AS users')
                                 ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
                                     $join   ->on('users.id_pegawai','=','pegawai.id');
                                     $join   ->where('pegawai.status','=', 'active');
@@ -136,7 +136,7 @@ class HomeSKPDController extends Controller {
 
     protected function total_skp_tahunan($skpd_id){
         return 	Renja::WHERE('renja.skpd_id',$skpd_id)
-                            ->leftjoin('db_pare_2018.skp_tahunan AS skp', function($join){
+                            ->leftjoin('db_pare_2018_demo.skp_tahunan AS skp', function($join){
                                 $join   ->on('skp.renja_id','=','renja.id');
                             })->count();
     }
