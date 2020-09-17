@@ -48,7 +48,7 @@ class TPPReportAPIController extends Controller
 
         $client = new Client([
             // Base URI is used with relative requests
-            'base_uri' => 'https://api-siap.silk.bkpsdm.karawangkab.go.id',
+            'base_uri' => 'https://apiv2-siap.silk.bkpsdm.karawangkab.go.id',
         ]);
           
         $response = $client->request('GET', '/absensi/'.$nip.'/monthly-report', [
@@ -73,7 +73,7 @@ class TPPReportAPIController extends Controller
     //============================= AMBIL DATA ABSENSI SIAP PER SKPD ==========================================//
     protected function data_kehadiran($month,$skpd_id){
         try {
-            $client = new Client([ 'base_uri' => 'https://api-siap.silk.bkpsdm.karawangkab.go.id']);
+            $client = new Client([ 'base_uri' => 'https://apiv2-siap.silk.bkpsdm.karawangkab.go.id']);
             $guzzleResult = $client->request('GET', '/absensi-monthly-report/', [
                 'form_params'   =>  [
                                         'access_token'  => 'MjIzNTZmZjItNTJmOS00NjA1LTk5YWEtOGQwN2VhNmIwNjVm',
