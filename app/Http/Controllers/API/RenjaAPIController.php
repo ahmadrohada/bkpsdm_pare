@@ -538,12 +538,23 @@ class RenjaAPIController extends Controller {
                             ->SELECT(
                                  'renja_tujuan.label AS tujuan_label',
                                  'indikator_tujuan.label AS indikator_tujuan_label',
+                                 'indikator_tujuan.target AS indikator_tujuan_target',
+                                 'indikator_tujuan.satuan AS indikator_tujuan_c',
+
                                  'sasaran.label AS sasaran_label',
                                  'indikator_sasaran.label AS indikator_sasaran_label',
+                                 'indikator_sasaran.target AS indikator_sasaran_target',
+                                 'indikator_sasaran.satuan AS indikator_sasaran_satuan',
+
                                  'program.label AS program_label',
                                  'indikator_program.label AS indikator_program_label',
+                                 'indikator_program.target AS indikator_program_target',
+                                 'indikator_program.satuan AS indikator_program_satuan',
+
                                  'kegiatan.label AS kegiatan_label',
-                                 'indikator_kegiatan.label AS indikator_kegiatan_label'
+                                 'indikator_kegiatan.label AS indikator_kegiatan_label',
+                                 'indikator_kegiatan.target AS indikator_kegiatan_target',
+                                 'indikator_kegiatan.satuan AS indikator_kegiatan_satuan'
 
 
                                 )
@@ -552,9 +563,69 @@ class RenjaAPIController extends Controller {
                             
     
         $datatables = Datatables::of($renja)
-        ->addColumn('periode', function ($x) {
+        ->addColumn('tw_1_indikator_tujuan_target', function ($x) {
+            return $x->indikator_tujuan_target.' '. $x->indikator_tujuan_satuan;
+        })->addColumn('tw_1_indikator_tujuan_realisasi', function ($x) {
             return "";
-        })->addColumn('renja_id', function ($x) {
+        })->addColumn('tw_2_indikator_tujuan_target', function ($x) {
+            return $x->indikator_tujuan_target.' '. $x->indikator_tujuan_satuan;
+        })->addColumn('tw_2_indikator_tujuan_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_3_indikator_tujuan_target', function ($x) {
+            return $x->indikator_tujuan_target.' '. $x->indikator_tujuan_satuan;
+        })->addColumn('tw_3_indikator_tujuan_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_4_indikator_tujuan_target', function ($x) {
+            return $x->indikator_tujuan_target.' '. $x->indikator_tujuan_satuan;
+        })->addColumn('tw_4_indikator_tujuan_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_1_indikator_sasaran_target', function ($x) {
+            return $x->indikator_sasaran_target.' '. $x->indikator_sasaran_satuan;
+        })->addColumn('tw_1_indikator_sasaran_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_2_indikator_sasaran_target', function ($x) {
+            return $x->indikator_sasaran_target.' '. $x->indikator_sasaran_satuan;
+        })->addColumn('tw_2_indikator_sasaran_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_3_indikator_sasaran_target', function ($x) {
+            return $x->indikator_sasaran_target.' '. $x->indikator_sasaran_satuan;
+        })->addColumn('tw_3_indikator_sasaran_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_4_indikator_sasaran_target', function ($x) {
+            return $x->indikator_sasaran_target.' '. $x->indikator_sasaran_satuan;
+        })->addColumn('tw_4_indikator_sasaran_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_1_indikator_program_target', function ($x) {
+            return $x->indikator_program_target.' '. $x->indikator_program_satuan;
+        })->addColumn('tw_1_indikator_program_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_2_indikator_program_target', function ($x) {
+            return $x->indikator_program_target.' '. $x->indikator_program_satuan;
+        })->addColumn('tw_2_indikator_program_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_3_indikator_program_target', function ($x) {
+            return $x->indikator_program_target.' '. $x->indikator_program_satuan;
+        })->addColumn('tw_3_indikator_program_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_4_indikator_program_target', function ($x) {
+            return $x->indikator_program_target.' '. $x->indikator_program_satuan;
+        })->addColumn('tw_4_indikator_program_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_1_indikator_kegiatan_target', function ($x) {
+            return $x->indikator_kegiatan_target.' '. $x->indikator_kegiatan_satuan;
+        })->addColumn('tw_1_indikator_kegiatan_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_2_indikator_kegiatan_target', function ($x) {
+            return $x->indikator_kegiatan_target.' '. $x->indikator_kegiatan_satuan;
+        })->addColumn('tw_2_indikator_kegiatan_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_3_indikator_kegiatan_target', function ($x) {
+            return $x->indikator_kegiatan_target.' '. $x->indikator_kegiatan_satuan;
+        })->addColumn('tw_3_indikator_kegiatan_realisasi', function ($x) {
+            return "";
+        })->addColumn('tw_4_indikator_kegiatan_target', function ($x) {
+            return $x->indikator_kegiatan_target.' '. $x->indikator_kegiatan_satuan;
+        })->addColumn('tw_4_indikator_kegiatan_realisasi', function ($x) {
             return "";
         });
 
