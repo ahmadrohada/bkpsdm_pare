@@ -400,9 +400,13 @@ class PohonKinerjaAPIController extends Controller {
        
         //klasifikasi get data menurut root node nya,.. 
         if ( $request->id == "#"){
-            $data = 'tujuan';
+            $data       = 'tujuan';
+            $node_id    = '';
         }else{
             $data = $request->data;
+
+            $x			= explode('|',$request->id);
+            $node_id    = $x[1];
         }
         $state = array( "opened" => true, "selected" => false );
         
@@ -414,7 +418,7 @@ class PohonKinerjaAPIController extends Controller {
             foreach ($tujuan as $x) {
                    
 
-                    $sub_data_tujuan['id']	            = $x->id;
+                    $sub_data_tujuan['id']	            = 'tujuan|'.$x->id;
                     $sub_data_tujuan['data']	        = "tujuan";
                     $sub_data_tujuan['text']			= Pustaka::capital_string($x->label);
                     $sub_data_tujuan['icon']            = "jstree-tujuan";
@@ -425,7 +429,7 @@ class PohonKinerjaAPIController extends Controller {
 
                     $sasaran = Sasaran::where('tujuan_id','=',$x->id)->select('id','label')->get();
                     foreach ($sasaran as $y) {
-                        $sub_data_sasaran['id']		        = $y->id;
+                        $sub_data_sasaran['id']		        = 'sasaran|'.$y->id;
                         $sub_data_sasaran['data']	        = "sasaran";
                         $sub_data_sasaran['text']			= Pustaka::capital_string($y->label);
                         $sub_data_sasaran['icon']           = "jstree-sasaran";
@@ -451,9 +455,9 @@ class PohonKinerjaAPIController extends Controller {
                 }
             break;
             case 'sasaran':
-                $program = Program:: where('sasaran_id','=',$request->id)->select('id','label')->get();
+                $program = Program:: where('sasaran_id','=',$node_id)->select('id','label')->get();
                 foreach ($program as $d) {
-                    $sub_data_program['id']		        = $d->id;
+                    $sub_data_program['id']		        = 'program|'.$d->id;
                     $sub_data_program['data']	        = "program";
                     $sub_data_program['text']			= Pustaka::capital_string($d->label);
                     $sub_data_program['icon']           = "jstree-program";
@@ -472,9 +476,9 @@ class PohonKinerjaAPIController extends Controller {
                 
             break;
             case 'program':
-                $kegiatan = Kegiatan:: where('program_id','=',$request->id)->select('id','label')->get();
+                $kegiatan = Kegiatan:: where('program_id','=',$node_id)->select('id','label')->get();
                 foreach ($kegiatan as $e) {
-                    $sub_data_kegiatan['id']		    = $e->id;
+                    $sub_data_kegiatan['id']		    = 'kegiatan|'.$e->id;
                     $sub_data_kegiatan['data']	        = "kegiatan";
                     $sub_data_kegiatan['text']			= Pustaka::capital_string($e->label);
                     $sub_data_kegiatan['icon']          = "jstree-kegiatan";
@@ -491,14 +495,13 @@ class PohonKinerjaAPIController extends Controller {
                 
             break;
             case 'kegiatan':
-                $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$request->id)->select('id','label')->get();
+                $ind_kegiatan = IndikatorKegiatan:: where('kegiatan_id','=',$node_id)->select('id','label')->get();
                 foreach ($ind_kegiatan as $g) {
-                    $sub_data_ind_kegiatan['id']	        = $g->id;
+                    $sub_data_ind_kegiatan['id']	        = 'ind_kegiatan|'.$g->id;
                     $sub_data_ind_kegiatan['data']	        = "ind_kegiatan";
                     $sub_data_ind_kegiatan['text']			= Pustaka::capital_string($g->label);
                     $sub_data_ind_kegiatan['icon']          = "jstree-ind_kegiatan";
                     $sub_data_ind_kegiatan['type']          = "ind_kegiatan";
-                    $sub_data_ind_kegiatan['children']      = true ;
 
                     $ind_kegiatan_list[] = $sub_data_ind_kegiatan;
                 }

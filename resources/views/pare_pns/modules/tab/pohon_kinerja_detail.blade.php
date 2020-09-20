@@ -94,8 +94,8 @@
 		}) */.on("changed.jstree", function (e, data) {
 				if(data.selected.length) {
 					//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
-					detail_table((data.instance.get_node(data.selected[0]).data)+'|'+(data.instance.get_node(data.selected[0]).id));
-					
+					//detail_table((data.instance.get_node(data.selected[0]).data)+'|'+(data.instance.get_node(data.selected[0]).id));
+					detail_table(data.instance.get_node(data.selected[0]).id);
 				}
 		}); 
 

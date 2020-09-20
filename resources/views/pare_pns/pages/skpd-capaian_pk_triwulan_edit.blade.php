@@ -19,17 +19,17 @@
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
 				{{-- <li class="status active"><a href="#status" data-toggle="tab">Status </a></li> --}}
-				<li class="detail active"><a href="#detail" data-toggle="tab" >Detail</a></li>
+				{{-- <li class="detail active"><a href="#detail" data-toggle="tab" >Detail</a></li> --}}
 				<li class="sasaran_triwulan_tab"><a href="#sasaran_triwulan_tab" data-toggle="tab">Sasaran </a></li>
 				<li class="program_triwulan_tab"><a href="#program_triwulan_tab" data-toggle="tab">Program </a></li>
 			</ul>
 
  
 			<div class="tab-content"  style="min-height:400px;">
-				<div class="tab-pane fade" id="status">
+				{{--  <div class="tab-pane fade" id="status">
 					
-				</div>
-				<div class=" tab-pane fade" id="detail">
+				</div>  --}}
+				<div class="active tab-pane fade" id="detail">
 					
 				</div>
 				<div class="tab-pane fade" id="sasaran_triwulan_tab">
@@ -56,6 +56,8 @@ $(document).ready(function() {
 		$(this).tab('show');
 	}); 
 
+	
+
 	// store the currently selected tab in the hash value
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
 		var id = $(e.target).attr("href").substr(1);
@@ -79,7 +81,8 @@ $(document).ready(function() {
 	if ( hash != ''){
 		$('#myTab a[href="' + hash + '"]').tab('show');
 	}else{
-		$('#myTab a[href="#detail"]').tab('show');
+		$('#myTab a[href="#sasaran_triwulan_tab"]').tab('show');
+		
 	}
 	
 

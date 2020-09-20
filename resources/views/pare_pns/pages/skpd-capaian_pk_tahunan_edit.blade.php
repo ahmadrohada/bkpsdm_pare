@@ -18,21 +18,21 @@
 	    <section class="content">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
-				{{-- <li class="status active"><a href="#status" data-toggle="tab">Status </a></li> --}}
-				<li class="detail active"><a href="#detail" data-toggle="tab" >Detail</a></li>
+				{{-- <li class="status"><a href="#status" data-toggle="tab">Status </a></li> --}}
+				{{--  <li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>  --}}
 				<li class="sasaran_tahunan_tab"><a href="#sasaran_tahunan_tab" data-toggle="tab">Sasaran </a></li>
 				<li class="program_tahunan_tab"><a href="#program_tahunan_tab" data-toggle="tab">Program </a></li>
 			</ul>
 
  
 			<div class="tab-content"  style="min-height:400px;">
-				<div class="tab-pane fade" id="status">
+				{{--  <div class="tab-pane fade" id="status">
 					
 				</div>
 				<div class=" tab-pane fade" id="detail">
 					
-				</div>
-				<div class="tab-pane fade" id="sasaran_tahunan_tab">
+				</div>  --}}
+				<div class="active tab-pane fade" id="sasaran_tahunan_tab">
 					@include('pare_pns.tables.capaian_pk_sasaran_tahunan')
 				</div>			
 				<div class=" tab-pane fade" id="program_tahunan_tab">
@@ -80,7 +80,7 @@ $(document).ready(function() {
 	if ( hash != ''){
 		$('#myTab a[href="' + hash + '"]').tab('show');
 	}else{
-		$('#myTab a[href="#detail"]').tab('show');
+		$('#myTab a[href="#sasaran_tahunan_tab"]').tab('show');
 	}
 	
 

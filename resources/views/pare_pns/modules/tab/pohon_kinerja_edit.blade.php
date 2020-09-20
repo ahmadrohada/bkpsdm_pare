@@ -76,7 +76,7 @@
 		$('#renja_tree_kegiatan').jstree({
 			'core' : {
 				'data' : {
-					'url' : "{{ url("api_resource/skpd_pohon_kinerja") }}",  
+					'url' : "{{ url("api_resource/skpd_pohon_kinerja") }}",   
 					'data' : function (node) {
 						return { 	"id" 		: node.id ,
 									"data" 		: node.data,
@@ -94,9 +94,9 @@
 				//$('#renja_tree_kegiatan').jstree('open_all');
 		}).on("changed.jstree", function (e, data) {
 				if(data.selected.length) {
-					//alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
-					detail_table((data.instance.get_node(data.selected[0]).data)+'|'+(data.instance.get_node(data.selected[0]).id));
-					
+					//alert((data.instance.get_node(data.selected[0]).data)+'|'+(data.instance.get_node(data.selected[0]).id));
+					//detail_table((data.instance.get_node(data.selected[0]).data)+'|'+(data.instance.get_node(data.selected[0]).id));
+					detail_table(data.instance.get_node(data.selected[0]).id);
 				}
 		}); 
 
