@@ -1178,7 +1178,7 @@ class TPPReportAPIController extends Controller
                                     'skpd.skpd'
 
                                 ])
-                                ->orderBy('tpp_report.created_at', 'ASC')
+                                ->orderBy('tpp_report.created_at', 'DESC')
                                 ->get();
 
         $datatables = Datatables::of($tpp_report)

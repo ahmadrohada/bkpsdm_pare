@@ -101,33 +101,34 @@
 
 	
 	function initTreeKegTahunanPK() {
-		$('#pk_keg_tahunan_tree')
-		.on("loaded.jstree", function(){
-			$('#pk_keg_tahunan_tree').jstree('open_all');
-		})
-		.on("changed.jstree", function (e, data) {
-			if(data.selected.length) {
-				pk_detail_table(data.instance.get_node(data.selected[0]).id);
-			}
-		})
-		.jstree({
-            'core' : {
-						'data' : {
-						"url" 	: "{{ url("api_resource/pohon_kinerja-kegiatan_tree") }}",
-						"data" 	: function (node) {
-							return  {   "renja_id" : {!! $renja->id !!} 
-
-                                    };
-						},
-						"dataType" : "json"
+		$('#pk_keg_tahunan_tree').jstree({
+			'core' : {
+				'data' : {
+					'url' 	: "{{ url("api_resource/pohon_kinerja-kegiatan_tree") }}", 
+					'data' : function (node) {
+						return { 	"id" 		: node.id ,
+									"data" 		: node.data,
+									"renja_id" 	: {!! $renja->id !!}
+								};
+					}
 				}
-				,'check_callback' : true,
-						'themes' : { 'responsive' : false }
-			}
-			,"plugins" : [ "search" ]
+			},
 			
+			'check_callback' : true,
+			'themes' : { 'responsive' : false },
+			'plugins': ['search'] ,
+			
+		}).on("loaded.jstree", function(){
+				//$('#renja_tree_kegiatan').jstree('open_all');
+		}).on("changed.jstree", function (e, data) {
+				if(data.selected.length) {
+					//alert((data.instance.get_node(data.selected[0]).data)+'|'+(data.instance.get_node(data.selected[0]).id));
+					//detail_table((data.instance.get_node(data.selected[0]).data)+'|'+(data.instance.get_node(data.selected[0]).id));
+					pk_detail_table(data.instance.get_node(data.selected[0]).id);
+				}
+		}); 
+
 		
-	    });
 	}
 
 	
