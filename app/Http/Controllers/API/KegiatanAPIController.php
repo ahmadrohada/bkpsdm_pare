@@ -186,10 +186,18 @@ class KegiatanAPIController extends Controller {
                         foreach ($ik as $y) {
                             $data_ind_kegiatan['id']	        = "IndikatorKegiatan|".$y->id;
                             $data_ind_kegiatan['text']			= Pustaka::capital_string($y->label);
-                            $data_ind_kegiatan['data']	            = "rencana_aksi";
-                            $data_ind_kegiatan['type']              = "rencana_aksi";
+                            $data_ind_kegiatan['data']	        = "rencana_aksi";
+                            $data_ind_kegiatan['type']          = "rencana_aksi";
                             $data_ind_kegiatan['icon']	        = 'jstree-ind_kegiatan';
-                            $data_ind_kegiatan['children']      = true ;
+
+                            //coba tes children
+                            $cd = RencanaAksi::WHERE('indikator_kegiatan_id',$y->id)->select('id')->count();
+                            if ( $cd != null ){
+                                $data_ind_kegiatan['children']  = true ;
+                            }else{
+                                $data_ind_kegiatan['children']  = false ;
+                            }
+                           
                             
     
                             $ind_kegiatan_list[] = $data_ind_kegiatan ;
@@ -218,7 +226,15 @@ class KegiatanAPIController extends Controller {
                     $data_rencana_aksi['icon']	    = 'jstree-rencana_aksi';
                     $data_rencana_aksi['data']	    = "kegiatan_bulanan";
                     $data_rencana_aksi['type']      = "kegiatan_bulanan";
-                    $data_rencana_aksi['children']  = true ;
+                    
+
+                    //coba tes children
+                    $cd = KegiatanSKPBulanan::WHERE('rencana_aksi_id',$z->id)->select('id')->count();
+                    if ( $cd != null ){
+                        $data_rencana_aksi['children']  = true ;
+                    }else{
+                        $data_rencana_aksi['children']  = false ;
+                    }
                     $rencana_aksi_list[] = $data_rencana_aksi;
                 }
                 
