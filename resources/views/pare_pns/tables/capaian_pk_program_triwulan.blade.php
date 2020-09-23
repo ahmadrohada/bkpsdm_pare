@@ -97,7 +97,7 @@ table.dataTable tbody td {
 											}else{
 												if ( (row.realisasi_indikator_id) >= 1 ){
 													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_realisasi_program_triwulan"  data-indikator_program_id="'+row.indikator_program_id+'"><i class="fa fa-pencil" ></i></a></span>'+
-															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_program_triwulan"  data-realisasi_program_id ="'+row.realisasi_program_id+'"  data-realisasi_indikator_id="'+row.realisasi_indikator_id+'"  data-program_id="'+row.program_id+'"  data-label="'+row.indikator_label+'" ><i class="fa fa-close " ></i></a></span>';
+															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_realisasi_program_triwulan"  data-realisasi_program_id ="'+row.realisasi_program_id+'"  data-realisasi_indikator_id="'+row.realisasi_indikator_id+'"  data-program_id="'+row.program_id+'"  data-label="'+row.indikator_program_label+'" ><i class="fa fa-close " ></i></a></span>';
 												}else{
 													return  '<span  data-toggle="tooltip" title="Add" style="margin:2px;" ><a class="btn btn-info btn-xs create_realisasi_program_triwulan"  data-indikator_program_id="'+row.indikator_program_id+'" data-program_id="'+row.program_id+'"><i class="fa fa-plus" ></i></a></span>'+
 															'<span  style="margin:2px;" disabled><a class="btn btn-default btn-xs "  ><i class="fa fa-close " ></i></a></span>';

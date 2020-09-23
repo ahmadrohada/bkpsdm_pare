@@ -31,6 +31,8 @@ use App\Models\MasaPemerintahan;
 
 use App\Helpers\Pustaka;
 
+use App\Traits\RealisasiCapaianTriwulan; 
+
 use Datatables;
 use Validator;
 use Gravatar;
@@ -39,7 +41,7 @@ Use Alert;
 
 class RenjaAPIController extends Controller {
 
-
+    use RealisasiCapaianTriwulan;
     
     public function ConfirmRenja( Request $request )
     {
@@ -502,10 +504,11 @@ class RenjaAPIController extends Controller {
 
 
 
-    public function SKPDMonitoringKinerja(Request $request)
+    public function SKPDMonitoringKinerja(Request $request) 
     {
        
-        
+        $renja_id = $request->renja_id;
+
         $renja = Tujuan::
                             leftjoin('db_pare_2018.renja_indikator_tujuan AS indikator_tujuan', function($join) { 
                                 $join   ->on('indikator_tujuan.tujuan_id','=','renja_tujuan.id');
@@ -539,26 +542,30 @@ class RenjaAPIController extends Controller {
                                  'renja_tujuan.label AS tujuan_label',
                                  'indikator_tujuan.label AS indikator_tujuan_label',
                                  'indikator_tujuan.target AS indikator_tujuan_target',
-                                 'indikator_tujuan.satuan AS indikator_tujuan_c',
+                                 'indikator_tujuan.satuan AS indikator_tujuan_satuan',
 
                                  'sasaran.label AS sasaran_label',
+                                 'indikator_sasaran.id AS indikator_sasaran_id',
                                  'indikator_sasaran.label AS indikator_sasaran_label',
                                  'indikator_sasaran.target AS indikator_sasaran_target',
                                  'indikator_sasaran.satuan AS indikator_sasaran_satuan',
 
                                  'program.label AS program_label',
+                                 'indikator_program.id AS indikator_program_id',
                                  'indikator_program.label AS indikator_program_label',
                                  'indikator_program.target AS indikator_program_target',
                                  'indikator_program.satuan AS indikator_program_satuan',
 
                                  'kegiatan.label AS kegiatan_label',
+                                 'kegiatan.id AS kegiatan_id',
+                                 'indikator_kegiatan.id AS indikator_kegiatan_id',
                                  'indikator_kegiatan.label AS indikator_kegiatan_label',
                                  'indikator_kegiatan.target AS indikator_kegiatan_target',
                                  'indikator_kegiatan.satuan AS indikator_kegiatan_satuan'
 
 
                                 )
-                            ->WHERE('renja_tujuan.renja_id','=',$request->renja_id)
+                            ->WHERE('renja_tujuan.renja_id','=',$renja_id)
                             ->get();
                             
     
@@ -579,54 +586,60 @@ class RenjaAPIController extends Controller {
             return $x->indikator_tujuan_target.' '. $x->indikator_tujuan_satuan;
         })->addColumn('tw_4_indikator_tujuan_realisasi', function ($x) {
             return "";
-        })->addColumn('tw_1_indikator_sasaran_target', function ($x) {
+        })
+        
+        ->addColumn('tw_1_indikator_sasaran_target', function ($x) {
             return $x->indikator_sasaran_target.' '. $x->indikator_sasaran_satuan;
-        })->addColumn('tw_1_indikator_sasaran_realisasi', function ($x) {
-            return "";
+        })->addColumn('tw_1_indikator_sasaran_realisasi', function ($x) use($renja_id) {
+            return $this->realisasi_indikator_sasaran_triwulan($renja_id,1,$x->indikator_sasaran_id);
         })->addColumn('tw_2_indikator_sasaran_target', function ($x) {
             return $x->indikator_sasaran_target.' '. $x->indikator_sasaran_satuan;
-        })->addColumn('tw_2_indikator_sasaran_realisasi', function ($x) {
-            return "";
+        })->addColumn('tw_2_indikator_sasaran_realisasi', function ($x) use($renja_id){
+            return $this->realisasi_indikator_sasaran_triwulan($renja_id,2,$x->indikator_sasaran_id);
         })->addColumn('tw_3_indikator_sasaran_target', function ($x) {
             return $x->indikator_sasaran_target.' '. $x->indikator_sasaran_satuan;
-        })->addColumn('tw_3_indikator_sasaran_realisasi', function ($x) {
-            return "";
+        })->addColumn('tw_3_indikator_sasaran_realisasi', function ($x) use($renja_id) {
+            return $this->realisasi_indikator_sasaran_triwulan($renja_id,3,$x->indikator_sasaran_id);
         })->addColumn('tw_4_indikator_sasaran_target', function ($x) {
             return $x->indikator_sasaran_target.' '. $x->indikator_sasaran_satuan;
-        })->addColumn('tw_4_indikator_sasaran_realisasi', function ($x) {
-            return "";
-        })->addColumn('tw_1_indikator_program_target', function ($x) {
+        })->addColumn('tw_4_indikator_sasaran_realisasi', function ($x) use($renja_id) {
+            return $this->realisasi_indikator_sasaran_triwulan($renja_id,4,$x->indikator_sasaran_id);
+        })
+        
+        ->addColumn('tw_1_indikator_program_target', function ($x) {
             return $x->indikator_program_target.' '. $x->indikator_program_satuan;
-        })->addColumn('tw_1_indikator_program_realisasi', function ($x) {
-            return "";
+        })->addColumn('tw_1_indikator_program_realisasi', function ($x) use($renja_id){
+            return $this->realisasi_indikator_program_triwulan($renja_id,1,$x->indikator_program_id);
         })->addColumn('tw_2_indikator_program_target', function ($x) {
             return $x->indikator_program_target.' '. $x->indikator_program_satuan;
-        })->addColumn('tw_2_indikator_program_realisasi', function ($x) {
-            return "";
+        })->addColumn('tw_2_indikator_program_realisasi', function ($x) use($renja_id){
+            return $this->realisasi_indikator_program_triwulan($renja_id,2,$x->indikator_program_id);
         })->addColumn('tw_3_indikator_program_target', function ($x) {
             return $x->indikator_program_target.' '. $x->indikator_program_satuan;
-        })->addColumn('tw_3_indikator_program_realisasi', function ($x) {
-            return "";
+        })->addColumn('tw_3_indikator_program_realisasi', function ($x) use($renja_id) {
+            return $this->realisasi_indikator_program_triwulan($renja_id,3,$x->indikator_program_id);
         })->addColumn('tw_4_indikator_program_target', function ($x) {
             return $x->indikator_program_target.' '. $x->indikator_program_satuan;
-        })->addColumn('tw_4_indikator_program_realisasi', function ($x) {
-            return "";
-        })->addColumn('tw_1_indikator_kegiatan_target', function ($x) {
+        })->addColumn('tw_4_indikator_program_realisasi', function ($x) use($renja_id) {
+            return $this->realisasi_indikator_program_triwulan($renja_id,1,$x->indikator_program_id);
+        })
+        
+        ->addColumn('tw_1_indikator_kegiatan_target', function ($x) {
             return $x->indikator_kegiatan_target.' '. $x->indikator_kegiatan_satuan;
-        })->addColumn('tw_1_indikator_kegiatan_realisasi', function ($x) {
-            return "";
+        })->addColumn('tw_1_indikator_kegiatan_realisasi', function ($x) use($renja_id){
+            return $this->realisasi_indikator_kegiatan_triwulan($renja_id,1,$x->kegiatan_id,$x->indikator_kegiatan_id);
         })->addColumn('tw_2_indikator_kegiatan_target', function ($x) {
             return $x->indikator_kegiatan_target.' '. $x->indikator_kegiatan_satuan;
-        })->addColumn('tw_2_indikator_kegiatan_realisasi', function ($x) {
-            return "";
+        })->addColumn('tw_2_indikator_kegiatan_realisasi', function ($x)  use($renja_id){
+            return $this->realisasi_indikator_kegiatan_triwulan($renja_id,2,$x->kegiatan_id,$x->indikator_kegiatan_id);
         })->addColumn('tw_3_indikator_kegiatan_target', function ($x) {
             return $x->indikator_kegiatan_target.' '. $x->indikator_kegiatan_satuan;
-        })->addColumn('tw_3_indikator_kegiatan_realisasi', function ($x) {
-            return "";
+        })->addColumn('tw_3_indikator_kegiatan_realisasi', function ($x)  use($renja_id){
+            return $this->realisasi_indikator_kegiatan_triwulan($renja_id,3,$x->kegiatan_id,$x->indikator_kegiatan_id);
         })->addColumn('tw_4_indikator_kegiatan_target', function ($x) {
             return $x->indikator_kegiatan_target.' '. $x->indikator_kegiatan_satuan;
-        })->addColumn('tw_4_indikator_kegiatan_realisasi', function ($x) {
-            return "";
+        })->addColumn('tw_4_indikator_kegiatan_realisasi', function ($x)  use($renja_id){
+            return $this->realisasi_indikator_kegiatan_triwulan($renja_id,4,$x->kegiatan_id,$x->indikator_kegiatan_id);
         });
 
         
@@ -635,6 +648,114 @@ class RenjaAPIController extends Controller {
         } 
 
         return $datatables->make(true);
+        
+    }
+
+    public function SKPDMonitoringKinerjaKegiatan(Request $request) 
+    {
+       
+        $renja_id = $request->renja_id;
+
+        $renja = Kegiatan::
+                            
+                            leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join) { 
+                                $join   ->on('indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
+                                
+                            })                
+                            ->SELECT(
+                                 
+                                 'renja_kegiatan.label AS kegiatan_label',
+                                 'renja_kegiatan.id AS kegiatan_id',
+                                 'indikator_kegiatan.id AS indikator_kegiatan_id',
+                                 'indikator_kegiatan.label AS indikator_kegiatan_label',
+                                 'indikator_kegiatan.target AS indikator_kegiatan_target',
+                                 'indikator_kegiatan.satuan AS indikator_kegiatan_satuan'
+
+
+                                )
+                            ->WHERE('renja_kegiatan.renja_id','=',$renja_id)
+                            ->get();
+                            
+    
+        $datatables = Datatables::of($renja)
+        
+        
+        ->addColumn('tw_1_indikator_kegiatan_target', function ($x) {
+            return $x->indikator_kegiatan_target.' '. $x->indikator_kegiatan_satuan;
+        })->addColumn('tw_1_indikator_kegiatan_realisasi', function ($x) use($renja_id){
+            return $this->realisasi_indikator_kegiatan_triwulan($renja_id,1,$x->kegiatan_id,$x->indikator_kegiatan_id);
+        })->addColumn('tw_1_indikator_kegiatan_percentage', function ($x)  use($renja_id) {
+            return $this->hitung_percentage_realisasi_indikator_kegiatan_triwulan($renja_id,1,$x->kegiatan_id,$x->indikator_kegiatan_id,$x->indikator_kegiatan_target);
+        })->addColumn('tw_2_indikator_kegiatan_target', function ($x) {
+            return $x->indikator_kegiatan_target.' '. $x->indikator_kegiatan_satuan;
+        })->addColumn('tw_2_indikator_kegiatan_realisasi', function ($x)  use($renja_id){
+            return $this->realisasi_indikator_kegiatan_triwulan($renja_id,2,$x->kegiatan_id,$x->indikator_kegiatan_id);
+        })->addColumn('tw_2_indikator_kegiatan_percentage', function ($x)  use($renja_id) {
+            return $this->hitung_percentage_realisasi_indikator_kegiatan_triwulan($renja_id,2,$x->kegiatan_id,$x->indikator_kegiatan_id,$x->indikator_kegiatan_target);
+        })->addColumn('tw_3_indikator_kegiatan_target', function ($x) {
+            return $x->indikator_kegiatan_target.' '. $x->indikator_kegiatan_satuan;
+        })->addColumn('tw_3_indikator_kegiatan_realisasi', function ($x)  use($renja_id){
+            return $this->realisasi_indikator_kegiatan_triwulan($renja_id,3,$x->kegiatan_id,$x->indikator_kegiatan_id);
+        })->addColumn('tw_3_indikator_kegiatan_percentage', function ($x)  use($renja_id) {
+            return $this->hitung_percentage_realisasi_indikator_kegiatan_triwulan($renja_id,3,$x->kegiatan_id,$x->indikator_kegiatan_id,$x->indikator_kegiatan_target);
+        })->addColumn('tw_4_indikator_kegiatan_target', function ($x) {
+            return $x->indikator_kegiatan_target.' '. $x->indikator_kegiatan_satuan;
+        })->addColumn('tw_4_indikator_kegiatan_realisasi', function ($x)  use($renja_id){
+            return $this->realisasi_indikator_kegiatan_triwulan($renja_id,4,$x->kegiatan_id,$x->indikator_kegiatan_id);
+        })->addColumn('tw_4_indikator_kegiatan_percentage', function ($x)  use($renja_id) {
+            return $this->hitung_percentage_realisasi_indikator_kegiatan_triwulan($renja_id,4,$x->kegiatan_id,$x->indikator_kegiatan_id,$x->indikator_kegiatan_target);
+        });
+
+        
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+
+        return $datatables->make(true);
+        
+    }
+
+    public function SKPDMonitoringKinerjaKegiatanAverage(Request $request) 
+    {
+       
+        $renja_id = $request->renja_id;
+
+        $renja = Kegiatan::
+                            
+                            leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join) { 
+                                $join   ->on('indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
+                                
+                            })                
+                            ->SELECT(
+                                 
+                                 'renja_kegiatan.id AS kegiatan_id',
+                                 'indikator_kegiatan.id AS indikator_kegiatan_id',
+                                 'indikator_kegiatan.target AS indikator_kegiatan_target'
+
+
+                                )
+                            ->WHERE('renja_kegiatan.renja_id','=',$renja_id)
+                            ->get();
+             
+        $response= array();
+
+        for ($i =1; $i <= 4; $i++){
+
+            $no = 0 ;
+            $percentage = 0 ;
+            foreach ($renja as $x) {
+                $no++;    
+                $percentage += $this->hitung_percentage_realisasi_indikator_kegiatan_triwulan($renja_id,$i,$x->kegiatan_id,$x->indikator_kegiatan_id,$x->indikator_kegiatan_target);                    	
+            }	
+
+            $h['triwulan_'.$i] = number_format(($percentage/$no) ,2).' %';
+           
+        }
+                            
+        array_push($response, $h);
+       
+
+        return $response;
         
     }
     

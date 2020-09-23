@@ -16,7 +16,7 @@
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-capaian_bulanan') }}"><span class="fa fa-angle-left"></span></a>
 				Capaian Bulanan Personal {{$label_name}}
 			</h1>
-				{!! Breadcrumbs::render('personal_edit_capaian_bulanan') !!}
+				{!! Breadcrumbs::render('personal_edit_capaian_bulanan') !!} 
       </section>
 	  
 	    <section class="content">
