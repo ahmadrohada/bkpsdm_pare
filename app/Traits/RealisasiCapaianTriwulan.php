@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\CapaianPKTriwulan;
 use App\Models\Kegiatan;
+use App\Models\RealisasiIndikatorTujuanTriwulan;
 use App\Models\RealisasiIndikatorSasaranTriwulan;
 use App\Models\RealisasiIndikatorProgramTriwulan;
 use App\Models\RealisasiIndikatorKegiatanTriwulan;
@@ -16,12 +17,59 @@ use App\Helpers\Pustaka;
 trait RealisasiCapaianTriwulan
 {
 
-    public function realisasi_indikator_sasaran_triwulan($renja_id,$triwulan,$indikator_sasaran_id){ 
+    //========================= I N I K A T O R    T U J U A N =======================================//
+    public function realisasi_indikator_tujuan_triwulan($renja_id,$triwulan,$indikator_tujuan_id){ 
 
         //cari capaian trieulan ID nya dulu
         $dt_tw = CapaianPKTriwulan::WHERE('renja_id','=',$renja_id)
                                     ->WHERE('triwulan','=',$triwulan)
                                     ->first();
+        if ( $dt_tw ){
+            $data = RealisasiIndikatorTujuanTriwulan::WHERE('capaian_id','=', $dt_tw->id)
+                                                    ->WHERE('indikator_tujuan_id','=',$indikator_tujuan_id)
+                                                    ->first();
+            if ( $data ){
+                return $data->realisasi_quantity.' '.$data->satuan;
+            }else{
+                return "-";
+            }
+        }else{
+            return "-";
+        }
+    }
+
+    public function hitung_percentage_realisasi_indikator_tujuan_triwulan($renja_id,$triwulan,$indikator_tujuan_id,$target){ 
+        //cari capaian trieulan ID nya dulu
+        $dt_tw = CapaianPKTriwulan::WHERE('renja_id','=',$renja_id)
+                                    ->WHERE('triwulan','=',$triwulan)
+                                    ->first();
+     
+        if ( $dt_tw ){
+            $data = RealisasiIndikatorTujuanTriwulan::WHERE('capaian_id','=', $dt_tw->capaian_triwulan_id)
+                                                    ->WHERE('indikator_tujuan_id','=',$indikator_tujuan_id)
+                                                    ->first();
+            if ( $data ){
+                return Pustaka::persen($data->realisasi_quantity,$target);
+            }else{
+                return "0 %";
+            }
+        }else{
+            return "0 %";
+        } 
+    }
+
+
+
+
+    //========================= I N D I K A T O R    S A S A R A N =======================================//
+
+    public function realisasi_indikator_sasaran_triwulan($renja_id,$triwulan,$indikator_sasaran_id){ 
+        //cari capaian trieulan ID nya dulu
+        $dt_tw = CapaianPKTriwulan::WHERE('renja_id','=',$renja_id)
+                                    ->WHERE('triwulan','=',$triwulan)
+                                    ->first();
+        //return $renja_id.'|'.$triwulan.'|'.$indikator_sasaran_id;
+        //return $dt_tw;
         if ( $dt_tw ){
             $data = RealisasiIndikatorSasaranTriwulan::WHERE('capaian_id','=', $dt_tw->id)
                                                     ->WHERE('indikator_sasaran_id','=',$indikator_sasaran_id)
@@ -36,6 +84,29 @@ trait RealisasiCapaianTriwulan
         }
     }
 
+    public function hitung_percentage_realisasi_indikator_sasaran_triwulan($renja_id,$triwulan,$indikator_sasaran_id,$target){ 
+        //cari capaian trieulan ID nya dulu
+        $dt_tw = CapaianPKTriwulan::WHERE('renja_id','=',$renja_id)
+                                    ->WHERE('triwulan','=',$triwulan)
+                                    ->first();
+     
+        if ( $dt_tw ){
+            $data = RealisasiIndikatorSasaranTriwulan::WHERE('capaian_id','=', $dt_tw->id)
+                                                    ->WHERE('indikator_sasaran_id','=',$indikator_sasaran_id)
+                                                    ->first();
+            if ( $data ){
+                return Pustaka::persen($data->realisasi_quantity,$target);
+            }else{
+                return "0 %";
+            }
+        }else{
+            return "0 %";
+        } 
+    }
+
+
+
+    //========================= I N D I K A T O R    P R O G R A M ======================================//
     public function realisasi_indikator_program_triwulan($renja_id,$triwulan,$indikator_program_id){ 
 
         //cari capaian trieulan ID nya dulu
@@ -56,6 +127,29 @@ trait RealisasiCapaianTriwulan
         }
     }
 
+    public function hitung_percentage_realisasi_indikator_program_triwulan($renja_id,$triwulan,$indikator_program_id,$target){ 
+        //cari capaian trieulan ID nya dulu
+        $dt_tw = CapaianPKTriwulan::WHERE('renja_id','=',$renja_id)
+                                    ->WHERE('triwulan','=',$triwulan)
+                                    ->first();
+     
+        if ( $dt_tw ){
+            $data = RealisasiIndikatorProgramTriwulan::WHERE('capaian_id','=', $dt_tw->id)
+                                                    ->WHERE('indikator_program_id','=',$indikator_program_id)
+                                                    ->first();
+            if ( $data ){
+                return Pustaka::persen($data->realisasi_quantity,$target);
+            }else{
+                return "0 %";
+            }
+        }else{
+            return "0 %";
+        } 
+    }
+
+
+
+//=================== I N D I K A T O R ------ K E G I A T A N ================================================//
 
     public function realisasi_indikator_kegiatan_triwulan($renja_id,$triwulan,$kegiatan_id,$indikator_kegiatan_id){ 
 

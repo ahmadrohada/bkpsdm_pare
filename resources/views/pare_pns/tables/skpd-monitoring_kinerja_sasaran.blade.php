@@ -1,10 +1,10 @@
 <div class="box-body table-responsive" style="min-height:440px;">
 
 			
-				<table id="table_monitoring_kinerja_kegiatan" class="table table-striped table-hover " style="font-size:95% ;">
+				<table id="table_monitoring_kinerja_sasaran" class="table table-striped table-hover " style="font-size:95% ;">
 					<thead> 
 						<tr>
-							<th rowspan="3" style="padding-left:160px; padding-right:160px ;">KEGIATAN</th>
+							<th rowspan="3" style="padding-left:160px; padding-right:160px ;">SASARAN</th>
 							<th rowspan="3" style="padding-left:250px; padding-right:250px ;">INDIKATOR</th>
 							<th colspan="12" >CAPAIAN</th>
 							
@@ -45,8 +45,8 @@ table.dataTable tbody td {
 
 		
 
-function mk_kegiatan(){
-	var table_monitoring_kinerja_kegiatan = $('#table_monitoring_kinerja_kegiatan').DataTable({
+function mk_sasaran(){
+	var table_monitoring_kinerja_sasaran = $('#table_monitoring_kinerja_sasaran').DataTable({
 				destroy			: true,
 				processing      : true,
 				serverSide      : true,
@@ -62,7 +62,7 @@ function mk_kegiatan(){
 								],
 				
 				ajax			: {
-									url	: '{{ url("api_resource/skpd_monitoring_kinerja_kegiatan") }}',
+									url	: '{{ url("api_resource/skpd_monitoring_kinerja_sasaran") }}',
 									data: { renja_id : {!! $renja->id !!} },
 									method: 'POST'
 								},
@@ -82,27 +82,27 @@ function mk_kegiatan(){
 				
 				columns			: [
 									
-									{ data: 'kegiatan_label',name:'kegiatan_label'},
-									{ data: 'indikator_kegiatan_label',name:'indikator_kegiatan_label'},
+									{ data: 'sasaran_label',name:'sasaran_label'},
+									{ data: 'indikator_sasaran_label',name:'indikator_sasaran_label'},
 
-									{ data: 'tw_1_indikator_kegiatan_target',name:''},
-									{ data: 'tw_1_indikator_kegiatan_realisasi',name:''},
-									{ data: 'tw_1_indikator_kegiatan_percentage',name:''},
-
-
-									{ data: 'tw_2_indikator_kegiatan_target',name:''},
-									{ data: 'tw_2_indikator_kegiatan_realisasi',name:''},
-									{ data: 'tw_2_indikator_kegiatan_percentage',name:''},
+									{ data: 'tw_1_indikator_sasaran_target',name:''},
+									{ data: 'tw_1_indikator_sasaran_realisasi',name:''},
+									{ data: 'tw_1_indikator_sasaran_percentage',name:''},
 
 
-									{ data: 'tw_3_indikator_kegiatan_target',name:''},
-									{ data: 'tw_3_indikator_kegiatan_realisasi',name:''},
-									{ data: 'tw_3_indikator_kegiatan_percentage',name:''},
+									{ data: 'tw_2_indikator_sasaran_target',name:''},
+									{ data: 'tw_2_indikator_sasaran_realisasi',name:''},
+									{ data: 'tw_2_indikator_sasaran_percentage',name:''},
 
 
-									{ data: 'tw_4_indikator_kegiatan_target',name:''},
-									{ data: 'tw_4_indikator_kegiatan_realisasi',name:''},
-									{ data: 'tw_4_indikator_kegiatan_percentage',name:''},
+									{ data: 'tw_3_indikator_sasaran_target',name:''},
+									{ data: 'tw_3_indikator_sasaran_realisasi',name:''},
+									{ data: 'tw_3_indikator_sasaran_percentage',name:''},
+
+
+									{ data: 'tw_4_indikator_sasaran_target',name:''},
+									{ data: 'tw_4_indikator_sasaran_realisasi',name:''},
+									{ data: 'tw_4_indikator_sasaran_percentage',name:''},
 									
 								],
 								initComplete: function(settings, json) {
@@ -112,7 +112,7 @@ function mk_kegiatan(){
 
 
 		$.ajax({
-				url			: '{{ url("api_resource/skpd_monitoring_kinerja_kegiatan_average") }}',
+				url			: '{{ url("api_resource/skpd_monitoring_kinerja_sasaran_average") }}',
 				data 		: { renja_id : {!! $renja->id !!} },
 				method		: "GET",
 				dataType	: "json",

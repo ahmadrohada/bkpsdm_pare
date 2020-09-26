@@ -19,15 +19,27 @@
 
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs" id="myTab">
-					<li class="monitoring_kinerja"><a href="#tab_1" data-toggle="tab">Monitoring Kinerja </a></li>
-					<li class="kegiatan"><a href="#tab_2" data-toggle="tab" >Kegiatan</a></li>
+					<li class="monitoring_kinerja"><a href="#monitoring_kinerja" data-toggle="tab">Monitoring Kinerja </a></li>
+					<li class="tujuan"><a href="#tujuan" data-toggle="tab" >Tujuan</a></li>
+					<li class="sasaran"><a href="#sasaran" data-toggle="tab" >Sasaran</a></li>
+					<li class="program"><a href="#program" data-toggle="tab" >Program</a></li>
+					<li class="kegiatan"><a href="#kegiatan" data-toggle="tab" >Kegiatan</a></li>
 					
 				</ul>
 				<div class="tab-content"  style="min-height:400px;">
-					<div class="active tab-pane fade" id="tab_1">
+					<div class="active tab-pane fade" id="monitoring_kinerja">
 						@include('pare_pns.tables.skpd-monitoring_kinerja')
 					</div>
-					<div class="tab-pane fade" id="tab_2">
+					<div class="tab-pane fade" id="tujuan">
+						@include('pare_pns.tables.skpd-monitoring_kinerja_tujuan')
+					</div>
+					<div class="tab-pane fade" id="sasaran">
+						@include('pare_pns.tables.skpd-monitoring_kinerja_sasaran')
+					</div>
+					<div class="tab-pane fade" id="program">
+						@include('pare_pns.tables.skpd-monitoring_kinerja_program')
+					</div>
+					<div class="tab-pane fade" id="kegiatan">
 						@include('pare_pns.tables.skpd-monitoring_kinerja_kegiatan')
 					</div>	
 				</div>			
@@ -51,9 +63,15 @@ $(document).ready(function() {
 		//destroy table agar hide kolom  tidak muncul duluan
 		//$('#table_monitoring_kinerja').DataTable().clear().destroy();
 
-		if ( id == 'tab_1'){
+		if ( id == 'monitoring_kinerja'){
 			//LoadKegiatanBulananTable(); 
-		}else if ( id == 'tab_2'){
+		}else if ( id == 'tujuan'){
+			mk_tujuan();
+		}else if ( id == 'sasaran'){
+			mk_sasaran();
+		}else if ( id == 'program'){
+			mk_program();
+		}else if ( id == 'kegiatan'){
 			mk_kegiatan();
 		}
 		$('html, body').animate({scrollTop:0}, 0);
@@ -67,7 +85,7 @@ $(document).ready(function() {
 	if ( hash != ''){
 		$('#myTab a[href="' + hash + '"]').tab('show');
 	}else{
-		$('#myTab a[href="#tab_1"]').tab('show');
+		$('#myTab a[href="#monitoring_kinerja"]').tab('show');
 	}
 	
 

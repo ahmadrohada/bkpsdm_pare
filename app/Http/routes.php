@@ -703,11 +703,20 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 
 
 
-	//=========================--- MOLNITORING KINERJA  ======================================//
+	//=========================--- MONITORING KINERJA  ======================================//
 	Route::post('skpd_monitoring_kinerja','API\RenjaAPIController@SKPDMonitoringKinerja');
+
+	Route::post('skpd_monitoring_kinerja_tujuan','API\RenjaAPIController@SKPDMonitoringKinerjaTujuan');
+	Route::get('skpd_monitoring_kinerja_tujuan_average','API\RenjaAPIController@SKPDMonitoringKinerjaTujuanAverage');
+
+	Route::post('skpd_monitoring_kinerja_sasaran','API\RenjaAPIController@SKPDMonitoringKinerjaSasaran');
+	Route::get('skpd_monitoring_kinerja_sasaran_average','API\RenjaAPIController@SKPDMonitoringKinerjaSasaranAverage');
+
+	Route::post('skpd_monitoring_kinerja_program','API\RenjaAPIController@SKPDMonitoringKinerjaProgram');
+	Route::get('skpd_monitoring_kinerja_program_average','API\RenjaAPIController@SKPDMonitoringKinerjaProgramAverage');
+
 	Route::post('skpd_monitoring_kinerja_kegiatan','API\RenjaAPIController@SKPDMonitoringKinerjaKegiatan');
 	Route::get('skpd_monitoring_kinerja_kegiatan_average','API\RenjaAPIController@SKPDMonitoringKinerjaKegiatanAverage');
-
 
 
 	//=========================--- REALISASI  UPLOAD BUKTI   ======================================//
