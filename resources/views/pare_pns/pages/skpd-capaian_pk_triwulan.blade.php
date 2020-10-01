@@ -8,9 +8,16 @@
 @section('content')
 	 <div class="content-wrapper" >
 	    <section class="content-header">
+			<?php
+				$xd = request()->segment(4); 
+				$label_name = ( $xd == 'edit') ? ' [ Edit ] ' : '' ;
+				
+				$middleware = request()->segment(1);
+				
+			?>
 			<h1>
-				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('skpd-capaian_pk_triwulan') }}"><span class="fa fa-angle-left"></span></a>
-				Edit Capaian PK [ {!! Pustaka::triwulan($capaian_pk_triwulan->triwulan) !!} ]
+				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route($middleware.'-capaian_pk_triwulan') }}"><span class="fa fa-angle-left"></span></a>
+				Capaian PK {!! Pustaka::triwulan($capaian_pk_triwulan->triwulan) !!}  {{$label_name}}
 			</h1>
 				{!! Breadcrumbs::render('skpd-capaian_pk_triwulan_edit') !!}
       </section>

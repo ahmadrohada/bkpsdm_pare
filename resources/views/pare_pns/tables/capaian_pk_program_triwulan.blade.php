@@ -41,6 +41,11 @@ table.dataTable tbody td {
 				//order 			: [0 , 'asc' ],
 				columnDefs		: [
 									{ "orderable": false, className: "text-center", targets: [ 0,3,4,5 ] },
+									@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )  
+										{ visible: true, "targets": [5]}
+									@else
+										{ visible: false, "targets": [5]}
+									@endif
 									
 								],
 				ajax			: {

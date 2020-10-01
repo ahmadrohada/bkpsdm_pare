@@ -179,6 +179,22 @@ Breadcrumbs::register('admin-puskesmas-pegawai', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_pegawai'), '/pegawai', ['icon' => Lang::get('sidebar-nav.link_icon_pegawai')]);
 });
 
+
+// DASHBOARD > ADMIN > CAPAIAN PK Trwieulan>
+Breadcrumbs::register('admin-capaian_pk_triwulan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_pk_triwulan'), '/public/admin/capaian_pk_triwulan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_pk_triwulan')]);
+});
+
+
+// DASHBOARD > ADMIN > CAPAIAN PK TAHUNAN >
+Breadcrumbs::register('admin-capaian_pk_tahunan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_pk_tahunan'), '/public/admin/capaian_pk_tahunan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian_pk_tahunan')]);
+});
+
 //==========================================================================================================//
 //================================== ES KA PE DE ===========================================================//
 //==========================================================================================================//

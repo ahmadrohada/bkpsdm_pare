@@ -225,7 +225,7 @@ class CapaianTriwulanAPIController extends Controller {
 
             $capaian_triwulan                              = new CapaianTriwulan;
             $capaian_triwulan->pegawai_id                  = Input::get('pegawai_id');
-            $capaian_triwulan->triwulan                   = Input::get('triwulan');
+            $capaian_triwulan->triwulan                    = Input::get('triwulan');
             $capaian_triwulan->skp_tahunan_id              = Input::get('skp_tahunan_id');
             $capaian_triwulan->u_nama                      = Input::get('u_nama');
             $capaian_triwulan->u_jabatan_id                = Input::get('u_jabatan_id');
@@ -234,7 +234,7 @@ class CapaianTriwulanAPIController extends Controller {
             
     
             
-    
+    /* 
             if ( $capaian_triwulan->save()){
                 return \Response::make($capaian_triwulan->id, 200);
                 //add realisasi kegiatan bawahan
@@ -254,7 +254,7 @@ class CapaianTriwulanAPIController extends Controller {
                 
             }else{
                 return \Response::make('error', 500);
-            } 
+            }  */
 
 
     }   

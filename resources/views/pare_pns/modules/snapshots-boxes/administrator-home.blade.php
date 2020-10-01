@@ -29,7 +29,7 @@
 					</div>
 					<div class="icon">
 						<i class="fa fa-users"></i>
-					</div>
+					</div> 
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
@@ -104,6 +104,22 @@
 				</div>
 			</div>
 
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-yellow capaian_perjanjian_kinerja" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							CAPAIAN PERJANJIAN KINERJA
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa fa-tasks"></i>
+					</div>
+				</div>
+			</div>
+
 
 		</div>
 	</div>
@@ -143,6 +159,10 @@ $(document).ready(function(){
 	
 	$(".puskesmas").click(function(){
 		window.location.assign("puskesmas");
+    });
+
+	$(".capaian_perjanjian_kinerja").click(function(){
+		window.location.assign("capaian_pk");
     });
 
 

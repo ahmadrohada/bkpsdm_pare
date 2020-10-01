@@ -612,6 +612,96 @@ class HomeAdminController extends Controller {
     }
 
 
+    public function showCapaianTriwulanPK(Request $request)
+    {
+            
+        $user                   = \Auth::user();
+        $users 			        = \DB::table('users')->get();
+
+        $userRole               = $user->hasRole('personal');
+        $admin_skpdRole         = $user->hasRole('admin_skpd');
+        $adminRole              = $user->hasRole('administrator');
+
+        if($userRole)
+        {
+            $access = 'User';
+        } elseif ($admin_skpdRole) {
+            $access = 'Admin Skpd';
+        } elseif ($adminRole) {
+            $access = 'Administrator';
+        }
+
+
+        //CARI id skpd nya
+        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+       
+		return view('pare_pns.pages.administrator-capaian_pk-triwulan', [
+                'users' 		          => $users,
+                'total_pegawai' 	      => $this->total_pegawai(),
+                'total_users' 	          => $this->total_users(),
+                'total_skpd'              => $this->total_skpd(),
+                'total_TPP_report'        => $this->total_TPP_report(),
+                'total_pohon_kinerja'     => $this->total_pohon_kinerja(),
+                'total_skp_tahunan'       => $this->total_skp_tahunan(),
+                'total_puskesmas'         => $this->total_puskesmas(),
+
+
+                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+        		'user' 			          => $user,
+        		'access' 	              => $access,
+                'h_box'                   => 'box-teal',
+        	]
+        );   
+
+        
+    }
+
+    public function showCapaianTahunanPK(Request $request)
+    {
+            
+        $user                   = \Auth::user();
+        $users 			        = \DB::table('users')->get();
+
+        $userRole               = $user->hasRole('personal');
+        $admin_skpdRole         = $user->hasRole('admin_skpd');
+        $adminRole              = $user->hasRole('administrator');
+
+        if($userRole)
+        {
+            $access = 'User';
+        } elseif ($admin_skpdRole) {
+            $access = 'Admin Skpd';
+        } elseif ($adminRole) {
+            $access = 'Administrator';
+        }
+
+
+        //CARI id skpd nya
+        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+       
+		return view('pare_pns.pages.administrator-capaian_pk-tahunan', [
+                'users' 		          => $users,
+                'total_pegawai' 	      => $this->total_pegawai(),
+                'total_users' 	          => $this->total_users(),
+                'total_skpd'              => $this->total_skpd(),
+                'total_TPP_report'        => $this->total_TPP_report(),
+                'total_pohon_kinerja'     => $this->total_pohon_kinerja(),
+                'total_skp_tahunan'       => $this->total_skp_tahunan(),
+                'total_puskesmas'         => $this->total_puskesmas(),
+
+
+                'nama_skpd' 	          => $this->nama_skpd($skpd_id),
+        		'user' 			          => $user,
+        		'access' 	              => $access,
+                'h_box'                   => 'box-maroon',
+        	]
+        );   
+
+        
+    }
+
+
+
     public function UpdateTable(Request $request)
     {
             

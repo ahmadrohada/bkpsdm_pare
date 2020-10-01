@@ -8,9 +8,12 @@
 @section('content')
 	 <div class="content-wrapper" >
 	    <section class="content-header">
+			<?php
+				$middleware = request()->segment(1);
+			?>
 			<h1>
-				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('skpd-capaian_pk_triwulan') }}"><span class="fa fa-angle-left"></span></a>
-				Monitoring Kinerja
+				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route($middleware.'-capaian_pk_triwulan') }}"><span class="fa fa-angle-left"></span></a>
+				Monitoring Kinerja {{ $renja->Periode->label }} - {{ Pustaka::capital_string($renja->SKPD->skpd) }}
 			</h1>
 				{!! Breadcrumbs::render('skpd-pohon_kinerja') !!}
       </section>

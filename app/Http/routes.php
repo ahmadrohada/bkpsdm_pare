@@ -731,7 +731,7 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	Route::get('skpd_capaian_pk_triwulan_list','API\CapaianPKTriwulanAPIController@SKPDCapaianPKTriwulanList');
 	Route::post('simpan_capaian_pk_triwulan','API\CapaianPKTriwulanAPIController@Store');
 	
-
+	Route::get('administrator_capaian_pk_triwulan_list','API\CapaianPKTriwulanAPIController@AdministratorCapaianPKTriwulanList');
 
 	//========================================================================================================//
 	//==============================  SKPD CAPAIAN  PK TAHUNAN  ==============================================//
@@ -739,6 +739,8 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	Route::get('capaian_pk_tahunan_create_confirm','API\CapaianPKTahunanAPIController@CreateConfirm');
 	Route::get('skpd_capaian_pk_tahunan_list','API\CapaianPKTahunanAPIController@SKPDCapaianPKTahunanList');
 	Route::post('simpan_capaian_pk_tahunan','API\CapaianPKTahunanAPIController@Store');
+
+
 
 
 	//======================   REALISASI SASARAN TRIWULAN      ==================================//
@@ -1191,6 +1193,8 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'HomeAdminController@showPuskesmas'
 	]);
 
+	
+
 
 	/* Route::get('admin/update_table', [
 		'as' 			=> '',
@@ -1344,6 +1348,41 @@ Route::group(['middleware' => 'administrator'], function () {
 		'as' 			=> '{username}',
 		'uses' 			=> 'HomeAdminController@AdministratorPuskesmasPegawaiError'
 	]); 
+
+	//============================================================================================//
+	//========================== ADMIn CAPAIAN PK       ========================================//
+	//============================================================================================//
+	Route::get('admin/capaian_pk', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeAdminController@showCapaianTriwulanPK'
+	]);
+	
+	Route::get('admin/capaian_pk-triwulan', [
+		'as' 			=> 'admin-capaian_pk_triwulan',
+		'uses' 			=> 'HomeAdminController@showCapaianTriwulanPK'
+	]);
+
+	Route::get('admin/capaian_pk-triwulan/{capaian_pk_triwulan_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'CapaianPKTriwulanController@SKPDCapaianPKTriwulanEdit'
+	]);
+
+
+	Route::get('admin/capaian_pk-tahunan', [
+		'as' 			=> '',
+		'uses' 			=> 'HomeAdminController@showCapaianTahunanPK'
+	]);
+	Route::get('admin/capaian_pk-tahunan/{capaian_pk_tahunan_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'CapaianPKTahunanController@SKPDCapaianPKTahunanEdit'
+	]);
+
+	//=======================  MONITORING KINERJA  ==================================//
+	Route::get('admin/monitoring_kinerja/{renja_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'RenjaController@SKPDMonitoringKinerja'
+	]);
+
 
 	//============================================================================================//
 	Route::get('admin/skpd/{skpd_id}/struktur-organisasi', [
