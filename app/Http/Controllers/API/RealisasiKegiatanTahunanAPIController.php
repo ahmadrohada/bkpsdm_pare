@@ -1301,7 +1301,8 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             'target_waktu'          => 'required|numeric|min:1|max:12',
                             'target_cost'           => 'required',
 
-                            'realisasi_quantity'    => 'required|numeric|min:1|max:'.$request->target_quantity,
+                            //'realisasi_quantity'    => 'required|numeric|min:0|max:'.$request->target_quantity,
+                            'realisasi_quantity'    => 'required|numeric|min:0',
                             //'realisasi_quality'     => 'required|numeric|min:1|max:100',
                             'realisasi_waktu'       => 'required|numeric|min:1|max:12',
                             'realisasi_cost'        => 'required',
@@ -1427,7 +1428,8 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             'target_waktu'          => 'required|numeric|min:1|max:12',
                             'target_cost'           => 'required',
 
-                            'realisasi_quantity'    => 'required|numeric|min:1|max:'.$request->target_quantity,
+                            //'realisasi_quantity'    => 'required|numeric|min:1|max:'.$request->target_quantity,
+                            'realisasi_quantity'    => 'required|numeric|min:0',
                             'realisasi_waktu'       => 'required|numeric|min:1|max:12',
                             'realisasi_cost'        => 'required',
                             'satuan'                => 'required',
@@ -1523,7 +1525,8 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             'target_waktu'          => 'required|numeric|min:1|max:12',
                             'target_cost'           => 'required',
 
-                            'realisasi_quantity'    => 'required|numeric|min:1|max:'.$request->target_quantity,
+                            //'realisasi_quantity'    => 'required|numeric|min:1|max:'.$request->target_quantity,
+                            'realisasi_quantity'    => 'required|numeric|min:0',
                             //'realisasi_quality'     => 'required|numeric|min:1|max:100',
                             'realisasi_waktu'       => 'required|numeric|min:1|max:12',
                             'realisasi_cost'        => 'required',

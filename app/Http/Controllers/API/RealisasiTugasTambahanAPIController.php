@@ -97,7 +97,8 @@ class RealisasiTugasTambahanAPIController extends Controller {
                             'tugas_tambahan_id'  => 'required',
                             'capaian_bulanan_id'        => 'required',
                             'target'                    => 'required',
-                            'realisasi'                 => 'required|numeric|max:'.$request->target,
+                            //'realisasi'                 => 'required|numeric|max:'.$request->target,
+                            'realisasi'                 => 'required|numeric',
                             'satuan'                    => 'required',
                         ),
                         $messages
@@ -200,7 +201,8 @@ class RealisasiTugasTambahanAPIController extends Controller {
                             'realisasi_tugas_tambahan_id'    => 'required',
                             'tugas_tambahan_id'              => 'required',
                             'target'                                => 'required',
-                            'realisasi'                             => 'required|numeric|max:'.$request->target,
+                            //'realisasi'                             => 'required|numeric|max:'.$request->target,
+                            'realisasi'                         => 'required|numeric',
                             'satuan'                                => 'required',
                         ),
                         $messages

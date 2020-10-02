@@ -198,7 +198,8 @@ class RealisasiSasaranTahunanAPIController extends Controller {
                             'indikator_sasaran_id'  => 'required',
 
                             'target_quantity'       => 'required|numeric|min:0',
-                            'realisasi_quantity'    => 'required|numeric|min:0|max:'.$request->target_quantity,
+                            //'realisasi_quantity'    => 'required|numeric|min:0|max:'.$request->target_quantity,
+                            'realisasi_quantity'    => 'required|numeric',
                         ),
                         $messages
         );
@@ -283,7 +284,8 @@ class RealisasiSasaranTahunanAPIController extends Controller {
                             'jumlah_indikator'                          => 'required|numeric|min:1',
 
                             'target_quantity'                           => 'required|numeric|min:0',
-                            'realisasi_quantity'                        => 'required|numeric|min:0|max:'.$request->target_quantity,
+                            //'realisasi_quantity'                        => 'required|numeric|min:0|max:'.$request->target_quantity,
+                            'realisasi_quantity'                    => 'required|numeric',
                             'satuan'                                    => 'required',
 
 

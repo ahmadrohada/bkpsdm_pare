@@ -189,7 +189,8 @@ class RealisasiProgramTahunanAPIController extends Controller {
                             'indikator_program_id'  => 'required',
 
                             'target_quantity'       => 'required|numeric|min:0',
-                            'realisasi_quantity'    => 'required|numeric|min:0|max:'.$request->target_quantity,
+                            //'realisasi_quantity'    => 'required|numeric|min:0|max:'.$request->target_quantity,
+                            'realisasi_quantity'    => 'required|numeric|min:0',
                         ),
                         $messages
         );
@@ -274,7 +275,8 @@ class RealisasiProgramTahunanAPIController extends Controller {
                             'jumlah_indikator'                          => 'required|numeric|min:1',
 
                             'target_quantity'                           => 'required|numeric|min:0',
-                            'realisasi_quantity'                        => 'required|numeric|min:0|max:'.$request->target_quantity,
+                            //'realisasi_quantity'                        => 'required|numeric|min:0|max:'.$request->target_quantity,
+                            'realisasi_quantity'                        => 'required|numeric|min:0',
                             'satuan'                                    => 'required',
 
 
