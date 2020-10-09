@@ -41,7 +41,7 @@ class IndikatorTujuanAPIController extends Controller {
             return $x->label_ind_tujuan;
         })
         ->addColumn('target_ind_tujuan', function ($x) {
-            return $x->target.' '.$x->satuan;
+            return Pustaka::decimal($x->target).' '.$x->satuan;
         })
         ->addColumn('action', function ($x) {
             return $x->ind_tujuan_id;
@@ -73,7 +73,7 @@ class IndikatorTujuanAPIController extends Controller {
         $ind_tujuan = array(
             'id'            => $x->ind_tujuan_id,
             'label'         => $x->label,
-            'target'      => $x->target,
+            'target'        => $x->target,
             'satuan'        => $x->satuan
 
         );

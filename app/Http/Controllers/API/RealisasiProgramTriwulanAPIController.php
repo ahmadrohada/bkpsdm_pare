@@ -76,10 +76,11 @@ class RealisasiProgramTriwulanAPIController extends Controller {
 
         $datatables = Datatables::of($dt)
                         ->addColumn('target', function ($x) {
-                            return $x->target.' '.$x->satuan;
+                            return ( $x->realisasi_indikator_id == null ) ? ( Pustaka::decimal($x->target).' '.$x->satuan ): ( Pustaka::decimal($x->realisasi_indikator_target_quantity)." ".$x->realisasi_indikator_satuan );
+                            //return $x->target.' '.$x->satuan; 
                         })
                         ->addColumn('realisasi_quantity', function ($x) {
-                            return $x->realisasi_indikator_realisasi_quantity.' '.$x->realisasi_indikator_satuan;
+                            return Pustaka::decimal($x->realisasi_indikator_realisasi_quantity).' '.$x->realisasi_indikator_satuan;
                         })
                         ->addColumn('action', function ($x) {
                             return $x->sasaran_id;
