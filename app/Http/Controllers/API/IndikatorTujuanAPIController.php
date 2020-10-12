@@ -96,7 +96,7 @@ class IndikatorTujuanAPIController extends Controller {
                         array(
                             'tujuan_id'             => 'required',
                             'label_ind_tujuan'      => 'required',
-                            'target_ind_tujuan'   => 'required',
+                            'target_ind_tujuan'     => 'required|numeric|min:0',
                             //'satuan_ind_tujuan'     => 'required',
                         ),
                         $messages
@@ -143,7 +143,7 @@ class IndikatorTujuanAPIController extends Controller {
                         array(
                             'ind_tujuan_id'          => 'required',
                             'label_ind_tujuan'       => 'required',
-                           'target_ind_tujuan'    => 'required',
+                           'target_ind_tujuan'          => 'required|numeric|min:0',
                             //'satuan_ind_tujuan'      => 'required',
                             
                         ),

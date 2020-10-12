@@ -96,7 +96,7 @@ class IndikatorProgramAPIController extends Controller {
                         array(
                             'program_id'            => 'required',
                             'label_ind_program'     => 'required',
-                            'target_ind_program'  => 'required',
+                            'target_ind_program'    => 'required|numeric|min:0',
                             //'satuan_ind_program'    => 'required',
                         ),
                         $messages
@@ -113,7 +113,7 @@ class IndikatorProgramAPIController extends Controller {
 
         $is->program_id     = Input::get('program_id');
         $is->label          = Input::get('label_ind_program');
-        $is->target       = Input::get('target_ind_program');
+        $is->target         = Input::get('target_ind_program');
         $is->satuan         = Input::get('satuan_ind_program');
 
         if ( $is->save()){
@@ -132,7 +132,7 @@ class IndikatorProgramAPIController extends Controller {
         $messages = [
             'ind_program_id.required'       => 'Harus diisi',
             'label_ind_program.required'    => 'Harus diisi',
-            'target_ind_program.required' => 'Harus diisi',
+            'target_ind_program.required'   => 'Harus diisi',
             //'satuan_ind_program.required'   => 'Harus diisi',
                 
 
@@ -143,7 +143,7 @@ class IndikatorProgramAPIController extends Controller {
                         array(
                             'ind_program_id'        => 'required',
                             'label_ind_program'     => 'required',
-                            'target_ind_program'  => 'required',
+                            'target_ind_program'    => 'required|numeric|min:0',
                             //'satuan_ind_program'    => 'required',
                             
                         ),
@@ -164,7 +164,7 @@ class IndikatorProgramAPIController extends Controller {
 
 
         $is->label             = Input::get('label_ind_program');
-        $is->target          = Input::get('target_ind_program');
+        $is->target             = Input::get('target_ind_program');
         $is->satuan            = Input::get('satuan_ind_program');
 
         if ( $is->save()){

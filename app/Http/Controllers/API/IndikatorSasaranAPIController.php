@@ -93,7 +93,7 @@ class IndikatorSasaranAPIController extends Controller {
                         array(
                             'sasaran_id'            => 'required',
                             'label_ind_sasaran'     => 'required',
-                            'target_ind_sasaran'  => 'required',
+                            'target_ind_sasaran'    => 'required|numeric|min:0',
                             //'satuan_ind_sasaran'    => 'required',
                         ),
                         $messages
@@ -140,7 +140,7 @@ class IndikatorSasaranAPIController extends Controller {
                         array(
                             'ind_sasaran_id'        => 'required',
                             'label_ind_sasaran'     => 'required',
-                            'target_ind_sasaran'  => 'required',
+                            'target_ind_sasaran'    => 'required|numeric|min:0',
                             //'satuan_ind_sasaran'    => 'required',
                             
                         ),

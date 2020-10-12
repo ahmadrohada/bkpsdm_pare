@@ -176,7 +176,7 @@ class IndikatorKegiatanAPIController extends Controller {
                         array(
                             'kegiatan_id'           => 'required',
                             'label_ind_kegiatan'    => 'required',
-                            'target_ind_kegiatan'   => 'required',
+                            'target_ind_kegiatan'   => 'required|numeric|min:0',
                             'satuan_ind_kegiatan'   => 'required',
 
                         ),
@@ -224,7 +224,7 @@ class IndikatorKegiatanAPIController extends Controller {
                         array(
                             'ind_kegiatan_id'        => 'required',
                             'label_ind_kegiatan'     => 'required',
-                            'target_ind_kegiatan'  => 'required',
+                            'target_ind_kegiatan'  => 'required|numeric|min:0',
                             'satuan_ind_kegiatan'    => 'required',
                             
                         ),
