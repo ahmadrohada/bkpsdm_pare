@@ -221,7 +221,7 @@
 										searchable: false,
 										"render": function(data, type, row) {
 										
-												return '<span  data-toggle="tooltip" title="Ubah Data" style="margin:1px;" ><a class="btn btn-info btn-xs ubah_tpp_report_data_id"  data-id="' + row.tpp_report_data_id + '"><i class="fa fa-edit" ></i></a></span>';
+												return '<span  data-toggle="tooltip" title="Sinkronisasi Data" style="margin:1px;" ><a class="btn btn-warning btn-xs ubah_tpp_report_data_id"  data-id="' + row.tpp_report_data_id + '"><i class="fa fa-refresh" ></i></a></span>';
 											
 
 										}

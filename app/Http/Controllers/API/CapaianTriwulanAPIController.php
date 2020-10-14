@@ -196,7 +196,6 @@ class CapaianTriwulanAPIController extends Controller {
                  'u_jabatan_id.required'                 => 'Harus diisi',
 
         ];
-
         $validator = Validator::make(
                         Input::all(),
                         array(
@@ -212,17 +211,10 @@ class CapaianTriwulanAPIController extends Controller {
     
         if ( $validator->fails() ){
             //$messages = $validator->messages();
-                    return response()->json(['errors'=>$validator->messages()],422);
-            
+                    return response()->json(['errors'=>$validator->messages()],422);  
         }
 
-       /*  if ( (Pustaka::tgl_sql(Input::get('tgl_mulai'))) >= (Pustaka::tgl_sql(Input::get('tgl_selesai'))) ){
-            $pesan =  ['masa_penilaian'  => 'Error'] ;
-            return response()->json(['errors'=> $pesan ],422);
-            
-        }
- */
-
+    
             $capaian_triwulan                              = new CapaianTriwulan;
             $capaian_triwulan->pegawai_id                  = Input::get('pegawai_id');
             $capaian_triwulan->triwulan                    = Input::get('triwulan');
@@ -232,29 +224,13 @@ class CapaianTriwulanAPIController extends Controller {
             $capaian_triwulan->p_nama                      = Input::get('p_nama');
             $capaian_triwulan->p_jabatan_id                = Input::get('p_jabatan_id');
             
-    
             
-    /* 
+    
             if ( $capaian_triwulan->save()){
-                return \Response::make($capaian_triwulan->id, 200);
-                //add realisasi kegiatan bawahan
-                
-
-
-
-
-
-
-
-
-
-
-
-
-                
+                return \Response::make($capaian_triwulan->id, 200); 
             }else{
                 return \Response::make('error', 500);
-            }  */
+            }  
 
 
     }   

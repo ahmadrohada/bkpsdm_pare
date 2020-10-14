@@ -76,7 +76,12 @@
 		return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 	}
 
-	
+	function format_quantity(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if ( (charCode >= 46 && <= 57 ) ||  (charCode >= 65 && charCode <=  122) )
+        return true;
+        return false;
+    }
 
 	
       

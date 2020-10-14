@@ -1,4 +1,4 @@
-<div class="modal fade modal-realisasi_tahunan" id="" role="dialog"  aria-hidden="true">
+<div class="modal fade modal-realisasi_kegiatan_triwulan" id="" role="dialog"  aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +8,7 @@
                 </h4>
             </div>
 
-            <form  id="realisasi_tahunan_form" method="POST" action="">
+            <form  id="realisasi_kegiatan_triwulan_form" method="POST" action="">
 
 			<input type="hidden"  name="capaian_triwulan_id">
 			<input type="hidden"  name="ind_kegiatan_id">
@@ -46,7 +46,7 @@
 						<div class="col-md-6 col-xs-6 form-group">	
 							<label class="control-label">Target Quantity </label>
 							<div class="input-group">
-							<input type="text" class="form-control input-sm target_quantity" name="target_quantity">
+							<input type="text" class="form-control input-sm target_quantity" onkeypress='return format_quantity(event)' name="target_quantity">
 								<div class="input-group-addon">
 									<span class="satuan"></span>
 								</div>
@@ -55,7 +55,7 @@
 						<div class="col-md-6 col-xs-6 form-group quantity">	
 							<label class="control-label">Realisasi Quantity</label>
 							<div class="input-group">
-								<input type="text" name="realisasi_quantity" required class="form-control input-sm realisasi_quantity" placeholder="realisasi">
+								<input type="text" name="realisasi_quantity" onkeypress='return format_quantity(event)' required class="form-control input-sm realisasi_quantity" placeholder="realisasi">
 								<div class="input-group-addon">
 									<span class="satuan"></span>
 								</div>
@@ -134,15 +134,17 @@
         
 	}); 
 
-	$('.modal-realisasi_tahunan').on('shown.bs.modal', function(){
+
+
+	$('.modal-realisasi_kegiatan_triwulan').on('shown.bs.modal', function(){
 		
 		$(this).find('input:text')[1].focus();
 		reset_submitx();
 	});
 
-	$('.modal-realisasi_tahunan').on('hidden.bs.modal', function(){
+	$('.modal-realisasi_kegiatan_triwulan').on('hidden.bs.modal', function(){
 		$('.quantity,.cost').removeClass('has-error');
-		$('.modal-realisasi_tahunan').find('[name=realisasi_quantity],[name=realisasi_quality],[name=realisasi_cost]').val('');
+		$('.modal-realisasi_kegiatan_triwulan').find('[name=realisasi_quantity],[name=realisasi_quality],[name=realisasi_cost]').val('');
 	});
 
 
@@ -163,19 +165,19 @@
 
 
 	function on_submitx(){
-		$('.modal-realisasi_tahunan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('.modal-realisasi_kegiatan_triwulan').find('.button_simpan').addClass('fa-spinner faa-spin animated');
 		$('#submit-save').prop('disabled',true);
 	}
 	function reset_submitx(){
-		$('.modal-realisasi_tahunan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
-		$('.modal-realisasi_tahunan').find('.button_simpan').addClass('fa-floppy-o');
+		$('.modal-realisasi_kegiatan_triwulan').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-realisasi_kegiatan_triwulan').find('.button_simpan').addClass('fa-floppy-o');
 		$('#submit-save').prop('disabled',false);
 	}
 
 	$(document).on('click','#submit-save',function(e){
 
 		on_submitx();
-		var data = $('#realisasi_tahunan_form').serialize();
+		var data = $('#realisasi_kegiatan_triwulan_form').serialize();
 
 		//alert(data);
 		$.ajax({
@@ -196,7 +198,7 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-realisasi_tahunan').modal('hide');
+					$('.modal-realisasi_kegiatan_triwulan').modal('hide');
 					$('#realisasi_kegiatan_triwulan_table').DataTable().ajax.reload(null,false);
 					
 					
@@ -243,7 +245,7 @@
 	$(document).on('click','#submit-update',function(e){
 
 		on_submitx();
-		var data = $('#realisasi_tahunan_form').serialize();
+		var data = $('#realisasi_kegiatan_triwulan_form').serialize();
 
 		//alert(data);
 		$.ajax({
@@ -263,7 +265,7 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-realisasi_tahunan').modal('hide');
+					$('.modal-realisasi_kegiatan_triwulan').modal('hide');
 					$('#realisasi_kegiatan_triwulan_table').DataTable().ajax.reload(null,false);
 					
 				},
