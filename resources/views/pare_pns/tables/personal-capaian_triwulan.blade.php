@@ -272,13 +272,14 @@
 		
 		var skp_tahunan_id = $(this).data('skp_tahunan_id') ;
 		var triwulan = $(this).data('triwulan') ;
+		//alert(triwulan);
 
 		$.ajax({
 				url			: '{{ url("api_resource/capaian_triwulan_create_confirm") }}',
 				data 		: { skp_tahunan_id:skp_tahunan_id,triwulan:triwulan },
 				method		: "GET",
 				dataType	: "json",
-				success	: function(data) {
+				success		: function(data) {
 					if ( data == 0 ){
 						modal_create_capaian_triwulan(skp_tahunan_id,triwulan);
 					}else{
@@ -288,13 +289,13 @@
 				},
 				error: function(data){
 					alert("tes gagal ajah");
-				},
+				}/* ,
 				beforeSend: function(){
 					show_loader();
 				},
 				complete: function(){
 					swal.close();
-				} 						
+				} 	 */					
 		});	  
 
 
