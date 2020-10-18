@@ -59,8 +59,8 @@
 	  }
 	  
       /* Fungsi */
-	function formatRupiah(angka, prefix)
-	{
+	function formatRupiah(angka, prefix){
+        
 		var number_string = angka.replace(/[^,\d]/g, '').toString(),
 			split	= number_string.split(','),
 			sisa 	= split[0].length % 3,
@@ -76,12 +76,12 @@
 		return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 	}
 
-	/* function format_quantity(evt) {
+	function format_quantity(evt) {
         var charCode = (evt.which) ? evt.which : event.keyCode ;
-        if ( (charCode >= 46 && <= 57 ) |  (charCode >= 65 && charCode <=  122) )
+        if ( ( charCode > 47 && charCode < 58 ) | ( charCode == 46) |  ( charCode >= 65 && charCode <= 69  )  )
         return true;
         return false;
-    } */
+    }
 
 	
       
