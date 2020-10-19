@@ -55,7 +55,7 @@
 						<div class="col-md-6 col-xs-6 form-group quantity">	
 							<label class="control-label">Realisasi Quantity</label>
 							<div class="input-group">
-								<input type="text" name="realisasi_quantity" onkeypress='return format_quantity(event)' required class="form-control input-sm realisasi_quantity" placeholder="angka atau huruf ABCDE">
+								<input type="text" name="realisasi_quantity" onkeypress='return format_quantity(event)' required class="form-control input-sm realisasi_quantity" placeholder="1234567890ABCDE">
 								<div class="input-group-addon">
 									<span class="satuan"></span>
 								</div>

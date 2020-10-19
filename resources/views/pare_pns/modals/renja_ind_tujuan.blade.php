@@ -26,7 +26,7 @@
 						
 						<div class="col-md-8 form-group target_ind_tujuan">
 						<label class="control-label">Target :</label>
-						<input type="text" name="target_ind_tujuan" id="target_ind_tujuan" required class="form-control input-sm" onkeypress='return format_quantity(event)' placeholder="target">        
+						<input type="text" name="target_ind_tujuan" id="target_ind_tujuan" required class="form-control input-sm" onkeypress='return format_quantity(event)' placeholder="1234567890ABCDE">        
 						</div>
 
 						<div class="col-md-4 form-group satuan_ind_tujuan">

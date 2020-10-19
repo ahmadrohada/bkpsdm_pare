@@ -111,7 +111,7 @@ function mk_sasaran(){
 		});	
 
 
-		$.ajax({
+		$.ajax({ 
 				url			: '{{ url("api_resource/skpd_monitoring_kinerja_sasaran_average") }}',
 				data 		: { renja_id : {!! $renja->id !!} },
 				method		: "GET",

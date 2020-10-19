@@ -46,7 +46,7 @@
 						<div class="col-md-6 col-xs-6 form-group">	
 							<label class="control-label">Target Quantity </label>
 							<div class="input-group">
-								<input type="text" name="target_quantity" required class="form-control input-sm target_quantity" onkeypress='return format_quantity(event)' placeholder="target">
+								<input type="text" name="target_quantity" required class="form-control input-sm target_quantity" onkeypress='return format_quantity(event)' placeholder="1234567890ABCDE">
 								<div class="input-group-addon">
 									<span class="satuan"></span>
 								</div>
@@ -55,7 +55,7 @@
 						<div class="col-md-6 col-xs-6 form-group quantity">	
 							<label class="control-label">Realisasi Quantity</label>
 							<div class="input-group">
-								<input type="text" name="realisasi_quantity" required class="form-control input-sm realisasi_quantity" onkeypress='return format_quantity(event)' placeholder="realisasi">
+								<input type="text" name="realisasi_quantity" required class="form-control input-sm realisasi_quantity" onkeypress='return format_quantity(event)' placeholder="1234567890ABCDE">
 								<div class="input-group-addon">
 									<span class="satuan"></span>
 								</div>

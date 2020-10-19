@@ -75,60 +75,45 @@
 										return row.nama_skpd;
 									}	
 								},
-								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"90px",
+								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"90px", 
 									"render": function ( data, type, row ) {
 
+										if (row.capaian_pk_triwulan1_id == null ){ 
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">X</a></span>';
+										}else{
+											return  '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_triwulan" style="width:75px;" data-triwulan="1" data-id="'+row.capaian_pk_triwulan1_id+'">'+row.capaian_triwulan1+'</a></span>';
+										}
 										
-										if (row.remaining_time_triwulan1 >= 0 ){
-											if (row.capaian_pk_triwulan1_id == null ){ 
-												return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">X</a></span>';
-											}else{
-												return  '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_triwulan" style="width:75px;" data-triwulan="1" data-id="'+row.capaian_pk_triwulan1_id+'"><i class="fa fa-eye" ></i></a></span>';
-											}
-										}else{
-											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">-</a></span>';
-										}	
 									}
 								},
 								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"90px",
 									"render": function ( data, type, row ) {
-										if (row.remaining_time_triwulan2 >= 0 ){
-											if (row.capaian_pk_triwulan2_id == null ){
-												return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">X</a></span>';
-											}else{
-												return  '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_triwulan"  style="width:75px;" data-triwulan="2" data-id="'+row.capaian_pk_triwulan2_id+'"><i class="fa fa-eye" ></i></a></span>';
-											}
+										if (row.capaian_pk_triwulan2_id == null ){
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">X</a></span>';
 										}else{
-											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">-</a></span>';
-										}	
-									}
-								},
-								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"90px",
-									"render": function ( data, type, row ) {
-										if (row.remaining_time_triwulan3 >= 0 ){
-											if (row.capaian_pk_triwulan3_id == null ){
-												return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">X</a></span>';
-											}else{
-												return  '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_triwulan" style="width:75px;"  data-triwulan="3" data-id="'+row.capaian_pk_triwulan3_id+'"><i class="fa fa-eye" ></i></a></span>';
-											}
-										}else{
-											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">-</a></span>';
-											
+											return  '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_triwulan"  style="width:75px;" data-triwulan="2" data-id="'+row.capaian_pk_triwulan2_id+'">'+row.capaian_triwulan2+'</a></span>';
 										}
+										
 									}
 								},
 								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"90px",
 									"render": function ( data, type, row ) {
-										if (row.remaining_time_triwulan4 >= 0 ){
-											if (row.capaian_pk_triwulan4_id == null ){
-												return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">X</a></span>';
-											}else{
-												return  '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_triwulan"  style="width:75px;" data-triwulan="4" data-id="'+row.capaian_pk_triwulan4_id+'"><i class="fa fa-eye" ></i></a></span>';
-											}
+										if (row.capaian_pk_triwulan3_id == null ){
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">X</a></span>';
 										}else{
-											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">-</a></span>';
+											return  '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_triwulan" style="width:75px;"  data-triwulan="3" data-id="'+row.capaian_pk_triwulan3_id+'">'+row.capaian_triwulan3+'</a></span>';
 										}
-
+										
+									}
+								},
+								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"90px",
+									"render": function ( data, type, row ) {
+										if (row.capaian_pk_triwulan4_id == null ){
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">X</a></span>';
+										}else{
+											return  '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_triwulan"  style="width:75px;" data-triwulan="4" data-id="'+row.capaian_pk_triwulan4_id+'">'+row.capaian_triwulan4+'</a></span>';
+										}
+										
 									}
 								},
 								{  data: 'action',width:"20px",

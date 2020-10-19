@@ -950,7 +950,7 @@ class RenjaAPIController extends Controller {
              
         $response= array();
 
-        for ($i =1; $i <= 4; $i++){
+        for ($i =1; $i <= 4; $i++){ 
 
             $no = 0 ;
             $percentage = 0 ;
