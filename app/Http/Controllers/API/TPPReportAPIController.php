@@ -79,11 +79,11 @@ class TPPReportAPIController extends Controller
                                         'access_token'  => 'MjIzNTZmZjItNTJmOS00NjA1LTk5YWEtOGQwN2VhNmIwNjVm',
                                         'approvedOnly'  => true
                                     ],
-                'timeout'       =>  60,
+                'timeout'       =>  360,
                 'query'         =>  [
                                         'month'         => $month ,
                                         'skpdId'        => $skpd_id,
-                                        'limit'         => 10000,
+                                        'limit'         => 2000,
                                     ]
             ]);
            
