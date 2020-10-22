@@ -83,7 +83,7 @@ class TPPReportAPIController extends Controller
                 'query'         =>  [
                                         'month'         => $month ,
                                         'skpdId'        => $skpd_id,
-                                        'limit'         => 2000,
+                                        'limit'         => 10000,
                                     ]
             ]);
            
@@ -1540,6 +1540,7 @@ class TPPReportAPIController extends Controller
             ->WHERE('tb_pegawai.nip', '!=', 'admin')
             ->WHERE('tb_pegawai.status', 'active')
             ->ORDERBY('skp.id','ASC')
+            
             ->get(); 
 
             foreach ($tpp_data as $x) {
