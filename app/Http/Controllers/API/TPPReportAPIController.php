@@ -1449,15 +1449,15 @@ class TPPReportAPIController extends Controller
 
 
             //AMBIL DATA KEHADIRAN   from SIAP WITH ID SKPD AND BULAN TAHUN
-            if ( $st_kt->skpd_id != 19 ){
+            //if ( $st_kt->skpd_id != 19 ){
                 $dt             = Periode::WHERE('periode.id',$st_kt->periode_id)->first();
                 $month          = Pustaka::periode_tahun($dt->label).'-'.$bulan_lalu;
                 $data_kehadiran = $this->data_kehadiran($month,$st_kt->skpd_id);
-            }else{
+            /* }else{
                 $dt             = Periode::WHERE('periode.id',$st_kt->periode_id)->first();
                 $month          = Pustaka::periode_tahun($dt->label).'-'.$bulan_lalu;
                 $data_kehadiran = null ;
-            }
+            } */
             
 
 
