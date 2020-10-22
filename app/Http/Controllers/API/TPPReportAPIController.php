@@ -1540,8 +1540,6 @@ class TPPReportAPIController extends Controller
             ->WHERE('tb_pegawai.nip', '!=', 'admin')
             ->WHERE('tb_pegawai.status', 'active')
             ->ORDERBY('skp.id','ASC')
-            //mencegah duplikat data
-            ->GROUPBY('tb_pegawai.id')
             ->get(); 
 
             foreach ($tpp_data as $x) {
