@@ -1448,16 +1448,10 @@ class TPPReportAPIController extends Controller
             }
 
 
-            
-            if ($st_kt->skpd_id == 19  ){
-                $data_kehadiran = null;
-            }else{
-                //AMBIL DATA KEHADIRAN   from SIAP WITH ID SKPD AND BULAN TAHUN
-                $dt             = Periode::WHERE('periode.id',$st_kt->periode_id)->first();
-                $month          = Pustaka::periode_tahun($dt->label).'-'.$bulan_lalu;
-                $data_kehadiran = $this->data_kehadiran($month,$st_kt->skpd_id);
-            }
-           
+            //AMBIL DATA KEHADIRAN   from SIAP WITH ID SKPD AND BULAN TAHUN
+            $dt             = Periode::WHERE('periode.id',$st_kt->periode_id)->first();
+            $month          = Pustaka::periode_tahun($dt->label).'-'.$bulan_lalu;
+            $data_kehadiran = $this->data_kehadiran($month,$st_kt->skpd_id);
 
 
             
@@ -1546,7 +1540,8 @@ class TPPReportAPIController extends Controller
             ->WHERE('tb_pegawai.nip', '!=', 'admin')
             ->WHERE('tb_pegawai.status', 'active')
             ->ORDERBY('skp.id','ASC')
-            
+            //mencegah duplikat data
+            ->GROUPBY('tb_pegawai.id')
             ->get(); 
 
             foreach ($tpp_data as $x) {
