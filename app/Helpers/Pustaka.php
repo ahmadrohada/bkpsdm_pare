@@ -392,23 +392,29 @@ class Pustaka {
 	}
 
 	public static function decimal( $a){
-		$data = str_replace( ',', '', $a );
-		if ( $data > 0 ){
-			$x	= explode('.',$data);
-			if ( isset($x[1])){
-				if (  $x[1] == '00' ){
-					$hasil = number_format(($data) , 0);
+		//JIKA BUKAN NUMBER
+		if(!is_numeric($a)){
+			return $a;
+		}else{
+			$data = str_replace( ',', '', $a );
+			if ( $data > 0 ){
+				$x	= explode('.',$data);
+				if ( isset($x[1])){
+					if (  $x[1] == '00' ){
+						$hasil = number_format(($data) , 0);
+					}else{
+						//$hasil = number_format(($data) , 2);
+						$hasil =  $data;
+					}
 				}else{
-					//$hasil = number_format(($data) , 2);
-					$hasil =  $data;
+					$hasil = number_format(($data) , 0);
 				}
 			}else{
-				$hasil = number_format(($data) , 0);
+				$hasil = 0 ;
 			}
-		}else{
-			$hasil = 0 ;
+			return $hasil;
 		}
-		return $hasil;
+		
 	}
 
 	public static function ave($data,$data2){
