@@ -178,7 +178,7 @@ class RealisasiProgramTriwulanAPIController extends Controller {
                 
                 'target_quantity.required'     => 'Harus diisi',
                 'realisasi_quantity.required'  => 'Harus diisi',
-                'satuan.required'              => 'Harus diisi',
+                //'satuan.required'              => 'Harus diisi',
 
         ];
 
@@ -189,9 +189,9 @@ class RealisasiProgramTriwulanAPIController extends Controller {
                             'program_id'            => 'required',
                             'indikator_program_id'  => 'required',
 
-                            'target_quantity'       => 'required|numeric|min:0',
+                            'target_quantity'       => 'required',
                             //'realisasi_quantity'    => 'required|numeric|min:0|max:'.$request->target_quantity,
-                            'realisasi_quantity'    => 'required|numeric|min:0',
+                            'realisasi_quantity'    => 'required',
                         ),
                         $messages
         );

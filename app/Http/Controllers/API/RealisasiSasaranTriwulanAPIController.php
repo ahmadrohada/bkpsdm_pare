@@ -187,7 +187,7 @@ class RealisasiSasaranTriwulanAPIController extends Controller {
                 
                 'target_quantity.required'     => 'Harus diisi',
                 'realisasi_quantity.required'  => 'Harus diisi',
-                'satuan.required'              => 'Harus diisi',
+                //'satuan.required'              => 'Harus diisi',
 
         ];
 
@@ -198,9 +198,9 @@ class RealisasiSasaranTriwulanAPIController extends Controller {
                             'sasaran_id'            => 'required',
                             'indikator_sasaran_id'  => 'required',
 
-                            'target_quantity'       => 'required|numeric|min:0',
+                            'target_quantity'       => 'required',
                             //'realisasi_quantity'    => 'required|numeric|min:0|max:'.$request->target_quantity,
-                            'realisasi_quantity'    => 'required|numeric|min:0',
+                            'realisasi_quantity'    => 'required',
                         ),
                         $messages
         );
@@ -268,7 +268,7 @@ class RealisasiSasaranTriwulanAPIController extends Controller {
 
                 'target_quantity.required'                          => 'Harus diisi',
                 'realisasi_quantity.required'                       => 'Harus diisi',
-                'satuan.required'                                   => 'Harus diisi',
+                //'satuan.required'                                   => 'Harus diisi',
 
                 
         
@@ -284,10 +284,10 @@ class RealisasiSasaranTriwulanAPIController extends Controller {
                             'indikator_sasaran_id'                      => 'required',
                             'jumlah_indikator'                          => 'required|numeric|min:1',
 
-                            'target_quantity'                           => 'required|numeric|min:0',
+                            'target_quantity'                           => 'required',
                             //'realisasi_quantity'                        => 'required|numeric|min:0|max:'.$request->target_quantity,
-                            'realisasi_quantity'                        => 'required|numeric|min:0',
-                            'satuan'                                    => 'required',
+                            'realisasi_quantity'                        => 'required',
+                            //'satuan'                                    => 'required',
 
 
                         ),
