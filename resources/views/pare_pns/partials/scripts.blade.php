@@ -78,7 +78,7 @@
 
 	function format_quantity(evt) {
         var charCode = (evt.which) ? evt.which : event.keyCode ;
-        if ( ( charCode > 47 && charCode < 58 ) | ( charCode == 46) |  ( charCode >= 65 && charCode <= 69  )  )
+        if ( ( charCode > 47 && charCode < 58 ) | ( charCode == 46) |  ( charCode >= 65 && charCode <= 90  )  )
         return true;
         return false;
     }

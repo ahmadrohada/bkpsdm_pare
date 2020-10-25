@@ -30,7 +30,7 @@
 						
 						<div class="col-md-8 form-group target_ind_kegiatan">
 						<label class="control-label">Target :</label>
-						<input type="text" name="target_ind_kegiatan" id="target_ind_kegiatan" onkeypress='return format_quantity(event)' required class="form-control input-sm" placeholder="1234567890ABCDE">        
+						<input type="text" name="target_ind_kegiatan" id="target_ind_kegiatan" onkeypress='return format_quantity(event)' required class="form-control input-sm" placeholder="huruf capital / angka">        
 						</div>
 
 						<div class="col-md-4 form-group satuan_ind_kegiatan">
