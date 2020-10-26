@@ -221,7 +221,12 @@ class CapaianPKTriwulanAPIController extends Controller {
                         $percentage += $this->hitung_percentage_realisasi_indikator_sasaran_triwulan($x->renja_id,1,$xt->indikator_sasaran_id,$xt->indikator_sasaran_target);                    	
                     }	
 
-                    return number_format(($percentage/$no) ,2).' %';
+                    if ($no > 0 ){
+                        return Pustaka::persen2($percentage,$no);
+                    }else{
+                        return '';
+                    }
+                    
                 
                   
                 
@@ -245,7 +250,11 @@ class CapaianPKTriwulanAPIController extends Controller {
                         $percentage += $this->hitung_percentage_realisasi_indikator_sasaran_triwulan($x->renja_id,2,$xt->indikator_sasaran_id,$xt->indikator_sasaran_target);                    	
                     }	
 
-                    return number_format(($percentage/$no) ,2).' %';
+                    if ($no > 0 ){
+                        return Pustaka::persen2($percentage,$no);
+                    }else{
+                        return '';
+                    }
         })
         ->addColumn('capaian_triwulan3', function ($x){
             /* $tahun = Pustaka::tahun($x->awal);
@@ -266,7 +275,11 @@ class CapaianPKTriwulanAPIController extends Controller {
                         $percentage += $this->hitung_percentage_realisasi_indikator_sasaran_triwulan($x->renja_id,3,$xt->indikator_sasaran_id,$xt->indikator_sasaran_target);                    	
                     }	
 
-                    return number_format(($percentage/$no) ,2).' %';
+                    if ($no > 0 ){
+                        return Pustaka::persen2($percentage,$no);
+                    }else{
+                        return '';
+                    }
         })
         ->addColumn('capaian_triwulan4', function ($x){
            /*  $tahun = Pustaka::tahun($x->awal);
@@ -287,7 +300,11 @@ class CapaianPKTriwulanAPIController extends Controller {
                         $percentage += $this->hitung_percentage_realisasi_indikator_sasaran_triwulan($x->renja_id,4,$xt->indikator_sasaran_id,$xt->indikator_sasaran_target);                    	
                     }	
 
-                    return number_format(($percentage/$no) ,2).' %';
+                    if ($no > 0 ){
+                        return Pustaka::persen2($percentage,$no);
+                    }else{
+                        return '';
+                    }
         });
 
         if ($keyword = $request->get('search')['value']) {
