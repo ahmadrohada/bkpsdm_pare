@@ -50,23 +50,34 @@
 
 @endsection
 @section('content')
-    <div class="login-box box-login-style">
-		<div class="login-logo">
-			<img src="{{asset('assets/images/form/logo.png')}}" >
-			<h3 class="visible-lg visible-md  login-header" style="color:#077821; text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px white;">Performance Agreement Report by Electronic</h3>
-			<h4 class="visible-sm visible-xs  login-header" style="color:#077821; text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px white;">Performance Agreement Report by Electronic</h4>
-		
-		</div>
-		<div class="login-box-body" style="border-radius: 3px !important; background-color:rgba(255,255, 255, 0.3);">
 
-			@include('pare_pns.partials.return-messages')
-			<h4 class="login-box-msg">
-			  	{{-- Lang::get('auth.login') --}}
-			</h4>
-			@include('pare_pns.forms.login-form')
-			<hr>
-		  </div>
-    </div>
+	<div class="col-lg-6">
+		<div class="login-box box-login-style">
+			<div class="login-logo">
+				<img src="{{asset('assets/images/form/logo.png')}}" >
+				<h3 class="visible-lg visible-md  login-header" style="color:#077821; text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px white;">Performance Agreement Report by Electronic</h3>
+				<h4 class="visible-sm visible-xs  login-header" style="color:#077821; text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px white;">Performance Agreement Report by Electronic</h4>
+			
+			</div>
+			<div class="login-box-body" style="border-radius: 3px !important; background-color:rgba(255,255, 255, 0.3);">
+	
+				@include('pare_pns.partials.return-messages')
+				<h4 class="login-box-msg">
+					  {{-- Lang::get('auth.login') --}}
+				</h4>
+				@include('pare_pns.forms.login-form')
+				<hr>
+			  </div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<section class="content">
+			<div class="nav-tabs-custom" hidden>
+				
+				@include('pare_pns.tables.unauth_capaian_pk_sasaran_triwulan')
+			</div>
+		</section>
+	</div>
 @endsection
 
 @section('template_scripts')

@@ -44,7 +44,7 @@
 			</div>
 
 
-				<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-red capaian_tahunan" style="cursor:pointer;">
 					<div class="inner">
 						<h3 class="personal_jm_capaian_tahunan">
@@ -59,6 +59,8 @@
 					</div>
 				</div>
 			</div>
+
+			
 
 
 

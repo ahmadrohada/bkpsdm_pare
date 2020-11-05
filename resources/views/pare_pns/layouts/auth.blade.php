@@ -7,7 +7,7 @@
 
 {{-- Load Auth Layout Head --}}
 @section('layout-head')
-
+	@include('pare_pns.partials.scripts')
     {{-- Load Common Admin Head --}}
 	@include('pare_pns.structure.head')
 
@@ -22,7 +22,7 @@
 
 {{-- Load Layout Scripts --}}
 @section('layout-scripts')
-
+	@include('pare_pns.partials.scripts')
 	@yield('template_scripts')
 
 @stop

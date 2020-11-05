@@ -615,6 +615,8 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 
 	Route::post('tpp_report_data_update','API\TPPReportAPIController@TPPReportDataUpdate');
 
+	Route::get('personal_tpp_report_data_list','API\TPPReportAPIController@PersonalTPPReportDataList');
+
 
 	//============================= TPP REPORT DATA KEHADIRAN=====================================================//
 	
@@ -1830,6 +1832,11 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	Route::get('capaian-tahunan', [
 		'as' 			=> 'personal-capaian_tahunan',
 		'uses' 			=> 'HomePersonalController@showCapaianTahunan'
+	]);
+
+	Route::get('tpp', [
+		'as' 			=> '',
+		'uses' 			=> 'HomePersonalController@showTPP'
 	]);
 
 //======================= A P P R O V A L    R E Q U E S T ==================================//

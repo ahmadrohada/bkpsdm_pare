@@ -220,6 +220,11 @@ return [
 	'link_title_tpp_report_cetak'    		=> 'Cetak TPP Report',
 	'link_icon_tpp_report_cetak'     		=> 'fa-print',
 
+	//TPP PERSONAL LIST
+
+	'link_title_tpp'    		=> 'TPP',
+	'link_icon_tpp'     		=> 'fa-money',
+
 
 	// PUSKESDAMS
 	'link_title_puskesmas'    		=> 'Puskesmas',
