@@ -74,7 +74,7 @@
 		<section class="content">
 			<div class="nav-tabs-custom" hidden>
 				
-				@include('pare_pns.tables.unauth_capaian_pk_sasaran_triwulan')
+				
 			</div>
 		</section>
 	</div>
