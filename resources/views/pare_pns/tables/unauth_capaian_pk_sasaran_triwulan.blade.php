@@ -1,115 +1,126 @@
-<div class="box-body table-responsive" style="min-height:330px;">
-	<div class="toolbar">  
- 	</div>
-
-	<table id="realisasi_sasaran_triwulan_table" class="table table-striped table-hover" >
-		<thead>
-			<tr>
-				<th>NO</th>
-				<th>SASARAN PERJANJIAN KINERJA</th>
-				<th>INDIKATOR SASARAN</th>
-				<th>TARGET</th>
-				<th>REALISASI</th>
-				<th><i class="fa fa-cog"></i></th>
-			</tr>
-		</thead>
-							
-	</table>
-
+<div class="box">
+    <div class="box-header with-border">
+        <h1 class="box-title">
+            Data Capaian PK - Triwulan 2020
+        </h1>
+	</div>
+	<div class="row" style="padding:5px 30px; min-height:490px;">
+		<div class="box-body">
+			<table id="capaian_pk_triwulan_table" class="table table-striped table-hover">
+				<thead>
+					<tr class="success">
+						<th rowspan="2">NO</th>
+						<th rowspan="2">SKPD</th>
+						<th colspan="4">CAPAIAN PK - TRIWULAN</th>
+						<th rowspan="2"><i class="fa fa-cog"></i></th>
+					</tr>
+					<tr>
+						<th>TRIWULAN I</th>
+						<th>TRIWULAN II</th>
+						<th>TRIWULAN III</th>
+						<th>TRIWULAN IV</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
 </div>
 
-<style>
-table.dataTable tbody td {
-  vertical-align: middle;
-}
-</style>
-
-
-@include('pare_pns.modals.realisasi_sasaran_triwulan')
+@include('pare_pns.modals.create_capaian_pk_triwulan_confirm')
 
 <script type="text/javascript">
-
-	load_sasaran_triwulan();
-  	function load_sasaran_triwulan(){
-		
-		var table_sasaran_triwulan = $('#realisasi_sasaran_triwulan_table').DataTable({
-				destroy			: true,
-				processing      : false,
+	$('#capaian_pk_triwulan_table').DataTable({
+				processing      : true,
 				serverSide      : true,
-				searching      	: true,
-				paging          : false,
-				//order 			: [0 , 'asc' ],
+				searching      	: false,
+				paging          : true,
+				bInfo			: false,
+				bSort			: false,
+				lengthChange	: false,
+				lengthMenu		: [25],
 				columnDefs		: [
-									{ "orderable": false, className: "text-center", targets: [ 0,3,4,5 ] },
-									@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )  
-										{ visible: true, "targets": [5]}
-									@else
-										{ visible: false, "targets": [5]}
-									@endif
-									 
+									{ 	className: "text-center", targets: [ 0,2,3,4,5,6 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_sasaran_triwulan") }}',
-									data: { 
-											"capaian_pk_triwulan_id" 	: 789,
-											"renja_id" 					: 45,
-										 },
+									url	: '{{ url("api_resource/unauth_capaian_pk_list") }}',
+									data: { },
+									delay:3000
+
 								},
-				targets			: 'no-sort',
-				bSort			: false,
-				rowsGroup		: [ 1 ],
-				columns			: [
-									{ data: 'sasaran_id' , orderable: true,searchable:false,width:"30px",
-										"render": function ( data, type, row ,meta) {
-											return meta.row + meta.settings._iDisplayStart + 1 ;
-										}
-									},
-									{ data: "sasaran_label", name:"sasaran_label",
-										"render": function ( data, type, row ) {
-											return row.sasaran_label;
-											
-										}
-									}, 
-									{ data: "indikator_label", name:"indikator_label",
-										"render": function ( data, type, row ) {
-											return row.indikator_label;
-											
-										}
-									}, 
-									
-									{ data: "target", name:"target", width:"100px",
-										"render": function ( data, type, row ) {
-											return row.target ;
-										}
-									},
-									{ data: "realisasi_quantity", name:"realisasi_quantity", width:"100px",
-										"render": function ( data, type, row ) {
-											if ( (row.realisasi_indikator_id) >= 1 ){
-												return row.realisasi_quantity ;
-											}else{
-												return  '-';
-											
-											} 
+				
+				columns			:[
+								{ data: 'renja_id' , orderable: true,searchable:false,width:"35px",
+									"render": function ( data, type, row ,meta) {
+										return meta.row + meta.settings._iDisplayStart + 1 ;
+									}
+								},
+								{ data: "nama_skpd" ,  name:"nama_skpd", orderable: true, searchable: true,width:"250px",
+									"render": function ( data, type, row ) {
+										return row.nama_skpd;
+									}	
+								},
+								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"90px", 
+									"render": function ( data, type, row ) {
 
-											
+										if (row.capaian_pk_triwulan1_id == null ){ 
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">X</a></span>';
+										}else{
+											return  '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_triwulan" style="width:75px;" data-triwulan="1" data-id="'+row.capaian_pk_triwulan1_id+'">'+row.capaian_triwulan1+'</a></span>';
 										}
-									},
-									{  data: 'action',width:"60px",
-											"render": function ( data, type, row ) {
 										
-												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs "  "><i class="fa fa-pencil" ></i></a></span>'+
-														'<span style="margin:2px;" ><a class="btn btn-default btn-xs "  "><i class="fa fa-close " ></i></a></span>';
-									
+									}
+								},
+								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"90px",
+									"render": function ( data, type, row ) {
+										if (row.capaian_pk_triwulan2_id == null ){
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">X</a></span>';
+										}else{
+											return  '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_triwulan"  style="width:75px;" data-triwulan="2" data-id="'+row.capaian_pk_triwulan2_id+'">'+row.capaian_triwulan2+'</a></span>';
 										}
-									},
-									
+										
+									}
+								},
+								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"90px",
+									"render": function ( data, type, row ) {
+										if (row.capaian_pk_triwulan3_id == null ){
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">X</a></span>';
+										}else{
+											return  '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_triwulan" style="width:75px;"  data-triwulan="3" data-id="'+row.capaian_pk_triwulan3_id+'">'+row.capaian_triwulan3+'</a></span>';
+										}
+										
+									}
+								},
+								{ data: "capaian_triwulan" , orderable: false,searchable:false,width:"90px",
+									"render": function ( data, type, row ) {
+										if (row.capaian_pk_triwulan4_id == null ){
+											return  '<span style="margin:1px;" ><a class="btn btn-default btn-xs" style="width:75px; cursor:default;">X</a></span>';
+										}else{
+											return  '<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_triwulan"  style="width:75px;" data-triwulan="4" data-id="'+row.capaian_pk_triwulan4_id+'">'+row.capaian_triwulan4+'</a></span>';
+										}
+										
+									}
+								},
+								{  data: 'action',width:"20px",visible: false,
+									"render": function ( data, type, row ) {
+										return  '<span  data-toggle="tooltip" title="Monitoring Kinerja" style="margin:2px;" ><a class="btn btn-info btn-xs monitoring_kinerja"  data-id="'+row.renja_id+'"><i class="fa fa-eye" ></i></a></span>';
+									}
+								},
 								
-								],
-								initComplete: function(settings, json) {
-								
-							}
-		});	
-	}
+							]
+			
+	});
 
 
+	$(document).on('click','.monitoring_kinerja',function(e){
+		var renja_id = $(this).data('id') ;
+		window.location.assign("monitoring_kinerja/"+renja_id);
+	});
+
+	$(document).on('click','.lihat_capaian_triwulan',function(e){
+		var capaian_pk_id = $(this).data('id') ;
+		window.location.assign("capaian_pk-triwulan/"+capaian_pk_id);
+	});
+
+	  
+	
 </script>

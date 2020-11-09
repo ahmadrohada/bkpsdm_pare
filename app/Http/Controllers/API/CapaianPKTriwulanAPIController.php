@@ -316,6 +316,185 @@ class CapaianPKTriwulanAPIController extends Controller {
     }
 
 
+    public function UnAuthAdministratorCapaianPKTriwulanList(Request $request)  
+    {
+    
+        $dt = Renja::
+                    leftjoin('db_pare_2018.periode AS periode', function($join){
+                        $join   ->on('renja.periode_id','=','periode.id');
+                    }) 
+                    ->leftjoin('demo_asn.m_skpd AS skpd', function($join) { 
+                        $join   ->on('renja.skpd_id','=','skpd.id');
+                        
+                    })  
+                    //CAPAIAN TRIWULAN I
+                    ->leftjoin('db_pare_2018.capaian_pk_triwulan AS triwulan1', function($join){
+                        $join   ->on('triwulan1.renja_id','=','renja.id');
+                        $join   ->where('triwulan1.triwulan','=','1');
+                    })
+                     //CAPAIAN TRIWULAN II
+                    ->leftjoin('db_pare_2018.capaian_pk_triwulan AS triwulan2', function($join){
+                        $join   ->on('triwulan2.renja_id','=','renja.id');
+                        $join   ->where('triwulan2.triwulan','=','2');
+                    })
+                    //CAPAIAN TRIWULAN III
+                    ->leftjoin('db_pare_2018.capaian_pk_triwulan AS triwulan3', function($join){
+                        $join   ->on('triwulan3.renja_id','=','renja.id');
+                        $join   ->where('triwulan3.triwulan','=','3');
+                    })
+                     //CAPAIAN TRIWULAN IV
+                    ->leftjoin('db_pare_2018.capaian_pk_triwulan AS triwulan4', function($join){
+                        $join   ->on('triwulan4.renja_id','=','renja.id');
+                        $join   ->where('triwulan4.triwulan','=','4');
+                    })
+                    ->SELECT(   
+                                'renja.id AS renja_id',
+                                'renja.send_to_kaban',
+                                'renja.kepala_skpd_id',
+                                'renja.nama_kepala_skpd',
+                                'renja.status_approve',
+                                'periode.label AS periode_label',
+                                'periode.awal AS awal',
+                                'skpd.skpd AS nama_skpd',
+
+                                'triwulan1.id AS capaian_pk_triwulan1_id',
+                                'triwulan2.id AS capaian_pk_triwulan2_id',
+                                'triwulan3.id AS capaian_pk_triwulan3_id',
+                                'triwulan4.id AS capaian_pk_triwulan4_id',
+                                'triwulan1.status AS capaian_pk_triwulan1_status',
+                                'triwulan2.status AS capaian_pk_triwulan2_status',
+                                'triwulan3.status AS capaian_pk_triwulan3_status',
+                                'triwulan4.status AS capaian_pk_triwulan4_status'
+                            )
+                    ->WHERE('periode.id', 6 )
+                    ->ORDERBY('skpd.id','ASC')
+                    ->get();
+        //return $dt;
+
+        
+        $datatables = Datatables::of($dt)
+        
+        ->addColumn('periode', function ($x) {
+            return $x->periode_label;
+        })->addColumn('nama_skpd', function ($x) {
+            return Pustaka::capital_string($x->nama_skpd);
+        })->addColumn('nama_kepala_skpd', function ($x) {
+            return $x->nama_kepala_skpd;
+        })
+        ->addColumn('capaian_triwulan1', function ($x){
+           /*  $tahun = Pustaka::tahun($x->awal);
+            $tgl_selesai = strtotime($tahun."-04-01");
+            $now         = time();
+            return floor(($tgl_selesai - $now)/ (60*60*24)) * -1; */
+            $renja = Tujuan::
+                            leftjoin('db_pare_2018.renja_sasaran AS sasaran', function($join) {  $join   ->on('sasaran.tujuan_id','=','renja_tujuan.id');}) 
+                            ->leftjoin('db_pare_2018.renja_indikator_sasaran AS indikator_sasaran', function($join) { $join   ->on('indikator_sasaran.sasaran_id','=','sasaran.id');})                
+                            ->SELECT('sasaran.id AS sasarann_id', 'indikator_sasaran.id AS indikator_sasaran_id','indikator_sasaran.target AS indikator_sasaran_target')
+                            ->WHERE('renja_tujuan.renja_id','=',$x->renja_id)
+                            ->get();
+             
+                    $no = 0 ;
+                    $percentage = 0 ;
+                    foreach ($renja as $xt) {
+                        $no++;    
+                        $percentage += $this->hitung_percentage_realisasi_indikator_sasaran_triwulan($x->renja_id,1,$xt->indikator_sasaran_id,$xt->indikator_sasaran_target);                    	
+                    }	
+
+                    if ($no > 0 ){
+                        return Pustaka::persen2($percentage,$no);
+                    }else{
+                        return '';
+                    }
+                    
+                
+                  
+                
+        })
+        ->addColumn('capaian_triwulan2', function ($x){
+            /* $tahun = Pustaka::tahun($x->awal);
+            $tgl_selesai = strtotime($tahun."-07-01");
+            $now         = time();
+            return floor(($tgl_selesai - $now)/ (60*60*24)) * -1; */
+            $renja = Tujuan::
+                            leftjoin('db_pare_2018.renja_sasaran AS sasaran', function($join) {  $join   ->on('sasaran.tujuan_id','=','renja_tujuan.id');}) 
+                            ->leftjoin('db_pare_2018.renja_indikator_sasaran AS indikator_sasaran', function($join) { $join   ->on('indikator_sasaran.sasaran_id','=','sasaran.id');})                
+                            ->SELECT('sasaran.id AS sasarann_id', 'indikator_sasaran.id AS indikator_sasaran_id','indikator_sasaran.target AS indikator_sasaran_target')
+                            ->WHERE('renja_tujuan.renja_id','=',$x->renja_id)
+                            ->get();
+             
+                    $no = 0 ;
+                    $percentage = 0 ;
+                    foreach ($renja as $xt) {
+                        $no++;    
+                        $percentage += $this->hitung_percentage_realisasi_indikator_sasaran_triwulan($x->renja_id,2,$xt->indikator_sasaran_id,$xt->indikator_sasaran_target);                    	
+                    }	
+
+                    if ($no > 0 ){
+                        return Pustaka::persen2($percentage,$no);
+                    }else{
+                        return '';
+                    }
+        })
+        ->addColumn('capaian_triwulan3', function ($x){
+            /* $tahun = Pustaka::tahun($x->awal);
+            $tgl_selesai = strtotime($tahun."-10-01");
+            $now         = time();
+            return floor(($tgl_selesai - $now)/ (60*60*24)) * -1; */
+            $renja = Tujuan::
+                            leftjoin('db_pare_2018.renja_sasaran AS sasaran', function($join) {  $join   ->on('sasaran.tujuan_id','=','renja_tujuan.id');}) 
+                            ->leftjoin('db_pare_2018.renja_indikator_sasaran AS indikator_sasaran', function($join) { $join   ->on('indikator_sasaran.sasaran_id','=','sasaran.id');})                
+                            ->SELECT('sasaran.id AS sasarann_id', 'indikator_sasaran.id AS indikator_sasaran_id','indikator_sasaran.target AS indikator_sasaran_target')
+                            ->WHERE('renja_tujuan.renja_id','=',$x->renja_id)
+                            ->get();
+             
+                    $no = 0 ;
+                    $percentage = 0 ;
+                    foreach ($renja as $xt) {
+                        $no++;    
+                        $percentage += $this->hitung_percentage_realisasi_indikator_sasaran_triwulan($x->renja_id,3,$xt->indikator_sasaran_id,$xt->indikator_sasaran_target);                    	
+                    }	
+
+                    if ($no > 0 ){
+                        return Pustaka::persen2($percentage,$no);
+                    }else{
+                        return '';
+                    }
+        })
+        ->addColumn('capaian_triwulan4', function ($x){
+           /*  $tahun = Pustaka::tahun($x->awal);
+            $tgl_selesai = strtotime(($tahun+1)."-01-01");
+            $now         = time();
+            return floor(($tgl_selesai - $now)/ (60*60*24)) * -1; */
+            $renja = Tujuan::
+                            leftjoin('db_pare_2018.renja_sasaran AS sasaran', function($join) {  $join   ->on('sasaran.tujuan_id','=','renja_tujuan.id');}) 
+                            ->leftjoin('db_pare_2018.renja_indikator_sasaran AS indikator_sasaran', function($join) { $join   ->on('indikator_sasaran.sasaran_id','=','sasaran.id');})                
+                            ->SELECT('sasaran.id AS sasarann_id', 'indikator_sasaran.id AS indikator_sasaran_id','indikator_sasaran.target AS indikator_sasaran_target')
+                            ->WHERE('renja_tujuan.renja_id','=',$x->renja_id)
+                            ->get();
+             
+                    $no = 0 ;
+                    $percentage = 0 ;
+                    foreach ($renja as $xt) {
+                        $no++;    
+                        $percentage += $this->hitung_percentage_realisasi_indikator_sasaran_triwulan($x->renja_id,4,$xt->indikator_sasaran_id,$xt->indikator_sasaran_target);                    	
+                    }	
+
+                    if ($no > 0 ){
+                        return Pustaka::persen2($percentage,$no);
+                    }else{
+                        return '';
+                    }
+        });
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
+        
+
+    return $datatables->make(true);
+    }
+
+
     public function Store(Request $request)
 	{
         $messages = [

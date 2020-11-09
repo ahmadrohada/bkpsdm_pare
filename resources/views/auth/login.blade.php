@@ -51,7 +51,7 @@
 @endsection
 @section('content')
 
-	<div class="col-lg-6">
+	<div class="col-lg-4">
 		<div class="login-box box-login-style">
 			<div class="login-logo">
 				<img src="{{asset('assets/images/form/logo.png')}}" >
@@ -70,13 +70,13 @@
 			  </div>
 		</div>
 	</div>
-	<div class="col-lg-6">
-		<section class="content">
-			<div class="nav-tabs-custom" hidden>
+	<div class="col-lg-8 visible-lg">
+		
+			<div style="height:495px; padding:10px 10px;" class="nav-tabs-custom table-responsive">
 				
-				
+				@include('pare_pns.tables.unauth_capaian_pk_sasaran_triwulan')
+			
 			</div>
-		</section>
 	</div>
 @endsection
 

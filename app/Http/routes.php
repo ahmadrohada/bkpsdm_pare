@@ -28,9 +28,17 @@ Route::group(['prefix' => 'pare_api','middleware'=> 'auth.api:tes' ], function (
 });
 
 
+Route::group(['prefix' => 'api_resource'], function () {
+
+	Route::get('unauth_capaian_pk_list','API\CapaianPKTriwulanAPIController@UnAuthAdministratorCapaianPKTriwulanList');
+
+
+});
 
 //===================== AJAX REQUEST CONTROLLER =================//
 Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
+
+
 
 	Route::resource('periode_tahunan','API\PeriodeTahunanAPIController');
 
