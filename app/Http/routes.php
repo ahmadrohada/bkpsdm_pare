@@ -178,6 +178,8 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	//JFU
 	Route::get('jfu-kk_sasaran_strategis','API\KontrakKinerjaAPIController@SasaranStrategisJFU');
 	
+	Route::get('jfu-kk_anggaran_kegiatan','API\KontrakKinerjaAPIController@AnggaranKegiatanJFU');
+	Route::get('jfu-total_anggaran_kk','API\KontrakKinerjaAPIController@TotalAnggaranKegiatanJFU');
 
 
 	//========================================================================================================//

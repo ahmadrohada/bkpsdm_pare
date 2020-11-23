@@ -21,10 +21,9 @@
 					<thead>
 						<tr class="success">
 							<th class="no-sort"  style="padding-right:8px;">NO</th>
-							<th >SASARAN STRATEGIS/PROGRAM</th>
-							<th >INDIKATOR PROGRAM</th>
+							<th >KEGIATAN</th>
+							<th >RENCANA AKSI</th></th>
 							<th >TARGET</th>
-							<th><i class="fa fa-cog"></i></th>
 						</tr>
 					</thead>
 					
@@ -46,7 +45,7 @@
 				</div>
 			</div>
 			<div class="box-body table-responsive">
-				<table id="kontrak_kinerja_program_table" class="table table-striped table-hover" >
+				<table id="kk_angaran_kegiatan_table" class="table table-striped table-hover" >
 					<thead>
 						<tr class="success">
 							<th class="no-sort" style="padding-right:8px;">NO</th>
@@ -88,7 +87,7 @@ function load_kontrak_kinerja(){
 				bInfo			: false,
 				bSort			: false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,3 ] }
+								{ className: "text-center", targets: [ 0 ] }
 							  ],
 			ajax			: {
 								url	: '{{ url("api_resource/jfu-kk_sasaran_strategis") }}',
@@ -105,18 +104,18 @@ function load_kontrak_kinerja(){
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-							{ data: "kegiatan", name:"kegiatan_label", orderable: false, searchable: false,
+							{ data: "kegiatan", name:"", orderable: false, searchable: false,
 								"render": function ( data, type, row ) {
-									if ( row.pk_status == 1 ){
+									if ( row.kk_status == 1 ){
 										return  row.kegiatan;
 									}else{
 										return  '<text class="blm_add">'+row.kegiatan+'</text>';
 									}		
 								}
-							},
-							{ data: "indikator", name:"indikator_kegiatan_label", orderable: false, searchable: false,
+							}, 
+							{ data: "indikator", name:"", orderable: false, searchable: false,
 								"render": function ( data, type, row ) {
-									if ( row.pk_status == 1 ){
+									if ( row.kk_status == 1 ){
 										return  row.indikator;
 									}else{
 										return  '<text class="blm_add">'+row.indikator+'</text>';
@@ -124,9 +123,9 @@ function load_kontrak_kinerja(){
 								}
 							
 							},
-							{ data: "target", name:"target", orderable: false, searchable: false , width:"80px",
+							{ data: "target", name:"", orderable: false, searchable: false , width:"80px",
 								"render": function ( data, type, row ) {
-									if ( row.pk_status == 1 ){
+									if ( row.kk_status == 1 ){
 										return  row.target;
 									}else{
 										return  '<text class="blm_add">'+row.target+'</text>';
@@ -134,9 +133,9 @@ function load_kontrak_kinerja(){
 								}
 							
 							},
-							{  data: 'action',width:"30px",orderable: false,
+							/* {  data: 'action',width:"30px",orderable: false,
 									"render": function ( data, type, row ) {
-										if ( row.pk_status == 1 ){
+										if ( row.kk_status == 1 ){
 											return  '<span  data-toggle="tooltip" title="Hapus Kegiatan" style="margin:1px;" ><a class="btn btn-success btn-xs remove_esl4_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-check" ></i></a></span>';
 										}else{
 											return  '<span  data-toggle="tooltip" title="Tambah Kegiatan" style="margin:1px;" ><a class="btn btn-default btn-xs add_esl4_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-minus" ></i></a></span>';
@@ -144,7 +143,7 @@ function load_kontrak_kinerja(){
 										
 											
 									}
-							},
+							}, */
 							
 						],
 						initComplete: function(settings, json) {
@@ -154,7 +153,7 @@ function load_kontrak_kinerja(){
 		});	
 
 
-		$('#kontrak_kinerja_program_table').DataTable({
+		$('#kk_angaran_kegiatan_table').DataTable({
 				destroy			: true,
 				processing      : false,
 				serverSide      : true,
@@ -167,7 +166,7 @@ function load_kontrak_kinerja(){
 								{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/eselon4-pk_program") }}',
+								url	: '{{ url("api_resource/jfu-kk_anggaran_kegiatan") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
 										"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
@@ -181,18 +180,18 @@ function load_kontrak_kinerja(){
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "kegiatan", name:"kegiatan_label", orderable: false, searchable: false,
+								{ data: "kegiatan_label", name:"kegiatan_label", orderable: false, searchable: false,
 									"render": function ( data, type, row ) {
-										if ( row.pk_status == 1 ){
-											return  row.kegiatan;
+										if ( row.kk_status == 1 ){
+											return  row.kegiatan_label;
 										}else{
-											return  '<text class="blm_add">'+row.kegiatan+'</text>';
+											return  '<text class="blm_add">'+row.kegiatan_label+'</text>';
 										}		
 									}
 								},
 								{ data: "anggaran", name:"anggaran", orderable: false, searchable: false,
 									"render": function ( data, type, row ) {
-										if ( row.pk_status == 1 ){
+										if ( row.kk_status == 1 ){
 											return  row.anggaran;
 										}else{
 											return  '<text class="blm_add">'+row.anggaran+'</text>';
@@ -216,7 +215,7 @@ function load_kontrak_kinerja(){
 
 	function hitung_total_anggaran(){
 		$.ajax({
-				url			: '{{ url("api_resource/eselon4-total_anggaran_pk") }}',
+				url			: '{{ url("api_resource/jfu-total_anggaran_kk") }}',
 				data		: { 
 									"renja_id" : {!! $skp->Renja->id !!} , 
 									"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
@@ -246,7 +245,7 @@ function load_kontrak_kinerja(){
 				method		: "POST",
 				success		: function(data) {
 					$('#kontrak_kinerja_kegiatan_table').DataTable().ajax.reload(null,false); 
-					$('#kontrak_kinerja_program_table').DataTable().ajax.reload(null,false); 
+					$('#kk_angaran_kegiatan_table').DataTable().ajax.reload(null,false); 
 					hitung_total_anggaran();
 					Swal.fire({
 							title: "",
@@ -288,7 +287,7 @@ function load_kontrak_kinerja(){
 				method		: "POST",
 				success		: function(data) {
 					$('#kontrak_kinerja_kegiatan_table').DataTable().ajax.reload(null,false); 
-					$('#kontrak_kinerja_program_table').DataTable().ajax.reload(null,false); 
+					$('#kk_angaran_kegiatan_table').DataTable().ajax.reload(null,false); 
 					hitung_total_anggaran();
 					Swal.fire({
 							title: "",
