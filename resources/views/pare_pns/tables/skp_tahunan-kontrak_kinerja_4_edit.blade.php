@@ -87,7 +87,8 @@ function load_kontrak_kinerja(){
 				bInfo			: false,
 				bSort			: false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0 ] }
+								{ className: "text-center", targets: [ 0 ] },
+								{ "visible": false, targets: [ 0 ] }
 							  ],
 			ajax			: {
 								url	: '{{ url("api_resource/jfu-kk_sasaran_strategis") }}',
@@ -98,6 +99,7 @@ function load_kontrak_kinerja(){
 
 								 	},
 							 }, 
+			rowsGroup		: [0,1],
 			columns			:[
 							{ data: 'id' , orderable: false,searchable:false,width:"30px",
 									"render": function ( data, type, row ,meta) {

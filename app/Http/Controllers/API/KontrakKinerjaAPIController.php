@@ -56,8 +56,9 @@ class KontrakKinerjaAPIController extends Controller {
                                                 'kegiatan_tahunan.target_waktu'
 
                                             ) 
-                                    ->groupBy('kegiatan_tahunan.id')
-                                    //->orderBY('skp_tahunan_rencana_aksi.label')
+                                    ->groupBy('kegiatan_tahunan.label')
+                                    ->groupBy('skp_tahunan_rencana_aksi.label')
+                                    //->WHERE('kegiatan_tahunan.skp_tahunan_id','=',$skp_tahunan_id)
                                     ->distinct()
                                     ->get(); 
 
