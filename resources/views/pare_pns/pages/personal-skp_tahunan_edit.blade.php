@@ -51,6 +51,12 @@
 						case '3': // eselon 4
 								echo '<li class="perjanjian_kinerja_tab"><a href="#perjanjian_kinerja_tab" data-toggle="tab" >Perjanjian Kinerja</a></li>';
 								break;
+						case '4': // Jabatan Pelaksana
+								echo '<li class="kontrak_kinerja_tab"><a href="#kontrak_kinerja_tab" data-toggle="tab" >Kontrak Kinerja</a></li>';
+								break;
+						/* case '5': // Jabatan Fungsional
+								echo '<li class="kontrak_kinerja_tab"><a href="#kontrak_kinerja_tab" data-toggle="tab" >Kontrak Kinerja</a></li>';
+								break; */
 						
 					}
 				?>
@@ -167,6 +173,16 @@
 						}
 					?>		
 				</div>
+				<div class="tab-pane fade" id="kontrak_kinerja_tab">
+					<?php
+						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+							case '4':  //JFU / pelaksana
+									?>@include('pare_pns.tables.skp_tahunan-kontrak_kinerja_4_edit')<?php
+							break;
+						
+						}
+					?>		
+				</div>
 				
 				<div class="tab-pane fade" id="skp_bulanan_tab">
 
@@ -253,6 +269,8 @@ $(document).ready(function() {
 			rencana_aksi_time_table();
 		}else if ( id == 'perjanjian_kinerja_tab'){
 			load_perjanjian_kinerja();
+		}else if ( id == 'kontrak_kinerja_tab'){
+			load_kontrak_kinerja();
 		}else if ( id == 'tugas_tambahan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
 			LoadTugasTambahanTab();

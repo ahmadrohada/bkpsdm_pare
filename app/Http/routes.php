@@ -166,6 +166,20 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	Route::post('add_ind_program_to_pk','API\PerjanjianKinerjaAPIController@AddIndProgramToPK');
 	Route::post('remove_ind_program_from_pk','API\PerjanjianKinerjaAPIController@RemoveIndProgramFromPK');
 
+
+
+
+
+	//========================================================================================================//
+	//================================ KONTRAK KINERJA JFU JFT  =============================================//
+	//========================================================================================================//
+
+	
+	//JFU
+	Route::get('jfu-kk_sasaran_strategis','API\KontrakKinerjaAPIController@SasaranStrategisJFU');
+	
+
+
 	//========================================================================================================//
 	//====================== SKP TAHUNAN SKPD =========================================================//
 	//========================================================================================================//
