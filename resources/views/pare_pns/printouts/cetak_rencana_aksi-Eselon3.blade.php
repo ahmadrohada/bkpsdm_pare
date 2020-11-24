@@ -63,7 +63,7 @@
 			@endphp
 			@foreach( json_decode($data) as $p) 
 				@php 
-					if ( $p->jm_row_kegiatan > 1 ) { //5
+					if ( $p->jm_row_kegiatan > 1 ) { //5 
 						if ( $merge == 1  ) {
 							echo 	'<tr>
 										<td class="tengah" width="3%">'.$i++.'</td>

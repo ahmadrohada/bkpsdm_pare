@@ -6,7 +6,7 @@
 				
 				</h1>
 				<div class="box-tools pull-right" style="padding-top:5px;">
-					<form method="post" target="_blank" action="./cetak_perjanjian_kinerja-Eselon4">
+					<form method="post" target="_blank" action="./cetak_kontrak_kinerja-JFU">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="renja_id" value="{{ $skp->Renja->id }}">
 						<input type="hidden" name="jabatan_id" value="{{$skp->PejabatYangDinilai->Jabatan->id}}">
@@ -238,87 +238,5 @@ function load_kontrak_kinerja(){
 
 	
 
-	$(document).on('click','.remove_esl4_pk_kegiatan',function(e){
-		var kegiatan_id = $(this).data('id') ;
-		show_loader();
-		$.ajax({
-				url			: '{{ url("api_resource/remove_esl4_kegiatan_from_pk") }}',
-				data 		: {kegiatan_id : kegiatan_id},
-				method		: "POST",
-				success		: function(data) {
-					$('#kontrak_kinerja_kegiatan_table').DataTable().ajax.reload(null,false); 
-					$('#kk_angaran_kegiatan_table').DataTable().ajax.reload(null,false); 
-					hitung_total_anggaran();
-					Swal.fire({
-							title: "",
-							text: "Berhasil Dihapus",
-							type: "success",
-							width: "200px",
-							showConfirmButton: false,
-							allowOutsideClick : false,
-							timer: 1500
-						}).then(function () {
-							
-						},
-						function (dismiss) {
-							if (dismiss === 'timer') {
-								//table.ajax.reload(null,false);
-							}
-					})
 
-
-				},
-				error: function(data){
-					Swal.fire({
-			        		title: "Error",
-			        		text: "",
-			        		type: "error"
-			        	}).then (function(){
-			        		
-			        	});
-				}						
-		});	
-	});
-
-	$(document).on('click','.add_esl4_pk_kegiatan',function(e){
-		var kegiatan_id = $(this).data('id') ;
-		show_loader();
-		$.ajax({
-				url			: '{{ url("api_resource/add_esl4_kegiatan_to_pk") }}',
-				data 		: {kegiatan_id : kegiatan_id},
-				method		: "POST",
-				success		: function(data) {
-					$('#kontrak_kinerja_kegiatan_table').DataTable().ajax.reload(null,false); 
-					$('#kk_angaran_kegiatan_table').DataTable().ajax.reload(null,false); 
-					hitung_total_anggaran();
-					Swal.fire({
-							title: "",
-							text: "Berhasil ditambahkan",
-							type: "success",
-							width: "200px",
-							showConfirmButton: false,
-							allowOutsideClick : false,
-							timer: 1500
-						}).then(function () {
-							
-						},
-						function (dismiss) {
-							if (dismiss === 'timer') {
-								//table.ajax.reload(null,false);
-							}
-					})
-
-
-				},
-				error: function(data){
-					Swal.fire({
-			        		title: "Error",
-			        		text: "",
-			        		type: "error"
-			        	}).then (function(){
-			        		
-			        	});
-				}						
-		});	
-	});
 </script>
