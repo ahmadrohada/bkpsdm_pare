@@ -54,9 +54,9 @@
 						case '4': // Jabatan Pelaksana
 								echo '<li class="kontrak_kinerja_tab"><a href="#kontrak_kinerja_tab" data-toggle="tab" >Kontrak Kinerja</a></li>';
 								break;
-						/* case '5': // Jabatan Fungsional
+						case '5': // Jabatan Fungsional
 								echo '<li class="kontrak_kinerja_tab"><a href="#kontrak_kinerja_tab" data-toggle="tab" >Kontrak Kinerja</a></li>';
-								break; */
+								break; 
 						
 					}
 				?>
@@ -178,6 +178,9 @@
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '4':  //JFU / pelaksana
 									?>@include('pare_pns.tables.skp_tahunan-kontrak_kinerja_4_edit')<?php
+							break;
+							case '5':  //JFT 
+									?>@include('pare_pns.tables.skp_tahunan-kontrak_kinerja_5_edit')<?php
 							break;
 						
 						}
