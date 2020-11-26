@@ -526,12 +526,7 @@
   background: url("throbber.gif") center center no-repeat;
 }
 /** CUSTOM RENJA ICON **/
-
-
-
-
 .jstree-default .jstree-tujuan {
-  
 
   height:18px !important;
   width:60px !important;
@@ -544,6 +539,23 @@
 }
 .jstree-tujuan:after{
   content:'Tujuan';
+  display:block;
+  margin:-5px 0 0 -5px !important;
+}
+
+.jstree-default .jstree-bidang_urusan {
+
+  height:18px !important;
+  width:100px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(167, 4, 153);
+  font-size:13px; 
+}
+.jstree-bidang_urusan:after{
+  content:'Bidang Urusan';
   display:block;
   margin:-5px 0 0 -5px !important;
 }
@@ -577,11 +589,28 @@
   border: 1px solid rgb(250, 97, 8);
   font-size:13px;
   
-  
-  
 }
 .jstree-sasaran:after{
   content:'Sasaran';
+  
+  display:block;
+  margin:-5px 0 0 -5px;
+}
+
+.jstree-default .jstree-program_2 {
+  
+  height:18px !important;
+  width:65px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(250, 97, 8);
+  font-size:13px;
+  
+}
+.jstree-program_2:after{
+  content:'Program';
   
   display:block;
   margin:-5px 0 0 -5px;
@@ -620,6 +649,27 @@
 }
 .jstree-program:after{
   content:'Program';
+  
+  display:block;
+  margin:-5px 0 0 -5px;
+}
+
+.jstree-default .jstree-kegiatan_2 {
+  
+  height:18px !important;
+  width:65px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(0, 145, 194);
+  font-size:13px;
+  
+  
+  
+}
+.jstree-kegiatan_2:after{
+  content:'Kegiatan';
   
   display:block;
   margin:-5px 0 0 -5px;
@@ -678,6 +728,66 @@
 }
 .jstree-kegiatan_non_anggaran:after{
   content:'Kegiatan non anggaran';
+  
+  display:block;
+  margin:-5px 0 0 -5px;
+}
+
+
+
+.jstree-default .jstree-sub_kegiatan {
+  
+  height:18px !important;
+  width:95px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(5, 201, 31);
+  font-size:13px;
+  
+  
+}
+.jstree-sub_kegiatan:after{
+  content:'Sub Kegiatan';
+  
+  display:block;
+  margin:-5px 0 0 -5px;
+}
+
+.jstree-default .jstree-sub_kegiatan_non_anggaran {
+  
+  height:18px !important;
+  width:150px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(5, 85, 16);
+  font-size:13px;
+  
+  
+}
+.jstree-sub_kegiatan_non_anggaran:after{
+  content:'Sub Kegiatan non anggaran';
+  
+  display:block;
+  margin:-5px 0 0 -5px;
+}
+
+.jstree-default .jstree-ind_sub_kegiatan {
+  height:18px !important;
+  width:140px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:white;
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(184, 255, 193);
+  font-size:13px;
+}
+
+.jstree-ind_sub_kegiatan:after{
+  content:'Indikator Sub Kegiatan';
   
   display:block;
   margin:-5px 0 0 -5px;

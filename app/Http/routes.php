@@ -81,6 +81,7 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 
 	//=============================== POHON KINERJA ==========================================================//
 	Route::get('skpd_pohon_kinerja','API\PohonKinerjaAPIController@PohonKinerjaTree');
+	Route::get('skpd_pohon_kinerja_2021','API\PohonKinerjaAPIController_2021@PohonKinerjaTree');
 	
 
 	//========================================================================================================//
@@ -1664,7 +1665,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]); 
 
 	//----------------------------------------------------------------------------------------//
-	//======================== RENCANA KERJA PERANGKAT DAERAH ================================//
+	//======================== POHON KINERJA PERANGKAT DAERAH ================================//
 	//----------------------------------------------------------------------------------------//
 	Route::get('pohon_kinerja/{renja_id}',[
 		'as' 			=> '',

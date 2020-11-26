@@ -117,15 +117,31 @@ class RenjaController extends Controller {
         $renja	        = Renja::where('id', '=', $x->renja_id)->first();
         $user           = \Auth::user();
 
-        if ( $user->pegawai->JabatanAktif->id_skpd == $renja->skpd_id ){
-            if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) != 2 ) ){
-                return redirect('/skpd/pohon_kinerja/'.$x->renja_id)->with('status', 'Rencana Kerja dikirm ke atasan');
+        if ( $renja->periode->id == 7 ){
+            //RENJA 2021
+            if ( $user->pegawai->JabatanAktif->id_skpd == $renja->skpd_id ){
+                if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) != 2 ) ){
+                    return redirect('/skpd/pohon_kinerja/'.$x->renja_id)->with('status', 'Rencana Kerja dikirm ke atasan');
+                }else{
+                    return view('pare_2021.pages.skpd-pohon_kinerja_edit', ['renja'=> $renja,'h_box'=> 'box-info','role' =>'skpd']);    
+                }
             }else{
-                return view('pare_pns.pages.skpd-pohon_kinerja_edit', ['renja'=> $renja,'h_box'=> 'box-info','role' =>'skpd']);    
+                return redirect('/dashboard');
             }
         }else{
-            return redirect('/dashboard');
+            //RENJA 2020
+            if ( $user->pegawai->JabatanAktif->id_skpd == $renja->skpd_id ){
+                if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) != 2 ) ){
+                    return redirect('/skpd/pohon_kinerja/'.$x->renja_id)->with('status', 'Rencana Kerja dikirm ke atasan');
+                }else{
+                    return view('pare_pns.pages.skpd-pohon_kinerja_edit', ['renja'=> $renja,'h_box'=> 'box-info','role' =>'skpd']);    
+                }
+            }else{
+                return redirect('/dashboard');
+            }
         }
+
+       
        
 
         
