@@ -227,7 +227,7 @@
 			@endforeach
 			</tbody>
 	</table>
-	<br>
+	{{-- <br>
 	<table class="cetak_report">
 		<thead>
 			<tr>
@@ -256,7 +256,7 @@
 				<td colspan="2" align='right'><b>Rp. {{ number_format( $total_anggaran, '0', ',', '.') }}</b></td>
 			</tr>
 		</tbody>
-	</table>
+	</table> --}}
 	<table  class="sign_report" width="100%" style="margin-top:60px;">
 		<tr>
 			<td width="45%">

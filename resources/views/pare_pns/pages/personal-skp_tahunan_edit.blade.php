@@ -274,6 +274,7 @@ $(document).ready(function() {
 			load_perjanjian_kinerja();
 		}else if ( id == 'kontrak_kinerja_tab'){
 			load_kontrak_kinerja();
+			
 		}else if ( id == 'tugas_tambahan_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
 			LoadTugasTambahanTab();

@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<div class="box box-primary">
 			<div class="box-header with-border text-center">
 				<h1 class="box-title ">
@@ -17,7 +17,7 @@
 			</div>
 			<div class="box-body table-responsive">
 				
-				<table id="kontrak_kinerja_kegiatan_table" class="table table-striped table-hover" >
+				<table id="kontrak_kinerja_kegiatan_jfu_table" class="table table-striped table-hover" >
 					<thead>
 						<tr class="success">
 							<th class="no-sort"  style="padding-right:8px;">NO</th>
@@ -33,7 +33,7 @@
 		
 		
 	</div> 
-	<div class="col-md-6">
+	{{-- <div class="col-md-6">
 
 		<div class="box box-primary">
 			<div class="box-header with-border text-center">
@@ -45,13 +45,12 @@
 				</div>
 			</div>
 			<div class="box-body table-responsive">
-				<table id="kk_angaran_kegiatan_table" class="table table-striped table-hover" >
+				<table id="kk_angaran_kegiatan_jfu_table" class="table table-striped table-hover" >
 					<thead>
 						<tr class="success">
 							<th class="no-sort" style="padding-right:8px;">NO</th>
 							<th >KEGIATAN</th>
 							<th >AGGARAN</th>
-							{{-- <th><i class="fa fa-cog"></i></th> --}}
 						</tr>
 					</thead>
 					
@@ -67,7 +66,7 @@
 			
 		</div>		
 		
-	</div> 
+	</div>  --}}
 </div>
 
 
@@ -78,7 +77,7 @@
 function load_kontrak_kinerja(){
 
 
-    $('#kontrak_kinerja_kegiatan_table').DataTable({
+    $('#kontrak_kinerja_kegiatan_jfu_table').DataTable({
 				destroy			: true,
 				//processing      : false,
 				serverSide      : true,
@@ -155,7 +154,7 @@ function load_kontrak_kinerja(){
 		});	
 
 
-		$('#kk_angaran_kegiatan_table').DataTable({
+		/* $('#kk_angaran_kegiatan_jfu_table').DataTable({
 				destroy			: true,
 				processing      : false,
 				serverSide      : true,
@@ -210,11 +209,11 @@ function load_kontrak_kinerja(){
 		});	
 
 		hitung_total_anggaran();
-
+		*/
 	}
 
 
-
+	/*
 	function hitung_total_anggaran(){
 		$.ajax({
 				url			: '{{ url("api_resource/jfu-total_anggaran_kk") }}',
@@ -234,7 +233,7 @@ function load_kontrak_kinerja(){
 					
 				}						
 		});
-	}
+	} */
 
 	
 

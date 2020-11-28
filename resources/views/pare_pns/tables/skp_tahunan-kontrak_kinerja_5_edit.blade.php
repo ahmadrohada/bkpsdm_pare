@@ -6,7 +6,7 @@
 				
 				</h1>
 				<div class="box-tools pull-right" style="padding-top:5px;">
-					<form method="post" target="_blank" action="./cetak_kontrak_kinerja-JFU">
+					<form method="post" target="_blank" action="./cetak_kontrak_kinerja-JFT">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="renja_id" value="{{ $skp->Renja->id }}">
 						<input type="hidden" name="jabatan_id" value="{{$skp->PejabatYangDinilai->Jabatan->id}}">
@@ -85,13 +85,13 @@ function load_kontrak_kinerja(){
 				searching      	: false,
 				paging          : false,
 				bInfo			: false,
-				bSort			: false,hada
+				bSort			: false,
 			columnDefs		: [
 								{ className: "text-center", targets: [ 0 ] },
 								{ "visible": false, targets: [ 0 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/jfu-kk_sasaran_strategis") }}',
+								url	: '{{ url("api_resource/jft-kk_sasaran_strategis") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
 										"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
@@ -168,7 +168,7 @@ function load_kontrak_kinerja(){
 								{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/jfu-kk_anggaran_kegiatan") }}',
+								url	: '{{ url("api_resource/jft-kk_anggaran_kegiatan") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
 										"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
@@ -217,7 +217,7 @@ function load_kontrak_kinerja(){
 
 	function hitung_total_anggaran(){
 		$.ajax({
-				url			: '{{ url("api_resource/jfu-total_anggaran_kk") }}',
+				url			: '{{ url("api_resource/jft-total_anggaran_kk") }}',
 				data		: { 
 									"renja_id" : {!! $skp->Renja->id !!} , 
 									"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
