@@ -1989,6 +1989,11 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'API\KontrakKinerjaAPIController@cetakKontrakKinerjaJFU'
 	]);
 
+	Route::post('skp_tahunan/{skp_tahunan_id}/cetak_kontrak_kinerja-JFT', [
+		'as' 			=> '',
+		'uses' 			=> 'API\KontrakKinerjaAPIController@cetakKontrakKinerjaJFT'
+	]);
+
 	
 
 

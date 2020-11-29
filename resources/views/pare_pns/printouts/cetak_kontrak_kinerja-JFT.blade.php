@@ -130,39 +130,7 @@
 	
 		<pagebreak></pagebreak>
 		<table class="kop" border="0">
-				{{-- <tr>
-					<td rowspan="4" align="right" valign="top">
-						<img src="{{asset('assets/images/logo_karawang.png')}}" width="90px" height="120px" >
-					</td>
-					<td align="center" valign="top">
-						<FONT style="font-size:14pt; font-family:Cambria; letter-spacing:1pt;  ">PEMERINTAH KABUPATEN KARAWANG</FONT>
-					</td>
-				</tr>
-				<tr>
-					<td align="center"  style="padding:0px;" valign="top">
-						<FONT style=" font-size:16pt; font-weight:bold; font-family:Cambria; letter-spacing:1.2pt;  ">BADAN KEPEGAWAIAN DAN PENGEMBANGAN SUMBER DAYA MANUSIA</FONT>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" style="padding-top:0px;"  valign="top">
-						<font style=" text-align:center;  font-size:11pt; ont-family:Times New Roman,verdana,calibri; " > 
-							Jl. Ahmad Yani No. 1 Karawang 41315
-						</font>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" style="padding-top:0px;" valign="top">
-						<font style=" text-align:center; font-size:11pt; font-family:Times New Roman,verdana,calibri; " > 
-							Telp. (0267) 404047
-						</font>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" valign="top">
-						<hr class="kop_hr">
-						<hr class="kop_hr2">
-					</td>
-				</tr> --}}
+				
 				<tr>
 					<td height="180px"></td>
 				</tr>
@@ -202,57 +170,63 @@
 	<font style=" font-size:8pt;  font-family:Trebuchet MS,Calibri;">
 		Tanggal Cetak &nbsp;&nbsp;: {{ $waktu_cetak }} <br>
 	</font>
-	@php
-		$arrayForTable = [];
-		foreach ($data as $databaseValue) {
-			$temp = [];
-			$temp['rencana_aksi_label'] = $databaseValue['rencana_aksi_label'];
-			$temp['rencana_aksi_target'] = $databaseValue['target'];
-			$temp['rencana_aksi_satuan'] = $databaseValue['satuan'];
-			if(!isset($arrayForTable[$databaseValue['kegiatan_label']])){
-				$arrayForTable[$databaseValue['kegiatan_label']] = [];
-			}
-			$arrayForTable[$databaseValue['kegiatan_label']][] = $temp;
-		}
-
-		$no = 1 ;
-
-	@endphp
-		
-		
-
 	<table class="cetak_report">
 		<thead>
 			<tr>
 				<th width="5%" >NO</th>
 				<th width="">KEGIATAN</th>
-				<th width="35%">RENCANA AKSI</th>
-				<th width="15%" >TARGET</th>
+				<th width="20%" >TARGET</th>
 															
 			</tr>
 		</thead>
 
 		<tbody>
-			 
-			@foreach ($arrayForTable as $id=>$values) :
-				@foreach ($values as $key=>$value) : 
+			@php $i=1 @endphp
+			@foreach($data as $p)
+				
 				<tr>
-					@if ($key == 0) :
-						<td rowspan={{ count($values) }} >{{ $no}} </td>
-						<td rowspan={{ count($values) }} >{{ $id }} </td>
-						@php $no++; @endphp
-					@endif
-						<td>{{  $value['rencana_aksi_label' ]}}</td>
-						<td>{{  $value['rencana_aksi_target' ].' '. $value['rencana_aksi_satuan' ]}}</td>
-				</tr>
+                    <td align='right'>{{ $i++ }}</td>
+					<td>{{ $p->label }}</td>
+					<td align='center'>{{ $p->target." ".$p->satuan  }}</td>
+                </tr>
 			
-				@endforeach
 			@endforeach
-
-			
-		</tbody>
+			</tbody>
 	</table>
+	{{-- <br>
+	<table class="cetak_report">
+		<thead>
+			<tr>
+				<th width="5%" >NO</th>
+				<th width="">KEGIATAN</th>
+				<th width="18%">ANGGARAN</th>
+				<th width="20%" > KETERANGAN </th>
+															
+			</tr>
+		</thead>
+
+		<tbody>
+			{{ $i=1 }} 
+			@foreach($data_2 as $x)
+
+				<tr>
+                    <td align='right'>{{ $i++ }}</td>
+					<td>{{ $x->kegiatan_label }}</td>
+					<td align='right'>Rp. {{ number_format( $x->anggaran, '0', ',', '.') }}</td>
+					<td></td>
+                </tr>
+			
+			@endforeach
+			<tr>
+				<td colspan="2"><b>TOTAL ANGGARAN</b></td>
+				<td colspan="2" align='right'><b>Rp. {{ number_format( $total_anggaran, '0', ',', '.') }}</b></td>
+			</tr>
+		</tbody>
+	</table> --}}
+
 	
+
+
 	<table  class="sign_report" width="100%" style="margin-top:60px;">
 		<tr>
 			<td width="45%">

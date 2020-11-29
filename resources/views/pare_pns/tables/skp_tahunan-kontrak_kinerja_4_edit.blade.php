@@ -87,7 +87,7 @@ function load_kontrak_kinerja(){
 				bSort			: false,
 			columnDefs		: [
 								{ className: "text-center", targets: [ 0 ] },
-								{ "visible": false, targets: [ 0 ] }
+								/* { "visible": false, targets: [ 0 ] } */
 							  ],
 			ajax			: {
 								url	: '{{ url("api_resource/jfu-kk_sasaran_strategis") }}',
@@ -100,51 +100,11 @@ function load_kontrak_kinerja(){
 							 }, 
 			rowsGroup		: [0,1],
 			columns			:[
-							{ data: 'id' , orderable: false,searchable:false,width:"30px",
-									"render": function ( data, type, row ,meta) {
-										return meta.row + meta.settings._iDisplayStart + 1 ;
-									}
-								},
-							{ data: "kegiatan", name:"", orderable: false, searchable: false,
-								"render": function ( data, type, row ) {
-									if ( row.kk_status == 1 ){
-										return  row.kegiatan;
-									}else{
-										return  '<text class="blm_add">'+row.kegiatan+'</text>';
-									}		
-								}
-							}, 
-							{ data: "indikator", name:"", orderable: false, searchable: false,
-								"render": function ( data, type, row ) {
-									if ( row.kk_status == 1 ){
-										return  row.indikator;
-									}else{
-										return  '<text class="blm_add">'+row.indikator+'</text>';
-									}		
-								}
-							
-							},
-							{ data: "target", name:"", orderable: false, searchable: false , width:"80px",
-								"render": function ( data, type, row ) {
-									if ( row.kk_status == 1 ){
-										return  row.target;
-									}else{
-										return  '<text class="blm_add">'+row.target+'</text>';
-									}		
-								}
-							
-							},
-							/* {  data: 'action',width:"30px",orderable: false,
-									"render": function ( data, type, row ) {
-										if ( row.kk_status == 1 ){
-											return  '<span  data-toggle="tooltip" title="Hapus Kegiatan" style="margin:1px;" ><a class="btn btn-success btn-xs remove_esl4_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-check" ></i></a></span>';
-										}else{
-											return  '<span  data-toggle="tooltip" title="Tambah Kegiatan" style="margin:1px;" ><a class="btn btn-default btn-xs add_esl4_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-minus" ></i></a></span>';
-										}
-										
-											
-									}
-							}, */
+							{ data: 'no' , orderable: false,searchable:false,width:"30px"},
+							{ data: "kegiatan_label", name:"kegiatan_label", orderable: false, searchable: false}, 
+							{ data: "rencana_aksi_label", name:"rencana_aksi_label", orderable: false, searchable: false},
+							{ data: "target", name:"target", orderable: false, searchable: false , width:"80px"},
+						
 							
 						],
 						initComplete: function(settings, json) {
