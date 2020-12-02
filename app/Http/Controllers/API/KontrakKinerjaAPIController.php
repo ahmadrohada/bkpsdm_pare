@@ -84,12 +84,12 @@ class KontrakKinerjaAPIController extends Controller {
        
 
        $datatables = Datatables::of($rencana_aksi)
-                           ->addColumn('no', function ($x) use($arrayForTable){
+                            ->addColumn('no', function ($x) use($arrayForTable){
                                 return $arrayForTable[$x->kegiatan_label]['no'];
-                           })
-                           ->addColumn('target', function ($x) {
+                            })
+                            ->addColumn('target', function ($x) {
                                 return $x->target." ".$x->satuan;
-                           });
+                            });
                            
        
                            if ($keyword = $request->get('search')['value']) {
