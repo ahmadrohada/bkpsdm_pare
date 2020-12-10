@@ -1863,6 +1863,11 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'HomePersonalController@showCapaianTahunan'
 	]);
 
+	Route::get('capaian-gabungan', [
+		'as' 			=> 'personal-capaian_gabungan',
+		'uses' 			=> 'HomePersonalController@showCapaianGabungan'
+	]);
+
 	Route::get('tpp', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showTPP'

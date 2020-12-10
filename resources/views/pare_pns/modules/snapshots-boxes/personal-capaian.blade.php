@@ -60,6 +60,22 @@
 				</div>
 			</div>
 
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-green capaian_gabungan" style="cursor:pointer;">
+					<div class="inner">
+						<h3 class="personal_jm_capaian_gabungan">
+							*
+						</h3>
+						<p>
+							<strong>Gabungan</strong>
+						</p>
+					</div>
+					<div class="icon">
+						<i class="ion ion-stats-bars"></i>
+					</div>
+				</div>
+			</div>
+
 			
 
 
@@ -83,6 +99,10 @@ $(document).ready(function(){
 
 	$(".capaian_tahunan").click(function(){
 		window.location.assign("capaian-tahunan");
+	});
+	
+	$(".capaian_gabungan").click(function(){
+		window.location.assign("capaian-gabungan");
     });
 	
 	

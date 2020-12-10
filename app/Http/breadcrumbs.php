@@ -605,6 +605,20 @@ Breadcrumbs::register('personal_edit_capaian_tahunan', function($breadcrumbs)
     $breadcrumbs->push(Lang::get('sidebar-nav.link_title_edit_capaian_tahunan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_edit_capaian_tahunan')]);
 });
 
+// DASHBOARD >CAPAIAN GABUNGAN
+
+Breadcrumbs::register('capaian_gabungan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('personal-dashboard');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_capaian_gabungan'), '/public/personal/capaian-gabungan', ['icon' => Lang::get('sidebar-nav.link_icon_capaian')]);
+});
+
+Breadcrumbs::register('personal_edit_capaian_gabungan', function($breadcrumbs)
+{
+    $breadcrumbs->parent('capaian_gabungan');
+    $breadcrumbs->push(Lang::get('sidebar-nav.link_title_edit_capaian_gabungan'), '', ['icon' => Lang::get('sidebar-nav.link_icon_edit_capaian_gabungan')]);
+});
+
 
 // DASHBOARD > APPROVAL REQUEST
 Breadcrumbs::register('approval_request', function($breadcrumbs)

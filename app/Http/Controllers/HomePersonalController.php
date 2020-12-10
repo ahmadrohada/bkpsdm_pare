@@ -223,6 +223,27 @@ class HomePersonalController extends Controller {
         
     }
 
+    public function showCapaianGabungan(Request $request)
+    {
+        $user      = \Auth::user();
+        $pegawai   = $user->pegawai;       
+        
+
+        return view('pare_pns.pages.personal-home-capaian_gabungan', [
+               'pegawai' 		        => $pegawai,
+               'nama_pegawai'     	    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+               'jm_capaian_bulanan'     => $this->jm_capaian_bulanan($pegawai->id),
+               'jm_capaian_triwulan'    => $this->jm_capaian_triwulan($pegawai->id),
+               'jm_capaian_tahunan'     => $this->jm_capaian_tahunan($pegawai->id),
+               'jm_capaian_gabungan'    => "*",
+               'h_box'                  => 'box-green',
+               
+           ]
+        );   
+
+        
+    }
+
 
     public function showTPP(Request $request)
     {
