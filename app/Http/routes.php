@@ -2100,6 +2100,11 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'as' 			=> '',
 		'uses' 			=> 'CapaianTahunanController@PersonalCapaianTahunanRalat'
 	]);
+
+	Route::get('capaian-tahunan/{capaian_tahunan_id}/cetak',[
+		'as' 			=> '',
+		'uses' 			=> 'CapaianTahunanController@PersonalCapaianTahunancetak'
+	]);
 	
 
 

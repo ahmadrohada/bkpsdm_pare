@@ -109,17 +109,20 @@
 														//ditolak
 														return  '<span  data-toggle="tooltip" title="Ralat" style="margin:2px;" ><a class="btn btn-warning btn-xs ralat_capaian_tahunan"  data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_tahunan"  data-id="'+row.capaian_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="cetak" style="margin:2px;" ><a class="btn btn-primary btn-xs cetak_capaian_tahunan"  data-id="'+row.capaian_id+'"><i class="fa fa-print" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-close " ></i></a></span>';
 													}else{
 														//diterima
 														return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-pencil" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_capaian_tahunan"  data-id="'+row.capaian_id+'"><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="cetak" style="margin:2px;" ><a class="btn btn-primary btn-xs cetak_capaian_tahunan"  data-id="'+row.capaian_id+'"><i class="fa fa-print" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-default btn-xs"><i class="fa fa-close " ></i></a></span>';
 													}
 												}else{
 													//blm dikirim
 													return  	'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_capaian_tahunan" data-id="'+row.capaian_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="lihat" style="margin:2px;" ><a class="btn btn-default btn-xs "><i class="fa fa-eye" ></i></a></span>'+
+																'<span  data-toggle="tooltip" title="cetak" style="margin:2px;" ><a class="btn btn-primary btn-xs cetak_capaian_tahunan"  data-id="'+row.capaian_id+'"><i class="fa fa-print" ></i></a></span>'+
 																'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_capaian_tahunan" data-id="'+row.capaian_id+'"><i class="fa fa-close " ></i></a></span>';
 												}
 											}else{
@@ -147,6 +150,11 @@
 	$(document).on('click','.lihat_capaian_tahunan',function(e){
 		var capaian_id = $(this).data('id') ;
 		window.location.assign("capaian-tahunan/"+capaian_id);
+	});
+
+	$(document).on('click','.cetak_capaian_tahunan',function(e){
+		var capaian_id = $(this).data('id') ;
+		window.location.assign("capaian-tahunan/"+capaian_id+"/cetak");
 	});
 	
 	
