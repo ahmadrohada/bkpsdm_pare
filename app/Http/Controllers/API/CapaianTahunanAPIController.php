@@ -26,6 +26,7 @@ use App\Helpers\Pustaka;
 use App\Traits\HitungCapaian; 
 use App\Traits\BawahanList;
 use App\Traits\PJabatan;
+use App\Traits\PenilaianPerilakuKerja;
 
 use Datatables;
 use Validator;
@@ -36,6 +37,7 @@ class CapaianTahunanAPIController extends Controller {
     use HitungCapaian;
     use BawahanList;
     use PJabatan;
+    use PenilaianPerilakuKerja;
 
     
 
@@ -86,24 +88,7 @@ class CapaianTahunanAPIController extends Controller {
                 if ( $x->capaian_id != null ){
                     $data_kinerja               = $this->hitung_capaian_tahunan($x->capaian_id); 
                 
-                    //kegiatan tahunan
-                    $jm_capaian_kegiatan_tahunan        = $data_kinerja['jm_capaian_kegiatan_tahunan'];
-                    $jm_kegiatan_tahunan                = $data_kinerja['jm_kegiatan_tahunan'];
-                    $ave_capaian_kegiatan_tahunan       = $data_kinerja['ave_capaian_kegiatan_tahunan'];
-                    //tugas tambahan
-                    $jm_tugas_tambahan                  = $data_kinerja['jm_tugas_tambahan'];
-                    $jm_capaian_tugas_tambahan          = $data_kinerja['jm_capaian_tugas_tambahan'];
-                    $ave_capaian_tugas_tambahan         = $data_kinerja['ave_capaian_tugas_tambahan'];
-                    //unsur penunjang
-                    $nilai_unsur_penunjang_tugas_tambahan   = $data_kinerja['nilai_unsur_penunjang_tugas_tambahan'];
-                    $nilai_unsur_penunjang_kreativitas      = $data_kinerja['nilai_unsur_penunjang_kreativitas'];
-                    $nilai_unsur_penunjang              = $nilai_unsur_penunjang_tugas_tambahan + $nilai_unsur_penunjang_kreativitas;
-            
-                    $jm_kegiatan_skp                    = $jm_kegiatan_tahunan + $jm_tugas_tambahan;
-                    $jm_capaian_kegiatan_skp            = $jm_capaian_kegiatan_tahunan + $jm_capaian_tugas_tambahan;
-            
-                    $capaian_kinerja_tahunan  = Pustaka::ave($jm_capaian_kegiatan_skp,$jm_kegiatan_skp);
-                    $capaian_skp              = $capaian_kinerja_tahunan +  $nilai_unsur_penunjang ;
+                    $capaian_skp                        = $data_kinerja['nilai_capaian_skp'];
                     return $capaian_skp;
                 }else{
                     return '-';
@@ -867,7 +852,7 @@ class CapaianTahunanAPIController extends Controller {
                 'jm_tugas_tambahan'             => $jm_tugas_tambahan, //B
                 'jm_kegiatan_skp'               => $jm_kegiatan_skp, //A+B
 
-                'jm_capaian_kegiatan_tahunan'   => $jm_capaian_kegiatan_tahunan,  //A
+                'jm_capaian_kegiatan_tahunan'   => number_format($jm_capaian_kegiatan_tahunan,2),  //A
                 'jm_capaian_tugas_tambahan'     => $jm_capaian_tugas_tambahan, //B
                 'jm_capaian_kegiatan_skp'       => $jm_capaian_kegiatan_skp, //A+B
 

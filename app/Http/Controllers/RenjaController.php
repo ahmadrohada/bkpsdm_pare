@@ -60,7 +60,15 @@ class RenjaController extends Controller {
 	{
         $renja	= Renja::where('id', '=', $request->renja_id)->first();
 
-        return view('pare_pns.pages.administrator-pohon_kinerja_detail', ['renja'=> $renja, 'role' => 'administrator' ]);  
+
+        if ( $renja->periode->id == 7 ){
+            //RENJA 2021
+            return view('pare_2021.pages.administrator-pohon_kinerja', ['renja'=> $renja, 'role' => 'administrator' ]);
+        }else{
+            //RENJA 2020
+            return view('pare_pns.pages.administrator-pohon_kinerja_detail', ['renja'=> $renja, 'role' => 'administrator' ]);
+        }
+          
        
     }
  

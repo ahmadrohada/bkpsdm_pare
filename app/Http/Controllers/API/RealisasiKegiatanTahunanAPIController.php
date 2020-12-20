@@ -381,7 +381,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
         }
 
 
-        public function RealisasiKegiatanTahunan2(Request $request){
+        public function RealisasiKegiatanTahunan2(Request $request){ 
             //kegiatan eselon 3
             $renja_id   = $request->renja_id;
             $jabatan_id = $request->jabatan_id;
@@ -465,8 +465,21 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             
                             ->get();
 
+            $no = 0 ;
+            foreach ($kegiatan as $dbValue) {
+                $temp = [];
+                if(!isset($arrayForTable[$dbValue['kegiatan_label']])){
+                    $arrayForTable[$dbValue['kegiatan_label']] = [];
+                    $no += 1 ;
+                }
+                $temp['no']         = $no;
+                $arrayForTable[$dbValue['kegiatan_label']] = $temp;
+            }
+
             $datatables = Datatables::of($kegiatan)
-       
+                            ->addColumn('no', function ($x) use($arrayForTable){
+                                return $arrayForTable[$x->kegiatan_label]['no'];
+                            })
                             ->addColumn('id', function ($x) {
                                 return $x->kegiatan_tahunan_id;
                             })->addColumn('capaian_tahunan_id', function ($x) use ($capaian_id) {
@@ -1296,13 +1309,13 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             'ind_kegiatan_id'       => 'required',
                             'jumlah_indikator'      => 'required|numeric|min:1',
 
-                            'target_quantity'       => 'required|numeric|min:0',
+                            'target_quantity'       => 'required',
                             'target_quality'        => 'required|numeric|min:1|max:100',
                             'target_waktu'          => 'required|numeric|min:1|max:12',
                             'target_cost'           => 'required',
 
                             //'realisasi_quantity'    => 'required|numeric|min:0|max:'.$request->target_quantity,
-                            'realisasi_quantity'    => 'required|numeric|min:0',
+                            'realisasi_quantity'    => 'required',
                             //'realisasi_quality'     => 'required|numeric|min:1|max:100',
                             'realisasi_waktu'       => 'required|numeric|min:1|max:12',
                             'realisasi_cost'        => 'required',
@@ -1423,13 +1436,13 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             'capaian_id'            => 'required',
                             'kegiatan_tahunan_id'   => 'required',
                             
-                            'target_quantity'       => 'required|numeric|min:0',
+                            'target_quantity'       => 'required',
                             'target_quality'        => 'required|numeric|min:1|max:100',
                             'target_waktu'          => 'required|numeric|min:1|max:12',
                             'target_cost'           => 'required',
 
                             //'realisasi_quantity'    => 'required|numeric|min:1|max:'.$request->target_quantity,
-                            'realisasi_quantity'    => 'required|numeric|min:0',
+                            'realisasi_quantity'    => 'required',
                             'realisasi_waktu'       => 'required|numeric|min:1|max:12',
                             'realisasi_cost'        => 'required',
                             'satuan'                => 'required',
@@ -1458,13 +1471,13 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
 
         $rkt_save->target_angka_kredit      = Input::get('target_angka_kredit');
         $rkt_save->target_quality           = Input::get('target_quality');
-        $rkt_save->target_quantity          = Input::get('target_quantity');
+        $rkt_save->target_quantity          = trim(Input::get('target_quantity'));
         $rkt_save->target_cost              = preg_replace('/[^0-9]/', '', Input::get('target_cost'));
         $rkt_save->target_waktu             = Input::get('target_waktu');
 
         $rkt_save->realisasi_angka_kredit   = Input::get('realisasi_angka_kredit');
         $rkt_save->realisasi_quality        = Input::get('realisasi_quality');
-        $rkt_save->realisasi_quantity       = Input::get('realisasi_quantity');
+        $rkt_save->realisasi_quantity       = trim(Input::get('realisasi_quantity'));
         $rkt_save->realisasi_cost           = preg_replace('/[^0-9]/', '', Input::get('realisasi_cost'));
         $rkt_save->realisasi_waktu          = Input::get('realisasi_waktu');
         $rkt_save->satuan                   = Input::get('satuan');
@@ -1526,7 +1539,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             'target_cost'           => 'required',
 
                             //'realisasi_quantity'    => 'required|numeric|min:1|max:'.$request->target_quantity,
-                            'realisasi_quantity'    => 'required|numeric|min:0',
+                            'realisasi_quantity'    => 'required',
                             //'realisasi_quality'     => 'required|numeric|min:1|max:100',
                             'realisasi_waktu'       => 'required|numeric|min:1|max:12',
                             'realisasi_cost'        => 'required',
@@ -1652,7 +1665,8 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             'target_cost'           => 'required',
                             'satuan'                => 'required',
 
-                            'realisasi_quantity'    => 'required|numeric|min:1|max:'.$request->target_quantity,
+                            //'realisasi_quantity'    => 'required|numeric|min:1|max:'.$request->target_quantity,
+                            'realisasi_quantity'    => 'required',
                             'realisasi_quality'     => 'required|numeric|min:1|max:100',
                             'realisasi_waktu'       => 'required|numeric|min:1|max:12',
                             'realisasi_cost'        => 'required',

@@ -27,15 +27,19 @@
 			</div>
 
 
-			<div class="form-group form-group-sm" style="margin-top:-10px;">
-				<label class="col-md-4 " ></label>
-				<div class="col-md-8 text-right">
-					<span class="btn btn-xs btn-success btn_edit_ka_skpd " data-toggle="tooltip" data-placement="top" title="Ganti Kepala SKPD"> 
-					<i class="fa fa-pencil" ></i>EDIT</span>
-					<span class="btn btn-xs btn-danger btn_batal_ka_skpd hidden" data-toggle="tooltip" data-placement="top" title="Batal"> 
-					<i class="fa fa-refresh" ></i>BATAL</span>
-				</div>
-			</div>
+			@if ( request()->segment(4) == 'edit' )
+				<div class="form-group form-group-sm" style="margin-top:-10px;">
+					<label class="col-md-4 " ></label>
+					<div class="col-md-8 text-right">
+						<span class="btn btn-xs btn-success btn_edit_ka_skpd " data-toggle="tooltip" data-placement="top" title="Ganti Kepala SKPD"> 
+						<i class="fa fa-pencil" ></i>EDIT</span>
+						<span class="btn btn-xs btn-danger btn_batal_ka_skpd hidden" data-toggle="tooltip" data-placement="top" title="Batal"> 
+						<i class="fa fa-refresh" ></i>BATAL</span>
+					</div>
+				</div>					
+			@endif
+
+			
 
 			<div class="form-group form-group-sm form_edit_nip"  style="margin-top:10px;">
 				<label class="col-md-4">NIP / Nama Kepala SKPD</label>

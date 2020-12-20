@@ -18,7 +18,9 @@
 						<b>Persetujuan Kepala SKPD</b> <a class="pull-right st_persetujuan_kaban">-</a>
 					</li>
 				</ul>
-
+				<div class="kirim_renja" hidden>
+					<button class="btn btn-primary btn-block kirim_renja " disabled>Submit</button>
+				</div>
 			
 				<div class="batalkan_renja" hidden>
 					<button class="btn btn-warning btn-block batalkan_renja ">Batalkan Permintaan Persetujuan</button>
@@ -109,6 +111,64 @@
 	}
 
 
+	$(document).on('click','.kirim_renja',function(e){
+		Swal.fire({
+				title: "Submit Pohon Kinerja",
+				text: "Pohon Kinerja dikirim kepada Kepala SKPD untuk mendapatkan persetujuan",
+				type: "question",
+				showCancelButton: true,
+				cancelButtonText: "Batal",
+				confirmButtonText: "Submit",
+				confirmButtonClass: "btn btn-success",
+				cancelButtonClass: "btn btn-danger",
+				cancelButtonColor: "#d33",
+				closeOnConfirm: false
+		}).then ((result) => {
+			if (result.value){
+				$.ajax({
+					url		: '{{ url("api_resource/renja_send_to_kaban") }}',
+					type	: 'POST',
+					data    : {renja_id: {!! $renja->id !!} },
+					cache   : false,
+					success:function(data){
+							Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										location.reload();
+
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+					});	
+				
+
+					
+			}
+		});
+	});
 
 	$(document).on('click','.batalkan_renja',function(e){
 		Swal.fire({

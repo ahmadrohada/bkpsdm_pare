@@ -11,7 +11,7 @@
 
 			<h1>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('skpd-pohon_kinerja') }}"><span class="fa fa-angle-left"></span></a>
-				Edit Pohon Kinerja 2021
+				Pohon Kinerja ( {{$renja->periode->label}} )
 			</h1>
 
 				{!! Breadcrumbs::render($role.'-pohon_kinerja-edit') !!}
@@ -21,7 +21,6 @@
 
 				<div class="nav-tabs-custom">
 					<ul class="nav nav-tabs" id="myTab">
-						<li class="status"><a href="#status" data-toggle="tab">Status</a></li>
 						<li class="detail"><a href="#detail" data-toggle="tab">Detail</a></li>
 						<li class="rencana_kerja_tab"><a href="#rencana_kerja_tab" data-toggle="tab">Pohon Kinerja</a></li>
 						<li class="distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
@@ -33,11 +32,8 @@
 					</ul>
 						
 					<div class="tab-content"  style="margin-left:20px;">
-						<div class="active tab-pane fade" id="status">
-							@include('pare_2021.modules.timeline.renja_status_edit')	
-						</div>
 						<div class="tab-pane fade" id="detail">
-							@include('pare_2021.modules.edit_forms.renja_detail')
+							@include('pare_2021.modules.tab.pohon_kinerja.detail')
 						</div>
 						
 						<div class=" tab-pane fade" id="rencana_kerja_tab">
@@ -84,9 +80,7 @@ $(document).ready(function() {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
 		//alert(id);
-		if ( id == 'status'){
-			status_show();
-		}else if ( id == 'rencana_kerja_tab'){
+		if ( id == 'rencana_kerja_tab'){
 			$('html, body').animate({scrollTop:0}, 0);
 			renja_list_kegiatan_tree();
 		}else if ( id == 'distribusi_kegiatan'){
@@ -114,7 +108,7 @@ $(document).ready(function() {
 	if ( hash != ''){
 		$('#myTab a[href="' + hash + '"]').tab('show');
 	}else{
-		$('#myTab a[href="#status"]').tab('show');
+		$('#myTab a[href="#detail"]').tab('show');
 	}
 	
 

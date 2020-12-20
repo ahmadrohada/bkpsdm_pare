@@ -1,4 +1,4 @@
-@extends('pare_pns.layouts.dashboard')
+@extends('pare_2021.layouts.dashboard')
 
 @section('template_title')
 {{ Pustaka::capital_string(\Auth::user()->Pegawai->JabatanAktif->SKPD->skpd )  }}
@@ -11,7 +11,7 @@
 
 			<h1>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('skpd-pohon_kinerja') }}"><span class="fa fa-angle-left"></span></a>
-				Pohon Kinerja 
+				Pohon Kinerja ( {{$renja->periode->label}} )
 			</h1>
 
 				{!! Breadcrumbs::render($role.'-pohon_kinerja-detail') !!}
@@ -21,7 +21,6 @@
 
 				<div class="nav-tabs-custom">
 					<ul class="nav nav-tabs" id="myTab">
-						<li class="status"><a href="#status" data-toggle="tab">Status</a></li>
 						<li class="detail"><a href="#detail" data-toggle="tab">Detail</a></li>
 						<li class="rencana_kerja_tab"><a href="#rencana_kerja_tab" data-toggle="tab">Pohon Kinerja</a></li>
 						<li class="distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
@@ -30,28 +29,25 @@
 					</ul>
 						
 					<div class="tab-content"  style="margin-left:20px;">
-						<div class="active tab-pane fade" id="status">
-							@include('pare_pns.modules.timeline.renja_status_detail')	
-						</div>
 						<div class="tab-pane fade" id="detail">
-							@include('pare_pns.modules.edit_forms.renja_detail')
+							@include('pare_2021.modules.tab.pohon_kinerja.detail')
 						</div>
 						
 						<div class=" tab-pane fade" id="rencana_kerja_tab">
-							@include('pare_pns.modules.tab.pohon_kinerja_detail')
+							@include('pare_2021.modules.tab.pohon_kinerja_detail')
 						</div> 
 						
   
 						<div class=" tab-pane fade" id="distribusi_kegiatan">
-							@include('pare_pns.modules.tab.distribusi_kegiatan_detail') 
+							@include('pare_2021.modules.tab.distribusi_kegiatan_detail') 
 						</div>
 
 						<div class=" tab-pane fade" id="perjanjian_kinerja">
-							@include('pare_pns.modules.tab.perjanjian_kinerja_skpd_detail') 
+							@include('pare_2021.modules.tab.perjanjian_kinerja_skpd_detail') 
 						</div>
 
 						<div class=" tab-pane fade" id="kegiatan_tahunan">
-							@include('pare_pns.modules.tab.pohon_kinerja-kegiatan_tahunan_detail') 
+							@include('pare_2021.modules.tab.pohon_kinerja-kegiatan_tahunan_detail') 
 						</div>
 						 
 					</div>
@@ -81,9 +77,7 @@ $(document).ready(function() {
 		window.location.hash = id;
 		//alert(id);
 
-		if ( id == 'status'){
-			status_show();
-		}else if ( id == 'rencana_kerja_tab'){
+		if ( id == 'rencana_kerja_tab'){
 			//alert(id);
 			$('html, body').animate({scrollTop:0}, 0);
 			RencanaKerjaList();
@@ -107,7 +101,7 @@ $(document).ready(function() {
 	if ( hash != ''){
 		$('#myTab a[href="' + hash + '"]').tab('show');
 	}else{
-		$('#myTab a[href="#status"]').tab('show');
+		$('#myTab a[href="#detail"]').tab('show');
 	}
 	
 

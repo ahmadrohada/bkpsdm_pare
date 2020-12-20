@@ -311,7 +311,7 @@ class Pustaka {
 		$tanggal = isset($tanggal) ? $tanggal : '';
 		$nm_bulan = isset($nm_bulan) ? $nm_bulan : '';
 		$tahun = isset($tahun) ? $tahun : '';
-		$data=$tanggal.'   '.$nm_bulan.'  '.$tahun;
+		$data=$tanggal.' '.$nm_bulan.' '.$tahun;
 	return $data;
 	}
 
@@ -436,6 +436,25 @@ class Pustaka {
 	}
 
 	public static function perilaku($data){
+		if ($data == 0 ){
+			$keterangan = "Buruk";
+		}else if ($data <= 50 ){
+			$keterangan = "Buruk";
+		}else if ($data <= 60) {
+			$keterangan = "Kurang";
+		}else if ($data <= 75) {
+			$keterangan = "Cukup";
+		}else if ($data <= 90) {
+			$keterangan = "Baik";
+		}else if ($data >=90.001) {
+			$keterangan = "Sangat Baik";
+		}
+
+		return $keterangan;
+
+	}
+
+	public static function skor_capaian($data){
 		if ($data == 0 ){
 			$keterangan = "Buruk";
 		}else if ($data <= 50 ){

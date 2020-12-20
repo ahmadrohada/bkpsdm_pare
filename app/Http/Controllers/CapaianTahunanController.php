@@ -1,40 +1,23 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Logic\User\UserRepository;
-use App\Logic\User\CaptureIp;
-use App\Http\Requests;
 
-use App\Models\User;
-use App\Models\Role;
-use App\Models\Skpd;
-use App\Models\Periode;
-use App\Models\Renja;
-use App\Models\SKPTahunan;
-use App\Models\SKPBulanan;
 use App\Models\CapaianBulanan;
 use App\Models\CapaianTahunan;
 
 use App\Models\Kegiatan;
+use App\Models\UnsurPenunjangTugasTambahan;
+use App\Models\UnsurPenunjangKreativitas;
 
 
 use App\Models\Jabatan;
-
 use App\Helpers\Pustaka;
 
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Support\Facades;
 use Illuminate\Http\Request;
 
 use App\Traits\PJabatan;
-
-
-use Illuminate\Support\Facades\Response;
-use Intervention\Image\Facades\Image;
+use App\Traits\HitungCapaian; 
+use App\Traits\PenilaianPerilakuKerja;
 
 use PDF;
 use Datatables;
@@ -46,6 +29,8 @@ Use Alert;
 class CapaianTahunanController extends Controller {
 
     use PJabatan; 
+    use HitungCapaian;
+    use PenilaianPerilakuKerja;
 
     protected function jm_approval_request_cap_bulanan($jabatan_id){
         $data_1 = CapaianBulanan::rightjoin('demo_asn.tb_history_jabatan AS atasan', function($join) use($jabatan_id){
@@ -214,14 +199,17 @@ class CapaianTahunanController extends Controller {
     public function PersonalCapaianTahunancetak(Request $request)
     {
        
+        $capaian_id = $request->capaian_tahunan_id;
+        $data       = CapaianTahunan::WHERE('id',$capaian_id)->first();
+        $renja_id   = $data->SKPTahunan->renja_id;    
+        $jabatan_id = $data->PejabatYangDinilai->id_jabatan;
 
-        //kegiatan eselon 3
-        $renja_id   = $request->renja_id;
-        $jabatan_id = $request->jabatan_id;
-        $capaian_id = $request->capaian_id;
+        //return $data->PejabatYangDinilai->Eselon->id_jenis_jabatan;
+
+
+
+        //KEGIATAN
         $bawahan = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray();
-
-
         $kegiatan_list = Kegiatan::WHERE('renja_kegiatan.renja_id', $renja_id )
                         ->WHEREIN('renja_kegiatan.jabatan_id', $bawahan  )
                         //LEFT JOIN ke Kegiatan SKP TAHUNAN
@@ -297,11 +285,73 @@ class CapaianTahunanController extends Controller {
                                 ) 
                         
                         ->get();
+        //UNSUR PENUNJANG Tugas Tambahan
+        $unsur_penunjang_tugas_tambahan_list = UnsurPenunjangTugasTambahan::where('capaian_tahunan_id', '=' ,$capaian_id)
+                                                                            ->select([   
+                                                                                'id AS tugas_tambahan_id',
+                                                                                'label AS tugas_tambahan_label',
+                                                                                'approvement'
+                                                                            ])->get();   
+
+        $unsur_penunjang_kreativitas_list = UnsurPenunjangKreativitas::where('capaian_tahunan_id', '=' ,$capaian_id )
+                                                                ->select([   
+                                                                    'id AS kreativitas_id',
+                                                                    'label AS kreativitas_label',
+                                                                    'nilai AS kreativitas_nilai',
+                                                                    'manfaat_id',
+                                                                    'approvement'
+                                                                ])->get();
+
+        //==========================  HITUNG CAPAIAN SKP ===========================================================//
+        $data_kinerja             = $this->hitung_capaian_tahunan($capaian_id); 
+        //========================== PEnilaian Perilaku kekerja  ===================================================//
+        $penilaian_perilaku_kerja = $this->NilaiPerilakuKerja($capaian_id);
+
+        //Pejabat Yang dinilai
+        $pejabat_yang_dinilai = array(
+            'nama'          => $data->u_nama,
+            'nip'           => $data->PejabatYangDinilai->nip,
+            'pgr'           => $data->PejabatYangDinilai->Golongan->pangkat.' / ('.$data->PejabatYangDinilai->Golongan->golongan.' )',
+            'jabatan'       => Pustaka::capital_string($data->PejabatYangDinilai->jabatan),
+            'unit_kerja'    => Pustaka::capital_string($data->PejabatYangDinilai->UnitKerja->unit_kerja),
+            
+        );
+
+        //Pejabat Penilai
+        $pejabat_penilai = array(
+            'nama'          => $data->p_nama,
+            'nip'           => $data->PejabatPenilai->nip,
+            'pgr'           => $data->PejabatPenilai->Golongan->pangkat.' / ('.$data->PejabatPenilai->Golongan->golongan.' )',
+            'jabatan'       => Pustaka::capital_string($data->PejabatPenilai->jabatan),
+            'unit_kerja'    => Pustaka::capital_string($data->PejabatPenilai->UnitKerja->unit_kerja),
+            
+        );
+
+        //Atasan Pejabat Penilai
+        $atasan_pejabat_penilai = array(
+            'nama'          => '',
+            'nip'           => '',
+            'pgr'           => '',
+            'jabatan'       => '',
+            'unit_kerja'    => '',
+            
+        );
 
 
-       
-        $pdf = PDF::loadView('pare_pns.printouts.capaian_tahunan_2', [  
-                                                    'kegiatan_list' => $kegiatan_list
+        $pdf = PDF::loadView('pare_pns.printouts.capaian_tahunan', [  
+                                                                'data'                                      => $data,
+                                                                'nama_skpd'                                 => $data->PejabatYangDinilai->SKPD->skpd,
+                                                                'kegiatan_list'                             => $kegiatan_list,
+                                                                'kegiatan_list'                             => $kegiatan_list,
+                                                                'unsur_penunjang_tugas_tambahan_list'       => $unsur_penunjang_tugas_tambahan_list,
+                                                                'unsur_penunjang_kreativitas_list'          => $unsur_penunjang_kreativitas_list,
+                                                                'data_kinerja'                              => $data_kinerja,
+                                                                'penilaian_perilaku_kerja'                  => $penilaian_perilaku_kerja,
+                                                                'pejabat_yang_dinilai'                      => $pejabat_yang_dinilai,
+                                                                'pejabat_penilai'                           => $pejabat_penilai,
+                                                                'atasan_pejabat_penilai'                    => $atasan_pejabat_penilai,
+                                                                'tgl_dibuat'                                => Pustaka::balik2($data->created_at),
+                                                                'masa_penilaian'                            => Pustaka::balik2($data->tgl_mulai) .' s.d '.Pustaka::balik2($data->tgl_selesai) ,
 
                                                     ], [], [
                                                     'format' => 'A4-L'
@@ -319,10 +369,7 @@ class CapaianTahunanController extends Controller {
 				<td width="33%" style="text-align: right;"></td>
 			</tr>
         </table>');
-        //"tpp".$bulan_depan."_".$skpd."
-        //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
-        //return $pdf->download('PerjanjianKinerja'.$jabatan->PejabatYangDinilai->nip.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
-        return $pdf->stream('CapaianTahunan.pdf');
+        return $pdf->download('CapaianTahunan.pdf');
     }
 
 }

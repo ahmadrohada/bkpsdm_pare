@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Models\UnsurPenunjangTugasTambahan;
 use App\Models\UnsurPenunjangKreativitas;
 
+use App\Traits\HitungUnsurPenunjang; 
 
 use Datatables;
 use Validator;
@@ -15,7 +16,8 @@ use Input;
 
 
 class UnsurPenunjangAPIController extends Controller {
-
+    
+    use HitungUnsurPenunjang;
     
    
     public function TugasTambahanList(Request $request)
@@ -26,25 +28,14 @@ class UnsurPenunjangAPIController extends Controller {
                                     'id AS tugas_tambahan_id',
                                     'label AS tugas_tambahan_label',
                                     'approvement'
-                                ])
-                                ->get();
+                                ]);
 
-        //nilai tugas tambahan
-        $n_tt = UnsurPenunjangTugasTambahan::WHERE('capaian_tahunan_id', '=' ,$request->get('capaian_tahunan_id'))
-                                            ->WHERE('approvement', '=' , '1' )
-                                            ->count();
+        $data                                   =  $dt->get();       
+        $n_unsur_penunjang_tugas_tambahan       =  $dt->WHERE('approvement', '=' , '1' )->count();
+        $n_nilai                                =  $this->Nilai_UP_TugasTambahan($n_unsur_penunjang_tugas_tambahan);
 
-        if ( $n_tt < 1){
-            $n_nilai = 0;
-        }else if ( $n_tt <= 3 ){
-            $n_nilai = 1;
-        }else if ( $n_tt <= 6 ){
-            $n_nilai = 2;
-        }else if ( $n_tt >= 7 ){
-            $n_nilai = 3;
-        }
-
-        $datatables = Datatables::of($dt)
+ 
+        $datatables = Datatables::of($data)
                     ->addColumn('tugas_tambahan_label', function ($x) {
                         return $x->tugas_tambahan_label;
                     })
