@@ -18,9 +18,18 @@
 				Capaian Tahunan Eselon {{ $capaian->PejabatYangDinilai->Eselon->eselon }} [ Detail ]
 			</h1>
 				{!! Breadcrumbs::render('personal_edit_capaian_tahunan') !!}
-      </section>
+				
+	  </section>
+	 
+	
 	   
 	    <section class="content">
+			<div style="height:120px;" class="callout callout-danger slide" hidden>
+				<h4>I am a danger callout!</h4>
+			
+				<p>There is a problem that we need to fix. A wonderful serenity has taken possession of my entire soul,
+				  like these sweet mornings of spring which I enjoy with my whole heart.</p>
+			  </div>
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="status"><a href="#status" data-toggle="tab">Status </a></li>
@@ -101,10 +110,10 @@ $(document).ready(function() {
 
 		$('#tugas_tambahan_table').DataTable().clear().destroy();
 
-		if ( id == 'kegiatan_tahunan_tab'){
-			LoadKegiatanTahunanTable();
-		}else if ( id == 'status'){
+		if ( id == 'status'){
 			status_show(); 
+		}else if ( id == 'kegiatan_tahunan_tab'){
+			LoadKegiatanTahunanTable();
 		}else if ( id == 'unsur_penunjang_tab'){
 			LoadUnsurPenunajangTugasTambahanTable(); 
 			LoadUnsurPenunajangKreativitasTable();

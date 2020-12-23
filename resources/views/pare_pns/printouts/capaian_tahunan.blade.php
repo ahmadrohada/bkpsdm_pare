@@ -11,13 +11,13 @@
 <table class="kop_skp" border="0" width="100%">
 	<tr>
 		<td align="center" valign="top">
-			<FONT style=" font-size:13pt; font-weight:bold; font-family:Times New Roman; letter-spacing:1.2pt;  ">PENILAIAN CAPAIAN SASARAN KERJA PEGAWAI</FONT>
+			<FONT style=" font-size:13pt; font-weight:bold; letter-spacing:1.2pt;  ">PENILAIAN CAPAIAN SASARAN KERJA PEGAWAI</FONT>
 		</td>
 	</tr>
 	<tr>
 		<td align="center"  style="padding:0px;" valign="top">
 			<FONT style=" font-size:9pt; font-family:Trebuchet MS,Calibri; color:#454545;"> 
-				Masa Penilaian 
+				Masa Penilaian {{ $masa_penilaian }}
 			</FONT>
 		</td>
 	</tr>
@@ -26,8 +26,7 @@
 	<br>
 	
 	<font style=" font-size:8pt;  font-family:Trebuchet MS,Calibri; color:#454545;">
-			Dicetak oleh 
-	
+			Dicetak oleh {{ $user }} [ {{ $tgl_cetak }} ] 
 	</font>	
 
 	@php
@@ -71,14 +70,14 @@
 	@endphp
 	
 	
-	<table class="cetak_skp_tahunan" style="margin-top:-3px;">
+	<table class="cetak_skp_tahunan" style="margin-top:-3px; font-style:Times New Roman;">
 	<thead>
 		<tr >
 			<th  rowspan="2" width="3%" style="border:1.3pt solid black;">NO</th>
 			<th  rowspan="2" width="25%"  style="border:1.5pt solid black;">I. KEGIATAN TUGAS JABATAN</th>
 			<th  rowspan="2" width="5%"  style="border:1.3pt solid black;">AK</th>
 			<th  colspan="6" width="25%"  style="border:1.3pt solid black;">TARGET</th>
-			<th  rowspan="2" width="4%"  style="border:1.3pt solid black;">AK</th>
+			<th  rowspan="2" width="5%"  style="border:1.3pt solid black;">AK</th>
 			<th  colspan="6" width="25%"  style="border:1.3pt solid black;">REALISASI</th>
 			<th  rowspan="2" width="6%"  style="border:1.3pt solid black;">PERHITUNGAN</th>
 			<th  rowspan="2" width="5%"  style="border:1.3pt solid black;">NILAI CAPAIAN SKP</th>
@@ -457,7 +456,7 @@
 						<td class="garis_y" height="173px;">8.  REKOMENDASI</td>
 					</tr>
 					<tr>
-						<td class="garis_y" height="340px">
+						<td class="garis_y" height="500px">
 							
 							<table align="right" style="border:none!important;">
 								<tr>
@@ -468,7 +467,7 @@
 								<tr>
 									<td align="center" style="border:none!important;">
 										PEJABAT PENILAI,
-									</td>
+									</td> 
 								</tr>
 								<tr height="110px" style="border:none!important;">
 									<td height="50px" style="border:none!important;">
@@ -484,7 +483,7 @@
 		
 							</table>
 							
-							<table style="border:none!important;">
+							<table style="border:none!important; margin-top:40px;">
 								<tr>
 									<td align="center" style="border:none!important;" width="50%">
 										10. DITERIMA TANGGAL 

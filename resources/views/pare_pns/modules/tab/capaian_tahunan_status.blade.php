@@ -177,6 +177,7 @@
 				data 		: { capaian_tahunan_id : {!! $capaian->id !!} },
 				method		: "GET",
 				dataType	: "json",
+				cache		: true,
 				success	: function(data) {
 					//$('.st_formula_hitung').html(data['tgl_dibuat']);
 					$('.st_created_at').html(data['tgl_dibuat']);
@@ -224,6 +225,7 @@
 			data 		: {capaian_tahunan_id : {{ $capaian->id}} },
 			method		: "GET",
 			dataType	: "json",
+			cache		: true,
 			success	: function(data) {
 
 					$('.nilai_orientasi_pelayanan').html(data['pelayanan']);

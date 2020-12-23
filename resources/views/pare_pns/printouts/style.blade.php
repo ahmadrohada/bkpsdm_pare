@@ -156,7 +156,7 @@ table.kop_skp {
 	border-collapse:collapse;
 	color:black;
 	padding: 0px;
-
+	font-family: "Times New Roman";
 }
 
 
@@ -180,6 +180,7 @@ table.cetak_skp_tahunan th{
 		font-weight:bold;
 		font-size:10pt;
 		background:#e8e7e9;
+		font: "Times New Roman";
 }
 
 

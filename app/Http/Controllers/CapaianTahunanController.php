@@ -337,8 +337,14 @@ class CapaianTahunanController extends Controller {
             
         );
 
+        $user      = \Auth::user();
+        $pegawai   = $user->pegawai;   
+        $tgl = date('Y'."-".'m'."-".'d');
+        $waktu = date('H'.":".'i'.":".'s');
 
         $pdf = PDF::loadView('pare_pns.printouts.capaian_tahunan', [  
+                                                                'user'                                      => $pegawai->nama,
+                                                                'tgl_cetak'                                 => Pustaka::balik($tgl).' / '.$waktu,
                                                                 'data'                                      => $data,
                                                                 'nama_skpd'                                 => $data->PejabatYangDinilai->SKPD->skpd,
                                                                 'kegiatan_list'                             => $kegiatan_list,
@@ -369,7 +375,7 @@ class CapaianTahunanController extends Controller {
 				<td width="33%" style="text-align: right;"></td>
 			</tr>
         </table>');
-        return $pdf->download('CapaianTahunan.pdf');
+        return $pdf->download('CapaianTahunan_'.$pejabat_yang_dinilai['nip'].'.pdf');
     }
 
 }
