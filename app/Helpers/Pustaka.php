@@ -813,6 +813,8 @@ class Pustaka {
 		switch($bulan)
 					{
 						
+				case 00 : $nm_bulan='-';
+						break;
 				case 01 : $nm_bulan='Januari';
 						break;
 				case 02 : $nm_bulan='Februari';
@@ -845,7 +847,12 @@ class Pustaka {
 		$tahun = isset($tahun) ? $tahun : '';
 		
 		$data=$tanggal.'   '.$nm_bulan.'  '.$tahun;
-	return $data . "&nbsp;&nbsp;[" .$jam. "]" ;
+		if ( $nm_bulan != "-" ){
+			return $data . "&nbsp;&nbsp;[" .$jam. "]" ;
+		}else{
+			return null ;
+		}
+	
 
 	}
 

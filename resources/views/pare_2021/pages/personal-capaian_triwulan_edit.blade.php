@@ -49,7 +49,7 @@
 					
 				</div>  --}}
 				<div class="tab-pane fade active" id="detail">
-					@include('pare_pns.modules.edit_forms.capaian_triwulan_detail')		
+					@include('pare_pns.modules.tabs.capaian_triwulan_detail')		
 				</div>
 								
 				<div class="tab-pane fade" id="kegiatan_triwulan_tab">

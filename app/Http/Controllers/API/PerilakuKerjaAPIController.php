@@ -258,12 +258,12 @@ class PerilakuKerjaAPIController extends Controller {
                 'kerjasama_03.required'         => 'Harus diisi',
                 'kerjasama_04.required'         => 'Harus diisi',
                 'kerjasama_05.required'         => 'Harus diisi',
-                /* 'kepemimpinan_01.required'      => 'Harus diisi',
+                'kepemimpinan_01.required'      => 'Harus diisi',
                 'kepemimpinan_02.required'      => 'Harus diisi',
                 'kepemimpinan_03.required'      => 'Harus diisi',
                 'kepemimpinan_04.required'      => 'Harus diisi',
                 'kepemimpinan_05.required'      => 'Harus diisi',
-                'kepemimpinan_06.required'      => 'Harus diisi', */
+                'kepemimpinan_06.required'      => 'Harus diisi', 
 
         ];
 
@@ -290,12 +290,12 @@ class PerilakuKerjaAPIController extends Controller {
                             'kerjasama_03'         => 'required|numeric|min:1|max:5',
                             'kerjasama_04'         => 'required|numeric|min:1|max:5',
                             'kerjasama_05'         => 'required|numeric|min:1|max:5',
-                            /* 'kepemimpinan_01'      => 'required|numeric|min:1|max:5',
+                            'kepemimpinan_01'      => 'required|numeric|min:1|max:5',
                             'kepemimpinan_02'      => 'required|numeric|min:1|max:5',
                             'kepemimpinan_03'      => 'required|numeric|min:1|max:5',
                             'kepemimpinan_04'      => 'required|numeric|min:1|max:5',
                             'kepemimpinan_05'      => 'required|numeric|min:1|max:5',
-                            'kepemimpinan_06'      => 'required|numeric|min:1|max:5', */
+                            'kepemimpinan_06'      => 'required|numeric|min:1|max:5',
 
                         ),
                         $messages
@@ -335,11 +335,11 @@ class PerilakuKerjaAPIController extends Controller {
         $sr->kerjasama_04         = Input::get('kerjasama_04');
         $sr->kerjasama_05         = Input::get('kerjasama_05');
         $sr->kepemimpinan_01      = Input::get('kepemimpinan_01') ? Input::get('kepemimpinan_01') : 0 ;
-        $sr->kepemimpinan_02      = Input::get('kepemimpinan_02') ? Input::get('kepemimpinan_01') : 0 ;
-        $sr->kepemimpinan_03      = Input::get('kepemimpinan_03') ? Input::get('kepemimpinan_01') : 0 ;
-        $sr->kepemimpinan_04      = Input::get('kepemimpinan_04') ? Input::get('kepemimpinan_01') : 0 ;
-        $sr->kepemimpinan_05      = Input::get('kepemimpinan_05') ? Input::get('kepemimpinan_01') : 0 ;
-        $sr->kepemimpinan_06      = Input::get('kepemimpinan_06') ? Input::get('kepemimpinan_01') : 0 ;
+        $sr->kepemimpinan_02      = Input::get('kepemimpinan_02') ? Input::get('kepemimpinan_02') : 0 ;
+        $sr->kepemimpinan_03      = Input::get('kepemimpinan_03') ? Input::get('kepemimpinan_03') : 0 ;
+        $sr->kepemimpinan_04      = Input::get('kepemimpinan_04') ? Input::get('kepemimpinan_04') : 0 ;
+        $sr->kepemimpinan_05      = Input::get('kepemimpinan_05') ? Input::get('kepemimpinan_05') : 0 ;
+        $sr->kepemimpinan_06      = Input::get('kepemimpinan_06') ? Input::get('kepemimpinan_06') : 0 ;
 
 
         if ( $sr->save()){

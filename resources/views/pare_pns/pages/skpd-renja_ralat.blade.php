@@ -20,7 +20,7 @@
 
 				<div class="nav-tabs-custom ">
 					<ul class="nav nav-tabs" id="myTab">
-						<li class="status"><a href="#status" data-toggle="tab">Status</a></li>
+						<li class="status"><a href="#status" data-toggle="tab">Sumary</a></li>
 						<li class="detail"><a href="#detail" data-toggle="tab">Detail</a></li>
 						<li class="rencana_kerja_tab"><a href="#rencana_kerja_tab" data-toggle="tab">Pohon Kinerja</a></li>
 						<li class="distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
@@ -31,14 +31,14 @@
 							@include('pare_pns.modules.timeline.renja_status_edit')	
 						</div>
 						<div class="tab-pane fade" id="detail">
-							@include('pare_pns.modules.edit_forms.renja_detail')
+							@include('pare_pns.modules.tabs.renja_detail')
 						</div>
 						
 						<div class=" tab-pane fade" id="rencana_kerja_tab">
-							@include('pare_pns.modules.tab.pohon_kinerja_edit')
+							@include('pare_pns.modules.tabs.pohon_kinerja_edit')
 						</div>
 						<div class=" tab-pane fade" id="distribusi_kegiatan">
-							@include('pare_pns.modules.tab.distribusi_kegiatan_edit') 
+							@include('pare_pns.modules.tabs.distribusi_kegiatan_edit') 
 						</div>
 						
 					</div>

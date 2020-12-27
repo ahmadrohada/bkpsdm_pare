@@ -10,20 +10,70 @@
 	    <section class="content-header">
 			<?php
 				$xd = request()->segment(4); 
-				$label_name = ( $xd == 'ralat') ? ' [ Ralat ] ' : ' [ Edit ] ' ;
+				$label_name = ( $xd == 'ralat') ? ' [ Ralat ] ' : ' [ Draft ] ' ;
 			?>
 			<h1>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-capaian_tahunan') }}"><span class="fa fa-angle-left"></span></a>
 				Edit Capaian Tahunan Eselon {{ $capaian->PejabatYangDinilai->Eselon->eselon }}  {{$label_name}}
 			</h1>
-				{!! Breadcrumbs::render('personal_edit_capaian_tahunan') !!}
+				
       </section>
 	  
 	    <section class="content">
+
+		<div class="row badge_persetujuan">
+			<div class="col-md-12">
+				<div class="callout callout-info " style="height:155px;">
+
+					<table>
+						<tr>
+							<td rowspan="4"><i class="fa fa-pencil fa-3x" style="padding-right:30px;"></i></td>
+							<td >Periode</td>
+							<td >&nbsp;&nbsp;&nbsp;</td>
+							<td>{{ Pustaka::tahun($capaian->tgl_mulai) }} </td>
+						</tr>
+						<tr>
+							<td>Created</td>
+							<td></td>
+							<td>{{ Pustaka::tgl_jam($capaian->created_at) }}</td>
+							</tr>
+							<tr>
+								<td>
+									Send
+								</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									Approved
+								</td>
+								<td></td>
+								<td></td>
+							</tr>
+					
+					</table>
+					<hr>
+					@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )
+						<?php
+							$xd = request()->segment(4); 
+							$attr_name = ( $xd == 'ralat') ? ' kembali ' : '' ;
+						?>
+						<div class="col-xs-12 col-lg-2 no-padding" >
+							<button type="button" class="btn btn-sm btn-block btn-warning pull-left kirim_capaian" style="margin-top:-15px;">
+								Kirim {{$attr_name}} ke Atasan <i class="send_icon"></i>
+							</button>
+						</div>
+					@endif
+				</div>
+			
+			</div>
+		</div>
+
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
-				<li class="status"><a href="#status" data-toggle="tab">Status </a></li>
-				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
+				<li class="sumary"><a href="#sumary" data-toggle="tab">Sumary </a></li>
+				<li class="pejabat"><a href="#pejabat" data-toggle="tab" >Pejabat</a></li>
 				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian->PejabatYangDinilai->Eselon->eselon !!}</a></li>
 				<li class="unsur_penunjang_tab"><a href="#unsur_penunjang_tab" data-toggle="tab">Unsur Penunjang</a></li>
 				<li class="tugas_tambahan_tab"><a href="#tugas_tambahan_tab" data-toggle="tab">Tugas Tambahan</a></li>
@@ -31,11 +81,11 @@
 
  
 			<div class="tab-content"  style="min-height:400px;">
-				<div class="active tab-pane fade" id="status">
-					@include('pare_pns.modules.tab.capaian_tahunan_status')
+				<div class="active tab-pane fade" id="sumary">
+					@include('pare_pns.modules.tabs.capaian_tahunan_sumary')
 				</div>
-				<div class="tab-pane fade" id="detail">
-					@include('pare_pns.modules.edit_forms.capaian_tahunan_detail')			
+				<div class="tab-pane fade" id="pejabat">
+					@include('pare_pns.modules.tabs.capaian_tahunan_pejabat')			
 				</div>
 								
 				<div class=" tab-pane fade" id="kegiatan_tahunan_tab">
@@ -78,6 +128,30 @@
 	</div>
 <script type="text/javascript">
 $(document).ready(function() {
+
+
+	$.ajax({
+				url			: '{{ url("api_resource/capaian_tahunan_detail") }}',
+				data 		: { capaian_tahunan_id : {!! $capaian->id !!} },
+				method		: "GET",
+				dataType	: "json",
+				cache		: true,
+				success	: function(data) {
+					
+					$('.st_created').html(data['date_of_created']);
+					$('.st_send').html(data['date_of_send']);
+					$('.st_approved').html(data['date_of_approve']);
+					$('.st_periode').html(data['periode']);
+
+
+			
+					
+				},
+				error: function(data){
+					
+				}						
+	});
+
 	
 	$('#myTab a').click(function(e) {
 		
@@ -101,8 +175,8 @@ $(document).ready(function() {
 
 		if ( id == 'kegiatan_tahunan_tab'){
 			LoadKegiatanTahunanTable();
-		}else if ( id == 'status'){
-			status_show(); 
+		}else if ( id == 'sumary'){
+			sumary_show(); 
 		}else if ( id == 'unsur_penunjang_tab'){
 			LoadUnsurPenunajangTugasTambahanTable(); 
 			LoadUnsurPenunajangKreativitasTable();
@@ -120,8 +194,82 @@ $(document).ready(function() {
 	if ( hash != ''){
 		$('#myTab a[href="' + hash + '"]').tab('show');
 	}else{
-		$('#myTab a[href="#status"]').tab('show');
+		$('#myTab a[href="#sumary"]').tab('show');
 	}
+
+	function on_kirim(){
+		$('.send_icon').addClass('fa fa-spinner faa-spin animated');
+		$('.kirim_capaian').prop('disabled',true);
+	}
+	function reset_kirim(){
+		$('.send_icon').removeClass('fa fa-spinner faa-spin animated');
+		$('.send_icon').addClass('fa fa-send');
+		$('.kirim_capaian').prop('disabled',false);
+	}
+
+	$(document).on('click','.kirim_capaian',function(e){
+		Swal.fire({
+				title: "Kirim Capaian",
+				text: "Capaian Tahunan akan dikirim ke atasan untuk mendapatkan persetujuan, edit pada capaian tidak bisa dilakukan",
+				type: "question",
+				showCancelButton: true,
+				cancelButtonText: "Batal",
+				confirmButtonText: "Kirim Capaian",
+				confirmButtonClass: "btn btn-success",
+				cancelButtonClass: "btn btn-danger",
+				cancelButtonColor: "#d33",
+				closeOnConfirm: false
+		}).then ((result) => {
+			if (result.value){
+				on_kirim();
+				$.ajax({
+					url		: '{{ url("api_resource/kirim_capaian_tahunan") }}',
+					type	: 'POST',
+					data    : { capaian_tahunan_id : {!! $capaian->id !!} },
+					cache   : false,
+					success:function(data){
+							
+							Swal.fire({
+									title: "",
+									text: "Sukses",
+									type: "success",
+									width: "200px",
+									showConfirmButton: false,
+									allowOutsideClick : false,
+									timer: 900
+									}).then(function () {
+										reset_kirim();
+										location.reload();
+
+									},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											
+											
+										}
+									}
+								)
+								
+							
+					},
+					error: function(e) {
+							reset_kirim();
+							Swal.fire({
+									title: "Gagal",
+									text: "",
+									type: "warning"
+								}).then (function(){
+										
+								});
+							}
+					});	
+				
+
+					
+			}
+		});
+	}); 
+
 	
 
 });

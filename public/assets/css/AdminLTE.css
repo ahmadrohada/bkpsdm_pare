@@ -2496,6 +2496,11 @@ a:focus {
 .callout.callout-success {
   border-color: #00733e;
 }
+
+.callout.callout-capaian {
+  border-color: #00733e;
+}
+
 /*
  * Component: alert
  * ----------------
@@ -4553,6 +4558,7 @@ a:focus {
 .callout.callout-warning,
 .callout.callout-info,
 .callout.callout-success,
+.callout.callout-capaian,
 .alert-success,
 .alert-danger,
 .alert-error,
@@ -4632,6 +4638,14 @@ a:focus {
 .modal-success .modal-body {
   background-color: #00a65a !important;
 }
+
+.callout.callout-capaian,
+.alert-capaian,
+.label-capaian,
+.modal-capaian .modal-body {
+  background-color: #00c0ef !important;
+}
+
 .bg-navy {
   background-color: #001f3f !important;
 }

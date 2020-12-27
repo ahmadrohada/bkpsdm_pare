@@ -61,40 +61,40 @@
  
 			<div class="tab-content"  style="min-height:400px;">
 				<div class="active tab-pane fade" id="detail">
-					@include('pare_pns.modules.tab.skp_tahunan_detail')				
+					@include('pare_pns.modules.tabs.skp_tahunan_detail')				
 				</div>		
 				<div class=" tab-pane fade" id="kegiatan_tahunan_tab">
 					<?php
 						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': 
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan,  json_decode($jabatan_staf_ahli))){ //JIKA STAF AHLI
-										?>@include('pare_pns.modules.tab.kegiatan_tahunan_5_detail')<?php
+										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_5_detail')<?php
 									}else{
-										?>@include('pare_pns.modules.tab.kegiatan_tahunan_1_detail')<?php
+										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_1_detail')<?php
 									}
 									
 									break;
 							case '2':
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan,  json_decode($jabatan_irban))){ //JIKA IRBAN
-										?>@include('pare_pns.modules.tab.kegiatan_tahunan_3_detail')<?php
+										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_3_detail')<?php
 									}else{
-										?>@include('pare_pns.modules.tab.kegiatan_tahunan_2_detail')<?php
+										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_2_detail')<?php
 									}
 									
 									break;
 							case '3': 
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan,  json_decode($jabatan_lurah))){ //JIKA LURAH
-										?>@include('pare_pns.modules.tab.kegiatan_tahunan_2_detail')<?php
+										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_2_detail')<?php
 									}else{
-										?>@include('pare_pns.modules.tab.kegiatan_tahunan_3_detail')<?php
+										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_3_detail')<?php
 									}
 
 									break;
 							case '4':   
-									?>@include('pare_pns.modules.tab.kegiatan_tahunan_4_detail')<?php
+									?>@include('pare_pns.modules.tabs.kegiatan_tahunan_4_detail')<?php
 									break;
 							case '5':   
-									?>@include('pare_pns.modules.tab.kegiatan_tahunan_5_detail')<?php
+									?>@include('pare_pns.modules.tabs.kegiatan_tahunan_5_detail')<?php
 									break;
 						}
 					?>
@@ -175,7 +175,7 @@
 							case '2': //Deselon III
 	
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan,  json_decode($jabatan_irban))){ //JIKA IRBAN
-										?>@include('pare_pns.modules.tab.kegiatan_bulanan_3_detail')<?php
+										?>@include('pare_pns.modules.tabs.kegiatan_bulanan_3_detail')<?php
 									}else{
 										?>@include('pare_pns.tables.skp_bulanan-kegiatan_2_edit')<?php
 									}
@@ -185,7 +185,7 @@
 									if (in_array( $skp->PejabatYangDinilai->id_jabatan,  json_decode($jabatan_lurah))){ //JIKA LURAH
 										?>@include('pare_pns.tables.skp_bulanan-kegiatan_2_edit')<?php
 									}else{
-										?>@include('pare_pns.modules.tab.kegiatan_bulanan_3_detail')<?php
+										?>@include('pare_pns.modules.tabs.kegiatan_bulanan_3_detail')<?php
 									}
 
 									break;
@@ -200,7 +200,7 @@
 					
 				</div>
 				<div class="tab-pane fade" id="tugas_tambahan_tab">
-					@include('pare_pns.modules.tab.tugas_tambahan')
+					@include('pare_pns.modules.tabs.tugas_tambahan')
 				</div>
 
 			</div>			

@@ -229,8 +229,6 @@ table.penilaian tbody td {
 </style>
 
 <script type="text/javascript">
-$(document).ready(function() {
-
 
 	$(".rating-pk").rating({
 			showCaption: true,
@@ -532,7 +530,7 @@ $(document).ready(function() {
 					allowOutsideClick : false,
 					timer: 1500
 				}).then(function () {
-					status_pengisian();
+					penilaian_perilaku_kerja_show();
 					//$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
 					$('.modal-penilaian_perilaku_kerja').modal('hide');
 
@@ -577,7 +575,7 @@ $(document).ready(function() {
 					allowOutsideClick : false,
 					timer: 1500
 				}).then(function () {
-					status_pengisian();
+					penilaian_perilaku_kerja_show();
 					//$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
 					$('.modal-penilaian_perilaku_kerja').modal('hide');
 
@@ -606,6 +604,5 @@ $(document).ready(function() {
     });
 
 
-});
 
 </script>

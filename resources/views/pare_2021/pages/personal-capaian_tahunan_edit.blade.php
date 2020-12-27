@@ -32,10 +32,10 @@
  
 			<div class="tab-content"  style="min-height:400px;">
 				<div class="active tab-pane fade" id="status">
-					@include('pare_pns.modules.tab.capaian_tahunan_status')
+					@include('pare_pns.modules.tabs.capaian_tahunan_status')
 				</div>
 				<div class="tab-pane fade" id="detail">
-					@include('pare_pns.modules.edit_forms.capaian_tahunan_detail')			
+					@include('pare_pns.modules.tabs.capaian_tahunan_detail')			
 				</div>
 								
 				<div class=" tab-pane fade" id="kegiatan_tahunan_tab">

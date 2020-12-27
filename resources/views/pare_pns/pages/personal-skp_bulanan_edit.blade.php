@@ -29,7 +29,7 @@
 
 			<div class="tab-content"  style="min-height:400px;">
 				<div class="active tab-pane fade" id="detail">
-					@include('pare_pns.modules.tab.skp_bulanan_detail')
+					@include('pare_pns.modules.tabs.skp_bulanan_detail')
 				</div>
 								
 				<div class=" tab-pane fade" id="kegiatan_bulanan_tab">

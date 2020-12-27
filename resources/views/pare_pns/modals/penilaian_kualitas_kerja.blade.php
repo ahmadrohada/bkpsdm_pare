@@ -62,6 +62,14 @@
     </div>
 </div>
 
+<link rel="stylesheet" href="{{asset('assets/css/star-rating.css')}}" />
+<script src="{{asset('assets/js/star-rating.js')}}"></script>
+<style>
+table.penilaian tbody td {
+  vertical-align: middle;
+}
+</style>
+
 
 
 <script type="text/javascript">
@@ -144,7 +152,7 @@
 					allowOutsideClick : false,
 					timer: 1500
 				}).then(function () {
-					status_pengisian();
+					sumary_show();
 					$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
 					$('.modal-penilaian_kualitas_kerja').modal('hide');
 
@@ -190,7 +198,7 @@
 					allowOutsideClick : false,
 					timer: 1500
 				}).then(function () {
-					status_pengisian();
+					sumary_show();
 					$('#realisasi_kegiatan_tahunan_table').DataTable().ajax.reload(null,false);
 					$('.modal-penilaian_kualitas_kerja').modal('hide');
 

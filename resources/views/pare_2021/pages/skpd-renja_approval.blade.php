@@ -31,16 +31,16 @@
 							@include('pare_pns.modules.timeline.renja_status_approval')	
 						</div>
 						<div class="tab-pane fade" id="detail">
-							@include('pare_pns.modules.edit_forms.renja_detail')
+							@include('pare_pns.modules.tabs.renja_detail')
 						</div>
 						
 						<div class=" tab-pane fade" id="rencana_kerja_tab">
-							@include('pare_pns.modules.tab.pohon_kinerja_detail')
+							@include('pare_pns.modules.tabs.pohon_kinerja_detail')
 						</div>  
 						
   
 						<div class=" tab-pane fade" id="distribusi_kegiatan">
-							@include('pare_pns.modules.tab.distribusi_kegiatan_detail') 
+							@include('pare_pns.modules.tabs.distribusi_kegiatan_detail') 
 						</div>
 						
 					</div>

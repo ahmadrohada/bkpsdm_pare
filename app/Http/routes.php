@@ -682,11 +682,14 @@ Route::group(['prefix' => 'api_resource','middleware'=> 'auth' ], function () {
 	
 	Route::get('create_capaian_tahunan_confirm','API\CapaianTahunanAPIController@CreateConfirm');
 	Route::get('ganti_atasan_capaian_tahunan','API\PegawaiAPIController@selectAtasanCapaianTahunan');
-	Route::post('set_pejabat_penilai_capaian_tahunan','API\CapaianTahunanAPIController@PejabatPenilaiUpdate');
+	Route::post('update_pejabat_penilai','API\CapaianTahunanAPIController@PejabatPenilaiUpdate');
+	Route::post('update_atasan_pejabat_penilai','API\CapaianTahunanAPIController@AtasanPejabatPenilaiUpdate');
 
 	Route::get('capaian_tahunan_status','API\CapaianTahunanAPIController@CapaianTahunanStatus');
 	
 	Route::get('capaian_tahunan_detail','API\CapaianTahunanAPIController@CapaianTahunanDetail');
+
+	Route::get('capaian_tahunan_pejabat','API\CapaianTahunanAPIController@CapaianTahunanPejabat');
 
 	Route::get('approval_request_capaian_tahunan_list','API\CapaianTahunanAPIController@ApprovalRequestList');
 

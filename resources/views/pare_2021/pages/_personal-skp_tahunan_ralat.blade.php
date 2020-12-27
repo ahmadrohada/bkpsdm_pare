@@ -28,7 +28,7 @@
 					@include('pare_pns.modules.timeline.skp_tahunan_status_ralat')	
 				</div>
 				<div class="tab-pane" id="detail">
-					@include('pare_pns.modules.edit_forms.skp_tahunan_detail')			
+					@include('pare_pns.modules.tabs.skp_tahunan_detail')			
 				</div>
 								
 				<div class=" tab-pane" id="kegiatan_tahunan_tab">

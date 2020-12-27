@@ -25,7 +25,7 @@
 			</ul>
 			<div class="tab-content" style="min-height:400px;">
 				<div class="active tab-pane fade" id="status">
-					@include('pare_pns.modules.tab.puskesmas_tpp_report_status')
+					@include('pare_pns.modules.tabs.puskesmas_tpp_report_status')
 				</div>
 				<div class=" tab-pane fade" id="tpp_report_data">
 					@include('pare_pns.tables.tpp_report_data_list_puskesmas')

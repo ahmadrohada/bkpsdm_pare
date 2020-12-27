@@ -31,7 +31,7 @@
 			</ul>
 			<div class="tab-content"  style="min-height:400px;">
 				<div class="active tab-pane fade" id="status">
-					@include('pare_pns.modules.tab.capaian_bulanan_status')
+					@include('pare_pns.modules.tabs.capaian_bulanan_status')
 				</div>
 				<div class="tab-pane fade" id="detail">
 					@include('pare_pns.modules.detail_forms.capaian_bulanan_detail')			

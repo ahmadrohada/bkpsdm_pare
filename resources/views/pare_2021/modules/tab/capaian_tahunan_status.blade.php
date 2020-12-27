@@ -1,7 +1,7 @@
 <div class="row badge_persetujuan" hidden>
 	<div class="col-md-12">
 		<div class="alert alert-danger bg-maroon alert-dismissible">
-			<h4><i class="icon fa fa-info"></i> Status Capaian Tahunan</h4>
+			<h4><i class="icon fa fa-info"></i> Status Capaian Tahunan</h4> 
 			<span class="text-badge_persetujuan"></span>
 		</div>
 	</div>
