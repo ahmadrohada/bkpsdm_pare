@@ -21,7 +21,7 @@ trait PenilaianPerilakuKerja
             $kerjasama = ($x->kerjasama_01+$x->kerjasama_02+$x->kerjasama_03+$x->kerjasama_04+$x->kerjasama_05)/25*100;
             $kepemimpinan = ($x->kepemimpinan_01+$x->kepemimpinan_02+$x->kepemimpinan_03+$x->kepemimpinan_04+$x->kepemimpinan_05+$x->kepemimpinan_06)/30*100;
 
-            if ( $x->CapaianTahunan->PejabatYangDinilai->Jabatan->Eselon->id_jenis_jabatan < 4 ){
+            if ( $x->CapaianTahunan->PegawaiYangDinilai->Jabatan->Eselon->id_jenis_jabatan < 4 ){
                 $jumlah = $pelayanan+$integritas+$komitmen+$disiplin+$kerjasama+$kepemimpinan;
                 $ave    = $jumlah / 6 ;
             }else{

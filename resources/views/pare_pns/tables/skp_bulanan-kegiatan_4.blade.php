@@ -44,7 +44,7 @@
 									data: { 
 										
 											"renja_id" 		 : {!! $skp->SKPTahunan->Renja->id !!} , 
-											"jabatan_id" 	 : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+											"jabatan_id" 	 : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
 											"skp_bulanan_id" : {!! $skp->id !!}
 									 },
 								},

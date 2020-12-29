@@ -22,7 +22,7 @@ class SKPTahunan extends Model
         return $this->hasMany('App\Models\KegiatanSKPTahunan','skp_tahunan_id')->select('id');
     }
     
-    public function PejabatYangDinilai()
+    public function PegawaiYangDinilai()
     {
         return $this->hasOne('App\Models\HistoryJabatan','id','u_jabatan_id');
     }

@@ -220,7 +220,7 @@
 
 	$(document).on('click','#submit-save',function(e){
 
-		@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+		@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
 			save_jft();
 		@else
 			save_eselon();
@@ -359,7 +359,7 @@
 	$(document).on('click','#submit-update',function(e){
 
 
-		@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+		@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
 			update_jft();
 		@else
 			update_eselon();

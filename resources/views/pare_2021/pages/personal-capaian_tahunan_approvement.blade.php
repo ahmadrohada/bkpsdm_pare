@@ -20,7 +20,7 @@
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="status"><a href="#status" data-toggle="tab">Status </a></li>
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
-				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">A. Kegiatan Tahunan Eselon {!! $capaian->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">A. Kegiatan Tahunan Eselon {!! $capaian->PegawaiYangDinilai->Eselon->eselon !!} / {!! $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				<li class="unsur_penunjang_tab"><a href="#unsur_penunjang_tab" data-toggle="tab">Unsur Penunjang</a></li>
 				<li class="tugas_tambahan_tab"><a href="#tugas_tambahan_tab" data-toggle="tab">Tugas Tambahan</a></li>
 			
@@ -37,7 +37,7 @@
 								
 				<div class=" tab-pane fade" id="kegiatan_tahunan_tab">
 					<?php
-						switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						switch(  $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': 
 									?><?php
 									break;

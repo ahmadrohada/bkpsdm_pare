@@ -155,7 +155,7 @@
 						</tr>
 						
 						
-						@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  < 4 )
+						@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  < 4 )
 					
 						
 						<tr style="background:rgb(240, 208, 250);">
@@ -364,7 +364,7 @@ $(document).ready(function() {
 		
 		
 		
-		if ( {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}  >= 4 ){
+		if ( {!! $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan!!}  >= 4 ){
 			f =( ( a+b+d+e )/20 )*100;
 		}else{
 			f =( ( a+b+c+d+e )/25 )*100;
@@ -422,7 +422,7 @@ $(document).ready(function() {
 		
 		
 		
-		if (  {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}  >= 4 ){
+		if (  {!! $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan!!}  >= 4 ){
 			g =( a+b+c+d+e+f )/5;
 		}else{
 			g =( a+b+c+d+e+f )/6;

@@ -22,7 +22,7 @@
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
-				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan SKP Bulanan Eselon {!! $skp->PejabatYangDinilai->Eselon->eselon !!} / {!! $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan SKP Bulanan Eselon {!! $skp->PegawaiYangDinilai->Eselon->eselon !!} / {!! $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				<li class="uraian_tugas_tambahan_tab"><a href="#uraian_tugas_tambahan_tab" data-toggle="tab" >Uraian Tugas Tambahan</a></li>
 			</ul>
 
@@ -34,7 +34,7 @@
 								
 				<div class=" tab-pane fade" id="kegiatan_bulanan_tab">
 					<?php
-						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': // 1. Eselon II
 									?>@include('pare_pns.tables.skp_bulanan-kegiatan_1')<?php
 									break;

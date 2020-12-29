@@ -29,14 +29,14 @@
 							<tr>
 								<td>Created</td>
 								<td></td>
-								<td>{{ Pustaka::tgl_jam($capaian->created_at) }}</td>
+								<td>{{ Pustaka::tgl_jam_short($capaian->created_at) }}</td>
 							</tr>
 							<tr>
 								<td>
 									Send
 								</td>
 								<td></td>
-								<td>{{ Pustaka::tgl_jam($capaian->date_of_send) }}</td>
+								<td>{{ Pustaka::tgl_jam_short($capaian->date_of_send) }}</td>
 							</tr>
 							<tr>
 								<td>
@@ -47,7 +47,7 @@
 									@if (  $capaian->status_approve == "2" )
 										{{ $capaian->alasan_penolakan }}
 									@elseif (  $capaian->status_approve == "1" )
-										{{ Pustaka::tgl_jam($capaian->date_of_approve) }}
+										{{ Pustaka::tgl_jam_short($capaian->date_of_approve) }}
 									@else
 										-
 									@endif	
@@ -73,7 +73,7 @@
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="sumary"><a href="#sumary" data-toggle="tab">Sumary </a></li>
 				<li class="pejabat"><a href="#pejabat" data-toggle="tab" >Pejabat</a></li>
-				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian->PegawaiYangDinilai->Eselon->eselon !!} / {!! $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				<li class="unsur_penunjang_tab"><a href="#unsur_penunjang_tab" data-toggle="tab">Unsur Penunjang</a></li>
 				<li class="tugas_tambahan_tab"><a href="#tugas_tambahan_tab" data-toggle="tab">Tugas Tambahan</a></li>
 				<li class="penilaian_perilaku_kerja_tab"><a href="#penilaian_perilaku_kerja_tab" data-toggle="tab">Penilaian Perilaku Kerja</a></li>
@@ -90,7 +90,7 @@
 								
 				<div class=" tab-pane fade" id="kegiatan_tahunan_tab">
 					<?php
-						switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						switch(  $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': 
 									?><?php
 									break;

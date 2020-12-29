@@ -19,7 +19,7 @@
 			<ul class="nav nav-tabs" id="myTab">
 				<li class=" status"><a href="#status" data-toggle="tab">Status </a></li>
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
-				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan SKP Tahunan Eselon {!! $skp->PejabatYangDinilai->Eselon->eselon !!} / {!! $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan SKP Tahunan Eselon {!! $skp->PegawaiYangDinilai->Eselon->eselon !!} / {!! $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 			</ul>
 
 
@@ -33,22 +33,22 @@
 								
 				<div class=" tab-pane" id="kegiatan_tahunan_tab">
 					<!-- 1. ka SKPD -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '1')
+					@if ( $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '1')
 						@include('pare_pns.tables.tables_skp_tahunan-kegiatan_1_edit')
 					@endif 
 
 					<!-- 2. KABID -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
+					@if ( $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '2')
 						@include('pare_pns.tables.skp_tahunan-kegiatan_2_edit')
 					@endif
 
 					<!-- 2. KASUBID -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+					@if ( $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '3')
 						@include('pare_pns.tables.skp_tahunan-kegiatan_3_edit')
 					@endif
 
 					<!-- 2. PELAKSANA -->
-					@if ( $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
+					@if ( $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '4')
 						@include('pare_pns.tables.kegiatan_tahunan_4')
 					@endif
 				

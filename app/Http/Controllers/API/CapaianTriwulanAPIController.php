@@ -140,7 +140,7 @@ class CapaianTriwulanAPIController extends Controller {
                 return Pustaka::periode_tahun($x->label);
             })
             ->addColumn('id_jenis_jabatan', function ($x) {
-                return ($x->PejabatYangDinilai->Eselon)?($x->PejabatYangDinilai->Eselon->id_jenis_jabatan):'';
+                return ($x->PegawaiYangDinilai->Eselon)?($x->PegawaiYangDinilai->Eselon->id_jenis_jabatan):'';
             })
             ->addColumn('jabatan', function ($x) {
                 if ( $this->jabatan($x->u_jabatan_id) == null ){
@@ -242,7 +242,7 @@ class CapaianTriwulanAPIController extends Controller {
 
     
         $p_detail   = $capaian->PejabatPenilai;
-        $u_detail   = $capaian->PejabatYangDinilai;
+        $u_detail   = $capaian->PegawaiYangDinilai;
        
 
         if ( $p_detail != null ){

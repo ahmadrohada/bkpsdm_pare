@@ -25,7 +25,7 @@
 							</p>
 
 						
-							@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  != '5')
+							@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  != '5')
 							<p>
 								<i class="fa fa-user"></i> <span class="penanggung_jawab" style="margin-right:10px;"></span>
 							</p>
@@ -49,7 +49,7 @@
 								<span class="kegiatan_bulanan_label"></span>
 							</p>
 
-							@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  != '5')
+							@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  != '5')
 							<p>
 								<i class="fa fa-user"></i> <span class="pelaksana" style="margin-right:10px;"></span>
 							</p>

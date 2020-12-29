@@ -299,9 +299,9 @@ class KontrakKinerjaAPIController extends Controller {
                                                     'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
                                                     //DATA ASN YANG DINILAI
                                                     'nama_pejabat'  => $jabatan->u_nama,
-                                                    'nip_pejabat'   => $jabatan->PejabatYangDinilai->nip,
-                                                    'jenis_jabatan' => $jabatan->PejabatYangDinilai->Eselon->JenisJabatan->jenis_jabatan,
-                                                    'jabatan'       => $jabatan->PejabatYangDinilai->jabatan,
+                                                    'nip_pejabat'   => $jabatan->PegawaiYangDinilai->nip,
+                                                    'jenis_jabatan' => $jabatan->PegawaiYangDinilai->Eselon->JenisJabatan->jenis_jabatan,
+                                                    'jabatan'       => $jabatan->PegawaiYangDinilai->jabatan,
                                                     //DATA ASN PNILAI
                                                     'nama_atasan'  => $jabatan->p_nama,
                                                     'nip_atasan'   => $jabatan->PejabatPenilai->nip,
@@ -331,7 +331,7 @@ class KontrakKinerjaAPIController extends Controller {
 				<td width="33%" style="text-align: right;"></td>
 			</tr>
         </table>');
-        return $pdf->stream('KontrakKinerja'.$jabatan->PejabatYangDinilai->nip.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf'); 
+        return $pdf->stream('KontrakKinerja'.$jabatan->PegawaiYangDinilai->nip.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf'); 
     }
 
 
@@ -451,9 +451,9 @@ class KontrakKinerjaAPIController extends Controller {
                                                     'nama_skpd'     => $this::nama_skpd($Renja->skpd_id),
                                                     //DATA ASN YANG DINILAI
                                                     'nama_pejabat'  => $jabatan->u_nama,
-                                                    'nip_pejabat'   => $jabatan->PejabatYangDinilai->nip,
-                                                    'jenis_jabatan' => $jabatan->PejabatYangDinilai->Eselon->JenisJabatan->jenis_jabatan,
-                                                    'jabatan'       => $jabatan->PejabatYangDinilai->jabatan,
+                                                    'nip_pejabat'   => $jabatan->PegawaiYangDinilai->nip,
+                                                    'jenis_jabatan' => $jabatan->PegawaiYangDinilai->Eselon->JenisJabatan->jenis_jabatan,
+                                                    'jabatan'       => $jabatan->PegawaiYangDinilai->jabatan,
                                                     //DATA ASN PNILAI
                                                     'nama_atasan'  => $jabatan->p_nama,
                                                     'nip_atasan'   => $jabatan->PejabatPenilai->nip,
@@ -485,7 +485,7 @@ class KontrakKinerjaAPIController extends Controller {
         </table>');
         //"tpp".$bulan_depan."_".$skpd."
         //return $pdf->stream('TPP'.$p->bulan.'_'.$this::nama_skpd($p->skpd_id).'.pdf');
-        return $pdf->stream('KontrakKinerja'.$jabatan->PejabatYangDinilai->nip.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
+        return $pdf->stream('KontrakKinerja'.$jabatan->PegawaiYangDinilai->nip.'_'.Pustaka::tahun($Renja->periode->awal).'.pdf');
     }
 
 

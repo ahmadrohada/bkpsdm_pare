@@ -14,7 +14,7 @@
 			?>
 			<h1>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-capaian_tahunan') }}"><span class="fa fa-angle-left"></span></a>
-				Edit Capaian Tahunan Eselon {{ $capaian->PejabatYangDinilai->Eselon->eselon }}  {{$label_name}}
+				Capaian Tahunan Eselon {{ $capaian->PegawaiYangDinilai->Eselon->eselon }}  {{$label_name}}
 			</h1>
 				
       </section>
@@ -27,28 +27,28 @@
 
 					<table>
 						<tr>
-							<td rowspan="4"><i class="fa fa-pencil fa-3x" style="padding-right:30px;"></i></td>
+							<td rowspan="4" class="hidden-xs"><i class="fa fa-pencil fa-3x" style="padding-right:30px;"></i></td>
 							<td >Periode</td>
-							<td >&nbsp;&nbsp;&nbsp;</td>
+							<td >&nbsp;&nbsp;:&nbsp;</td>
 							<td>{{ Pustaka::tahun($capaian->tgl_mulai) }} </td>
 						</tr>
 						<tr>
 							<td>Created</td>
-							<td></td>
-							<td>{{ Pustaka::tgl_jam($capaian->created_at) }}</td>
+							<td>&nbsp;&nbsp;:&nbsp;</td>
+							<td>{{ Pustaka::tgl_jam_short($capaian->created_at) }}</td>
 							</tr>
 							<tr>
 								<td>
 									Send
 								</td>
-								<td></td>
+								<td>&nbsp;&nbsp;:&nbsp;</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>
 									Approved
 								</td>
-								<td></td>
+								<td>&nbsp;&nbsp;:&nbsp;</td>
 								<td></td>
 							</tr>
 					
@@ -74,7 +74,7 @@
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="sumary"><a href="#sumary" data-toggle="tab">Sumary </a></li>
 				<li class="pejabat"><a href="#pejabat" data-toggle="tab" >Pejabat</a></li>
-				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian->PejabatYangDinilai->Eselon->eselon !!}</a></li>
+				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian->PegawaiYangDinilai->Eselon->eselon !!}</a></li>
 				<li class="unsur_penunjang_tab"><a href="#unsur_penunjang_tab" data-toggle="tab">Unsur Penunjang</a></li>
 				<li class="tugas_tambahan_tab"><a href="#tugas_tambahan_tab" data-toggle="tab">Tugas Tambahan</a></li>
 			</ul>
@@ -90,7 +90,7 @@
 								
 				<div class=" tab-pane fade" id="kegiatan_tahunan_tab">
 					<?php
-						switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						switch(  $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': 
 									?><?php
 									break;

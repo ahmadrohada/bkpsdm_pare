@@ -14,6 +14,7 @@
 					<th rowspan="2">TOTAL<br> HITUNG</th>
 					<th rowspan="2">CAPAIAN <br>SKP</th>
 					<th rowspan="2"><i class="fa fa-cog"></i></th>
+					<th rowspan="2" style="padding: 3px 20px;"><i class="fa fa-cog"></i></th>
 				</tr>
 				<tr>
 					<th>AK</th>
@@ -48,6 +49,7 @@ table.dataTable tbody td {
 }
 </style>
 @include('pare_pns.modals.realisasi_kegiatan_tahunan')
+@include('pare_pns.modals.penilaian_kualitas_kerja')
 
 <script type="text/javascript">
 
@@ -72,9 +74,17 @@ table.dataTable tbody td {
 									/* { visible: false, "targets": [10]}, */
 									{ "width": "150px", "targets": [0,1] },     
 									@if ( ( request()->segment(4) == 'edit' )|( request()->segment(4) == 'ralat' ) )  
-										{ visible: true, "targets": [19]}
+										{ visible: true, "targets": [19]},
+										{ visible: false, "targets": [13,14,15,16,17,18]},
 									@else
-										{ visible: false, "targets": [19]}
+										{ visible: false, "targets": [19]},
+										{ visible: true, "targets": [13,14,15,16,17,18]},
+									@endif
+
+									@if (  request()->segment(2) != 'capaian_tahunan_bawahan_approvement' )
+										{ visible: false, "targets": [20]},
+									@else
+										{ visible: true, "targets": [20]},
 									@endif
 								],
 				ajax			: {
@@ -82,9 +92,9 @@ table.dataTable tbody td {
 									data: { 
 										
 											"renja_id" 				: {!! $capaian->SKPTahunan->Renja->id !!} , 
-											"jabatan_id" 			: {!! $capaian->PejabatYangDinilai->Jabatan->id !!},
+											"jabatan_id" 			: {!! $capaian->PegawaiYangDinilai->Jabatan->id !!},
 											"capaian_id" 			: {!! $capaian->id !!},
-											"jenis_jabatan"			: {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan !!},
+											"jenis_jabatan"			: {!! $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan !!},
 									 },
 								},
 				rowCallback		: function(row, data, index){
@@ -110,13 +120,9 @@ table.dataTable tbody td {
 										$(row).find('td:eq(18)').css('font-weight', 'bold');
 									
 									},
-				rowsGroup		: [ 0,1,3,5,6,7,8,10,11,12,14,15,16,17,18 ],
+				rowsGroup		: [ 0,1,3,5,6,7,8,10,11,12,14,15,16,17,18,20 ],
 				columns			: [ 
-									{ data: 'kegiatan_tahunan_id' ,width:"10px",
-										"render": function ( data, type, row ,meta) {
-											return meta.row + meta.settings._iDisplayStart + 1 ;
-										}
-									},
+									{ data: "no",searchable:false},
 									{ data: "kegiatan_tahunan_label", name:"kegiatan_tahunan_label",width:"420px",
 										"render": function ( data, type, row ) {
 											return row.kegiatan_tahunan_label;
@@ -214,7 +220,7 @@ table.dataTable tbody td {
 											"render": function ( data, type, row ) {
 
 											//form realisasi untuk kegiatan tahunan , bukan untuk indikator
-											@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+											@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
 										
 									
 												if ( {!! $capaian->status !!} == 1 ){
@@ -248,6 +254,17 @@ table.dataTable tbody td {
 
 										}
 									},
+									{  data: 'realisasi_kegiatan_id',name:'realisasi_kegiatan_id',
+										"render": function ( data, type, row ) {
+											
+											if ( (row.penilaian) >= 1 ){
+												return  '<span data-toggle="tooltip" title="Ubah data penilaian" style="margin:2px;" ><a class="btn btn-success btn-xs penilaian_kualitas_kerja"  data-realisasi_kegiatan_id="'+row.realisasi_kegiatan_id+'"><i class="fa fa-pencil" ></i></a></span>';	
+											}else{
+												return  '<span data-toggle="tooltip" title="Berikan Penilaian Kualitas Kerja"  style="margin:2px;" ><a class="btn btn-info btn-xs penilaian_kualitas_kerja"  data-realisasi_kegiatan_id="'+row.realisasi_kegiatan_id+'"><i class="fa fa-pagelines" ></i></a></span>';
+											} 
+											
+										}
+									},
 									
 								
 								],
@@ -267,7 +284,7 @@ table.dataTable tbody td {
 
 	$(document).on('click','.create_realisasi_tahunan',function(e){
 	
-		@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+		@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
 			var kegiatan_id = $(this).data('kegiatan_id');
 			$('.modal-realisasi_tahunan').find('h4').html('Add Realisasi Kegiatan Tahunan');
 			$('.modal-realisasi_tahunan').find('.btn-submit').attr('id', 'submit-save');
@@ -395,7 +412,7 @@ table.dataTable tbody td {
 	}
 
 	$(document).on('click','.edit_realisasi_tahunan',function(e){
-		@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+		@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
 			var kegiatan_id = $(this).data('kegiatan_id');
 			$('.modal-realisasi_tahunan').find('h4').html('Edit Realisasi Kegiatan Tahunan');
 			$('.modal-realisasi_tahunan').find('.btn-submit').attr('id', 'submit-update');
@@ -553,6 +570,35 @@ table.dataTable tbody td {
 			}
 		});
 	}
+
+
+	$(document).on('click','.penilaian_kualitas_kerja',function(e){
+		var realisasi_kegiatan_id = $(this).data('realisasi_kegiatan_id');
+		$.ajax({
+				url			  	: '{{ url("api_resource/penilaian_kualitas_kerja_detail") }}',
+				data 		  	: { 
+									realisasi_kegiatan_id : realisasi_kegiatan_id ,
+								},
+				method			: "GET",
+				dataType		: "json",
+				success	: function(data) {
+					
+					$('.modal-penilaian_kualitas_kerja').find('[class=realisasi_kegiatan_tahunan_id]').val(data['realisasi_kegiatan_tahunan_id']);
+					$('.modal-penilaian_kualitas_kerja').find('h4').html('Penilaian Kualitas Kerja');
+					
+					$('.akurasi').rating('update',data['akurasi']);
+					$('.ketelitian').rating('update',data['ketelitian']);
+					$('.kerapihan').rating('update',data['kerapihan']);
+					$('.keterampilan').rating('update',data['keterampilan']);
+					hitung_penilaian_kualitas_kerja();
+					$('.modal-penilaian_kualitas_kerja').modal('show');  
+				},
+				error: function(data){
+					
+				}						
+		});	
+
+	});
 
 	
 

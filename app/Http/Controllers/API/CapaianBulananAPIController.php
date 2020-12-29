@@ -59,7 +59,7 @@ class CapaianBulananAPIController extends Controller {
 
     
         $p_detail   = $capaian->PejabatPenilai;
-        $u_detail   = $capaian->PejabatYangDinilai;
+        $u_detail   = $capaian->PegawaiYangDinilai;
        
 
         if ( $p_detail != null ){
@@ -243,26 +243,26 @@ class CapaianBulananAPIController extends Controller {
                                 )
                         ->first();
 
-        $jenis_jabatan  = $skp_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
+        $jenis_jabatan  = $skp_bulanan->PegawaiYangDinilai->Eselon->id_jenis_jabatan;
         $renja_id       = $skp_bulanan->SKPTahunan->renja_id;
         $bulan          = $skp_bulanan->bulan;
-        $jabatan_id     = $skp_bulanan->PejabatYangDinilai->id_jabatan;
+        $jabatan_id     = $skp_bulanan->PegawaiYangDinilai->id_jabatan;
 
         //Uraian Tugas Jabatan pada skp bulanan
         $jm_uraian_tugas_tambahan =  UraianTugasTambahan::WHERE('skp_bulanan_id',$request->get('skp_bulanan_id'))->count();
         
         //Jika STAF AHLI
-        if ( ( $jenis_jabatan == 1 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli ) ) ){
+        if ( ( $jenis_jabatan == 1 ) & ( in_array( $skp_bulanan->PegawaiYangDinilai->id_jabatan, $id_jabatan_staf_ahli ) ) ){
             $jenis_jabatan = 5 ; //STAFF AHLI DIANGGAP JFT
         }
 
         //jika irban
-        if ( ( $jenis_jabatan == 2 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_irban ) ) ){
+        if ( ( $jenis_jabatan == 2 ) & ( in_array( $skp_bulanan->PegawaiYangDinilai->id_jabatan, $id_jabatan_irban ) ) ){
             $jenis_jabatan = 31 ; //irban
         }
 
         //jika Lurah
-        if ( ( $jenis_jabatan == 3 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah ) ) ){
+        if ( ( $jenis_jabatan == 3 ) & ( in_array( $skp_bulanan->PegawaiYangDinilai->id_jabatan, $id_jabatan_lurah ) ) ){
             $jenis_jabatan = 2 ; //lurah
         }
 
@@ -346,7 +346,7 @@ class CapaianBulananAPIController extends Controller {
         //================================= K A S U B I D ========================================// 
         }else if ( $jenis_jabatan == 3 ){ //eselon IV
             //cari bawahan
-            $jabatan_id = $skp_bulanan->PejabatYangDinilai->id_jabatan;
+            $jabatan_id = $skp_bulanan->PegawaiYangDinilai->id_jabatan;
             $bawahan = Jabatan::
                             WHERE('id',$jabatan_id)
                             ->orwhere(function ($query) use($jabatan_id) {
@@ -401,7 +401,7 @@ class CapaianBulananAPIController extends Controller {
         }else if ( $jenis_jabatan == 2){   //Eselon III atau lurah
 
             
-            $jabatan_id = $skp_bulanan->PejabatYangDinilai->id_jabatan;
+            $jabatan_id = $skp_bulanan->PegawaiYangDinilai->id_jabatan;
             //cari bawahan
             $bawahan        = Jabatan::SELECT('id','skpd AS jabatan' )->WHERE('parent_id',$jabatan_id )->get();
             //$bawahan_ls     = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray();
@@ -466,7 +466,7 @@ class CapaianBulananAPIController extends Controller {
         //============================   ESELON 2 dengan perlakuan Normal   ===================================// 
         }else if ( $jenis_jabatan == 1){
 
-            $jabatan_id = $skp_bulanan->PejabatYangDinilai->id_jabatan;
+            $jabatan_id = $skp_bulanan->PegawaiYangDinilai->id_jabatan;
             //BAWAHAN ESELON II normal
             $bawahan = $this->BawahanListCapaianBulanan($jabatan_id,$jenis_jabatan); 
          
@@ -554,7 +554,7 @@ class CapaianBulananAPIController extends Controller {
                 'renja_id'              =>  $renja_id,
                 'jenis_jabatan'         =>  $jenis_jabatan,
                 'list_bawahan'          =>  $list_bawahan,
-                'jabatan_id'            =>  $skp_bulanan->PejabatYangDinilai->id_jabatan,
+                'jabatan_id'            =>  $skp_bulanan->PegawaiYangDinilai->id_jabatan,
                 'pegawai_id'            =>  $skp_bulanan->pegawai_id,
                 'skp_bulanan_id'        =>  $skp_bulanan->skp_bulanan_id,
                 'periode_label'			=>  Pustaka::bulan($skp_bulanan->bulan),
@@ -599,7 +599,7 @@ class CapaianBulananAPIController extends Controller {
                     'renja_id'              =>  $renja_id,
                     'list_bawahan'          =>  $list_bawahan,
                     //'list_kegiatan'         =>  $kegiatan_list,
-                    'jabatan_id'            => $skp_bulanan->PejabatYangDinilai->id_jabatan,
+                    'jabatan_id'            => $skp_bulanan->PegawaiYangDinilai->id_jabatan,
                     'pegawai_id'            =>  $skp_bulanan->pegawai_id,
                     'skp_bulanan_id'        =>  $skp_bulanan->skp_bulanan_id,
                     'periode_label'			=>  Pustaka::bulan($skp_bulanan->bulan),
@@ -675,7 +675,7 @@ class CapaianBulananAPIController extends Controller {
     
         $bulan = $capaian_bulanan->SKPBulanan->bulan;
         $p_detail   = $capaian_bulanan->PejabatPenilai;
-        $u_detail   = $capaian_bulanan->PejabatYangDinilai;
+        $u_detail   = $capaian_bulanan->PegawaiYangDinilai;
         //STATUS APPROVE
         if ( ($capaian_bulanan->status_approve) == 1 ){ 
             $persetujuan_atasan = 'disetujui';

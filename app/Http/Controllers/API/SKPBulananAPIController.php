@@ -174,7 +174,7 @@ class SKPBulananAPIController extends Controller {
 
         $renja      = $skp->SKPTahunan->Renja;
         $p_detail   = $skp->PejabatPenilai;
-        $u_detail   = $skp->PejabatYangDinilai;
+        $u_detail   = $skp->PegawaiYangDinilai;
        
 
         if ( $p_detail != null ){

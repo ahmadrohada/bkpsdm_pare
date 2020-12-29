@@ -2619,7 +2619,7 @@ a:focus {
   color: #777;
 }
 .nav-tabs-custom > .nav-tabs > li > a {
-  color: #444;
+  color: rgb(121, 121, 121);
   border-radius: 0;
 }
 .nav-tabs-custom > .nav-tabs > li > a.text-muted {
@@ -2650,6 +2650,7 @@ a:focus {
   border-top-color: transparent;
   border-left-color: #f4f4f4;
   border-right-color: #f4f4f4;
+  color: #060035;
 }
 .nav-tabs-custom > .nav-tabs > li:first-of-type {
   margin-left: 0;

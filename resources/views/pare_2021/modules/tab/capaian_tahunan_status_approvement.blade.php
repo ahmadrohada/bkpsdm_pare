@@ -112,7 +112,7 @@
 							<td style="text-align:center;"><span class="nilai_kerjasama">-</span></td>
 							<td><span class="ket_kerjasama">-</span></td>
 						</tr>
-						@if ( $capaian->PejabatYangDinilai->Jabatan->Eselon->id_jenis_jabatan  < 4 )
+						@if ( $capaian->PegawaiYangDinilai->Jabatan->Eselon->id_jenis_jabatan  < 4 )
 						<tr>
 							<td style="padding-left:10px;">6.</td>
 							<td>Kepemimpinan</td>

@@ -5,7 +5,7 @@
 		<div class="box box-primary" id='kegiatan_tahunan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					List Realisasi Kegiatan Tahunan  / {!! $capaian->PejabatYangDinilai->Eselon->eselon !!}
+					List Realisasi Kegiatan Tahunan  / {!! $capaian->PegawaiYangDinilai->Eselon->eselon !!}
 				</h1>
 
 				<div class="box-tools pull-right">
@@ -83,7 +83,7 @@ table.dataTable tbody td {
 				columnDefs		: [
 									{ "orderable": false, className: "text-center", targets: [ 0,3,4,5,7,8,10,11,12,13,14,15 ] },
 									{ className: "text-right", targets: [ 6,9] },
-									@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+									@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
 										{ className: "hide", targets: [ 2 ] },
 									@endif
 									
@@ -93,9 +93,9 @@ table.dataTable tbody td {
 									data: { 
 										
 											"renja_id" 				: {!! $capaian->SKPTahunan->Renja->id !!} , 
-											"jabatan_id" 			: {!! $capaian->PejabatYangDinilai->Jabatan->id !!},
+											"jabatan_id" 			: {!! $capaian->PegawaiYangDinilai->Jabatan->id !!},
 											"capaian_id" 			: {!! $capaian->id !!},
-											"jenis_jabatan"			: {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan !!},
+											"jenis_jabatan"			: {!! $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan !!},
 									 },
 								},
 				targets			: 'no-sort',

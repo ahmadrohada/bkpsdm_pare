@@ -9,7 +9,7 @@
 					<form method="post" target="_blank" action="./cetak_perjanjian_kinerja-Eselon2">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="renja_id" value="{{ $skp->Renja->id }}">
-						<input type="hidden" name="jabatan_id" value="{{$skp->PejabatYangDinilai->Jabatan->id}}">
+						<input type="hidden" name="jabatan_id" value="{{$skp->PegawaiYangDinilai->Jabatan->id}}">
 						<input type="hidden" name="skp_tahunan_id" value="{{$skp->id}}">
 						<button type="submit" class="btn btn-info btn-xs"><i class="fa fa-print"></i> Cetak</button>
 					</form>

@@ -66,7 +66,7 @@
 		$.ajax({
 				url			: '{{ url("api_resource/skp_tahunan_timeline_status") }}',
 				data 		: { skp_tahunan_id : {!! $skp->id!!},
-								jabatan_id : {!! $skp->PejabatYangDinilai->id_jabatan !!},
+								jabatan_id : {!! $skp->PegawaiYangDinilai->id_jabatan !!},
 								renja_id : {!! $skp->Renja->id !!}
 								},
 				method		: "GET",
@@ -98,7 +98,7 @@
 		$.ajax({
 				url			: '{{ url("api_resource/skp_tahunan_status_pengisian3") }}',
 				data 		: { skp_tahunan_id : {!! $skp->id!!},
-								jabatan_id : {!! $skp->PejabatYangDinilai->id_jabatan !!},
+								jabatan_id : {!! $skp->PegawaiYangDinilai->id_jabatan !!},
 								renja_id : {!! $skp->Renja->id !!} 
 								},
 				method		: "GET",

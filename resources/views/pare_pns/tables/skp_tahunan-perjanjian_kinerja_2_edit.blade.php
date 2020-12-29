@@ -9,7 +9,7 @@
 					<form method="post" target="_blank" action="./cetak_perjanjian_kinerja-Eselon3">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="renja_id" value="{{ $skp->Renja->id }}">
-						<input type="hidden" name="jabatan_id" value="{{$skp->PejabatYangDinilai->Jabatan->id}}">
+						<input type="hidden" name="jabatan_id" value="{{$skp->PegawaiYangDinilai->Jabatan->id}}">
 						<input type="hidden" name="skp_tahunan_id" value="{{$skp->id}}">
 						<button type="submit" class="btn btn-info btn-xs"><i class="fa fa-print"></i> Cetak</button>
 					</form>
@@ -95,7 +95,7 @@ function load_perjanjian_kinerja(){
 								url	: '{{ url("api_resource/eselon3-pk_sasaran_strategis") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
-										"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+										"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
 										"skp_tahunan_id" : {!! $skp->id !!}
 
 								 	},
@@ -172,7 +172,7 @@ function load_perjanjian_kinerja(){
 								url	: '{{ url("api_resource/eselon3-pk_program") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
-										"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+										"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
 										"skp_tahunan_id" : {!! $skp->id !!}
 
 								 	},
@@ -217,7 +217,7 @@ function load_perjanjian_kinerja(){
 				url			: '{{ url("api_resource/eselon3-total_anggaran_pk") }}',
 				data		: { 
 									"renja_id" : {!! $skp->Renja->id !!} , 
-									"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+									"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
 									"skp_tahunan_id" : {!! $skp->id !!}
 								},
 				method		: "GET",

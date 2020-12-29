@@ -112,7 +112,7 @@
 						"url" 	: "{{ url("api_resource/skp_bulanan_tree2") }}",
 						"data" 	: function (node) {
 							return { "renja_id" : {!! $skp->Renja->id !!} , 
-                          			"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+                          			"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
 									"skp_tahunan_id" : {!! $skp->id !!} };
 						},
 						"dataType" : "json"
@@ -250,7 +250,7 @@
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 
-											"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+											"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
 											"skp_bulanan_id" : skp_bulanan_id
 									 },
 								},
@@ -346,7 +346,7 @@
 									data: { 
 										
 											"skp_tahunan_id" : {!! $skp->id !!},
-											"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!}
+											"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!}
 									 },
 								},
 				columns			: [

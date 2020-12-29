@@ -24,7 +24,7 @@ class SKPBulanan extends Model
         return $this->hasOne('App\Models\SKPTahunan','id','skp_tahunan_id');
     }
 
-    public function PejabatYangDinilai()
+    public function PegawaiYangDinilai()
     {
         return $this->hasOne('App\Models\HistoryJabatan','id','u_jabatan_id');
     }

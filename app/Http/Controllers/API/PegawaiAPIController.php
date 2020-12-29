@@ -199,7 +199,7 @@ class PegawaiAPIController extends Controller {
         }
 
         $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
-                        ->where('id','!=',$capaian->PejabatYangDinilai->id )
+                        ->where('id','!=',$capaian->PegawaiYangDinilai->id )
                         ->where('id','!=',$atasan_id )
                         ->where('status','active')
                         ->get();
@@ -233,7 +233,7 @@ class PegawaiAPIController extends Controller {
         }
 
         $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
-                        ->where('id','!=',$capaian->PejabatYangDinilai->id )
+                        ->where('id','!=',$capaian->PegawaiYangDinilai->id )
                         ->where('id','!=',$atasan_id )
                         ->where('status','active')
                         ->get();
@@ -266,7 +266,7 @@ class PegawaiAPIController extends Controller {
         }
 
         $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
-                        ->where('id','!=',$capaian->PejabatYangDinilai->id )
+                        ->where('id','!=',$capaian->PegawaiYangDinilai->id )
                         ->where('id','!=',$atasan_id )
                         ->where('status','active')
                         ->get();

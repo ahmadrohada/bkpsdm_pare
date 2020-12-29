@@ -140,7 +140,7 @@ class CapaianTahunanAPIController extends Controller {
         $capaian = CapaianTahunan::WHERE('capaian_tahunan.id',$request->capaian_tahunan_id)->first();
 
         if ( $capaian ){
-            $u_detail   = $capaian->PejabatYangDinilai;
+            $u_detail   = $capaian->PegawaiYangDinilai;
             $p_detail   = $capaian->PejabatPenilai;  //penilai
             $ap_detail   = $capaian->AtasanPejabatPenilai;  //atasan pejabat
     
@@ -230,8 +230,8 @@ class CapaianTahunanAPIController extends Controller {
         $id_jabatan_lurah       = json_decode($this->jenis_PJabatan('lurah'));
         $id_jabatan_staf_ahli   = json_decode($this->jenis_PJabatan('staf_ahli'));
 
-        $jenis_jabatan  = $skp_tahunan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
-        $jabatan_id     = $skp_tahunan->PejabatYangDinilai->id_jabatan;
+        $jenis_jabatan  = $skp_tahunan->PegawaiYangDinilai->Eselon->id_jenis_jabatan;
+        $jabatan_id     = $skp_tahunan->PegawaiYangDinilai->id_jabatan;
         $renja_id       = $skp_tahunan->Renja->id;
 
         //return $renja_id;
@@ -246,17 +246,17 @@ class CapaianTahunanAPIController extends Controller {
         $jm_uraian_tugas_tambahan =  UraianTugasTambahan::WHERE('skp_bulanan_id',$request->get('skp_bulanan_id'))->count();
                 
         //Jika STAF AHLI
-        if ( ( $jenis_jabatan == 1 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_staf_ahli ) ) ){
+        if ( ( $jenis_jabatan == 1 ) & ( in_array( $skp_bulanan->PegawaiYangDinilai->id_jabatan, $id_jabatan_staf_ahli ) ) ){
             $jenis_jabatan = 5 ; //STAFF AHLI DIANGGAP JFT
         }
 
         //jika irban
-        if ( ( $jenis_jabatan == 2 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_irban ) ) ){
+        if ( ( $jenis_jabatan == 2 ) & ( in_array( $skp_bulanan->PegawaiYangDinilai->id_jabatan, $id_jabatan_irban ) ) ){
             $jenis_jabatan = 31 ; //irban
         }
 
         //jika Lurah
-        if ( ( $jenis_jabatan == 3 ) & ( in_array( $skp_bulanan->PejabatYangDinilai->id_jabatan, $id_jabatan_lurah ) ) ){
+        if ( ( $jenis_jabatan == 3 ) & ( in_array( $skp_bulanan->PegawaiYangDinilai->id_jabatan, $id_jabatan_lurah ) ) ){
             $jenis_jabatan = 2 ; //lurah
         } */
 
@@ -346,7 +346,7 @@ class CapaianTahunanAPIController extends Controller {
             $data = array( 
                 'status'			    =>  $status,
                 'skp_tahunan_id'        =>  $skp_tahunan->skp_tahunan_id,
-                'jabatan_id'            =>  $skp_tahunan->PejabatYangDinilai->id_jabatan,
+                'jabatan_id'            =>  $skp_tahunan->PegawaiYangDinilai->id_jabatan,
                 'pegawai_id'            =>  $skp_tahunan->pegawai_id,
                 'periode_label'			=>  $skp_tahunan->Renja->Periode->label,
                 'masa_penilaian'        =>  Pustaka::balik($skp_tahunan->tgl_mulai). ' s.d '. Pustaka::balik($skp_tahunan->tgl_selesai),
@@ -387,7 +387,7 @@ class CapaianTahunanAPIController extends Controller {
         $data = array(
                 'status'			    =>  $status,
                 'skp_tahunan_id'        =>  $skp_tahunan->skp_tahunan_id,
-                'jabatan_id'            =>  $skp_tahunan->PejabatYangDinilai->id_jabatan,
+                'jabatan_id'            =>  $skp_tahunan->PegawaiYangDinilai->id_jabatan,
                 'pegawai_id'            =>  $skp_tahunan->pegawai_id,
                 'periode_label'			=>  $skp_tahunan->Renja->Periode->label,
                 'masa_penilaian'        =>  Pustaka::balik($skp_tahunan->tgl_mulai). ' s.d '. Pustaka::balik($skp_tahunan->tgl_selesai),
@@ -752,7 +752,7 @@ class CapaianTahunanAPIController extends Controller {
         })->addColumn('nama', function ($x) {
             return $x->u_nama;
         })->addColumn('jabatan', function ($x) {
-            return Pustaka::capital_string($x->PejabatYangDinilai?$x->PejabatYangDinilai->jabatan:'');
+            return Pustaka::capital_string($x->PegawaiYangDinilai?$x->PegawaiYangDinilai->jabatan:'');
         })->addColumn('capaian_tahunan_id', function ($x) {
             return $x->capaian_tahunan_id;
         });
@@ -856,7 +856,7 @@ class CapaianTahunanAPIController extends Controller {
             $kerjasama = ($x->kerjasama_01+$x->kerjasama_02+$x->kerjasama_03+$x->kerjasama_04+$x->kerjasama_05)/25*100;
             $kepemimpinan = ($x->kepemimpinan_01+$x->kepemimpinan_02+$x->kepemimpinan_03+$x->kepemimpinan_04+$x->kepemimpinan_05+$x->kepemimpinan_06)/30*100;
 
-            if ( $x->CapaianTahunan->PejabatYangDinilai->Jabatan->Eselon->id_jenis_jabatan < 4 ){
+            if ( $x->CapaianTahunan->PegawaiYangDinilai->Jabatan->Eselon->id_jenis_jabatan < 4 ){
                 $jumlah = $pelayanan+$integritas+$komitmen+$disiplin+$kerjasama+$kepemimpinan;
                 $ave    = $jumlah / 6 ;
             }else{
@@ -871,7 +871,7 @@ class CapaianTahunanAPIController extends Controller {
 
       
         $p_detail   = $capaian_tahunan->PejabatPenilai;
-        $u_detail   = $capaian_tahunan->PejabatYangDinilai;
+        $u_detail   = $capaian_tahunan->PegawaiYangDinilai;
         //STATUS APPROVE
         if ( ($capaian_tahunan->send_to_atasan) == 1 ){
             if ( ($capaian_tahunan->status_approve) == 0 ){

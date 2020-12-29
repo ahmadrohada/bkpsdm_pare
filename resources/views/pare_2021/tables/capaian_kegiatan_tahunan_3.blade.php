@@ -88,9 +88,9 @@ table.dataTable tbody td {
 									data: { 
 										
 											"renja_id" 				: {!! $capaian->SKPTahunan->Renja->id !!} , 
-											"jabatan_id" 			: {!! $capaian->PejabatYangDinilai->Jabatan->id !!},
+											"jabatan_id" 			: {!! $capaian->PegawaiYangDinilai->Jabatan->id !!},
 											"capaian_id" 			: {!! $capaian->id !!},
-											"jenis_jabatan"			: {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan !!},
+											"jenis_jabatan"			: {!! $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan !!},
 									 },
 								},
 				rowCallback		: function(row, data, dataIndex){
@@ -223,7 +223,7 @@ table.dataTable tbody td {
 											"render": function ( data, type, row ) {
 
 											//form realisasi untuk kegiatan tahunan , bukan untuk indikator
-											@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+											@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
 										
 									
 												if ( {!! $capaian->status !!} == 1 ){
@@ -288,7 +288,7 @@ table.dataTable tbody td {
 
 	$(document).on('click','.create_realisasi_tahunan',function(e){
 	
-		@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+		@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
 			var kegiatan_id = $(this).data('kegiatan_id');
 			$('.modal-realisasi_tahunan').find('h4').html('Add Realisasi Kegiatan Tahunan');
 			$('.modal-realisasi_tahunan').find('.btn-submit').attr('id', 'submit-save');
@@ -416,7 +416,7 @@ table.dataTable tbody td {
 	}
 
 	$(document).on('click','.edit_realisasi_tahunan',function(e){
-		@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+		@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
 			var kegiatan_id = $(this).data('kegiatan_id');
 			$('.modal-realisasi_tahunan').find('h4').html('Edit Realisasi Kegiatan Tahunan');
 			$('.modal-realisasi_tahunan').find('.btn-submit').attr('id', 'submit-update');

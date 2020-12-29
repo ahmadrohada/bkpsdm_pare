@@ -117,7 +117,7 @@
 				var queryParameters = {
 					jabatan				: params.term,
 					jabatan_id		    : {{$skp->u_jabatan_id}},
-					jabatan_sendiri		: {{ $skp->PejabatYangDinilai->id_jabatan }}
+					jabatan_sendiri		: {{ $skp->PegawaiYangDinilai->id_jabatan }}
 				}
 				return queryParameters;
 			},

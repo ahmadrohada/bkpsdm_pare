@@ -20,7 +20,7 @@
 			<ul class="nav nav-tabs" id="myTab">
 				{{--  <li class="status"><a href="#status" data-toggle="tab">Status </a></li>  --}}
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
-				<li class="kegiatan_triwulan_tab"><a href="#kegiatan_triwulan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian_triwulan->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="kegiatan_triwulan_tab"><a href="#kegiatan_triwulan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian_triwulan->PegawaiYangDinilai->Eselon->eselon !!} / {!! $capaian_triwulan->PegawaiYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				
 			</ul>
 
@@ -28,22 +28,22 @@
 			<div class="tab-content"  style="min-height:400px;">
 				{{--  <div class="tab-pane fade" id="status">
 					<!-- 2. KABID -->
-					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
+					@if ( $capaian_triwulan->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '2')
 						@include('pare_pns.modules.timeline.capaian_triwulan_status_edit')
 					@endif
 
 					<!-- 3. KASUBID -->
-					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+					@if ( $capaian_triwulan->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '3')
 						@include('pare_pns.modules.timeline.capaian_triwulan_status_edit')
 					@endif
 
 					<!-- 4. JFU -->
-					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
+					@if ( $capaian_triwulan->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '4')
 						@include('pare_pns.modules.timeline.capaian_triwulan_status_edit')
 					@endif
 
 					<!-- 5. JFT -->
-					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+					@if ( $capaian_triwulan->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
 						@include('pare_pns.modules.timeline.capaian_triwulan_status_edit')
 					@endif
 					
@@ -55,22 +55,22 @@
 				<div class="tab-pane fade" id="kegiatan_triwulan_tab">
 
 					<!-- 2. KABID -->
-					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '2')
+					@if ( $capaian_triwulan->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '2')
 						@include('pare_pns.tables.capaian_kegiatan_triwulan_edit')
 					@endif
 
 					<!-- 3. KASUBID -->
-					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '3')
+					@if ( $capaian_triwulan->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '3')
 						@include('pare_pns.tables.capaian_kegiatan_triwulan_edit')
 					@endif
 
 					<!-- 3. JFU -->
-					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '4')
+					@if ( $capaian_triwulan->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '4')
 						@include('pare_pns.tables.capaian_kegiatan_triwulan_edit')
 					@endif
 
 					<!-- 5. JFT -->
-					@if ( $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+					@if ( $capaian_triwulan->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
 						@include('pare_pns.tables.capaian_kegiatan_triwulan_jft_edit')
 					@endif
 					

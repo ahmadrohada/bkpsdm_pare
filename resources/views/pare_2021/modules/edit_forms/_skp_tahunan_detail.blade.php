@@ -110,7 +110,7 @@
 		<div class="form-group form-group-sm"  style="margin-top:10px;">
 			<label class="col-md-4">NIP</label>
 			<div class="col-md-8">
-				<span id="u_nip" class="form-control">{{ $skp->PejabatYangDinilai->nip }}</span>
+				<span id="u_nip" class="form-control">{{ $skp->PegawaiYangDinilai->nip }}</span>
 			</div>
 		</div>
 
@@ -124,28 +124,28 @@
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4 " >Pangkat / Gol</label>
 			<div class="col-md-8">
-				<span id="u_golongan" class="form-control">{{ ( $skp->PejabatYangDinilai->golongan ? $skp->PejabatYangDinilai->golongan->pangkat : '' ) }} /  {{ ( $skp->PejabatPenilai->golongan ? $skp->PejabatPenilai->golongan->golongan : '' ) }}</span>
+				<span id="u_golongan" class="form-control">{{ ( $skp->PegawaiYangDinilai->golongan ? $skp->PegawaiYangDinilai->golongan->pangkat : '' ) }} /  {{ ( $skp->PejabatPenilai->golongan ? $skp->PejabatPenilai->golongan->golongan : '' ) }}</span>
 			</div>
 		</div>
 
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4 " >Eselon</label>
 			<div class="col-md-8">
-				<span id="u_eselon" class="form-control">{{ ( $skp->PejabatYangDinilai->eselon ? $skp->PejabatYangDinilai->eselon->eselon : '' ) }}</span>
+				<span id="u_eselon" class="form-control">{{ ( $skp->PegawaiYangDinilai->eselon ? $skp->PegawaiYangDinilai->eselon->eselon : '' ) }}</span>
 			</div>
 		</div>
 
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4 ">Jabatan</label>
 			<div class="col-md-8">
-				<span id="u_jabatan" class="form-control" style="height:48px;">{{  pustaka::capital_string( ( $skp->PejabatYangDinilai->Jabatan ? $skp->PejabatYangDinilai->Jabatan->skpd : '' )) }}</span>
+				<span id="u_jabatan" class="form-control" style="height:48px;">{{  pustaka::capital_string( ( $skp->PegawaiYangDinilai->Jabatan ? $skp->PegawaiYangDinilai->Jabatan->skpd : '' )) }}</span>
 			</div>
 		</div>
 
 		<div class="form-group form-group-sm" style="margin-top:-10px;">
 			<label class="col-md-4">Unit Kerja</label>
 			<div class="col-md-8">
-				<span class="form-control" id="u_unit_kerja"  style="height:60px;">{{ pustaka::capital_string( ( $skp->PejabatYangDinilai->skpd ? $skp->PejabatYangDinilai->skpd->skpd : '' )) }}</span>
+				<span class="form-control" id="u_unit_kerja"  style="height:60px;">{{ pustaka::capital_string( ( $skp->PegawaiYangDinilai->skpd ? $skp->PegawaiYangDinilai->skpd->skpd : '' )) }}</span>
 			</div>
 		</div>
 	</div>	 

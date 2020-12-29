@@ -60,7 +60,7 @@
 			ajax			: {
 								url	: '{{ url("api_resource/rencana_aksi_time_table_2") }}',
 								data: { skp_tahunan_id: {!! $skp->id !!} ,
-										jabatan_id    : {!! $skp->PejabatYangDinilai->id_jabatan !!}
+										jabatan_id    : {!! $skp->PegawaiYangDinilai->id_jabatan !!}
 									 },
 								//cache : false,
 								//quietMillis: 800,

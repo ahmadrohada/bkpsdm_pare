@@ -5,7 +5,7 @@
 		<div class="box box-primary" id='kegiatan_triwulan'>
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					List Realisasi Kegiatan Tahunan Triwulan {!! $capaian_triwulan->triwulan !!} [ Eselon {!! $capaian_triwulan->PejabatYangDinilai->Eselon->eselon !!}  ]
+					List Realisasi Kegiatan Tahunan Triwulan {!! $capaian_triwulan->triwulan !!} [ Eselon {!! $capaian_triwulan->PegawaiYangDinilai->Eselon->eselon !!}  ]
 				</h1>
 
 				<div class="box-tools pull-right">
@@ -71,9 +71,9 @@
 									data: { 
 										
 											"renja_id" 				: {!! $capaian_triwulan->SKPTahunan->Renja->id !!} , 
-											"jabatan_id" 			: {!! $capaian_triwulan->PejabatYangDinilai->Jabatan->id !!},
+											"jabatan_id" 			: {!! $capaian_triwulan->PegawaiYangDinilai->Jabatan->id !!},
 											"capaian_triwulan_id" 	: {!! $capaian_triwulan->id !!},
-											"jenis_jabatan"			: {!! $capaian_triwulan->PejabatYangDinilai->Eselon->id_jenis_jabatan !!},
+											"jenis_jabatan"			: {!! $capaian_triwulan->PegawaiYangDinilai->Eselon->id_jenis_jabatan !!},
 									 },
 								},
 				targets			: 'no-sort',

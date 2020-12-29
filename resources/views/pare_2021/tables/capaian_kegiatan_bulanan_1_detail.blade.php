@@ -72,7 +72,7 @@
 									data: { 
 										
 											"renja_id" 			: {!! $capaian->SKPBulanan->SKPTahunan->Renja->id !!} , 
-											"jabatan_id" 		: {!! $capaian->PejabatYangDinilai->Jabatan->id !!},
+											"jabatan_id" 		: {!! $capaian->PegawaiYangDinilai->Jabatan->id !!},
 											"skp_bulanan_id" 	: {!! $capaian->SKPBulanan->id !!},
 											"capaian_id" 		: {!! $capaian->id !!},
 									 },

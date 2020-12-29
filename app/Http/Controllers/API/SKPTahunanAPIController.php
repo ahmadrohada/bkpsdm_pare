@@ -60,7 +60,7 @@ class SKPTahunanAPIController extends Controller {
 
         $renja      = $skp->Renja; 
         $p_detail   = $skp->PejabatPenilai;
-        $u_detail   = $skp->PejabatYangDinilai;
+        $u_detail   = $skp->PegawaiYangDinilai;
 
         $p_gol      = $skp->GolonganPenilai;
         $u_gol      = $skp->GolonganYangDinilai;
@@ -413,7 +413,7 @@ class SKPTahunanAPIController extends Controller {
 
         foreach($skp_tahunan as $tm) {
 
-            $jabatan = Pustaka::capital_string($tm->PejabatYangDinilai?$tm->PejabatYangDinilai->jabatan:'');
+            $jabatan = Pustaka::capital_string($tm->PegawaiYangDinilai?$tm->PegawaiYangDinilai->jabatan:'');
 
             $h['time']	    = $tm->created_at->format('Y-m-d H:i:s');
             $h['body']	    = [ ['tag'=>'p','content'=>'<b class="text-success">'.$tm->u_nama.'</b>'] , 
@@ -1507,7 +1507,7 @@ class SKPTahunanAPIController extends Controller {
         })->addColumn('nama', function ($x) {
             return $x->u_nama;
         })->addColumn('jabatan', function ($x) {
-            return Pustaka::capital_string($x->PejabatYangDinilai->Jabatan->skpd);
+            return Pustaka::capital_string($x->PegawaiYangDinilai->Jabatan->skpd);
         })->addColumn('skp_tahunan_id', function ($x) {
             return $x->skp_tahunan_id;
         });

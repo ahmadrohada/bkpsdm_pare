@@ -2,7 +2,7 @@
 	<div class="form-horizontal col-md-6">
 		<div class="panel-default ">
 			<i class="fa fa-user"></i>
-			<span class="text-primary"> PEJABAT YANG DINILAI</span>
+			<span class="text-primary"> PEGAWAI YANG DINILAI</span>
 		</div>
 							
 		<div class="form-group form-group-sm"  style="margin-top:10px;">

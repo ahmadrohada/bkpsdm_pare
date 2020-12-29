@@ -116,7 +116,7 @@
 
 
 	$(document).on('click', '#simpan_penilaian_kualitas_kerja', function(){
-		@if ( $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan  == '5')
+		@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
 			save_jft();
 		@else
 			save();

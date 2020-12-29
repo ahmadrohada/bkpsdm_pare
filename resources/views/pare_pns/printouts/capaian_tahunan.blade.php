@@ -56,7 +56,7 @@
             }else{
                 $temp['nilai_capaian'] 			= Pustaka::persen_bulat(number_format(($dbValue['hitung_quantity'] + $dbValue['hitung_quality'] + $dbValue['hitung_waktu'] + $dbValue['hitung_cost'] )/4 ,2) );
             }
-
+ 
 
 			//$temp['rencana_aksi_satuan'] = $dbValue['satuan'];
 			if(!isset($arrayForTable[$dbValue['kegiatan_label']])){
@@ -504,8 +504,8 @@
 								</tr>
 								<tr>
 									<td align="center" style="border:none!important;">
-									<u>{{ $pejabat_yang_dinilai['nama'] }}</u><br>
-									<font style="font-size:10pt;">NIP.{{ $pejabat_yang_dinilai['nip'] }} </font>
+									<u>{{ $pegawai_yang_dinilai['nama'] }}</u><br>
+									<font style="font-size:10pt;">NIP.{{ $pegawai_yang_dinilai['nip'] }} </font>
 									</td>
 									<td style="border:none!important; "></td>
 								</tr>
@@ -530,9 +530,10 @@
 								</tr>
 								<tr>
 									<td align="center" style="border:none!important;">
-									<u></u><br>
-									<font style="font-size:10pt;">NIP. </font>
-									</td>
+										<u>{{ $atasan_pejabat_penilai['nama'] }}</u><br>
+										<font style="font-size:10pt;">NIP.{{ $atasan_pejabat_penilai['nip'] }} </font>
+										</td>
+										<td style="border:none!important; "></td>
 								</tr>
 		
 							</table>
@@ -601,23 +602,23 @@
 					</tr>	
 					<tr>
 						<td class="garis" >a. Nama</td>
-						<td class="garis-end" >{{ $pejabat_yang_dinilai['nama'] }}</td>
+						<td class="garis-end" >{{ $pegawai_yang_dinilai['nama'] }}</td>
 					</tr>	
 					<tr>
 						<td class="garis" >b. NIP</td>
-						<td class="garis-end" >{{ $pejabat_yang_dinilai['nip'] }}</td>
+						<td class="garis-end" >{{ $pegawai_yang_dinilai['nip'] }}</td>
 					</tr>	
 					<tr>
 						<td class="garis" >c. Pangkat,Golongan,Ruang,TMT</td>
-						<td class="garis-end" >{{ $pejabat_yang_dinilai['pgr'] }}</td>
+						<td class="garis-end" >{{ $pegawai_yang_dinilai['pgr'] }}</td>
 					</tr>	
 					<tr>
 						<td class="garis" >d. Jabatan/Pekerjaan</td>
-						<td class="garis-end" >{{ $pejabat_yang_dinilai['jabatan'] }}</td>
+						<td class="garis-end" >{{ $pegawai_yang_dinilai['jabatan'] }}</td>
 					</tr>
 					<tr>
 						<td class="garis tabel-end" >e. Unit Organisasi</td>
-						<td class="garis-end tabel-end" >{{ $pejabat_yang_dinilai['unit_kerja'] }}</td>
+						<td class="garis-end tabel-end" >{{ $pegawai_yang_dinilai['unit_kerja'] }}</td>
 					</tr>
 					<tr>
 						<td rowspan="6" class="garis_bold">2.</td>
@@ -648,24 +649,24 @@
 						<td class="garis_bold"  colspan="2"	><b>ATASAN PEJABAT PENILAI</b></td>
 					</tr>	
 					<tr>
-						<td class="garis">a. Nama</td>
-						<td class="garis-end"></td>
+						<td class="garis" >a. Nama</td>
+						<td class="garis-end" >{{ $atasan_pejabat_penilai['nama'] }}</td>
 					</tr>	
 					<tr>
 						<td class="garis" >b. NIP</td>
-						<td class="garis-end" ></td>
+						<td class="garis-end" >{{ $atasan_pejabat_penilai['nip'] }}</td>
 					</tr>	
 					<tr>
 						<td class="garis" >c. Pangkat,Golongan,Ruang,TMT</td>
-						<td class="garis-end" ></td>
+						<td class="garis-end" >{{ $atasan_pejabat_penilai['pgr'] }}</td>
 					</tr>	
 					<tr>
 						<td class="garis" >d. Jabatan/Pekerjaan</td>
-						<td class="garis-end" ></td>
+						<td class="garis-end" >{{ $atasan_pejabat_penilai['jabatan'] }}</td>
 					</tr>
 					<tr>
 						<td class="garis tabel-end" >e. Unit Organisasi</td>
-						<td class="garis-end tabel-end" ></td>
+						<td class="garis-end tabel-end" >{{ $atasan_pejabat_penilai['unit_kerja'] }}</td>
 					</tr>
 				</table>
 			</td>

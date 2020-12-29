@@ -20,7 +20,7 @@
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="status"><a href="#status" data-toggle="tab">Status </a></li>
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
-				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan Bulanan Eselon {!! $capaian->PejabatYangDinilai->Eselon->eselon !!} / {!! $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan Bulanan Eselon {!! $capaian->PegawaiYangDinilai->Eselon->eselon !!} / {!! $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				<li class="uraian_tugas_tambahan_tab"><a href="#uraian_tugas_tambahan_tab" data-toggle="tab">Uraian Tugas Tambahan</a></li>
 			</ul>
 		
@@ -35,16 +35,16 @@
 				<div class=" tab-pane fade" id="kegiatan_bulanan_tab">
 					<?php
 					
-						switch(  $capaian->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						switch(  $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': // 1. KABAN 
-									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, json_decode($jabatan_staf_ahli))){ //JIKA IRBAN
+									if (in_array( $capaian->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_staf_ahli))){ //JIKA IRBAN
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_5_detail')<?php
 									}else{
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_1_detail')<?php
 									}
 									break;
 							case '2': //2. KABID 
-									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, json_decode($jabatan_irban))){ //JIKA IRBAN
+									if (in_array( $capaian->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban))){ //JIKA IRBAN
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_3')<?php
 									}else{
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2')<?php
@@ -52,7 +52,7 @@
 									
 									break;
 							case '3':  //3. KASUBID
-									if (in_array( $capaian->PejabatYangDinilai->id_jabatan, json_decode($jabatan_lurah))){ //JIKA LURAH
+									if (in_array( $capaian->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_lurah))){ //JIKA LURAH
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_2')<?php
 									}else{
 										?>@include('pare_pns.tables.capaian_kegiatan_bulanan_3')<?php

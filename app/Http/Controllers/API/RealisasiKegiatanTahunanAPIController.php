@@ -778,10 +778,21 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                             ->WHERE('skp_tahunan_rencana_aksi.renja_id',$request->renja_id)
                             ->GET();
 
-
-
+            $no = 0 ;
+            foreach ($rencana_aksi as $dbValue) {
+                $temp = [];
+                if(!isset($arrayForTable[$dbValue['kegiatan_tahunan_label']])){
+                    $arrayForTable[$dbValue['kegiatan_tahunan_label']] = [];
+                    $no += 1 ;
+                }
+                $temp['no']   = $no;
+                $arrayForTable[$dbValue['kegiatan_tahunan_label']] = $temp;
+            }
+                
             $datatables = Datatables::of($rencana_aksi)
-       
+                            ->addColumn('no', function ($x) use($arrayForTable){
+                                return $arrayForTable[$x->kegiatan_tahunan_label]['no'];
+                            })
                             ->addColumn('id', function ($x) {
                                 return $x->kegiatan_tahunan_id;
                             })->addColumn('capaian_tahunan_id', function ($x) use ($capaian_id) {

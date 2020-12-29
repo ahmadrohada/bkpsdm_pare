@@ -122,7 +122,7 @@
 								return { 	"id" 		: node.id ,
 											"data" 		: node.data,
 											"renja_id" : {!! $skp->Renja->id !!} , 
-                          					"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+                          					"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
 											"skp_tahunan_id" : {!! $skp->id !!} 
 										};
 									}
@@ -251,7 +251,7 @@
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 
-											"jabatan_id" : {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+											"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
 											"skp_bulanan_id" : skp_bulanan_id
 									 },
 								},

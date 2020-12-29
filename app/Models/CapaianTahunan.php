@@ -22,7 +22,7 @@ class CapaianTahunan extends Model
     
 
    
-    public function PejabatYangDinilai()
+    public function PegawaiYangDinilai()
     {
         return $this->hasOne('App\Models\HistoryJabatan','id','u_jabatan_id');
     }

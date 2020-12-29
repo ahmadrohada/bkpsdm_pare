@@ -35,6 +35,9 @@ return [
 	'link_title_profile_edit'   => 'Edit User Profile',
 	'link_icon_profile_edit'    => 'fa-cog',
 
+	'link_title_personal'    		=> 'Personal',
+	'link_icon_personal'     		=> 'fa-user',
+
 	// ADMIN USER PROFILE LINKS
 	'link_title_users'    		=> 'Users',
 	'link_icon_users'     		=> 'fa-users',

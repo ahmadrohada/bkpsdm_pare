@@ -349,12 +349,12 @@ trait HitungCapaian
 
                 
 
-        //$jenis_jabatan = $capaian_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
+        //$jenis_jabatan = $capaian_bulanan->PegawaiYangDinilai->Eselon->id_jenis_jabatan;
         $jenis_jabatan = $capaian_bulanan->id_jenis_jabatan;
         $bulan = $capaian_bulanan->SKPBulanan->bulan;
         $renja_id = $capaian_bulanan->SKPBulanan->SKPTahunan->renja_id;
         $skp_bulanan_id = $capaian_bulanan->skp_bulanan_id;
-        $jabatan_id = ( $capaian_bulanan->PejabatYangDinilai ) ? $capaian_bulanan->PejabatYangDinilai->id_jabatan : 0 ;
+        $jabatan_id = ( $capaian_bulanan->PegawaiYangDinilai ) ? $capaian_bulanan->PegawaiYangDinilai->id_jabatan : 0 ;
 
 
         //Uraian Tugas Jabatan pada skp bulanan
@@ -424,7 +424,7 @@ trait HitungCapaian
         return array_merge($data,$data_2);
     }
 
-
+ 
 //==================================== CAPAIAN TAHUNAN AREA ===========================================================//
     protected function capaian_tahunan_jfu($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id)
     {
@@ -592,11 +592,11 @@ trait HitungCapaian
        
                 
 
-        //$jenis_jabatan = $capaian_tahunan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
+        //$jenis_jabatan = $capaian_tahunan->PegawaiYangDinilai->Eselon->id_jenis_jabatan;
         $jenis_jabatan = $capaian_tahunan->id_jenis_jabatan;
         $renja_id = $capaian_tahunan->SKPTahunan->renja_id;
         $skp_tahunan_id = $capaian_tahunan->skp_tahunan_id;
-        $jabatan_id = ( $capaian_tahunan->PejabatYangDinilai ) ? $capaian_tahunan->PejabatYangDinilai->id_jabatan : 0 ;
+        $jabatan_id = ( $capaian_tahunan->PegawaiYangDinilai ) ? $capaian_tahunan->PegawaiYangDinilai->id_jabatan : 0 ;
 
          
 

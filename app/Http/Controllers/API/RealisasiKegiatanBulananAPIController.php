@@ -163,8 +163,8 @@ class RealisasiKegiatanBulananAPIController extends Controller {
     {
         $capaian_id     = $request->capaian_id;
         $skp_bulanan    = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->first();
-        $jabatan_id     = $skp_bulanan->PejabatYangDinilai->id_jabatan;
-        $jenis_jabatan  = $skp_bulanan->PejabatYangDinilai->Eselon->id_jenis_jabatan;
+        $jabatan_id     = $skp_bulanan->PegawaiYangDinilai->id_jabatan;
+        $jenis_jabatan  = $skp_bulanan->PegawaiYangDinilai->Eselon->id_jenis_jabatan;
         $renja_id       = $skp_bulanan->SKPTahunan->renja_id;
         $bulan          = $skp_bulanan->bulan;
 

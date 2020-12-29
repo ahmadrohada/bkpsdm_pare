@@ -10,7 +10,7 @@
 	    <section class="content-header">
 			<h1>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-skp_tahunan') }}"><span class="fa fa-angle-left"></span></a>
-				SKP Tahunan  {!! $skp->PejabatYangDinilai->Eselon->eselon !!} [ Edit ]
+				SKP Tahunan  {!! $skp->PegawaiYangDinilai->Eselon->eselon !!} [ Edit ]
 			</h1>
 				{!! Breadcrumbs::render('personal_edit_skp_tahunan') !!}
       	</section>
@@ -22,7 +22,7 @@
 				
 				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
 				<?php 
-					switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+					switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 						case '1': // eselon 2
 								break;
 						case '2': // eselon 3
@@ -41,7 +41,7 @@
 				
 				<?php
 					
-					switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+					switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 						case '1': // eselon 2
 								echo '<li class="perjanjian_kinerja_tab"><a href="#perjanjian_kinerja_tab" data-toggle="tab" >Perjanjian Kinerja</a></li>';
 								break;
@@ -79,19 +79,19 @@
 				</div>
 				<div class=" tab-pane fade" id="rencana_aksi_tab">
 					<?php 
-						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': //eselon 2
 									
 							break;
 							case '2': //eselon 3
-									if (in_array( $skp->PejabatYangDinilai->id_jabatan,  json_decode($jabatan_irban)  )){ //JIKA IRBAN
+									if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_irban)  )){ //JIKA IRBAN
 										?>@include('pare_pns.tables.skp_tahunan-rencana_aksi_time_table_3')<?php
 									}else{
 										?>@include('pare_pns.tables.skp_tahunan-rencana_aksi_time_table_2')<?php
 									}
 							break;
 							case '3': //eselon 4
-									if (in_array( $skp->PejabatYangDinilai->id_jabatan, json_decode($jabatan_lurah) )){ //JIKA LURAH
+									if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_lurah) )){ //JIKA LURAH
 										?>@include('pare_pns.tables.skp_tahunan-rencana_aksi_time_table_2')<?php
 									}else{
 										?>@include('pare_pns.tables.skp_tahunan-rencana_aksi_time_table_3')<?php
@@ -109,11 +109,11 @@
 				<div class=" tab-pane fade" id="kegiatan_tahunan_tab">
 					<?php
 						//echo $jabatan_staf_ahli;
-						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': 
-									if (in_array( $skp->PejabatYangDinilai->id_jabatan,  json_decode($jabatan_staf_ahli))){ //JIKA STAF AHLI
+									if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_staf_ahli))){ //JIKA STAF AHLI
 										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_5_edit')<?php
-									}else if (in_array( $skp->PejabatYangDinilai->id_jabatan,  json_decode($jabatan_sekda))){ //JIKA SEKDA
+									}else if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_sekda))){ //JIKA SEKDA
 										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_sekda_detail')<?php
 									}else{ //normal kondisi
 										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_1_detail')<?php
@@ -122,7 +122,7 @@
 									break;
 							case '2':
 	
-									if (in_array( $skp->PejabatYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
+									if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
 										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_3_edit')<?php
 									}else{
 										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_2_detail')<?php
@@ -131,7 +131,7 @@
 									break;
 							case '3': 
 
-									if (in_array( $skp->PejabatYangDinilai->id_jabatan,  json_decode($jabatan_lurah))){ //JIKA LURAH
+									if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_lurah))){ //JIKA LURAH
 										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_2_detail')<?php
 									}else{
 										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_3_edit')<?php
@@ -150,12 +150,12 @@
 				</div>
 				<div class="tab-pane fade" id="perjanjian_kinerja_tab">
 					<?php
-						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1':  //eselon 2
 									?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_1_edit')<?php
 									break;
 							case '2': //Eselon 3
-									if (in_array( $skp->PejabatYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
+									if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
 										?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_3_edit')<?php
 									}else{
 										?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_2_edit')<?php
@@ -163,7 +163,7 @@
 									
 									break;
 							case '3':  //Eselon 4
-									if (in_array( $skp->PejabatYangDinilai->id_jabatan,  json_decode($jabatan_lurah))){ //JIKA LURAH
+									if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_lurah))){ //JIKA LURAH
 										?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_2_edit')<?php
 									}else{
 										?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_3_edit')<?php
@@ -175,7 +175,7 @@
 				</div>
 				<div class="tab-pane fade" id="kontrak_kinerja_tab">
 					<?php
-						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '4':  //JFU / pelaksana
 									?>@include('pare_pns.tables.skp_tahunan-kontrak_kinerja_4_edit')<?php
 							break;
@@ -190,9 +190,9 @@
 				<div class="tab-pane fade" id="skp_bulanan_tab">
 
 					<?php
-						switch(  $skp->PejabatYangDinilai->Eselon->id_jenis_jabatan ) {
+						switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 							case '1': //eselon 2
-									if (in_array( $skp->PejabatYangDinilai->id_jabatan, json_decode($jabatan_staf_ahli))){ //JIKA STAF AHLI
+									if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_staf_ahli))){ //JIKA STAF AHLI
 										?>@include('pare_pns.tables.skp_bulanan-kegiatan_5_edit')<?php
 									}else{
 										?>@include('pare_pns.tables.skp_bulanan-kegiatan_1_edit')<?php
@@ -201,7 +201,7 @@
 									break;
 							case '2': //eselon 3
 	
-									if (in_array( $skp->PejabatYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
+									if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
 										?>@include('pare_pns.modules.tabs.kegiatan_bulanan_3_edit')<?php
 									}else{
 										?>@include('pare_pns.tables.skp_bulanan-kegiatan_2_edit')<?php
@@ -209,7 +209,7 @@
 									
 									break;
 							case '3': //eselon 4
-									if (in_array( $skp->PejabatYangDinilai->id_jabatan, json_decode($jabatan_lurah))){ //JIKA LURAH
+									if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_lurah))){ //JIKA LURAH
 										?>@include('pare_pns.tables.skp_bulanan-kegiatan_2_edit')<?php
 									}else{
 										?>@include('pare_pns.modules.tabs.kegiatan_bulanan_3_edit')<?php

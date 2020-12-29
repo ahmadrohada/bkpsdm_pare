@@ -46,7 +46,7 @@
 						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_5") }}", //Eselon 5
 						"data" 	: function (node) {
 							return  {   "renja_id" 			: {!! $skp->Renja->id !!} , 
-                                        "jabatan_id" 		: {!! $skp->PejabatYangDinilai->Jabatan->id !!},
+                                        "jabatan_id" 		: {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
 										"skp_tahunan_id" 	: {!! $skp->id !!}
                                     };
 						},
