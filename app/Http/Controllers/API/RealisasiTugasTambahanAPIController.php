@@ -12,6 +12,7 @@ use App\Models\SKPBulanan;
 use App\Helpers\Pustaka;
 use App\Traits\HitungCapaian;
 use App\Traits\BawahanList;
+use App\Traits\TraitCapaianTahunan;
 
 use Datatables;
 use Validator;
@@ -20,6 +21,7 @@ use Input;
 class RealisasiTugasTambahanAPIController extends Controller {
     use HitungCapaian;
     use BawahanList;
+    use TraitCapaianTahunan;
     
     
 
@@ -27,48 +29,11 @@ class RealisasiTugasTambahanAPIController extends Controller {
 
     public function RealisasiTugasTambahanList(Request $request)
     {
+        
             
-        $dt = TugasTambahan::
-                               
-                                leftjoin('db_pare_2018.realisasi_tugas_tambahan AS realisasi', function($join){
-                                    $join   ->on('realisasi.tugas_tambahan_id','=','skp_tahunan_tugas_tambahan.id');
-                                })
-                                ->select([   
-                                    'skp_tahunan_tugas_tambahan.id AS tugas_tambahan_id',
-                                    'skp_tahunan_tugas_tambahan.label AS tugas_tambahan_label',
-                                    'skp_tahunan_tugas_tambahan.target AS tugas_tambahan_target',
-                                    'skp_tahunan_tugas_tambahan.satuan AS tugas_tambahan_satuan',
-                                    'skp_tahunan_tugas_tambahan.label AS tugas_tambahan_label',
-                                    'realisasi.id AS realisasi_tugas_tambahan_id',
-                                    'realisasi.realisasi',
-                                    'realisasi.satuan AS realisasi_satuan'
-                                ])
-                                ->ORDERBY('skp_tahunan_tugas_tambahan.id','ASC')
-                                ->where('skp_tahunan_tugas_tambahan.skp_tahunan_id', '=' ,$request->get('skp_tahunan_id'))
-                                ->get();
+        $dt = $this->TugasTambahan($request->skp_tahunan_id);
 
-        $datatables = Datatables::of($dt)
-                                    ->addColumn('tugas_tambahan_id', function ($x) {
-                                    return $x->tugas_tambahan_id;
-                                    })
-                                    ->addColumn('realisasi_tugas_tambahan_id', function ($x) {
-                                        return $x->realisasi_tugas_tambahan_id;
-                                    })
-                                    ->addColumn('tugas_tambahan_label', function ($x) {
-                                    return $x->tugas_tambahan_label;
-                                    })
-                                    ->addColumn('tugas_tambahan_label', function ($x) {
-                                    return $x->tugas_tambahan_label;
-                                    })
-                                    ->addColumn('target', function ($x) {
-                                    return $x->tugas_tambahan_target.' '.$x->tugas_tambahan_satuan;
-                                    })
-                                    ->addColumn('realisasi', function ($x) {
-                                        return $x->realisasi.' '.$x->realisasi_satuan;
-                                    })
-                                    ->addColumn('persen', function ($x) {
-                                        return   Pustaka::persen($x->realisasi,$x->tugas_tambahan_target);
-                                    });
+        $datatables = Datatables::of(collect($dt));
 
         if ($keyword = $request->get('search')['value']) {
         $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);

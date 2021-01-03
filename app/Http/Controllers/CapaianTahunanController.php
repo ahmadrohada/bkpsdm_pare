@@ -203,87 +203,21 @@ class CapaianTahunanController extends Controller {
     {
        
         $capaian_id = $request->capaian_tahunan_id;
-
-        $data = $this->CapaianTahunan($capaian_id);
 			
-        
-        return $data;
-        
-        /* 
-        
-        //UNSUR PENUNJANG Tugas Tambahan
-        $unsur_penunjang_tugas_tambahan_list = UnsurPenunjangTugasTambahan::where('capaian_tahunan_id', '=' ,$capaian_id)
-                                                                            ->select([   
-                                                                                'id AS tugas_tambahan_id',
-                                                                                'label AS tugas_tambahan_label',
-                                                                                'approvement'
-                                                                            ])->get();   
-
-        $unsur_penunjang_kreativitas_list = UnsurPenunjangKreativitas::where('capaian_tahunan_id', '=' ,$capaian_id )
-                                                                ->select([   
-                                                                    'id AS kreativitas_id',
-                                                                    'label AS kreativitas_label',
-                                                                    'nilai AS kreativitas_nilai',
-                                                                    'manfaat_id',
-                                                                    'approvement'
-                                                                ])->get();
-
-        //==========================  HITUNG CAPAIAN SKP ===========================================================//
-        $data_kinerja             = $this->hitung_capaian_tahunan($capaian_id); 
-        //========================== PEnilaian Perilaku kekerja  ===================================================//
-        $penilaian_perilaku_kerja = $this->NilaiPerilakuKerja($capaian_id);
-
-        //Pejabat Yang dinilai
-        $pegawai_yang_dinilai = array(
-            'nama'          => $data->u_nama,
-            'nip'           => $data->PegawaiYangDinilai->nip,
-            'pgr'           => $data->PegawaiYangDinilai->Golongan->pangkat.' / ('.$data->PegawaiYangDinilai->Golongan->golongan.' )',
-            'jabatan'       => Pustaka::capital_string($data->PegawaiYangDinilai->jabatan),
-            'unit_kerja'    => Pustaka::capital_string($data->PegawaiYangDinilai->UnitKerja->unit_kerja),
-            
-        );
-
-        //Pejabat Penilai
-        $pejabat_penilai = array(
-            'nama'          => $data->p_nama,
-            'nip'           => $data->PejabatPenilai->nip,
-            'pgr'           => $data->PejabatPenilai->Golongan->pangkat.' / ('.$data->PejabatPenilai->Golongan->golongan.' )',
-            'jabatan'       => Pustaka::capital_string($data->PejabatPenilai->jabatan),
-            'unit_kerja'    => Pustaka::capital_string($data->PejabatPenilai->UnitKerja->unit_kerja),
-            
-        );
-
-        //Atasan Pejabat Penilai
-        $atasan_pejabat_penilai = array(
-            'nama'          => $data->ap_nama,
-            'nip'           => $data->AtasanPejabatPenilai->nip,
-            'pgr'           => $data->AtasanPejabatPenilai->Golongan->pangkat.' / ('.$data->AtasanPejabatPenilai->Golongan->golongan.' )',
-            'jabatan'       => Pustaka::capital_string($data->AtasanPejabatPenilai->jabatan),
-            'unit_kerja'    => Pustaka::capital_string($data->AtasanPejabatPenilai->UnitKerja->unit_kerja),
-            
-        );
-
-        $user      = \Auth::user();
-        $pegawai   = $user->pegawai;   
-        $tgl = date('Y'."-".'m'."-".'d');
-        $waktu = date('H'.":".'i'.":".'s');
+        $user       = \Auth::user();
+        $pegawai    = $user->pegawai;   
+        $tgl        = date('Y'."-".'m'."-".'d');
+        $waktu      = date('H'.":".'i'.":".'s');
 
         $pdf = PDF::loadView('pare_pns.printouts.capaian_tahunan', [  
                                                                 'user'                                      => $pegawai->nama,
                                                                 'tgl_cetak'                                 => Pustaka::balik($tgl).' / '.$waktu,
-                                                                'data'                                      => $data,
-                                                                'nama_skpd'                                 => $data->PegawaiYangDinilai->SKPD->skpd,
-                                                                'kegiatan_list'                             => $kegiatan_list,
-                                                                'kegiatan_list'                             => $kegiatan_list,
-                                                                'unsur_penunjang_tugas_tambahan_list'       => $unsur_penunjang_tugas_tambahan_list,
-                                                                'unsur_penunjang_kreativitas_list'          => $unsur_penunjang_kreativitas_list,
-                                                                'data_kinerja'                              => $data_kinerja,
-                                                                'penilaian_perilaku_kerja'                  => $penilaian_perilaku_kerja,
-                                                                'pegawai_yang_dinilai'                      => $pegawai_yang_dinilai,
-                                                                'pejabat_penilai'                           => $pejabat_penilai,
-                                                                'atasan_pejabat_penilai'                    => $atasan_pejabat_penilai,
-                                                                'tgl_dibuat'                                => Pustaka::balik2($data->created_at),
-                                                                'masa_penilaian'                            => Pustaka::balik2($data->tgl_mulai) .' s.d '.Pustaka::balik2($data->tgl_selesai) ,
+                                                                'kegiatan_list'                             => $this->Kegiatan($capaian_id),
+                                                                'unsur_penunjang_tugas_tambahan_list'       => $this->UnsurPenunjangTugasTambahan($capaian_id),
+                                                                'unsur_penunjang_kreativitas_list'          => $this->UnsurPenunjangKreativitas($capaian_id),
+                                                                'sumary'                                    => $this->Sumary($capaian_id),
+                                                                'penilaian_perilaku_kerja'                  => $this->NilaiPerilakuKerja($capaian_id),
+                                                                'pejabat'                                   => $this->Pejabat($capaian_id),
 
                                                     ], [], [
                                                     'format' => 'A4-L'
@@ -301,7 +235,7 @@ class CapaianTahunanController extends Controller {
 				<td width="33%" style="text-align: right;"></td>
 			</tr>
         </table>');
-        return $pdf->stream('CapaianTahunan_'.$pegawai_yang_dinilai['nip'].'.pdf');  */
+        return $pdf->stream('CapaianTahunan_'.$pejabat['u_nip'].'.pdf'); 
 
 
         

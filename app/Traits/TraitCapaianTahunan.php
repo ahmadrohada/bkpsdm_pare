@@ -28,6 +28,148 @@ use App\Helpers\Pustaka;
 trait TraitCapaianTahunan
 {
 
+    protected function Sumary($capaian_id){
+
+        $capaian_tahunan = CapaianTahunan::
+                            leftjoin('db_pare_2018.realisasi_kegiatan_tahunan AS rkt', function($join){
+                                $join   ->on('rkt.capaian_id','=','capaian_tahunan.id');
+                            })
+                            ->leftjoin('db_pare_2018.penilaian_perilaku_kerja AS pke', function($join){
+                                $join   ->on('pke.capaian_tahunan_id','=','capaian_tahunan.id');
+                            })
+                            
+                            ->SELECT(
+                                'capaian_tahunan.id AS capaian_tahunan_id',
+                                'capaian_tahunan.skp_tahunan_id AS skp_tahunan_id',
+                                'capaian_tahunan.created_at',
+                                'capaian_tahunan.tgl_mulai',
+                                'capaian_tahunan.tgl_selesai',
+                                'capaian_tahunan.status_approve',
+                                'capaian_tahunan.send_to_atasan',
+                                'capaian_tahunan.alasan_penolakan',
+                                'capaian_tahunan.p_jabatan_id',
+                                'capaian_tahunan.u_jabatan_id',
+                                'pke.id AS penilaian_perilaku_kerja'
+                            )
+                            ->where('capaian_tahunan.id','=', $capaian_id )->first();
+    
+        $x = PerilakuKerja::
+                            SELECT( '*') 
+                            ->WHERE('penilaian_perilaku_kerja.capaian_tahunan_id', $capaian_id)
+                            ->first();
+
+		if ( $x != null ){
+            $pelayanan = ($x->pelayanan_01+$x->pelayanan_02+$x->pelayanan_03)/15 * 100;
+            $integritas = ($x->integritas_01+$x->integritas_02+$x->integritas_03+$x->integritas_04)/20*100;
+            $komitmen = ($x->komitmen_03+$x->komitmen_03+$x->komitmen_03)/15*100;
+            $disiplin = ($x->disiplin_01+$x->disiplin_02+$x->disiplin_03+$x->disiplin_04)/20*100;
+            $kerjasama = ($x->kerjasama_01+$x->kerjasama_02+$x->kerjasama_03+$x->kerjasama_04+$x->kerjasama_05)/25*100;
+            $kepemimpinan = ($x->kepemimpinan_01+$x->kepemimpinan_02+$x->kepemimpinan_03+$x->kepemimpinan_04+$x->kepemimpinan_05+$x->kepemimpinan_06)/30*100;
+
+            if ( $x->CapaianTahunan->PegawaiYangDinilai->Jabatan->Eselon->id_jenis_jabatan < 4 ){
+                $jumlah = $pelayanan+$integritas+$komitmen+$disiplin+$kerjasama+$kepemimpinan;
+                $ave    = $jumlah / 6 ;
+            }else{
+                $jumlah = $pelayanan+$integritas+$komitmen+$disiplin+$kerjasama;
+                $ave    = $jumlah / 5 ; 
+            }
+        }else{
+            $ave    = 0 ; 
+        }
+
+
+
+      
+        $p_detail   = $capaian_tahunan->PejabatPenilai;
+        $u_detail   = $capaian_tahunan->PegawaiYangDinilai;
+        //STATUS APPROVE
+        if ( ($capaian_tahunan->send_to_atasan) == 1 ){
+            if ( ($capaian_tahunan->status_approve) == 0 ){
+                $persetujuan_atasan = 'Menunggu Persetujuan';
+                $alasan_penolakan   = "";
+            }else if ( ($capaian_tahunan->status_approve) == 1 ){
+                $persetujuan_atasan = 'disetujui';
+                $alasan_penolakan   = "";
+            }else if ( ($capaian_tahunan->status_approve) == 2 ){
+                $persetujuan_atasan = 'ditolak';
+                $alasan_penolakan   = $capaian_tahunan->alasan_penolakan;
+            }else{
+                $persetujuan_atasan = '';
+                $alasan_penolakan   = "";
+            }
+        }else{
+            $persetujuan_atasan = '';
+            $alasan_penolakan   = "";
+        }
+        
+
+        //KInerja
+        $data_kinerja               = $this->hitung_capaian_tahunan($capaian_id); 
+        //return $data_kinerja;
+
+        //kegiatan tahunan
+        $jm_capaian_kegiatan_tahunan        = $data_kinerja['jm_capaian_kegiatan_tahunan'];
+        $jm_kegiatan_tahunan                = $data_kinerja['jm_kegiatan_tahunan'];
+        $ave_capaian_kegiatan_tahunan       = $data_kinerja['ave_capaian_kegiatan_tahunan'];
+        //tugas tambahan
+        $jm_tugas_tambahan                  = $data_kinerja['jm_tugas_tambahan'];
+        $jm_capaian_tugas_tambahan          = $data_kinerja['jm_capaian_tugas_tambahan'];
+        $ave_capaian_tugas_tambahan         = $data_kinerja['ave_capaian_tugas_tambahan'];
+        //unsur penunjang
+        $nilai_unsur_penunjang_tugas_tambahan   = $data_kinerja['nilai_unsur_penunjang_tugas_tambahan'];
+        $nilai_unsur_penunjang_kreativitas      = $data_kinerja['nilai_unsur_penunjang_kreativitas'];
+        $nilai_unsur_penunjang              = $nilai_unsur_penunjang_tugas_tambahan + $nilai_unsur_penunjang_kreativitas;
+
+        $jm_kegiatan_skp                    = $jm_kegiatan_tahunan + $jm_tugas_tambahan;
+        $jm_capaian_kegiatan_skp            = $jm_capaian_kegiatan_tahunan + $jm_capaian_tugas_tambahan;
+
+        //unseu
+
+        $capaian_kinerja_tahunan  = Pustaka::ave($jm_capaian_kegiatan_skp,$jm_kegiatan_skp);
+        $capaian_skp              = $capaian_kinerja_tahunan +  $nilai_unsur_penunjang ;
+
+        $nilai_prestasi_kerja = number_format( ($capaian_skp * 60 / 100)+( $ave * 40 / 100 ) , 2 );
+        //return $data_kinerja;
+      
+        $response = array(
+                
+                'jm_kegiatan_tahunan'           => $jm_kegiatan_tahunan,  //A
+                'jm_tugas_tambahan'             => $jm_tugas_tambahan, //B
+                'jm_kegiatan_skp'               => $jm_kegiatan_skp, //A+B
+
+                'jm_capaian_kegiatan_tahunan'   => number_format($jm_capaian_kegiatan_tahunan,2),  //A
+                'jm_capaian_tugas_tambahan'     => $jm_capaian_tugas_tambahan, //B
+                'jm_capaian_kegiatan_skp'       => $jm_capaian_kegiatan_skp, //A+B
+
+                'nilai_unsur_penunjang'         => $nilai_unsur_penunjang,
+
+               
+                'capaian_kinerja_tahunan'       => $capaian_kinerja_tahunan,
+                'capaian_skp'                   => $capaian_skp,
+                'penilaian_perilaku_kerja'      => Pustaka::persen_bulat($ave),
+
+                'nilai_prestasi_kerja'          => Pustaka::persen_bulat($nilai_prestasi_kerja),
+
+
+                
+                //'capaian_skp_tahunan'         => $capaian_skp_tahunan,
+                
+                'status_approve'                => $persetujuan_atasan,
+                'send_to_atasan'                => $capaian_tahunan->send_to_atasan,
+                'alasan_penolakan'              => $alasan_penolakan,
+                'skp_tahunan_id'                => $capaian_tahunan->skp_tahunan_id,
+                'tgl_dibuat'                    => Pustaka::balik2($capaian_tahunan->created_at),
+                'p_nama'                        => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
+                'u_nama'                        => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
+                
+                
+                'masa_penilaian'                => Pustaka::balik2($capaian_tahunan->tgl_mulai) .' s.d '.Pustaka::balik2($capaian_tahunan->tgl_selesai) ,
+
+
+        );
+       
+        return $response; 
+    }
 
     //========================= PEJABAT ==========================================//
     protected function Pejabat($capaian_id){
@@ -106,7 +248,7 @@ trait TraitCapaianTahunan
             $n_nilai = 3;
         }
 
-
+        $item = array();
         foreach( $data AS $x ){
 
             $item[] = array(
@@ -118,6 +260,7 @@ trait TraitCapaianTahunan
 					
 			);
         }
+        
         return $item;
     }
 
@@ -131,6 +274,7 @@ trait TraitCapaianTahunan
                                             'approvement'
                                         ])
                                         ->get();
+        $item = array();
         foreach( $data AS $x ){
             switch ($x->manfaat_id) {
                 case "3":
@@ -160,7 +304,42 @@ trait TraitCapaianTahunan
         return $item;
     }
 
-    protected function TugasTambahan($capaian_id){
+    protected function TugasTambahan($skp_tahunan_id){
+
+
+        $dt = TugasTambahan::
+                               
+                                leftjoin('db_pare_2018.realisasi_tugas_tambahan AS realisasi', function($join){
+                                    $join   ->on('realisasi.tugas_tambahan_id','=','skp_tahunan_tugas_tambahan.id');
+                                })
+                                ->select([   
+                                    'skp_tahunan_tugas_tambahan.id AS tugas_tambahan_id',
+                                    'skp_tahunan_tugas_tambahan.label AS tugas_tambahan_label',
+                                    'skp_tahunan_tugas_tambahan.target AS tugas_tambahan_target',
+                                    'skp_tahunan_tugas_tambahan.satuan AS tugas_tambahan_satuan',
+                                    'skp_tahunan_tugas_tambahan.label AS tugas_tambahan_label',
+                                    'realisasi.id AS realisasi_tugas_tambahan_id',
+                                    'realisasi.realisasi',
+                                    'realisasi.satuan AS realisasi_satuan'
+                                ])
+                                ->ORDERBY('skp_tahunan_tugas_tambahan.id','ASC')
+                                ->where('skp_tahunan_tugas_tambahan.skp_tahunan_id', '=' ,$skp_tahunan_id)
+                                ->get(); 
+
+        $item = array();
+        foreach( $dt AS $x ){
+                $item[] = array(
+                        'tugas_tambahan_id'             => $x->tugas_tambahan_id,
+                        'realisasi_tugas_tambahan_id'   => $x->realisasi_tugas_tambahan_id,
+                        'tugas_tambahan_label'          => $x->tugas_tambahan_label,
+                        'target'                        => $x->tugas_tambahan_target.' '.$x->tugas_tambahan_satuan,
+                        'realisasi'                     => $x->realisasi.' '.$x->realisasi_satuan,
+                        'persen'                        => Pustaka::persen($x->realisasi,$x->tugas_tambahan_target),
+
+
+                );
+        }
+        return $item;
         
     }
 
@@ -262,14 +441,15 @@ trait TraitCapaianTahunan
 
     public function CapaianTahunan($capaian_id){
 
+        $capaian            = CapaianTahunan::WHERE('id',$capaian_id)->first();
    
         $data_final = array(
-                    "sumary"                        => null,
+                    "sumary"                        => $this->Sumary($capaian_id),
                     "pejabat"                       => $this->Pejabat($capaian_id),
                     "kegiatan"                      => $this->Kegiatan($capaian_id),
                     "unsur_penujang_tugas_tambahan" => $this->UnsurPenunjangTugasTambahan($capaian_id),
                     "unsur_penunjang_kreativitas"   => $this->UnsurPenunjangKreativitas($capaian_id),
-                    "tugas_tambahan"                => $this->TugasTambahan($capaian_id),
+                    "tugas_tambahan"                => $this->TugasTambahan($capaian->skp_tahunan_id),
                     "penilaian_perilaku_kerja"      => $this->NilaiPerilakuKerja($capaian_id),
            
         );
@@ -502,8 +682,11 @@ trait TraitCapaianTahunan
                 'capaian_tahunan_id'        => $x->capaian_id,
                 'kegiatan_tahunan_id'	    => $x->kegiatan_tahunan_id,
                 'realisasi_kegiatan_id'	    => $x->realisasi_kegiatan_id,
+                'realisasi_indikator_id'    => $x->realisasi_indikator_id,
+                'indikator_kegiatan_id'	    => $x->indikator_kegiatan_id,
                 'kegiatan_tahunan_label'	=> $x->kegiatan_tahunan_label,
                 'indikator_kegiatan_label'	=> $x->indikator_kegiatan_label,
+                
 
                 'target_ak'                 => ( $x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_target_ak : $x->kegiatan_tahunan_ak ),
                 'target_quantity'           => ( $x->realisasi_indikator_id ? $x->realisasi_indikator_target_quantity : $x->indikator_kegiatan_target )." ".($x->realisasi_indikator_id ? $x->realisasi_indikator_satuan : $x->indikator_kegiatan_satuan),
@@ -515,7 +698,7 @@ trait TraitCapaianTahunan
                 'realisasi_quantity'        => ( $x->realisasi_indikator_id ? $x->realisasi_indikator_realisasi." ".$x->realisasi_indikator_satuan : "-" ),
                 'realisasi_quality'         => ($x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_realisasi_quality." %" : "-" ),
                 'realisasi_waktu'           => ($x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_realisasi_waktu." bln" : "-" ),
-                'realisasi_cost'            => $x->realisasi_kegiatan_realisasi_cost,
+                'realisasi_cost'            => "Rp. ". ($x->realisasi_kegiatan_id ? number_format($x->realisasi_kegiatan_realisasi_cost,'0',',','.') : "-" ),
 
                 'hitung_quantity'           => Pustaka::persen_bulat($x->hitung_quantity),
                 'hitung_quality'            => Pustaka::persen_bulat($x->hitung_quality),
