@@ -119,13 +119,7 @@ table.dataTable tbody td {
 				rowsGroup		: [ 0,1,3,5,6,7,8,10,11,12,13,14,15,16,17,18,20 ],
 			
 				columns			: [ 
-									{ data: "kegiatan_tahunan_id",searchable:false,
-										"render": function ( data, type, row ,meta ,group ) {
-											return meta.row + meta.settings._iDisplayStart + 1 ;
-											
-										}
-										
-									},
+									{ data: "no",searchable:false},
 									{ data: "kegiatan_tahunan_label", name:"kegiatan_tahunan_label",
 										"render": function ( data, type, row ) {
 											return row.kegiatan_tahunan_label;

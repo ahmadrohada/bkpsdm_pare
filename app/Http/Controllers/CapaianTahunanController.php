@@ -235,7 +235,7 @@ class CapaianTahunanController extends Controller {
 				<td width="33%" style="text-align: right;"></td>
 			</tr>
         </table>');
-        return $pdf->stream('CapaianTahunan_'.$pejabat['u_nip'].'.pdf'); 
+        return $pdf->download('CapaianTahunan_'.$pejabat['u_nip'].'.pdf'); 
 
 
         
