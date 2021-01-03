@@ -31,20 +31,20 @@
 					<li class="list-group-item st_alasan_penolakan_div hidden" style="padding:8px 10px;">
 						Alasan Penolakan <a class="pull-right st_alasan_penolakan" >-</a>
 					</li> --}}
-			<li class="list-group-item" style="padding:8px 10px;">
+			{{-- <li class="list-group-item" style="padding:8px 10px;">
 				I. Jumlah Kegiatan Tahunan <a class="pull-right st_jumlah_kegiatan_tahunan" >-</a>
 			</li>
 			<li class="list-group-item" style="padding:8px 10px;">
 				II. Jumlah Tugas Tambahan <a class="pull-right st_jumlah_tugas_tambahan" >-</a>
-			</li>
+			</li> --}}
 			<li class="list-group-item" style="padding:8px 10px; border-top: solid 1px #615e68 !important;">
-				A. Jumlah Kegiatan SKP ( I + II) <a class="pull-right st_jumlah_kegiatan_skp" >-</a>
+				A. Jumlah Kegiatan SKP<a class="pull-right st_jumlah_kegiatan_skp" >-</a>
 			</li>
 
 			@if ( ( request()->segment(4) != 'edit' )&( request()->segment(4) != 'ralat' ) )
 					
 			<li class="list-group-item" style="padding:8px 10px;">
-				B. Nilai Capaian Kegiatan SKP + Tugas Tambahan
+				B. Nilai Capaian Kegiatan SKP
 				<a class="pull-right st_capaian_kegiatan_skp" >-</a>
 			</li>
 			<li class="list-group-item" style="padding:8px 10px;">
@@ -98,7 +98,7 @@
 					$('.st_jumlah_tugas_tambahan').html(data['jm_tugas_tambahan']);
 					$('.st_jumlah_kegiatan_skp').html(data['jm_kegiatan_skp']); // keg tahunan + tugas Tambahan
 
-					$('.st_capaian_kegiatan_skp').html(data['jm_capaian_kegiatan_tahunan']+' + '+data['jm_capaian_tugas_tambahan']);
+					$('.st_capaian_kegiatan_skp').html(data['jm_capaian_kegiatan_tahunan']);
 					
 					$('.st_capaian_skp').html(data['capaian_skp']);
 					$('.st_nilai_unsur_penunjang').html(data['nilai_unsur_penunjang']);

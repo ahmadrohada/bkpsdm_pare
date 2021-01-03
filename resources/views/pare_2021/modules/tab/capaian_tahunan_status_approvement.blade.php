@@ -24,14 +24,14 @@
 					<li class="list-group-item st_alasan_penolakan_div hidden" style="padding:8px 10px;">
 						Alasan Penolakan <a class="pull-right st_alasan_penolakan" >-</a>
 					</li>
-					<li class="list-group-item" style="padding:8px 10px;">
+					{{-- <li class="list-group-item" style="padding:8px 10px;">
 						I. Jumlah Kegiatan Tahunan <a class="pull-right st_jumlah_kegiatan_tahunan" >-</a>
 					</li>
 					<li class="list-group-item" style="padding:8px 10px;">
 						II. Jumlah Tugas Tambahan <a class="pull-right st_jumlah_tugas_tambahan" >-</a>
-					</li>
+					</li> --}}
 					<li class="list-group-item" style="padding:8px 10px; border-top: solid 1px #615e68 !important;">
-						A. Jumlah Kegiatan SKP ( I + II) <a class="pull-right st_jumlah_kegiatan_skp" >-</a>
+						A. Jumlah Kegiatan SKP<a class="pull-right st_jumlah_kegiatan_skp" >-</a>
 					</li>
 					<li class="list-group-item" style="padding:8px 10px;">
 						B. Nilai Capaian Kegiatan SKP + Tugas Tambahan
