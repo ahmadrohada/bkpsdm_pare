@@ -84,7 +84,7 @@ table.dataTable tbody td {
 									@endif
 								],
 				ajax			: {
-									url	: '{{ url("api/realisasi_kegiatan_tahunan") }}',
+									url	: '{{ url("api/realisasi_kegiatan_tahunan_2") }}',
 									data: { 
 										
 											"renja_id" 				: {!! $capaian->SKPTahunan->Renja->id !!} , 
