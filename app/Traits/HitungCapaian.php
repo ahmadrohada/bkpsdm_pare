@@ -520,7 +520,7 @@ trait HitungCapaian
     protected function capaian_tahunan_eselon3($capaian_id,$skp_tahunan_id,$renja_id,$jabatan_id)
     {
 
-        //Jumlah kegiatan 
+       /*  //Jumlah kegiatan 
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray();
         $jm_kegiatan = Kegiatan::SELECT('id','label')
                             ->WHERE('renja_kegiatan.renja_id', $renja_id )
@@ -529,7 +529,23 @@ trait HitungCapaian
                                 $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
                                 
                             })
-                            ->count();
+                            ->count(); */
+        $data       = CapaianTahunan::WHERE('id',$capaian_id)->first();
+        $renja_id   = $data->SKPTahunan->renja_id;    
+        $jabatan_id = $data->PegawaiYangDinilai->id_jabatan;
+                   
+        $bawahan = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray();
+                   
+                   
+        $jm_kegiatan = Kegiatan::WHERE('renja_kegiatan.renja_id', $renja_id )
+                                            ->WHEREIN('renja_kegiatan.jabatan_id', $bawahan  )
+                                            //LEFT JOIN ke Kegiatan SKP TAHUNAN
+                                            ->JOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                                
+                                            })
+                                            ->DISTINCT('kegiatan_tahunan.id')
+                                            ->count('kegiatan_tahunan.id');
 
 
        
@@ -602,24 +618,24 @@ trait HitungCapaian
 
         //Tugas Tambahan pada skp tahunan
         //tidak dihitung pada capaian tahunan
-       /*  $jm_tugas_tambahan =  TugasTambahan::WHERE('skp_tahunan_id',$skp_tahunan_id)->count();
-        $cdata = TugasTambahan::
+       //$jm_tugas_tambahan =  TugasTambahan::WHERE('skp_tahunan_id',$skp_tahunan_id)->count();
+     /*    $cdata = TugasTambahan::
                                     leftjoin('db_pare_2018.realisasi_tugas_tambahan AS realisasi', function($join) use($capaian_id){
                                         $join   ->on('realisasi.tugas_tambahan_id','=','skp_tahunan_tugas_tambahan.id');
                                         $join   ->where('realisasi.capaian_id','=',$capaian_id);
                                     })
                                     ->SELECT('skp_tahunan_tugas_tambahan.target','realisasi.realisasi')
                                     ->WHERE('skp_tahunan_tugas_tambahan.skp_tahunan_id','=',$skp_tahunan_id)
-                                    ->get(); */
+                                    ->get();  */
 
         $jm_capaian_tugas_tambahan = 0 ;
         $jm_tugas_tambahan = 0 ;
 
-       /*  foreach ($cdata as $data) {
+      /*  foreach ($cdata as $data) {
             $jm_tugas_tambahan ++;
             $jm_capaian_tugas_tambahan += Pustaka::persen($data->realisasi,$data->target);
-        } */
-
+        } 
+ */
         $data_2 = array(
                         'jm_tugas_tambahan'           => $jm_tugas_tambahan,
                         'jm_capaian_tugas_tambahan'   => $jm_capaian_tugas_tambahan,
