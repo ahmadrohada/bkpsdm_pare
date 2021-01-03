@@ -63,7 +63,7 @@
 	
 	function sumary_show(){
 		$.ajax({
-				url			: '{{ url("api_resource/capaian_tahunan_status") }}',
+				url			: '{{ url("api/capaian_tahunan_status") }}',
 				data 		: { capaian_tahunan_id : {!! $capaian->id !!} },
 				method		: "GET",
 				dataType	: "json",

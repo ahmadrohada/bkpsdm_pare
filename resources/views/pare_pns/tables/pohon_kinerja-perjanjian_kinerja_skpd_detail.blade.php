@@ -97,7 +97,7 @@ function load_perjanjian_kinerja(){
 								{ className: "text-center", targets: [ 0,3 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-pk_sasaran_strategis") }}',
+								url	: '{{ url("api/skpd-pk_sasaran_strategis") }}',
 								data: { renja_id: {!! $renja->id !!} },
 							 }, 
 			columns			:[
@@ -154,7 +154,7 @@ function load_perjanjian_kinerja(){
 								{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-pk_program") }}',
+								url	: '{{ url("api/skpd-pk_program") }}',
 								data: { renja_id: {!! $renja->id !!} },
 							 }, 
 			columns			:[
@@ -184,7 +184,7 @@ function load_perjanjian_kinerja(){
 
 	function hitung_total_anggaran(){
 		$.ajax({
-				url			: '{{ url("api_resource/skpd-total_anggaran_pk") }}',
+				url			: '{{ url("api/skpd-total_anggaran_pk") }}',
 				data 		: { renja_id: {!! $renja->id !!} },
 				method		: "GET",
 				dataType	: "json",
@@ -203,7 +203,7 @@ function load_perjanjian_kinerja(){
 	$(document).on('click','.add_sasaran',function(e){
 		var sasaran_id = $(this).data('id') ;
 		$.ajax({
-				url			: '{{ url("api_resource/add_sasaran_to_pk") }}',
+				url			: '{{ url("api/add_sasaran_to_pk") }}',
 				data 		: {sasaran_id : sasaran_id},
 				method		: "POST",
 				success		: function(data) {
@@ -243,7 +243,7 @@ function load_perjanjian_kinerja(){
 	$(document).on('click','.remove_sasaran',function(e){
 		var sasaran_id = $(this).data('id') ;
 		$.ajax({
-				url			: '{{ url("api_resource/remove_sasaran_from_pk") }}',
+				url			: '{{ url("api/remove_sasaran_from_pk") }}',
 				data 		: {sasaran_id : sasaran_id},
 				method		: "POST",
 				success		: function(data) {

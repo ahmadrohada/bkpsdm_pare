@@ -40,7 +40,7 @@ $(document).ready(function() {
 		
         var data = $('#create-perjanjian_kinerja-form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/skpd_simpan_perjanjian_kinerja") }}',
+			url		: '{{ url("api/skpd_simpan_perjanjian_kinerja") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(e) {

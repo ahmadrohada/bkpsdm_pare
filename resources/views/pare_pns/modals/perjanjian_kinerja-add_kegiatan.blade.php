@@ -72,7 +72,7 @@
 										{ className: "text-right", targets: [ 2 ] }
 									],
 					ajax			: {
-										url	: '{{ url("api_resource/eselon2_kegiatan_list") }}',
+										url	: '{{ url("api/eselon2_kegiatan_list") }}',
 										data: { program_id : program_id },
 										delay:3000
 									},
@@ -110,7 +110,7 @@
 
 	function hitung_total_anggaran_kegiatan(program_id){
 		$.ajax({
-					url			: '{{ url("api_resource/eselon2-total_anggaran_kegiatan") }}',
+					url			: '{{ url("api/eselon2-total_anggaran_kegiatan") }}',
 					data		: { 
 										"program_id" : program_id
 									},
@@ -132,7 +132,7 @@
 		var program_id = $('.program_id').val();
 		show_loader();
 		$.ajax({
-				url			: '{{ url("api_resource/remove_esl2_kegiatan_from_pk") }}',
+				url			: '{{ url("api/remove_esl2_kegiatan_from_pk") }}',
 				data 		: {kegiatan_id : kegiatan_id},
 				method		: "POST",
 				success		: function(data) {
@@ -176,7 +176,7 @@
 		var program_id = $('.program_id').val();
 		show_loader();
 		$.ajax({
-				url			: '{{ url("api_resource/add_esl2_kegiatan_to_pk") }}',
+				url			: '{{ url("api/add_esl2_kegiatan_to_pk") }}',
 				data 		: {kegiatan_id : kegiatan_id},
 				method		: "POST",
 				success		: function(data) {

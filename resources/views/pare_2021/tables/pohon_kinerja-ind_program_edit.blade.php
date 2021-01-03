@@ -59,7 +59,7 @@ function load_ind_program(program_id){
 
 
 $.ajax({
-		url			: '{{ url("api_resource/program_detail") }}',
+		url			: '{{ url("api/program_detail") }}',
 		data 		: {program_id : program_id},
 		method		: "GET",
 		dataType	: "json",
@@ -84,7 +84,7 @@ $('#ind_program_table').DataTable({
 								{ className: "text-center", targets: [ 0,2,3 ] }
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_ind_program_list") }}',
+								url	: '{{ url("api/skpd-renja_ind_program_list") }}',
 								data: { program_id: program_id },
 							}, 
 			columns			:[
@@ -124,7 +124,7 @@ $('#ind_program_table').DataTable({
 	$(document).on('click','.edit_ind_program',function(e){
 		var ind_program_id = $(this).data('id') ;
 		$.ajax({
-				url			: '{{ url("api_resource/ind_program_detail") }}',
+				url			: '{{ url("api/ind_program_detail") }}',
 				data 		: {ind_program_id : ind_program_id},
 				method		: "GET",
 				dataType	: "json",
@@ -165,7 +165,7 @@ $('#ind_program_table').DataTable({
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_ind_program") }}',
+					url		: '{{ url("api/hapus_ind_program") }}',
 					type	: 'POST',
 					data    : {ind_program_id:ind_program_id},
 					cache   : false,

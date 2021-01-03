@@ -64,7 +64,7 @@
 	function load_ind_kegiatan(kegiatan_id){
 		
 		$.ajax({
-				url			: '{{ url("api_resource/kegiatan_detail") }}',
+				url			: '{{ url("api/kegiatan_detail") }}',
 				data 		: {kegiatan_id : kegiatan_id },
 				method		: "GET",
 				dataType	: "json",
@@ -99,7 +99,7 @@
 								{ className: "text-center", targets: [ 0,2 ] }
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_ind_kegiatan_list") }}',
+								url	: '{{ url("api/skpd-renja_ind_kegiatan_list") }}',
 								data: { kegiatan_id: kegiatan_id },
 							}, 
 			columns			:[

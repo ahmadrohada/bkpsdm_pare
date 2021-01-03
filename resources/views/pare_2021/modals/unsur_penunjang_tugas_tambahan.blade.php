@@ -76,7 +76,7 @@
 		on_submit_tt()
         var data = $('#unsur_penunjang_tugas_tambahan-form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_unsur_penunjang_tugas_tambahan") }}',
+			url		: '{{ url("api/simpan_unsur_penunjang_tugas_tambahan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -133,7 +133,7 @@
 		on_submit_tt()
         var data = $('#unsur_penunjang_tugas_tambahan-form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/update_unsur_penunjang_tugas_tambahan") }}',
+			url		: '{{ url("api/update_unsur_penunjang_tugas_tambahan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

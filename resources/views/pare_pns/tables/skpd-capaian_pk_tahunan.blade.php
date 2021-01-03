@@ -49,7 +49,7 @@
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skpd_capaian_pk_tahunan_list") }}',
+									url	: '{{ url("api/skpd_capaian_pk_tahunan_list") }}',
 									data: { skpd_id : {!! $skpd_id !!} },
 									delay:3000
 
@@ -136,7 +136,7 @@
 		var renja_id = $(this).data('renja_id') ;
 		show_loader();
 		$.ajax({
-			url		: '{{ url("api_resource/capaian_pk_tahunan_create_confirm") }}',
+			url		: '{{ url("api/capaian_pk_tahunan_create_confirm") }}',
 			type	: 'GET',
 			data	:  	{ 
 							renja_id : renja_id
@@ -168,7 +168,7 @@
 
 	function modal_create_capaian_pk_tahunan(renja_id){
 		$.ajax({
-				url			: '{{ url("api_resource/renja_detail") }}',
+				url			: '{{ url("api/renja_detail") }}',
 				data 		: { renja_id:renja_id },
 				method		: "GET",
 				dataType	: "json",
@@ -208,7 +208,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_capaian_pk") }}',
+					url		: '{{ url("api/hapus_capaian_pk") }}',
 					type	: 'POST',
 					data    : { capaian_pk_id:capaian_pk_id },
 					cache   : false,

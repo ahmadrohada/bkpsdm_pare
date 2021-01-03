@@ -70,7 +70,7 @@ function load_ind_kegiatan(kegiatan_id){
 
 
 $.ajax({
-		url			: '{{ url("api_resource/kegiatan_detail") }}',
+		url			: '{{ url("api/kegiatan_detail") }}',
 		data 		: {kegiatan_id : kegiatan_id},
 		method		: "GET",
 		dataType	: "json",
@@ -96,7 +96,7 @@ $('#ind_kegiatan_table').DataTable({
 								{ className: "text-center", targets: [ 0,2,3 ] }
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_ind_kegiatan_list") }}',
+								url	: '{{ url("api/skpd-renja_ind_kegiatan_list") }}',
 								data: { kegiatan_id: kegiatan_id },
 							}, 
 			columns			:[
@@ -137,7 +137,7 @@ $(document).on('click','.create_ind_kegiatan',function(e){
 		var ind_kegiatan_id = $(this).data('id') ;
 		//alert(ind_kegiatan_id);
 	    $.ajax({
-				url			: '{{ url("api_resource/ind_kegiatan_detail") }}',
+				url			: '{{ url("api/ind_kegiatan_detail") }}',
 				data 		:  {ind_kegiatan_id : ind_kegiatan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -178,7 +178,7 @@ $(document).on('click','.create_ind_kegiatan',function(e){
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_ind_kegiatan") }}',
+					url		: '{{ url("api/hapus_ind_kegiatan") }}',
 					type	: 'POST',
 					data    : {ind_kegiatan_id:ind_kegiatan_id},
 					cache   : false,

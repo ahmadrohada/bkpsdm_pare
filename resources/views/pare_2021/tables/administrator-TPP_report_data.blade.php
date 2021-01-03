@@ -51,7 +51,7 @@
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_tpp_report_list") }}',
+									url	: '{{ url("api/administrator_tpp_report_list") }}',
 									
 									delay:3000
 								},
@@ -99,7 +99,7 @@
 	$(document).on('click', '.cetak_tpp_report_data', function(e) {
 		var tpp_report_id = $(this).data('id');
 		$.ajax({
-				url		: '{{ url("api_resource/tpp_report_detail") }}',
+				url		: '{{ url("api/tpp_report_detail") }}',
 				type	: 'GET',
 				data	:  	{ tpp_report_id : tpp_report_id },
 				success	: function(data) {

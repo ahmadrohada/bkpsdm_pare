@@ -117,7 +117,7 @@
 	$('#skp_bulanan_tree').jstree({
 				'core' : {
 					'data' : {
-							"url" 	: "{{ url("api_resource/skp_bulanan_tree4") }}", 
+							"url" 	: "{{ url("api/skp_bulanan_tree4") }}", 
 							'data' : function (node) {
 								return { 	"id" 		: node.id ,
 											"data" 		: node.data,
@@ -247,7 +247,7 @@
 									@endif 
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_bulanan_4") }}',
+									url	: '{{ url("api/kegiatan_bulanan_4") }}',
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 
@@ -331,7 +331,7 @@
 									@endif 
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skp_bulanan_list_4") }}',
+									url	: '{{ url("api/skp_bulanan_list_4") }}',
 									data: { 
 										
 											"skp_tahunan_id" : {!! $skp->id !!} 
@@ -388,7 +388,7 @@
 
 	function modal_create_skp_bulanan(){
 		$.ajax({
-				url			: '{{ url("api_resource/skp_tahunan_detail") }}',
+				url			: '{{ url("api/skp_tahunan_detail") }}',
 				data 		: {skp_tahunan_id : {{ $skp->id}}},
 				method		: "GET",
 				dataType	: "json",
@@ -464,7 +464,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_skp_bulanan") }}',
+					url		: '{{ url("api/hapus_skp_bulanan") }}',
 					type	: 'POST',
 					data    : {skp_bulanan_id:skp_bulanan_id},
 					cache   : false,
@@ -515,7 +515,7 @@
 
 	function show_modal_create(rencana_aksi_id,skp_bulanan_id){
 		$.ajax({
-				url			  : '{{ url("api_resource/rencana_aksi_detail_4") }}',
+				url			  : '{{ url("api/rencana_aksi_detail_4") }}',
 				data 		  : {rencana_aksi_id : rencana_aksi_id},
 				method		: "GET",
 				dataType	: "json",
@@ -548,7 +548,7 @@
 		var id = $(this).data('id');
 		
 		$.ajax({
-				url			  	: '{{ url("api_resource/kegiatan_bulanan_detail") }}',
+				url			  	: '{{ url("api/kegiatan_bulanan_detail") }}',
 				data 		  	: {kegiatan_bulanan_id : id},
 				method			: "GET",
 				dataType		: "json",
@@ -598,7 +598,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_kegiatan_bulanan") }}',
+					url		: '{{ url("api/hapus_kegiatan_bulanan") }}',
 					type	: 'POST',
 					data    : {kegiatan_bulanan_id:kegiatan_bulanan_id},
 					cache   : false,

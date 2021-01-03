@@ -82,7 +82,7 @@
 
 									],
 						ajax		: {
-										url: '{{ url("api_resource/skpd_tpp_report_data_list") }}',
+										url: '{{ url("api/skpd_tpp_report_data_list") }}',
 										data: { tpp_report_id: {{ $tpp_report->id }}},
 
 										},
@@ -239,7 +239,7 @@
 		var tpp_report_data_id = $(this).data('id');
 		show_loader();
 		$.ajax({
-			url		: '{{ url("api_resource/tpp_report_data_edit") }}',
+			url		: '{{ url("api/tpp_report_data_edit") }}',
 			type	: 'GET',
 			data	:  	{ 
 							tpp_report_data_id : tpp_report_data_id

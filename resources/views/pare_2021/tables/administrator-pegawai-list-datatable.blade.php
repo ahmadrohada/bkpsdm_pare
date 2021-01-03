@@ -52,7 +52,7 @@
 									{ 	className: "text-center", targets: [ 0,1,3,5,7] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_pegawai_list") }}',
+									url	: '{{ url("api/administrator_pegawai_list") }}',
 									//data: { page : 4 , dtpage : 13 }, //PAGINATION bawaan laravel
 								},
 				

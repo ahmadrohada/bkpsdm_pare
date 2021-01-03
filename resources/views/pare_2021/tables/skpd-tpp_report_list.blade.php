@@ -38,7 +38,7 @@
 
 	$(document).on('click','.create_tpp_report',function(e){
 		$.ajax({
-				url		: 		'{{ url("api_resource/create_tpp_report_confirm") }}',
+				url		: 		'{{ url("api/create_tpp_report_confirm") }}',
 				type	: 'GET',
 				data	:  	{ 
 								skpd_id : {{ $skpd->id }},
@@ -89,7 +89,7 @@
 									{className: "text-center",targets: [0,1,2,3,4,5,6]}
 								],
 					ajax: {
-						url		: '{{ url("api_resource/skpd_tpp_report_list") }}',
+						url		: '{{ url("api/skpd_tpp_report_list") }}',
 						data	: { skpd_id : {{$skpd->id}} },
 						delay	: 3000
 
@@ -148,7 +148,7 @@
 	$(document).on('click', '.cetak_tpp_report_data', function(e) {
 		var tpp_report_id = $(this).data('id');
 		$.ajax({
-				url		: '{{ url("api_resource/tpp_report_detail") }}',
+				url		: '{{ url("api/tpp_report_detail") }}',
 				type	: 'GET',
 				data	:  	{ tpp_report_id : tpp_report_id },
 				success	: function(data) {
@@ -195,7 +195,7 @@
 		}).then((result) => {
 			if (result.value) {
 				$.ajax({
-					url: '{{ url("api_resource/hapus_tpp_report") }}',
+					url: '{{ url("api/hapus_tpp_report") }}',
 					type: 'POST',
 					data: {
 						tpp_report_id: tpp_report_id

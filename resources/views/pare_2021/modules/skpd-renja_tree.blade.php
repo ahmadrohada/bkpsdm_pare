@@ -30,7 +30,7 @@ $(document).ready(function() {
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/skpd_renja_tree") }}",
+						"url" 	: "{{ url("api/skpd_renja_tree") }}",
 						"data" 	: function (node) {
 							return { "id" : node.id };
 						},
@@ -59,7 +59,7 @@ $(document).ready(function() {
 					data.instance.refresh();
 				});
 		}).on('delete_node.jstree', function (e, data) {
-			$.get('{{ url("api_resource/hapus_kegiatan_renja") }}', { 'id' : data.node.id })
+			$.get('{{ url("api/hapus_kegiatan_renja") }}', { 'id' : data.node.id })
 				.fail(function () {
 					data.instance.refresh();
 				});

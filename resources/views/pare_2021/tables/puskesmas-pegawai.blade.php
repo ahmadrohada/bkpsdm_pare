@@ -51,7 +51,7 @@
 									{ "visible": false, "targets": [6]}
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/puskesmas_pegawai_list") }}',
+									url	: '{{ url("api/puskesmas_pegawai_list") }}',
 									data: { puskesmas_id : {{$puskesmas_id}} },
 									delay:3000
 								},

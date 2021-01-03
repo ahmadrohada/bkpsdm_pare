@@ -67,7 +67,7 @@ $(document).ready(function() {
 		
         var data = $('#create-program-form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/skpd_simpan_program") }}',
+			url		: '{{ url("api/skpd_simpan_program") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

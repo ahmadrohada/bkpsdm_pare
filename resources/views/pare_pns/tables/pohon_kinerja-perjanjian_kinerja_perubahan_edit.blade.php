@@ -67,7 +67,7 @@ function load_perjanjian_kinerja(){
 								{ className: "text-center", targets: [ 0,3 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-pk_sasaran_list") }}',
+								url	: '{{ url("api/skpd-pk_sasaran_list") }}',
 								data: { renja_id: {!! $renja->id !!} },
 							 }, 
 			columns			:[

@@ -57,7 +57,7 @@ function load_kontrak_kinerja(){
 								{ className: "text-center", targets: [ 0 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/jft-kk_sasaran_strategis") }}',
+								url	: '{{ url("api/jft-kk_sasaran_strategis") }}',
 								data: { 
 										"renja_id" 			: {!! $skp->Renja->id !!} , 
 										"jabatan_id" 		: {!! $skp->PegawaiYangDinilai->Jabatan->id !!},

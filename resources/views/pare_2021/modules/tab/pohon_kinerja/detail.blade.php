@@ -97,7 +97,7 @@
 		minimumInputLength  : 3,
 		
         ajax: {
-            url				: '{{ url("api_resource/select_ka_skpd_list") }}',
+            url				: '{{ url("api/select_ka_skpd_list") }}',
             dataType		: 'json',
             quietMillis		: 250,
             data			: function (params) {
@@ -163,7 +163,7 @@
 		var id = $(".p_nip_edit option:selected").val();
 
 		$.ajax({
-			url     	: '{{ url("api_resource/set_kepala_skpd_renja") }}',
+			url     	: '{{ url("api/set_kepala_skpd_renja") }}',
 			type    	: "POST",
 			data    	: { renja_id: {{ $renja->id }}, 
 							ka_skpd_id  : id

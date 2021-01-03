@@ -87,7 +87,7 @@ table{
 				{ targets: 'no-sort', orderable: false },
 			],
 			ajax: {
-				url: '{{ url("api_resource/skpd_tpp_report_data_list") }}',
+				url: '{{ url("api/skpd_tpp_report_data_list") }}',
 				data: {
 					tpp_report_id: {{ $tpp_report->id }}
 				},
@@ -212,7 +212,7 @@ table{
 	$(document).on('click','.ubah_tpp_report_data_id',function(e){
 		var tpp_report_data_id = $(this).data('id');
 		$.ajax({
-			url		: '{{ url("api_resource/tpp_report_data_detail") }}',
+			url		: '{{ url("api/tpp_report_data_detail") }}',
 			type	: 'GET',
 			data	:  	{ 
 							tpp_report_data_id : tpp_report_data_id

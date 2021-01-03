@@ -12,7 +12,7 @@
 		 //Json Object
 	 
 			 $.ajax({
-					 url		: '{{ url("api_resource/perjanjian_kinerja_timeline_status") }}',
+					 url		: '{{ url("api/perjanjian_kinerja_timeline_status") }}',
 					 data 		: {perjanjian_kinerja_id : {!! $pk->id!!} },
 					 method		: "GET",
 					 dataType	: "json",

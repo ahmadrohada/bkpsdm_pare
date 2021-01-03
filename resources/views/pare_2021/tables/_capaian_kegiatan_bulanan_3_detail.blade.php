@@ -40,7 +40,7 @@
 									{ className: "text-center", targets: [ 0,2,3,4,5 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_kegiatan_bulanan_3") }}',
+									url	: '{{ url("api/realisasi_kegiatan_bulanan_3") }}',
 									data: { 
 										
 											"renja_id" 			: {!! $capaian->SKPBulanan->SKPTahunan->Renja->id !!} , 

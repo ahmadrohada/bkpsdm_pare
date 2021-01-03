@@ -26,7 +26,7 @@ use App\Helpers\Pustaka;
 use App\Traits\HitungCapaian; 
 use App\Traits\BawahanList;
 use App\Traits\PJabatan;
-use App\Traits\PenilaianPerilakuKerja;
+use App\Traits\TraitCapaianTahunan;
 
 use Datatables;
 use Validator;
@@ -37,7 +37,7 @@ class CapaianTahunanAPIController extends Controller {
     use HitungCapaian;
     use BawahanList;
     use PJabatan;
-    use PenilaianPerilakuKerja;
+    use TraitCapaianTahunan;
 
     
 

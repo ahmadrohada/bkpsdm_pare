@@ -64,7 +64,7 @@
 									{ className: "text-center", targets: [ 0,2,3,4,5 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_kegiatan_bulanan_5") }}',
+									url	: '{{ url("api/realisasi_kegiatan_bulanan_5") }}',
 									data: { 
 										
 											"renja_id" 			: {!! $capaian->SKPBulanan->SKPTahunan->Renja->id !!} , 
@@ -150,7 +150,7 @@
 
 	function show_modal_create(kegiatan_bulanan_id){
 		$.ajax({
-				url			  : '{{ url("api_resource/kegiatan_bulanan_detail_jft") }}',
+				url			  : '{{ url("api/kegiatan_bulanan_detail_jft") }}',
 				data 		  : {kegiatan_bulanan_id : kegiatan_bulanan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -191,7 +191,7 @@
 	
 		var realisasi_kegiatan_bulanan_id = $(this).data('id');
 		$.ajax({
-				url			  	: '{{ url("api_resource/realisasi_kegiatan_bulanan_detail_jft") }}',
+				url			  	: '{{ url("api/realisasi_kegiatan_bulanan_detail_jft") }}',
 				data 		  	: {realisasi_kegiatan_bulanan_id : realisasi_kegiatan_bulanan_id},
 				method			: "GET",
 				dataType		: "json",
@@ -248,7 +248,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_kegiatan_bulanan_jft") }}',
+					url		: '{{ url("api/hapus_realisasi_kegiatan_bulanan_jft") }}',
 					type	: 'POST',
 					data    : {realisasi_kegiatan_bulanan_id:realisasi_kegiatan_bulanan_id},
 					cache   : false,

@@ -87,7 +87,7 @@
 
 	$('.kegiatan_tahunan').select2({
 		ajax: {
-			url: '{{ url("api_resource/kegiatan_tahunan_list_JFT") }}',
+			url: '{{ url("api/kegiatan_tahunan_list_JFT") }}',
 			dataType: 'json',
 			quietMillis: 500,
 			data: function(params) {
@@ -112,7 +112,7 @@
 
 	function show_modal_kegiatan_bulanan(sasaran_id){
 		$.ajax({
-				url			: '{{ url("api_resource/sasaran_detail") }}',
+				url			: '{{ url("api/sasaran_detail") }}',
 				data 		: {sasaran_id : sasaran_id},
 				method		: "GET",
 				dataType	: "json",
@@ -194,7 +194,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_kegiatan_bulanan_jft") }}',
+			url		: '{{ url("api/simpan_kegiatan_bulanan_jft") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -272,7 +272,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_kegiatan_bulanan_jft") }}',
+			url		: '{{ url("api/update_kegiatan_bulanan_jft") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

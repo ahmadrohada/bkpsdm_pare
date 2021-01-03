@@ -51,7 +51,7 @@
 									{ visible: false, "targets": [6]}
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_pegawai_puskesmas_list") }}',
+									url	: '{{ url("api/administrator_pegawai_puskesmas_list") }}',
 									data: { puskesmas_id : {{$puskesmas_id}} },
 									//delay:3000
 								},
@@ -124,7 +124,7 @@
 			}).then ((result) => {
 				if (result.value){
 					$.ajax({
-						url		: '{{ url("api_resource/add_admin_puskesmas") }}',
+						url		: '{{ url("api/add_admin_puskesmas") }}',
 						type	: 'POST',
 						data    : {user_id:user_id},
 						cache   : false,
@@ -184,7 +184,7 @@
 			}).then ((result) => {
 				if (result.value){
 					$.ajax({
-						url		: '{{ url("api_resource/remove_admin_puskesmas") }}',
+						url		: '{{ url("api/remove_admin_puskesmas") }}',
 						type	: 'POST',
 						data    : {user_role_id:user_role_id},
 						cache   : false,

@@ -85,7 +85,7 @@
 	function penilaian_perilaku_kerja_show(){
 		
 		$.ajax({
-			url			: '{{ url("api_resource/penilaian_perilaku_kerja") }}',
+			url			: '{{ url("api/penilaian_perilaku_kerja") }}',
 			data 		: {capaian_tahunan_id : {{ $capaian->id}} },
 			method		: "GET",
 			dataType	: "json",

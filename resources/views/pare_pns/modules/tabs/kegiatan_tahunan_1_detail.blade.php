@@ -76,7 +76,7 @@
 		$('#kegiatan_tahunan_kaban').jstree({
 				'core' : {
 					'data' : {
-							"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_1") }}", 
+							"url" 	: "{{ url("api/skp_tahunan_kegiatan_1") }}", 
 							'data' : function (node) {
 								return { 	"id" 		: node.id ,
 											"data" 		: node.data,
@@ -179,7 +179,7 @@
 	
 	function load_rencana_aksi_detail(rencana_aksi_id){
 		$.ajax({
-				url			: '{{ url("api_resource/rencana_aksi_detail") }}',
+				url			: '{{ url("api/rencana_aksi_detail") }}',
 				data 		: {rencana_aksi_id : rencana_aksi_id},
 				method		: "GET",
 				dataType	: "json",

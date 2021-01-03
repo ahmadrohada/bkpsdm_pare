@@ -62,7 +62,7 @@ function mk_sasaran(){
 								],
 				
 				ajax			: {
-									url	: '{{ url("api_resource/skpd_monitoring_kinerja_sasaran") }}',
+									url	: '{{ url("api/skpd_monitoring_kinerja_sasaran") }}',
 									data: { renja_id : {!! $renja->id !!} },
 									method: 'POST'
 								},
@@ -112,7 +112,7 @@ function mk_sasaran(){
 
 
 		$.ajax({ 
-				url			: '{{ url("api_resource/skpd_monitoring_kinerja_sasaran_average") }}',
+				url			: '{{ url("api/skpd_monitoring_kinerja_sasaran_average") }}',
 				data 		: { renja_id : {!! $renja->id !!} },
 				method		: "GET",
 				dataType	: "json",

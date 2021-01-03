@@ -126,7 +126,7 @@
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_3") }}", //Eselon 2
+						"url" 	: "{{ url("api/skp_tahunan_kegiatan_3") }}", //Eselon 2
 						"data" 	: function (node) {
 							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
                                         "jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
@@ -212,7 +212,7 @@
 									{ "orderable": false, targets: [ 0,1,2,3,4 ]  }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_tahunan_3") }}',
+									url	: '{{ url("api/kegiatan_tahunan_3") }}',
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 
@@ -282,7 +282,7 @@
 
 
 $.ajax({
-		url			: '{{ url("api_resource/kegiatan_tahunan_detail") }}',
+		url			: '{{ url("api/kegiatan_tahunan_detail") }}',
 		data 		: {kegiatan_tahunan_id : kegiatan_tahunan_id},
 		method		: "GET",
 		dataType	: "json",
@@ -312,7 +312,7 @@ $.ajax({
 								{ 'orderable': false , targets: [ 0,1]  }
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/skp_tahunan_rencana_aksi_3") }}',
+								url	: '{{ url("api/skp_tahunan_rencana_aksi_3") }}',
 								data: { kegiatan_tahunan_id: kegiatan_tahunan_id },
 							},
 							columns			: [

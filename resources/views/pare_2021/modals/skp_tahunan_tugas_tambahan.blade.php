@@ -146,7 +146,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_tugas_tambahan") }}',
+			url		: '{{ url("api/simpan_tugas_tambahan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -212,7 +212,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_tugas_tambahan") }}',
+			url		: '{{ url("api/update_tugas_tambahan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

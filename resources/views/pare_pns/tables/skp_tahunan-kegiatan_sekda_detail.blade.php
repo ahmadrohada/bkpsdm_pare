@@ -52,7 +52,7 @@
 									{ "orderable": false, targets: [ 0,1,3,4,5 ]  }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_tahunan_sekda") }}',
+									url	: '{{ url("api/kegiatan_tahunan_sekda") }}',
 									data: { 
 										
 											"renja_id" 			: {!! $skp->Renja->id !!} , 

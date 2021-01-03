@@ -52,7 +52,7 @@
 									@endif 
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_kegiatan_bulanan_3") }}', 
+									url	: '{{ url("api/realisasi_kegiatan_bulanan_3") }}', 
 									data: { 
 										
 											"renja_id" 			: {!! $capaian->SKPBulanan->SKPTahunan->Renja->id !!} , 
@@ -186,7 +186,7 @@
 
 		var id = $(this).data('id');
 		$.ajax({
-			url		: '{{ url("api_resource/realisasi_rencana_aksi_detail_3") }}',
+			url		: '{{ url("api/realisasi_rencana_aksi_detail_3") }}',
 			type	: 'GET',
 			data	:  {realisasi_rencana_aksi_id : id },
 			success	: function(data) {
@@ -224,7 +224,7 @@
 
 	function show_modal_create(rencana_aksi_id){
 		$.ajax({
-				url			  : '{{ url("api_resource/rencana_aksi_detail_3") }}',
+				url			  : '{{ url("api/rencana_aksi_detail_3") }}',
 				data 		  : {rencana_aksi_id : rencana_aksi_id},
 				method		: "GET",
 				dataType	: "json",
@@ -275,7 +275,7 @@
 	
 		var realisasi_rencana_aksi_id = $(this).data('id');
 		$.ajax({
-				url			  	: '{{ url("api_resource/realisasi_rencana_aksi_detail_3") }}',
+				url			  	: '{{ url("api/realisasi_rencana_aksi_detail_3") }}',
 				data 		  	: {realisasi_rencana_aksi_id : realisasi_rencana_aksi_id},
 				method			: "GET",
 				dataType		: "json",
@@ -337,7 +337,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_rencana_aksi_3") }}',
+					url		: '{{ url("api/hapus_realisasi_rencana_aksi_3") }}',
 					type	: 'POST',
 					data    : {realisasi_rencana_aksi_id:realisasi_rencana_aksi_id},
 					cache   : false,

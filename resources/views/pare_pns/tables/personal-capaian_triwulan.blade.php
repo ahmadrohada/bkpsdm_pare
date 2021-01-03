@@ -52,7 +52,7 @@
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/personal_capaian_triwulan_list") }}',
+									url	: '{{ url("api/personal_capaian_triwulan_list") }}',
 									data: { pegawai_id : {!! $pegawai->id !!} },
 									delay:3000
 
@@ -223,7 +223,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_capaian_triwulan") }}',
+					url		: '{{ url("api/hapus_capaian_triwulan") }}',
 					type	: 'POST',
 					data    : { capaian_triwulan_id:capaian_triwulan_id },
 					cache   : false,
@@ -275,7 +275,7 @@
 		//alert(triwulan);
 
 		$.ajax({
-				url			: '{{ url("api_resource/capaian_triwulan_create_confirm") }}',
+				url			: '{{ url("api/capaian_triwulan_create_confirm") }}',
 				data 		: { skp_tahunan_id:skp_tahunan_id,triwulan:triwulan },
 				method		: "GET",
 				dataType	: "json",
@@ -324,7 +324,7 @@
 		
 
 		$.ajax({
-				url			: '{{ url("api_resource/skp_tahunan_detail") }}',
+				url			: '{{ url("api/skp_tahunan_detail") }}',
 				data 		: { skp_tahunan_id:skp_tahunan_id },
 				method		: "GET",
 				dataType	: "json",

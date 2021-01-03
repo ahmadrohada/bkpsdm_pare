@@ -46,7 +46,7 @@ $('#program_table').DataTable({
 							{ className: "text-center", targets: [ 0,2 ] }
 						  ],
 		ajax			: {
-							url	: '{{ url("api_resource/skpd-renja_program_list") }}',
+							url	: '{{ url("api/skpd-renja_program_list") }}',
 							data: { sasaran_id: sasaran_id },
 						 }, 
 		columns			:[
@@ -85,7 +85,7 @@ $(document).on('click','.create_program',function(e){
 $(document).on('click','.edit_program',function(e){
 	var program_id = $(this).data('id') ;
 	$.ajax({
-			url			: '{{ url("api_resource/program_detail") }}',
+			url			: '{{ url("api/program_detail") }}',
 			data 		: {program_id : program_id},
 			method		: "GET",
 			dataType	: "json",
@@ -123,7 +123,7 @@ $(document).on('click','.hapus_program',function(e){
 	}).then ((result) => {
 		if (result.value){
 			$.ajax({
-				url		: '{{ url("api_resource/hapus_program") }}',
+				url		: '{{ url("api/hapus_program") }}',
 				type	: 'POST',
 				data    : {program_id:program_id},
 				cache   : false,

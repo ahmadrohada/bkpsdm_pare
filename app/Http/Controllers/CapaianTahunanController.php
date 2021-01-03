@@ -10,6 +10,9 @@ use App\Models\UnsurPenunjangTugasTambahan;
 use App\Models\UnsurPenunjangKreativitas;
 
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+
 use App\Models\Jabatan;
 use App\Helpers\Pustaka;
 
@@ -17,8 +20,7 @@ use Illuminate\Http\Request;
 
 use App\Traits\PJabatan;
 use App\Traits\HitungCapaian; 
-use App\Traits\PenilaianPerilakuKerja;
-use App\Traits\RealisasiKegiatan;
+use App\Traits\TraitCapaianTahunan;
 
 use PDF;
 use Datatables;
@@ -31,8 +33,7 @@ class CapaianTahunanController extends Controller {
 
     use PJabatan; 
     use HitungCapaian;
-    use PenilaianPerilakuKerja;
-    use RealisasiKegiatan;
+    use TraitCapaianTahunan;
 
     protected function jm_approval_request_cap_bulanan($jabatan_id){
         $data_1 = CapaianBulanan::rightjoin('demo_asn.tb_history_jabatan AS atasan', function($join) use($jabatan_id){
@@ -202,29 +203,13 @@ class CapaianTahunanController extends Controller {
     {
        
         $capaian_id = $request->capaian_tahunan_id;
-        $data       = CapaianTahunan::WHERE('id',$capaian_id)->first();
-        $renja_id   = $data->SKPTahunan->renja_id;    
-        $jabatan_id = $data->PegawaiYangDinilai->id_jabatan;
 
-        //return $data->PegawaiYangDinilai->Eselon->id_jenis_jabatan;
-        switch($data->PegawaiYangDinilai->Eselon->id_jenis_jabatan)
-		{
-            case 1 : 
-                    $kegiatan_list = $this->Eselon2($capaian_id);
-			break;
-            case 2 : 
-                    $kegiatan_list = $this->Eselon3($capaian_id);
-			break;
-            case 3 : 
-                    $kegiatan_list = $this->Eselon4($capaian_id);
-			break;
-            case 4 : 
-                    $kegiatan_list = $this->JFU($capaian_id);
-			break;
-						
-		}
+        $data = $this->CapaianTahunan($capaian_id);
+			
         
-
+        return $data;
+        
+        /* 
         
         //UNSUR PENUNJANG Tugas Tambahan
         $unsur_penunjang_tugas_tambahan_list = UnsurPenunjangTugasTambahan::where('capaian_tahunan_id', '=' ,$capaian_id)
@@ -316,7 +301,11 @@ class CapaianTahunanController extends Controller {
 				<td width="33%" style="text-align: right;"></td>
 			</tr>
         </table>');
-        return $pdf->stream('CapaianTahunan_'.$pegawai_yang_dinilai['nip'].'.pdf'); 
+        return $pdf->stream('CapaianTahunan_'.$pegawai_yang_dinilai['nip'].'.pdf');  */
+
+
+        
+
     }
 
 }

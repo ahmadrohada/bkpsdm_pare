@@ -83,7 +83,7 @@ $(document).ready(function() {
 							  ],
 			ajax			: {
 				
-								url	: '{{ url("api_resource/skpd_indikator_kegiatan_perjanjian_kinerja_list") }}',
+								url	: '{{ url("api/skpd_indikator_kegiatan_perjanjian_kinerja_list") }}',
 								data: { kegiatan_id: {{ $kegiatan->id }} },
 							 },
 			columns			:[

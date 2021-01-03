@@ -50,7 +50,7 @@
 									@endif 
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_kegiatan_bulanan_4") }}',
+									url	: '{{ url("api/realisasi_kegiatan_bulanan_4") }}',
 									data: { 
 										
 											"renja_id" 			: {!! $capaian->SKPBulanan->SKPTahunan->Renja->id !!} , 
@@ -170,7 +170,7 @@
 	
 		var id = $(this).data('id');
 		$.ajax({
-			url		: '{{ url("api_resource/realisasi_kegiatan_bulanan_detail") }}',
+			url		: '{{ url("api/realisasi_kegiatan_bulanan_detail") }}',
 			type	: 'GET',
 			data	:  {realisasi_kegiatan_bulanan_id : id },
 			success	: function(data) {
@@ -210,7 +210,7 @@
 
 	function show_modal_create(kegiatan_bulanan_id){
 		$.ajax({
-				url			  : '{{ url("api_resource/kegiatan_bulanan_detail") }}',
+				url			  : '{{ url("api/kegiatan_bulanan_detail") }}',
 				data 		  : {kegiatan_bulanan_id : kegiatan_bulanan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -252,7 +252,7 @@
 	
 		var realisasi_kegiatan_bulanan_id = $(this).data('id');
 		$.ajax({
-				url			  	: '{{ url("api_resource/realisasi_kegiatan_bulanan_detail") }}',
+				url			  	: '{{ url("api/realisasi_kegiatan_bulanan_detail") }}',
 				data 		  	: {realisasi_kegiatan_bulanan_id : realisasi_kegiatan_bulanan_id},
 				method			: "GET",
 				dataType		: "json",
@@ -311,7 +311,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_kegiatan_bulanan") }}',
+					url		: '{{ url("api/hapus_realisasi_kegiatan_bulanan") }}',
 					type	: 'POST',
 					data    : {realisasi_kegiatan_bulanan_id:realisasi_kegiatan_bulanan_id},
 					cache   : false,

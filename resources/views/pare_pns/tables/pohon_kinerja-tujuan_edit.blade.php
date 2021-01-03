@@ -47,7 +47,7 @@
 								{ className: "text-center", targets: [ 0,2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_tujuan_list") }}',
+								url	: '{{ url("api/skpd-renja_tujuan_list") }}',
 								data: { renja_id: {!! $renja->id !!} },
 							 }, 
 			columns			:[
@@ -81,7 +81,7 @@
 	$(document).on('click','.edit_tujuan',function(e){
 		var tujuan_id = $(this).data('id') ;
 		$.ajax({
-				url			: '{{ url("api_resource/tujuan_detail") }}',
+				url			: '{{ url("api/tujuan_detail") }}',
 				data 		: {tujuan_id : tujuan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -120,7 +120,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_tujuan") }}',
+					url		: '{{ url("api/hapus_tujuan") }}',
 					type	: 'POST',
 					data    : {tujuan_id:tujuan_id},
 					cache   : false,

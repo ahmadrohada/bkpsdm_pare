@@ -58,7 +58,7 @@
 
 	function status_show(){
 		$.ajax({
-				url			: '{{ url("api_resource/renja_timeline_status") }}',
+				url			: '{{ url("api/renja_timeline_status") }}',
 				data 		: {renja_id : {!! $renja->id!!} },
 				method		: "GET",
 				dataType	: "json",
@@ -88,7 +88,7 @@
 
 	function status_pengisian(){
 		$.ajax({
-				url			: '{{ url("api_resource/renja_status_pengisian") }}',
+				url			: '{{ url("api/renja_status_pengisian") }}',
 				data 		: { skp_tahunan_id : 2,
 								jabatan_id : 2,
 								renja_id : 2 
@@ -130,7 +130,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/renja_setuju_by_kaban") }}',
+					url		: '{{ url("api/renja_setuju_by_kaban") }}',
 					type	: 'POST',
 					data    : { renja_id: {!! $renja->id !!} ,
 								kaban_id: {!! $pegawai->JabatanAktif->id !!}
@@ -209,7 +209,7 @@
 			}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/renja_tolak_by_kaban") }}',
+					url		: '{{ url("api/renja_tolak_by_kaban") }}',
 					type	: 'POST',
 					data    : { renja_id: {!! $renja->id !!} ,
 								kaban_id: {!! $pegawai->JabatanAktif->id !!},

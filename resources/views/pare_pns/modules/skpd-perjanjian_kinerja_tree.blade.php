@@ -24,7 +24,7 @@ $(document).ready(function() {
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/skpd_renja_tree") }}",
+						"url" 	: "{{ url("api/skpd_renja_tree") }}",
 						"data" 	: function (node) {
 							return { "renja_id" : {!! $pk->renja->id !!} };
 						},
@@ -59,22 +59,22 @@ $(document).ready(function() {
 
 			switch ( tx[0] ){
 				case 'ind_tujuan':
-					var url = 'api_resource/sasaran_store'
+					var url = 'api/sasaran_store'
 				break;
 				case 'sasaran':
-					var url = 'api_resource/ind_sasaran_store'
+					var url = 'api/ind_sasaran_store'
 				break;
 				case 'ind_sasaran':
-					var url = 'api_resource/program_store'
+					var url = 'api/program_store'
 				break;
 				case 'program':
-					var url = 'api_resource/ind_program_store'
+					var url = 'api/ind_program_store'
 				break;
 				case 'ind_program':
-					var url = 'api_resource/kegiatan_store'
+					var url = 'api/kegiatan_store'
 				break;
 				case 'kegiatan':
-					var url = 'api_resource/ind_kegiatan_store'
+					var url = 'api/ind_kegiatan_store'
 				break;
 
 				default:
@@ -105,22 +105,22 @@ $(document).ready(function() {
 
 			switch ( dt[0] ){
 				case 'sasaran':
-					var url = 'api_resource/sasaran_rename'
+					var url = 'api/sasaran_rename'
 				break;
 				case 'ind_sasaran':
-					var url = 'api_resource/ind_sasaran_rename'
+					var url = 'api/ind_sasaran_rename'
 				break;
 				case 'program':
-					var url = 'api_resource/program_rename'
+					var url = 'api/program_rename'
 				break;
 				case 'ind_program':
-					var url = 'api_resource/ind_program_rename'
+					var url = 'api/ind_program_rename'
 				break;
 				case 'kegiatan':
-					var url = 'api_resource/kegiatan_rename'
+					var url = 'api/kegiatan_rename'
 				break;
 				case 'ind_kegiatan':
-					var url = 'api_resource/ind_kegiatan_rename'
+					var url = 'api/ind_kegiatan_rename'
 				break;
 
 				default:

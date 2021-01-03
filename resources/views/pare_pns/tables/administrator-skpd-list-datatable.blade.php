@@ -53,7 +53,7 @@
 									{	className: "hidden", targets: [5] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_skpd_list") }}',
+									url	: '{{ url("api/administrator_skpd_list") }}',
 									
 									delay:3000
 								},

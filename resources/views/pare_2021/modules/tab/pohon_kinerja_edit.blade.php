@@ -76,7 +76,7 @@
 		$('#renja_tree_kegiatan').jstree({
 			'core' : {
 				'data' : {
-					'url' : "{{ url("api_resource/skpd_pohon_kinerja_2021") }}",   
+					'url' : "{{ url("api/skpd_pohon_kinerja_2021") }}",   
 					'data' : function (node) {
 						return { 	"id" 		: node.id ,
 									"data" 		: node.data,

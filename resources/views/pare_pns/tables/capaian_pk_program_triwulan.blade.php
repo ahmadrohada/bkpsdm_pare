@@ -49,7 +49,7 @@ table.dataTable tbody td {
 									
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_program_triwulan") }}',
+									url	: '{{ url("api/realisasi_program_triwulan") }}',
 									data: { 
 											"capaian_pk_triwulan_id" 	: {!! $capaian_pk_triwulan->id !!},
 											"renja_id" 					: {!! $capaian_pk_triwulan->renja_id !!},
@@ -133,7 +133,7 @@ table.dataTable tbody td {
 
 	function show_modal_create_realisasi_program_triwulan(indikator_program_id){
 		$.ajax({
-				url			  	: '{{ url("api_resource/add_realisasi_program_triwulan") }}',
+				url			  	: '{{ url("api/add_realisasi_program_triwulan") }}',
 				data 		  	: { 
 									indikator_program_id : indikator_program_id ,
 									capaian_id : {!! $capaian_pk_triwulan->id !!} },
@@ -203,7 +203,7 @@ table.dataTable tbody td {
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_program_triwulan") }}',
+					url		: '{{ url("api/hapus_realisasi_program_triwulan") }}',
 					type	: 'POST',
 					data    : { program_id:program_id,
 								realisasi_indikator_id:realisasi_indikator_id,

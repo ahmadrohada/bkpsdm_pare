@@ -64,7 +64,7 @@
 
 	function status_show(){
 		$.ajax({
-				url			: '{{ url("api_resource/skp_tahunan_timeline_status") }}',
+				url			: '{{ url("api/skp_tahunan_timeline_status") }}',
 				data 		: { skp_tahunan_id : {!! $skp->id!!},
 								jabatan_id : {!! $skp->PegawaiYangDinilai->id_jabatan !!},
 								renja_id : {!! $skp->Renja->id !!}
@@ -96,7 +96,7 @@
 
 	function status_pengisian(){
 		$.ajax({
-				url			: '{{ url("api_resource/skp_tahunan_status_pengisian3") }}',
+				url			: '{{ url("api/skp_tahunan_status_pengisian3") }}',
 				data 		: { skp_tahunan_id : {!! $skp->id!!},
 								jabatan_id : {!! $skp->PegawaiYangDinilai->id_jabatan !!},
 								renja_id : {!! $skp->Renja->id !!} 
@@ -141,7 +141,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/skp_tahunan_setuju_by_atasan") }}',
+					url		: '{{ url("api/skp_tahunan_setuju_by_atasan") }}',
 					type	: 'POST',
 					data    : { skp_tahunan_id: {!! $skp->id !!} ,
 								atasan_id: {!! $pegawai->JabatanAktif->id !!}
@@ -220,7 +220,7 @@
 			}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/skp_tahunan_tolak_by_atasan") }}',
+					url		: '{{ url("api/skp_tahunan_tolak_by_atasan") }}',
 					type	: 'POST',
 					data    : { skp_tahunan_id: {!! $skp->id !!} ,
 								atasan_id: {!! $pegawai->JabatanAktif->id !!},

@@ -138,7 +138,7 @@
 		on_submit_ke();
         var data = $('.penilaian_kode_etik_form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_penilaian_kode_etik") }}',
+			url		: '{{ url("api/simpan_penilaian_kode_etik") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -184,7 +184,7 @@
 		on_submit_ke();
         var data = $('.penilaian_kode_etik_form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/update_penilaian_kode_etik") }}',
+			url		: '{{ url("api/update_penilaian_kode_etik") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

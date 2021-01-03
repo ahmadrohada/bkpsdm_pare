@@ -65,7 +65,7 @@
         
         allowClear      : true,
         ajax: {
-            url			: '{{ url("api_resource/misi_select2") }}',
+            url			: '{{ url("api/misi_select2") }}',
 			type		: 'GET',
             dataType	: 'json',
             quietMillis	: 250,
@@ -101,7 +101,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_tujuan") }}',
+			url		: '{{ url("api/simpan_tujuan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -154,7 +154,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_tujuan") }}',
+			url		: '{{ url("api/update_tujuan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

@@ -96,7 +96,7 @@ breadcrumb();
 function breadcrumb(){
   $.ajax({
       method    : "GET",
-      url       : '{{ url("api_resource/breadcrumb-perjanjian_kinerja") }}',
+      url       : '{{ url("api/breadcrumb-perjanjian_kinerja") }}',
 			data      : { perjanjian_kinerja_id: {{ $perjanjian_kinerja->id }} },
 			dataType  : "json",
 			success   : function (data) {

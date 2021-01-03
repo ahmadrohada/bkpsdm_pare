@@ -49,7 +49,7 @@
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/skpd_renja_distribusi_kegiatan_tree") }}",
+						"url" 	: "{{ url("api/skpd_renja_distribusi_kegiatan_tree") }}",
 						"data" 	: function (node) {
 							return { "renja_id" : {!! $renja->id !!},
 									 "skpd_id"  : {!! $renja->SKPD->id !!}

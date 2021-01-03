@@ -82,7 +82,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_ind_kegiatan") }}',
+			url		: '{{ url("api/simpan_ind_kegiatan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -144,7 +144,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_ind_kegiatan") }}',
+			url		: '{{ url("api/update_ind_kegiatan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

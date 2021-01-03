@@ -151,7 +151,7 @@
 	
 
 	$.ajax({
-		url     	: '{{ url("api_resource/capaian_tahunan_detail") }}',
+		url     	: '{{ url("api/capaian_tahunan_detail") }}',
 		type    	: "GET",
 		data    	: { capaian_tahunan_id: {{ $capaian->id }} },
 		success		: function (data) {

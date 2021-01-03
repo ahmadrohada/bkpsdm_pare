@@ -43,7 +43,7 @@
 								{ className: "text-center", targets: [ 0] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_tujuan_list") }}',
+								url	: '{{ url("api/skpd-renja_tujuan_list") }}',
 								data: { renja_id: {!! $renja->id !!} },
 							 }, 
 			columns			:[

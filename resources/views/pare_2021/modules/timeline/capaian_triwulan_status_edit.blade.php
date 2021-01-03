@@ -43,7 +43,7 @@
 	
 	function status_pengisian(){
 		$.ajax({
-				url			: '{{ url("api_resource/capaian_triwulan_status_pengisian") }}',
+				url			: '{{ url("api/capaian_triwulan_status_pengisian") }}',
 				data 		: { capaian_triwulan_id : {!! $capaian_triwulan->id !!} },
 				method		: "GET",
 				dataType	: "json",
@@ -94,7 +94,7 @@
 			if (result.value){
 				on_tutup();
 				$.ajax({
-					url		: '{{ url("api_resource/tutup_capaian_triwulan") }}',
+					url		: '{{ url("api/tutup_capaian_triwulan") }}',
 					type	: 'POST',
 					data    : { capaian_triwulan_id : {!! $capaian_triwulan->id !!} },
 					cache   : false,

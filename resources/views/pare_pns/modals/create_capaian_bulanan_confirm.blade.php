@@ -248,7 +248,7 @@
 		on_submit_cbc();
 
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_capaian_bulanan") }}',
+			url		: '{{ url("api/simpan_capaian_bulanan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

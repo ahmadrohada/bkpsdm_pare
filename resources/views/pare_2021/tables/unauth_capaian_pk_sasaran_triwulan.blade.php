@@ -42,7 +42,7 @@
 									{ 	className: "text-center", targets: [ 0,2,3,4,5,6 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/unauth_capaian_pk_list") }}',
+									url	: '{{ url("api/unauth_capaian_pk_list") }}',
 									data: { },
 									delay:3000
 

@@ -58,7 +58,7 @@
 							
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/rencana_aksi_time_table_2") }}',
+								url	: '{{ url("api/rencana_aksi_time_table_2") }}',
 								data: { skp_tahunan_id: {!! $skp->id !!} ,
 										jabatan_id    : {!! $skp->PegawaiYangDinilai->id_jabatan !!}
 									 },
@@ -133,7 +133,7 @@
 	$(document).on('click','.edit_rencana_aksi',function(e){
 		var rencana_aksi_id = $(this).data('id') ;
 		$.ajax({
-				url			: '{{ url("api_resource/rencana_aksi_detail") }}',
+				url			: '{{ url("api/rencana_aksi_detail") }}',
 				data 		: {rencana_aksi_id : rencana_aksi_id},
 				method		: "GET",
 				dataType	: "json",
@@ -183,7 +183,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_rencana_aksi") }}',
+					url		: '{{ url("api/hapus_rencana_aksi") }}',
 					type	: 'POST',
 					data    : {rencana_aksi_id:rencana_aksi_id},
 					cache   : false,

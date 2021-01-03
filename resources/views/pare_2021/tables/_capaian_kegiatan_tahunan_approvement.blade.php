@@ -90,7 +90,7 @@ table.dataTable tbody td {
 									
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_kegiatan_tahunan") }}',
+									url	: '{{ url("api/realisasi_kegiatan_tahunan") }}',
 									data: { 
 										
 											"renja_id" 				: {!! $capaian->SKPTahunan->Renja->id !!} , 
@@ -249,7 +249,7 @@ table.dataTable tbody td {
 		var realisasi_kegiatan_id = $(this).data('realisasi_kegiatan_id');
 
 		$.ajax({
-				url			  	: '{{ url("api_resource/penilaian_kualitas_kerja_detail") }}',
+				url			  	: '{{ url("api/penilaian_kualitas_kerja_detail") }}',
 				data 		  	: { 
 									realisasi_kegiatan_id : realisasi_kegiatan_id ,
 								  },

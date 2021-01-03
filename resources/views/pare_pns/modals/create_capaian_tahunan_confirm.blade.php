@@ -256,7 +256,7 @@
 		var data = $('#create-capaian_tahunan_confirm-form').serialize();
 		on_submit();
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_capaian_tahunan") }}',
+			url		: '{{ url("api/simpan_capaian_tahunan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

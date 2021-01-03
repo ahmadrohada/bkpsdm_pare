@@ -72,7 +72,7 @@ function load_kegiatan_kasubid(jabatan_id){
 
 	$(".photo_kasubid").prop("src","{{asset('assets/images/form/default_icon.png')}}");
 	$.ajax({
-		url			: '{{ url("api_resource/detail_pejabat_aktif") }}',
+		url			: '{{ url("api/detail_pejabat_aktif") }}',
 		data 		: {jabatan_id : jabatan_id},
 		method		: "GET",
 		dataType	: "json",
@@ -106,7 +106,7 @@ function load_kegiatan_kasubid(jabatan_id){
 									{ className: "text-right", targets: [ 2 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skpd-renja_kegiatan_list_kasubid") }}',
+									url	: '{{ url("api/skpd-renja_kegiatan_list_kasubid") }}',
 									data: { jabatan_id: jabatan_id ,
 											renja_id:{!! $renja->id !!}
 										},

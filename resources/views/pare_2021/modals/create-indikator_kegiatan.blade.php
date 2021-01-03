@@ -86,7 +86,7 @@ $(document).ready(function() {
 		
         var data = $('#create-indikator_kegiatan-form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/skpd_simpan_indikator_kegiatan") }}',
+			url		: '{{ url("api/skpd_simpan_indikator_kegiatan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

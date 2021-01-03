@@ -96,7 +96,7 @@ function load_perjanjian_kinerja(){
 								{ className: "text-center", targets: [ 0,3 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/eselon2-pk_sasaran_strategis") }}',
+								url	: '{{ url("api/eselon2-pk_sasaran_strategis") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!}
 								 	},
@@ -168,7 +168,7 @@ function load_perjanjian_kinerja(){
 								{ className: "text-right", targets: [ 3 ] },
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/eselon2-pk_program") }}',
+								url	: '{{ url("api/eselon2-pk_program") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!}
 
@@ -207,7 +207,7 @@ function load_perjanjian_kinerja(){
 
 	function hitung_total_anggaran(){
 		$.ajax({
-				url			: '{{ url("api_resource/eselon2-total_anggaran_pk") }}',
+				url			: '{{ url("api/eselon2-total_anggaran_pk") }}',
 				data		: { 
 									"renja_id" : {!! $skp->Renja->id !!}
 								},
@@ -238,7 +238,7 @@ function load_perjanjian_kinerja(){
 		var sasaran_id = $(this).data('id') ;
 		show_loader();
 		$.ajax({
-				url			: '{{ url("api_resource/add_sasaran_to_pk") }}',
+				url			: '{{ url("api/add_sasaran_to_pk") }}',
 				data 		: {sasaran_id : sasaran_id},
 				method		: "POST",
 				success		: function(data) {
@@ -280,7 +280,7 @@ function load_perjanjian_kinerja(){
 		var sasaran_id = $(this).data('id') ;
 		show_loader();
 		$.ajax({
-				url			: '{{ url("api_resource/remove_sasaran_from_pk") }}',
+				url			: '{{ url("api/remove_sasaran_from_pk") }}',
 				data 		: {sasaran_id : sasaran_id},
 				method		: "POST",
 				success		: function(data) {

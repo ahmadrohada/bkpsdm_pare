@@ -39,7 +39,7 @@ function load_sasaran(tujuan_id){
 								{ className: "text-center", targets: [ 0 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_sasaran_list") }}',
+								url	: '{{ url("api/skpd-renja_sasaran_list") }}',
 								data: { tujuan_id: tujuan_id },
 							 }, 
 			columns			:[

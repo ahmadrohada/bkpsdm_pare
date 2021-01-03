@@ -48,7 +48,7 @@
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/personal_capaian_tahunan_list") }}',
+									url	: '{{ url("api/personal_capaian_tahunan_list") }}',
 									data: { pegawai_id : {!! $pegawai->id !!} },
 									delay:3000
 
@@ -162,7 +162,7 @@
 	$(document).on('click','.create_capaian_tahunan',function(e){
 		var skp_tahunan_id = $(this).data('skp_tahunan_id') ;
 		$.ajax({
-			url		: '{{ url("api_resource/create_capaian_tahunan_confirm") }}',
+			url		: '{{ url("api/create_capaian_tahunan_confirm") }}',
 			type	: 'GET',
 			data	:  	{ 
 							skp_tahunan_id : skp_tahunan_id
@@ -292,7 +292,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_capaian_tahunan") }}',
+					url		: '{{ url("api/hapus_capaian_tahunan") }}',
 					type	: 'POST',
 					data    : { capaian_tahunan_id:capaian_tahunan_id },
 					cache   : false,

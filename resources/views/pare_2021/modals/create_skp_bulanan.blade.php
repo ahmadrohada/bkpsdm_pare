@@ -132,7 +132,7 @@
  
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/create_skp_bulanan") }}',
+			url		: '{{ url("api/create_skp_bulanan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -198,7 +198,7 @@
 
 			//alert(data);
 			$.ajax({
-				url		: '{{ url("api_resource/update_skp_bulanan") }}',
+				url		: '{{ url("api/update_skp_bulanan") }}',
 				type	: 'POST',
 				data	:  data,
 				success	: function(data , textStatus, jqXHR) {

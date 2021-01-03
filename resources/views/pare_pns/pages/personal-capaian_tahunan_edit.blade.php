@@ -23,11 +23,11 @@
 
 		<div class="row badge_persetujuan">
 			<div class="col-md-12">
-				<div class="callout callout-info " style="height:155px;">
+				<div class="callout callout-info " style="height:145px;">
 
-					<table>
+					<table style="font-size:12px;">
 						<tr>
-							<td rowspan="4" class="hidden-xs"><i class="fa fa-pencil fa-3x" style="padding-right:30px;"></i></td>
+							<td rowspan="4" style="padding:8px 2px;" class="hidden-xs"><i class="fa fa-pencil fa-3x" style="padding-right:30px;"></i></td>
 							<td >Periode</td>
 							<td >&nbsp;&nbsp;:&nbsp;</td>
 							<td>{{ Pustaka::tahun($capaian->tgl_mulai) }} </td>
@@ -131,7 +131,7 @@ $(document).ready(function() {
 
 
 	$.ajax({
-				url			: '{{ url("api_resource/capaian_tahunan_detail") }}',
+				url			: '{{ url("api/capaian_tahunan_detail") }}',
 				data 		: { capaian_tahunan_id : {!! $capaian->id !!} },
 				method		: "GET",
 				dataType	: "json",
@@ -223,7 +223,7 @@ $(document).ready(function() {
 			if (result.value){
 				on_kirim();
 				$.ajax({
-					url		: '{{ url("api_resource/kirim_capaian_tahunan") }}',
+					url		: '{{ url("api/kirim_capaian_tahunan") }}',
 					type	: 'POST',
 					data    : { capaian_tahunan_id : {!! $capaian->id !!} },
 					cache   : false,

@@ -48,7 +48,7 @@
 									//{ 	className: "hidden-xs", targets: [ 5 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_unit_kerja_skpd_list") }}',
+									url	: '{{ url("api/administrator_unit_kerja_skpd_list") }}',
 									data: { skpd_id : {{$skpd_id}} },
 									delay:3000
 								},

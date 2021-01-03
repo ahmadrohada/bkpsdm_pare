@@ -173,7 +173,7 @@
 
 	function status_pengisian(){
 		$.ajax({
-				url			: '{{ url("api_resource/capaian_tahunan_status") }}',
+				url			: '{{ url("api/capaian_tahunan_status") }}',
 				data 		: { capaian_tahunan_id : {!! $capaian->id !!} },
 				method		: "GET",
 				dataType	: "json",
@@ -220,7 +220,7 @@
 		});
 
 		$.ajax({
-			url			: '{{ url("api_resource/penilaian_perilaku_kerja") }}',
+			url			: '{{ url("api/penilaian_perilaku_kerja") }}',
 			data 		: {capaian_tahunan_id : {{ $capaian->id}} },
 			method		: "GET",
 			dataType	: "json",
@@ -279,7 +279,7 @@
 			if (result.value){
 				on_kirim();
 				$.ajax({
-					url		: '{{ url("api_resource/kirim_capaian_tahunan") }}',
+					url		: '{{ url("api/kirim_capaian_tahunan") }}',
 					type	: 'POST',
 					data    : { capaian_tahunan_id : {!! $capaian->id !!} },
 					cache   : false,

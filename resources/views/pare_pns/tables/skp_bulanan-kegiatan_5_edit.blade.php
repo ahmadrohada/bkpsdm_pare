@@ -116,7 +116,7 @@
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/skp_bulanan_tree5") }}",
+						"url" 	: "{{ url("api/skp_bulanan_tree5") }}",
 						"data" 	: function (node) {
 							return { "renja_id" : {!! $skp->Renja->id !!} , 
                           "jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
@@ -250,7 +250,7 @@
 									{ className: "text-center", targets: [ 0,2,3 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_bulanan_5") }}',
+									url	: '{{ url("api/kegiatan_bulanan_5") }}',
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 
@@ -295,7 +295,7 @@
 									{ className: "text-center", targets: [ 0,1,3,4 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skp_bulanan_list_5") }}',
+									url	: '{{ url("api/skp_bulanan_list_5") }}',
 									data: { 
 										
 											"skp_tahunan_id" : {!! $skp->id !!} 
@@ -352,7 +352,7 @@
 
 	function modal_create_skp_bulanan(){
 		$.ajax({
-				url			: '{{ url("api_resource/skp_tahunan_detail") }}',
+				url			: '{{ url("api/skp_tahunan_detail") }}',
 				data 		: {skp_tahunan_id : {{ $skp->id}}},
 				method		: "GET",
 				dataType	: "json",
@@ -415,7 +415,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_skp_bulanan") }}',
+					url		: '{{ url("api/hapus_skp_bulanan") }}',
 					type	: 'POST',
 					data    : {skp_bulanan_id:skp_bulanan_id},
 					cache   : false,
@@ -466,7 +466,7 @@
 	$(document).on('click','.edit_kegiatan_bulanan',function(e){
 		var kegiatan_bulanan_id = $(this).data('id') ;
 		$.ajax({
-				url			: '{{ url("api_resource/kegiatan_bulanan_detail_jft") }}',
+				url			: '{{ url("api/kegiatan_bulanan_detail_jft") }}',
 				data 		: {kegiatan_bulanan_id : kegiatan_bulanan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -516,7 +516,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_kegiatan_bulanan_jft") }}',
+					url		: '{{ url("api/hapus_kegiatan_bulanan_jft") }}',
 					type	: 'POST',
 					data    : {kegiatan_bulanan_id:kegiatan_bulanan_id},
 					cache   : false,

@@ -55,7 +55,7 @@ function load_ind_program(program_id){
 
 
 $.ajax({
-		url			: '{{ url("api_resource/program_detail") }}',
+		url			: '{{ url("api/program_detail") }}',
 		data 		: {program_id : program_id},
 		method		: "GET",
 		dataType	: "json",
@@ -80,7 +80,7 @@ $('#ind_program_table').DataTable({
 								{ className: "text-center", targets: [ 0,2 ] }
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_ind_program_list") }}',
+								url	: '{{ url("api/skpd-renja_ind_program_list") }}',
 								data: { program_id: program_id },
 							}, 
 			columns			:[

@@ -51,7 +51,7 @@
 										@endif
 									],
 					ajax			: {
-										url		: '{{ url("api_resource/realisasi_tugas_tambahan_list") }}',
+										url		: '{{ url("api/realisasi_tugas_tambahan_list") }}',
 										data	: { 
 													"skp_tahunan_id" : {!! $capaian->skp_tahunan_id !!}
 												  },
@@ -135,7 +135,7 @@
 	function show_modal_create_realisasi_tugas_tambahan(tugas_tambahan_id){
 		
 		$.ajax({
-				url			  : '{{ url("api_resource/tugas_tambahan_detail") }}',
+				url			  : '{{ url("api/tugas_tambahan_detail") }}',
 				data 		  : {tugas_tambahan_id : tugas_tambahan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -166,7 +166,7 @@
 		var realisasi_tugas_tambahan_id = $(this).data('id') ;
 		
 		$.ajax({
-				url			: '{{ url("api_resource/realisasi_tugas_tambahan_detail") }}',
+				url			: '{{ url("api/realisasi_tugas_tambahan_detail") }}',
 				data 		: {realisasi_tugas_tambahan_id : realisasi_tugas_tambahan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -213,7 +213,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_tugas_tambahan") }}',
+					url		: '{{ url("api/hapus_realisasi_tugas_tambahan") }}',
 					type	: 'POST',
 					data    : { realisasi_tugas_tambahan:realisasi_tugas_tambahan },
 					cache   : false,

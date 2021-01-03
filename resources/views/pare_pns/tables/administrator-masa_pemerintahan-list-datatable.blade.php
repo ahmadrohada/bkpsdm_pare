@@ -49,7 +49,7 @@
 									{ 	className: "text-center", targets: [ 0,1,4,5] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_masa_pemerintahan_list") }}',
+									url	: '{{ url("api/administrator_masa_pemerintahan_list") }}',
 									
 									delay:3000
 								},

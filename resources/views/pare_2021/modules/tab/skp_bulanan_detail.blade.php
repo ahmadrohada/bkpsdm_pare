@@ -143,7 +143,7 @@
 function detail_show(){
 
 	$.ajax({
-		url     	: '{{ url("api_resource/skp_bulanan_detail") }}',
+		url     	: '{{ url("api/skp_bulanan_detail") }}',
 		type    	: "GET",
 		data    	: { skp_bulanan_id: {{ $skp->id }} },
 		beforeSend	: function ( xhr ) {

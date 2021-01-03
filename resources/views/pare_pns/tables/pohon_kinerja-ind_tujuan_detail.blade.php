@@ -46,7 +46,7 @@
 function load_ind_tujuan(tujuan_id){
 
 	$.ajax({
-			url			: '{{ url("api_resource/tujuan_detail") }}',
+			url			: '{{ url("api/tujuan_detail") }}',
 			data 		: {tujuan_id : tujuan_id},
 			method		: "GET",
 			dataType	: "json",
@@ -71,7 +71,7 @@ function load_ind_tujuan(tujuan_id){
 								{ className: "text-center", targets: [ 0,2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_ind_tujuan_list") }}',
+								url	: '{{ url("api/skpd-renja_ind_tujuan_list") }}',
 								data: { tujuan_id: tujuan_id },
 							 }, 
 			columns			:[

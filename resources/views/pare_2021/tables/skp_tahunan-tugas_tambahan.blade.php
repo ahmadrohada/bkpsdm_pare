@@ -61,7 +61,7 @@
 										@endif
 									],
 					ajax			: {
-										url	: '{{ url("api_resource/tugas_tambahan_list") }}',
+										url	: '{{ url("api/tugas_tambahan_list") }}',
 										data: 	{ 
 													"skp_tahunan_id" : {!! $skp->id !!}
 												},
@@ -111,7 +111,7 @@
 		var tugas_tambahan_id = $(this).data('id') ;
 		
 		$.ajax({
-				url			: '{{ url("api_resource/tugas_tambahan_detail") }}',
+				url			: '{{ url("api/tugas_tambahan_detail") }}',
 				data 		: {tugas_tambahan_id : tugas_tambahan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -157,7 +157,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_tugas_tambahan") }}',
+					url		: '{{ url("api/hapus_tugas_tambahan") }}',
 					type	: 'POST',
 					data    : { tugas_tambahan_id:tugas_tambahan_id },
 					cache   : false,

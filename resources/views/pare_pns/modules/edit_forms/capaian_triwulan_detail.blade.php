@@ -184,7 +184,7 @@
 	function cap_triwulan_detail(){
 
 		$.ajax({
-			url     	: '{{ url("api_resource/capaian_triwulan_detail") }}',
+			url     	: '{{ url("api/capaian_triwulan_detail") }}',
 			type    	: "GET",
 			data    	: { capaian_triwulan_id: {{ $capaian_triwulan->id }} },
 			success		: function (data) {
@@ -256,7 +256,7 @@
 		minimumInputLength  : 3,
 		
         ajax: {
-            url				: '{{ url("api_resource/ganti_atasan_capaian_triwulan") }}',
+            url				: '{{ url("api/ganti_atasan_capaian_triwulan") }}',
             dataType		: 'json',
             quietMillis		: 250,
             data			: function (params) {
@@ -321,7 +321,7 @@
 		var id = $(".p_nip_edit option:selected").val();
 
 		$.ajax({
-			url     	: '{{ url("api_resource/set_pejabat_penilai_capaian_triwulan") }}',
+			url     	: '{{ url("api/set_pejabat_penilai_capaian_triwulan") }}',
 			type    	: "POST",
 			data    	: { capaian_triwulan_id: {{ $capaian_triwulan->id }}, 
 							pejabat_penilai_id  : id

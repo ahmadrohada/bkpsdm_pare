@@ -70,7 +70,7 @@
 									{ className: "text-right", targets: [ 4,6] },
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_kegiatan_triwulan_2") }}',
+									url	: '{{ url("api/realisasi_kegiatan_triwulan_2") }}',
 									data: { 
 										
 											"renja_id" 				: {!! $capaian_triwulan->SKPTahunan->Renja->id !!} , 
@@ -170,7 +170,7 @@
 
 	function show_modal_create(ind_kegiatan_id){
 		$.ajax({
-				url			  	: '{{ url("api_resource/ind_kegiatan_detail") }}',
+				url			  	: '{{ url("api/ind_kegiatan_detail") }}',
 				data 		  	: { ind_kegiatan_id : ind_kegiatan_id , capaian_triwulan_id : {!! $capaian_triwulan->id !!} },
 				method			: "GET",
 				dataType		: "json",
@@ -210,7 +210,7 @@
 	
 		var realisasi_triwulan_kegiatan_tahunan_id = $(this).data('id');
 		$.ajax({
-				url			  	: '{{ url("api_resource/realisasi_triwulan_kegiatan_tahunan_detail") }}',
+				url			  	: '{{ url("api/realisasi_triwulan_kegiatan_tahunan_detail") }}',
 				data 		  	: { id : realisasi_triwulan_kegiatan_tahunan_id, 
 									capaian_triwulan_id : {{ $capaian_triwulan->id }}	
 								  },
@@ -269,7 +269,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_kegiatan_triwulan") }}',
+					url		: '{{ url("api/hapus_realisasi_kegiatan_triwulan") }}',
 					type	: 'POST',
 					data    : {realisasi_kegiatan_id:realisasi_kegiatan_id},
 					cache   : false,

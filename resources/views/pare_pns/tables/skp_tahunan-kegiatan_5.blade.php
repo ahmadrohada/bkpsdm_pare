@@ -68,7 +68,7 @@
 									@endif
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_tahunan_5") }}',
+									url	: '{{ url("api/kegiatan_tahunan_5") }}',
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 
@@ -121,7 +121,7 @@
 	$(document).on('click','.edit_kegiatan_tahunan',function(e){
 		var kegiatan_tahunan_id = $(this).data('id') ;
 		$.ajax({
-				url			: '{{ url("api_resource/kegiatan_tahunan_detail_jft") }}',
+				url			: '{{ url("api/kegiatan_tahunan_detail_jft") }}',
 				data 		: {kegiatan_tahunan_id : kegiatan_tahunan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -173,7 +173,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_kegiatan_tahunan_jft") }}',
+					url		: '{{ url("api/hapus_kegiatan_tahunan_jft") }}',
 					type	: 'POST',
 					data    : {kegiatan_tahunan_id:kegiatan_tahunan_id},
 					cache   : false,

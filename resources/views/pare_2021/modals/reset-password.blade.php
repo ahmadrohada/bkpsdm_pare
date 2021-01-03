@@ -34,7 +34,7 @@ $(document).ready(function() {
         //alert(user_id);
 
         $.ajax({
-			url		: '{{ url("api_resource/reset_password") }}',
+			url		: '{{ url("api/reset_password") }}',
 			type	: 'POST',
 			data	:  { user_id:user_id },
 			success	: function(data , textStatus, jqXHR) {

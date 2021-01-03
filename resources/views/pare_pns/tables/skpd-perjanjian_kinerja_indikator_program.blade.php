@@ -84,7 +84,7 @@ $(document).ready(function() {
 							  ],
 			ajax			: {
 				
-								url	: '{{ url("api_resource/skpd_indikator_program_perjanjian_kinerja_list") }}',
+								url	: '{{ url("api/skpd_indikator_program_perjanjian_kinerja_list") }}',
 								data: { program_id: {{ $program->id }} },
 							 },
 			columns			:[

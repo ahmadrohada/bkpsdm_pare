@@ -84,7 +84,7 @@
 	$(document).on('click', '#save_capaian_pk_tahunan', function(){
 		var data = $('#create-capaian_pk_tahunan-form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_capaian_pk_tahunan") }}',
+			url		: '{{ url("api/simpan_capaian_pk_tahunan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

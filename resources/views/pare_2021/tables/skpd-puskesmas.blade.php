@@ -52,7 +52,7 @@
 									{	className: "hidden", targets: [5] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_puskesmas_list") }}',
+									url	: '{{ url("api/administrator_puskesmas_list") }}',
 									
 									delay:3000
 								},

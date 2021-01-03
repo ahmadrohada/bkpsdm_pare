@@ -43,7 +43,7 @@
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/approval_request_skp_tahunan_list") }}',
+									url	: '{{ url("api/approval_request_skp_tahunan_list") }}',
 									data: { pegawai_id : {!! $pegawai->id !!} },
 									delay:3000
 								},

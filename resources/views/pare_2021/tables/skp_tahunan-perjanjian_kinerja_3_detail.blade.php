@@ -89,7 +89,7 @@ function load_perjanjian_kinerja(){
 								{ className: "text-center", targets: [ 0,3 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/eselon4-pk_sasaran_strategis") }}',
+								url	: '{{ url("api/eselon4-pk_sasaran_strategis") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
 										"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
@@ -153,7 +153,7 @@ function load_perjanjian_kinerja(){
 								{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/eselon4-pk_program") }}',
+								url	: '{{ url("api/eselon4-pk_program") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
 										"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
@@ -204,7 +204,7 @@ function load_perjanjian_kinerja(){
 
 	function hitung_total_anggaran(){
 		$.ajax({
-				url			: '{{ url("api_resource/eselon4-total_anggaran_pk") }}',
+				url			: '{{ url("api/eselon4-total_anggaran_pk") }}',
 				data		: { 
 									"renja_id" : {!! $skp->Renja->id !!} , 
 									"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},

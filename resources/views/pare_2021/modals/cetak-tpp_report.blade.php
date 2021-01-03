@@ -76,7 +76,7 @@
 		var tpp_report_id = $('.tpp_report_id').val();
 		$('.unit_kerja').select2({
 			ajax: {
-				url: '{{ url("api_resource/cetak_tpp_unit_kerja_list") }}',
+				url: '{{ url("api/cetak_tpp_unit_kerja_list") }}',
 				dataType: 'json',
 				quietMillis: 500,
 				data: function(params) {

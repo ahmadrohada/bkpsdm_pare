@@ -37,7 +37,7 @@ $(document).ready(function() {
 
         new_username = $(".new_username").val();
         $.ajax({
-			url		: '{{ url("api_resource/ubah_username") }}',
+			url		: '{{ url("api/ubah_username") }}',
 			type	: 'POST',
 			data	:  { user_id:user_id , new_username:new_username },
 			success	: function(data , textStatus, jqXHR) {

@@ -104,7 +104,7 @@
 		$('#pk_keg_tahunan_tree').jstree({
 			'core' : {
 				'data' : {
-					'url' 	: "{{ url("api_resource/pohon_kinerja-kegiatan_tree") }}", 
+					'url' 	: "{{ url("api/pohon_kinerja-kegiatan_tree") }}", 
 					'data' : function (node) {
 						return { 	"id" 		: node.id ,
 									"data" 		: node.data,
@@ -196,7 +196,7 @@
 		
 
 $.ajax({
-		url			: '{{ url("api_resource/kegiatan_tahunan_detail") }}',
+		url			: '{{ url("api/kegiatan_tahunan_detail") }}',
 		data 		: {kegiatan_tahunan_id : kegiatan_tahunan_id},
 		method		: "GET",
 		dataType	: "json",
@@ -237,7 +237,7 @@ var table_rencana_aksi = $('#rencana_aksi_table').DataTable({
 						  { 'orderable': false , targets: [2]  } 
 						],
 		ajax			: {
-							url	: '{{ url("api_resource/skp_tahunan_rencana_aksi_3") }}',
+							url	: '{{ url("api/skp_tahunan_rencana_aksi_3") }}',
 							data: { kegiatan_tahunan_id: kegiatan_tahunan_id },
 						},
 						columns			: [

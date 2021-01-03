@@ -151,7 +151,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_realisasi_rencana_aksi_2") }}',
+			url		: '{{ url("api/simpan_realisasi_rencana_aksi_2") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -220,7 +220,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_realisasi_rencana_aksi_2") }}',
+			url		: '{{ url("api/update_realisasi_rencana_aksi_2") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

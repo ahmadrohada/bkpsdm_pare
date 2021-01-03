@@ -72,7 +72,7 @@
 		//alert (kegiatan_id);
 
 		$.ajax({
-				url			: '{{ url("api_resource/kegiatan_detail") }}',
+				url			: '{{ url("api/kegiatan_detail") }}',
 				data 		: {kegiatan_id : kegiatan_id },
 				method		: "GET",
 				dataType	: "json",
@@ -108,7 +108,7 @@
 									{ 'orderable': false , targets: [ 0,1,2 ]  }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_rencana_aksi") }}',
+									url	: '{{ url("api/kegiatan_rencana_aksi") }}',
 									data: { kegiatan_id: kegiatan_id },
 								},
 								columns			: [

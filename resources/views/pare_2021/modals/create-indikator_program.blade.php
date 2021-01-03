@@ -86,7 +86,7 @@ $(document).ready(function() {
 		
         var data = $('#create-indikator_program-form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/skpd_simpan_indikator_program") }}',
+			url		: '{{ url("api/skpd_simpan_indikator_program") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

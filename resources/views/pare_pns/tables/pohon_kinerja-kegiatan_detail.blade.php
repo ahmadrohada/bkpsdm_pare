@@ -50,7 +50,7 @@ function load_kegiatan(program_id){
 								{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_kegiatan_list") }}',
+								url	: '{{ url("api/skpd-renja_kegiatan_list") }}',
 								data: { program_id: program_id ,
 										renja_id:{!! $renja->id !!}
 									 },
@@ -84,7 +84,7 @@ function load_kegiatan(program_id){
 								//{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_kegiatan_non_anggaran_list") }}',
+								url	: '{{ url("api/skpd-renja_kegiatan_non_anggaran_list") }}',
 								data: { program_id: program_id ,
 										renja_id:{!! $renja->id !!}
 									 },

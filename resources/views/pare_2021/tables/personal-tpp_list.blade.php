@@ -77,7 +77,7 @@
 										//{ className: "dt-nowrap", "targets": [2] },
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/personal_tpp_report_data_list") }}',
+									url	: '{{ url("api/personal_tpp_report_data_list") }}',
 									data: { pegawai_id : {!! $pegawai->id !!} },
 									delay:3000
 
@@ -187,7 +187,7 @@
 		
 
 		$.ajax({
-			url		: '{{ url("api_resource/create_capaian_bulanan_confirm") }}',
+			url		: '{{ url("api/create_capaian_bulanan_confirm") }}',
 			type	: 'GET',
 			data	:  	{ 
 							skp_bulanan_id : skp_bulanan_id
@@ -299,7 +299,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_capaian_bulanan") }}',
+					url		: '{{ url("api/hapus_capaian_bulanan") }}',
 					type	: 'POST',
 					data    : { capaian_bulanan_id:capaian_bulanan_id },
 					cache   : false,

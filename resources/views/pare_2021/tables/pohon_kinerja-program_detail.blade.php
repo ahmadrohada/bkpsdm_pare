@@ -44,7 +44,7 @@ $('#program_table').DataTable({
 							{ className: "text-center", targets: [ 0 ] }
 						  ],
 		ajax			: {
-							url	: '{{ url("api_resource/skpd-renja_program_list") }}',
+							url	: '{{ url("api/skpd-renja_program_list") }}',
 							data: { sasaran_id: sasaran_id },
 						 }, 
 		columns			:[

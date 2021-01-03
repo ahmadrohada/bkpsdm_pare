@@ -85,7 +85,7 @@
 
 	$('.sasaran').select2({
 		ajax: {
-			url: '{{ url("api_resource/sasaran_list_skp_JFT") }}',
+			url: '{{ url("api/sasaran_list_skp_JFT") }}',
 			dataType: 'json',
 			quietMillis: 500,
 			data: function(params) {
@@ -112,7 +112,7 @@
 
 	function show_modal_kegiatan(sasaran_id){
 		$.ajax({
-				url			: '{{ url("api_resource/sasaran_detail") }}',
+				url			: '{{ url("api/sasaran_detail") }}',
 				data 		: {sasaran_id : sasaran_id},
 				method		: "GET",
 				dataType	: "json",
@@ -194,7 +194,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_kegiatan_tahunan_jft") }}',
+			url		: '{{ url("api/simpan_kegiatan_tahunan_jft") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -270,7 +270,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_kegiatan_tahunan_jft") }}',
+			url		: '{{ url("api/update_kegiatan_tahunan_jft") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

@@ -70,7 +70,7 @@
 									{ className: "hide", targets: [  ] },
 								  ],
 				ajax			: {
-									url	: '{{ url("api_resource/tugas_tambahan_list") }}',
+									url	: '{{ url("api/tugas_tambahan_list") }}',
 									data: { capaian_tahunan_id : {!! $capaian->id !!} },
 								  },
 				columns			: [
@@ -117,7 +117,7 @@
 									{ className: "hide", targets: [  ] },
 								  ],
 				ajax			: {
-									url	: '{{ url("api_resource/kreativitas_list") }}',
+									url	: '{{ url("api/kreativitas_list") }}',
 									data: { capaian_tahunan_id : {!! $capaian->id !!} },
 								  },
 				columns			: [

@@ -67,7 +67,7 @@
 									{ className: "text-right", targets: [ 3,5] },
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_kegiatan_triwulan") }}',
+									url	: '{{ url("api/realisasi_kegiatan_triwulan") }}',
 									data: { 
 										
 											"renja_id" 				: {!! $capaian_triwulan->SKPTahunan->Renja->id !!} , 
@@ -163,7 +163,7 @@
 
 	function show_modal_create(kegiatan_tahunan_id){
 		$.ajax({
-				url			  	: '{{ url("api_resource/add_realisasi_kegiatan_triwulan_jft") }}',
+				url			  	: '{{ url("api/add_realisasi_kegiatan_triwulan_jft") }}',
 				data 		  	: { 
 									kegiatan_tahunan_id : kegiatan_tahunan_id ,
 									capaian_id : {!! $capaian_triwulan->id !!} },
@@ -242,7 +242,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_kegiatan_triwulan") }}',
+					url		: '{{ url("api/hapus_realisasi_kegiatan_triwulan") }}',
 					type	: 'POST',
 					data    : { kegiatan_id:kegiatan_id,
 								realisasi_indikator_kegiatan_id:realisasi_indikator_kegiatan_id,

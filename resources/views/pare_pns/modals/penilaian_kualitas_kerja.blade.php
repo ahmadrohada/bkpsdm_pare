@@ -136,7 +136,7 @@ table.penilaian tbody td {
 	function save(){
 		var data = $('.penilaian_kualitas_kerja_form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_penilaian_kualitas_kerja") }}',
+			url		: '{{ url("api/simpan_penilaian_kualitas_kerja") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -182,7 +182,7 @@ table.penilaian tbody td {
 	function save_jft(){
 		var data = $('.penilaian_kualitas_kerja_form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_penilaian_kualitas_kerja_5") }}',
+			url		: '{{ url("api/simpan_penilaian_kualitas_kerja_5") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

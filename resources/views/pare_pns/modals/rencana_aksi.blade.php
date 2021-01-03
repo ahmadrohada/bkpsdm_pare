@@ -110,7 +110,7 @@
 	
 	$('#pelaksana').select2({
 		ajax: {
-			url				: '{{ url("api_resource/select2_bawahan_list") }}',
+			url				: '{{ url("api/select2_bawahan_list") }}',
 			dataType		: 'json',
 			delay			: 200,
 			data			: function (params) {
@@ -189,7 +189,7 @@
  
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_rencana_aksi") }}',
+			url		: '{{ url("api/simpan_rencana_aksi") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -261,7 +261,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_rencana_aksi") }}',
+			url		: '{{ url("api/update_rencana_aksi") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

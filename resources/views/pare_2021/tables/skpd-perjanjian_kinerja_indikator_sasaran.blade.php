@@ -84,7 +84,7 @@ $(document).ready(function() {
 							  ],
 			ajax			: {
 				
-								url			: '{{ url("api_resource/skpd_indikator_sasaran_perjanjian_kinerja_list") }}',
+								url			: '{{ url("api/skpd_indikator_sasaran_perjanjian_kinerja_list") }}',
 								data		: { sasaran_perjanjian_kinerja_id: {{ $sasaran->id }} },
 								delay		: 3000
 							 },

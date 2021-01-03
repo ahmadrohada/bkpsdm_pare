@@ -109,7 +109,7 @@
 	
 	function status_show(){
 		$.ajax({
-				url			: '{{ url("api_resource/capaian_bulanan_status_pengisian") }}',
+				url			: '{{ url("api/capaian_bulanan_status_pengisian") }}',
 				data 		: { capaian_bulanan_id : {!! $capaian->id !!} },
 				method		: "GET",
 				dataType	: "json",

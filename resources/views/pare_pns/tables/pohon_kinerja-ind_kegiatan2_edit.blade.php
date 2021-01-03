@@ -38,7 +38,7 @@
 	function load_ind_kegiatan_end(ind_kegiatan_id){
 		
 		$.ajax({
-				url			: '{{ url("api_resource/ind_kegiatan_detail") }}',
+				url			: '{{ url("api/ind_kegiatan_detail") }}',
 				data 		: {ind_kegiatan_id : ind_kegiatan_id},
 				method		: "GET",
 				dataType	: "json",

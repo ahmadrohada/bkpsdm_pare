@@ -76,7 +76,7 @@ table.dataTable tbody td {
 									{ className: "text-right", targets: [ 4,6] },
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_kegiatan_triwulan") }}',
+									url	: '{{ url("api/realisasi_kegiatan_triwulan") }}',
 									data: { 
 										
 											"renja_id" 				: {!! $capaian_triwulan->SKPTahunan->Renja->id !!} , 
@@ -179,7 +179,7 @@ table.dataTable tbody td {
 
 	function show_modal_create(indikator_kegiatan_id){
 		$.ajax({
-				url			  	: '{{ url("api_resource/add_realisasi_kegiatan_triwulan") }}',
+				url			  	: '{{ url("api/add_realisasi_kegiatan_triwulan") }}',
 				data 		  	: { 
 									indikator_kegiatan_id : indikator_kegiatan_id ,
 									capaian_id : {!! $capaian_triwulan->id !!} ,
@@ -264,7 +264,7 @@ table.dataTable tbody td {
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_kegiatan_triwulan") }}',
+					url		: '{{ url("api/hapus_realisasi_kegiatan_triwulan") }}',
 					type	: 'POST',
 					data    : { kegiatan_id:kegiatan_id,
 								realisasi_indikator_kegiatan_id:realisasi_indikator_kegiatan_id,

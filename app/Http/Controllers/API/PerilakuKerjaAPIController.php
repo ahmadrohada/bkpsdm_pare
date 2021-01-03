@@ -7,7 +7,7 @@ use App\Http\Requests;
 
 use App\Models\PerilakuKerja;
 
-use App\Traits\PenilaianPerilakuKerja;
+use App\Traits\TraitCapaianTahunan;
 
 use App\Helpers\Pustaka;
 use Datatables;
@@ -17,7 +17,7 @@ use Input;
 
 class PerilakuKerjaAPIController extends Controller {
 
-    use PenilaianPerilakuKerja;
+    use TraitCapaianTahunan;
    
   
     public function PenilaianPerilakuKerjaDetail(Request $request)

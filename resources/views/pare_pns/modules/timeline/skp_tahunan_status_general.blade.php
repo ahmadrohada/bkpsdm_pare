@@ -33,7 +33,7 @@
 
 	function status_show(){
 		$.ajax({
-				url			: '{{ url("api_resource/skp_tahunan_general_timeline") }}',
+				url			: '{{ url("api/skp_tahunan_general_timeline") }}',
 				data 		: { 
 								u_jabatan_id : {!! $skp->u_jabatan_id !!},
 								renja_id 	 : {!! $skp->renja_id !!}

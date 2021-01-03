@@ -51,7 +51,7 @@
 										@endif
 									],
 					ajax			: {
-										url		: '{{ url("api_resource/uraian_tugas_tambahan_list") }}',
+										url		: '{{ url("api/uraian_tugas_tambahan_list") }}',
 										data	: { 
 													"skp_bulanan_id" : {!! $skp->id !!}
 												  },
@@ -102,7 +102,7 @@
 		var uraian_tugas_tambahan_id = $(this).data('id') ;
 		
 		$.ajax({
-				url			: '{{ url("api_resource/uraian_tugas_tambahan_detail") }}',
+				url			: '{{ url("api/uraian_tugas_tambahan_detail") }}',
 				data 		: {uraian_tugas_tambahan_id : uraian_tugas_tambahan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -147,7 +147,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_uraian_tugas_tambahan") }}',
+					url		: '{{ url("api/hapus_uraian_tugas_tambahan") }}',
 					type	: 'POST',
 					data    : { uraian_tugas_tambahan_id:uraian_tugas_tambahan_id },
 					cache   : false,

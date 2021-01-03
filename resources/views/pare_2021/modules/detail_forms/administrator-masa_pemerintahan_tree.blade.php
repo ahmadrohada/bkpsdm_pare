@@ -23,7 +23,7 @@ $(document).ready(function() {
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/administrator_masa_pemerintahan_tree") }}",
+						"url" 	: "{{ url("api/administrator_masa_pemerintahan_tree") }}",
 						"data" 	: function (node) {
 							return { "renja_id" : {!! $mp->id !!} };
 						},

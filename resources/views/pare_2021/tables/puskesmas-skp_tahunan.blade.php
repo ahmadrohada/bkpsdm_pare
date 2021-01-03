@@ -51,7 +51,7 @@
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/puskesmas_skp_tahunan_list") }}',
+									url	: '{{ url("api/puskesmas_skp_tahunan_list") }}',
 									data: { puskesmas_id : {{$puskesmas_id}} },
 									delay:3000
 								},

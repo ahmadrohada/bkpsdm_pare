@@ -90,7 +90,7 @@ $(document).ready(function() {
 								{ className: "text-center", targets: [ 0,3,4 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd_kegiatan_perjanjian_kinerja_list") }}',
+								url	: '{{ url("api/skpd_kegiatan_perjanjian_kinerja_list") }}',
 								data: { indikator_program_id: {{ $indikator_program->id }} },
 							  },
 			columns			: [

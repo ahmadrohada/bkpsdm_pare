@@ -54,7 +54,7 @@
 	var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 	//Dropzone.autoDiscover = false;
 	var myDropzone = new Dropzone(".dropzone", {
-		url             : '{{ url("api_resource/file_upload") }}',
+		url             : '{{ url("api/file_upload") }}',
 		paramName       : 'file',
 		maxFiles        : 1,
 		maxFilesize		: 2,  // 3 mb
@@ -95,7 +95,7 @@
 	function update_table(bukti){
 		var data = $('#bukti_realisasi_form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/update_bukti_realisasi_kegiatan_bulanan") }}',
+			url		: '{{ url("api/update_bukti_realisasi_kegiatan_bulanan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data) {
@@ -118,7 +118,7 @@
 
 		var fdata = $('#bukti_realisasi_form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/realisasi_kegiatan_bulanan_detail") }}',
+			url		: '{{ url("api/realisasi_kegiatan_bulanan_detail") }}',
 			type	: 'GET',
 			data	:  fdata,
 			success	: function(data) {

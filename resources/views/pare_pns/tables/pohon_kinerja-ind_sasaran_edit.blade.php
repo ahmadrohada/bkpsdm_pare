@@ -58,7 +58,7 @@ function load_ind_sasaran(sasaran_id){
 
 
 $.ajax({
-		url			: '{{ url("api_resource/sasaran_detail") }}',
+		url			: '{{ url("api/sasaran_detail") }}',
 		data 		: {sasaran_id : sasaran_id},
 		method		: "GET",
 		dataType	: "json",
@@ -83,7 +83,7 @@ $('#ind_sasaran_table').DataTable({
 								{ className: "text-center", targets: [ 0,2,3 ] }
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_ind_sasaran_list") }}',
+								url	: '{{ url("api/skpd-renja_ind_sasaran_list") }}',
 								data: { sasaran_id: sasaran_id },
 							}, 
 			columns			:[
@@ -123,7 +123,7 @@ $('#ind_sasaran_table').DataTable({
 	$(document).on('click','.edit_ind_sasaran',function(e){
 		var ind_sasaran_id = $(this).data('id') ;
 		$.ajax({
-				url			: '{{ url("api_resource/ind_sasaran_detail") }}',
+				url			: '{{ url("api/ind_sasaran_detail") }}',
 				data 		: {ind_sasaran_id : ind_sasaran_id},
 				method		: "GET",
 				dataType	: "json",
@@ -164,7 +164,7 @@ $('#ind_sasaran_table').DataTable({
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_ind_sasaran") }}',
+					url		: '{{ url("api/hapus_ind_sasaran") }}',
 					type	: 'POST',
 					data    : {ind_sasaran_id:ind_sasaran_id},
 					cache   : false,

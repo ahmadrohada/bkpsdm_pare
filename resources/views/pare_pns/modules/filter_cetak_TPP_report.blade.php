@@ -97,7 +97,7 @@
 
 	$('.periode_tahun').select2({
 		ajax: {
-			url: '{{ url("api_resource/cetak_tpp_periode_list") }}',
+			url: '{{ url("api/cetak_tpp_periode_list") }}',
 			dataType: 'json',
 			quietMillis: 500,
 			data: function(params) {
@@ -126,7 +126,7 @@
 		periode_id = $(this).val();
 		$('.periode_bulan').select2({
 			ajax: {
-				url: '{{ url("api_resource/cetak_tpp_periode_bulan_list") }}',
+				url: '{{ url("api/cetak_tpp_periode_bulan_list") }}',
 				dataType: 'json',
 				quietMillis: 500,
 				data: function(params) {
@@ -160,7 +160,7 @@
 
 		$('.skpd').select2({
 			ajax: {
-				url: '{{ url("api_resource/cetak_tpp_skpd_list") }}',
+				url: '{{ url("api/cetak_tpp_skpd_list") }}',
 				dataType: 'json',
 				quietMillis: 500,
 				data: function(params) {
@@ -197,7 +197,7 @@
 		$('.unit_kerja').val('').trigger('change');
 		$('.unit_kerja').select2({
 			ajax: {
-				url: '{{ url("api_resource/cetak_tpp_unit_kerja_list") }}',
+				url: '{{ url("api/cetak_tpp_unit_kerja_list") }}',
 				dataType: 'json',
 				quietMillis: 500,
 				data: function(params) {

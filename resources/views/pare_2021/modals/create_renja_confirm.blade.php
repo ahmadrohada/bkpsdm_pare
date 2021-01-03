@@ -142,7 +142,7 @@
 		
 
 		$.ajax({
-			url		: '{{ url("api_resource/create_renja_confirm") }}',
+			url		: '{{ url("api/create_renja_confirm") }}',
 			type	: 'GET',
 			data	:  	{ 
 							periode_id : periode_id,
@@ -197,7 +197,7 @@
 		var data = $('#create-renja_confirm-form').serialize();
 
 		$.ajax({
-			url		: '{{ url("api_resource/create_renja") }}',
+			url		: '{{ url("api/create_renja") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

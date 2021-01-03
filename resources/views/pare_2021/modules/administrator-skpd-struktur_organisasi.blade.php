@@ -31,7 +31,7 @@ $(document).ready(function() {
     
     
     $.ajax({
-			url		: "{{ url("api_resource/skpd_struktur_organisasi") }}",
+			url		: "{{ url("api/skpd_struktur_organisasi") }}",
 			method	: "GET",
 			dataType: "json",
             data    : { skpd_id : {{$skpd_id}} },

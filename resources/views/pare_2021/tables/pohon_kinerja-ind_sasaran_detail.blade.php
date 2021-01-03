@@ -54,7 +54,7 @@ function load_ind_sasaran(sasaran_id){
 
 
 $.ajax({
-		url			: '{{ url("api_resource/sasaran_detail") }}',
+		url			: '{{ url("api/sasaran_detail") }}',
 		data 		: {sasaran_id : sasaran_id},
 		method		: "GET",
 		dataType	: "json",
@@ -79,7 +79,7 @@ $('#ind_sasaran_table').DataTable({
 								{ className: "text-center", targets: [ 0,2 ] }
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_ind_sasaran_list") }}',
+								url	: '{{ url("api/skpd-renja_ind_sasaran_list") }}',
 								data: { sasaran_id: sasaran_id },
 							}, 
 			columns			:[

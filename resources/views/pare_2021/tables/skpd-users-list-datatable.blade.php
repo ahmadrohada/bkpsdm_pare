@@ -48,7 +48,7 @@
 									{ className: "text-center", targets: [ 0,2 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skpd_pegawai_list") }}',
+									url	: '{{ url("api/skpd_pegawai_list") }}',
 									
 									delay:3000
 								},

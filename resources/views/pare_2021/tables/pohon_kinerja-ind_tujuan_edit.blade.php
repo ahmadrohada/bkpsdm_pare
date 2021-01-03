@@ -54,7 +54,7 @@
 function load_ind_tujuan(tujuan_id){
 
 	$.ajax({
-			url			: '{{ url("api_resource/tujuan_detail") }}',
+			url			: '{{ url("api/tujuan_detail") }}',
 			data 		: {tujuan_id : tujuan_id},
 			method		: "GET",
 			dataType	: "json",
@@ -79,7 +79,7 @@ function load_ind_tujuan(tujuan_id){
 								{ className: "text-center", targets: [ 0,2,3 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_ind_tujuan_list") }}',
+								url	: '{{ url("api/skpd-renja_ind_tujuan_list") }}',
 								data: { tujuan_id: tujuan_id },
 							 }, 
 			columns			:[
@@ -116,7 +116,7 @@ function load_ind_tujuan(tujuan_id){
 	$(document).on('click','.edit_ind_tujuan',function(e){
 		var ind_tujuan_id = $(this).data('id') ;
 		$.ajax({
-				url			: '{{ url("api_resource/ind_tujuan_detail") }}',
+				url			: '{{ url("api/ind_tujuan_detail") }}',
 				data 		: {ind_tujuan_id : ind_tujuan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -157,7 +157,7 @@ function load_ind_tujuan(tujuan_id){
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_ind_tujuan") }}',
+					url		: '{{ url("api/hapus_ind_tujuan") }}',
 					type	: 'POST',
 					data    : {ind_tujuan_id:ind_tujuan_id},
 					cache   : false,

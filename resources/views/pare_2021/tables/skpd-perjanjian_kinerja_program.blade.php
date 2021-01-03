@@ -87,7 +87,7 @@ $(document).ready(function() {
 								{ className: "text-center", targets: [ 0,2,3 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd_program_perjanjian_kinerja_list") }}',
+								url	: '{{ url("api/skpd_program_perjanjian_kinerja_list") }}',
 								data: { indikator_sasaran_id: {{ $indikator_sasaran->id }} },
 							  },
 			columns			: [

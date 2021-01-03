@@ -17,11 +17,11 @@
 	    <section class="content">
 			<div class="row badge_persetujuan">
 				<div class="col-md-12">
-					<div class="callout callout-info " style="height:155px;">
+					<div class="callout callout-info " style="height:145px;">
 	
-						<table>
+						<table style="font-size:12px;">
 							<tr>
-								<td rowspan="4"><i class="st_icon fa fa-pencil-square-o fa-3x" style="padding-right:30px;"></i></td>
+								<td rowspan="4" style="padding:8px 2px;"><i class="st_icon fa fa-pencil-square-o fa-3x" style="padding-right:30px;"></i></td>
 								<td >Periode</td>
 								<td >&nbsp;&nbsp;&nbsp;</td>
 								<td>{{ Pustaka::tahun($capaian->tgl_mulai) }} </td>
@@ -152,7 +152,7 @@ $(document).ready(function() {
 			}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/tolak_capaian_tahunan") }}',
+					url		: '{{ url("api/tolak_capaian_tahunan") }}',
 					type	: 'POST',
 					data    : { capaian_tahunan_id:{!! $capaian->id !!} ,
 								alasan:result.value
@@ -212,7 +212,7 @@ $(document).ready(function() {
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/terima_capaian_tahunan") }}',
+					url		: '{{ url("api/terima_capaian_tahunan") }}',
 					type	: 'POST',
 					data    : { capaian_tahunan_id:{!! $capaian->id !!}
 							   },

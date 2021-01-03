@@ -55,7 +55,7 @@ function skp_list_bawahan($pk_id,$jabatan_id){
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skp_bawahan_list_md") }}',
+									url	: '{{ url("api/skp_bawahan_list_md") }}',
 									data: { 	renja_id	: $pk_id,
 												jabatan_id  : $jabatan_id,
 											}

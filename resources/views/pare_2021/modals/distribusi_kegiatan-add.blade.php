@@ -63,7 +63,7 @@
 										{ className: "text-right", targets: [ 2 ] }
 									],
 					ajax			: {
-										url	: '{{ url("api_resource/renja_kegiatan_list") }}',
+										url	: '{{ url("api/renja_kegiatan_list") }}',
 										data: { renja_id : {!! $renja->id !!} },
 										delay:3000
 									},
@@ -90,7 +90,7 @@
 
 			if ( data.length >0 ){
 				$.ajax({
-						url		: '{!! url("api_resource/add_kegiatan_to_pejabat?id_jabatan='+tes+'") !!}',
+						url		: '{!! url("api/add_kegiatan_to_pejabat?id_jabatan='+tes+'") !!}',
 						type	: 'POST',
 						data	: data,
 						success	: function(data) {

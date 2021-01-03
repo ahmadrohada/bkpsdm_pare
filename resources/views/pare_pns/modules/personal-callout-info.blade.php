@@ -42,7 +42,7 @@ $(document).ready(function(){
 //cek perjanjian kinerja
 //cek skp dengan perjanjian kinerja diatas,pegawai id , dan jabatan yang aktif pada m_history jabatan
 	$.ajax({
-			url		: '{{ url("api_resource/personal_cek_status_skp_tahunan") }}',
+			url		: '{{ url("api/personal_cek_status_skp_tahunan") }}',
 			type	: 'GET',
 			data	:  	{ 
 							pegawai_id : {!! $user->id_pegawai !!}

@@ -54,7 +54,7 @@
 
 	function status_pengisian() {
 		$.ajax({
-			url: '{{ url("api_resource/puskesmas_tpp_report_detail") }}',
+			url: '{{ url("api/puskesmas_tpp_report_detail") }}',
 			data: {
 				tpp_report_id: {{ $tpp_report->id }}, puskesmas_id : {{ $puskesmas_id }}
 			},
@@ -113,7 +113,7 @@
 			if (result.value){
 				on_kirim();
 				$.ajax({
-					url		: '{{ url("api_resource/close_tpp_report") }}',
+					url		: '{{ url("api/close_tpp_report") }}',
 					type	: 'POST',
 					data    : {tpp_report_id: {!! $tpp_report->id !!} },
 					cache   : false,

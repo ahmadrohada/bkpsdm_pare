@@ -91,7 +91,7 @@ function load_perjanjian_kinerja(){
 								{ className: "text-center", targets: [ 0,3 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/eselon4-pk_sasaran_strategis") }}',
+								url	: '{{ url("api/eselon4-pk_sasaran_strategis") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
 										"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
@@ -167,7 +167,7 @@ function load_perjanjian_kinerja(){
 								{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/eselon4-pk_program") }}',
+								url	: '{{ url("api/eselon4-pk_program") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
 										"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
@@ -216,7 +216,7 @@ function load_perjanjian_kinerja(){
 
 	function hitung_total_anggaran(){
 		$.ajax({
-				url			: '{{ url("api_resource/eselon4-total_anggaran_pk") }}',
+				url			: '{{ url("api/eselon4-total_anggaran_pk") }}',
 				data		: { 
 									"renja_id" : {!! $skp->Renja->id !!} , 
 									"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
@@ -241,7 +241,7 @@ function load_perjanjian_kinerja(){
 		var kegiatan_id = $(this).data('id') ;
 		show_loader();
 		$.ajax({
-				url			: '{{ url("api_resource/remove_esl4_kegiatan_from_pk") }}',
+				url			: '{{ url("api/remove_esl4_kegiatan_from_pk") }}',
 				data 		: {kegiatan_id : kegiatan_id},
 				method		: "POST",
 				success		: function(data) {
@@ -283,7 +283,7 @@ function load_perjanjian_kinerja(){
 		var kegiatan_id = $(this).data('id') ;
 		show_loader();
 		$.ajax({
-				url			: '{{ url("api_resource/add_esl4_kegiatan_to_pk") }}',
+				url			: '{{ url("api/add_esl4_kegiatan_to_pk") }}',
 				data 		: {kegiatan_id : kegiatan_id},
 				method		: "POST",
 				success		: function(data) {

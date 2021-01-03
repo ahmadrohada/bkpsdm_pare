@@ -93,7 +93,7 @@
 		on_submit_k()
         var data = $('#unsur_penunjang_kreativitas-form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_unsur_penunjang_kreativitas") }}',
+			url		: '{{ url("api/simpan_unsur_penunjang_kreativitas") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -150,7 +150,7 @@
 		on_submit_k()
         var data = $('#unsur_penunjang_kreativitas-form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/update_unsur_penunjang_kreativitas") }}',
+			url		: '{{ url("api/update_unsur_penunjang_kreativitas") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

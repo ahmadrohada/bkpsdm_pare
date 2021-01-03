@@ -46,7 +46,7 @@ $(document).ready(function() {
 		serverSide	: true,
 		select: true,
 		ajax		: {
-							url	: '{{ url("api_resource/skpd_sasaran_list") }}',
+							url	: '{{ url("api/skpd_sasaran_list") }}',
 							type: 'get',
                             data: { perjanjian_kinerja_id: {{ $perjanjian_kinerja->id }} }
 						},
@@ -79,7 +79,7 @@ $(document).ready(function() {
 
         $.ajax({
 			type        : 'POST',
-			url			: '{{ url("api_resource/skpd_simpan_sasaran_perjanjian_kinerja") }}',
+			url			: '{{ url("api/skpd_simpan_sasaran_perjanjian_kinerja") }}',
 			data        : {sasaran_id:sasaran_id,perjanjian_kinerja_id:perjanjian_kinerja_id },
 			cache       : false,
 			success     : function(e) {

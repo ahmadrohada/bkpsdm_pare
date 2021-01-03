@@ -53,7 +53,7 @@ $(document).ready(function() {
 									{ className: "text-right", targets: [ 6 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skp_tahunan_kegiatan_tugas_jabatan") }}',
+									url	: '{{ url("api/skp_tahunan_kegiatan_tugas_jabatan") }}',
 									data: { skp_tahunan_id: {!! $skp->id !!} },
 								},
 				columns			: [

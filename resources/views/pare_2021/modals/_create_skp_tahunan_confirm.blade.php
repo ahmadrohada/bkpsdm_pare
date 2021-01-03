@@ -163,7 +163,7 @@ $(document).ready(function() {
 		var data = $('#create-skp_tahunan_confirm-form').serialize();
 
 		$.ajax({
-			url		: '{{ url("api_resource/create_skp_tahunan") }}',
+			url		: '{{ url("api/create_skp_tahunan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

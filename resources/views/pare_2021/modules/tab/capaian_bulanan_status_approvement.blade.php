@@ -127,7 +127,7 @@
 
 	function status_pengisian(){
 		$.ajax({
-				url			: '{{ url("api_resource/capaian_bulanan_status_pengisian") }}',
+				url			: '{{ url("api/capaian_bulanan_status_pengisian") }}',
 				data 		: { capaian_bulanan_id : {!! $capaian->id !!} },
 				method		: "GET",
 				dataType	: "json",
@@ -194,7 +194,7 @@
 		show_loader();
 		var id = $('.penilaian_kode_etik_id').val();
 		$.ajax({
-			url			: '{{ url("api_resource/detail_penilaian_kode_etik") }}',
+			url			: '{{ url("api/detail_penilaian_kode_etik") }}',
 			data 		: {penilaian_kode_etik_id : id},
 			method		: "GET",
 			dataType	: "json",
@@ -244,7 +244,7 @@
 			}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/tolak_capaian_bulanan") }}',
+					url		: '{{ url("api/tolak_capaian_bulanan") }}',
 					type	: 'POST',
 					data    : { capaian_bulanan_id:{!! $capaian->id !!} ,
 								alasan:result.value
@@ -306,7 +306,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/terima_capaian_bulanan") }}',
+					url		: '{{ url("api/terima_capaian_bulanan") }}',
 					type	: 'POST',
 					data    : { capaian_bulanan_id:{!! $capaian->id !!}
 							   },

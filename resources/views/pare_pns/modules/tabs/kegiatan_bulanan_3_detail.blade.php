@@ -107,7 +107,7 @@
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/skp_bulanan_tree3") }}",
+						"url" 	: "{{ url("api/skp_bulanan_tree3") }}",
 						"data" 	: function (node) {
 							return { "renja_id" : {!! $skp->Renja->id !!} , 
                           			"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
@@ -195,7 +195,7 @@
 									{ className: "text-center", targets: [ 0,2] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_bulanan_3") }}',
+									url	: '{{ url("api/kegiatan_bulanan_3") }}',
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 
@@ -257,7 +257,7 @@
 									{ className: "text-center", targets: [ 0,1,3] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skp_bulanan_list_3") }}',
+									url	: '{{ url("api/skp_bulanan_list_3") }}',
 									data: { 
 											"renja_id" : {!! $skp->Renja->id !!},
 											"skp_tahunan_id" : {!! $skp->id !!},

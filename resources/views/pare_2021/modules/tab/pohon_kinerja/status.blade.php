@@ -55,7 +55,7 @@
 
 	function status_show(){
 		$.ajax({
-				url			: '{{ url("api_resource/renja_timeline_status") }}',
+				url			: '{{ url("api/renja_timeline_status") }}',
 				data 		: {renja_id : {!! $renja->id!!} },
 				method		: "GET",
 				dataType	: "json",
@@ -85,7 +85,7 @@
 
 	function status_pengisian(){
 		$.ajax({
-				url			: '{{ url("api_resource/renja_status_pengisian") }}',
+				url			: '{{ url("api/renja_status_pengisian") }}',
 				data 		: {renja_id: {!! $renja->id !!} },
 				method		: "GET",
 				dataType	: "json",
@@ -126,7 +126,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/renja_send_to_kaban") }}',
+					url		: '{{ url("api/renja_send_to_kaban") }}',
 					type	: 'POST',
 					data    : {renja_id: {!! $renja->id !!} },
 					cache   : false,
@@ -185,7 +185,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/renja_pull_from_kaban") }}',
+					url		: '{{ url("api/renja_pull_from_kaban") }}',
 					type	: 'POST',
 					data    : {renja_id: {!! $renja->id !!} },
 					cache   : false,

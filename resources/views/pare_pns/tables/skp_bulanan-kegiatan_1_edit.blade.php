@@ -102,7 +102,7 @@
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/skp_bulanan_tree1") }}",
+						"url" 	: "{{ url("api/skp_bulanan_tree1") }}",
 						"data" 	: function (node) {
 							return { "renja_id" : {!! $skp->Renja->id !!} , 
                           			"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
@@ -239,7 +239,7 @@
 									{ className: "text-center", targets: [ 0,2 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/kegiatan_bulanan_1") }}',
+									url	: '{{ url("api/kegiatan_bulanan_1") }}',
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 
@@ -335,7 +335,7 @@
 									{ className: "text-center", targets: [ 0,1,3,4 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skp_bulanan_list_1") }}',
+									url	: '{{ url("api/skp_bulanan_list_1") }}',
 									data: { 
 										
 											"skp_tahunan_id" : {!! $skp->id !!},
@@ -393,7 +393,7 @@
 
 	function modal_create_skp_bulanan(){
 		$.ajax({
-				url			: '{{ url("api_resource/skp_tahunan_detail") }}',
+				url			: '{{ url("api/skp_tahunan_detail") }}',
 				data 		: {skp_tahunan_id : {{ $skp->id}}},
 				method		: "GET",
 				dataType	: "json",
@@ -456,7 +456,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_skp_bulanan") }}',
+					url		: '{{ url("api/hapus_skp_bulanan") }}',
 					type	: 'POST',
 					data    : {skp_bulanan_id:skp_bulanan_id},
 					cache   : false,
@@ -521,7 +521,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_kegiatan_bulanan") }}',
+					url		: '{{ url("api/hapus_kegiatan_bulanan") }}',
 					type	: 'POST',
 					data    : {kegiatan_bulanan_id:kegiatan_bulanan_id},
 					cache   : false,

@@ -38,7 +38,7 @@
 
 
         $.ajax({
-				url			: '{{ url("api_resource/bantuan_detail") }}',
+				url			: '{{ url("api/bantuan_detail") }}',
 				data 		: {bantuan_id : id},
 				method		: "GET",
 				dataType	: "json",

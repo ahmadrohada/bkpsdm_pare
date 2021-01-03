@@ -91,7 +91,7 @@ $(document).ready(function() {
 		
         var data = $('#create-indikator_sasaran-form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/skpd_simpan_indiator_sasaran") }}',
+			url		: '{{ url("api/skpd_simpan_indiator_sasaran") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

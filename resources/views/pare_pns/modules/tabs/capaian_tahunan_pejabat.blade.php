@@ -231,7 +231,7 @@
 	
 
 	$.ajax({
-		url     	: '{{ url("api_resource/capaian_tahunan_pejabat") }}',
+		url     	: '{{ url("api/capaian_tahunan_pejabat") }}',
 		type    	: "GET",
 		data    	: { capaian_tahunan_id: {{ $capaian->id }} },
 		success		: function (data) {
@@ -302,7 +302,7 @@
 		minimumInputLength  : 3,
 		
         ajax: {
-            url				: '{{ url("api_resource/ganti_atasan_capaian_tahunan") }}',
+            url				: '{{ url("api/ganti_atasan_capaian_tahunan") }}',
             dataType		: 'json',
             quietMillis		: 250,
             data			: function (params) {
@@ -367,7 +367,7 @@
 		var id = $(".p_nip_edit_pejabat_penilai option:selected").val();
 
 		$.ajax({
-			url     	: '{{ url("api_resource/update_pejabat_penilai") }}',
+			url     	: '{{ url("api/update_pejabat_penilai") }}',
 			type    	: "POST",
 			data    	: { capaian_tahunan_id: {{ $capaian->id }}, 
 							pejabat_penilai_id  : id
@@ -447,7 +447,7 @@
 		minimumInputLength  : 3,
 		
         ajax: {
-            url				: '{{ url("api_resource/ganti_atasan_capaian_tahunan") }}',
+            url				: '{{ url("api/ganti_atasan_capaian_tahunan") }}',
             dataType		: 'json',
             quietMillis		: 250,
             data			: function (params) {
@@ -512,7 +512,7 @@
 		var id = $(".ap_nip_edit_atasan_pejabat_penilai option:selected").val();
 
 		$.ajax({
-			url     	: '{{ url("api_resource/update_atasan_pejabat_penilai") }}',
+			url     	: '{{ url("api/update_atasan_pejabat_penilai") }}',
 			type    	: "POST",
 			data    	: { capaian_tahunan_id: {{ $capaian->id }}, 
 							pejabat_penilai_id  : id

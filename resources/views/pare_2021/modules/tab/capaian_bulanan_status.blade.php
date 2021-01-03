@@ -145,7 +145,7 @@
 
 	function status_pengisian(){
 		$.ajax({
-				url			: '{{ url("api_resource/capaian_bulanan_status_pengisian") }}',
+				url			: '{{ url("api/capaian_bulanan_status_pengisian") }}',
 				data 		: { capaian_bulanan_id : {!! $capaian->id !!} },
 				method		: "GET",
 				dataType	: "json",
@@ -208,7 +208,7 @@
 			if (result.value){
 				on_kirim();
 				$.ajax({
-					url		: '{{ url("api_resource/kirim_capaian_bulanan") }}',
+					url		: '{{ url("api/kirim_capaian_bulanan") }}',
 					type	: 'POST',
 					data    : { capaian_bulanan_id : {!! $capaian->id !!} },
 					cache   : false,

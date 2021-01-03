@@ -48,7 +48,7 @@
 		$('#ditribusi_renja').jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api_resource/skpd_renja_distribusi_kegiatan_tree") }}",
+						"url" 	: "{{ url("api/skpd_renja_distribusi_kegiatan_tree") }}",
 						"data" 	: function (node) {
 							return { 	"id" 		: node.id ,
 										"data" 		: node.data,

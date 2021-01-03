@@ -90,7 +90,7 @@ function load_kontrak_kinerja(){
 								/* { "visible": false, targets: [ 0 ] } */
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/jfu-kk_sasaran_strategis") }}',
+								url	: '{{ url("api/jfu-kk_sasaran_strategis") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
 										"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
@@ -127,7 +127,7 @@ function load_kontrak_kinerja(){
 								{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/jfu-kk_anggaran_kegiatan") }}',
+								url	: '{{ url("api/jfu-kk_anggaran_kegiatan") }}',
 								data: { 
 										"renja_id" : {!! $skp->Renja->id !!} , 
 										"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
@@ -176,7 +176,7 @@ function load_kontrak_kinerja(){
 	/*
 	function hitung_total_anggaran(){
 		$.ajax({
-				url			: '{{ url("api_resource/jfu-total_anggaran_kk") }}',
+				url			: '{{ url("api/jfu-total_anggaran_kk") }}',
 				data		: { 
 									"renja_id" : {!! $skp->Renja->id !!} , 
 									"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},

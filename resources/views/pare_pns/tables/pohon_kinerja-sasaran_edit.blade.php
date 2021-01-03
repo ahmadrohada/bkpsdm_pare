@@ -40,7 +40,7 @@ function load_sasaran(tujuan_id){
 								{ className: "text-center", targets: [ 0,2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_sasaran_list") }}',
+								url	: '{{ url("api/skpd-renja_sasaran_list") }}',
 								data: { tujuan_id: tujuan_id },
 							 }, 
 			columns			:[
@@ -79,7 +79,7 @@ $(document).on('click','.create_sasaran',function(e){
 	$(document).on('click','.edit_sasaran',function(e){
 		var sasaran_id = $(this).data('id') ;
 		$.ajax({
-				url			: '{{ url("api_resource/sasaran_detail") }}',
+				url			: '{{ url("api/sasaran_detail") }}',
 				data 		: {sasaran_id : sasaran_id},
 				method		: "GET",
 				dataType	: "json",
@@ -118,7 +118,7 @@ $(document).on('click','.create_sasaran',function(e){
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_sasaran") }}',
+					url		: '{{ url("api/hapus_sasaran") }}',
 					type	: 'POST',
 					data    : {sasaran_id:sasaran_id},
 					cache   : false,

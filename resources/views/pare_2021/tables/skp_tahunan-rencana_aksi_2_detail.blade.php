@@ -56,7 +56,7 @@
 
 	function load_rencana_aksi(indikator_kegiatan_id){
 		$.ajax({
-				url			: '{{ url("api_resource/ind_kegiatan_detail") }}',
+				url			: '{{ url("api/ind_kegiatan_detail") }}',
 				data 		: {ind_kegiatan_id : indikator_kegiatan_id , skp_tahunan_id: {!! $skp->id !!}  },
 				method		: "GET",
 				dataType	: "json",
@@ -91,7 +91,7 @@
 							
 							],
 			ajax			: {
-								url	: '{{ url("api_resource/skp_tahunan_rencana_aksi") }}',
+								url	: '{{ url("api/skp_tahunan_rencana_aksi") }}',
 								data: { indikator_kegiatan_id: indikator_kegiatan_id },
 							},
 							

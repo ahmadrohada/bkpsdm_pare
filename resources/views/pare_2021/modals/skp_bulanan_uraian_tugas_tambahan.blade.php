@@ -57,7 +57,7 @@
 
 	$('.tugas_tambahan').select2({
 		ajax: {
-			url: '{{ url("api_resource/tugas_tambahan_select2") }}',
+			url: '{{ url("api/tugas_tambahan_select2") }}',
 			dataType: 'json',
 			quietMillis: 100,
 			data: function(params) {
@@ -132,7 +132,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_uraian_tugas_tambahan") }}',
+			url		: '{{ url("api/simpan_uraian_tugas_tambahan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -193,7 +193,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_uraian_tugas_tambahan") }}',
+			url		: '{{ url("api/update_uraian_tugas_tambahan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

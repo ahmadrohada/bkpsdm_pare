@@ -76,7 +76,7 @@
 									 
 								  ],
 				ajax			: {
-									url	: '{{ url("api_resource/unsur_penunjang_tugas_tambahan_list") }}',
+									url	: '{{ url("api/unsur_penunjang_tugas_tambahan_list") }}',
 									data: { capaian_tahunan_id : {!! $capaian->id !!} },
 									quietMillis: 500,
 
@@ -166,7 +166,7 @@
 									
 								  ],
 				ajax			: {
-									url	: '{{ url("api_resource/unsur_penunjang_kreativitas_list") }}',
+									url	: '{{ url("api/unsur_penunjang_kreativitas_list") }}',
 									data: { capaian_tahunan_id : {!! $capaian->id !!} },
 									quietMillis: 500,
 
@@ -252,7 +252,7 @@
 		var tugas_tambahan_id = $(this).data('id') ;
 		//alert(tugas_tambahan_id);
 		$.ajax({
-				url			: '{{ url("api_resource/unsur_penunjang_tugas_tambahan_detail") }}',
+				url			: '{{ url("api/unsur_penunjang_tugas_tambahan_detail") }}',
 				data 		: {tugas_tambahan_id : tugas_tambahan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -292,7 +292,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_unsur_penunjang_tugas_tambahan") }}',
+					url		: '{{ url("api/hapus_unsur_penunjang_tugas_tambahan") }}',
 					type	: 'POST',
 					data    : { tugas_tambahan_id:tugas_tambahan_id },
 					cache   : false,
@@ -339,7 +339,7 @@
 		var tugas_tambahan_id = $(this).data('id') ;
 	
 			$.ajax({
-					url		: '{{ url("api_resource/approve_unsur_penunjang_tugas_tambahan") }}',
+					url		: '{{ url("api/approve_unsur_penunjang_tugas_tambahan") }}',
 					type	: 'POST',
 					data    : { tugas_tambahan_id:tugas_tambahan_id },
 					cache   : false,
@@ -384,7 +384,7 @@
 		var tugas_tambahan_id = $(this).data('id') ;
 	
 			$.ajax({
-					url		: '{{ url("api_resource/reject_unsur_penunjang_tugas_tambahan") }}',
+					url		: '{{ url("api/reject_unsur_penunjang_tugas_tambahan") }}',
 					type	: 'POST',
 					data    : { tugas_tambahan_id:tugas_tambahan_id },
 					cache   : false,
@@ -442,7 +442,7 @@
 		var kreativitas_id = $(this).data('id') ;
 		//alert(kreativitas_id);
 		$.ajax({
-				url			: '{{ url("api_resource/unsur_penunjang_kreativitas_detail") }}',
+				url			: '{{ url("api/unsur_penunjang_kreativitas_detail") }}',
 				data 		: {kreativitas_id : kreativitas_id},
 				method		: "GET",
 				dataType	: "json",
@@ -485,7 +485,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_unsur_penunjang_kreativitas") }}',
+					url		: '{{ url("api/hapus_unsur_penunjang_kreativitas") }}',
 					type	: 'POST',
 					data    : { kreativitas_id:kreativitas_id },
 					cache   : false,
@@ -531,7 +531,7 @@
 		var kreativitas_id = $(this).data('id') ;
 	
 			$.ajax({
-					url		: '{{ url("api_resource/approve_unsur_penunjang_kreativitas") }}',
+					url		: '{{ url("api/approve_unsur_penunjang_kreativitas") }}',
 					type	: 'POST',
 					data    : { kreativitas_id:kreativitas_id },
 					cache   : false,
@@ -576,7 +576,7 @@
 		var kreativitas_id = $(this).data('id') ;
 	
 			$.ajax({
-					url		: '{{ url("api_resource/reject_unsur_penunjang_kreativitas") }}',
+					url		: '{{ url("api/reject_unsur_penunjang_kreativitas") }}',
 					type	: 'POST',
 					data    : { kreativitas_id:kreativitas_id },
 					cache   : false,

@@ -52,7 +52,7 @@
 									{ 	className: "text-center", targets: [ 0,1,3,4,5,6,7 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skpd_capaian_pk_triwulan_list") }}',
+									url	: '{{ url("api/skpd_capaian_pk_triwulan_list") }}',
 									data: { skpd_id : {!! $skpd_id !!} },
 									delay:3000
 
@@ -204,7 +204,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_capaian_pk_triwulan") }}',
+					url		: '{{ url("api/hapus_capaian_pk_triwulan") }}',
 					type	: 'POST',
 					data    : { capaian_pk_triwulan_id:capaian_pk_triwulan_id },
 					cache   : false,
@@ -255,7 +255,7 @@
 		var triwulan = $(this).data('triwulan') ;
 		show_loader();
 		$.ajax({
-				url			: '{{ url("api_resource/capaian_pk_triwulan_create_confirm") }}',
+				url			: '{{ url("api/capaian_pk_triwulan_create_confirm") }}',
 				data 		: { renja_id:renja_id,triwulan:triwulan },
 				method		: "GET",
 				dataType	: "json",
@@ -307,7 +307,7 @@
 		
 
 		$.ajax({
-				url			: '{{ url("api_resource/renja_detail") }}',
+				url			: '{{ url("api/renja_detail") }}',
 				data 		: { renja_id:renja_id },
 				method		: "GET",
 				dataType	: "json",

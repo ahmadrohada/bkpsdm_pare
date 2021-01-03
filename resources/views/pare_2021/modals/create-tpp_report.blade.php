@@ -86,7 +86,7 @@
 		show_loader();
 		var data = $('#create-tpp_report-form').serialize();
 		$.ajax({
-			url: '{{ url("api_resource/simpan_tpp_report") }}',
+			url: '{{ url("api/simpan_tpp_report") }}',
 			type: 'POST',
 			data: data,
 			success: function(data, textStatus, jqXHR) {

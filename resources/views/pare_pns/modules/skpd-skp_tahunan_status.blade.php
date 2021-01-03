@@ -12,7 +12,7 @@ $(document).ready(function() {
 	//Json Object
 
 		$.ajax({
-				url			: '{{ url("api_resource/skp_tahunan_timeline_status") }}',
+				url			: '{{ url("api/skp_tahunan_timeline_status") }}',
 				data 		: {skp_tahunan_id : {!! $skp->id!!} },
 				method		: "GET",
 				dataType	: "json",

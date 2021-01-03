@@ -245,7 +245,7 @@
 		show_loader();
 
 		$.ajax({
-			url		: '{{ url("api_resource/create_skp_tahunan_confirm") }}',
+			url		: '{{ url("api/create_skp_tahunan_confirm") }}',
 			type	: 'GET',
 			data	:  	{ 
 							periode_id : periode_id,
@@ -339,7 +339,7 @@
 
 		on_submit();
 		$.ajax({
-			url		: '{{ url("api_resource/create_skp_tahunan") }}',
+			url		: '{{ url("api/create_skp_tahunan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data) {

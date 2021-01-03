@@ -183,7 +183,7 @@
 		minimumInputLength  : 3,
 		
         ajax: {
-            url				: '{{ url("api_resource/select_pegawai_list") }}',
+            url				: '{{ url("api/select_pegawai_list") }}',
             dataType		: 'json',
             quietMillis		: 250,
             data			: function (params) {
@@ -248,7 +248,7 @@
 		var id = $(".p_nip_edit option:selected").val();
 
 		$.ajax({
-			url     	: '{{ url("api_resource/set_pejabat_penilai_skp_tahunan") }}',
+			url     	: '{{ url("api/set_pejabat_penilai_skp_tahunan") }}',
 			type    	: "POST",
 			data    	: { skp_tahunan_id: {{ $skp->id }}, 
 							pejabat_penilai_id  : id

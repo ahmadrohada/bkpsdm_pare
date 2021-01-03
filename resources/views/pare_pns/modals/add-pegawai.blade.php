@@ -30,7 +30,7 @@ $(document).ready(function() {
         //alert(pegawai_id);
 
         $.ajax({
-			url		: '{{ url("api_resource/add_pegawai") }}',
+			url		: '{{ url("api/add_pegawai") }}',
 			type	: 'POST',
 			data	:  { pegawai_id:pegawai_id,nip:nip },
 			success	: function(data , textStatus, jqXHR) {

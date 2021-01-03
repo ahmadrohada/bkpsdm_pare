@@ -41,7 +41,7 @@
 									{	className: "hidden", targets: [5] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/renja_rencana_aksi") }}',
+									url	: '{{ url("api/renja_rencana_aksi") }}',
 									data: { renja_id : {!! $renja->id !!} },
 									delay:3000
 								},

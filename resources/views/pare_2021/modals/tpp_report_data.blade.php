@@ -166,7 +166,7 @@
 			var data = $('#update_tpp').serialize();
 			show_loader();
 			$.ajax({
-				url		: '{{ url("api_resource/tpp_report_data_update") }}',
+				url		: '{{ url("api/tpp_report_data_update") }}',
 				type	: 'POST',
 				data	:  data,
 				success	: function(data , textStatus, jqXHR) {

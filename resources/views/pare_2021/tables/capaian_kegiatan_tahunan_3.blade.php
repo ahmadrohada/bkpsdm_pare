@@ -84,7 +84,7 @@ table.dataTable tbody td {
 									@endif
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_kegiatan_tahunan_3") }}',
+									url	: '{{ url("api/realisasi_kegiatan_tahunan_3") }}',
 									data: { 
 										
 											"renja_id" 				: {!! $capaian->SKPTahunan->Renja->id !!} , 
@@ -307,7 +307,7 @@ table.dataTable tbody td {
 
 	function show_modal_create(indikator_kegiatan_id){
 		$.ajax({
-				url			  	: '{{ url("api_resource/add_realisasi_kegiatan_tahunan") }}',
+				url			  	: '{{ url("api/add_realisasi_kegiatan_tahunan") }}',
 				data 		  	: { 
 									indikator_kegiatan_id : indikator_kegiatan_id ,
 									capaian_id : {!! $capaian->id !!} },
@@ -362,7 +362,7 @@ table.dataTable tbody td {
 
 	function show_modal_create_jft(kegiatan_id){
 		$.ajax({
-				url			  	: '{{ url("api_resource/add_realisasi_kegiatan_tahunan_5") }}',
+				url			  	: '{{ url("api/add_realisasi_kegiatan_tahunan_5") }}',
 				data 		  	: { 
 									kegiatan_id 	: kegiatan_id ,
 									capaian_id 		: {!! $capaian->id !!} },
@@ -469,7 +469,7 @@ table.dataTable tbody td {
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_kegiatan_tahunan") }}',
+					url		: '{{ url("api/hapus_realisasi_kegiatan_tahunan") }}',
 					type	: 'POST',
 					data    : { kegiatan_id:kegiatan_id,
 								realisasi_indikator_kegiatan_id:realisasi_indikator_kegiatan_id,
@@ -534,7 +534,7 @@ table.dataTable tbody td {
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_kegiatan_tahunan_5") }}',
+					url		: '{{ url("api/hapus_realisasi_kegiatan_tahunan_5") }}',
 					type	: 'POST',
 					data    : { 
 								realisasi_kegiatan_id:realisasi_kegiatan_id
@@ -582,7 +582,7 @@ table.dataTable tbody td {
 		var realisasi_kegiatan_id = $(this).data('realisasi_kegiatan_id');
 
 		$.ajax({
-				url			  	: '{{ url("api_resource/penilaian_kualitas_kerja_detail") }}',
+				url			  	: '{{ url("api/penilaian_kualitas_kerja_detail") }}',
 				data 		  	: { 
 									realisasi_kegiatan_id : realisasi_kegiatan_id ,
 								},

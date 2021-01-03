@@ -44,7 +44,7 @@ table.dataTable tbody td {
 									
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/realisasi_sasaran_tahunan") }}',
+									url	: '{{ url("api/realisasi_sasaran_tahunan") }}',
 									data: { 
 											"capaian_pk_tahunan_id" 	: {!! $capaian_pk_tahunan->id !!},
 											"renja_id" 					: {!! $capaian_pk_tahunan->renja_id !!},
@@ -128,7 +128,7 @@ table.dataTable tbody td {
 
 	function show_modal_create_realisasi_sasaran_tahunan(indikator_sasaran_id){
 		$.ajax({
-				url			  	: '{{ url("api_resource/add_realisasi_sasaran_tahunan") }}',
+				url			  	: '{{ url("api/add_realisasi_sasaran_tahunan") }}',
 				data 		  	: { 
 									indikator_sasaran_id : indikator_sasaran_id ,
 									capaian_id : {!! $capaian_pk_tahunan->id !!} },
@@ -198,7 +198,7 @@ table.dataTable tbody td {
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_sasaran_tahunan") }}',
+					url		: '{{ url("api/hapus_realisasi_sasaran_tahunan") }}',
 					type	: 'POST',
 					data    : { sasaran_id:sasaran_id,
 								realisasi_indikator_id:realisasi_indikator_id,

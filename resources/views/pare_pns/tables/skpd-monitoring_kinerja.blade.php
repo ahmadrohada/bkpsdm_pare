@@ -110,7 +110,7 @@ table.dataTable tbody td {
 								],
 				
 				ajax			: {
-									url	: '{{ url("api_resource/skpd_monitoring_kinerja") }}',
+									url	: '{{ url("api/skpd_monitoring_kinerja") }}',
 									data: { renja_id : {!! $renja->id !!} },
 									method: 'POST'
 								},

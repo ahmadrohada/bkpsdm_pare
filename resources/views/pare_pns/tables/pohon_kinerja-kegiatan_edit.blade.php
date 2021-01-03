@@ -59,7 +59,7 @@ function load_kegiatan(program_id){
 								{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_kegiatan_list") }}',
+								url	: '{{ url("api/skpd-renja_kegiatan_list") }}',
 								data: { program_id: program_id ,
 										renja_id:{!! $renja->id !!}
 									 },
@@ -100,7 +100,7 @@ function load_kegiatan(program_id){
 								//{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_kegiatan_non_anggaran_list") }}',
+								url	: '{{ url("api/skpd-renja_kegiatan_non_anggaran_list") }}',
 								data: { program_id: program_id ,
 										renja_id:{!! $renja->id !!}
 									 },
@@ -143,7 +143,7 @@ function load_kegiatan(program_id){
 	$(document).on('click','.edit_kegiatan',function(e){
 		var kegiatan_id = $(this).data('id') ;
 		$.ajax({
-				url			: '{{ url("api_resource/kegiatan_detail") }}',
+				url			: '{{ url("api/kegiatan_detail") }}',
 				data 		: {kegiatan_id : kegiatan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -186,7 +186,7 @@ function load_kegiatan(program_id){
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_kegiatan") }}',
+					url		: '{{ url("api/hapus_kegiatan") }}',
 					type	: 'POST',
 					data    : {kegiatan_id:kegiatan_id},
 					cache   : false,

@@ -161,7 +161,7 @@
 	
 
 	$.ajax({
-		url     	: '{{ url("api_resource/capaian_bulanan_detail") }}',
+		url     	: '{{ url("api/capaian_bulanan_detail") }}',
 		type    	: "GET",
 		data    	: { capaian_bulanan_id: {{ $capaian->id }} },
 		success		: function (data) {
@@ -230,7 +230,7 @@
 		minimumInputLength  : 3,
 		
         ajax: {
-            url				: '{{ url("api_resource/ganti_atasan_capaian_bulanan") }}',
+            url				: '{{ url("api/ganti_atasan_capaian_bulanan") }}',
             dataType		: 'json',
             quietMillis		: 250,
             data			: function (params) {
@@ -295,7 +295,7 @@
 		var id = $(".p_nip_edit option:selected").val();
 
 		$.ajax({
-			url     	: '{{ url("api_resource/set_pejabat_penilai_capaian_bulanan") }}',
+			url     	: '{{ url("api/set_pejabat_penilai_capaian_bulanan") }}',
 			type    	: "POST",
 			data    	: { capaian_bulanan_id: {{ $capaian->id }}, 
 							pejabat_penilai_id  : id

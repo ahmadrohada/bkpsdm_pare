@@ -47,7 +47,7 @@
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url			: '{{ url("api_resource/personal_skp_tahunan_list") }}',
+									url			: '{{ url("api/personal_skp_tahunan_list") }}',
 									data		: { pegawai_id : {!! $pegawai->id !!} },
 									cache 		: false,
 									quietMillis	: 500,
@@ -138,7 +138,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_skp_tahunan") }}',
+					url		: '{{ url("api/hapus_skp_tahunan") }}',
 					type	: 'POST',
 					data    : {skp_tahunan_id:skp_tahunan_id},
 					cache   : false,

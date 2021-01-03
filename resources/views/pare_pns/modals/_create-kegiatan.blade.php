@@ -60,7 +60,7 @@ $(document).ready(function() {
 	$('#jabatan').select2({
         allowClear: true,
         ajax: {
-            url				: '{{ url("api_resource/select2_jabatan_list") }}',
+            url				: '{{ url("api/select2_jabatan_list") }}',
             dataType		: 'json',
             quietMillis		: 850,
             data			: function (params) {
@@ -99,7 +99,7 @@ $(document).ready(function() {
 		
         var data = $('#create-kegiatan-form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/skpd_simpan_kegiatan") }}',
+			url		: '{{ url("api/skpd_simpan_kegiatan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

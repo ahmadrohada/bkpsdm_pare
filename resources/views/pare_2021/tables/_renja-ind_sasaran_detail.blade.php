@@ -75,7 +75,7 @@
 								{ className: "text-center", targets: [ 0,2 ] }
 							  ],
 			/* ajax			: {
-								url	: '{{ url("api_resource/skpd-renja_kegiatan_list") }}',
+								url	: '{{ url("api/skpd-renja_kegiatan_list") }}',
 								data: { indikator_sasaran_id: 100 },
 							 }, */
 			columns			:[

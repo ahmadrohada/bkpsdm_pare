@@ -445,7 +445,7 @@ $(document).ready(function() {
 
 	$(document).on('click','.edit_penilaian_perilaku',function(e){
 		$.ajax({
-			url			: '{{ url("api_resource/detail_penilaian_perilaku_kerja") }}',
+			url			: '{{ url("api/detail_penilaian_perilaku_kerja") }}',
 			data 		: {capaian_tahunan_id : {{ $capaian->id}} },
 			method		: "GET",
 			dataType	: "json",
@@ -519,7 +519,7 @@ $(document).ready(function() {
 		
         var data = $('.penilaian_perilaku_kerja_form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_penilaian_perilaku_kerja") }}',
+			url		: '{{ url("api/simpan_penilaian_perilaku_kerja") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
@@ -564,7 +564,7 @@ $(document).ready(function() {
 		
         var data = $('.penilaian_perilaku_kerja_form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/update_penilaian_perilaku_kerja") }}',
+			url		: '{{ url("api/update_penilaian_perilaku_kerja") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

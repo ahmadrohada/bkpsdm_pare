@@ -152,7 +152,7 @@ $(document).ready(function() {
     
 		var data = $('#update_password').serialize();
         $.ajax({
-                url		: '{{ url("api_resource/update_password") }}',
+                url		: '{{ url("api/update_password") }}',
                 type	: 'POST',
                 data	:  data,
                 success	: function(data , textStatus, jqXHR) {

@@ -39,7 +39,7 @@ $(document).ready(function() {
 	
 
     $.ajax({
-			url		: "{{ url("api_resource/puskesmas_struktur_organisasi") }}",
+			url		: "{{ url("api/puskesmas_struktur_organisasi") }}",
 			method	: "GET",
 			dataType: "json",
 			data    : { puskesmas_id : {{$puskesmas_id}} },

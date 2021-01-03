@@ -15,7 +15,7 @@
 			?>
 			<h1>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route($route_name) }}"><span class="fa fa-angle-left"></span></a>
-				Capaian Tahunan Eselon {{ $capaian->PegawaiYangDinilai->Eselon->eselon }} [ Detail ]
+				Capaian Tahunan Eselon {{ $capaian->PegawaiYangDinilai->Eselon->eselon }}
 			</h1>
 	  </section>
 	 
@@ -25,11 +25,11 @@
 			
 			<div class="row badge_persetujuan">
 				<div class="col-md-12">
-					<div class="callout callout-info " style="height:155px;">
+					<div class="callout callout-info "  style="height:145px;">
 	
-						<table>
+						<table style="font-size:12px;">
 							<tr>
-								<td rowspan="4">
+								<td rowspan="4" style="padding:8px 2px;">
 									@if (  $capaian->status_approve == "2" )
 										<i class="st_icon fa fa-times fa-5x" style="padding-right:30px;"></i>
 									@elseif (  $capaian->status_approve == "1" )
@@ -162,7 +162,7 @@
 $(document).ready(function() {
 
 	$.ajax({
-				url			: '{{ url("api_resource/capaian_tahunan_detail") }}',
+				url			: '{{ url("api/capaian_tahunan_detail") }}',
 				data 		: { capaian_tahunan_id : {!! $capaian->id !!} },
 				method		: "GET",
 				dataType	: "json",

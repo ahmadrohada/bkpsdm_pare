@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Models\UnsurPenunjangTugasTambahan;
 use App\Models\UnsurPenunjangKreativitas;
 
-use App\Traits\HitungUnsurPenunjang; 
+use App\Traits\TraitCapaianTahunan;
 
 use Datatables;
 use Validator;
@@ -17,38 +17,19 @@ use Input;
 
 class UnsurPenunjangAPIController extends Controller {
     
-    use HitungUnsurPenunjang;
+    
+    use TraitCapaianTahunan;
     
    
     public function TugasTambahanList(Request $request)
     {
             
-        $dt = UnsurPenunjangTugasTambahan::where('capaian_tahunan_id', '=' ,$request->get('capaian_tahunan_id'))
-                                ->select([   
-                                    'id AS tugas_tambahan_id',
-                                    'label AS tugas_tambahan_label',
-                                    'approvement'
-                                ]);
-
-        $data                                   =  $dt->get();       
-        $n_unsur_penunjang_tugas_tambahan       =  $dt->WHERE('approvement', '=' , '1' )->count();
-        $n_nilai                                =  $this->Nilai_UP_TugasTambahan($n_unsur_penunjang_tugas_tambahan);
-
+        $data       = $this->UnsurPenunjangTugasTambahan($request->capaian_tahunan_id);
  
-        $datatables = Datatables::of($data)
-                    ->addColumn('tugas_tambahan_label', function ($x) {
-                        return $x->tugas_tambahan_label;
-                    })
-                    ->addColumn('action', function ($x) {
-                        return $x->tugas_tambahan_id;
-                    })
-                    ->addColumn('tugas_tambahan_nilai', function ($x) use($n_nilai) {
-                        return $n_nilai;
-                    });
-
-                    if ($keyword = $request->get('search')['value']) {
-                        $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-                    } 
+        $datatables = Datatables::of(collect($data));
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        } 
         return $datatables->make(true);
     }
 
@@ -275,38 +256,10 @@ class UnsurPenunjangAPIController extends Controller {
     public function KreativitasList(Request $request)
     {
             
-        $dt = UnsurPenunjangKreativitas::where('capaian_tahunan_id', '=' ,$request->get('capaian_tahunan_id'))
-                                ->select([   
-                                    'id AS kreativitas_id',
-                                    'label AS kreativitas_label',
-                                    'nilai AS kreativitas_nilai',
-                                    'manfaat_id',
-                                    'approvement'
-                                ])
-                                ->get();
+        
+        $data       = $this->UnsurPenunjangKreativitas($request->capaian_tahunan_id);
 
-        $datatables = Datatables::of($dt)
-                    ->addColumn('kreativitas_label', function ($x) {
-                        return $x->kreativitas_label;
-                    })
-                    ->addColumn('kreativitas_manfaat', function ($x) {
-                        switch ($x->manfaat_id) {
-                            case "3":
-                              return "Untuk Unit Kerja";
-                              break;
-                            case "6":
-                                return "Untuk Organisasi";
-                              break;
-                            case "12":
-                                return "Untuk Pemerintah";
-                              break;
-                            default:
-                                return "Undefine";
-                          }
-                    })
-                    ->addColumn('action', function ($x) {
-                        return $x->kreativitas_id;
-                    });
+        $datatables = Datatables::of(collect($data));
 
                     if ($keyword = $request->get('search')['value']) {
                         $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);

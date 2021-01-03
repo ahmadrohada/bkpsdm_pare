@@ -62,7 +62,7 @@ function mk_tujuan(){
 								],
 				
 				ajax			: {
-									url	: '{{ url("api_resource/skpd_monitoring_kinerja_tujuan") }}',
+									url	: '{{ url("api/skpd_monitoring_kinerja_tujuan") }}',
 									data: { renja_id : {!! $renja->id !!} },
 									method: 'POST'
 								},
@@ -112,7 +112,7 @@ function mk_tujuan(){
 
 
 		$.ajax({
-				url			: '{{ url("api_resource/skpd_monitoring_kinerja_tujuan_average") }}',
+				url			: '{{ url("api/skpd_monitoring_kinerja_tujuan_average") }}',
 				data 		: { renja_id : {!! $renja->id !!} },
 				method		: "GET",
 				dataType	: "json",

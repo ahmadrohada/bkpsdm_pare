@@ -79,7 +79,7 @@
 
 		//alert(data);
 		$.ajax({
-			url		: '{{ url("api_resource/update_kegiatan") }}',
+			url		: '{{ url("api/update_kegiatan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {

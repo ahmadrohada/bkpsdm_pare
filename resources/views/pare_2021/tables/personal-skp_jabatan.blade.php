@@ -51,7 +51,7 @@
 									{ 	className: "text-center", targets: [ 0,1,2,5,6 ] },
 								  ],
 				ajax			: {
-									url	: '{{ url("api_resource/personal_skp_jabatan_list") }}',
+									url	: '{{ url("api/personal_skp_jabatan_list") }}',
 									data: { pegawai_id : {!! $pegawai->id !!} },
 									delay:3000
 
@@ -176,7 +176,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_skp_tahunan") }}',
+					url		: '{{ url("api/hapus_skp_tahunan") }}',
 					type	: 'POST',
 					data    : {skp_tahunan_id:skp_tahunan_id},
 					cache   : false,

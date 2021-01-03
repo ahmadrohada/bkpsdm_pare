@@ -33,7 +33,7 @@
 $(document).ready(function() {
 	
 	$.ajax({
-			url		: "{{ url("api_resource/skpd_peta_jabatan") }}",
+			url		: "{{ url("api/skpd_peta_jabatan") }}",
 			method	: "GET",
 			dataType: "json",
 			data    : {},

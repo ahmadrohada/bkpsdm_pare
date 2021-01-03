@@ -71,7 +71,7 @@ $(document).ready(function() {
 								{ className: "text-center", targets: [ 0,3 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api_resource/skpd_sasaran_perjanjian_kinerja_list") }}',
+								url	: '{{ url("api/skpd_sasaran_perjanjian_kinerja_list") }}',
 								data: { perjanjian_kinerja_id: {{ $perjanjian_kinerja->id }} },
 								delay:3000
 							  },

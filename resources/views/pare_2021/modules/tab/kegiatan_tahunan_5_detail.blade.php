@@ -36,7 +36,7 @@
 		.jstree({
             'core' : {
 						'data' : {
-						"url" 	: "{{ url("api_resource/skp_tahunan_kegiatan_5") }}", //Eselon 4
+						"url" 	: "{{ url("api/skp_tahunan_kegiatan_5") }}", //Eselon 4
 						"data" 	: function (node) {
 							return  {   "renja_id" 			: {!! $skp->Renja->id !!} , 
                                         "jabatan_id" 		: {!! $skp->PegawaiYangDinilai->Jabatan->id !!},

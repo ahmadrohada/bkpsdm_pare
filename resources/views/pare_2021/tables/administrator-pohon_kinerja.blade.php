@@ -50,7 +50,7 @@
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/administrator_pohon_kinerja_list") }}',
+									url	: '{{ url("api/administrator_pohon_kinerja_list") }}',
 									
 									delay:3000
 								},

@@ -93,7 +93,7 @@
 
 			],
 			ajax: {
-				url: '{{ url("api_resource/administrator_tpp_report_data_list") }}',
+				url: '{{ url("api/administrator_tpp_report_data_list") }}',
 				data: {
 					tpp_report_id: tpp_report_id,
 					unit_kerja_id:unit_kerja_id

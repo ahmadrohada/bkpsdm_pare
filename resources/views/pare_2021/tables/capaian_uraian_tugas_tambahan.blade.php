@@ -52,7 +52,7 @@
 										@endif
 									],
 					ajax			: {
-										url		: '{{ url("api_resource/realisasi_uraian_tugas_tambahan_list") }}',
+										url		: '{{ url("api/realisasi_uraian_tugas_tambahan_list") }}',
 										data	: { 
 													"skp_bulanan_id" : {!! $capaian->skp_bulanan_id !!}
 												  },
@@ -145,7 +145,7 @@
 	function show_modal_create_realisasi_uraian_tugas_tambahan(uraian_tugas_tambahan_id){
 		
 		$.ajax({
-				url			  : '{{ url("api_resource/uraian_tugas_tambahan_detail") }}',
+				url			  : '{{ url("api/uraian_tugas_tambahan_detail") }}',
 				data 		  : {uraian_tugas_tambahan_id : uraian_tugas_tambahan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -176,7 +176,7 @@
 		var realisasi_uraian_tugas_tambahan_id = $(this).data('id') ;
 		
 		$.ajax({
-				url			: '{{ url("api_resource/realisasi_uraian_tugas_tambahan_detail") }}',
+				url			: '{{ url("api/realisasi_uraian_tugas_tambahan_detail") }}',
 				data 		: {realisasi_uraian_tugas_tambahan_id : realisasi_uraian_tugas_tambahan_id},
 				method		: "GET",
 				dataType	: "json",
@@ -223,7 +223,7 @@
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api_resource/hapus_realisasi_uraian_tugas_tambahan") }}',
+					url		: '{{ url("api/hapus_realisasi_uraian_tugas_tambahan") }}',
 					type	: 'POST',
 					data    : { realisasi_uraian_tugas_tambahan:realisasi_uraian_tugas_tambahan },
 					cache   : false,

@@ -72,7 +72,7 @@ $(document).ready(function(){
 
     $(".sasaran").click(function(){
 		$.ajax({
-		url     	: '{{ url("api_resource/new_update_sasaran") }}',
+		url     	: '{{ url("api/new_update_sasaran") }}',
 		type    	: "GET",
 		data    	: {  },
 		success		: function (data) {
@@ -89,7 +89,7 @@ $(document).ready(function(){
 
 	$(".program").click(function(){
 		$.ajax({
-		url     	: '{{ url("api_resource/new_update_program") }}',
+		url     	: '{{ url("api/new_update_program") }}',
 		type    	: "GET",
 		data    	: {  },
 		success		: function (data) {
@@ -106,7 +106,7 @@ $(document).ready(function(){
 
 	$(".kegiatan").click(function(){
 		$.ajax({
-		url     	: '{{ url("api_resource/new_update_kegiatan") }}',
+		url     	: '{{ url("api/new_update_kegiatan") }}',
 		type    	: "GET",
 		data    	: {  },
 		success		: function (data) {

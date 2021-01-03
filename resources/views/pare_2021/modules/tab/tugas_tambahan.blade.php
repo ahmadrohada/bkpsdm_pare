@@ -33,7 +33,7 @@
 		$('#tugas_tambahan_tree').jstree({
             'core' : {
 						'data' : {
-						"url" 	: "{{ url("api_resource/tugas_tambahan_tree") }}",
+						"url" 	: "{{ url("api/tugas_tambahan_tree") }}",
 						"data" 	: function (node) {
 							return  {  
 										"id" 				: node.id ,

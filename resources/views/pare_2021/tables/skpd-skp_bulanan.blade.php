@@ -50,7 +50,7 @@
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api_resource/skpd_skp_bulanan_list") }}',
+									url	: '{{ url("api/skpd_skp_bulanan_list") }}',
 									data: { skpd_id : {{$skpd_id}} },
 									delay:3000
 								},

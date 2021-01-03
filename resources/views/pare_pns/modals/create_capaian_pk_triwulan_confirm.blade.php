@@ -96,7 +96,7 @@
 	$(document).on('click', '#save_capaian_pk_triwulan', function(){
 		var data = $('#create-capaian_pk_triwulan-form').serialize();
 		$.ajax({
-			url		: '{{ url("api_resource/simpan_capaian_pk_triwulan") }}',
+			url		: '{{ url("api/simpan_capaian_pk_triwulan") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
