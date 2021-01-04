@@ -130,7 +130,6 @@ trait TraitCapaianTahunan
 
         $nilai_prestasi_kerja = number_format( ($capaian_skp * 60 / 100)+( $ave * 40 / 100 ) , 2 );
         //return $data_kinerja;
-      
         $response = array(
                 
                 'jm_kegiatan_tahunan'           => $jm_kegiatan_tahunan,  //A
@@ -443,7 +442,10 @@ trait TraitCapaianTahunan
 			break;
             case 4 : 
                     $kegiatan_list = $this->JFU($capaian_id);
-			break;
+            break;
+            case 5 :
+                    $kegiatan_list = $this->JFT($capaian_id);
+            break;
 						
 		} 
 
@@ -929,6 +931,128 @@ trait TraitCapaianTahunan
                     
                                         
                     );
+        }
+        return $item;
+    }
+
+
+    public function JFT($capaian_id){
+
+        
+        $kegiatan = CapaianTahunan::
+                                WHERE('capaian_tahunan.id', $capaian_id )
+                                ->leftjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function($join){
+                                    $join   ->on('skp_tahunan.id','=','capaian_tahunan.skp_tahunan_id');
+                                })
+                                ->leftjoin('db_pare_2018.skp_tahunan_kegiatan_jft AS skp_tahunan_kegiatan_jft', function($join){
+                                    $join   ->on('skp_tahunan_kegiatan_jft.skp_tahunan_id','=','skp_tahunan.id');
+                                })
+                                //LEFT JOIN TERHADAP REALISASI TAHUNAN JFT
+                                ->leftjoin('db_pare_2018.realisasi_kegiatan_tahunan_jft AS realisasi_kegiatan', function($join) use ( $capaian_id ){
+                                    $join   ->on('realisasi_kegiatan.kegiatan_tahunan_id','=','skp_tahunan_kegiatan_jft.id');
+                                    $join   ->WHERE('realisasi_kegiatan.capaian_id','=',  $capaian_id );
+                                    
+                                })
+    
+                                ->SELECT(   
+                                            'skp_tahunan_kegiatan_jft.id AS kegiatan_tahunan_id',
+                                            'skp_tahunan_kegiatan_jft.label AS kegiatan_tahunan_label',
+                                            'skp_tahunan_kegiatan_jft.target AS indikator_kegiatan_target',
+                                            'skp_tahunan_kegiatan_jft.satuan AS indikator_kegiatan_satuan',
+                                            'skp_tahunan_kegiatan_jft.quality AS kegiatan_tahunan_quality',
+                                            'skp_tahunan_kegiatan_jft.cost AS kegiatan_tahunan_cost',
+                                            'skp_tahunan_kegiatan_jft.target_waktu AS kegiatan_tahunan_target_waktu',
+                                            'skp_tahunan_kegiatan_jft.angka_kredit AS kegiatan_tahunan_ak',
+    
+                                           
+    
+                                            'realisasi_kegiatan.id AS realisasi_kegiatan_id',
+                                            'realisasi_kegiatan.target_angka_kredit AS realisasi_kegiatan_target_ak',
+                                            'realisasi_kegiatan.target_quality AS realisasi_kegiatan_target_quality',
+                                            'realisasi_kegiatan.target_quantity AS realisasi_indikator_target_quantity',
+                                            'realisasi_kegiatan.target_cost AS realisasi_kegiatan_target_cost',
+                                            'realisasi_kegiatan.target_waktu AS realisasi_kegiatan_target_waktu',
+                                            'realisasi_kegiatan.realisasi_angka_kredit AS realisasi_kegiatan_realisasi_ak',
+                                            'realisasi_kegiatan.realisasi_quality AS realisasi_kegiatan_realisasi_quality',
+                                            'realisasi_kegiatan.realisasi_quantity AS realisasi_indikator_realisasi',
+                                            'realisasi_kegiatan.realisasi_cost AS realisasi_kegiatan_realisasi_cost',
+                                            'realisasi_kegiatan.realisasi_waktu AS realisasi_kegiatan_realisasi_waktu',
+                                            'realisasi_kegiatan.satuan AS realisasi_indikator_satuan',
+    
+                                            'realisasi_kegiatan.hitung_quantity',
+                                            'realisasi_kegiatan.hitung_quality',
+                                            'realisasi_kegiatan.hitung_waktu',
+                                            'realisasi_kegiatan.hitung_cost',
+                                            'realisasi_kegiatan.akurasi',
+                                            'realisasi_kegiatan.ketelitian',
+                                            'realisasi_kegiatan.kerapihan',
+                                            'realisasi_kegiatan.keterampilan',
+    
+    
+                                            'capaian_tahunan.status'
+                                           
+                                        ) 
+                                
+                                ->get();
+
+
+                            $item = array(); 
+                            $no = 0 ;
+        foreach( $kegiatan AS $x ){
+                                        
+        if ( $x->hitung_cost <=0 ){
+            $capaian_skp =   Pustaka::persen_bulat(number_format(($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/3 ,2) ) ;
+        }else{
+            $capaian_skp = Pustaka::persen_bulat(number_format(($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/4 ,2) );
+        }
+                                        
+        if ( ($x->akurasi + $x->ketelitian + $x->kerapihan + $x->keterampilan ) == 0) {
+            $penilaian = 0;
+        }else{
+            $penilaian = 1;
+        }
+                                        
+        //penomoran
+        $temp = [];
+        if(!isset($arrayForTable[$x['kegiatan_tahunan_label']])){
+            $arrayForTable[$x['kegiatan_tahunan_label']] = [];
+            $no += 1 ;
+        }
+        $temp['no']         = $no;
+                                        
+        $item[] = array(
+                        'no'                        => $no,
+                        'capaian_tahunan_id'        => $x->capaian_id,
+                        'kegiatan_tahunan_id'	    => $x->kegiatan_tahunan_id,
+                        'realisasi_kegiatan_id'	    => $x->realisasi_kegiatan_id,
+                        'realisasi_indikator_id'    => $x->realisasi_indikator_id,
+                        'indikator_kegiatan_id'	    => $x->indikator_kegiatan_id,
+                        'kegiatan_tahunan_label'	=> $x->kegiatan_tahunan_label,
+                        'indikator_kegiatan_label'	=> $x->indikator_kegiatan_label,
+                                                        
+                                        
+                        'target_ak'                 => ( $x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_target_ak : $x->kegiatan_tahunan_ak ),
+                        'target_quantity'           => ( $x->realisasi_kegiatan_id ? $x->realisasi_indikator_target_quantity : $x->indikator_kegiatan_target )." ".($x->realisasi_kegiatan_id ? $x->realisasi_indikator_satuan : $x->indikator_kegiatan_satuan),
+                        'target_quality'            => ($x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_target_quality : $x->kegiatan_tahunan_quality )." %",
+                        'target_waktu'              => ($x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_target_waktu : $x->kegiatan_tahunan_target_waktu )." bln",
+                        'target_cost'               => "Rp. ". ($x->realisasi_kegiatan_id ? number_format($x->realisasi_kegiatan_target_cost,'0',',','.') : number_format($x->kegiatan_tahunan_cost,'0',',','.') ),
+                                                        
+                        'realisasi_ak'              => ( $x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_realisasi_ak : "-" ),
+                        'realisasi_quantity'        => ( $x->realisasi_kegiatan_id ? $x->realisasi_indikator_realisasi." ".$x->realisasi_indikator_satuan : "-" ),
+                        'realisasi_quality'         => ($x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_realisasi_quality." %" : "-" ),
+                        'realisasi_waktu'           => ($x->realisasi_kegiatan_id ? $x->realisasi_kegiatan_realisasi_waktu." bln" : "-" ),
+                        'realisasi_cost'            => "Rp. ". ($x->realisasi_kegiatan_id ? number_format($x->realisasi_kegiatan_realisasi_cost,'0',',','.') : "-" ),
+                                        
+                        'hitung_quantity'           => Pustaka::persen_bulat($x->hitung_quantity),
+                        'hitung_quality'            => Pustaka::persen_bulat($x->hitung_quality),
+                        'hitung_waktu'              => Pustaka::persen_bulat($x->hitung_waktu),
+                        'hitung_cost'               => Pustaka::persen_bulat($x->hitung_cost),
+                        'total_hitung'              => $x->hitung_quantity+$x->hitung_quality+$x->hitung_waktu,
+                        'capaian_skp'               => $capaian_skp,
+                        'penilaian'                 => $penilaian,
+                                        
+                                                            
+                );
         }
         return $item;
     }

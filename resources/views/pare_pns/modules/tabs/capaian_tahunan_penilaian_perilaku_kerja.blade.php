@@ -118,4 +118,75 @@
 				}						
 		});	 
 	}
+
+	$(document).on('click','.edit_penilaian_perilaku',function(e){
+		$.ajax({
+			url			: '{{ url("api/detail_penilaian_perilaku_kerja") }}',
+			data 		: {capaian_tahunan_id : {{ $capaian->id}} },
+			method		: "GET",
+			dataType	: "json",
+			success	: function(data) {
+
+					$('.modal-penilaian_perilaku_kerja').find('[name=capaian_tahunan_id]').val({!! $capaian->id !!});
+					$('.modal-penilaian_perilaku_kerja').find('[name=perilaku_kerja_id]').val(data['id']);
+					
+					$('.pelayanan_01').rating('update',data['pelayanan_01']);
+					$('.pelayanan_02').rating('update',data['pelayanan_02']);
+					$('.pelayanan_03').rating('update',data['pelayanan_03']);
+					 
+					$('.integritas_01').rating('update',data['integritas_01']);
+					$('.integritas_02').rating('update',data['integritas_02']);
+					$('.integritas_03').rating('update',data['integritas_03']);
+					$('.integritas_04').rating('update',data['integritas_04']);
+					
+					
+					$('.komitmen_01').rating('update',data['komitmen_01']);
+					$('.komitmen_02').rating('update',data['komitmen_02']);
+					$('.komitmen_03').rating('update',data['komitmen_03']);
+					
+					
+					$('.disiplin_01').rating('update',data['disiplin_01']);
+					$('.disiplin_02').rating('update',data['disiplin_02']);
+					$('.disiplin_03').rating('update',data['disiplin_03']);
+					$('.disiplin_04').rating('update',data['disiplin_04']);
+					
+					$('.kerjasama_01').rating('update',data['kerjasama_01']);
+					$('.kerjasama_02').rating('update',data['kerjasama_02']);
+					$('.kerjasama_03').rating('update',data['kerjasama_03']);
+					$('.kerjasama_04').rating('update',data['kerjasama_04']);
+					$('.kerjasama_05').rating('update',data['kerjasama_05']);
+					
+					
+					$('.kepemimpinan_01').rating('update',data['kepemimpinan_01']);
+					$('.kepemimpinan_02').rating('update',data['kepemimpinan_02']);
+					$('.kepemimpinan_03').rating('update',data['kepemimpinan_03']);
+					$('.kepemimpinan_04').rating('update',data['kepemimpinan_04']);
+					$('.kepemimpinan_05').rating('update',data['kepemimpinan_05']);
+					$('.kepemimpinan_06').rating('update',data['kepemimpinan_06']); 
+					
+					hitung_ave_pelayanan();
+					hitung_ave_integritas();
+					hitung_ave_komitmen();
+					hitung_ave_disiplin();
+					hitung_ave_kerjasama();
+					hitung_ave_kepemimpinan();
+
+					if ( data['id'] == 0 ){
+						$('.modal-penilaian_perilaku_kerja').find('h4').html('Add Penilaian Perilaku');
+						$('.modal-penilaian_perilaku_kerja').find('.btn-submit').attr('id', 'simpan_penilaian_perilaku_kerja');
+					}else{
+						$('.modal-penilaian_perilaku_kerja').find('h4').html('Edit Penilaian Perilaku');
+						$('.modal-penilaian_perilaku_kerja').find('.btn-submit').attr('id', 'update_penilaian_perilaku_kerja');
+					}
+
+					
+					
+					$('.modal-penilaian_perilaku_kerja').modal('show');
+
+				},
+				error: function(data){
+					
+				}						
+		});	 
+	});
 </script>

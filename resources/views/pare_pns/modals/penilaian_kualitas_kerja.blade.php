@@ -55,7 +55,7 @@
 
 			<div class="modal-footer">
                 {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left ', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right  btn-submit', 'type' => 'button', 'id' => 'simpan_penilaian_kualitas_kerja' )) !!}
+                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').' button_simpan" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right  btn-submit', 'type' => 'button', 'id' => 'simpan_penilaian_kualitas_kerja' )) !!}
             </div>
 			</form>
         </div>
@@ -131,10 +131,23 @@ table.penilaian tbody td {
 		@endif
         
 		
-    });
+	});
+	
+	
+	function on_submit_pkk(){
+		$('.modal-penilaian_kualitas_kerja').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('#simpan_penilaian_kualitas_kerja').prop('disabled',true);
+	}
+	function reset_submit_pkk(){
+		$('.modal-penilaian_kualitas_kerja').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-penilaian_kualitas_kerja').find('.button_simpan').addClass('fa-floppy-o');
+		$('#simpan_penilaian_kualitas_kerja').prop('disabled',false);
+	}
+
 
 	function save(){
 		var data = $('.penilaian_kualitas_kerja_form').serialize();
+		on_submit_pkk();
 		$.ajax({
 			url		: '{{ url("api/simpan_penilaian_kualitas_kerja") }}',
 			type	: 'POST',
@@ -142,7 +155,7 @@ table.penilaian tbody td {
 			success	: function(data , textStatus, jqXHR) {
 				
 				//$('#indikator_sasaran_table').DataTable().ajax.reload(null,false);
-
+				reset_submit_pkk();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -181,6 +194,7 @@ table.penilaian tbody td {
 
 	function save_jft(){
 		var data = $('.penilaian_kualitas_kerja_form').serialize();
+		on_submit_pkk();
 		$.ajax({
 			url		: '{{ url("api/simpan_penilaian_kualitas_kerja_5") }}',
 			type	: 'POST',
@@ -188,7 +202,7 @@ table.penilaian tbody td {
 			success	: function(data , textStatus, jqXHR) {
 				
 				//$('#indikator_sasaran_table').DataTable().ajax.reload(null,false);
-
+				reset_submit_pkk();
 				Swal.fire({
 					title: "",
 					text: "Sukses",

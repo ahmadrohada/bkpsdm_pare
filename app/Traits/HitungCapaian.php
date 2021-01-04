@@ -469,7 +469,7 @@ trait HitungCapaian
         $jm_realisasi = RealisasiKegiatanTahunanJFT::WHERE('capaian_id',$capaian_id)->count();
 
         //cari nilai_capaian Kegiatan tahunan
-       /*  $xdata = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->get();
+        $xdata = RealisasiKegiatanTahunanJFT::WHERE('capaian_id',$capaian_id)->get();
        
         $jm_capaian_kegiatan_tahunan = 0 ;
         foreach ($xdata as $x) {
@@ -481,11 +481,11 @@ trait HitungCapaian
             }
 
             $jm_capaian_kegiatan_tahunan =  $jm_capaian_kegiatan_tahunan + $capaian_kegiatan_tahunan;
-        } */
+        } 
 
         return array(
             'jm_kegiatan_tahunan'           => $jm_kegiatan,
-            'jm_capaian_kegiatan_tahunan'   => '',
+            'jm_capaian_kegiatan_tahunan'   => $jm_capaian_kegiatan_tahunan,
             'ave_capaian_kegiatan_tahunan'  => null,
         );
 

@@ -689,7 +689,7 @@ class CapaianTahunanAPIController extends Controller {
     
         $datatables = Datatables::of($dt)
         ->addColumn('periode', function ($x) {
-            return Pustaka::periode($x->tgl_mulai);
+            return Pustaka::tahun($x->tgl_mulai);
         })->addColumn('nama', function ($x) {
             return $x->u_nama;
         })->addColumn('jabatan', function ($x) {

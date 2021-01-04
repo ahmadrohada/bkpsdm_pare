@@ -16,21 +16,21 @@
 					<table class="table table-condensed penilaian">
 						<thead>
 						<tr class='bg-primary'>
-							<th data-halign="center"  data-valign="middle" data-align="center" data-valign="middle" width="17%">Indikator</th>
-							<th data-halign="center" data-valign="middle" width="40%">Sub.Indikator</th>
-							<th data-halign="center" data-valign="middle" data-align="center" width="35%">Skor</th>
+							<th data-halign="center"  data-valign="middle" data-align="center" data-valign="middle" data-width="170">Indikator</th>
+							<th data-halign="center" data-valign="middle" width="45%">Sub.Indikator</th>
+							<th data-halign="center" data-valign="middle" data-align="center" data-width="270">Penilaian</th>
 							<th data-halign="center" data-valign="middle" data-align="center" data-valign="middle">Skor</th>
 						
 						</tr>
 						</thead>
 						<!-- DATA QUESIONER -->
 						<tr style="background:rgb(239, 254, 255);">
-							<td rowspan="3" style="valign:middle;" >Orientasi Pelayanan</td>
+							<td rowspan="3" style="valign:middle;" align="center">Orientasi <br>Pelayanan</td>
 							<td>Sopan</td>
 							<td>
 								<input value="1" class="rating-pk pelayanan_01" name="pelayanan_01" >
 							</td>
-							<td rowspan="3" ><span class="skor_pelayanan">0</span></td>
+							<td rowspan="3" align="center"><span class="skor_pelayanan">0</span></td>
 						</tr>
 						<tr style="background:rgb(239, 254, 255);">
 							<td>Hormat</td>
@@ -46,12 +46,12 @@
 						</tr>
 						
 						<tr style="background:rgb(255, 255, 239);">
-							<td rowspan="4" >Integritas</td>
+							<td rowspan="4" align="center">Integritas</td>
 							<td>Jujur</td>
 							<td>
 								<input  value="1"  class="rating-pk integritas_01" name="integritas_01" >
 							</td>
-							<td rowspan="4" ><span class="skor_integritas">0</span></td>
+							<td rowspan="4" align="center"><span class="skor_integritas">0</span></td>
 						</tr>
 						<tr style="background:rgb(255, 255, 239);">
 							<td>Ikhlas</td>
@@ -73,12 +73,12 @@
 						</tr>
 						
 						<tr style="background:rgb(250, 208, 248);">
-							<td rowspan="3" >Komitmen</td>
+							<td rowspan="3" align="center">Komitmen</td>
 							<td>Menegakan ideologi pancasila / UUD’45 dan NKRI</td>
 							<td>
 								<input  value="1" class="rating-pk komitmen_01" name="komitmen_01" >
 							</td>
-							<td rowspan="3" ><span class="skor_komitmen">0</span></td>
+							<td rowspan="3" align="center"><span class="skor_komitmen">0</span></td>
 						</tr>
 						<tr style="background:rgb(250, 208, 248);">
 							<td>Berusaha menjalankan rencana dan tujuan organisasi</td>
@@ -94,12 +94,12 @@
 						</tr>
 						
 						<tr style="background:rgb(208, 250, 221);">
-							<td rowspan="4" >Disiplin</td>
+							<td rowspan="4" align="center">Disiplin</td>
 							<td>Taat pada aturan</td>
 							<td>
 								<input  value="1" class="rating-pk disiplin_01" name="disiplin_01" >
 							</td>
-							<td rowspan="4" ><span class="skor_disiplin">0</span></td>
+							<td rowspan="4" align="center"><span class="skor_disiplin">0</span></td>
 						</tr>
 						<tr style="background:rgb(208, 250, 221);">
 							<td>Tanggungjawab</td>
@@ -122,12 +122,12 @@
 						
 						
 						<tr>
-							<td rowspan="5" >Kerjasama</td>
+							<td rowspan="5" align="center">Kerjasama</td>
 							<td>Mampu bekerjasama dengan rekan kerja baik di dalam maupun di luar kerja</td>
 							<td>
 								<input  value="1" class="rating-pk kerjasama_01" name="kerjasama_01" >
 							</td>
-							<td rowspan="5" ><span class="skor_kerjasama">0</span></td>
+							<td rowspan="5" align="center"><span class="skor_kerjasama">0</span></td>
 						</tr>
 						<tr>
 							<td>Mampu bekerjasama dengan atasan baik di dalam maupun di luar kerja</td>
@@ -159,12 +159,12 @@
 					
 						
 						<tr style="background:rgb(240, 208, 250);">
-							<td rowspan="6" >Kepemimpinan</td>
+							<td rowspan="6" align="center">Kepemimpinan</td>
 							<td>Tegas</td>
 							<td>
 								<input  value="1" class="rating-pk kepemimpinan_01" name="kepemimpinan_01">
 							</td>
-							<td rowspan="6" ><span class="skor_kepemimpinan">0</span></td>
+							<td rowspan="6" align="center"><span class="skor_kepemimpinan">0</span></td>
 						</tr>
 						<tr style="background:rgb(240, 208, 250);">
 							<td>Tidak Memihak</td>
@@ -211,7 +211,7 @@
 
 			<div class="modal-footer">
                 {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_cancel_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_cancel_text'), array('class' => 'btn btn-sm btn-default pull-left ', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').'" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right  btn-submit', 'type' => 'button', 'id' => 'save' )) !!}
+                {!! Form::button('<i class="fa fa-fw '.Lang::get('modals.confirm_modal_button_save_icon').' button_simpan" aria-hidden="true"></i> ' . Lang::get('modals.confirm_modal_button_save_text'), array('class' => 'btn btn-sm btn-primary pull-right  btn-submit', 'type' => 'button', 'id' => 'save' )) !!}
             </div>
 			</form>
         </div>
@@ -243,7 +243,8 @@ table.penilaian tbody td {
 								2: '&nbsp;&nbsp;&nbsp;Kurang&nbsp&nbsp;&nbsp;&nbsp;', 
 								3: '&nbsp;&nbsp;&nbsp;&nbsp;Cukup&nbsp;&nbsp;&nbsp;&nbsp;',
 								4: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Baik&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-								5: '&nbsp;&nbsp;Sangat Baik &nbsp;&nbsp;'}
+								5: '&nbsp;&nbsp;Sangat Baik &nbsp;&nbsp;'},
+			'starCaptionClasses' : {_all:'hidden-xs'}
 	});
 
 	
@@ -439,88 +440,28 @@ table.penilaian tbody td {
 	}
 
 
+	function on_submit_ppk(){
+		$('.modal-penilaian_perilaku_kerja').find('.button_simpan').addClass('fa-spinner faa-spin animated');
+		$('#simpan_penilaian_perilaku_kerja').prop('disabled',true);
+	}
+	function reset_submit_ppk(){
+		$('.modal-penilaian_perilaku_kerja').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
+		$('.modal-penilaian_perilaku_kerja').find('.button_simpan').addClass('fa-floppy-o');
+		$('#simpan_penilaian_perilaku_kerja').prop('disabled',false);
+	}
 
-
-	$(document).on('click','.edit_penilaian_perilaku',function(e){
-		$.ajax({
-			url			: '{{ url("api/detail_penilaian_perilaku_kerja") }}',
-			data 		: {capaian_tahunan_id : {{ $capaian->id}} },
-			method		: "GET",
-			dataType	: "json",
-			success	: function(data) {
-
-					$('.modal-penilaian_perilaku_kerja').find('[name=capaian_tahunan_id]').val({!! $capaian->id !!});
-					$('.modal-penilaian_perilaku_kerja').find('[name=perilaku_kerja_id]').val(data['id']);
-					
-					$('.pelayanan_01').rating('update',data['pelayanan_01']);
-					$('.pelayanan_02').rating('update',data['pelayanan_02']);
-					$('.pelayanan_03').rating('update',data['pelayanan_03']);
-					 
-					$('.integritas_01').rating('update',data['integritas_01']);
-					$('.integritas_02').rating('update',data['integritas_02']);
-					$('.integritas_03').rating('update',data['integritas_03']);
-					$('.integritas_04').rating('update',data['integritas_04']);
-					
-					
-					$('.komitmen_01').rating('update',data['komitmen_01']);
-					$('.komitmen_02').rating('update',data['komitmen_02']);
-					$('.komitmen_03').rating('update',data['komitmen_03']);
-					
-					
-					$('.disiplin_01').rating('update',data['disiplin_01']);
-					$('.disiplin_02').rating('update',data['disiplin_02']);
-					$('.disiplin_03').rating('update',data['disiplin_03']);
-					$('.disiplin_04').rating('update',data['disiplin_04']);
-					
-					$('.kerjasama_01').rating('update',data['kerjasama_01']);
-					$('.kerjasama_02').rating('update',data['kerjasama_02']);
-					$('.kerjasama_03').rating('update',data['kerjasama_03']);
-					$('.kerjasama_04').rating('update',data['kerjasama_04']);
-					$('.kerjasama_05').rating('update',data['kerjasama_05']);
-					
-					
-					$('.kepemimpinan_01').rating('update',data['kepemimpinan_01']);
-					$('.kepemimpinan_02').rating('update',data['kepemimpinan_02']);
-					$('.kepemimpinan_03').rating('update',data['kepemimpinan_03']);
-					$('.kepemimpinan_04').rating('update',data['kepemimpinan_04']);
-					$('.kepemimpinan_05').rating('update',data['kepemimpinan_05']);
-					$('.kepemimpinan_06').rating('update',data['kepemimpinan_06']); 
-					
-					hitung_ave_pelayanan();
-					hitung_ave_integritas();
-					hitung_ave_komitmen();
-					hitung_ave_disiplin();
-					hitung_ave_kerjasama();
-					hitung_ave_kepemimpinan();
-
-					if ( data['id'] == 0 ){
-						$('.modal-penilaian_perilaku_kerja').find('h4').html('Add Penilaian Perilaku');
-						$('.modal-penilaian_perilaku_kerja').find('.btn-submit').attr('id', 'simpan_penilaian_perilaku_kerja');
-					}else{
-						$('.modal-penilaian_perilaku_kerja').find('h4').html('Edit Penilaian Perilaku');
-						$('.modal-penilaian_perilaku_kerja').find('.btn-submit').attr('id', 'update_penilaian_perilaku_kerja');
-					}
-
-					
-					
-					$('.modal-penilaian_perilaku_kerja').modal('show');
-
-				},
-				error: function(data){
-					
-				}						
-		});	 
-	});
 
 	
 	$(document).on('click', '#simpan_penilaian_perilaku_kerja', function(){
 		
-        var data = $('.penilaian_perilaku_kerja_form').serialize();
+		var data = $('.penilaian_perilaku_kerja_form').serialize();
+		on_submit_ppk();
 		$.ajax({
 			url		: '{{ url("api/simpan_penilaian_perilaku_kerja") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
+				reset_submit_ppk();
 				Swal.fire({
 					title: "",
 					text: "Sukses",
@@ -560,12 +501,14 @@ table.penilaian tbody td {
 
 	$(document).on('click', '#update_penilaian_perilaku_kerja', function(){
 		
-        var data = $('.penilaian_perilaku_kerja_form').serialize();
+		var data = $('.penilaian_perilaku_kerja_form').serialize();
+		on_submit_ppk();
 		$.ajax({
 			url		: '{{ url("api/update_penilaian_perilaku_kerja") }}',
 			type	: 'POST',
 			data	:  data,
 			success	: function(data , textStatus, jqXHR) {
+				reset_submit_ppk();
 				Swal.fire({
 					title: "",
 					text: "Sukses",

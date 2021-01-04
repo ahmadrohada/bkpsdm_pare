@@ -221,7 +221,7 @@
 	$(document).on('click','#submit-save',function(e){
 
 		@if ( $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan  == '5')
-			save_jft();
+			save_rkt_jft();
 		@else
 			save_eselon();
 		@endif
@@ -292,7 +292,7 @@
 		});
 	}
 
-	function save_jft(){
+	function save_rkt_jft(){
 		on_submit_kt();
 		var data = $('#realisasi_tahunan_form').serialize();
 
@@ -330,21 +330,18 @@
 			)	
 			},
 			error: function(jqXHR , textStatus, errorThrown) {
-
-				var test = $.parseJSON(jqXHR.responseText);
 				
+				var test = $.parseJSON(jqXHR.responseText);
 				var data= test.errors;
-
 				$.each(data, function(index,value){
 					//alert (index+":"+value);
-					
 					//error message
 					((index == 'realisasi_quantity')?$('.quantity').addClass('has-error'):'');
 					((index == 'realisasi_quality')?$('.quality').addClass('has-error'):'');
 					((index == 'realisasi_waktu')?$('.waktu').addClass('has-error'):'');
 					((index == 'realisasi_cost')?$('.cost').addClass('has-error'):'');
+					reset_submit_kt();
 					
-					reset_submitx();
 					
 				
 				});
@@ -415,7 +412,7 @@
 					((index == 'realisasi_quality')?$('.quality').addClass('has-error'):'');
 					((index == 'realisasi_waktu')?$('.waktu').addClass('has-error'):'');
 					((index == 'realisasi_cost')?$('.cost').addClass('has-error'):'');
-					reset_submitx();
+					reset_submit_kt();
 
 					
 				
@@ -475,7 +472,7 @@
 					((index == 'realisasi_quality')?$('.quality').addClass('has-error'):'');
 					((index == 'realisasi_waktu')?$('.waktu').addClass('has-error'):'');
 					((index == 'realisasi_cost')?$('.cost').addClass('has-error'):'');
-					reset_submitx();
+					reset_submit_kt();
 
 					
 				

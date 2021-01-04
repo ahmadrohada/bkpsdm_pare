@@ -258,12 +258,12 @@ class PerilakuKerjaAPIController extends Controller {
                 'kerjasama_03.required'         => 'Harus diisi',
                 'kerjasama_04.required'         => 'Harus diisi',
                 'kerjasama_05.required'         => 'Harus diisi',
-                'kepemimpinan_01.required'      => 'Harus diisi',
+                /* 'kepemimpinan_01.required'      => 'Harus diisi',
                 'kepemimpinan_02.required'      => 'Harus diisi',
                 'kepemimpinan_03.required'      => 'Harus diisi',
                 'kepemimpinan_04.required'      => 'Harus diisi',
                 'kepemimpinan_05.required'      => 'Harus diisi',
-                'kepemimpinan_06.required'      => 'Harus diisi', 
+                'kepemimpinan_06.required'      => 'Harus diisi',  */
 
         ];
 
@@ -290,12 +290,12 @@ class PerilakuKerjaAPIController extends Controller {
                             'kerjasama_03'         => 'required|numeric|min:1|max:5',
                             'kerjasama_04'         => 'required|numeric|min:1|max:5',
                             'kerjasama_05'         => 'required|numeric|min:1|max:5',
-                            'kepemimpinan_01'      => 'required|numeric|min:1|max:5',
+                            /* 'kepemimpinan_01'      => 'required|numeric|min:1|max:5',
                             'kepemimpinan_02'      => 'required|numeric|min:1|max:5',
                             'kepemimpinan_03'      => 'required|numeric|min:1|max:5',
                             'kepemimpinan_04'      => 'required|numeric|min:1|max:5',
                             'kepemimpinan_05'      => 'required|numeric|min:1|max:5',
-                            'kepemimpinan_06'      => 'required|numeric|min:1|max:5',
+                            'kepemimpinan_06'      => 'required|numeric|min:1|max:5', */
 
                         ),
                         $messages
