@@ -18,8 +18,8 @@
 	    <section class="content"> 
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
-				<li class="status"><a href="#status" data-toggle="tab">Status </a></li>
-				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
+				<li class="status"><a href="#status" data-toggle="tab">Sumary </a></li>
+				<li class="detail"><a href="#detail" data-toggle="tab" >Pejabat</a></li>
 				<li class="kegiatan_bulanan_tab"><a href="#kegiatan_bulanan_tab" data-toggle="tab">Kegiatan Bulanan Eselon {!! $capaian->PegawaiYangDinilai->Eselon->eselon !!} / {!! $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				<li class="uraian_tugas_tambahan_tab"><a href="#uraian_tugas_tambahan_tab" data-toggle="tab">Uraian Tugas Tambahan</a></li>
 			</ul>

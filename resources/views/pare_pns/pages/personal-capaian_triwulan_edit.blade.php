@@ -19,7 +19,7 @@
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" id="myTab">
 				{{--  <li class="status"><a href="#status" data-toggle="tab">Status </a></li>  --}}
-				<li class="detail"><a href="#detail" data-toggle="tab" >Detail</a></li>
+				<li class="detail"><a href="#detail" data-toggle="tab" >Pejabat</a></li>
 				<li class="kegiatan_triwulan_tab"><a href="#kegiatan_triwulan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian_triwulan->PegawaiYangDinilai->Eselon->eselon !!} / {!! $capaian_triwulan->PegawaiYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				
 			</ul>
