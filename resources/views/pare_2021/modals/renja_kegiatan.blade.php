@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    kegiatan
+                    Sub kegiatan
                 </h4>
             </div>
 
@@ -17,7 +17,7 @@
 
 					<div class="row">
 						<div class="col-md-12 form-group label_kegiatan">
-							<label class="control-label">Kegiatan :</label>
+							<label class="control-label">Sub Kegiatan :</label>
 							<textarea name="label_kegiatan" rows="2" required class="form-control label_kegiatan" id="label_kegiatan" style="resize:none;"></textarea>
 						</div>
 					</div>

@@ -870,6 +870,7 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//========================================================================================================//
 	
 	Route::get('penilaian_kualitas_kerja_detail','API\RealisasiKegiatanTahunanAPIController@PenilaianKualitasKerja');
+	Route::get('penilaian_kualitas_kerja_detail_JFT','API\RealisasiKegiatanTahunanAPIController@PenilaianKualitasKerjaJFT');
 	Route::post('simpan_penilaian_kualitas_kerja','API\RealisasiKegiatanTahunanAPIController@UpdateKualitasKerja');
 	Route::post('simpan_penilaian_kualitas_kerja_5','API\RealisasiKegiatanTahunanAPIController@UpdateKualitasKerja5');
 

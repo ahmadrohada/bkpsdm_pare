@@ -496,7 +496,7 @@ table.dataTable tbody td {
 	$(document).on('click','.penilaian_kualitas_kerja',function(e){
 		var realisasi_kegiatan_id = $(this).data('realisasi_kegiatan_id');
 		$.ajax({
-				url			  	: '{{ url("api/penilaian_kualitas_kerja_detail") }}',
+				url			  	: '{{ url("api/penilaian_kualitas_kerja_detail_JFT") }}',
 				data 		  	: { 
 									realisasi_kegiatan_id : realisasi_kegiatan_id ,
 								},

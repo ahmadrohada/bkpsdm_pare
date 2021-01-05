@@ -622,11 +622,35 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
  
         );
         return $realisasi_kegiatan_tahunan;
-
-
-
     }
     
+    public function PenilaianKualitasKerjaJFT(Request $request)
+    {
+        $realisasi_kegiatan_id = $request->realisasi_kegiatan_id;
+        $x = RealisasiKegiatanTahunanJFT::WHERE('id',$realisasi_kegiatan_id)
+                                        ->SELECT(   'id',
+                                                    'akurasi',
+                                                    'ketelitian',
+                                                    'kerapihan',
+                                                    'keterampilan'
+                                        
+                                                )
+                                        ->first();
+
+
+
+        //return  $rencana_aksi;
+        $realisasi_kegiatan_tahunan = array(
+            'realisasi_kegiatan_tahunan_id' => $x->id,
+            'akurasi'                       => $x->akurasi,
+            'ketelitian'                    => $x->ketelitian,
+            'kerapihan'                     => $x->kerapihan,
+            'keterampilan'                  => $x->keterampilan,
+           
+ 
+        );
+        return $realisasi_kegiatan_tahunan;
+    }
     
     public function AddRealisasiKegiatanTahunan(Request $request)
     {
