@@ -30,11 +30,12 @@
 							</div>
 							<div class="form-horizontal col-xs-6" style="">
 								<div class="form-group form-group-sm">
-									<label>Masa Penilaian</label>
-									<p class="text-muted masa_penilaian_skp_tahunan"></p>   
+									<label>Jumlah Kegiatan Tahunan</label>
+									<p class="text-muted jm_kegiatan"></p>
+										
 								</div>
 							</div>
-							<div class="form-horizontal col-xs-6 before_end" hidden>
+							<div class="form-horizontal col-xs-6 " hidden>
 								<div class="form-group form-group-sm masa_penilaian">
 									<label>Masa Penilaian Capaian Tahunan</label>
 									<div class="input-group input-group-sm ">
@@ -46,25 +47,26 @@
 							</div>
 							
 						</div>
-						<div class="row" style="padding:0px 10px;">
-							<div class="form-horizontal col-md-6 " style="">
-								<div class="form-group form-group-sm">
-									<label>Jumlah Kegiatan Tahunan</label>
-									<p class="text-muted jm_kegiatan"></p>
-								</div>
-							</div>
-							
-						</div>
+						
 						
 						
 						
 						<hr>
 
-						<div class="form-horizontal col-md-12 before_end" style="padding-left:0px; " hidden>
-							<p class="text-danger">- Capaian dibuat sebelum masa penilaian SKP berakhir</p>
-							<p class="text-danger">- Ubah tgl akhir masa penilaian menjadi 1 hari sebelum TMT Jabatan Baru</p><span class="text-success masa_penilaian_baru"></span>
-							<p class="text-danger">- Masa Penilaian SKP akan diubah sesuai masa penilaian capaian</p>
-							<p class="text-danger">- SKP Bulanan setelah masa penilaian akan dihapus</p>
+						<div class="form-horizontal text-center col-md-12 normal_end" style="padding-left:0px; " hidden>
+							<h3 class="text-succes strong">MASA PENILAIAN SKP TAHUNAN</h3>
+							<h2 class="text-succes strong"><span class="masa_penilaian_skp_tahunan"></h2>
+							<h5 class="text-danger">PASTIKAN MASA PENILAIAN SKP SAMPAI DENGAN PADA BULAN DESEMBER</h5>
+							<h5 class="text-danger">JANGAN LANJUTKAN PROSES CREATE CAPAIAN JIKA MASA PENILAIAN BERMASALAH</h5>
+							<h5 class="text-danger">HUBUNGI ADMIN JIKA TERDAPAT KESALAHAN MASA PENILAIAN</h4>
+
+						</div>
+
+						<div class="form-horizontal col-md-12 text-center before_end" style="padding-left:0px; " hidden>
+							<h5 class="text-danger">- Capaian dibuat sebelum masa penilaian SKP berakhir</h5>
+							<h5 class="text-danger">- Ubah tgl akhir masa penilaian menjadi 1 hari sebelum TMT Jabatan Baru<span class="text-success masa_penilaian_baru"></span></h5>
+							<h5 class="text-danger">- Masa Penilaian SKP akan diubah sesuai masa penilaian capaian</h5>
+							<h5 class="text-danger">- SKP Bulanan setelah masa penilaian akan dihapus</h5>
 						</div>
 
 						

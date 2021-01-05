@@ -215,6 +215,7 @@
 
 				if (data['status']==='pass'){
 					$('.before_end').hide(); 
+					$('.normal_end').show(); 
 					$('.modal-create_capaian_tahunan_confirm').modal('show'); 
 				}else if (data['status']==='pass_before_end'){
 
@@ -238,6 +239,7 @@
 
 							
 							$('.before_end').show(); 
+							$('.normal_end').hide();
 							$('.modal-create_capaian_tahunan_confirm').modal('show'); 
 
 						}
