@@ -1270,6 +1270,7 @@ class RealisasiKegiatanTahunanAPIController extends Controller {
                 $rkt_update                           = RealisasiKegiatanTahunan::find(Input::get('realisasi_kegiatan_tahunan_id'));
                 $rkt_update->jumlah_indikator         = Input::get('jumlah_indikator');
                 //$rkt_update->realisasi_quality        = Input::get('realisasi_quality');
+                $rkt_update->target_angka_kredit    = Input::get('target_angka_kredit');
                 $rkt_update->realisasi_angka_kredit   = Input::get('realisasi_angka_kredit');
                 $rkt_update->realisasi_cost           = preg_replace('/[^0-9]/', '', Input::get('realisasi_cost'));
                 $rkt_update->realisasi_waktu          = Input::get('realisasi_waktu');

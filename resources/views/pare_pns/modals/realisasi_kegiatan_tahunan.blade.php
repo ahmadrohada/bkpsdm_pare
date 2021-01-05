@@ -18,7 +18,7 @@
 			<input type="hidden"  name="jumlah_indikator">
 			<input type="hidden"  name="satuan">
 
-			<input type="hidden"  name="target_angka_kredit">
+			{{-- <input type="hidden"  name="target_angka_kredit"> --}}
 			<input type="hidden"  name="target_quantity">
 			<input type="hidden"  name="target_quality">
 			<input type="hidden"  name="target_waktu">
@@ -41,7 +41,7 @@
 					<div class="row" style="margin-top:-10px;"> 
 						<div class="col-md-6 col-xs-6 form-group">	
 							<label class="control-label">Target AK </label>
-							<span type="text" class="form-control input-sm target_angka_kredit"></span>
+							<input type="text" class="form-control input-sm target_angka_kredit" name="target_angka_kredit">
 						</div>
 						<div class="col-md-6 col-xs-6 form-group angka_kredit">	
 							<label class="control-label">Realisasi AK</label>
@@ -173,7 +173,7 @@
 		
 
 		if ( $('.realisasi_angka_kredit').val() == ""  ){
-			$(this).find('input:text')[0].focus();
+			$(this).find('input:text')[1].focus();
 		}else{
 			$(this).find('input:text')[4].focus();
 		}

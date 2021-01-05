@@ -56,7 +56,7 @@
 						<div class="form-horizontal text-center col-md-12 normal_end" style="padding-left:0px; " hidden>
 							<h3 class="text-succes strong">MASA PENILAIAN SKP TAHUNAN</h3>
 							<h2 class="text-succes strong"><span class="masa_penilaian_skp_tahunan"></h2>
-							<h5 class="text-danger">PASTIKAN MASA PENILAIAN SKP SAMPAI DENGAN PADA BULAN DESEMBER</h5>
+							<h5 class="text-danger">PASTIKAN MASA PENILAIAN SKP SAMPAI DENGAN  BULAN <b>DESEMBER</b></h5>
 							<h5 class="text-danger">JANGAN LANJUTKAN PROSES CREATE CAPAIAN JIKA MASA PENILAIAN BERMASALAH</h5>
 							<h5 class="text-danger">HUBUNGI ADMIN JIKA TERDAPAT KESALAHAN MASA PENILAIAN</h4>
 
