@@ -1,20 +1,20 @@
-<div class="modal fade distribusi_kegiatan_add" id="createKegiatan" role="dialog"  aria-hidden="true">
+<div class="modal fade distribusi_subkegiatan_add" id="createKegiatan" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    Kegiatan List
+                    Sub Kegiatan List
                 </h4>
             </div>
 
 			<div class="modal-body">
 
-				<table id="kegiatan_list_add" class="table table-striped table-hover table-condensed">
+				<table id="subkegiatan_list_add" class="table table-striped table-hover table-condensed">
 					<thead>
 						<tr class="success">
 							<th>ADD</th>
-							<th>KEGIATAN</th>
+							<th>SUB KEGIATAN</th>
 							<!-- <th>TARGET</th> -->
 							<th>ANGGARAN</th>
 						</tr>
@@ -41,17 +41,17 @@
 
 <script type="text/javascript">
 
-		$('.distribusi_kegiatan_add').on('hidden.bs.modal', function() {
-			$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
+		$('.distribusi_subkegiatan_add').on('hidden.bs.modal', function() {
+			$('#subkegiatan_list_add').DataTable().ajax.reload(null,false);
 			
 		});
 	
-		$('.distribusi_kegiatan_add').on('shown.bs.modal', function(){
-			$('#kegiatan_list_add').DataTable().ajax.reload(null,false);
+		$('.distribusi_subkegiatan_add').on('shown.bs.modal', function(){
+			$('#subkegiatan_list_add').DataTable().ajax.reload(null,false);
 		});
 
 	
-		$('#kegiatan_list_add').DataTable({
+		$('#subkegiatan_list_add').DataTable({
 					destroy			: true,
 					processing      : true,
 					serverSide      : true,
@@ -63,7 +63,7 @@
 										{ className: "text-right", targets: [ 2 ] }
 									],
 					ajax			: {
-										url	: '{{ url("api/renja_kegiatan_list") }}',
+										url	: '{{ url("api/renja_subkegiatan_list") }}',
 										data: { renja_id : {!! $renja->id !!} },
 										delay:3000
 									},
@@ -74,7 +74,7 @@
 								
 									{ data: "label" ,  name:"label", orderable: true, searchable: true},
 									//{ data: "kegiatan_target" ,  name:"kegiatan_target", orderable: true, searchable: false,width:'140px'},
-									{ data: "kegiatan_anggaran" ,  name:"kegiatan_anggaran", orderable: true, searchable: false,width:'140px'},
+									{ data: "subkegiatan_anggaran" ,  name:"subkegiatan_anggaran", orderable: true, searchable: false,width:'140px'},
 									
 									
 								]
@@ -90,7 +90,7 @@
 
 			if ( data.length >0 ){
 				$.ajax({
-						url		: '{!! url("api/add_kegiatan_to_pejabat?id_jabatan='+tes+'") !!}',
+						url		: '{!! url("api/add_subkegiatan_to_pejabat?id_jabatan='+tes+'") !!}',
 						type	: 'POST',
 						data	: data,
 						success	: function(data) {
@@ -111,11 +111,11 @@
 									allowOutsideClick : false,
 									timer:500
 							}).then(function () {
-								$('.distribusi_kegiatan_add').modal('hide');
+								$('.distribusi_subkegiatan_add').modal('hide');
 								$('#ditribusi_renja').jstree('refresh');
 								$('#perjanjian_kinerja').DataTable().ajax.reload(null,false);
-								$('#kegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
-								$('#kegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
+								/* $('#subkegiatan_tahunan-kegiatan_table').DataTable().ajax.reload(null,false);
+								$('#subkegiatan_tahunan-kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false); */
 							
 									
 							},

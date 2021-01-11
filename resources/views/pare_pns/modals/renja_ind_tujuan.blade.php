@@ -26,7 +26,7 @@
 						
 						<div class="col-md-8 form-group target_ind_tujuan">
 						<label class="control-label">Target :</label>
-						<input type="text" name="target_ind_tujuan" id="target_ind_tujuan" required class="form-control input-sm" onkeypress='return format_quantity(event)' placeholder="huruf capital / angka">        
+						<input type="text" name="target_ind_tujuan" id="target_ind_tujuan" required class="form-control input-sm" onkeypress='return format_quantity(event)' placeholder="">        
 						</div>
 
 						<div class="col-md-4 form-group satuan_ind_tujuan">
@@ -51,7 +51,7 @@
 <script type="text/javascript">
 
 	$('.modal-ind_tujuan').on('shown.bs.modal', function(){
-		
+		$(this).find('.label_ind_tujuan').focus();
 	});
 
 	$('.modal-ind_tujuan').on('hidden.bs.modal', function(){

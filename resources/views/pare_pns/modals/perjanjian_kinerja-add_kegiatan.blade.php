@@ -10,7 +10,7 @@
 
 			<div class="modal-body">
 				<input type="hidden" class="program_id">
-				<table id="kegiatan_list_add" class="table table-striped table-hover table-condensed">
+				<table id="subkegiatan_list_add" class="table table-striped table-hover table-condensed">
 					<thead>
 						<tr class="success">
 							<th>NO</th>
@@ -45,8 +45,8 @@
 <script type="text/javascript">
 
 	$('.modal-kegiatan_list').on('hidden.bs.modal', function() {
-		$('#kegiatan_list_add').DataTable().clear();
-		$('#kegiatan_list_add').DataTable().destroy();
+		$('#subkegiatan_list_add').DataTable().clear();
+		$('#subkegiatan_list_add').DataTable().destroy();
 		$('.total_anggaran_kegiatan').html(0);
 	});
 	
@@ -59,7 +59,7 @@
 		$('.modal-kegiatan_list').find('h4').html('List Kegiatan Perjanjian Kinerja Eselon II');
 
 
-		$('#kegiatan_list_add').DataTable({
+		$('#subkegiatan_list_add').DataTable({
 					destroy			: true,
 					processing      : true,
 					serverSide      : true,
@@ -136,7 +136,7 @@
 				data 		: {kegiatan_id : kegiatan_id},
 				method		: "POST",
 				success		: function(data) {
-					$('#kegiatan_list_add').DataTable().ajax.reload(null,false); 
+					$('#subkegiatan_list_add').DataTable().ajax.reload(null,false); 
 					$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
 					hitung_total_anggaran();
 					hitung_total_anggaran_kegiatan(program_id);
@@ -180,7 +180,7 @@
 				data 		: {kegiatan_id : kegiatan_id},
 				method		: "POST",
 				success		: function(data) {
-					$('#kegiatan_list_add').DataTable().ajax.reload(null,false); 
+					$('#subkegiatan_list_add').DataTable().ajax.reload(null,false); 
 					$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
 					hitung_total_anggaran();
 					hitung_total_anggaran_kegiatan(program_id);

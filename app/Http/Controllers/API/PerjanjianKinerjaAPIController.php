@@ -10,6 +10,7 @@ use App\Models\Kegiatan;
 use App\Models\Tujuan;
 use App\Models\Sasaran;
 use App\Models\Program;
+use App\Models\SubKegiatan;
 use App\Models\IndikatorProgram;
 use App\Models\IndikatorSasaran;
 use App\Models\Pegawai;
@@ -99,10 +100,15 @@ class PerjanjianKinerjaAPIController extends Controller {
                     ->rightjoin('db_pare_2018.renja_program AS program', function ($join) {
                         $join->on('program.sasaran_id', '=', 'sasaran.id');
                     })
+                    ->rightjoin('db_pare_2018.renja_kegiatan AS kegiatan', function ($join) {
+                        $join->on('kegiatan.program_id', '=', 'program.id');
+                    })
                     ->where('renja_tujuan.renja_id', '=' ,$request->get('renja_id'))
                     ->select([   
                                 'program.id AS program_id',
-                                'program.label AS program_label'
+                                'program.label AS program_label',
+                                'kegiatan.id AS kegiatan_id'
+                                
                             ])
 
                     ->get();
@@ -114,16 +120,16 @@ class PerjanjianKinerjaAPIController extends Controller {
                     ->addColumn('program', function ($x) {
                         return $x->program_label;
                     })
-                    ->addColumn('jm_kegiatan', function ($x) {
+                    ->addColumn('jm_subkegiatan', function ($x) {
 
-                        $dt = Kegiatan::WHERE('program_id',$x->program_id)->WHERE('esl2_pk_status','1')->count();
-                        $dt_2 = Kegiatan::WHERE('program_id',$x->program_id)->count();
+                        $dt = SubKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->WHERE('esl2_pk_status','1')->count();
+                        $dt_2 = SubKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->count();
                         
                         return $dt." / ".$dt_2 ;
                     })
                     ->addColumn('anggaran', function ($x) {
 
-                        $dt = Kegiatan::WHERE('program_id',$x->program_id)->WHERE('esl2_pk_status','1')->select( \DB::raw('SUM(cost) as anggaran'))->get();
+                        $dt = SubKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->WHERE('esl2_pk_status','1')->select( \DB::raw('SUM(cost) as anggaran'))->get();
                         //return $dt[0]['anggaran'];
                         return "Rp.   " . number_format( $dt[0]['anggaran'], '0', ',', '.');
                     })
@@ -284,17 +290,21 @@ class PerjanjianKinerjaAPIController extends Controller {
                     ->rightjoin('db_pare_2018.renja_program AS program', function ($join) {
                         $join->on('program.sasaran_id', '=', 'sasaran.id');
                     })
+                    ->rightjoin('db_pare_2018.renja_kegiatan AS kegiatan', function ($join) {
+                        $join->on('kegiatan.program_id', '=', 'program.id');
+                    })
                     ->where('renja_tujuan.renja_id', '=' ,$request->get('renja_id'))
                     ->select([   
                                 'program.id AS program_id',
-                                'program.label AS program_label'
+                                'program.label AS program_label',
+                                'kegiatan.id AS kegiatan_id'
                             ])
 
                     ->get();
 
         $total_anggaran = 0 ;
         foreach ($dt as $x) {
-            $dt = Kegiatan::WHERE('program_id',$x->program_id)->WHERE('esl2_pk_status','1')->select( \DB::raw('SUM(cost) as anggaran'))->get();
+            $dt = SubKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->WHERE('esl2_pk_status','1')->select( \DB::raw('SUM(cost) as anggaran'))->get();
             $total_anggaran = $total_anggaran+$dt[0]['anggaran'];
             //return "Rp.   " . number_format( $dt[0]['anggaran'], '0', ',', '.');
 

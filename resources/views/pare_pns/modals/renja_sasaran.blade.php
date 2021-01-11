@@ -40,7 +40,7 @@
 <script type="text/javascript">
 
 	$('.modal-sasaran').on('shown.bs.modal', function(){
-		
+		$(this).find('.label_sasaran').focus();
 	});
 
 	$('.modal-sasaran').on('hidden.bs.modal', function(){

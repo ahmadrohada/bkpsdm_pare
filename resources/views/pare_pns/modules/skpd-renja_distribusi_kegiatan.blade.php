@@ -30,7 +30,7 @@ $(document).ready(function() {
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api/skpd_renja_distribusi_kegiatan_tree") }}",
+						"url" 	: "{{ url("api/skpd_renja_distribusi_subkegiatan_tree") }}",
 						"data" 	: function (node) {
 							return { "id" : node.id };
 						},

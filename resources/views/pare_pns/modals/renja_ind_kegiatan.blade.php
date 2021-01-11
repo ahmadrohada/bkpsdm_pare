@@ -13,11 +13,11 @@
 			<input type="hidden"  name="ind_kegiatan_id" class="ind_kegiatan_id">
 			<div class="modal-body">
 					
-					<strong>Kegiatan</strong>
+					{{-- <strong>Kegiatan</strong>
 					<p class="text-muted " style="margin-top:8px;padding-bottom:10px;">
 						<span class="txt_kegiatan_label"></span>
 					</p>
-					<br>
+					<br> --}}
 
 					<div class="row">
 						<div class="col-md-12 form-group label_ind_kegiatan ">
@@ -30,7 +30,7 @@
 						
 						<div class="col-md-8 form-group target_ind_kegiatan">
 						<label class="control-label">Target :</label>
-						<input type="text" name="target_ind_kegiatan" id="target_ind_kegiatan" onkeypress='return format_quantity(event)' required class="form-control input-sm" placeholder="huruf capital / angka">        
+						<input type="text" name="target_ind_kegiatan" id="target_ind_kegiatan" onkeypress='return format_quantity(event)' required class="form-control input-sm" placeholder="">        
 						</div>
 
 						<div class="col-md-4 form-group satuan_ind_kegiatan">
@@ -55,7 +55,7 @@
 <script type="text/javascript">
 
 	$('.modal-ind_kegiatan').on('shown.bs.modal', function(){
-		
+		$(this).find('.label_ind_kegiatan').focus();
 	});
 
 	$('.modal-ind_kegiatan').on('hidden.bs.modal', function(){

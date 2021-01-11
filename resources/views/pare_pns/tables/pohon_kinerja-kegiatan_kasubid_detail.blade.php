@@ -106,7 +106,7 @@ function load_kegiatan_kasubid(jabatan_id){
 									{ className: "text-right", targets: [ 3 ] }
 								],
 				ajax			: {
-									url	: '{{ url("api/skpd-renja_kegiatan_list_kasubid") }}',
+									url	: '{{ url("api/skpd-renja_subkegiatan_list_kasubid") }}',
 									data: { jabatan_id: jabatan_id ,
 											renja_id:{!! $renja->id !!}
 										},
@@ -176,7 +176,7 @@ function load_kegiatan_kasubid(jabatan_id){
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api/hapus_kegiatan_kasubid") }}',
+					url		: '{{ url("api/hapus_subkegiatan_kasubid") }}',
 					type	: 'POST',
 					data    : {kegiatan_id:kegiatan_id},
 					cache   : false,
@@ -241,7 +241,7 @@ function load_kegiatan_kasubid(jabatan_id){
 		}).then ((result) => {
 			if (result.value){
 				$.ajax({
-					url		: '{{ url("api/hapus_kegiatan_kasubid") }}',
+					url		: '{{ url("api/hapus_subkegiatan_kasubid") }}',
 					type	: 'POST',
 					data    : {kegiatan_id:kegiatan_id},
 					cache   : false,

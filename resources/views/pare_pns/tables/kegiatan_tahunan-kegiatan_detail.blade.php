@@ -51,7 +51,7 @@
 								{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api/pohon_kinerja-kegiatan_list") }}',
+								url	: '{{ url("api/pohon_kinerja-subkegiatan_list") }}',
 								data: { 
 										renja_id:{!! $renja->id !!}
 									 },
@@ -96,7 +96,7 @@
 								//{ className: "text-right", targets: [ 2 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api/pohon_kinerja-kegiatan_non_anggaran_list") }}',
+								url	: '{{ url("api/pohon_kinerja-subkegiatan_non_anggaran_list") }}',
 								data: { 
 										renja_id:{!! $renja->id !!}
 									 },

@@ -22,12 +22,12 @@
 						</div>
 					</div>
 
-					<div class="row">
+					{{-- <div class="row">
 						<div class="col-md-12 form-group cost_kegiatan">
 							<label class="control-label">Anggaran :</label>
 							<input type="text" name="cost_kegiatan" autocomplete="off" id="cost_kegiatan" required class="form-control input-sm" placeholder="cost">
 						</div>
-					</div>
+					</div> --}}
 
 				
 					
@@ -48,7 +48,7 @@
 <script type="text/javascript">
 
 	$('.modal-kegiatan').on('shown.bs.modal', function(){
-		
+		$(this).find('.label_kegiatan').focus();
 	});
 
 	$('.modal-kegiatan').on('hidden.bs.modal', function(){
@@ -92,7 +92,6 @@
 				}).then(function () {
 					$('.modal-kegiatan').modal('hide');
 					$('#kegiatan_table').DataTable().ajax.reload(null,false);
-					$('#kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
 					jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 					
 				},
@@ -154,7 +153,6 @@
 				}).then(function () {
 					$('.modal-kegiatan').modal('hide');
 					$('#kegiatan_table').DataTable().ajax.reload(null,false);
-					$('#kegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
 					jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
 					
 				},

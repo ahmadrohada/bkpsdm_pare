@@ -81,7 +81,7 @@
 	$('#kegiatan_tahunan_3').jstree({
 				'core' : {
 					'data' : {
-							"url" 	: "{{ url("api/skp_tahunan_kegiatan_3") }}", 
+							"url" 	: "{{ url("api/skp_tahunan_subkegiatan_3") }}", 
 							'data' : function (node) {
 								return { 	"id" 		: node.id ,
 											"data" 		: node.data,

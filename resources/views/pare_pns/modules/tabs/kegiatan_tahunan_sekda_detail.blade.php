@@ -74,7 +74,7 @@
 	$('#kegiatan_tahunan_sekda').jstree({
 				'core' : {
 					'data' : {
-							"url" 	: "{{ url("api/skp_tahunan_kegiatan_sekda") }}", 
+							"url" 	: "{{ url("api/skp_tahunan_subkegiatan_sekda") }}", 
 							'data' : function (node) {
 								return { 	"id" 		: node.id ,
 											"data" 		: node.data,

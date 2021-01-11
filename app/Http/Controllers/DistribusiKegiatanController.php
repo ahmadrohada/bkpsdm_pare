@@ -158,7 +158,7 @@ class DistribusiKegiatanController extends Controller {
 
         $datatables = Datatables::of($dt)
         ->addColumn('action', function ($x) {
-			return 		'<a href="administrator/'.$x->id_jabatan.'/add-kegiatan" class="btn btn-xs btn-primary" style="margin:2px; width:140px;"><i class="fa fa-plus"></i> Add Kegiatan</a>';
+			return 		'<a href="administrator/'.$x->id_jabatan.'/add-kegiatan" class="btn btn-xs btn-primary" style="margin:2px; width:140px;"><i class="fa fa-plus"></i> Add Sub Kegiatan</a>';
 		})->addColumn('nama_jabatan', function ($x) {
             
             return Pustaka::capital_string($x->skpd);

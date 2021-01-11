@@ -115,7 +115,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	//============================================================================================//
 	//============================ ADMIN HOME / ADMIN SNAPSHOTS ====================================//
 	//============================================================================================//
-	Route::get('admin/', [
+	/* Route::get('admin/', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeAdminController@showHomeAdministrator'
 	]);
@@ -138,14 +138,14 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/masa_pemerintahan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeAdminController@showMasaPemerintahan'
-	]);
+	]); */
 
 	Route::get('admin/pohon_kinerja', [
 		'as' 			=> 'admin-pohon_kinerja',
 		'uses' 			=> 'HomeAdminController@showPohonKinerja'
 	]);
 
-	Route::get('admin/skp_tahunan', [
+	/* Route::get('admin/skp_tahunan', [
 		'as' 			=> 'admin-skp_tahunan',
 		'uses' 			=> 'HomeAdminController@showSKPTahunan'
 	]);
@@ -158,24 +158,16 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/puskesmas', [
 		'as' 			=> 'admin-puskesmas',
 		'uses' 			=> 'HomeAdminController@showPuskesmas'
-	]);
-
-	
-
-
-	/* Route::get('admin/update_table', [
-		'as' 			=> '',
-		'uses' 			=> 'HomeAdminController@UpdateTable'
 	]); */
 
-
+	
 	//========================================================================================//
 	//================================ T P P    REPORT              ===========================//
 	//========================================================================================//
 
 	
 
-
+/* 
 	Route::get('admin/cetak_tpp_report', [
 		'as' 			=> '',
 		'uses' 			=> 'TPPReportController@AdministratorCetakTPPReport'
@@ -189,7 +181,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/tpp_report/{tpp_report_id}', [
 		'as' 			=> '',
 		'uses' 			=> 'TPPReportController@AdministratorTPPReport'
-	]);
+	]); */
 
 	
  
@@ -197,10 +189,10 @@ Route::group(['middleware' => 'administrator'], function () {
 	//----------------------------------------------------------------------------------------//
 	//============================ MASA PEMERINTAHAN ======== ================================//
 	//----------------------------------------------------------------------------------------//
-	Route::get('admin/masa_pemerintahan/{masa_pemerintahan_id}',[
+	/* Route::get('admin/masa_pemerintahan/{masa_pemerintahan_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'MasaPemerintahanController@showMasaPemerintahan'
-	]);
+	]); */
 
 	//----------------------------------------------------------------------------------------//
 	//========================      POHON KINERJA SKPD       ================================//
@@ -237,17 +229,17 @@ Route::group(['middleware' => 'administrator'], function () {
 	//----------------------------------------------------------------------------------------//
 	//========================      SKP TAHUNAN SKPD       ================================//
 	//----------------------------------------------------------------------------------------//
-	Route::get('admin/skp_tahunan/{skp_tahunan_id}',[
+	/* Route::get('admin/skp_tahunan/{skp_tahunan_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPTahunanController@AdministratorSKPTahunanDetail'
-	]);
+	]); */
 
 
 	//============================================================================================//
 	//====================================  PEGAWAI  =============================================//
 	//============================================================================================//
 	
-	Route::get('admin/pegawai/{pegawai_id}', [
+	/* Route::get('admin/pegawai/{pegawai_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@detailPegawai'
 	]);
@@ -256,24 +248,24 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/pegawai/{pegawai_id}/add', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@addPegawai'
-	]);
+	]); */
 
 	//============================================================================================//
 	//====================================  U S E R  =============================================//
 	//============================================================================================//
 	
 
-	Route::get('admin/users/{user_id}', [
+	/* Route::get('admin/users/{user_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'UserController@detailUser'
-	]);
+	]); */
 
 	//============================================================================================//
 	//============================= PEGAWAI      S K P D  ========================================//
 	//============================================================================================//
 	
 
-	Route::get('admin/skpd/{skpd_id}', [
+	/* Route::get('admin/skpd/{skpd_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'HomeAdminController@AdministratorSKPDPegawai'
 	]);
@@ -376,33 +368,10 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/capaian_bulanan/{capaian_bulanan_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'CapaianBulananController@PersonalCapaianBulananDetail'
-	]);
-	
-
-	//========================================================================//
-	
-	
-	/* // EDIT USERS PAGE ROUTE
-	Route::get('edit-users', [
-		'as' 			=> '{username}',
-		'uses' 			=> 'UsersManagementController@editUsersMainPanel'
-	]);
-
-	// TAG CONTROLLER PAGE ROUTE
-	Route::resource('admin/skilltags', 'SkillsTagController', ['except' => 'show']);
-
-	
-	
-	// TEST ROUTE ONLY ROUTE
-	Route::get('administrator', function () {
-	    echo 'Welcome to your ADMINISTRATOR page '. Auth::user()->nip .'.';
-	});
-	
-	// TEST ABOUT
-	Route::get('/about', [
-		'as' 			=> '{username}',
-		'uses' 			=> 'UsersManagementController@editUsersMainPanel'
 	]); */
+	
+
+
 	
 
 });
@@ -496,7 +465,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 
 
 
-	//=======================   TPP R E P O R T   ==================================//
+	/* //=======================   TPP R E P O R T   ==================================//
 	Route::get('report/tpp', [
 		'as' 			=> '',
 		'uses' 			=> 'TPPReportController@showSKPDTPPReport'
@@ -515,7 +484,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	Route::post('tpp_report/cetak', [
 		'as' 			=> '',
 		'uses' 			=> 'API\TPPReportAPIController@cetakTPPReportData'
-	]);
+	]); */
 
 	//========================================================================================//
 	//=============================       PERJANJIAN KINERJA       ===========================//
@@ -551,7 +520,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]);
 
 
-	//========================== CAPAIAN PK TRIWULAN =======================================//
+	/* //========================== CAPAIAN PK TRIWULAN =======================================//
 	Route::get('capaian_pk-triwulan/{capaian_pk_triwulan_id}/edit', [
 		'as' 			=> '',
 		'uses' 			=> 'CapaianPKTriwulanController@SKPDCapaianPKTriwulanEdit'
@@ -602,7 +571,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	Route::get('puskesmas/pegawai/{pegawai_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@detailPegawai'
-	]); 
+	]);  */
 
 	//----------------------------------------------------------------------------------------//
 	//======================== POHON KINERJA PERANGKAT DAERAH ================================//
@@ -623,7 +592,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]);
 	 
 	
-	//----------------------------------------------------------------------------------------//
+	/* //----------------------------------------------------------------------------------------//
 	//========================      SKP TAHUNAN SKPD       ================================//
 	//----------------------------------------------------------------------------------------//
 	Route::get('skp_tahunan/{skp_tahunan_id}',[
@@ -659,7 +628,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'as' 			=> '',
 		'uses' 			=> 'SKPBulananController@SKPBulananDetail'
 	]);
-
+ */
 	
 
 
@@ -669,7 +638,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 Route::group(['prefix' => 'puskesmas','middleware' => 'puskesmas'], function () {
 		
 	
-	//========================================================================================//
+	/* //========================================================================================//
 	//=======================   Puskesmas HOME / PUSKESMAS SNAPSHOTS =========================//
 	//========================================================================================//
 	Route::get('', [
@@ -739,7 +708,7 @@ Route::group(['prefix' => 'puskesmas','middleware' => 'puskesmas'], function () 
 	Route::get('skp_bulanan/{id}',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPBulananController@SKPBulananDetail'
-	]);
+	]); */
 
 	
 
@@ -754,7 +723,7 @@ Route::group(['prefix' => 'puskesmas','middleware' => 'puskesmas'], function () 
 
 Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
-	Route::get('', [
+	/* Route::get('', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showHomePersonal'
 	]);
@@ -1040,7 +1009,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	Route::get('capaian-tahunan/{capaian_tahunan_id}/cetak',[
 		'as' 			=> '',
 		'uses' 			=> 'CapaianTahunanController@PersonalCapaianTahunancetak'
-	]);
+	]); */
 	
 
 

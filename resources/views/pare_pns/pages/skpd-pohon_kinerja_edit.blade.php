@@ -11,48 +11,67 @@
 
 			<h1>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('skpd-pohon_kinerja') }}"><span class="fa fa-angle-left"></span></a>
-				Edit Pohon Kinerja 
+				Pohon Kinerja 
 			</h1>
-
-				{!! Breadcrumbs::render($role.'-pohon_kinerja-edit') !!}
-        
 	    </section>
 	    <section class="content">
 
+			<div class="row badge_persetujuan">
+				<div class="col-md-12">
+					<div class="callout callout-info " style="height:85px;">
+	
+						<table style="font-size:13px;">
+							<tr>
+								<td rowspan="4" style="padding:8px 2px;" class="hidden-xs"><i class="fa fa-pencil fa-3x" style="padding-right:30px;"></i></td>
+								<td >Periode</td>
+								<td >&nbsp;&nbsp;:&nbsp;</td>
+								<td>{{ Pustaka::periode_tahun($renja->Periode->label) }} </td>
+							</tr>
+							<tr>
+								<td>SKPD</td>
+								<td>&nbsp;&nbsp;:&nbsp;</td>
+								<td>{{ $renja->SKPD->skpd }} </td>
+							</tr>
+							<tr>
+								<td>
+									Created at
+								</td>
+								<td>&nbsp;&nbsp;:&nbsp;</td>
+								<td>{{ Pustaka::tgl_jam_short($renja->created_at)  }} </td>
+							</tr>
+						</table>
+					</div>
+				
+				</div>
+			</div> 
+
 				<div class="nav-tabs-custom">
 					<ul class="nav nav-tabs" id="myTab">
-						<li class="status"><a href="#status" data-toggle="tab">Status</a></li>
-						<li class="detail"><a href="#detail" data-toggle="tab">Detail</a></li>
-						<li class="rencana_kerja_tab"><a href="#rencana_kerja_tab" data-toggle="tab">Pohon Kinerja</a></li>
-						<li class="distribusi_kegiatan"><a href="#distribusi_kegiatan" data-toggle="tab">Distribusi Kegiatan</a></li>
+						<li class="pejabat"><a href="#pejabat" data-toggle="tab">Pejabat</a></li>
+						<li class="cascading_tab"><a href="#cascading_tab" data-toggle="tab">Cascading</a></li>
+						<li class="distribusi_subkegiatan"><a href="#distribusi_subkegiatan" data-toggle="tab">Distribusi Sub Kegiatan</a></li>
 						<li class="perjanjian_kinerja"><a href="#perjanjian_kinerja" data-toggle="tab">Perjanjian Kinerja</a></li>
-						<li class="kegiatan_tahunan"><a href="#kegiatan_tahunan" data-toggle="tab">Kegiatan Tahunan</a></li>
-					 
-						
-					
+						{{-- <li class="sub_kegiatan"><a href="#sub_kegiatan" data-toggle="tab">Sub Kegiatan</a></li> --}}
 					</ul>
 						
 					<div class="tab-content"  style="margin-left:20px;">
-						<div class="active tab-pane fade" id="status">
-							@include('pare_pns.modules.timeline.renja_status_edit')	
-						</div>
-						<div class="tab-pane fade" id="detail">
-							@include('pare_pns.modules.tabs.renja_detail')
+						<div class="tab-pane fade" id="pejabat">
+							@include('pare_pns.modules.tabs.pohon_kinerja_pejabat')
 						</div>
 						
-						<div class=" tab-pane fade" id="rencana_kerja_tab">
-							@include('pare_pns.modules.tabs.pohon_kinerja_edit')
+						<div class=" tab-pane fade" id="cascading_tab">
+							@include('pare_pns.modules.tabs.pohon_kinerja_cascading')
 						</div>
-						<div class=" tab-pane fade" id="distribusi_kegiatan">
-							@include('pare_pns.modules.tabs.distribusi_kegiatan_edit') 
+						<div class=" tab-pane fade" id="distribusi_subkegiatan">
+							@include('pare_pns.modules.tabs.pohon_kinerja_distribusi_subkegiatan') 
 						</div>
 						<div class=" tab-pane fade" id="perjanjian_kinerja">
-							@include('pare_pns.modules.tabs.perjanjian_kinerja_skpd_edit') 
+							@include('pare_pns.modules.tabs.pohon_kinerja_perjanjian_kinerja') 
 						</div>
 
-						<div class=" tab-pane" id="kegiatan_tahunan">
-							@include('pare_pns.modules.tabs.pohon_kinerja-kegiatan_tahunan_detail') 
-						</div>
+						{{-- <div class=" tab-pane" id="sub_kegiatan">
+							@include('pare_pns.modules.tabs._pohon_kinerja_sub_kegiatan') 
+						</div> --}}
 						
 					</div>
 						
@@ -68,8 +87,6 @@
 $(document).ready(function() {
 	
 
-	
-
 
 	$('#myTab a').click(function(e) {
 		
@@ -83,23 +100,15 @@ $(document).ready(function() {
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
+		$('html, body').animate({scrollTop:0}, 0);
 		//alert(id);
-		if ( id == 'status'){
-			status_show();
-		}else if ( id == 'rencana_kerja_tab'){
-			$('html, body').animate({scrollTop:0}, 0);
+		if ( id == 'cascading_tab'){
 			renja_list_kegiatan_tree();
-		}else if ( id == 'distribusi_kegiatan'){
-			$('html, body').animate({scrollTop:0}, 0);
-
-			initTreeDistribusiKegiatan();
-			
-
-		}else if ( id == 'kegiatan_tahunan'){
-			$('html, body').animate({scrollTop:0}, 0);
-			initTreeKegTahunanPK();
+		}else if ( id == 'distribusi_subkegiatan'){
+			initTreeDistribusiSubKegiatan();
+		}else if ( id == 'sub_kegiatan'){
+			initTreeSubKegiatanPK();
 		}else if ( id == 'perjanjian_kinerja'){
-			$('html, body').animate({scrollTop:0}, 0);
 			load_perjanjian_kinerja();
 		}
 
@@ -114,7 +123,7 @@ $(document).ready(function() {
 	if ( hash != ''){
 		$('#myTab a[href="' + hash + '"]').tab('show');
 	}else{
-		$('#myTab a[href="#status"]').tab('show');
+		$('#myTab a[href="#pejabat"]').tab('show');
 	}
 	
 

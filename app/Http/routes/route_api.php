@@ -301,11 +301,11 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//========================================================================================================//
 	
 	Route::get('skpd-renja_kegiatan_list','API\KegiatanAPIController@KegiatanList');
-	Route::get('skpd-renja_kegiatan_non_anggaran_list','API\KegiatanAPIController@KegiatanNonAnggaranList');
+	//Route::get('skpd-renja_kegiatan_non_anggaran_list','API\KegiatanAPIController@KegiatanNonAnggaranList');
 
-	Route::get('pohon_kinerja-kegiatan_tree','API\KegiatanAPIController@PohonKinerjaKegiatanTree');
-	Route::get('pohon_kinerja-kegiatan_list','API\KegiatanAPIController@PohonKinerjaKegiatanKegiatanList');
-	Route::get('pohon_kinerja-kegiatan_non_anggaran_list','API\KegiatanAPIController@PohonKinerjaKegiatanKegiatanNonAnggaranList');
+	
+	
+	//Route::get('pohon_kinerja-kegiatan_non_anggaran_list','API\KegiatanAPIController@PohonKinerjaKegiatanKegiatanNonAnggaranList');
 
 
 	Route::get('kegiatan_detail','API\KegiatanAPIController@KegiatanDetail');
@@ -330,7 +330,7 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	
 	
 	Route::get('renja_kegiatan_list','API\KegiatanAPIController@RenjaKegiatanList');
-	Route::post('add_kegiatan_to_pejabat','API\KegiatanAPIController@AddKegiatanToPejabat');
+	
 
 
 	//========================================================================================================//
@@ -349,40 +349,74 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
 
 	//========================================================================================================//
-	//============================= D I S T R I B U S I    K E G I A T A N    ========================//
+	//======================================      SUB K E G I A T A N      ===================================//
+	//=======================================================================================================//
+
+	Route::get('sub_kegiatan_update_data','API\SubKegiatanAPIController@UpdateDataSubKegiatan');
+	Route::get('skpd-renja_subkegiatan_list','API\SubKegiatanAPIController@SubKegiatanList');
+	Route::get('skpd-renja_subkegiatan_non_anggaran_list','API\SubKegiatanAPIController@SubKegiatanNonAnggaranList');
+	Route::get('pohon_kinerja-subkegiatan_non_anggaran_list','API\SubKegiatanAPIController@PohonKinerjaSubKegiatanNonAnggaranList');
+	Route::get('subkegiatan_detail','API\SubKegiatanAPIController@SubKegiatanDetail');
+
+	Route::get('pohon_kinerja-subkegiatan_tree','API\SubKegiatanAPIController@PohonKinerjaSubKegiatanTree');
+	Route::get('pohon_kinerja-subkegiatan_list','API\SubKegiatanAPIController@PohonKinerjaSubKegiatanList');
+
+	Route::get('renja_subkegiatan_list','API\SubKegiatanAPIController@RenjaSubKegiatanList');
+
+	Route::post('add_subkegiatan_to_pejabat','API\SubKegiatanAPIController@AddSubKegiatanToPejabat');
+
+	Route::post('simpan_subkegiatan','API\SubKegiatanAPIController@Store');
+	Route::post('update_subkegiatan','API\SubKegiatanAPIController@Update');
+	Route::post('hapus_subkegiatan','API\SubKegiatanAPIController@Hapus');
+
+
+	//========================================================================================================//
+	//===================================   INDIKATOR   SUB K E G I A T A N      =============================//
+	//========================================================================================================//
+	
+	
+	Route::get('skpd-renja_ind_subkegiatan_list','API\IndikatorSubKegiatanAPIController@IndikatorSubKegiatanList');
+	Route::get('ind_subkegiatan_detail','API\IndikatorSubKegiatanAPIController@IndikatorSubKegiatanDetail');
+	
+
+	Route::post('simpan_ind_subkegiatan','API\IndikatorSubKegiatanAPIController@Store');
+	Route::post('update_ind_subkegiatan','API\IndikatorSubKegiatanAPIController@Update');
+	Route::post('hapus_ind_subkegiatan','API\IndikatorSubKegiatanAPIController@Hapus');
+	//========================================================================================================//
+	//========================== D I S T R I B U S I   SUB   K E G I A T A N    ===============================//
+	// 07012020 yg didistribusikan adalah subKegiatan 
 	//========================================================================================================//
 
 
-	Route::get('skpd_renja_distribusi_kegiatan_tree','API\KegiatanAPIController@RenjaDistribusiKegiatanTree');
-	Route::get('skpd_renja_distribusi_kegiatan_tree_','API\KegiatanAPIController@RenjaDistribusiKegiatanTree_');
+	Route::get('skpd_renja_distribusi_subkegiatan_tree','API\SubKegiatanAPIController@RenjaDistribusiSubKegiatanTree');
 
 	//Kegiatan SEKDA
-	Route::get('skp_tahunan_kegiatan_sekda','API\KegiatanAPIController@SKPTahunanKegiatanTreeSekda');
+	Route::get('skp_tahunan_subkegiatan_sekda','API\SubKegiatanAPIController@SKPTahunanSubKegiatanTreeSekda');
 
 
 	//Kegiatan KA SKPD
-	Route::get('skpd-renja_kegiatan_list_kaskpd','API\KegiatanAPIController@RenjaKegiatanKaSKPD');
-	Route::get('skp_tahunan_kegiatan_1','API\KegiatanAPIController@SKPTahunanKegiatanTree1');
+	Route::get('skpd-renja_subkegiatan_list_kaskpd','API\SubKegiatanAPIController@RenjaSubKegiatanKaSKPD');
+	Route::get('skp_tahunan_subkegiatan_1','API\SubKegiatanAPIController@SKPTahunanSubKegiatanTree1');
 
 	//kegiatan KABID
-	Route::get('skpd-renja_kegiatan_list_kabid','API\KegiatanAPIController@RenjaKegiatanKabid');
-	Route::get('skp_tahunan_kegiatan_2','API\KegiatanAPIController@SKPTahunanKegiatanTree2');
+	Route::get('skpd-renja_subkegiatan_list_kabid','API\SubKegiatanAPIController@RenjaSubKegiatanKabid');
+	Route::get('skp_tahunan_subkegiatan_2','API\SubKegiatanAPIController@SKPTahunanSubKegiatanTree2');
 
 
 	//KEgiatan KASUBID
-	Route::get('skpd-renja_kegiatan_list_kasubid','API\KegiatanAPIController@RenjaKegiatanKasubid');
-	Route::get('skp_tahunan_kegiatan_3','API\KegiatanAPIController@SKPTahunanKegiatanTree3');
+	Route::get('skpd-renja_subkegiatan_list_kasubid','API\SubKegiatanAPIController@RenjaSubKegiatanKasubid');
+	Route::get('skp_tahunan_subkegiatan_3','API\SubKegiatanAPIController@SKPTahunanSubKegiatanTree3');
 
 	//KEgiatan PELAKSANA
-	Route::get('skp_tahunan_kegiatan_4','API\KegiatanAPIController@SKPTahunanKegiatanTree4');
+	Route::get('skp_tahunan_subkegiatan_4','API\SubKegiatanAPIController@SKPTahunanSubKegiatanTree4');
 
 	//KEgiatan JFT
 	//Route::get('skpd-renja_kegiatan_list_jft','API\KegiatanAPIController@RenjaKegiatanJFT');
-	Route::get('skp_tahunan_kegiatan_5','API\KegiatanAPIController@SKPTahunanKegiatanTree5');
+	Route::get('skp_tahunan_subkegiatan_5','API\SubKegiatanAPIController@SKPTahunanSubKegiatanTree5');
 
 	//UNLINK KEGFIATAN
 	
-	Route::post('hapus_kegiatan_kasubid','API\KegiatanAPIController@RemoveKegiatanFromPejabat');
+	Route::post('hapus_subkegiatan_kasubid','API\SubKegiatanAPIController@RemoveSubKegiatanFromPejabat');
 
 		
 

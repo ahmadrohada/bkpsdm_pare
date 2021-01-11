@@ -3,7 +3,7 @@
 			<div class="box box-primary ">
 					<div class="box-header with-border">
 						<h1 class="box-title">
-							Distibusi Kegiatan
+							Distibusi Sub Kegiatan
 						</h1>
 				 
 						<div class="box-tools pull-right">
@@ -38,7 +38,7 @@
 		$('#ditribusi_renja').jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api/skpd_renja_distribusi_kegiatan_tree") }}",
+						"url" 	: "{{ url("api/skpd_renja_distribusi_subkegiatan_tree") }}",
 						"data" 	: function (node) {
 							return { 	"id" 		: node.id ,
 										"data" 		: node.data,

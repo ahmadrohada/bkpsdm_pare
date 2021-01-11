@@ -43,7 +43,7 @@
 	$('#keg_tahunan_5_tree').jstree({
             'core' : {
 						'data' : {
-						"url" 	: "{{ url("api/skp_tahunan_kegiatan_5") }}", //Eselon 5
+						"url" 	: "{{ url("api/skp_tahunan_subkegiatan_5") }}", //Eselon 5
 						"data" 	: function (node) {
 							return  {   "renja_id" 			: {!! $skp->Renja->id !!} , 
                                         "jabatan_id" 		: {!! $skp->PegawaiYangDinilai->Jabatan->id !!},

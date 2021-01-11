@@ -76,7 +76,7 @@
 		$('#kegiatan_tahunan_kaban').jstree({
 				'core' : {
 					'data' : {
-							"url" 	: "{{ url("api/skp_tahunan_kegiatan_1") }}", 
+							"url" 	: "{{ url("api/skp_tahunan_subkegiatan_1") }}", 
 							'data' : function (node) {
 								return { 	"id" 		: node.id ,
 											"data" 		: node.data,

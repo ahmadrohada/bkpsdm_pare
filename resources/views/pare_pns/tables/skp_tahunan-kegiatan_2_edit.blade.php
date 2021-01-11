@@ -141,7 +141,7 @@
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api/skp_tahunan_kegiatan_2") }}", //Eselon 2
+						"url" 	: "{{ url("api/skp_tahunan_subkegiatan_2") }}", //Eselon 2
 						"data" 	: function (node) {
 							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
                                         "jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},

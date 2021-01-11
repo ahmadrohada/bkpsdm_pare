@@ -125,7 +125,7 @@
 		.jstree({
             'core' : {
 				'data' : {
-						"url" 	: "{{ url("api/skp_tahunan_kegiatan_4") }}", 
+						"url" 	: "{{ url("api/skp_tahunan_subkegiatan_4") }}", 
 						"data" 	: function (node) {
 							return  {   "renja_id" : {!! $skp->Renja->id !!} , 
                                         "jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
