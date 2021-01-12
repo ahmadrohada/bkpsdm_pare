@@ -8,7 +8,7 @@ use App\Models\IndikatorSubKegiatan;
 use App\Models\RencanaAksi;
 use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPBulanan;
-use App\Models\SKPD;
+use App\Models\Skpd;
 use App\Models\Jabatan;
 
 use App\Helpers\Pustaka;
