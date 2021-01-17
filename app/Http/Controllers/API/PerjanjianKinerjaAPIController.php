@@ -859,7 +859,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         $dt = Kegiatan::
                             
                             /* join('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                             }) */
                             join('db_pare_2018.renja_program AS program', function($join){
                                 $join   ->on('renja_kegiatan.program_id','=','program.id');

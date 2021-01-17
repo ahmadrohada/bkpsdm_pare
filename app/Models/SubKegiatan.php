@@ -7,9 +7,31 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SubKegiatan extends Model
 {
- 
+    use SoftDeletes;
     protected $table = 'renja_subkegiatan';
-  
+    protected $dates = ['deleted_at'];
+
+
+    //hanya menghapus/restore sampai indikatornya saja.
+    protected static function boot() 
+    {
+        parent::boot();
+
+        static::deleting(function($subkegiatan) {
+            foreach ($subkegiatan->IndikatorSubKegiatan()->get() as $indikator) {
+                $indikator->delete();
+            }
+        });
+
+        static::restoring(function($subkegiatan) {
+            foreach ($subkegiatan->IndikatorSubKegiatan()->get() as $indikator) {
+                $indikator->restore();
+            }
+        });
+
+    }
+
+
    
     public function IndikatorSubKegiatan()
     {

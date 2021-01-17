@@ -115,7 +115,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	//============================================================================================//
 	//============================ ADMIN HOME / ADMIN SNAPSHOTS ====================================//
 	//============================================================================================//
-	/* Route::get('admin/', [
+	Route::get('admin/', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeAdminController@showHomeAdministrator'
 	]);
@@ -138,7 +138,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/masa_pemerintahan', [
 		'as' 			=> '',
 		'uses' 			=> 'HomeAdminController@showMasaPemerintahan'
-	]); */
+	]);
 
 	Route::get('admin/pohon_kinerja', [
 		'as' 			=> 'admin-pohon_kinerja',
@@ -200,6 +200,10 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/pohon_kinerja/{renja_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'RenjaController@AdministratorRenjaDetail'
+	]);
+	Route::get('admin/pohon_kinerja/{renja_id}/edit',[
+		'as' 			=> '',
+		'uses' 			=> 'RenjaController@AdministratorRenjaEdit'
 	]);
 
 	//========================================================================================//
@@ -723,7 +727,7 @@ Route::group(['prefix' => 'puskesmas','middleware' => 'puskesmas'], function () 
 
 Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
-	/* Route::get('', [
+	Route::get('', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showHomePersonal'
 	]);
@@ -778,9 +782,9 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'HomePersonalController@showTPP'
 	]);
 
-//======================= A P P R O V A L    R E Q U E S T ==================================//
+	//======================= A P P R O V A L    R E Q U E S T ==================================//
 
-
+	/* 
 	Route::get('approval', [
 		'as' 			=> '',
 		'uses' 			=> 'ApprovalRequestController@showDashoard'
@@ -906,7 +910,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
 	
 
-
+	*/
 
 	//=========================================================================================//
 	//================================= SKP TAHUNAN      =====================================//
@@ -928,6 +932,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'SKPTahunanController@PersonalSKPTahunanRalat'
 	]);
 
+	/*
 
 	//=========================================================================================//
 	//================================= SKP BULANAN      =====================================//
@@ -983,7 +988,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'CapaianTriwulanController@PersonalCapaianTriwulanEdit'
 	]);
 
-
+	*/
 	//=========================================================================================//
 	//=============================   CAPAIAN TAHUNAN     ====================================//
 	//=========================================================================================//
@@ -1009,7 +1014,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	Route::get('capaian-tahunan/{capaian_tahunan_id}/cetak',[
 		'as' 			=> '',
 		'uses' 			=> 'CapaianTahunanController@PersonalCapaianTahunancetak'
-	]); */
+	]);
 	
 
 

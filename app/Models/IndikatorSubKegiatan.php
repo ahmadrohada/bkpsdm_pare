@@ -5,10 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class IndikatorSubKegiatan extends Model
+class IndikatorSubKegiatan extends Model 
 {
 
+    use SoftDeletes;
     protected $table = 'renja_indikator_subkegiatan';
+    protected $dates = ['deleted_at'];
+
+    
 
 
     public function SKPTahunan()

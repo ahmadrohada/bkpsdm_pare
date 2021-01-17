@@ -19,12 +19,16 @@
 
 {!! HTML::style(asset('assets/bower_components/dropzone/dist/dropzone.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
 
+{!! HTML::style(asset('assets/css/lc_switch.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
+
+
 {!! HTML::style(asset('assets/css/styles.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
 
 
 
 {!! HTML::style(asset('assets/css/AdminLTE.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
 {!! HTML::style(asset('assets/css/skins/_all-skins.css'), array('type' => 'text/css', 'rel' => 'stylesheet')) !!}
+
 
 
 

@@ -59,25 +59,55 @@ class RenjaController extends Controller {
     public function AdministratorRenjaDetail(Request $request)
 	{
         $renja	= Renja::where('id', '=', $request->renja_id)->first();
-
-
-        //if ( $renja->periode->id == 7 ){
-            //RENJA 2021
-            //return view('pare_2021.pages.administrator-pohon_kinerja', ['renja'=> $renja, 'role' => 'administrator' ]);
-        //}else{
-            //RENJA 2020
-            return view('pare_pns.pages.administrator-pohon_kinerja_detail', ['renja'=> $renja, 'role' => 'administrator' ]);
-        //}
-          
-       
+        if ( $renja->status == 1 ){
+            //DETAIL
+            return view('pare_pns.pages.administrator-pohon_kinerja', ['renja'=> $renja, 'role' => 'administrator' ]);
+        }else{
+            //EDIT
+            return redirect('/admin/pohon_kinerja/'.$request->renja_id.'/edit')->with('status', 'Edit');
+        }
     }
- 
+
+    public function AdministratorRenjaEdit(Request $request)
+	{
+        $renja	= Renja::where('id', '=', $request->renja_id)->first();
+        if ( $renja->status == 0 ){
+            //EDIT
+            return view('pare_pns.pages.administrator-pohon_kinerja', ['renja'=> $renja, 'role' => 'administrator' ]);
+        }else{
+            //DETAIL
+            return redirect('/admin/pohon_kinerja/'.$request->renja_id)->with('status', 'Detail');
+        }
+    }
 
     public function SKPDRenjaDetail(Request $request)
 	{
         $renja	= Renja::where('id', '=', $request->renja_id)->first();
+        if ( $renja->status == 1 ){
+            //DETAIL
+            return view('pare_pns.pages.skpd-pohon_kinerja', ['renja'=> $renja, 'role' => 'skpd' ]);
+        }else{
+            //EDIT
+            return redirect('/skpd/pohon_kinerja/'.$request->renja_id.'/edit')->with('status', 'Edit');
+        }
+    }
 
-        
+    public function SKPDRenjaEdit(Request $request)
+	{
+        $renja	= Renja::where('id', '=', $request->renja_id)->first();
+        if ( $renja->status == 0 ){
+            //DETAIL
+            return view('pare_pns.pages.skpd-pohon_kinerja', ['renja'=> $renja, 'role' => 'skpd' ]);
+        }else{
+            //EDIT
+            return redirect('/skpd/pohon_kinerja/'.$request->renja_id)->with('status', 'Detail');
+        }
+    }
+ 
+
+    /* public function SKPDRenjaDetail(Request $request)
+	{
+        $renja	= Renja::where('id', '=', $request->renja_id)->first();
 
         if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) == 2 ) ){
             return redirect('/skpd/pohon_kinerja/'.$request->renja_id.'/ralat')->with('status', 'Renja ditolak kaban');
@@ -86,25 +116,7 @@ class RenjaController extends Controller {
         }else{
             return view('pare_pns.pages.skpd-pohon_kinerja_detail', ['renja'=> $renja , 'role' => 'skpd']);  
         }
-    }
-
-    public function PersonalRenjaDetail(Request $request)
-	{
-        $renja	= Renja::where('id', '=', $request->renja_id)->first();
-
-        
-
-        if(  ( ($renja->send_to_kaban) == '0' ) ){
-            return redirect('personal/renja_approval-request')->with('status', 'akses ditolak');
-        }else if(  ( ($renja->send_to_kaban) == '1' ) &  ( ($renja->status_approve) != '1' ) ){
-            return redirect('personal/renja_approval-request')->with('status', 'akses ditolak');
-        }else if( ($renja->send_to_kaban) == '0' ) {
-            return redirect('/personal/renja/'.$request->renja_id.'/edit')->with('status', 'Renja belum dikirm ke kaban');
-        }else{
-            return view('pare_pns.pages.skpd-pohon_kinerja_detail', ['renja'=> $renja , 'role' =>'personal' ]);  
-        }
-    }
-
+    } 
     public function SKPDRenjaApproval(Request $request)
 	{
         $renja	= Renja::where('id', '=', $request->renja_id)->first();
@@ -131,7 +143,7 @@ class RenjaController extends Controller {
             if(  ( ($renja->send_to_kaban) == 1 ) &  ( ($renja->status_approve) != 2 ) ){
                 return redirect('/skpd/pohon_kinerja/'.$x->renja_id)->with('status', 'Rencana Kerja dikirm ke atasan');
             }else{
-                return view('pare_pns.pages.skpd-pohon_kinerja_edit', ['renja'=> $renja,'h_box'=> 'box-info','role' =>'skpd']);    
+                return view('pare_pns.pages.skpd-pohon_kinerja', ['renja'=> $renja,'h_box'=> 'box-info','role' =>'skpd']);    
             }
         }else{
             return redirect('/dashboard');
@@ -152,6 +164,28 @@ class RenjaController extends Controller {
         }
         
     }
+    */
+
+
+
+    public function PersonalRenjaDetail(Request $request)
+	{
+        $renja	= Renja::where('id', '=', $request->renja_id)->first();
+
+        
+
+        if(  ( ($renja->send_to_kaban) == '0' ) ){
+            return redirect('personal/renja_approval-request')->with('status', 'akses ditolak');
+        }else if(  ( ($renja->send_to_kaban) == '1' ) &  ( ($renja->status_approve) != '1' ) ){
+            return redirect('personal/renja_approval-request')->with('status', 'akses ditolak');
+        }else if( ($renja->send_to_kaban) == '0' ) {
+            return redirect('/personal/renja/'.$request->renja_id.'/edit')->with('status', 'Renja belum dikirm ke kaban');
+        }else{
+            return view('pare_pns.pages.skpd-pohon_kinerja_detail', ['renja'=> $renja , 'role' =>'personal' ]);  
+        }
+    }
+
+    
 
 
     public function SKPDMonitoringKinerja(Request $request)

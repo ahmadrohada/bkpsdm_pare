@@ -526,7 +526,7 @@ trait HitungCapaian
                             ->WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                 
                             })
                             ->count(); */
@@ -541,7 +541,7 @@ trait HitungCapaian
                                             ->WHEREIN('renja_kegiatan.jabatan_id', $bawahan  )
                                             //LEFT JOIN ke Kegiatan SKP TAHUNAN
                                             ->JOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                                 
                                             })
                                             ->DISTINCT('kegiatan_tahunan.id')

@@ -268,7 +268,7 @@ class RencanaAksiAPIController extends Controller {
                                 $join   ->on('keg_skp_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
                             })
                             ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
-                                $join   ->on('kegiatan.id','=','keg_skp_tahunan.kegiatan_id');
+                                $join   ->on('kegiatan.id','=','keg_skp_tahunan.subkegiatan_id');
                             })
                             ->leftjoin('db_pare_2018.renja_program AS program', function($join){
                                 $join   ->on('program.id','=','kegiatan.program_id');
@@ -510,7 +510,7 @@ class RencanaAksiAPIController extends Controller {
                                 $join   ->on('keg_skp_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
                             })
                             ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
-                                $join   ->on('kegiatan.id','=','keg_skp_tahunan.kegiatan_id');
+                                $join   ->on('kegiatan.id','=','keg_skp_tahunan.subkegiatan_id');
                             })
                             ->leftjoin('db_pare_2018.renja_program AS program', function($join){
                                 $join   ->on('program.id','=','kegiatan.program_id');
@@ -560,7 +560,7 @@ class RencanaAksiAPIController extends Controller {
 
             $jm_kegiatan = Kegiatan::
                         leftjoin('db_pare_2018.skp_tahunan_kegiatan AS keg_skp_tahunan', function($join){
-                            $join   ->on('keg_skp_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                            $join   ->on('keg_skp_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                         })
                         ->leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                             $join   ->on('keg_skp_tahunan.id','=','rencana_aksi.kegiatan_tahunan_id');
@@ -578,7 +578,7 @@ class RencanaAksiAPIController extends Controller {
                             $join   ->on('kegiatan.program_id','=','renja_program.id');
                         })
                         ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS keg_skp_tahunan', function($join){
-                            $join   ->on('keg_skp_tahunan.kegiatan_id','=','kegiatan.id');
+                            $join   ->on('keg_skp_tahunan.subkegiatan_id','=','kegiatan.id');
                         })
                         ->leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                             $join   ->on('keg_skp_tahunan.id','=','rencana_aksi.kegiatan_tahunan_id');
@@ -1181,7 +1181,7 @@ class RencanaAksiAPIController extends Controller {
                                         $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
                                     })
                                     ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use($skp_tahunan_id) {
-                                        $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                        $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                        
                                     })
                                     ->SELECT(   'kegiatan_tahunan.id AS kegiatan_tahunan_id',
@@ -1270,7 +1270,7 @@ class RencanaAksiAPIController extends Controller {
                                         $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
                                     })
                                     ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use($skp_tahunan_id) {
-                                        $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                        $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                         //ini karena Rencana Aksi nya eselon 4 harus milik kegiatan tahunan nya sewndiri
                                         $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id);
                                     })

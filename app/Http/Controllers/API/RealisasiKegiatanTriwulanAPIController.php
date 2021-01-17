@@ -34,7 +34,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                                 ->WHEREIN('renja_kegiatan.jabatan_id', $bawahan  )
                                 //LEFT JOIN ke Kegiatan SKP TAHUNAN
                                 ->JOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                    $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                    $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                     
                                 })
                                 //LEFT JOIN ke INDIKATOR KEGIATAN
@@ -278,7 +278,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                                     ->WHERE('renja_kegiatan.jabatan_id','=',  $jabatan_id  )
                                     //LEFT JOIN ke Kegiatan SKP TAHUNAN
                                     ->JOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use($skp_tahunan_id){
-                                        $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                        $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                         $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                                     })
                                     //LEFT JOIN ke INDIKATOR KEGIATAN
@@ -411,7 +411,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                             })
                             // JOIN RENJA KEGIATAN
                             ->leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join){
-                                $join   ->on('renja_kegiatan.id','=','kegiatan_tahunan.kegiatan_id');
+                                $join   ->on('renja_kegiatan.id','=','kegiatan_tahunan.subkegiatan_id');
                                 
                             })
                             // JOIN IND KEGIATAN
@@ -583,7 +583,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                 $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
             })
             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use($skp_tahunan_id){
-                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                 $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
             })
             //REALISASINYA
@@ -634,7 +634,7 @@ class RealisasiKegiatanTriwulanAPIController extends Controller {
                 $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
             })
             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                
             })
             //REALISASINYA

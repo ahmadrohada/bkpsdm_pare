@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class IndikatorKegiatan extends Model
 {
 
-    //use SoftDeletes;
+    use SoftDeletes;
     protected $table = 'renja_indikator_kegiatan';
-    //protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
     
 
-    public function skp_tahunan()
+
+
+
+    public function SKPTahunan()
     {
         return $this->hasMany('App\Models\SkpTahunan');
     }
@@ -25,7 +28,7 @@ class IndikatorKegiatan extends Model
     }
 
 
-    public function Rencanaaksi()
+    public function RencanaAksi()
     {
         return $this->hasMany('App\Models\RencanAksi');
     }

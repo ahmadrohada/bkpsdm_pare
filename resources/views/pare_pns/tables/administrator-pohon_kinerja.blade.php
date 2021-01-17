@@ -19,7 +19,7 @@
 						<th>NAMA SKPD</th>
 						<th>KA SKPD</th>
 						<th>JM TUJUAN</th>
-
+						<th>STATUS</th>
 						<th><i class="fa fa-cog" style="margin-left:12px !important;"></i></th>
 					</tr>
 				</thead>
@@ -27,8 +27,6 @@
 		</div>
 	</div>
 </div>
-
-
 
 <script type="text/javascript">
 	
@@ -46,16 +44,13 @@
 				//order 			: [ 5 , 'asc' ],
 				lengthMenu		: [10,20],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,4,5 ] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,4,5,6 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api/administrator_pohon_kinerja_list") }}',
-									
-									delay:3000
+									url	: '{{ url("api/administrator_pohon_kinerja_list") }}'
 								},
-				
-
+			
 				columns	:[
 								{ data: 'periode_id' , orderable: true,searchable:false,
 									"render": function ( data, type, row ,meta) {
@@ -70,7 +65,12 @@
 								{ data: "jm_tujuan" ,  name:"jm_tujuan", orderable: true, searchable: false},
 								{ data: "status" , orderable: false,searchable:false,
 									"render": function ( data, type, row ) {
-										return  '<span  data-toggle="tooltip" title="Lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_renja"  data-id="'+row.renja_id+'" ><i class="fa fa-eye" ></i></a></span>'
+										return  '<span  data-toggle="tooltip" title="Open" style="margin:2px;" ><a class="btn btn-info btn-xs close_renja">OPEN</a></span>';
+									}
+								},
+								{ data: "action" , orderable: false,searchable:false,
+									"render": function ( data, type, row ) {
+										return  '<span  data-toggle="tooltip" title="Lihat" style="margin:2px;" ><a class="btn btn-info btn-xs lihat_renja"  data-id="'+row.renja_id+'" ><i class="fa fa-eye" ></i></a></span>';
 									}
 								},
 								

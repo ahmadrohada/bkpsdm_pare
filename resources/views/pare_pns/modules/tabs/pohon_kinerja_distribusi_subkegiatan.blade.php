@@ -21,15 +21,14 @@
 							<div id="ditribusi_renja" class="demo"></div>
 						</div>
 					</div>
-				</div>
+				</div> 
 
 	</div>
 	<div class="col-md-6">
 			@include('pare_pns.tables.distribusi_subkegiatan-ka_skpd')
 			@include('pare_pns.tables.distribusi_subkegiatan-kabid')
 			@include('pare_pns.tables.distribusi_subkegiatan-kasubid')
-			@include('pare_pns.tables.distribusi_subkegiatan-ind_subkegiatan_edit')
-			@include('pare_pns.tables.distribusi_subkegiatan-ind_subkegiatan2_edit')
+			@include('pare_pns.tables.distribusi_subkegiatan-ind_subkegiatan')
 
 
 	</div>
@@ -71,8 +70,8 @@
 					'administrator' 	: { },
 					'pengawas' 			: { },
 					'pelaksana' 		: { },
-					'kegiatan' 			: { },
-					'ind_kegiatan'		: { },
+					'subkegiatan' 		: { },
+					'ind_subkegiatan'	: { },
 					'rencana_aksi'		: { }, 
 					'keg_bulanan'		: { },
 				} 
@@ -172,7 +171,7 @@
 			case 'subkegiatan':
 						$(".div_subkegiatan").show();
 						$(".div_ka_skpd,.div_kabid,.div_kasubid,.div_ind_subkegiatan").hide();
-						load_ind_subkegiatan2(tx[1]);
+						load_subkegiatan2(tx[1]);
 				
 			break;
 			case 'ind_subkegiatan':

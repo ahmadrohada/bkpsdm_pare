@@ -1,6 +1,6 @@
 
 
-<div class="row">
+<div class="row"> 
 	<div class="left_div col-md-6">
 
 

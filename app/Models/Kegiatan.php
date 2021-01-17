@@ -7,15 +7,33 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Kegiatan extends Model
 {
-    //use SoftDeletes;
+    use SoftDeletes;
     protected $table = 'renja_kegiatan';
-    //protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 
 
-
-    public function indikator_kegiatan()
+    protected static function boot() 
     {
-        return $this->hasMany('App\Models\IndikatorKegiatan');
+        parent::boot();
+
+        static::deleting(function($kegiatan) {
+            foreach ($kegiatan->IndikatorKegiatan()->get() as $indikator) {
+                $indikator->delete();
+            }
+            foreach ($kegiatan->SubKegiatan()->get() as $subkegiatan) {
+                $subkegiatan->delete();
+            }
+        });
+
+        static::restoring(function($kegiatan) {
+            foreach ($kegiatan->IndikatorKegiatan()->get() as $indikator) {
+                $indikator->restore();
+            }
+            foreach ($kegiatan->SubKegiatan()->get() as $subkegiatan) {
+                $subkegiatan->restore();
+            }
+        });
+
     }
 
     public function IndikatorKegiatan()
@@ -23,12 +41,12 @@ class Kegiatan extends Model
         return $this->hasMany('App\Models\IndikatorKegiatan');
     }
 
-
-   /*  public function indikator_program()
+    public function SubKegiatan()
     {
-        return $this->belongTo('App\Models\IndikatorProgram');
-    } 
- */
+        return $this->hasMany('App\Models\SubKegiatan');
+    }
+
+
     public function indikator_program()
     {
         return $this->belongsTo('App\Models\IndikatorProgram','id','indikator_program_id');

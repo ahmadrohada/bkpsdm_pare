@@ -106,7 +106,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                 
                             })
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
@@ -176,7 +176,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                 
                             })
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
@@ -237,7 +237,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHEREIN('renja_kegiatan.jabatan_id',$child )
                             ->join('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
-                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                 
                             })
                             ->join('demo_asn.m_skpd AS penanggung_jawab', function($join) use ( $skp_tahunan_id ){
@@ -298,7 +298,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
-                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                 $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                             })
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',

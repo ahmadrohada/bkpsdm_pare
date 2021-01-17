@@ -837,7 +837,7 @@ class SubKegiatanAPIController extends Controller {
                     }else{
                         $data_subkegiatan['icon']      = "jstree-subkegiatan";
                     }
-                    $data_subkegiatan['children']      = true ;
+                    $data_subkegiatan['children']      = false ;
 
                     $subkegiatan_list[] = $data_subkegiatan ;
                 }
@@ -850,7 +850,7 @@ class SubKegiatanAPIController extends Controller {
 
             break;
             case 'subkegiatan':
-                $ind_subkegiatan = IndikatorSubKegiatan:: where('subkegiatan_id','=',$request->id)->select('id','label')->get();
+                $ind_subkegiatan = IndikatorSubKegiatan::where('subkegiatan_id','=',$request->id)->select('id','label')->get();
                 foreach ($ind_subkegiatan as $g) {
                     $data_ind_subkegiatan['id']	            = $g->id;
                     $data_ind_subkegiatan['data']           = "ind_subkegiatan";
@@ -951,7 +951,7 @@ class SubKegiatanAPIController extends Controller {
                                 ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                                 ->WHEREIN('renja_kegiatan.jabatan_id',$child )
                                 ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                    $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                    $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                     //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                                 })
                                 ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
@@ -1070,7 +1070,7 @@ class SubKegiatanAPIController extends Controller {
                                 ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                                 ->WHEREIN('renja_kegiatan.jabatan_id',$child )
                                 ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                    $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                    $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                     //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                                 })
                                 ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
@@ -1163,7 +1163,7 @@ class SubKegiatanAPIController extends Controller {
         
     }
     
-    public function SKPTahunanKegiatanTree2(Request $request)
+    public function SKPTahunanSubKegiatanTree2(Request $request)
     {
        
         //SubKegiatan nya KABID , cari KASUBID yang parent KABID ini
@@ -1178,14 +1178,14 @@ class SubKegiatanAPIController extends Controller {
 
         $skp_tahunan_id = $request->skp_tahunan_id;
         $kegiatan = SubKegiatan::SELECT('id','label')
-                            ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
-                            ->WHEREIN('renja_kegiatan.jabatan_id',$child )
+                            ->WHERE('renja_subkegiatan.renja_id', $request->renja_id )
+                            ->WHEREIN('renja_subkegiatan.jabatan_id',$child )
                             ->join('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
-                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_subkegiatan.id');
                                 //$join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                             })
-                            ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
-                                        'renja_kegiatan.label AS kegiatan_label',
+                            ->SELECT(   'renja_subkegiatan.id AS subkegiatan_id',
+                                        'renja_subkegiatan.label AS kegiatan_label',
                                         'kegiatan_tahunan.id AS kegiatan_tahunan_id',
                                         'kegiatan_tahunan.label AS kegiatan_tahunan_label'
                                     ) 
@@ -1194,22 +1194,22 @@ class SubKegiatanAPIController extends Controller {
         $kegiatan_list = [];
         foreach ($kegiatan as $x) {
             if ( $x->kegiatan_tahunan_id >= 1 ){
-                $kegiatan_id                    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
+                $subkegiatan_id                    = "KegiatanTahunan|".$x->kegiatan_tahunan_id;
                 $kegiatan_label                 = $x->kegiatan_tahunan_label;
                 $data_kegiatan['icon']	        = 'jstree-kegiatan_tahunan';
             }else{
-                $kegiatan_id                    = "KegiatanRenja|".$x->kegiatan_id."|".$x->kegiatan_label;
+                $subkegiatan_id                    = "KegiatanRenja|".$x->subkegiatan_id."|".$x->kegiatan_label;
                 $kegiatan_label                 = $x->kegiatan_label;
                 $data_kegiatan['icon']	        = 'jstree-kegiatan';
             }
                     
-                                $data_kegiatan['id']	            = $kegiatan_id;
+                                $data_kegiatan['id']	            = $subkegiatan_id;
                                 $data_kegiatan['text']			    = Pustaka::capital_string($kegiatan_label);
                                 
                               
                     
                                 //Indikator SubKegiatan
-                                $ik = IndikatorKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->get();
+                                $ik = IndikatorSubKegiatan::WHERE('subkegiatan_id',$x->subkegiatan_id)->get();
                     
                                 foreach ($ik as $y) {
                                     $data_ind_kegiatan['id']	        = "IndikatorKegiatan|".$y->id;
@@ -1285,7 +1285,7 @@ class SubKegiatanAPIController extends Controller {
                             ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                             ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
-                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                 $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                             })
                             ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
@@ -1391,7 +1391,7 @@ class SubKegiatanAPIController extends Controller {
                                     ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
                                     ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
                                     ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
-                                        $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                        $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                         $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
                                     })
                                     ->SELECT(   'renja_kegiatan.id AS kegiatan_id',

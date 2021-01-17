@@ -506,12 +506,12 @@ trait TraitCapaianTahunan
                             })
                             //LEFT JOIN ke KEGIATAN RENJA
                             ->leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join){
-                                $join   ->on('renja_kegiatan.id','=','kegiatan_tahunan.kegiatan_id');
+                                $join   ->on('renja_kegiatan.id','=','kegiatan_tahunan.subkegiatan_id');
                                 
                             })
                             //LEFT JOIN ke INDIKATOR KEGIATAN
                             ->LEFTJOIN('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
-                                $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan_tahunan.kegiatan_id');
+                                $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan_tahunan.subkegiatan_id');
                                 
                             })
                             //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
@@ -656,7 +656,7 @@ trait TraitCapaianTahunan
                          ->WHEREIN('renja_kegiatan.jabatan_id', $bawahan  )
                          //LEFT JOIN ke Kegiatan SKP TAHUNAN
                          ->JOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                             $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                             $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                              
                          })
                          //LEFT JOIN ke INDIKATOR KEGIATAN
@@ -804,7 +804,7 @@ trait TraitCapaianTahunan
                             ->WHERE('renja_kegiatan.jabatan_id','=',  $jabatan_id  )
                             //LEFT JOIN ke Kegiatan SKP TAHUNAN
                             ->JOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                $join   ->on('kegiatan_tahunan.kegiatan_id','=','renja_kegiatan.id');
+                                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
                                 
                             })
                             //LEFT JOIN ke INDIKATOR KEGIATAN
