@@ -809,10 +809,10 @@
 }
 
 
-.jstree-default .jstree-kegiatan_tahunan {
+.jstree-default .jstree-kegiatan_skp_tahunan {
   
   height:18px !important;
-  width:95px !important;
+  width:120px !important;
   margin-top:3px;
   border-radius:8px 8px 8px 8px;
   background-color:rgb(253, 250, 237);
@@ -822,9 +822,27 @@
   
   
 }
-.jstree-kegiatan_tahunan:after{
-  content:'Keg. Tahunan';
+.jstree-kegiatan_skp_tahunan:after{
+  content:'Keg. SKP Tahunan';
+  display:block;
+  margin:-5px 0 0 -5px;
+}
+
+.jstree-default .jstree-ind_kegiatan_skp_tahunan {
   
+  height:18px !important;
+  width:75px !important;
+  margin-top:3px;
+  border-radius:8px 8px 8px 8px;
+  background-color:rgb(253, 250, 237);
+  color:rgb(26, 35, 53);
+  border: 1px solid rgb(231, 214, 136);
+  font-size:13px;
+  
+  
+}
+.jstree-ind_kegiatan_skp_tahunan:after{
+  content:'Indikator';
   display:block;
   margin:-5px 0 0 -5px;
 }

@@ -241,7 +241,7 @@ table.dataTable tbody td {
 
 	function show_modal_create(indikator_kegiatan_id){
 		$.ajax({
-				url			  	: '{{ url("api/add_realisasi_kegiatan_tahunan") }}',
+				url			  	: '{{ url("api/add_realisasi_kegiatan_skp_tahunan") }}',
 				data 		  	: { 
 									indikator_kegiatan_id : indikator_kegiatan_id ,
 									capaian_id : {!! $capaian->id !!} },

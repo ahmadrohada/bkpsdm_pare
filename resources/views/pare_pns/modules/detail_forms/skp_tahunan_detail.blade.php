@@ -248,7 +248,7 @@
 		var id = $(".p_nip_edit option:selected").val();
 
 		$.ajax({
-			url     	: '{{ url("api/set_pejabat_penilai_skp_tahunan") }}',
+			url     	: '{{ url("api/update_pejabat_penilai_skp_tahunan") }}',
 			type    	: "POST",
 			data    	: { skp_tahunan_id: {{ $skp->id }}, 
 							pejabat_penilai_id  : id

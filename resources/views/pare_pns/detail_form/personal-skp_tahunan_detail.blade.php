@@ -290,7 +290,7 @@ $(document).on('click', '.btn_edit_pejabat', function(){
 		var pegawai_id = $(".p_nip_edit option:selected").val();
 
 		$.ajax({
-			url     	: '{{ url("api/set_pejabat_penilai_skp_tahunan") }}',
+			url     	: '{{ url("api/update_pejabat_penilai_skp_tahunan") }}',
 			type    	: "POST",
 			data    	: { skp_tahunan_id: {{ $skp_tahunan->id }}, pegawai_id  : pegawai_id },
 			success		: function (data) {

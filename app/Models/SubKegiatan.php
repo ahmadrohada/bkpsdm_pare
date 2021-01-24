@@ -38,6 +38,11 @@ class SubKegiatan extends Model
         return $this->hasMany('App\Models\IndikatorSubKegiatan');
     }
 
+    public function KegiatanSKPTahunan()
+    {
+        return $this->hasMany('App\Models\KegiatanSKPTahunan','subkegiatan_id');
+    }
+
 
   /*   public function IndikatorKegiatan()
     {

@@ -1,9 +1,9 @@
 <div class="row">
 	<div class="col-md-5">
 		<div class="box box-primary ">
-			<div class="box-header with-border">
+			<div class="box-header with-border"> 
 				<h1 class="box-title">
-					Kegiatan Tahunan
+					Kegiatan SKP Tahunan 
 				</h1>
 				<div class="box-tools pull-right">
 					{!! Form::button('<i class="fa fa-minus"></i>', array('class' => 'btn btn-box-tool','title' => 'Collapse', 'data-widget' => 'collapse', 'data-toggle' => 'tooltip')) !!}
@@ -12,7 +12,7 @@
 			<div class="box-body" style="padding-left:0px; padding-right:0px;">
 				<input type='text' id = 'cari' class="form-control" placeholder="cari">
 				<div class="table-responsive auto">
-					<div id="kegiatan_tahunan_3"></div>
+					<div id="kegiatan_skp_tahunan_3"></div>
 				</div>
 			</div>
 		</div>
@@ -20,9 +20,9 @@
 		
 	</div> 
 	<div class="col-md-7">
-		@include('pare_pns.tables.skp_tahunan-kegiatan_3_edit')
-		@include('pare_pns.tables.skp_tahunan-indikator_kegiatan_3_edit')
-		@include('pare_pns.tables.skp_tahunan-rencana_aksi_3_edit')
+		@include('pare_pns.tables.rencana_aksi-kegiatan_skp_tahunan_top')
+		@include('pare_pns.tables.rencana_aksi-kegiatan_skp_tahunan')
+		@include('pare_pns.tables.rencana_aksi-rencana_aksi_3')
 
 		<!-- ========================== DETAIL RENVANA AKSI ====================================== -->
 		<div id='rencana_aksi_detail' hidden>
@@ -72,16 +72,16 @@
 <script type="text/javascript">
 	
 	function refreshTreeKegTahunan(){
-		jQuery('#kegiatan_tahunan_3').jstree(true).refresh(true);
-		jQuery('#kegiatan_tahunan_3').jstree().deselect_all(true);
+		jQuery('#kegiatan_skp_tahunan_3').jstree(true).refresh(true);
+		jQuery('#kegiatan_skp_tahunan_3').jstree().deselect_all(true);
 		//$('#rencana_aksi_table').DataTable().ajax.reload(null,false);
 		
 	} 
 	
-	$('#kegiatan_tahunan_3').jstree({
+	$('#kegiatan_skp_tahunan_3').jstree({
 				'core' : {
 					'data' : {
-							"url" 	: "{{ url("api/skp_tahunan_subkegiatan_3") }}", 
+							"url" 	: "{{ url("api/kegiatan_skp_tahunan_3_tree") }}", 
 							'data' : function (node) {
 								return { 	"id" 		: node.id ,
 											"data" 		: node.data,
@@ -111,7 +111,7 @@
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 		var v = $('#cari').val();
-		$('#kegiatan_tahunan_3').jstree(true).search(v);
+		$('#kegiatan_skp_tahunan_3').jstree(true).search(v);
 		}, 250);
 	});
 	
@@ -119,29 +119,22 @@
 	function detail_table(id){
 
 		var tx = id.split('|');
-		//alert(tx[0])
+		
 		
 		switch ( tx[0] ){
-                case 'kegiatan_tahunan':
-                  	//SHOW DETAIL KEGIATAN TAHUNAN DAN RENCANA KERJA LIST
-                  	$("#kegiatan_tahunan").hide();
-					$("#indikator_kegiatan").show();
-					$("#rencana_aksi").hide();
-					$("#rencana_aksi_detail").hide();
+                case 'kegiatan_skp_tahunan':
+					//alert(tx[0])
+					load_kegiatan_skp_tahunan( tx[1]);
+                  	$(".div_kegiatan_skp_tahunan").show();
+					$(".div_kegiatan_skp_tahunan_top,.div_rencana_aksi").hide();
 
-                  	load_indikator_kegiatan( tx[1]);
+                  	
 				break; 
-				case 'kegiatan_renja':
-					show_modal_create(tx[1]);
-				break;
-				case 'ind_kegiatan':
-					$("#kegiatan_tahunan").hide();
-					$("#indikator_kegiatan").hide();
-					$("#rencana_aksi").show();
-					$("#rencana_aksi_detail").hide();
-					load_rencana_aksi( tx[1]);	
-					rencana_aksi_list( tx[1]);
-
+				case 'ind_kegiatan_skp_tahunan':
+					//alert(tx[0])
+					load_ind_kegiatan_skp_tahunan( tx[1]);
+					$(".div_rencana_aksi").show();
+					$(".div_kegiatan_skp_tahunan_top,.div_kegiatan_skp_tahunan").hide();
 				break;
 				case 'rencana_aksi':
 					$("#kegiatan_tahunan").hide();
@@ -170,12 +163,10 @@
     }
     
 
-    $(".tutup").click(function(){
-			$("#kegiatan_tahunan").show();
-			$("#indikator_kegiatan").hide();
-			$("#rencana_aksi").hide();
-			$("#rencana_aksi_detail").hide();
-			jQuery('#kegiatan_tahunan_3').jstree().deselect_all(true);
+    $(".tutup_detail").click(function(){
+			$(".div_kegiatan_skp_tahunan_top").show();
+			$(".div_kegiatan_skp_tahunan,.div_rencana_aksi").hide();
+			jQuery('#kegiatan_skp_tahunan_3').jstree().deselect_all(true);
 	}); 
 	
 	function load_rencana_aksi_detail(rencana_aksi_id){

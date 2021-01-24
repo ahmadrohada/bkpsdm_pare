@@ -15,7 +15,7 @@
 			?>
 			<h1>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route($route_name) }}"><span class="fa fa-angle-left"></span></a>
-				Capaian Tahunan Eselon {{ $capaian->PegawaiYangDinilai->Eselon->eselon }}
+				Capaian SKP Tahunan Eselon {{ $capaian->PegawaiYangDinilai->Eselon->eselon }}
 			</h1>
 	  </section>
 	 
@@ -101,7 +101,7 @@
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="sumary"><a href="#sumary" data-toggle="tab">Sumary </a></li>
 				<li class="pejabat"><a href="#pejabat" data-toggle="tab" >Pejabat</a></li>
-				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian->PegawaiYangDinilai->Eselon->eselon !!} / {!! $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
+				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan SKP Tahunan Eselon {!! $capaian->PegawaiYangDinilai->Eselon->eselon !!} / {!! $capaian->PegawaiYangDinilai->Eselon->id_jenis_jabatan!!}</a></li>
 				<li class="unsur_penunjang_tab"><a href="#unsur_penunjang_tab" data-toggle="tab">Unsur Penunjang</a></li>
 				{{-- <li class="tugas_tambahan_tab"><a href="#tugas_tambahan_tab" data-toggle="tab">Tugas Tambahan</a></li>  --}}
 				<li class="penilaian_perilaku_kerja_tab"><a href="#penilaian_perilaku_kerja_tab" data-toggle="tab">Penilaian Perilaku Kerja</a></li>

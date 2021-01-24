@@ -34,7 +34,7 @@
 	</div>
 </div>
 
-@include('pare_pns.modals.renja_ind_subkegiatan')
+
 
 
 <script type="text/javascript">

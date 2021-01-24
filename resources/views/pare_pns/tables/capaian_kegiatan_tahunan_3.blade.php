@@ -1,5 +1,5 @@
 <div class="box-body table-responsive" style="min-height:330px;">
-	<div class="toolbar">
+	<div class="toolbar"> 
 	</div>
 	<div class="box-body table-responsive">
 		<table id="realisasi_kegiatan_tahunan_table" class="table table-striped table-bordered">
@@ -301,7 +301,7 @@ table.dataTable tbody td {
 
 	function show_modal_create(indikator_kegiatan_id){
 		$.ajax({
-				url			  	: '{{ url("api/add_realisasi_kegiatan_tahunan") }}',
+				url			  	: '{{ url("api/add_realisasi_kegiatan_skp_tahunan") }}',
 				data 		  	: { 
 									indikator_kegiatan_id : indikator_kegiatan_id ,
 									capaian_id : {!! $capaian->id !!} },
@@ -356,7 +356,7 @@ table.dataTable tbody td {
 
 	function show_modal_create_jft(kegiatan_id){
 		$.ajax({
-				url			  	: '{{ url("api/add_realisasi_kegiatan_tahunan_5") }}',
+				url			  	: '{{ url("api/add_realisasi_kegiatan_skp_tahunan_5") }}',
 				data 		  	: { 
 									kegiatan_id 	: kegiatan_id ,
 									capaian_id 		: {!! $capaian->id !!} },

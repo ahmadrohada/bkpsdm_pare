@@ -21,7 +21,10 @@ use App\Models\Jabatan;
 use App\Models\Kegiatan;
 use App\Models\Renja;
 use App\Models\Eselon;
+
+
 use App\Traits\PJabatan;
+use App\Traits\TraitSKPTahunan;
 
 
 use App\Helpers\Pustaka;
@@ -36,7 +39,7 @@ class SKPTahunanAPIController extends Controller {
     use PJabatan;
 
     
-
+    use TraitSKPTahunan;
 
     protected function SKPTahunandDetail(Request $request){
      
@@ -138,15 +141,13 @@ class SKPTahunanAPIController extends Controller {
             );
 
         }
-
-
-        return $data; 
-
-
-
-
-
+        return $data;
     }
+
+    protected function SKPTahunanPejabat(Request $request){
+        return $this->Pejabat($request->skp_tahunan_id);
+    }
+
   
     //KASUBID
     public function SKPTahunanStatusPengisian3( Request $request )
@@ -1402,7 +1403,7 @@ class SKPTahunanAPIController extends Controller {
     public function PejabatPenilaiUpdate(Request $request)
 	{
         $messages = [
-            'pejabat_penilai_id.required'           => 'Harus set Pegawai ID',
+            'pegawai_id.required'                   => 'Harus set Pegawai ID',
             'skp_tahunan_id.required'               => 'Harus diisi',
 
         ];
@@ -1410,7 +1411,7 @@ class SKPTahunanAPIController extends Controller {
         $validator = Validator::make(
             Input::all(),
             array(
-                'pejabat_penilai_id'    => 'required',
+                'pegawai_id'            => 'required',
                 'skp_tahunan_id'        => 'required',
             ),
             $messages
@@ -1422,7 +1423,7 @@ class SKPTahunanAPIController extends Controller {
 
 
         //Cari nama dan id pejabatan penilai
-        $pegawai     = Pegawai::SELECT('*')->where('id',$request->pejabat_penilai_id )->first();
+        $pegawai     = Pegawai::SELECT('*')->where('id',$request->pegawai_id )->first();
 
         //$jabatan_x     = $pegawai->JabatanAktif;
 
@@ -1436,7 +1437,7 @@ class SKPTahunanAPIController extends Controller {
 
         //CARI GOLONGAN
         //Golongan Aktif
-        $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $request->pejabat_penilai_id)
+        $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $request->pegawai_id)
                     ->WHERE('status','active')
                     ->first();
         if ($gol_atasan!=null){
@@ -1467,6 +1468,88 @@ class SKPTahunanAPIController extends Controller {
             "p_eselon"		=> $pegawai->JabatanAktif->Eselon?$pegawai->JabatanAktif->Eselon->eselon:'',
             "p_jabatan"		=> Pustaka::capital_string($pegawai->JabatanAktif->Jabatan?$pegawai->JabatanAktif->Jabatan->skpd:''),
             "p_unit_kerja"	=> Pustaka::capital_string($pegawai->JabatanAktif->Skpd?$pegawai->JabatanAktif->Skpd->skpd:''),
+            );
+
+
+        
+        if (  $skp_tahunan->save() ){
+            return \Response::make(  $item , 200);
+
+
+        }else{
+            return \Response::make('error', 500);
+        } 
+
+    }
+
+    public function AtasanPejabatPenilaiUpdate(Request $request)
+	{
+        $messages = [
+            'pegawai_id.required'                   => 'Harus set Pegawai ID',
+            'skp_tahunan_id.required'               => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+            Input::all(),
+            array(
+                'pegawai_id'            => 'required',
+                'skp_tahunan_id'        => 'required',
+            ),
+            $messages
+        );
+
+        if ( $validator->fails() ){
+                return response()->json(['errors'=>$validator->messages()],422);
+        }
+
+
+        //Cari nama dan id pejabatan penilai
+        $pegawai     = Pegawai::SELECT('*')->where('id',$request->pegawai_id )->first();
+
+        //$jabatan_x     = $pegawai->JabatanAktif;
+
+        if ( $pegawai->JabatanAktif ){
+
+            $ap_jabatan_id  =  $pegawai->JabatanAktif->id;
+        }else{
+            return \Response::make('Jabatan tidak ditemukan', 500);
+        }
+
+
+        //CARI GOLONGAN
+        //Golongan Aktif
+        $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $request->pegawai_id)
+                    ->WHERE('status','active')
+                    ->first();
+        if ($gol_atasan!=null){
+            $ap_golongan_id = $gol_atasan->id;
+        }else{
+            $ap_golongan_id = 0 ;
+        }
+        
+       
+
+        $skp_tahunan    = SKPTahunan::find($request->get('skp_tahunan_id'));
+        if (is_null($skp_tahunan)) {
+            return $this->sendError('SKP Tahunan tidak ditemukan tidak ditemukan.');
+        }
+
+        
+        $skp_tahunan->ap_jabatan_id    = $ap_jabatan_id;
+        $skp_tahunan->ap_golongan_id   = $ap_golongan_id;
+        $skp_tahunan->ap_nama          = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+   
+        
+        $item = array(
+           
+            "ap_nip"			=> $pegawai->nip,
+            "ap_nama"		    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+            "ap_pangkat"	    => $pegawai->GolonganAktif->golongan?$pegawai->GolonganAktif->golongan->pangkat:'',
+            "ap_golongan"	    => $pegawai->GolonganAktif->golongan?$pegawai->GolonganAktif->golongan->golongan:'',
+            "ap_eselon"		    => $pegawai->JabatanAktif->Eselon?$pegawai->JabatanAktif->Eselon->eselon:'',
+            "ap_jabatan"		=> Pustaka::capital_string($pegawai->JabatanAktif->Jabatan?$pegawai->JabatanAktif->Jabatan->skpd:''),
+            "ap_unit_kerja"	    => Pustaka::capital_string($pegawai->JabatanAktif->Skpd?$pegawai->JabatanAktif->Skpd->skpd:''),
             );
 
 

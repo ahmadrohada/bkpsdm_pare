@@ -9,21 +9,12 @@
             </div>
 
             <form  id="rencana_aksi_form" method="POST" action="">
-			<input type="hidden" required name="kegiatan_tahunan_id" class="kegiatan_tahunan_id">
-			<input type="hidden" required name="indikator_kegiatan_tahunan_id" class="indikator_kegiatan_tahunan_id">
-			<input type="hidden" required name="rencana_aksi_id" class="rencana_aksi_id">
-			<input type="hidden" required name="renja_id" class="renja_id" value="{!! $skp->renja_id !!}">
+			<input type="text" required name="rencana_aksi_id" class="rencana_aksi_id">
 			<div class="modal-body">
 					<div class="row">
-						<div class="col-md-12 form-group label_indikator_kegiatan_tahunan ">
+						<div class="col-md-12 form-group label_indikator_kegiatan ">
 							<label class="control-label">Indikator Kegiatan</label>
-							<p class="indikator_kegiatan_label"></p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12 form-group target_indikator_kegiatan ">
-							<label class="control-label">Target  Quantity</label>
-							<p class="txt_output_indikator_kegiatan"></p>
+							<select  class="form-control indikator_kegiatan_tahunan_id" name="indikator_kegiatan_tahunan_id" style="width: 100%;"></select>
 						</div>
 					</div>
 					<div class="row">
@@ -106,7 +97,7 @@
 <script type="text/javascript">
 
 	//disabled bulan yang kelewat
-	$('.waktu_pelaksanaan,.waktu_pelaksanaan_edit,#pelaksana').select2();
+	$('.waktu_pelaksanaan_edit,.waktu_pelaksanaan,#pelaksana,.indikator_kegiatan_tahunan_id').select2();
 	
 	$('#pelaksana').select2({
 		ajax: {
@@ -135,6 +126,31 @@
 		},
 	});
 
+	$('.indikator_kegiatan_tahunan_id').select2({
+		ajax: {
+			url				: '{{ url("api/indikator_kegiatan_skp_tahunan_select") }}',
+			dataType		: 'json',
+			delay			: 200,
+			data			: function (params) {
+				var queryParameters = {
+					label				: params.term,
+					skp_tahunan_id		: {{$skp->id}}
+				}
+				return queryParameters;
+			},
+			processResults: function (data) {	
+				return {
+					results: $.map(data, function (item) {
+						return {
+							text	: item.label,
+							id		: item.id,
+						}	
+						
+					})
+				};
+			}
+		},
+	});
 
 	$('.modal-rencana_aksi').on('shown.bs.modal', function(){
 		//$('input:text:visible:first').focus();
@@ -144,8 +160,8 @@
 	});
 
 	$('.modal-rencana_aksi').on('hidden.bs.modal', function(){
-		$('.label_indikator_kegiatan_tahunan,.label_rencana_aksi,.label_waktu_pelaksanaan,.target,.satuan,.label_pelaksana').removeClass('has-error');
-		$('.modal-rencana_aksi').find('[name=kegiatan_tahunan_id],[name=indikator_kegiatan_tahunan_id],[name=rencana_aksi_id],[name=label],[name=target],[name=satuan]').val('');
+		$('.label_indikator_kegiatan,.label_rencana_aksi,.label_waktu_pelaksanaan,.target,.satuan,.label_pelaksana').removeClass('has-error');
+		$('.modal-rencana_aksi').find('[name=kegiatan_tahunan_id],[name=indikator_kegiatan_id],[name=rencana_aksi_id],[name=label],[name=target],[name=satuan]').val('');
 		$('.waktu_pelaksanaan').select2('val','');
 		$('#ind_kegiatan').select2('val','');
 	});
@@ -153,8 +169,8 @@
 	$('.label_pelaksana').on('click', function(){
 		$('.label_pelaksana').removeClass('has-error');
 	});
-	$('.label_indikator_kegiatan_tahunan').on('click', function(){
-		$('.label_indikator_kegiatan_tahunan').removeClass('has-error');
+	$('.label_indikator_kegiatan').on('click', function(){
+		$('.label_indikator_kegiatan').removeClass('has-error');
 	});
 	$('.label_rencana_aksi').on('click', function(){
 		$('.label_rencana_aksi').removeClass('has-error');
@@ -233,7 +249,7 @@
 					//alert (index+":"+value);
 					
 					//error message
-					((index == 'indikator_kegiatan_tahunan_id')?$('.label_indikator_kegiatan_tahunan').addClass('has-error'):'');
+					((index == 'indikator_kegiatan_id')?$('.label_indikator_kegiatan').addClass('has-error'):'');
 					((index == 'label')?$('.label_rencana_aksi').addClass('has-error'):'');
 					((index == 'waktu_pelaksanaan')?$('.label_waktu_pelaksanaan').addClass('has-error'):'');
 					((index == 'pelaksana')?$('.label_pelaksana').addClass('has-error'):'');

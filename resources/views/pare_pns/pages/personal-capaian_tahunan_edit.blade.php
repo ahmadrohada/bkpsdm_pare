@@ -14,7 +14,7 @@
 			?>
 			<h1>
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-capaian_tahunan') }}"><span class="fa fa-angle-left"></span></a>
-				Capaian Tahunan Eselon {{ $capaian->PegawaiYangDinilai->Eselon->eselon }}  {{$label_name}}
+				Capaian SKP Tahunan Eselon {{ $capaian->PegawaiYangDinilai->Eselon->eselon }}  {{$label_name}}
 			</h1>
 				
       </section>
@@ -74,7 +74,7 @@
 			<ul class="nav nav-tabs" id="myTab">
 				<li class="sumary"><a href="#sumary" data-toggle="tab">Sumary </a></li>
 				<li class="pejabat"><a href="#pejabat" data-toggle="tab" >Pejabat</a></li>
-				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan Tahunan Eselon {!! $capaian->PegawaiYangDinilai->Eselon->eselon !!}</a></li>
+				<li class="kegiatan_tahunan_tab"><a href="#kegiatan_tahunan_tab" data-toggle="tab">Kegiatan SKP Tahunan Eselon {!! $capaian->PegawaiYangDinilai->Eselon->eselon !!}</a></li>
 				<li class="unsur_penunjang_tab"><a href="#unsur_penunjang_tab" data-toggle="tab">Unsur Penunjang</a></li>
 				{{-- <li class="tugas_tambahan_tab"><a href="#tugas_tambahan_tab" data-toggle="tab">Tugas Tambahan</a></li> --}}
 			</ul>

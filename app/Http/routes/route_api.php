@@ -461,6 +461,7 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//========================================================================================================//
 	Route::get('personal_skp_tahunan_list','API\SKPTahunanAPIController@PersonalSKPTahunanList');
 
+	Route::get('skp_tahunan_pejabat','API\SKPTahunanAPIController@SKPTahunanPejabat');
 
 	
 
@@ -492,12 +493,16 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	Route::post('skp_tahunan_tolak_by_atasan','API\SKPTahunanAPIController@TolakByAtasan');
 
 	//========================================================================================================//
-	//====================================== KEGIATAN THAUNAN ================================================//
+	//====================================== KEGIATAN SKP THAUNAN ============================================//
 	//========================================================================================================//
 	/* Route::get('skp_tahunan_ktj_2','API\KegiatanSKPTahunanAPIController@ktj_2_tree'); // (kabid ) */
 
+	Route::get('subkegiatan_list_kasubid','API\KegiatanSKPTahunanAPIController@SubKegiatanKasubid');
 
-	Route::get('kegiatan_tahunan_detail','API\KegiatanSKPTahunanAPIController@KegiatanTahunanDetail');
+
+	Route::post('add_subkegiatan_to_kegiatan_skp_tahunan','API\KegiatanSKPTahunanAPIController@AddSubKegiatanToKegiatan');
+
+	Route::get('kegiatan_skp_tahunan_detail','API\KegiatanSKPTahunanAPIController@KegiatanSKPTahunanDetail');
 	
 	/* Route::get('skp_tahunan_ktj','API\KegiatanSKPTahunanAPIController@KTJoverKegiatanIdlist'); */
 
@@ -513,6 +518,7 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
 	//kegiatan KASUBID
 	Route::get('kegiatan_tahunan_3','API\KegiatanSKPTahunanAPIController@KegiatanTahunan3');
+	Route::get('kegiatan_skp_tahunan_3_tree','API\KegiatanSKPTahunanAPIController@KegiatanSKPTahunanTree3');
 
 
 	//kegiatan PELAKSANA
@@ -524,14 +530,18 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
 	Route::post('simpan_kegiatan_tahunan','API\KegiatanSKPTahunanAPIController@Store');
 	Route::post('update_kegiatan_tahunan','API\KegiatanSKPTahunanAPIController@Update');
-	Route::post('hapus_kegiatan_tahunan','API\KegiatanSKPTahunanAPIController@Hapus');
-
-	
-	
+	Route::post('hapus_kegiatan_skp_tahunan','API\KegiatanSKPTahunanAPIController@Hapus');
 
 	Route::get('skp_tahunan_kegiatan_tugas_jabatan','API\KegiatanSKPTahunanAPIController@KegiatanTugasJabatanList');
 
-
+	//========================================================================================================//
+	//================================= INDIKATOR KEGIATAN SKP THAUNAN =======================================//
+	//========================================================================================================//
+	Route::get('indikator_kegiatan_skp_tahunan_select','API\IndikatorKegiatanSKPTahunanAPIController@SelectIndikatorKegiatanList');
+	Route::get('indikator_kegiatan_skp_tahunan_list','API\IndikatorKegiatanSKPTahunanAPIController@IndikatorKegiatanSKPTahunanList');
+	Route::get('indikator_kegiatan_skp_tahunan_detail','API\IndikatorKegiatanSKPTahunanAPIController@IndikatorKegiatanSKPTahunanDetail');
+	Route::post('hapus_indikator_kegiatan_skp_tahunan','API\IndikatorKegiatanSKPTahunanAPIController@Hapus');
+	
 	//========================================================================================================//
 	//====================================== KEGIATAN THAUNAN JFT ================================================//
 	//========================================================================================================//
@@ -878,35 +888,35 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
 
 
-	//=====================          REALISASI   KEGIATAN TAHUNAN      = =====================================//
+	//=====================        REALISASI   KEGIATAN SKP TAHUNAN      =====================================//
 	//========================================================================================================//
 	
-	//Route::get('realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan');
-	Route::get('realisasi_kegiatan_tahunan_2','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan2');
-	Route::get('realisasi_kegiatan_tahunan_3','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan3');
-	Route::get('realisasi_kegiatan_tahunan_4','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan4');
-	Route::get('realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanTahunanAPIController@RealisasiKegiatanTahunan5');
+	//Route::get('realisasi_kegiatan_tahunan','API\RealisasiKegiatanSKPTahunanAPIController@RealisasiKegiatanTahunan');
+	Route::get('realisasi_kegiatan_tahunan_2','API\RealisasiKegiatanSKPTahunanAPIController@RealisasiKegiatanTahunan2');
+	Route::get('realisasi_kegiatan_tahunan_3','API\RealisasiKegiatanSKPTahunanAPIController@RealisasiKegiatanTahunan3');
+	Route::get('realisasi_kegiatan_tahunan_4','API\RealisasiKegiatanSKPTahunanAPIController@RealisasiKegiatanTahunan4');
+	Route::get('realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanSKPTahunanAPIController@RealisasiKegiatanTahunan5');
 
-	Route::get('add_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@AddRealisasiKegiatanTahunan');
+	Route::get('add_realisasi_kegiatan_skp_tahunan','API\RealisasiKegiatanSKPTahunanAPIController@AddRealisasiKegiatanSKPTahunan');
 
-	Route::get('add_realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanTahunanAPIController@AddRealisasiKegiatanTahunan5');
+	Route::get('add_realisasi_kegiatan_skp_tahunan_5','API\RealisasiKegiatanSKPTahunanAPIController@AddRealisasiKegiatanSKPTahunan5');
 	
-	Route::post('simpan_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@Store');
-	Route::post('update_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@Update');
-	Route::post('hapus_realisasi_kegiatan_tahunan','API\RealisasiKegiatanTahunanAPIController@Destroy');
+	Route::post('simpan_realisasi_kegiatan_tahunan','API\RealisasiKegiatanSKPTahunanAPIController@Store');
+	Route::post('update_realisasi_kegiatan_tahunan','API\RealisasiKegiatanSKPTahunanAPIController@Update');
+	Route::post('hapus_realisasi_kegiatan_tahunan','API\RealisasiKegiatanSKPTahunanAPIController@Destroy');
 
-	Route::post('simpan_realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanTahunanAPIController@Store5');
-	Route::post('update_realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanTahunanAPIController@Update5');
-	Route::post('hapus_realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanTahunanAPIController@Destroy5');
+	Route::post('simpan_realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanSKPTahunanAPIController@Store5');
+	Route::post('update_realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanSKPTahunanAPIController@Update5');
+	Route::post('hapus_realisasi_kegiatan_tahunan_5','API\RealisasiKegiatanSKPTahunanAPIController@Destroy5');
 
 
 	//=====================        PENILAIAN KUALITAS KERJA      = =====================================//
 	//========================================================================================================//
 	
-	Route::get('penilaian_kualitas_kerja_detail','API\RealisasiKegiatanTahunanAPIController@PenilaianKualitasKerja');
-	Route::get('penilaian_kualitas_kerja_detail_JFT','API\RealisasiKegiatanTahunanAPIController@PenilaianKualitasKerjaJFT');
-	Route::post('simpan_penilaian_kualitas_kerja','API\RealisasiKegiatanTahunanAPIController@UpdateKualitasKerja');
-	Route::post('simpan_penilaian_kualitas_kerja_5','API\RealisasiKegiatanTahunanAPIController@UpdateKualitasKerja5');
+	Route::get('penilaian_kualitas_kerja_detail','API\RealisasiKegiatanSKPTahunanAPIController@PenilaianKualitasKerja');
+	Route::get('penilaian_kualitas_kerja_detail_JFT','API\RealisasiKegiatanSKPTahunanAPIController@PenilaianKualitasKerjaJFT');
+	Route::post('simpan_penilaian_kualitas_kerja','API\RealisasiKegiatanSKPTahunanAPIController@UpdateKualitasKerja');
+	Route::post('simpan_penilaian_kualitas_kerja_5','API\RealisasiKegiatanSKPTahunanAPIController@UpdateKualitasKerja5');
 
 	//=====================        PENILAIAN PERILAKU KERJA      = =====================================//
 	//========================================================================================================//
@@ -986,7 +996,8 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	Route::get('skp_tahunan_rencana_aksi_4','API\RencanaAksiAPIController@RencanaAksiList4');
 	
 	Route::get('rencana_aksi_time_table_2','API\RencanaAksiAPIController@RencanaAksiTimeTable2');
-	Route::get('rencana_aksi_time_table_3','API\RencanaAksiAPIController@RencanaAksiTimeTable3');
+	//Route::get('rencana_aksi_time_table_3','API\RencanaAksiAPIController@RencanaAksiTimeTable3');
+	Route::get('rencana_aksi_3','API\RencanaAksiAPIController@RencanaAksi3');
 	Route::get('rencana_aksi_time_table_4','API\RencanaAksiAPIController@RencanaAksiTimeTable4');
 
 	Route::get('rencana_aksi_detail','API\RencanaAksiAPIController@RencanaAksiDetail3');
@@ -1024,11 +1035,15 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//========================================================================================================//
 	//==================================  P E G A W A I =================================================//
 	//========================================================================================================//
+
+	Route::get('pegawai_list','API\PegawaiAPIController@PegawaiList');
+	//Route::get('select_pegawai_list','API\PegawaiAPIController@select_pejabat_penilai_list');
+
 	Route::get('administrator_pegawai_list','API\PegawaiAPIController@administrator_pegawai_list');
 	Route::get('skpd_pegawai_list','API\PegawaiAPIController@SKPDPegawaiList');
-	Route::get('select_pegawai_list','API\PegawaiAPIController@select_pejabat_penilai_list');
+	
 	Route::get('select_ka_skpd_list','API\PegawaiAPIController@select_ka_skpd_list');
-	Route::get('pegawai_list','API\PegawaiAPIController@select_pegawai_list');
+	
 	Route::get('ganti_atasan_capaian_bulanan','API\PegawaiAPIController@selectAtasanCapaianBulanan');
 
 	Route::get('administrator_pegawai_skpd_list','API\PegawaiAPIController@SKPDPegawaiList');
@@ -1041,7 +1056,8 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//========================================================================================================//
 	//============================  PEJABATA PENILAI SKP TAHUNAN ================================================//
 	//========================================================================================================//
-	Route::post('set_pejabat_penilai_skp_tahunan','API\SKPTahunanAPIController@PejabatPenilaiUpdate');
+	Route::post('update_pejabat_penilai_skp_tahunan','API\SKPTahunanAPIController@PejabatPenilaiUpdate');
+	Route::post('update_atasan_pejabat_penilai_skp_tahunan','API\SKPTahunanAPIController@AtasanPejabatPenilaiUpdate');
 	
 	
 

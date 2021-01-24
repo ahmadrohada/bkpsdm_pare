@@ -1236,7 +1236,7 @@ class SKPBulananAPIController extends Controller {
 
 
 
-    public function set_pejabat_penilai_skp_tahunan(Request $request)
+    public function update_pejabat_penilai_skp_tahunan(Request $request)
 	{
         $messages = [
             'pegawai_id.required'                   => 'Harus set Pegawai ID',

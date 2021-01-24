@@ -35,20 +35,20 @@ use Gravatar;
 use Input;
 Use Alert;
 
-class RealisasiKegiatanTahunanAPIController extends Controller {
+class RealisasiKegiatanSKPTahunanAPIController extends Controller {
 
     use TraitCapaianTahunan;
 
     protected function hitung_quantity($capaian_id,$kegiatan_tahunan_id,$jm_indikator){
         $data_uing = KegiatanSKPTahunan::
-                //LEFT JOIN ke INDIKATOR KEGIATAN
-                leftjoin('db_pare_2018.renja_indikator_kegiatan AS renja_indikator_kegiatan', function($join){
-                    $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','skp_tahunan_kegiatan.kegiatan_id');
+                //LEFT JOIN ke INDIKATOR SUB KEGIATAN
+                leftjoin('db_pare_2018.renja_indikator_subkegiatan AS renja_indikator_subkegiatan', function($join){
+                    $join   ->on('renja_indikator_subkegiatan.subkegiatan_id','=','skp_tahunan_kegiatan.subkegiatan_id');
                     
                 })
-                //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
-                ->join('db_pare_2018.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
-                    $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
+                //LEFT JOIN TERHADAP REALISASI INDIKATOR SUB KEGIATAN
+                ->join('db_pare_2018.realisasi_indikator_subkegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
+                    $join   ->on('realisasi_indikator.indikator_subkegiatan_id','=','renja_indikator_subkegiatan.id');
                     $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
                     
                 })

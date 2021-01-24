@@ -41,7 +41,7 @@
 <script type="text/javascript">
 
 	$('#kegiatan_tahunan_3_table').DataTable({
-				destroy					: true,
+				destroy			: true,
 				processing      : false,
 				serverSide      : true,
 				searching      	: false,

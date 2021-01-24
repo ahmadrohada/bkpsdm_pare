@@ -99,7 +99,7 @@ class PegawaiAPIController extends Controller {
     }
 
 
-    public function select_pegawai_list(Request $request)
+    public function PegawaiList(Request $request)
     {
         $pegawai     = Pegawai::Where('nama','like', '%'.$request->get('nama').'%')
                         ->where('id','!=',$request->get('pegawai_id'))
@@ -122,7 +122,7 @@ class PegawaiAPIController extends Controller {
         
     }
 
-    public function select_pejabat_penilai_list(Request $request)
+    /* public function select_pejabat_penilai_list(Request $request)
     {
 
         //cari pejabat dan penilai SKP
@@ -153,7 +153,7 @@ class PegawaiAPIController extends Controller {
         return $pegawai_list;
         
         
-    }
+    } */
 
     public function select_ka_skpd_list(Request $request)
     {

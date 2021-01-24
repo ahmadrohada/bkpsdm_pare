@@ -7,6 +7,7 @@ use App\Models\SubKegiatan;
 use App\Models\IndikatorSubKegiatan;
 use App\Models\RencanaAksi;
 use App\Models\KegiatanSKPTahunan;
+use App\Models\IndikatorKegiatanSKPTahunan;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\Skpd;
 use App\Models\Jabatan;
@@ -203,24 +204,14 @@ class SubKegiatanAPIController extends Controller {
                             'kegiatan_tahunan.id AS kegiatan_tahunan_id',
                             'renja_subkegiatan.id AS kegiatan_id',
                             'renja_subkegiatan.label AS subkegiatan_label',
-                            'renja_subkegiatan.indikator',
-                            'renja_subkegiatan.target',
-                            'renja_subkegiatan.satuan',
                             'renja_subkegiatan.cost',
-                            //'renja_subkegiatan.jabatan_id'
                             ])
                             ->get();
         $datatables = Datatables::of($dt)
             ->addColumn('subkegiatan_label', function ($x) {
             return $x->label_kegiatan;
          })
-         ->addColumn('indikator_kegiatan', function ($x) {
-            return $x->indikator;
-        })
-        ->addColumn('target_kegiatan', function ($x) {
-            return $x->target.' '.$x->satuan ;
-        })
-        ->addColumn('cost_kegiatan', function ($x) {
+        ->addColumn('cost_subkegiatan', function ($x) {
             return "Rp.  " .number_format($x->cost,'0',',','.') ;
         })
         ->addColumn('action', function ($x) {
@@ -251,31 +242,22 @@ class SubKegiatanAPIController extends Controller {
                         ->select([   
                             'id AS subkegiatan_id',
                             'label AS label_subkegiatan',
-                            'indikator',
-                            'target',
-                            'satuan',
                             'cost'
                             ])
                             ->get();
         $datatables = Datatables::of($dt)
-            ->addColumn('label_subkegiatan', function ($x) {
-            return $x->label_subkegiatan;
-         })
-         ->addColumn('indikator_subkegiatan', function ($x) {
-            return $x->indikator;
-        })
-        ->addColumn('target_subkegiatan', function ($x) {
-            return $x->target.' '.$x->satuan ;
-        })
-        ->addColumn('cost_subkegiatan', function ($x) {
-            return "Rp.  " .number_format($x->cost,'0',',','.') ;
-        })
-        ->addColumn('action', function ($x) {
-            return $x->kegiatan_id;
-        });
-        if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-        } 
+                            ->addColumn('label_subkegiatan', function ($x) {
+                                return $x->label_subkegiatan;
+                            })
+                            ->addColumn('cost_subkegiatan', function ($x) {
+                                return "Rp.  " .number_format($x->cost,'0',',','.') ;
+                            })
+                            ->addColumn('action', function ($x) {
+                                return $x->kegiatan_id;
+                            });
+                            if ($keyword = $request->get('search')['value']) {
+                                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+                            } 
         return $datatables->make(true);
         
     }
@@ -295,9 +277,6 @@ class SubKegiatanAPIController extends Controller {
                         ->select([   
                             'id AS subkegiatan_id',
                             'label AS label_subkegiatan',
-                            'indikator',
-                            'target',
-                            'satuan',
                             'cost',
                             'jabatan_id'
                             ])
@@ -305,12 +284,6 @@ class SubKegiatanAPIController extends Controller {
         $datatables = Datatables::of($dt)
         ->addColumn('label_subkegiatan', function ($x) {
             return $x->label_subkegiatan;
-        })
-        ->addColumn('indikator_subkegiatan', function ($x) {
-            return $x->indikator;
-        })
-        ->addColumn('target_subkegiatan', function ($x) {
-            return $x->target.' '.$x->satuan ;
         })
         ->addColumn('cost_subkegiatan', function ($x) {
             return "Rp.  " .number_format($x->cost,'0',',','.') ;
@@ -339,21 +312,12 @@ class SubKegiatanAPIController extends Controller {
                         ->select([   
                             'id AS kegiatan_id',
                             'label AS label_kegiatan',
-                            'indikator',
-                            'target',
-                            'satuan',
                             'cost'
                             ])
                             ->get();
         $datatables = Datatables::of($dt)
         ->addColumn('label_kegiatan', function ($x) {
             return $x->label_kegiatan;
-        })
-        ->addColumn('indikator_kegiatan', function ($x) {
-            return $x->indikator;
-        })
-        ->addColumn('target_kegiatan', function ($x) {
-            return $x->target.' '.$x->satuan ;
         })
         ->addColumn('cost_kegiatan', function ($x) {
             return "Rp.  " .number_format($x->cost,'0',',','.') ;
@@ -388,13 +352,10 @@ class SubKegiatanAPIController extends Controller {
                             ->WHERE('renja_subkegiatan.id', $request->get('subkegiatan_id') )
                             ->SELECT(   'renja_subkegiatan.id AS subkegiatan_id',
                                         'renja_subkegiatan.label AS label',
-                                        'renja_subkegiatan.indikator AS indikator',
-                                        'renja_subkegiatan.target AS target',
-                                        'renja_subkegiatan.satuan AS satuan',
                                         'renja_subkegiatan.cost AS cost'
                                     ) 
                             ->first();
-   /*      $list = IndikatorSubKegiatan::SELECT('id','label','target','satuan')
+   /*   $list = IndikatorSubKegiatan::SELECT('id','label','target','satuan')
                             ->WHERE('subkegiatan_id','=', $request->get('subkegiatan_id') )
                             ->get()
                             ->toArray(); */
@@ -402,10 +363,6 @@ class SubKegiatanAPIController extends Controller {
         $kegiatan = array(
                 'subkegiatan_id'   => $x->subkegiatan_id,
                 'label'             => $x->label,
-                'indikator'         => $x->indikator,
-                'target'            => $x->target,
-                'satuan'            => $x->satuan,
-                'output'            => $x->target.' '.$x->satuan,
                 'quality'           => '-',
                 'target_waktu'      => '-',
                 'cost'	            => number_format($x->cost,'0',',','.'),
@@ -1108,9 +1065,6 @@ class SubKegiatanAPIController extends Controller {
                             $data_ind_kegiatan['icon']	        = 'jstree-ind_kegiatan';
                             $data_ind_kegiatan['type']          = "ind_kegiatan";
                             $data_ind_kegiatan['children']      = true ;
-                            //$data_ind_kegiatan['state']         = $state;
-
-
                             $ind_kegiatan_list[] = $data_ind_kegiatan;
                         }
 
@@ -1130,7 +1084,7 @@ class SubKegiatanAPIController extends Controller {
                                        
             break;
             case 'ind_kegiatan':
-                $ra = RencanaAksi::WHERE('indikator_kegiatan_id',$request->id)
+                $ra = RencanaAksi::WHERE('indikator_kegiatan_tahunan_id',$request->id)
                                     ->orderBy('skp_tahunan_rencana_aksi.waktu_pelaksanaan','ASC')
                                     ->orderBy('skp_tahunan_rencana_aksi.id','DESC')
                                     ->get();
@@ -1141,9 +1095,6 @@ class SubKegiatanAPIController extends Controller {
                     $data_rencana_aksi['text']			= Pustaka::capital_string($z->label).' ['. Pustaka::bulan($z->waktu_pelaksanaan).']';
                     $data_rencana_aksi['icon']	        = 'jstree-rencana_aksi';
                     $data_rencana_aksi['type']          = "rencana_aksi";
-                    //$data_rencana_aksi['children']      = true ;
-                    //$data_rencana_aksi['state']         = $state;
-                    
                     $rencana_aksi_list[] = $data_rencana_aksi ;	
 
                 }
@@ -1373,7 +1324,7 @@ class SubKegiatanAPIController extends Controller {
        
     }
 
-    public function SKPTahunanKegiatanTree3(Request $request)
+    /* public function SKPTahunanSubKegiatanTree3(Request $request)
     {
        
         //klasifikasi get data menurut root node nya,.. 
@@ -1387,42 +1338,24 @@ class SubKegiatanAPIController extends Controller {
         switch ($data) {
             case 'kegiatan':
                 $skp_tahunan_id = $request->skp_tahunan_id;
-                $kegiatan = SubKegiatan::SELECT('id','label')
-                                    ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
-                                    ->WHERE('renja_kegiatan.jabatan_id',$request->jabatan_id )
-                                    ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
-                                        $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
-                                        $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=', $skp_tahunan_id );
-                                    })
-                                    ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
-                                                'renja_kegiatan.label AS kegiatan_label',
-                                                'kegiatan_tahunan.id AS kegiatan_tahunan_id',
-                                                'kegiatan_tahunan.label AS kegiatan_tahunan_label'
-                                            ) 
-                                    ->get(); 
+                $kegiatan = KegiatanSKPTahunan::
+                                                SELECT(     'skp_tahunan_kegiatan.id AS kegiatan_tahunan_id',
+                                                            'skp_tahunan_kegiatan.label AS kegiatan_tahunan_label'
+                                                        ) 
+                                                ->WHERE('skp_tahunan_kegiatan.skp_tahunan_id',$skp_tahunan_id)
+                                                ->get(); 
                 
 
                 foreach ($kegiatan as $x) {
-                    if ( $x->kegiatan_tahunan_id >= 1 ){
-                        $kegiatan_id                = $x->kegiatan_tahunan_id;
+                   
+                        $data_kegiatan['id']        = $x->kegiatan_tahunan_id;
                         $data_kegiatan['data']	    = "kegiatan_tahunan";
-                        $kegiatan_label             = $x->kegiatan_tahunan_label;
+                        $data_kegiatan['text']      = Pustaka::capital_string($x->kegiatan_tahunan_label);
                         $data_kegiatan['icon']	    = 'jstree-kegiatan_tahunan';
                         $data_kegiatan['type']      = "kegiatan_tahunan";
-                    }else{
-                        $kegiatan_id                = $x->kegiatan_id;
-                        $data_kegiatan['data']	    = "kegiatan_renja";
-                        $kegiatan_label             = $x->kegiatan_label;
-                        $data_kegiatan['icon']	    = 'jstree-kegiatan';
-                        $data_kegiatan['type']      = "kegiatan_renja";
-                    }
-
-                        $data_kegiatan['id']	    = $kegiatan_id;
-                        $data_kegiatan['text']	    = Pustaka::capital_string($kegiatan_label);
-                        $data_kegiatan['children']  = true ;
-                        //$data_kegiatan['state']     = $state;
+                        $data_kegiatan['state']     = $state;
                         
-                        $ik = IndikatorKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->get();
+                        $ik = IndikatorKegiatanSKPTahunan::WHERE('kegiatan_id',$x->kegiatan_tahunan_id)->get();
                         foreach ($ik as $y) {
                             $data_ind_kegiatan['id']	        = $y->id;
                             $data_ind_kegiatan['data']	        = "ind_kegiatan";
@@ -1430,17 +1363,17 @@ class SubKegiatanAPIController extends Controller {
                             $data_ind_kegiatan['icon']	        = 'jstree-ind_kegiatan';
                             $data_ind_kegiatan['type']          = "ind_kegiatan";
                             $data_ind_kegiatan['children']      = true ;
-                            //$data_ind_kegiatan['state']         = $state;
+                            
 
 
-                            $ind_kegiatan_list[] = $data_ind_kegiatan;
+                            $ind_subkegiatan_list[] = $data_ind_kegiatan;
                         }
 
-                        if(!empty($ind_kegiatan_list)) { 
-                            $data_kegiatan['children']       = $ind_kegiatan_list;
+                        if(!empty($ind_subkegiatan_list)) { 
+                            $data_kegiatan['children']       = $ind_subkegiatan_list;
                         }
                         $kegiatan_list[] = $data_kegiatan ;	
-                        $ind_kegiatan_list = "";
+                        $ind_subkegiatan_list = "";
                         unset($data_kegiatan['children']);
                 }
                     
@@ -1455,10 +1388,8 @@ class SubKegiatanAPIController extends Controller {
 
                
                 $keg_skp = KegiatanSKPTahunan::SELECT('id')->WHERE('skp_tahunan_id', $request->skp_tahunan_id )->get()->toArray(); 
-                           
-                
-                $ra = RencanaAksi::WHERE('skp_tahunan_rencana_aksi.indikator_kegiatan_id',$request->id)
-                                    ->WHEREIN('skp_tahunan_rencana_aksi.kegiatan_tahunan_id',$keg_skp)
+                $ra = RencanaAksi::WHERE('skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id',$request->id)
+                                    //->WHEREIN('skp_tahunan_rencana_aksi.kegiatan_tahunan_id',$keg_skp)
                                     ->orderBy('skp_tahunan_rencana_aksi.waktu_pelaksanaan','ASC')
                                     ->orderBy('skp_tahunan_rencana_aksi.id','DESC')
                                     ->get();
@@ -1531,7 +1462,7 @@ class SubKegiatanAPIController extends Controller {
 
         }
        
-    }
+    } */
    
     public function SKPTahunanKegiatanTree4(Request $request) 
     {
@@ -1752,9 +1683,9 @@ class SubKegiatanAPIController extends Controller {
                         ->select([   
                             'id AS subkegiatan_id',
                             'label AS label_subkegiatan',
-                            'indikator',
+                            /* 'indikator',
                             'target',
-                            'satuan',
+                            'satuan', */
                             'cost'
                             ])
                             ->get();
@@ -1763,10 +1694,12 @@ class SubKegiatanAPIController extends Controller {
             return $x->label_subkegiatan;
          })
          ->addColumn('indikator_subkegiatan', function ($x) {
-            return $x->indikator;
+            //return $x->indikator;
+            return "";
         })
         ->addColumn('target_subkegiatan', function ($x) {
-            return $x->target.' '.$x->satuan ;
+            //return $x->target.' '.$x->satuan ;
+            return "";
         })
         ->addColumn('cost_subkegiatan', function ($x) {
             return "Rp.  " .number_format($x->cost,'0',',','.') ;
@@ -1789,9 +1722,9 @@ class SubKegiatanAPIController extends Controller {
                         ->select([   
                             'id AS subkegiatan_id',
                             'label AS label_subkegiatan',
-                            'indikator',
+                            /* 'indikator',
                             'target',
-                            'satuan',
+                            'satuan', */
                             'cost'
                             ])
                             ->get();
@@ -1800,10 +1733,12 @@ class SubKegiatanAPIController extends Controller {
             return $x->label_subkegiatan;
          })
          ->addColumn('indikator_subkegiatan', function ($x) {
-            return $x->indikator;
+            //return $x->indikator;
+            return "";
         })
         ->addColumn('target_subkegiatan', function ($x) {
-            return $x->target.' '.$x->satuan ;
+           // return $x->target.' '.$x->satuan ;
+           return "";
         })
         ->addColumn('cost_subkegiatan', function ($x) {
             return "Rp.  " .number_format($x->cost,'0',',','.') ;
@@ -1824,9 +1759,6 @@ class SubKegiatanAPIController extends Controller {
                         ->select([   
                             'id AS subkegiatan_id',
                             'label AS label_subkegiatan',
-                            'indikator',
-                            'target',
-                            'satuan',
                             'cost'
                             ])
                             ->get();
@@ -1908,13 +1840,10 @@ class SubKegiatanAPIController extends Controller {
         
         
         $dt = SubKegiatan::WHERE('renja_id','=',$request->renja_id)
-                //->WHERE('jabatan_id','0')
+                ->WHERE('jabatan_id','0')
                 ->select([   
                     'id AS subkegiatan_id',
                     'label',
-                    'indikator',
-                    'target',
-                    'satuan',
                     'cost'
                     
                     ])
@@ -1927,9 +1856,6 @@ class SubKegiatanAPIController extends Controller {
         })
         ->addColumn('label', function ($x) {
             return $x->label;
-        })
-        ->addColumn('subkegiatan_target', function ($x) {
-            return $x->target.' '.$x->satuan;
         })
         ->addColumn('subkegiatan_anggaran', function ($x) {
             return "Rp.  " .number_format($x->cost,'0',',','.') ;

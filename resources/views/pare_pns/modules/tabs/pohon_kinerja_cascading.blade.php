@@ -7,7 +7,7 @@
 		<div class="box box-primary ">
 			<div class="box-header with-border">
 				<h1 class="box-title">
-					Pohon Kinerja ( {{$renja->periode->label}} )
+					Pohon Kinerja ( {{$renja->periode->label}} ) 
 				</h1>
 		
 				<div class="box-tools pull-right">

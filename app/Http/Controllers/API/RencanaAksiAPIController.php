@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PeriodeTahunan;
 use App\Models\PerjanjianKinerja;
 use App\Models\KegiatanSKPTahunan;
+use App\Models\IndikatorKegiatanSKPTahunan;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\CapaianRencanaAksi;
 use App\Models\HistoryJabatan;
@@ -19,6 +20,7 @@ use App\Models\Sasaran;
 use App\Models\Skpd;
 use App\Models\SKPTahunan;
 use App\Models\RencanaAksi;
+use App\Models\WaktuPelaksanaan;
 
 
 use App\Models\SasaranPerjanjianKinerja;
@@ -130,7 +132,7 @@ class RencanaAksiAPIController extends Controller {
 
         $ind_kegiatan = IndikatorKegiatan::WHERE('kegiatan_id',$request->kegiatan_id) 
                                         ->join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
-                                            $join   ->on('rencana_aksi.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
+                                            $join   ->on('rencana_aksi.indikator_kegiatan_tahunan_id','=','renja_indikator_kegiatan.id');
                                         })
                                         ->select([   
                                             'rencana_aksi.id AS rencana_aksi_id',
@@ -284,7 +286,7 @@ class RencanaAksiAPIController extends Controller {
                                     'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
                                     'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
                                     'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
-                                    'skp_tahunan_rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
+                                    'skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id AS indikator_kegiatan_id',
                                     'skp_tahunan_rencana_aksi.waktu_pelaksanaan AS wapel',
                                     'kegiatan.label AS kegiatan_label',
                                     'kegiatan.cost AS kegiatan_anggaran',
@@ -340,7 +342,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_01', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '01')
                                 ->first();
             if ( $kb ){
@@ -351,7 +353,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_02', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '02')
                                 ->first();
             if ( $kb ){
@@ -362,7 +364,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_03', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '03')
                                 ->first();
             if ( $kb ){
@@ -373,7 +375,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_04', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '04')
                                 ->first();
             if ( $kb ){
@@ -384,7 +386,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_05', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '05')
                                 ->first();
             if ( $kb ){
@@ -395,7 +397,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_06', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '06')
                                 ->first();
             if ( $kb ){
@@ -406,7 +408,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_07', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '07')
                                 ->first();
             if ( $kb ){
@@ -417,7 +419,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_08', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '08')
                                 ->first();
             if ( $kb ){
@@ -428,7 +430,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_09', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '09')
                                 ->first();
             if ( $kb ){
@@ -439,7 +441,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_10', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '10')
                                 ->first();
             if ( $kb ){
@@ -450,7 +452,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_11', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '11')
                                 ->first();
             if ( $kb ){
@@ -461,7 +463,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_12', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', '12')
                                 ->first();
             if ( $kb ){
@@ -526,7 +528,7 @@ class RencanaAksiAPIController extends Controller {
                                     'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
                                     'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
                                     'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
-                                    'skp_tahunan_rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
+                                    'skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id AS indikator_kegiatan_id',
                                     'skp_tahunan_rencana_aksi.waktu_pelaksanaan AS wapel',
                                     'kegiatan.label AS kegiatan_label',
                                     'kegiatan.cost AS kegiatan_anggaran',
@@ -614,7 +616,7 @@ class RencanaAksiAPIController extends Controller {
             for ($i = 1; $i <= 12; $i++){
                 $bulan = Pustaka::nol($i);
                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                 ->WHERE('waktu_pelaksanaan', $bulan)
                                 ->first();
                 if ( $kb ){
@@ -712,71 +714,43 @@ class RencanaAksiAPIController extends Controller {
     }
 
 
-    public function RencanaAksiTimeTable3(Request $request)
+    public function RencanaAksi3(Request $request)
     {
-       
-            $dt = KegiatanSKPTahunan::
-                            leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
-                                $join   ->on('kegiatan.id','=','skp_tahunan_kegiatan.kegiatan_id');
-                            })
-                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
-                                $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan.id');
-                            })
-                            ->rightjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
-                                //$join   ->on('rencana_aksi.indikator_kegiatan_id','=','indikator_kegiatan.id');
-                                //tambah join ke kegiatan tahunan nya, karena ada rencana aksi yang bukan dari keg tahunan
-                                $join   ->on('rencana_aksi.kegiatan_tahunan_id','=','skp_tahunan_kegiatan.id');
+        
+        $dt = KegiatanSKPTahunan::
+                               rightjoin('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator', function($join){
+                                    $join   ->on('indikator.kegiatan_id','=','skp_tahunan_kegiatan.id');
+                               })
+                               ->rightjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                                    $join   ->on('rencana_aksi.indikator_kegiatan_tahunan_id','=','indikator.id');
+                                }) 
+                                ->rightjoin('db_pare_2018.skp_tahunan_rencana_aksi_waktu_pelaksanaan AS waktu_pelaksanaan', function($join){
+                                    $join   ->on('waktu_pelaksanaan.rencana_aksi_id','=','rencana_aksi.id');
+                                }) 
                                 
-                                
-                            })
-                            ->leftjoin('db_pare_2018.renja_program AS program', function($join){
-                                $join   ->on('program.id','=','kegiatan.program_id');
-                            })
-                            ->leftjoin('db_pare_2018.renja_sasaran AS sasaran', function($join){
-                                $join   ->on('sasaran.id','=','program.sasaran_id');
-                            })
-                            ->leftjoin('db_pare_2018.renja_indikator_sasaran AS indikator_sasaran', function($join){
-                                $join   ->on('sasaran.id','=','indikator_sasaran.sasaran_id');
-                            })
-                            ->SELECT([  
-                                        'rencana_aksi.label AS rencana_aksi_label',
-                                        'rencana_aksi.target AS rencana_aksi_target',
-                                        'rencana_aksi.satuan AS rencana_aksi_satuan',
-                                        'rencana_aksi.id AS rencana_aksi_id',
-                                        'rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
-                                        'rencana_aksi.waktu_pelaksanaan AS wapel',
-                                        'kegiatan.label AS kegiatan_renja_label',
-                                        'kegiatan.cost AS kegiatan_anggaran',
-                                        'kegiatan.id AS kegiatan_id',
-                                        'skp_tahunan_kegiatan.id AS kegiatan_tahunan_id',
-                                        'skp_tahunan_kegiatan.label AS kegiatan_tahunan_label',
-                                        'program.label AS program_label',
-                                        'program.id AS program_id',
-                                        'sasaran.label AS sasaran_label',
-                                        'sasaran.id AS sasaran_id',
-                                        'indikator_sasaran.label AS indikator_sasaran_label',
-                                        'indikator_sasaran.target AS indikator_sasaran_target',
-                                        'indikator_sasaran.satuan AS indikator_sasaran_satuan'
+                                ->SELECT(   'indikator.id AS indikator_kegiatan_tahunan_id',
+                                            'indikator.label AS indikator_kegiatan_tahunan_label',
+                                            'indikator.target AS indikator_kegiatan_tahunan_target',
+                                            'indikator.satuan AS indikator_kegiatan_tahunan_satuan',
 
-
+                                            'rencana_aksi.id AS rencana_aksi_id',
+                                            'rencana_aksi.label AS rencana_aksi_label',
+                                            'rencana_aksi.target AS rencana_aksi_target',
+                                            'rencana_aksi.satuan AS rencana_aksi_satuan',
+                                            'waktu_pelaksanaan.*'
 
                                 
-                                
-                                ])
-                            
-                            ->WHERE('skp_tahunan_kegiatan.skp_tahunan_id','=', $request->skp_tahunan_id )
-                            ->ORDERBY('sasaran.id','ASC')
-                            ->ORDERBY('program.id','ASC')
-                            ->ORDERBY('kegiatan.id','ASC')
-                            ->ORDERBY('rencana_aksi.id','ASC')
-                            ->groupBy('rencana_aksi.label','rencana_aksi.jabatan_id')
-                            
-                            
-                            ->get();
-        //return $dt;
-                 
-                
-        $datatables = Datatables::of($dt)
+                                        )
+                                ->WHERE('skp_tahunan_kegiatan.skp_tahunan_id',$request->skp_tahunan_id)
+                                ->get();
+
+    
+        $datatables = Datatables::of($dt);
+                               
+        return $datatables->make(true);
+
+
+        /*
         ->addColumn('rencana_aksi_id', function ($x) {
             return $x->rencana_aksi_id;
         })
@@ -809,7 +783,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_01', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_tahunan_id)
                                 ->WHERE('waktu_pelaksanaan', '01')
                                 ->first();
             if ( $kb ){
@@ -820,7 +794,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_02', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_tahunan_id)
                                 ->WHERE('waktu_pelaksanaan', '02')
                                 ->first();
             if ( $kb ){
@@ -831,7 +805,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_03', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_tahunan_id)
                                 ->WHERE('waktu_pelaksanaan', '03')
                                 ->first();
             if ( $kb ){
@@ -842,7 +816,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_04', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_tahunan_id)
                                 ->WHERE('waktu_pelaksanaan', '04')
                                 ->first();
             if ( $kb ){
@@ -853,7 +827,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_05', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_tahunan_id)
                                 ->WHERE('waktu_pelaksanaan', '05')
                                 ->first();
             if ( $kb ){
@@ -864,7 +838,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_06', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_tahunan_id)
                                 ->WHERE('waktu_pelaksanaan', '06')
                                 ->first();
             if ( $kb ){
@@ -875,7 +849,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_07', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_tahunan_id)
                                 ->WHERE('waktu_pelaksanaan', '07')
                                 ->first();
             if ( $kb ){
@@ -886,7 +860,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_08', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_tahunan_id)
                                 ->WHERE('waktu_pelaksanaan', '08')
                                 ->first();
             if ( $kb ){
@@ -897,7 +871,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_09', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_tahunan_id)
                                 ->WHERE('waktu_pelaksanaan', '09')
                                 ->first();
             if ( $kb ){
@@ -908,7 +882,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_10', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_tahunan_id)
                                 ->WHERE('waktu_pelaksanaan', '10')
                                 ->first();
             if ( $kb ){
@@ -919,7 +893,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_11', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_tahunan_id)
                                 ->WHERE('waktu_pelaksanaan', '11')
                                 ->first();
             if ( $kb ){
@@ -930,7 +904,7 @@ class RencanaAksiAPIController extends Controller {
         ->addColumn('b_12', function ($x) {
             //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
             $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_tahunan_id)
                                 ->WHERE('waktu_pelaksanaan', '12')
                                 ->first();
             if ( $kb ){
@@ -943,7 +917,7 @@ class RencanaAksiAPIController extends Controller {
             $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
 
-        return $datatables->make(true);  
+        return $datatables->make(true);  */ 
         
     }
 
@@ -954,15 +928,18 @@ class RencanaAksiAPIController extends Controller {
        
         $dt = KegiatanSKPTahunan::
         
-                            leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
-                                $join   ->on('kegiatan.id','=','skp_tahunan_kegiatan.kegiatan_id');
+                            leftjoin('db_pare_2018.renja_subkegiatan AS subkegiatan', function($join){
+                                $join   ->on('subkegiatan.id','=','skp_tahunan_kegiatan.subkegiatan_id');
                             })
-                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
-                                $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan.id');
+                            ->leftjoin('db_pare_2018.renja_indikator_subkegiatan AS indikator_subkegiatan', function($join){
+                                $join   ->on('indikator_subkegiatan.subkegiatan_id','=','subkegiatan.id');
                             })
                             ->join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
-                                $join   ->on('rencana_aksi.indikator_kegiatan_id','=','indikator_kegiatan.id');
+                                $join   ->on('rencana_aksi.indikator_kegiatan_tahunan_id','=','indikator_kegiatan.id');
                                 
+                            })
+                            ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
+                                $join   ->on('kegiatan.id','=','subkegiatan.subkegiatan_id');
                             })
                             ->leftjoin('db_pare_2018.renja_program AS program', function($join){
                                 $join   ->on('program.id','=','kegiatan.program_id');
@@ -978,7 +955,7 @@ class RencanaAksiAPIController extends Controller {
                                         'rencana_aksi.target AS rencana_aksi_target',
                                         'rencana_aksi.satuan AS rencana_aksi_satuan',
                                         'rencana_aksi.id AS rencana_aksi_id',
-                                        'rencana_aksi.indikator_kegiatan_id AS indikator_kegiatan_id',
+                                        'rencana_aksi.indikator_kegiatan_tahunan_id AS indikator_kegiatan_id',
                                         'rencana_aksi.waktu_pelaksanaan AS wapel',
                                         'kegiatan.label AS kegiatan_label',
                                         'kegiatan.cost AS kegiatan_anggaran',
@@ -1033,7 +1010,7 @@ class RencanaAksiAPIController extends Controller {
                             ->addColumn('b_01', function ($x) {
                                 //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
                                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                                    ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                                    ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                                     ->WHERE('waktu_pelaksanaan', '01')
                                                     ->first();
                                 if ( $kb ){
@@ -1044,7 +1021,7 @@ class RencanaAksiAPIController extends Controller {
                             ->addColumn('b_02', function ($x) {
                                 //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
                                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                                    ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                                    ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                                     ->WHERE('waktu_pelaksanaan', '02')
                                                     ->first();
                                 if ( $kb ){
@@ -1055,7 +1032,7 @@ class RencanaAksiAPIController extends Controller {
                             ->addColumn('b_03', function ($x) {
                                 //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
                                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                                    ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                                    ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                                     ->WHERE('waktu_pelaksanaan', '03')
                                                     ->first();
                                 if ( $kb ){
@@ -1066,7 +1043,7 @@ class RencanaAksiAPIController extends Controller {
                             ->addColumn('b_04', function ($x) {
                                 //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
                                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                                    ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                                    ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                                     ->WHERE('waktu_pelaksanaan', '04')
                                                     ->first();
                                 if ( $kb ){
@@ -1077,7 +1054,7 @@ class RencanaAksiAPIController extends Controller {
                             ->addColumn('b_05', function ($x) {
                                 //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
                                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                                    ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                                    ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                                     ->WHERE('waktu_pelaksanaan', '05')
                                                     ->first();
                                 if ( $kb ){
@@ -1088,7 +1065,7 @@ class RencanaAksiAPIController extends Controller {
                             ->addColumn('b_06', function ($x) {
                                 //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
                                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                                    ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                                    ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                                     ->WHERE('waktu_pelaksanaan', '06')
                                                     ->first();
                                 if ( $kb ){
@@ -1099,7 +1076,7 @@ class RencanaAksiAPIController extends Controller {
                             ->addColumn('b_07', function ($x) {
                                 //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
                                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                                    ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                                    ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                                     ->WHERE('waktu_pelaksanaan', '07')
                                                     ->first();
                                 if ( $kb ){
@@ -1110,7 +1087,7 @@ class RencanaAksiAPIController extends Controller {
                             ->addColumn('b_08', function ($x) {
                                 //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
                                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                                    ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                                    ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                                     ->WHERE('waktu_pelaksanaan', '08')
                                                     ->first();
                                 if ( $kb ){
@@ -1121,7 +1098,7 @@ class RencanaAksiAPIController extends Controller {
                             ->addColumn('b_09', function ($x) {
                                 //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
                                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                                    ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                                    ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                                     ->WHERE('waktu_pelaksanaan', '09')
                                                     ->first();
                                 if ( $kb ){
@@ -1132,7 +1109,7 @@ class RencanaAksiAPIController extends Controller {
                             ->addColumn('b_10', function ($x) {
                                 //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
                                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                                    ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                                    ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                                     ->WHERE('waktu_pelaksanaan', '10')
                                                     ->first();
                                 if ( $kb ){
@@ -1143,7 +1120,7 @@ class RencanaAksiAPIController extends Controller {
                             ->addColumn('b_11', function ($x) {
                                 //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
                                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                                    ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                                    ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                                     ->WHERE('waktu_pelaksanaan', '11')
                                                     ->first();
                                 if ( $kb ){
@@ -1154,7 +1131,7 @@ class RencanaAksiAPIController extends Controller {
                             ->addColumn('b_12', function ($x) {
                                 //CARI RENCANA AKSI DENGAN LABEL DAN IND KEGIATAN ID INI yang dilaksanakan dibulan jan
                                 $kb =  RencanaAksi::WHERE('label',$x->rencana_aksi_label)
-                                                    ->WHERE('indikator_kegiatan_id',$x->indikator_kegiatan_id)
+                                                    ->WHERE('indikator_kegiatan_tahunan_id',$x->indikator_kegiatan_id)
                                                     ->WHERE('waktu_pelaksanaan', '12')
                                                     ->first();
                                 if ( $kb ){
@@ -1209,7 +1186,7 @@ class RencanaAksiAPIController extends Controller {
                             'skp_tahunan_rencana_aksi.jabatan_id',
                             
                             ])
-                        ->WHERE('skp_tahunan_rencana_aksi.indikator_kegiatan_id','=', $request->indikator_kegiatan_id )
+                        ->WHERE('skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id','=', $request->indikator_kegiatan_id )
                         ->WHERE('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=', $kegiatan_tahunan_id )
                         ->orderBy('skp_tahunan_rencana_aksi.waktu_pelaksanaan','ASC')
                         ->orderBy('skp_tahunan_rencana_aksi.id','DESC')
@@ -1264,7 +1241,7 @@ class RencanaAksiAPIController extends Controller {
             
         $skp_tahunan_id = $request->skp_tahunan_id;
         $jabatan_id = $request->jabatan_id;
-        //CARI kegiatan _tahunan nya
+        /* //CARI kegiatan _tahunan nya
         $keg_tahunan = IndikatorKegiatan::
                                     leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
                                         $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
@@ -1282,7 +1259,7 @@ class RencanaAksiAPIController extends Controller {
             $kegiatan_tahunan_id = $keg_tahunan->kegiatan_tahunan_id;
         }else{
             $kegiatan_tahunan_id = 0 ;
-        }
+        } */
        
         //return $kegiatan_tahunan_id;
         
@@ -1296,8 +1273,7 @@ class RencanaAksiAPIController extends Controller {
                             'skp_tahunan_rencana_aksi.jabatan_id',
                             
                             ])
-                        ->WHERE('skp_tahunan_rencana_aksi.indikator_kegiatan_id','=', $request->indikator_kegiatan_id )
-                        ->WHERE('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=', $kegiatan_tahunan_id )
+                        ->WHERE('skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id','=', $request->indikator_kegiatan_tahunan_id )
                         ->orderBy('skp_tahunan_rencana_aksi.waktu_pelaksanaan','ASC')
                         ->orderBy('skp_tahunan_rencana_aksi.id','DESC')
                         ->get();
@@ -1470,7 +1446,7 @@ class RencanaAksiAPIController extends Controller {
 
             'waktu_pelaksanaan'             => $x->waktu_pelaksanaan,
             'jabatan_id'                    => $x->pelaksana_id,
-            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan),
+            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanTahunan->SubKegiatan->PenanggungJawab->jabatan),
             'nama_jabatan'                  => $pelaksana,
             'pelaksana'                     => $pelaksana,
             'kegiatan_tahunan_label'        => $x->KegiatanTahunan->label,
@@ -1554,7 +1530,7 @@ class RencanaAksiAPIController extends Controller {
 
             'waktu_pelaksanaan'             => $x->waktu_pelaksanaan,
             'jabatan_id'                    => $x->pelaksana_id,
-            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan),
+            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanTahunan->SubKegiatan->PenanggungJawab->jabatan),
             'nama_jabatan'                  => $pelaksana,
             'pelaksana'                     => $pelaksana,
             'kegiatan_tahunan_label'        => $x->KegiatanTahunan->label,
@@ -1573,8 +1549,8 @@ class RencanaAksiAPIController extends Controller {
         //RENCANA AKSI untuk eselon4
         $x = RencanaAksi::
                     WHERE('skp_tahunan_rencana_aksi.id', $request->rencana_aksi_id)
-                    ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
-                        $join   ->on('skp_tahunan_rencana_aksi.indikator_kegiatan_id','=','indikator_kegiatan.id');
+                    ->leftjoin('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator_kegiatan', function($join){
+                        $join   ->on('skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id','=','indikator_kegiatan.id');
                     })
                     ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                         $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
@@ -1600,7 +1576,8 @@ class RencanaAksiAPIController extends Controller {
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
                                 'skp_tahunan_rencana_aksi.waktu_pelaksanaan',
-                                'indikator_kegiatan.id AS indikator_kegiatan_id',
+                                'skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id',
+                                'indikator_kegiatan.id AS indikator_kegiatan_tahunan_id',
                                 'indikator_kegiatan.label AS indikator_kegiatan_label',
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
@@ -1632,7 +1609,7 @@ class RencanaAksiAPIController extends Controller {
             'target_rencana_aksi'           => $x->target_rencana_aksi,
             'satuan_target_rencana_aksi'    => $x->satuan_target_rencana_aksi,
             'indikator_kegiatan_label'      => $x->indikator_kegiatan_label,
-            'indikator_kegiatan_id'         => $x->indikator_kegiatan_id,
+            'indikator_kegiatan_id'         => $x->indikator_kegiatan_tahunan_id,
             'kegiatan_bulanan_label'        => ($x->kegiatan_bulanan_label != '' )?$x->kegiatan_bulanan_label:'-',
             'kegiatan_bulanan_target'       => $x->target_pelaksana,
             'kegiatan_bulanan_satuan'       => $x->satuan_pelaksana,
@@ -1651,15 +1628,15 @@ class RencanaAksiAPIController extends Controller {
             'waktu_pelaksanaan'             => Pustaka::bulan($x->waktu_pelaksanaan),
             'waktu_pelaksanaan_int'         => $x->waktu_pelaksanaan,
             'jabatan_id'                    => $x->pelaksana_id,
-            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan),
+            'penanggung_jawab'              => $x->IndikatorKegiatanSKPTahunan,
             'nama_jabatan'                  => $pelaksana,
             'pelaksana'                     => $pelaksana,
-            'kegiatan_tahunan_label'        => $x->KegiatanTahunan->label,
-            'kegiatan_tahunan_target'       => $x->KegiatanTahunan->target,
-            'kegiatan_tahunan_satuan'       => $x->KegiatanTahunan->satuan,
-            'kegiatan_tahunan_waktu'        => $x->KegiatanTahunan->target_waktu,
-            'kegiatan_tahunan_cost'         => number_format($x->KegiatanTahunan->cost,'0',',','.'),
-            'kegiatan_tahunan_output'       => $x->KegiatanTahunan->target.' '.$x->KegiatanTahunan->satuan,
+            'kegiatan_tahunan_label'        => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label,
+            'kegiatan_tahunan_target'       => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target,
+            'kegiatan_tahunan_satuan'       => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->satuan,
+            'kegiatan_tahunan_waktu'        => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target_waktu,
+            'kegiatan_tahunan_cost'         => number_format($x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->cost,'0',',','.'),
+            'kegiatan_tahunan_output'       => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target.' '.$x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->satuan,
  
         );
         return $rencana_aksi;
@@ -1735,7 +1712,7 @@ class RencanaAksiAPIController extends Controller {
 
             'waktu_pelaksanaan'             => $x->waktu_pelaksanaan,
             'jabatan_id'                    => $x->pelaksana_id,
-            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan),
+            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanTahunan->SubKegiatan->PenanggungJawab->jabatan),
             'nama_jabatan'                  => $pelaksana,
             'pelaksana'                     => $pelaksana,
             'kegiatan_tahunan_label'        => $x->KegiatanTahunan->label,
@@ -1752,27 +1729,25 @@ class RencanaAksiAPIController extends Controller {
     {
 
         $messages = [
-                'kegiatan_tahunan_id.required'  => 'Harus diisi',
-                'indikator_kegiatan_id.required'=> 'Harus diisi',
-                'renja_id.required'             => 'Harus diisi',
-                'waktu_pelaksanaan.required'    => 'Harus diisi',
-                'pelaksana.required'            => 'Harus diisi',
-                'target.required'               => 'Harus diisi',
-                'satuan.required'               => 'Harus diisi',
+                
+                'indikator_kegiatan_tahunan_id.required'    => 'Harus diisi',
+                'waktu_pelaksanaan.required'                => 'Harus diisi',
+                'pelaksana.required'                        => 'Harus diisi',
+                'target.required'                           => 'Harus diisi',
+                'satuan.required'                           => 'Harus diisi',
 
         ];
 
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'kegiatan_tahunan_id'   => 'required|numeric|min:1',
-                            'indikator_kegiatan_id' => 'required|numeric|min:1',
-                            'renja_id'              => 'required',
-                            'pelaksana'             => 'required|numeric|min:1',
-                            'waktu_pelaksanaan'     => 'required',
-                            'label'                 => 'required',
-                            'target'                => 'required',
-                            'satuan'                => 'required',
+                            
+                            'indikator_kegiatan_tahunan_id' => 'required|numeric|min:1',
+                            'pelaksana'                     => 'required|numeric|min:1',
+                            'waktu_pelaksanaan'             => 'required',
+                            'label'                         => 'required',
+                            'target'                        => 'required',
+                            'satuan'                        => 'required',
                         ),
                         $messages
         );
@@ -1788,15 +1763,13 @@ class RencanaAksiAPIController extends Controller {
         for ($i = 0; $i < count($target); $i++){
             $data[] = array(
 
-            'kegiatan_tahunan_id'   => Input::get('kegiatan_tahunan_id'),
-            'indikator_kegiatan_id' => Input::get('indikator_kegiatan_id'),
-            'renja_id'              => Input::get('renja_id'),
-            'jabatan_id'            => Input::get('pelaksana'),
-            'label'                 => Input::get('label'),
-            'waktu_pelaksanaan'     => $target[$i],
-            'target'                => Input::get('target'),
-            'satuan'                => Input::get('satuan'),
-            'created_at'            => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
+            'indikator_kegiatan_tahunan_id' => Input::get('indikator_kegiatan_tahunan_id'),
+            'jabatan_id'                    => Input::get('pelaksana'),
+            'label'                         => Input::get('label'),
+            'waktu_pelaksanaan'             => $target[$i],
+            'target'                        => Input::get('target'),
+            'satuan'                        => Input::get('satuan'),
+            'created_at'                    => date('Y'."-".'m'."-".'d'." ".'H'.":".'i'.":".'s'),
             );
 
 
