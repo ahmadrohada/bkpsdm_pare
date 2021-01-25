@@ -191,13 +191,13 @@
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
 											?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_3_edit')<?php
 										}else{
-											?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_2_edit')<?php
+											?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_2')<?php
 										}
 										
 										break;
 								case '3':  //Eselon 4
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_lurah))){ //JIKA LURAH
-											?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_2_edit')<?php
+											?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_2')<?php
 										}else{
 											?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_3_edit')<?php
 										}
