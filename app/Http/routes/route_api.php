@@ -514,10 +514,10 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	Route::get('kegiatan_tahunan_1','API\KegiatanSKPTahunanAPIController@KegiatanTahunan1');
 
 	//kegiatan_KABID
-	Route::get('kegiatan_tahunan_2','API\KegiatanSKPTahunanAPIController@KegiatanTahunan2');
+	Route::get('kegiatan_skp_tahunan_2','API\KegiatanSKPTahunanAPIController@KegiatanSKPTahunan2');
 
 	//kegiatan KASUBID
-	Route::get('kegiatan_tahunan_3','API\KegiatanSKPTahunanAPIController@KegiatanTahunan3');
+	Route::get('kegiatan_skp_tahunan_3','API\KegiatanSKPTahunanAPIController@KegiatanSKPTahunan3');
 	Route::get('kegiatan_skp_tahunan_3_tree','API\KegiatanSKPTahunanAPIController@KegiatanSKPTahunanTree3');
 
 
@@ -537,6 +537,9 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//========================================================================================================//
 	//================================= INDIKATOR KEGIATAN SKP THAUNAN =======================================//
 	//========================================================================================================//
+
+	Route::get('update_indikator','API\IndikatorKegiatanSKPTahunanAPIController@UpdateIndikatorKegiatanSKPTahunan');
+	
 	Route::get('indikator_kegiatan_skp_tahunan_select','API\IndikatorKegiatanSKPTahunanAPIController@SelectIndikatorKegiatanList');
 	Route::get('indikator_kegiatan_skp_tahunan_list','API\IndikatorKegiatanSKPTahunanAPIController@IndikatorKegiatanSKPTahunanList');
 	Route::get('indikator_kegiatan_skp_tahunan_detail','API\IndikatorKegiatanSKPTahunanAPIController@IndikatorKegiatanSKPTahunanDetail');

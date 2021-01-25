@@ -54,7 +54,7 @@
 									{ "orderable": false, targets: [ 0,1,2,3,4,5,6 ]  }
 								],
 				ajax			: {
-									url	: '{{ url("api/kegiatan_tahunan_3") }}',
+									url	: '{{ url("api/kegiatan_skp_tahunan_3") }}',
 									data: { 
 										
 											"renja_id" : {!! $skp->Renja->id !!} , 

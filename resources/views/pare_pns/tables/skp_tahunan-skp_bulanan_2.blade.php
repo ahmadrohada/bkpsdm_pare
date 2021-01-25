@@ -32,7 +32,10 @@
 			<div class="box-body table-responsive">
 
 				<div class="toolbar">
-					<span  data-toggle="tooltip" title="Create SKP Bulanan"><a class="btn btn-info btn-xs create_skp_bulanan" ><i class="fa fa-plus" ></i> SKP Bulanan</a></span>
+					@if (request()->segment(4) == 'edit')  
+						<span  data-toggle="tooltip" title="Create SKP Bulanan"><a class="btn btn-info btn-xs create_skp_bulanan" ><i class="fa fa-plus" ></i> SKP Bulanan</a></span>
+					@endif
+					
 				</div>
 
 				<table id="skp_bulanan_table" class="table table-striped table-hover" >
@@ -243,7 +246,8 @@
 				bSort			: false,
 				lengthMenu		: [25,50,100],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,2 ] }
+									{ className: "text-center", targets: [ 0,2 ] },
+								
 								],
 				ajax			: {
 									url	: '{{ url("api/kegiatan_bulanan_2") }}',
@@ -339,7 +343,12 @@
 				paging          : false,
 				//order 			    : [ 0 , 'asc' ],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,1,3,4 ] }
+									{ className: "text-center", targets: [ 0,1,3,4 ] },
+									@if (request()->segment(4) == 'edit')  
+										{ visible: true, "targets": [4]},
+									@else
+										{ visible: false, "targets": [4]},
+									@endif
 								],
 				ajax			: {
 									url	: '{{ url("api/skp_bulanan_list_2") }}',

@@ -312,6 +312,7 @@ class KegiatanSKPBulananAPIController extends Controller {
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
+                                'skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id',
                                 'skp_tahunan_rencana_aksi.target AS target',
                                 'skp_tahunan_rencana_aksi.satuan AS satuan',
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
@@ -332,15 +333,15 @@ class KegiatanSKPBulananAPIController extends Controller {
         ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
             return $skp_id;
         })->addColumn('label', function ($x) {
-            if ( $x->pelaksana_id == $x->KegiatanTahunan->Kegiatan->jabatan_id ){ //dilaksanakan sendiri
+            if ( $x->pelaksana_id == $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subkegiatan->jabatan_id ){ //dilaksanakan sendiri
                 return $x->rencana_aksi_label;
             }else{
                 return $x->kegiatan_bulanan_label;
-            }
+            } 
         })->addColumn('ak', function ($x) {
             return '';
         })->addColumn('output', function ($x) {
-            if ( $x->pelaksana_id == $x->KegiatanTahunan->Kegiatan->jabatan_id ){ //dilaksanakan sendiri
+            if ( $x->pelaksana_id == $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subkegiatan->jabatan_id ){ //dilaksanakan sendiri
                 return $x->target_rencana_aksi.' '.$x->satuan_rencana_aksi;
             }else{
                 return $x->target_pelaksana.' '.$x->satuan_pelaksana;
@@ -364,8 +365,8 @@ class KegiatanSKPBulananAPIController extends Controller {
         })->addColumn('penanggung_jawab', function ($x) {
 
             //return Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan);
-            if ($x->KegiatanTahunan->Kegiatan){
-                return Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan);
+            if ($x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subkegiatan){
+                return Pustaka::capital_string($x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subkegiatan->PenanggungJawab->jabatan);
             }else{
                 return "";
             }

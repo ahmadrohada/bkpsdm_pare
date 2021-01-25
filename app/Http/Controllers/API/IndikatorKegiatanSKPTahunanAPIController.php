@@ -20,6 +20,25 @@ class IndikatorKegiatanSKPTahunanAPIController extends Controller {
 
 
 
+    public function UpdateIndikatorKegiatanSKPTahunan(Request $request){
+
+        
+        $kegiatan = KegiatanSKPTahunan::get();
+
+        //loop sub kegiatan 
+        foreach ($kegiatan as $x) {
+            $id_baru = $x->id;
+            
+            $dt_cek = IndikatorKegiatanSKPTahunan::WHERE('kegiatan_id',$x->subkegiatan_id)->get();
+                foreach ($dt_cek as $y) {
+                    $st_kt                  = IndikatorKegiatanSKPTahunan::find($y->id);
+                    $st_kt->kegiatan_id     = $id_baru ;
+                    $st_kt->save();
+                }
+        }
+    }
+
+
     public function SelectIndikatorKegiatanList(Request $request){
          
   

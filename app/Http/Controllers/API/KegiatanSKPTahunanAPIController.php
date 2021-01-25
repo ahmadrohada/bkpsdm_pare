@@ -316,68 +316,21 @@ class KegiatanSKPTahunanAPIController extends Controller {
         
     }
 
-    public function KegiatanTahunan2(Request $request)
+    public function KegiatanSKPTahunan2(Request $request)
     {
-             
-        $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->get()->toArray(); 
+            
+        $kegiatan = $this->Kegiatan($request->skp_tahunan_id);
 
-
-       //KEGIATAN KABID
-        $skp_tahunan_id = $request->skp_tahunan_id;
-        $kegiatan = Kegiatan::SELECT('id','label')
-                            ->WHERE('renja_kegiatan.renja_id', $request->renja_id )
-                            ->WHEREIN('renja_kegiatan.jabatan_id',$child )
-                            ->join('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
-                                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
-                                
-                            })
-                            ->join('demo_asn.m_skpd AS penanggung_jawab', function($join) use ( $skp_tahunan_id ){
-                                $join   ->on('penanggung_jawab.id','=','renja_kegiatan.jabatan_id');
-                                
-                            })
-                            ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
-                                        'renja_kegiatan.label AS kegiatan_label',
-                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label',
-                                        'kegiatan_tahunan.id AS kegiatan_tahunan_id',
-                                        'kegiatan_tahunan.target',
-                                        'kegiatan_tahunan.satuan',
-                                        'kegiatan_tahunan.angka_kredit',
-                                        'kegiatan_tahunan.quality',
-                                        'kegiatan_tahunan.cost AS biaya',
-                                        'kegiatan_tahunan.target_waktu',
-                                        'penanggung_jawab.skpd AS penanggung_jawab'
-                                    ) 
-                            ->get();
-
-                
-                
-        $datatables = Datatables::of($kegiatan)
-        ->addColumn('label', function ($x) {
-            return $x->kegiatan_tahunan_label;
-        })->addColumn('penanggung_jawab', function ($x) {
-            return Pustaka::capital_string($x->penanggung_jawab);
-        })->addColumn('ak', function ($x) {
-            return $x->ak;
-        })->addColumn('output', function ($x) {
-            return $x->target.' '.$x->satuan;
-        })->addColumn('mutu', function ($x) {
-            return $x->quality;
-        })->addColumn('waktu', function ($x) {
-            return $x->target_waktu;
-        })->addColumn('biaya', function ($x) {
-            return number_format($x->biaya,'0',',','.');
-        });
-
+        $datatables = Datatables::of(collect($kegiatan));
         if ($keyword = $request->get('search')['value']) {
             $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-        } 
-
-        return $datatables->make(true); 
+        }      
+        return $datatables->make(true);
         
     }
 
 
-    public function KegiatanTahunan3(Request $request) //sudah update
+    public function KegiatanSKPTahunan3(Request $request) //sudah update
     {
 
         $kegiatan = $this->Kegiatan($request->skp_tahunan_id);
@@ -730,7 +683,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
 
         $st_kt->label             = Input::get('label');
-        $st_kt->target          = preg_replace('/[^0-9]/', '', Input::get('target'));
+        $st_kt->target            = preg_replace('/[^0-9]/', '', Input::get('target'));
         $st_kt->satuan            = Input::get('satuan');
         $st_kt->angka_kredit      = Input::get('angka_kredit');
         $st_kt->quality           = preg_replace('/[^0-9]/', '', Input::get('quality'));

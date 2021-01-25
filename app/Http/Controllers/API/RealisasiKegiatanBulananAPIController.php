@@ -83,13 +83,13 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             'kegiatan_bulanan_satuan'       => $x->KegiatanSKPBulanan->satuan,
             'kegiatan_bulanan_output'       => $x->KegiatanSKPBulanan->target.' '.$x->KegiatanSKPBulanan->satuan,
             'pelaksana'                     => Pustaka::capital_string($x->KegiatanSKPBulanan->RencanaAksi->Pelaksana->jabatan),
-            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan),
-            'kegiatan_tahunan_label'        => $x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->label,
-            'kegiatan_tahunan_target'       => $x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->target,
-            'kegiatan_tahunan_satuan'       => $x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->satuan,
-            'kegiatan_tahunan_waktu'        => $x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->target_waktu,
-            'kegiatan_tahunan_cost'         => number_format($x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->cost,'0',',','.'),
-            'kegiatan_tahunan_output'       => $x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->target.' '.$x->KegiatanSKPBulanan->RencanaAksi->KegiatanTahunan->satuan,
+            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Kegiatan->PenanggungJawab->jabatan),
+            'kegiatan_tahunan_label'        => $x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label,
+            'kegiatan_tahunan_target'       => $x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target,
+            'kegiatan_tahunan_satuan'       => $x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->satuan,
+            'kegiatan_tahunan_waktu'        => $x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target_waktu,
+            'kegiatan_tahunan_cost'         => number_format($x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->cost,'0',',','.'),
+            'kegiatan_tahunan_output'       => $x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target.' '.$x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->satuan,
 
             'realisasi'                     => $x->realisasi,
             'bukti'                         => $x->bukti,
@@ -332,6 +332,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
+                                'skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id',
                                 'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
                                 'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
 
@@ -364,7 +365,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             return $skp_id;
        
         })->addColumn('kegiatan_tahunan_label', function ($x) {
-            return $x->KegiatanTahunan->label;
+            return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
             
         })->addColumn('persentasi_realisasi_rencana_aksi', function ($x) {
           
@@ -374,8 +375,8 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         })->addColumn('penanggung_jawab', function ($x) {
 
             
-            if ( $x->KegiatanTahunan->Kegiatan ){
-                return Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan);
+            if ( $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subegiatan ){
+                return Pustaka::capital_string($x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subkegiatan->PenanggungJawab->jabatan);
             }else{
                 return "";
             }
@@ -421,7 +422,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                             ->get() 
                             ->toArray(); 
 
-        $keg_tahunan = $skp_bln->SKPTahunan->KegiatanTahunan;
+        $keg_tahunan = $skp_bln->SKPTahunan->KegiatanSKPTahunan;
         
         $capaian_id = $request->capaian_id;
 
@@ -452,6 +453,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
+                                'skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id',
                                 'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
                                 'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
 
@@ -488,7 +490,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             return   Pustaka::persen($x->realisasi_rencana_aksi,$x->rencana_aksi_target);
         })
         ->addColumn('kegiatan_tahunan_label', function ($x) {
-            return $x->KegiatanTahunan->label;
+            return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
         })
         ->addColumn('pelaksana', function ($x) {
             if ( $x->pelaksana_id != null ){
@@ -543,7 +545,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             return $x->kegiatan_bulanan_id;
         })
         ->addColumn('kegiatan_tahunan_label', function ($x) use($skp_id){
-            return $x->RencanaAksi->KegiatanTahunan->label;
+            return $x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
         })
         ->addColumn('persentase_realisasi', function ($x) use($skp_id){
             return   Pustaka::persen($x->realisasi,$x->target);
@@ -593,7 +595,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             return $x->kegiatan_bulanan_id;
         })
         ->addColumn('kegiatan_tahunan_label', function ($x) use($skp_id){
-            return $x->KegiatanTahunan->label;
+            return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
         })
         ->addColumn('persentase_realisasi', function ($x) use($skp_id){
             return   Pustaka::persen($x->realisasi,$x->target);

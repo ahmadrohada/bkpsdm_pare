@@ -784,7 +784,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
 	//======================= A P P R O V A L    R E Q U E S T ==================================//
 
-	/* 
+	
 	Route::get('approval', [
 		'as' 			=> '',
 		'uses' 			=> 'ApprovalRequestController@showDashoard'
@@ -910,7 +910,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
 	
 
-	*/
+	
 
 	//=========================================================================================//
 	//================================= SKP TAHUNAN      =====================================//
@@ -932,7 +932,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'SKPTahunanController@PersonalSKPTahunanRalat'
 	]);
 
-	/*
+	
 
 	//=========================================================================================//
 	//================================= SKP BULANAN      =====================================//
@@ -988,7 +988,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'CapaianTriwulanController@PersonalCapaianTriwulanEdit'
 	]);
 
-	*/
+	
 	//=========================================================================================//
 	//=============================   CAPAIAN TAHUNAN     ====================================//
 	//=========================================================================================//

@@ -3,7 +3,7 @@
 @section('template_title')
 {{ Pustaka::nama_pegawai(\Auth::user()->pegawai->gelardpn , \Auth::user()->pegawai->nama , \Auth::user()->pegawai->gelarblk)  }}
 @stop
-
+ 
   
 @section('content') 
 	 <div class="content-wrapper" >
@@ -15,7 +15,7 @@
       	</section>
 	  
 	    <section class="content">
-			<div class="row badge_persetujuan">
+			<div class="row">
 				<div class="col-md-12">
 					<div class="callout callout-info " style="height:85px;">
 	
@@ -68,7 +68,7 @@
 
 					?>
 					<li class="kegiatan_skp_tahunan_tab"><a href="#kegiatan_skp_tahunan_tab" data-toggle="tab">Kegiatan SKP</a></li>
-					<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>
+					{{-- <li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li> --}}
 					
 					<?php
 						
@@ -122,12 +122,12 @@
 										}
 										
 										break;
-								case '2':
+								case '2': //
 		
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
 											?>@include('pare_pns.modules.tabs.kegiatan_tahunan_3_edit')<?php
 										}else{
-											?>@include('pare_pns.modules.tabs.kegiatan_tahunan_2_detail')<?php
+											?>@include('pare_pns.tables.skp_tahunan-kegiatan_skp_tahunan_2')<?php
 										}
 										
 										break;
@@ -136,8 +136,7 @@
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_lurah))){ //JIKA LURAH
 											?>@include('pare_pns.modules.tabs.kegiatan_tahunan_2_detail')<?php
 										}else{
-											/* ?>@include('pare_pns.modules.tabs.kegiatan_tahunan_3_edit')<?php */
-											?>@include('pare_pns.tables.kegiatan_skp_tahunan_3')<?php
+											?>@include('pare_pns.tables.skp_tahunan-kegiatan_skp_tahunan_3')<?php
 										}
 
 										break;
@@ -238,13 +237,13 @@
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
 											?>@include('pare_pns.modules.tabs.kegiatan_bulanan_3_edit')<?php
 										}else{
-											?>@include('pare_pns.tables.skp_bulanan-kegiatan_2_edit')<?php
+											?>@include('pare_pns.tables.skp_tahunan-skp_bulanan_2')<?php
 										}
 										
 										break;
 								case '3': //eselon 4
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_lurah))){ //JIKA LURAH
-											?>@include('pare_pns.tables.skp_bulanan-kegiatan_2_edit')<?php
+											?>@include('pare_pns.tables.skp_tahunan-skp_bulanan_2')<?php
 										}else{
 											?>@include('pare_pns.modules.tabs.kegiatan_bulanan_3_edit')<?php
 										}

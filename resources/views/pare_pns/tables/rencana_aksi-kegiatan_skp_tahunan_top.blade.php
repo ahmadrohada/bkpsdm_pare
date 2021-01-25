@@ -52,7 +52,7 @@
 									{ "orderable": false, targets: [ 0,1,2,3,4,5 ]  }
 								],
 				ajax			: {
-									url		: '{{ url("api/kegiatan_tahunan_3") }}',
+									url		: '{{ url("api/kegiatan_skp_tahunan_3") }}',
 									data	: { "skp_tahunan_id" : {!! $skp->id !!} }
 								},
 				rowsGroup		: [0,1,2,3,4,5],

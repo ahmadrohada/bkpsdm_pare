@@ -23,7 +23,6 @@ use App\Models\Renja;
 use App\Models\Eselon;
 
 
-use App\Traits\PJabatan;
 use App\Traits\TraitSKPTahunan;
 
 
@@ -36,8 +35,6 @@ use Input;
 Use Alert;
 
 class SKPTahunanAPIController extends Controller {
-    use PJabatan;
-
     
     use TraitSKPTahunan;
 

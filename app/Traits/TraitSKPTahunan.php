@@ -7,7 +7,7 @@ use App\Models\CapaianTahunan;
 use App\Models\Jabatan;
 use App\Models\RencanaAksi;
 use App\Models\RealisasiRencanaAksiKaban;
-use App\Models\Kegiatan;
+use App\Models\SubKegiatan;
 use App\Models\KegiatanSKPBulanan;
 use App\Models\KegiatanSKPTahunan;
 use App\Models\KegiatanSKPTahunanJFT;
@@ -29,6 +29,7 @@ use App\Helpers\Pustaka;
 
 trait TraitSKPTahunan
 {
+    use PJabatan;
 
     /* protected function Sumary($skp_tahunan_id){
 
@@ -430,17 +431,31 @@ trait TraitSKPTahunan
         $skp_tahunan            = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
         $jenis_jabatan          = $skp_tahunan->PegawaiYangDinilai->Eselon->id_jenis_jabatan;
 
-       
+        $jabatan_sekda          = $this->jenis_PJabatan('sekda');
+        $jabatan_irban          = $this->jenis_PJabatan('irban');
+        $jabatan_lurah          = $this->jenis_PJabatan('lurah');
+        $jabatan_staf_ahli      = $this->jenis_PJabatan('staf_ahli');
+
+
+        //jenis_jeni kegiatan tahunan
         switch($jenis_jabatan)
 		{
             case 1 : 
                     $kegiatan_list = $this->Eselon2($skp_tahunan_id);
 			break;
             case 2 : 
-                    $kegiatan_list = $this->Eselon3($skp_tahunan_id);
+                    if (in_array( $skp_tahunan->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
+                        $kegiatan_list = $this->Eselon4($skp_tahunan_id);
+                    }else{
+                        $kegiatan_list = $this->Eselon3($skp_tahunan_id);
+                    }
 			break;
             case 3 : 
-                    $kegiatan_list = $this->Eselon4($skp_tahunan_id);
+                    if (in_array( $skp_tahunan->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_lurah))){ //JIKA LURAH
+                        $kegiatan_list = $this->Eselon3($skp_tahunan_id);
+                    }else{
+                        $kegiatan_list = $this->Eselon4($skp_tahunan_id);
+                    }
 			break;
             case 4 : 
                     $kegiatan_list = $this->JFU($skp_tahunan_id);
@@ -488,7 +503,79 @@ trait TraitSKPTahunan
     public function JFU($skp_tahunan_id){}
 
 
-    public function Eselon3($skp_tahunan_id){}
+    public function Eselon3($skp_tahunan_id){
+
+        $skp_tahunan            = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
+        $jabatan_id             = $skp_tahunan->PegawaiYangDinilai->id_jabatan;
+        $renja_id               = $skp_tahunan->Renja->id;
+        $jenis_jabatan          = $skp_tahunan->PegawaiYangDinilai->Eselon->id_jenis_jabatan;
+
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
+
+        //KEGIATAN KABID
+        $kegiatan = SubKegiatan::SELECT('id','label')
+                            ->WHERE('renja_subkegiatan.renja_id', $renja_id )
+                            ->WHEREIN('renja_subkegiatan.jabatan_id',$child )
+                            ->join('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use ( $skp_tahunan_id ){
+                                 $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_subkegiatan.id');
+                            })
+                            ->leftjoin('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator', function($join){
+                                $join   ->on('indikator.kegiatan_id','=','kegiatan_tahunan.id') ;
+                                $join   ->whereNull('indikator.deleted_at');
+                            })
+                             ->join('demo_asn.m_skpd AS penanggung_jawab', function($join) use ( $skp_tahunan_id ){
+                                 $join   ->on('penanggung_jawab.id','=','renja_subkegiatan.jabatan_id');
+                             })
+                             ->SELECT(   
+                                         'kegiatan_tahunan.label AS kegiatan_skp_tahunan_label',
+                                         'kegiatan_tahunan.id AS kegiatan_skp_tahunan_id',
+                                         //'kegiatan_tahunan.target',
+                                         //'kegiatan_tahunan.satuan',
+                                         'kegiatan_tahunan.angka_kredit',
+                                         'kegiatan_tahunan.quality',
+                                         'kegiatan_tahunan.cost AS cost',
+                                         'kegiatan_tahunan.target_waktu',
+                                         'indikator.id AS indikator_kegiatan_skp_tahunan_id',
+                                         'indikator.label AS indikator_kegiatan_skp_tahunan_label',
+                                         'indikator.target',
+                                         'indikator.satuan',
+                                         'penanggung_jawab.skpd AS penanggung_jawab'
+                                     ) 
+                             ->get();
+                             
+        $item = array(); 
+        $no = 0 ;
+        foreach( $kegiatan AS $x ){
+                     
+            //penomoran
+            $temp = [];
+            if(!isset($arrayForTable[$x['kegiatan_skp_tahunan_id']])){
+                $arrayForTable[$x['kegiatan_skp_tahunan_id']] = [];
+                $no += 1 ;
+            }
+            $temp['no']         = $no;
+                                         
+            $item[] = array(
+                    'no'                                    => $no,
+                    'skp_tahunan_id'                        => $skp_tahunan_id,
+                    'kegiatan_skp_tahunan_id'	            => $x->kegiatan_skp_tahunan_id,
+                    'indikator_kegiatan_skp_tahunan_id'	    => $x->indikator_kegiatan_skp_tahunan_id,
+                    'kegiatan_skp_tahunan_label'	        => $x->kegiatan_skp_tahunan_label,
+                    'indikator_kegiatan_skp_tahunan_label'	=> $x->indikator_kegiatan_skp_tahunan_label,
+
+                    'penanggung_jawab'	                    => $x->penanggung_jawab,
+                                                         
+                    'target_ak'                 => $x->angka_kredit,
+                    'target_quality'            => $x->quality." %",
+                    'target_quantity'           => $x->target.' '.$x->satuan,
+                    'target_waktu'              => $x->target_waktu ." bln",
+                    'target_cost'               => "Rp. ". number_format($x->cost,'0',',','.'),
+            );
+        }
+        return $item; 
+                 
+    
+    }
 
 
     public function Eselon4($skp_tahunan_id){

@@ -81,15 +81,22 @@ function load_perjanjian_kinerja(){
 
 
     $('#perjanjian_kinerja_sasaran_table').DataTable({
-				destroy			: true,
-				processing      : false,
-				serverSide      : true,
-				searching      	: false,
-				paging          : false,
-				bInfo			: false,
-				bSort			: false,
+			destroy			: true,
+			processing      : true,
+			serverSide      : false,
+			searching      	: false,
+			paging          : false,
+			bInfo			: false,
+			bSort			: false,
+			lengthChange	: false,
+			lengthMenu		: [25,50,100],
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,3 ] }
+								{ className: "text-center", targets: [ 0,3 ] },
+								@if (request()->segment(4) == 'edit')  
+									{ visible: true, "targets": [4]},
+								@else
+									{ visible: false, "targets": [4]},
+								@endif
 							  ],
 			ajax			: {
 								url	: '{{ url("api/eselon3-pk_sasaran_strategis") }}',
@@ -158,55 +165,62 @@ function load_perjanjian_kinerja(){
 
 		$('#perjanjian_kinerja_program_table').DataTable({
 				destroy			: true,
-				processing      : false,
-				serverSide      : true,
+				processing      : true,
+				serverSide      : false,
 				searching      	: false,
 				paging          : false,
 				bInfo			: false,
 				bSort			: false,
-			columnDefs		: [
-								{ className: "text-center", targets: [ 0,3 ] },
-								{ className: "text-right", targets: [ 2 ] }
-							  ],
-			ajax			: {
-								url	: '{{ url("api/eselon3-pk_program") }}',
-								data: { 
-										"renja_id" : {!! $skp->Renja->id !!} , 
-										"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
-										"skp_tahunan_id" : {!! $skp->id !!}
+				lengthChange	: false,
+				lengthMenu		: [25,50,100],
+				columnDefs		: [
+									{ className: "text-center", targets: [ 0,3 ] },
+									{ className: "text-right", targets: [ 2 ] },
+									@if (request()->segment(4) == 'edit')  
+										{ visible: true, "targets": [3]},
+									@else
+										{ visible: false, "targets": [3]},
+									@endif
+								],
+				ajax			: {
+									url	: '{{ url("api/eselon3-pk_program") }}',
+									data: { 
+											"renja_id" : {!! $skp->Renja->id !!} , 
+											"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
+											"skp_tahunan_id" : {!! $skp->id !!}
 
-								 	},
-							 }, 
-			columns			:[
-								{ data: 'kegiatan_id' , orderable: false,searchable:false,width:"30px",
-									"render": function ( data, type, row ,meta) {
-										return meta.row + meta.settings._iDisplayStart + 1 ;
-									}
-								},
-								{ data: "kegiatan", name:"kegiatan_label", orderable: false, searchable: false},
-								{ data: "anggaran", name:"anggaran", orderable: false, searchable: false,width:"140px"},
-								{  data: 'action',width:"30px",orderable: false,
-									"render": function ( data, type, row ) {
-										if ( row.pk_status == 1 ){
-											return  '<span  data-toggle="tooltip" title="Hapus Kegiatan" style="margin:1px;" ><a class="btn btn-success btn-xs remove_esl3_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-check" ></i></a></span>';
-										}else{
-											return  '<span  data-toggle="tooltip" title="Tambah Kegiatan" style="margin:1px;" ><a class="btn btn-default btn-xs add_esl3_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-minus" ></i></a></span>';
+										},
+								}, 
+				columns			:[
+									{ data: 'kegiatan_id' , orderable: false,searchable:false,width:"30px",
+										"render": function ( data, type, row ,meta) {
+											return meta.row + meta.settings._iDisplayStart + 1 ;
 										}
-										
+									},
+									{ data: "kegiatan", name:"kegiatan_label", orderable: false, searchable: false},
+									{ data: "anggaran", name:"anggaran", orderable: false, searchable: false,width:"140px"},
+									{  data: 'action',width:"30px",orderable: false,
+										"render": function ( data, type, row ) {
+											if ( row.pk_status == 1 ){
+												return  '<span  data-toggle="tooltip" title="Hapus Kegiatan" style="margin:1px;" ><a class="btn btn-success btn-xs remove_esl3_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-check" ></i></a></span>';
+											}else{
+												return  '<span  data-toggle="tooltip" title="Tambah Kegiatan" style="margin:1px;" ><a class="btn btn-default btn-xs add_esl3_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-minus" ></i></a></span>';
+											}
 											
-									}
-								},
-							
-							
-						],
-						initComplete: function(settings, json) {
-							
-							
-   				 		}
-		
-		});	
+												
+										}
+									},
+								
+								
+							],
+							initComplete: function(settings, json) {
+								
+								
+							}
+			
+			});	
 
-		hitung_total_anggaran();
+			hitung_total_anggaran();
 
 	}
 
