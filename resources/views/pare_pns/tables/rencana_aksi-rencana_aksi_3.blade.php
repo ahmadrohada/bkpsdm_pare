@@ -6,7 +6,7 @@
 		</div>
 	</div>
 	<div class="box-body table-responsive">
-		<input type="hidden" class="indikator_kegiatan_id">
+		<input type="hidden" class="indikator_kegiatan_tahunan_id">
 		<input type="hidden" class="kegiatan_tahunan_id">
 		
 		<label>Indikator Kegiatan SKP Tahunan: </label>
@@ -47,7 +47,7 @@
 				dataType	: "json",
 				success	: function(data) {
 						
-						$('.indikator_kegiatan_id').val(data['ind_kegiatan_id']);
+						$('.indikator_kegiatan_tahunan_id').val(data['ind_kegiatan_id']);
 						$('.kegiatan_tahunan_id').val(data['kegiatan_tahunan_id']);
 
 						$('.indikator_kegiatan_label').html(data['label']);

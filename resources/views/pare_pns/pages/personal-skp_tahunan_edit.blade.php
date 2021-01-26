@@ -68,7 +68,7 @@
 
 					?>
 					<li class="kegiatan_skp_tahunan_tab"><a href="#kegiatan_skp_tahunan_tab" data-toggle="tab">Kegiatan SKP</a></li>
-					{{-- <li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li> --}}
+					<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>
 					
 					<?php
 						
