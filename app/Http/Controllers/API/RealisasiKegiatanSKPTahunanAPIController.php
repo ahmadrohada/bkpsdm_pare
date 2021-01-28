@@ -652,7 +652,7 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
         return $realisasi_kegiatan_tahunan;
     }
     
-    public function AddRealisasiKegiatanTahunan(Request $request)
+    public function AddRealisasiKegiatanSKPTahunan(Request $request)
     {
        
         $capaian_id = $request->capaian_id;
@@ -750,7 +750,7 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
     }
 
 
-    public function AddRealisasiKegiatanTahunan5(Request $request)
+    public function AddRealisasiKegiatanSKPTahunan5(Request $request)
     {
        
         $capaian_id = $request->capaian_id;

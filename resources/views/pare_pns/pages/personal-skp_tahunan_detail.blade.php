@@ -68,8 +68,23 @@
 
 					?>
 					<li class="kegiatan_skp_tahunan_tab"><a href="#kegiatan_skp_tahunan_tab" data-toggle="tab">Kegiatan SKP</a></li>
-					<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>
 					
+					<?php 
+						switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
+							case '1': // eselon 2
+									break;
+							case '2': // eselon 3
+									echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
+									break;
+							case '3': // eselon 4
+									echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
+									break;
+							case '4':   // JFU
+									echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Kegiatan Bulanan</a></li>';
+									break; 
+						}
+
+					?>
 					<?php
 						
 						switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {

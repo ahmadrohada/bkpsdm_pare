@@ -181,7 +181,7 @@ function load_perjanjian_kinerja(){
 									}
 								},
 							{ data: "program", name:"program_label", orderable: false, searchable: false},
-							{ data: "jm_kegiatan", name:"jm_kegiatan", orderable: false, searchable: false},
+							{ data: "jm_subkegiatan", name:"jm_subkegiatan", orderable: false, searchable: false},
 							{ data: "anggaran", name:"anggaran", orderable: false, searchable: false,width:"140px"},
 							
 							{  data: 'action',width:"30px",orderable: false,

@@ -88,8 +88,8 @@ class PerjanjianKinerjaAPIController extends Controller {
         return $datatables->make(true);
     }
 
-
-    public function ProgramSKPD(Request $request)
+ 
+    public function ProgramSKPD(Request $request) 
     {
             
         $dt = Tujuan::

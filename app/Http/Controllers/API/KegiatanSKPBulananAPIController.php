@@ -134,6 +134,7 @@ class KegiatanSKPBulananAPIController extends Controller {
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
                                 'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
                                 'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
+                                'skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id',
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
                                 'kegiatan_bulanan.target AS kegiatan_bulanan_target',
@@ -158,7 +159,7 @@ class KegiatanSKPBulananAPIController extends Controller {
         })->addColumn('status_skp', function ($x) use($skp_bln){
             return $skp_bln->status;
         })->addColumn('kegiatan_tahunan_label', function ($x) use($skp_bln){
-            return $x->KegiatanTahunan->label;
+            return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
         });
 
         
@@ -214,6 +215,7 @@ class KegiatanSKPBulananAPIController extends Controller {
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                 'skp_tahunan_rencana_aksi.kegiatan_tahunan_id',
+                                'skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id',
                                 'skp_tahunan_rencana_aksi.target',
                                 'skp_tahunan_rencana_aksi.satuan',
                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
@@ -255,7 +257,14 @@ class KegiatanSKPBulananAPIController extends Controller {
             return $pelaksana;
         })->addColumn('penanggung_jawab', function ($x) {
 
-            return Pustaka::capital_string($x->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan);
+           
+            if ($x->IndikatorKegiatanSKPTahunan ){
+                return Pustaka::capital_string($x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subkegiatan->PenanggungJawab->jabatan);
+            }else{
+                return "";
+            }
+          
+            
           
         })->addColumn('status_skp', function ($x) use($skp_bln){
             return $skp_bln->status;

@@ -256,7 +256,6 @@ class SKPBulananAPIController extends Controller {
     {
             
         $dt = \DB::table('db_pare_2018.renja AS renja')
-                   
                     ->join('db_pare_2018.perjanjian_kinerja AS pk', function($join){
                         $join   ->on('pk.renja_id','=','renja.id');
                     })

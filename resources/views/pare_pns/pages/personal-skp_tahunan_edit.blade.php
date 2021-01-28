@@ -68,7 +68,23 @@
 
 					?>
 					<li class="kegiatan_skp_tahunan_tab"><a href="#kegiatan_skp_tahunan_tab" data-toggle="tab">Kegiatan SKP</a></li>
-					<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>
+					<?php 
+					switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
+						case '1': // eselon 2
+								break;
+						case '2': // eselon 3
+								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
+								break;
+						case '3': // eselon 4
+								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
+								break;
+						case '4':   // JFU
+								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Kegiatan Bulanan</a></li>';
+								break; 
+					}
+
+					?>
+					
 					
 					<?php
 						
@@ -112,13 +128,13 @@
 						<?php
 							//echo $jabatan_staf_ahli;
 							switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
-								case '1': 
+								case '1': // jabatan KA SKPD atau JPT
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_staf_ahli))){ //JIKA STAF AHLI
 											?>@include('pare_pns.modules.tabs.kegiatan_tahunan_5_edit')<?php
 										}else if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_sekda))){ //JIKA SEKDA
 											?>@include('pare_pns.modules.tabs.kegiatan_tahunan_sekda_detail')<?php
-										}else{ //normal kondisi
-											?>@include('pare_pns.modules.tabs.kegiatan_tahunan_1_detail')<?php
+										}else{ //normal kondisi JPT
+											?>@include('pare_pns.tables.skp_tahunan-kegiatan_skp_tahunan_1')<?php
 										}
 										
 										break;
@@ -140,8 +156,8 @@
 										}
 
 										break;
-								case '4':   
-										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_4_detail')<?php
+								case '4':   //JFU
+										?>@include('pare_pns.tables.skp_tahunan-kegiatan_skp_tahunan_4')<?php
 										break;
 								case '5':   // JFT
 										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_5_edit')<?php
@@ -185,7 +201,7 @@
 						<?php
 							switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 								case '1':  //eselon 2
-										?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_1_edit')<?php
+										?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_1')<?php
 										break;
 								case '2': //Eselon 3
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN

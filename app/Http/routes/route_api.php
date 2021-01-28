@@ -511,7 +511,7 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
 
 	//KABAN
-	Route::get('kegiatan_tahunan_1','API\KegiatanSKPTahunanAPIController@KegiatanTahunan1');
+	Route::get('kegiatan_skp_tahunan_1','API\KegiatanSKPTahunanAPIController@KegiatanSKPTahunan1');
 
 	//kegiatan_KABID
 	Route::get('kegiatan_skp_tahunan_2','API\KegiatanSKPTahunanAPIController@KegiatanSKPTahunan2');
@@ -522,7 +522,7 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
 
 	//kegiatan PELAKSANA
-	Route::get('kegiatan_tahunan_4','API\KegiatanSKPTahunanAPIController@KegiatanTahunan4');
+	Route::get('kegiatan_skp_tahunan_4','API\KegiatanSKPTahunanAPIController@KegiatanSKPTahunan4');
 
 	//kegiatan JFT
 	Route::get('kegiatan_tahunan_5','API\KegiatanSKPTahunanJFTAPIController@KegiatanTahunan5');
