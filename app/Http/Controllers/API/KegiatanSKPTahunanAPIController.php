@@ -36,6 +36,40 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
     use TraitSKPTahunan;
 
+
+    //update
+    public function UpdateCostKegiatanSKPTahunan(Request $request)
+    {
+
+        $kegiatan = KegiatanSKPTahunan::
+         
+                                        leftjoin('db_pare_2018.renja_subkegiatan AS subkegiatan', function($join){
+                                            $join   ->on('skp_tahunan_kegiatan.subkegiatan_id','=','subkegiatan.id');
+                                        })
+                                        ->SELECT(   'skp_tahunan_kegiatan.label',
+                                                    'skp_tahunan_kegiatan.id AS kegiatan_skp_tahunan',
+                                                    'subkegiatan.cost AS sub_cost',
+                                                    'skp_tahunan_kegiatan.cost AS keg_cost'
+                                                    
+                                                    
+                                                )
+                                        ->limit(100)
+                                        ->get();
+
+        return $kegiatan;
+        
+        /* foreach ($kegiatan as $x) {
+            $update     = SubKegiatan::where('id', $x->id );
+
+            $data       = [ 'kegiatan_id' => $x->id ];
+            $update->update($data);
+
+        } */
+
+    }
+
+
+
     public function SubKegiatanKasubid(Request $request)
     {
         $skp = SKPTahunan::WHERE('id',$request->skp_tahunan_id)->first();

@@ -460,7 +460,6 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//==================================  SKP THAUNAN=================================================//
 	//========================================================================================================//
 	Route::get('personal_skp_tahunan_list','API\SKPTahunanAPIController@PersonalSKPTahunanList');
-
 	Route::get('skp_tahunan_pejabat','API\SKPTahunanAPIController@SKPTahunanPejabat');
 
 	
@@ -483,6 +482,10 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	Route::post('skp_tahunan_open','API\SKPTahunanAPIController@SKPOPen');
 	Route::post('skp_tahunan_close','API\SKPTahunanAPIController@SKPClose');
 
+	Route::post('update_pejabat_penilai_skp_tahunan','API\SKPTahunanAPIController@PejabatPenilaiUpdate');
+	Route::post('update_atasan_pejabat_penilai_skp_tahunan','API\SKPTahunanAPIController@AtasanPejabatPenilaiUpdate');
+	
+
 	Route::post('skp_tahunan_send_to_atasan','API\SKPTahunanAPIController@SendToAtasan');
 	Route::post('skp_tahunan_pull_from_atasan','API\SKPTahunanAPIController@PullFromAtasan');
 	Route::post('hapus_skp_tahunan','API\SKPTahunanAPIController@Destroy');
@@ -496,6 +499,8 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//====================================== KEGIATAN SKP THAUNAN ============================================//
 	//========================================================================================================//
 	/* Route::get('skp_tahunan_ktj_2','API\KegiatanSKPTahunanAPIController@ktj_2_tree'); // (kabid ) */
+	Route::get('update_cost_kegiatan_skp_tahunan','API\KegiatanSKPTahunanAPIController@UpdateCostKegiatanSKPTahunan');
+	
 
 	Route::get('subkegiatan_list_kasubid','API\KegiatanSKPTahunanAPIController@SubKegiatanKasubid');
 
@@ -570,7 +575,10 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	Route::get('skp_bulanan_list_4','API\SKPBulananAPIController@SKPBulananList4');
 	Route::get('skp_bulanan_list_5','API\SKPBulananAPIController@SKPBulananList5');
 
+	Route::get('skp_bulanan_pejabat','API\SKPBulananAPIController@SKPBulananPejabat');
 	
+	Route::post('update_pejabat_penilai_skp_bulanan','API\SKPBulananAPIController@PejabatPenilaiUpdate');
+	Route::post('update_atasan_pejabat_penilai_skp_bulanan','API\SKPBulananAPIController@AtasanPejabatPenilaiUpdate');
 
 	Route::get('personal_skp_bulanan_list','API\SKPBulananAPIController@PersonalSKPBulananList');
 
@@ -578,7 +586,6 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	
 
 	Route::post('create_skp_bulanan','API\SKPBulananAPIController@Store');
-	Route::get('skp_bulanan_detail','API\SKPBulananAPIController@SKPBulanandDetail');
 	Route::post('hapus_skp_bulanan','API\SKPBulananAPIController@Destroy');
 
 
@@ -615,24 +622,30 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	
 	
 	Route::get('capaian_bulanan_status_pengisian','API\CapaianBulananAPIController@CapaianBulananStatusPengisian');
-
-
 	Route::get('approval_request_capaian_bulanan_list','API\CapaianBulananAPIController@ApprovalRequestList');
-	
 	Route::get('capaian_bulanan_detail','API\CapaianBulananAPIController@CapaianBulananDetail');
-	Route::post('set_pejabat_penilai_capaian_bulanan','API\CapaianBulananAPIController@PejabatPenilaiUpdate');
 
-	
+	Route::get('capaian_bulanan_pejabat','API\CapaianBulananAPIController@CapaianBulananPejabat');
+	Route::post('update_pejabat_penilai_capaian_bulanan','API\CapaianBulananAPIController@PejabatPenilaiUpdate');
+	Route::post('update_atasan_pejabat_penilai_capaian_bulanan','API\CapaianBulananAPIController@AtasanPejabatPenilaiUpdate');
+
 	Route::get('create_capaian_bulanan_confirm','API\CapaianBulananAPIController@CreateConfirm');
-
 	Route::post('kirim_capaian_bulanan','API\CapaianBulananAPIController@SendToAtasan');
-
 	Route::post('tolak_capaian_bulanan','API\CapaianBulananAPIController@TolakByAtasan');
-
 	Route::post('terima_capaian_bulanan','API\CapaianBulananAPIController@TerimaByAtasan');
-
 	Route::post('simpan_capaian_bulanan','API\CapaianBulananAPIController@Store');
 	Route::post('hapus_capaian_bulanan','API\CapaianBulananAPIController@Destroy');
+
+
+	//=====================        PENILAIAN KODE ETIK      = =====================================//
+	//========================================================================================================//
+	
+	Route::get('detail_penilaian_kode_etik','API\KodeEtikAPIController@PenilaianKodeEtikDetail');
+	Route::get('penilaian_kode_etik','API\KodeEtikAPIController@PenilaianKodeEtik');
+	Route::post('simpan_penilaian_kode_etik','API\KodeEtikAPIController@Store');
+	Route::post('update_penilaian_kode_etik','API\KodeEtikAPIController@Update');
+	Route::post('hapus_penilaian_kode_etik','API\KodeEtikAPIController@Hapus');
+
 
 	//================================== T P P    REPORT =====================================================//
 
@@ -1022,18 +1035,6 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	Route::get('kegiatan_rencana_aksi','API\RencanaAksiAPIController@KegiatanRencanaAksiList');
 	
 	
-	
-
-
-	//========================================================================================================//
-	//======================================= PENILAIAN KODE ETIK =====================================//
-	//========================================================================================================//
-
-	Route::get('detail_penilaian_kode_etik','API\PenilaianKodeEtikAPIController@DetailPenilaianKodeEtik');
-
-	
-	Route::post('simpan_penilaian_kode_etik','API\PenilaianKodeEtikAPIController@Store');
-	Route::post('update_penilaian_kode_etik','API\PenilaianKodeEtikAPIController@Update');
 
 	//========================================================================================================//
 	//==================================  P E G A W A I =================================================//
@@ -1056,11 +1057,6 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	Route::get('puskesmas_pegawai_list','API\PegawaiAPIController@PuskesmasPegawaiList');
 	
 
-	//========================================================================================================//
-	//============================  PEJABATA PENILAI SKP TAHUNAN ================================================//
-	//========================================================================================================//
-	Route::post('update_pejabat_penilai_skp_tahunan','API\SKPTahunanAPIController@PejabatPenilaiUpdate');
-	Route::post('update_atasan_pejabat_penilai_skp_tahunan','API\SKPTahunanAPIController@AtasanPejabatPenilaiUpdate');
 	
 	
 

@@ -3,39 +3,27 @@
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\KodeEtik;
 
-use App\Models\PenilaianKodeEtik;
-use App\Models\PerjanjianKinerja;
-use App\Models\SKPTahunan;
-use App\Models\SKPBulanan;
-use App\Models\CapaianBulanan;
-use App\Models\Pegawai;
-use App\Models\HistoryJabatan;
-use App\Models\Jabatan;
-use App\Models\Golongan;
-use App\Models\Eselon;
-
-use App\Models\KegiatanSKPTahunan;
-use App\Models\RencanaAksi;
-use App\Models\KegiatanSKPBulanan;
-
-use App\Helpers\Pustaka;
-
-use Datatables;
+use App\Traits\TraitCapaianBulanan;
 use Validator;
-use Gravatar;
 use Input;
-Use Alert;
 
-class PenilaianKodeEtikAPIController extends Controller {
 
- 
-    protected function DetailPenilaianKodeEtik(Request $request){
+class KodeEtikAPIController extends Controller {
+
+    use TraitCapaianBulanan;
+   
+  
+    public function PenilaianKodeEtik(Request $request)
+    {
+        return $this->NilaiKodeEtik($request->capaian_bulanan_id);
+    }
+
+    protected function PenilaianKodeEtikDetail(Request $request){
      
 
-        $pke = PenilaianKodeEtik::WHERE('id',$request->penilaian_kode_etik_id)->first();
-
-    
+        $pke = KodeEtik::WHERE('id',$request->penilaian_kode_etik_id)->first();
             $data = array(
                 
                     'penilaian_kode_etik_id'=> $pke->id,
@@ -45,10 +33,6 @@ class PenilaianKodeEtikAPIController extends Controller {
                     'adaptif'               => $pke->adaptif,
                     'terbuka'               => $pke->terbuka,
                     'efektif'               => $pke->efektif,
-                   
-                
-                
-
             );
         return $data; 
     } 
@@ -88,13 +72,13 @@ class PenilaianKodeEtikAPIController extends Controller {
         }
 
        
-        $cek = PenilaianKodeEtik::WHERE('capaian_bulanan_id',Input::get('capaian_bulanan_id'))
+        $cek = KodeEtik::WHERE('capaian_bulanan_id',Input::get('capaian_bulanan_id'))
                                 ->SELECT('id')
                                 ->count();
 
         if ( $cek == 0 ){
            
-            $pke    = new PenilaianKodeEtik;
+            $pke    = new KodeEtik;
             $pke->capaian_bulanan_id  = Input::get('capaian_bulanan_id');
             $pke->santun              = Input::get('santun');
             $pke->amanah              = Input::get('amanah');
@@ -155,7 +139,7 @@ class PenilaianKodeEtikAPIController extends Controller {
         }
 
         
-        $pke    = PenilaianKodeEtik::find(Input::get('penilaian_kode_etik_id'));
+        $pke    = KodeEtik::find(Input::get('penilaian_kode_etik_id'));
         if (is_null($pke)) {
             return response()->json('PKE tidak ditemukan.',422);
         }
@@ -179,6 +163,4 @@ class PenilaianKodeEtikAPIController extends Controller {
 
     
     }
-   
-
 }

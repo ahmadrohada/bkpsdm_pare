@@ -12,9 +12,9 @@
 				$xd = request()->segment(4); 
 				$label_name = ( $xd == 'ralat') ? ' [ Ralat ] ' : ' [ Draft ] ' ;
 			?>
-			<h1>
+			<h1> 
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route('personal-capaian_tahunan') }}"><span class="fa fa-angle-left"></span></a>
-				Capaian SKP Tahunan Eselon {{ $capaian->PegawaiYangDinilai->Eselon->eselon }}  {{$label_name}}
+				Capaian SKP Tahunan  {{ $capaian->PegawaiYangDinilai->Eselon->eselon }}  {{$label_name}}
 			</h1>
 				
       </section>
@@ -29,26 +29,26 @@
 						<tr>
 							<td rowspan="4" style="padding:8px 2px;" class="hidden-xs"><i class="fa fa-pencil fa-3x" style="padding-right:30px;"></i></td>
 							<td >Periode</td>
-							<td >&nbsp;&nbsp;:&nbsp;</td>
+							<td >&nbsp;&nbsp;&nbsp;</td>
 							<td>{{ Pustaka::tahun($capaian->tgl_mulai) }} </td>
 						</tr>
 						<tr>
 							<td>Created</td>
-							<td>&nbsp;&nbsp;:&nbsp;</td>
+							<td >&nbsp;&nbsp;&nbsp;</td>
 							<td>{{ Pustaka::tgl_jam_short($capaian->created_at) }}</td>
 							</tr>
 							<tr>
 								<td>
 									Send
 								</td>
-								<td>&nbsp;&nbsp;:&nbsp;</td>
+								<td >&nbsp;&nbsp;&nbsp;</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>
 									Approved
 								</td>
-								<td>&nbsp;&nbsp;:&nbsp;</td>
+								<td >&nbsp;&nbsp;&nbsp;</td>
 								<td></td>
 							</tr>
 					
@@ -165,6 +165,7 @@ $(document).ready(function() {
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
 		var id = $(e.target).attr("href").substr(1);
 		window.location.hash = id;
+		$('html, body').animate({scrollTop:0}, 0);
 		//destroy table agar hide kolom  tidak muncul duluan
 		$('#realisasi_kegiatan_tahunan_table').DataTable().clear().destroy();
 		$('#realisasi_tugas_tambahan_table').DataTable().clear().destroy();
@@ -183,7 +184,7 @@ $(document).ready(function() {
 		}else if ( id == 'tugas_tambahan_tab'){
 			LoadTugasTambahanTable(); 
 		}
-		$('html, body').animate({scrollTop:0}, 0);
+		
 	});
 
 

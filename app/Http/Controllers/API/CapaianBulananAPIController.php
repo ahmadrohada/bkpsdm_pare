@@ -13,6 +13,7 @@ use App\Models\CapaianTriwulan;
 use App\Models\CapaianTahunan;
 use App\Models\Pegawai;
 use App\Models\HistoryJabatan;
+use App\Models\HistoryGolongan;
 use App\Models\Jabatan;
 use App\Models\Golongan;
 use App\Models\Eselon;
@@ -32,7 +33,7 @@ use App\Models\UraianTugasTambahan;
 use App\Helpers\Pustaka;
 use App\Traits\HitungCapaian; 
 use App\Traits\BawahanList;
-use App\Traits\PJabatan;
+use App\Traits\TraitCapaianBulanan;
 
 use Datatables;
 use Validator;
@@ -44,7 +45,7 @@ class CapaianBulananAPIController extends Controller {
 
     use HitungCapaian;
     use BawahanList;
-    use PJabatan;
+    use TraitCapaianBulanan;
 
   
   
@@ -736,12 +737,6 @@ class CapaianBulananAPIController extends Controller {
                 'tgl_dibuat'                => Pustaka::balik2($capaian_bulanan->created_at),
                 'p_nama'                    => isset($p_detail->Pegawai)?Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk) : "",
                 'u_nama'                    => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
-                'santun'                    => $capaian_bulanan->santun*20,
-                'amanah'                    => $capaian_bulanan->amanah*20,
-                'harmonis'                  => $capaian_bulanan->harmonis*20,
-                'adaptif'                   => $capaian_bulanan->adaptif*20,
-                'terbuka'                   => $capaian_bulanan->terbuka*20,
-                'efektif'                   => $capaian_bulanan->efektif*20,
 
 
 
@@ -990,10 +985,14 @@ class CapaianBulananAPIController extends Controller {
 
     }   
 
-    public function PejabatPenilaiUpdate(Request $request)
+    protected function CapaianBulananPejabat(Request $request){
+        return $this->Pejabat($request->capaian_bulanan_id);
+    }
+
+    public function PejabatPenilaiUpdate(Request $request) 
 	{
         $messages = [
-            'pejabat_penilai_id.required'           => 'Harus set Pegawai ID',
+            'pegawai_id.required'                   => 'Harus set Pegawai ID',
             'capaian_bulanan_id.required'           => 'Harus diisi',
 
         ];
@@ -1001,7 +1000,7 @@ class CapaianBulananAPIController extends Controller {
         $validator = Validator::make(
             Input::all(),
             array(
-                'pejabat_penilai_id'    => 'required',
+                'pegawai_id'            => 'required',
                 'capaian_bulanan_id'    => 'required',
             ),
             $messages
@@ -1013,7 +1012,7 @@ class CapaianBulananAPIController extends Controller {
 
 
         //Cari nama dan id pejabatan penilai
-        $pegawai     = Pegawai::SELECT('*')->where('id',$request->pejabat_penilai_id )->first();
+        $pegawai     = Pegawai::SELECT('*')->where('id',$request->pegawai_id )->first();
 
         //$jabatan_x     = $pegawai->JabatanAktif;
 
@@ -1025,7 +1024,7 @@ class CapaianBulananAPIController extends Controller {
         }
 
           //Golongan Aktif
-          $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $request->pejabat_penilai_id)
+          $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $request->pegawai_id)
                 ->WHERE('status','active')
                 ->first();
         if ($gol_atasan!=null){
@@ -1046,7 +1045,7 @@ class CapaianBulananAPIController extends Controller {
 
         
         $capaian_bulanan->p_jabatan_id    = $p_jabatan_id;
-        $capaian_bulanan->p_golongan_id    = $p_golongan_id;
+        $capaian_bulanan->p_golongan_id   = $p_golongan_id;
         $capaian_bulanan->p_nama          = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
    
         
@@ -1059,6 +1058,89 @@ class CapaianBulananAPIController extends Controller {
             "p_eselon"		=> $pegawai->JabatanAktif->Eselon?$pegawai->JabatanAktif->Eselon->eselon:'',
             "p_jabatan"		=> Pustaka::capital_string($pegawai->JabatanAktif->Jabatan?$pegawai->JabatanAktif->Jabatan->skpd:''),
             "p_unit_kerja"	=> Pustaka::capital_string($pegawai->JabatanAktif->Skpd?$pegawai->JabatanAktif->Skpd->skpd:''),
+            );
+
+
+        
+        if (  $capaian_bulanan->save() ){
+            return \Response::make(  $item , 200);
+
+
+        }else{
+            return \Response::make('error', 500);
+        } 
+
+    }
+
+    
+    public function AtasanPejabatPenilaiUpdate(Request $request)
+	{
+        $messages = [
+            'pegawai_id.required'                   => 'Harus set Pegawai ID',
+            'capaian_bulanan_id.required'               => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+            Input::all(),
+            array(
+                'pegawai_id'            => 'required',
+                'capaian_bulanan_id'        => 'required',
+            ),
+            $messages
+        );
+
+        if ( $validator->fails() ){
+                return response()->json(['errors'=>$validator->messages()],422);
+        }
+
+
+        //Cari nama dan id pejabatan penilai
+        $pegawai     = Pegawai::SELECT('*')->where('id',$request->pegawai_id )->first();
+
+        //$jabatan_x     = $pegawai->JabatanAktif;
+
+        if ( $pegawai->JabatanAktif ){
+
+            $ap_jabatan_id  =  $pegawai->JabatanAktif->id;
+        }else{
+            return \Response::make('Jabatan tidak ditemukan', 500);
+        }
+
+
+        //CARI GOLONGAN
+        //Golongan Aktif
+        $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $request->pegawai_id)
+                    ->WHERE('status','active')
+                    ->first();
+        if ($gol_atasan!=null){
+            $ap_golongan_id = $gol_atasan->id;
+        }else{
+            $ap_golongan_id = 0 ;
+        }
+        
+       
+
+        $capaian_bulanan    = CapaianBulanan::find($request->get('capaian_bulanan_id'));
+        if (is_null($capaian_bulanan)) {
+            return $this->sendError('Capaian Bulanan tidak ditemukan tidak ditemukan.');
+        }
+
+        
+        $capaian_bulanan->ap_jabatan_id    = $ap_jabatan_id;
+        $capaian_bulanan->ap_golongan_id   = $ap_golongan_id;
+        $capaian_bulanan->ap_nama          = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+   
+        
+        $item = array(
+           
+            "ap_nip"			=> $pegawai->nip,
+            "ap_nama"		    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+            "ap_pangkat"	    => $pegawai->GolonganAktif->golongan?$pegawai->GolonganAktif->golongan->pangkat:'',
+            "ap_golongan"	    => $pegawai->GolonganAktif->golongan?$pegawai->GolonganAktif->golongan->golongan:'',
+            "ap_eselon"		    => $pegawai->JabatanAktif->Eselon?$pegawai->JabatanAktif->Eselon->eselon:'',
+            "ap_jabatan"		=> Pustaka::capital_string($pegawai->JabatanAktif->Jabatan?$pegawai->JabatanAktif->Jabatan->skpd:''),
+            "ap_unit_kerja"	    => Pustaka::capital_string($pegawai->JabatanAktif->Skpd?$pegawai->JabatanAktif->Skpd->skpd:''),
             );
 
 

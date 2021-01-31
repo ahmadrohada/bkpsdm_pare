@@ -509,33 +509,42 @@ trait TraitSKPTahunan
    
     public function JFU($skp_tahunan_id){
         
+        //Kegiatan tahunan Pelaksana ( JFU ) adalah rencana aksi Eselon 4
         
         $skp_tahunan            = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
         $jabatan_id             = $skp_tahunan->PegawaiYangDinilai->id_jabatan;
         $renja_id               = $skp_tahunan->Renja->id;
-        $jenis_jabatan          = $skp_tahunan->PegawaiYangDinilai->Eselon->id_jenis_jabatan;
+
 
         //KEGIATAN pelaksana
-        $rencana_aksi = RencanaAksi::WHERE('jabatan_id',$jabatan_id)
-                            ->WHERE('renja_id',$renja_id)
-                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
+        $kegiatan = RencanaAksi::
+                            
+                            leftjoin('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator', function($join){
+                                $join   ->on('skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id','=','indikator.id') ;
                             })
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                $join  ->on('indikator.kegiatan_id','=','kegiatan_tahunan.id');
+                            })
+                            ->WHERE('skp_tahunan_rencana_aksi.jabatan_id',$jabatan_id)
+                            ->WHERE('skp_tahunan_rencana_aksi.renja_id',$renja_id)
                             ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
-                                        'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
-                                        'kegiatan_tahunan.label AS kegiatan_tahunan_label',
-                                        'kegiatan_tahunan.id AS kegiatan_tahunan_id',
-                                        'kegiatan_tahunan.target',
-                                        'kegiatan_tahunan.satuan',
+                                        'skp_tahunan_rencana_aksi.label AS kegiatan_skp_tahunan_label',
+
+                                        'kegiatan_tahunan.label AS kegiatan_skp_tahunan_label',
+                                        'kegiatan_tahunan.id AS kegiatan_skp_tahunan_id',
                                         'kegiatan_tahunan.angka_kredit',
                                         'kegiatan_tahunan.quality',
-                                        'kegiatan_tahunan.cost',
-                                        'kegiatan_tahunan.target_waktu'
+                                        'kegiatan_tahunan.cost AS cost',
+                                        'kegiatan_tahunan.target_waktu',
+                                        'indikator.id AS indikator_kegiatan_skp_tahunan_id',
+                                        'indikator.label AS indikator_kegiatan_skp_tahunan_label',
+                                        'indikator.target',
+                                        'indikator.satuan'
 
                                     ) 
                             ->groupBy('kegiatan_tahunan.id')
-                            //->orderBY('skp_tahunan_rencana_aksi.label')
-                            ->distinct()
+                            /*->orderBY('skp_tahunan_rencana_aksi.label')*/
+                            ->distinct() 
                             ->get(); 
         $item = array(); 
         $no = 0 ;

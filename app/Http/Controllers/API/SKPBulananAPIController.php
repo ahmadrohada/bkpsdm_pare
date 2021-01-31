@@ -13,6 +13,7 @@ use App\Models\HistoryJabatan;
 use App\Models\Golongan;
 use App\Models\Jabatan;
 use App\Models\Eselon;
+use App\Models\HistoryGolongan;
 
 use App\Models\KegiatanSKPTahunan;
 use App\Models\RencanaAksi;
@@ -20,7 +21,7 @@ use App\Models\KegiatanSKPBulanan;
 
 use App\Models\KegiatanSKPTahunanJFT;
 use App\Models\KegiatanSKPBulananJFT;
-use App\Traits\PJabatan;
+use App\Traits\TraitSKPBulanan;
 
 use App\Helpers\Pustaka;
 
@@ -32,7 +33,7 @@ Use Alert;
 
 class SKPBulananAPIController extends Controller {
 
-    use PJabatan;
+    use TraitSKPBulanan;
 
     public function SKPBulanan_timeline_status( Request $request )
     {
@@ -163,95 +164,175 @@ class SKPBulananAPIController extends Controller {
         
     }
 
-    protected function SKPBulanandDetail(Request $request){
-     
+    
+    protected function SKPBulananPejabat(Request $request){
+        return $this->Pejabat($request->skp_bulanan_id);
+    }
 
-        $skp = SKPBulanan::WHERE('skp_bulanan.id',$request->skp_bulanan_id)
-                            
-                            ->first();
+    public function PejabatPenilaiUpdate(Request $request)
+	{
+        $messages = [
+            'pegawai_id.required'                   => 'Harus set Pegawai ID',
+            'skp_bulanan_id.required'               => 'Harus diisi',
 
-        
+        ];
 
-        $renja      = $skp->SKPTahunan->Renja;
-        $p_detail   = $skp->PejabatPenilai;
-        $u_detail   = $skp->PegawaiYangDinilai;
-       
+        $validator = Validator::make(
+            Input::all(),
+            array(
+                'pegawai_id'            => 'required',
+                'skp_bulanan_id'        => 'required',
+            ),
+            $messages
+        );
 
-        if ( $p_detail != null ){
-            $data = array(
-                    'periode'	            => Pustaka::periode($skp->tgl_mulai),
-                    'date_created'	        => Pustaka::tgl_form($skp->created_at),
-                    'masa_penilaian'        => Pustaka::tgl_form($skp->tgl_mulai).' s.d  '.Pustaka::tgl_form($skp->tgl_selesai),
-
-                    'tgl_mulai'             => $skp->tgl_mulai,
-                    'pegawai_id'	        => $skp->pegawai_id,
-
-                    'u_jabatan_id'	        => $u_detail->id,
-                    'u_nip'	                => $u_detail->nip,
-                    'u_nama'                => $skp->u_nama,
-                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
-                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
-                    'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
-                    'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
-                    'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
-                    'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
-                
-                    'p_jabatan_id'	        => $p_detail->id,
-                    'p_nip'	                => $p_detail->nip,
-                    'p_nama'                => $skp->p_nama,
-                    'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
-                    'p_golongan'	        => $p_detail->Golongan ? $p_detail->Golongan->golongan : '',
-                    'p_eselon'	            => $p_detail->Eselon ? $p_detail->Eselon->eselon : '',
-                    'p_jabatan'	            => Pustaka::capital_string($p_detail->Jabatan ? $p_detail->Jabatan->skpd : ''),
-                    'p_unit_kerja'	        => Pustaka::capital_string($p_detail->UnitKerja ? $p_detail->UnitKerja->unit_kerja : ''),
-                    'p_skpd'	            => Pustaka::capital_string($p_detail->Skpd ? $p_detail->Skpd->skpd : ''), 
-                
-                    
-
-            );
-        }else{
-            $data = array(
-                    'periode'	            => Pustaka::periode($skp->tgl_mulai),
-                    'date_created'	        => Pustaka::tgl_form($skp->created_at),
-                    'masa_penilaian'        => Pustaka::tgl_form($skp->tgl_mulai).' s.d  '.Pustaka::tgl_form($skp->tgl_selesai),
-
-                    'tgl_mulai'             => $skp->tgl_mulai,
-                    'pegawai_id'	        => $skp->pegawai_id,
-                    
-                    'u_jabatan_id'	        => $u_detail->id,
-                    'u_nip'	                => $u_detail->nip,
-                    'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
-                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
-                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
-                    'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
-                    'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
-                    'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
-                    'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
-                
-                    'p_jabatan_id'	        => $p_detail,
-                    'p_nip'	                => '',
-                    'p_nama'                => '',
-                    'p_pangkat'	            => '',
-                    'p_golongan'	        => '',
-                    'p_eselon'	            => '',
-                    'p_jabatan'	            => '',
-                    'p_unit_kerja'	        => '',
-                    'p_skpd'	            => '', 
-                
-                
-
-            );
-
+        if ( $validator->fails() ){
+                return response()->json(['errors'=>$validator->messages()],422);
         }
 
 
-        return $data; 
+        //Cari nama dan id pejabatan penilai
+        $pegawai     = Pegawai::SELECT('*')->where('id',$request->pegawai_id )->first();
+
+        //$jabatan_x     = $pegawai->JabatanAktif;
+
+        if ( $pegawai->JabatanAktif ){
+
+            $p_jabatan_id  =  $pegawai->JabatanAktif->id;
+        }else{
+            return \Response::make('Jabatan tidak ditemukan', 500);
+        }
 
 
+        //CARI GOLONGAN
+        //Golongan Aktif
+        $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $request->pegawai_id)
+                    ->WHERE('status','active')
+                    ->first();
+        if ($gol_atasan!=null){
+            $p_golongan_id = $gol_atasan->id;
+        }else{
+            $p_golongan_id = 0 ;
+        }
+        
+       
+
+        $skp_bulanan    = SKPBulanan::find($request->get('skp_bulanan_id'));
+        if (is_null($skp_bulanan)) {
+            return $this->sendError('SKP Bulanan tidak ditemukan tidak ditemukan.');
+        }
+
+        
+        $skp_bulanan->p_jabatan_id    = $p_jabatan_id;
+        $skp_bulanan->p_golongan_id   = $p_golongan_id;
+        $skp_bulanan->p_nama          = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+   
+        
+        $item = array(
+           
+            "p_nip"			=> $pegawai->nip,
+            "p_nama"		=> Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+            "p_pangkat"	    => $pegawai->GolonganAktif->golongan?$pegawai->GolonganAktif->golongan->pangkat:'',
+            "p_golongan"	=> $pegawai->GolonganAktif->golongan?$pegawai->GolonganAktif->golongan->golongan:'',
+            "p_eselon"		=> $pegawai->JabatanAktif->Eselon?$pegawai->JabatanAktif->Eselon->eselon:'',
+            "p_jabatan"		=> Pustaka::capital_string($pegawai->JabatanAktif->Jabatan?$pegawai->JabatanAktif->Jabatan->skpd:''),
+            "p_unit_kerja"	=> Pustaka::capital_string($pegawai->JabatanAktif->Skpd?$pegawai->JabatanAktif->Skpd->skpd:''),
+            );
 
 
+        
+        if (  $skp_bulanan->save() ){
+            return \Response::make(  $item , 200);
+
+
+        }else{
+            return \Response::make('error', 500);
+        } 
 
     }
+
+    public function AtasanPejabatPenilaiUpdate(Request $request)
+	{
+        $messages = [
+            'pegawai_id.required'                   => 'Harus set Pegawai ID',
+            'skp_bulanan_id.required'               => 'Harus diisi',
+
+        ];
+
+        $validator = Validator::make(
+            Input::all(),
+            array(
+                'pegawai_id'            => 'required',
+                'skp_bulanan_id'        => 'required',
+            ),
+            $messages
+        );
+
+        if ( $validator->fails() ){
+                return response()->json(['errors'=>$validator->messages()],422);
+        }
+
+
+        //Cari nama dan id pejabatan penilai
+        $pegawai     = Pegawai::SELECT('*')->where('id',$request->pegawai_id )->first();
+
+        //$jabatan_x     = $pegawai->JabatanAktif;
+
+        if ( $pegawai->JabatanAktif ){
+
+            $ap_jabatan_id  =  $pegawai->JabatanAktif->id;
+        }else{
+            return \Response::make('Jabatan tidak ditemukan', 500);
+        }
+
+
+        //CARI GOLONGAN
+        //Golongan Aktif
+        $gol_atasan = HistoryGolongan::WHERE('id_pegawai', $request->pegawai_id)
+                    ->WHERE('status','active')
+                    ->first();
+        if ($gol_atasan!=null){
+            $ap_golongan_id = $gol_atasan->id;
+        }else{
+            $ap_golongan_id = 0 ;
+        }
+        
+       
+
+        $skp_bulanan    = SKPBulanan::find($request->get('skp_bulanan_id'));
+        if (is_null($skp_bulanan)) {
+            return $this->sendError('SKP Bulanan tidak ditemukan tidak ditemukan.');
+        }
+
+        
+        $skp_bulanan->ap_jabatan_id    = $ap_jabatan_id;
+        $skp_bulanan->ap_golongan_id   = $ap_golongan_id;
+        $skp_bulanan->ap_nama          = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
+   
+        
+        $item = array(
+           
+            "ap_nip"			=> $pegawai->nip,
+            "ap_nama"		    => Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk),
+            "ap_pangkat"	    => $pegawai->GolonganAktif->golongan?$pegawai->GolonganAktif->golongan->pangkat:'',
+            "ap_golongan"	    => $pegawai->GolonganAktif->golongan?$pegawai->GolonganAktif->golongan->golongan:'',
+            "ap_eselon"		    => $pegawai->JabatanAktif->Eselon?$pegawai->JabatanAktif->Eselon->eselon:'',
+            "ap_jabatan"		=> Pustaka::capital_string($pegawai->JabatanAktif->Jabatan?$pegawai->JabatanAktif->Jabatan->skpd:''),
+            "ap_unit_kerja"	    => Pustaka::capital_string($pegawai->JabatanAktif->Skpd?$pegawai->JabatanAktif->Skpd->skpd:''),
+            );
+
+
+        
+        if (  $skp_bulanan->save() ){
+            return \Response::make(  $item , 200);
+
+
+        }else{
+            return \Response::make('error', 500);
+        } 
+
+    }
+
     public function SKPDSKPBulanan_list(Request $request)
     {
             

@@ -83,7 +83,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             'kegiatan_bulanan_satuan'       => $x->KegiatanSKPBulanan->satuan,
             'kegiatan_bulanan_output'       => $x->KegiatanSKPBulanan->target.' '.$x->KegiatanSKPBulanan->satuan,
             'pelaksana'                     => Pustaka::capital_string($x->KegiatanSKPBulanan->RencanaAksi->Pelaksana->jabatan),
-            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Kegiatan->PenanggungJawab->jabatan),
+            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->SubKegiatan->PenanggungJawab->jabatan),
             'kegiatan_tahunan_label'        => $x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label,
             'kegiatan_tahunan_target'       => $x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target,
             'kegiatan_tahunan_satuan'       => $x->KegiatanSKPBulanan->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->satuan,

@@ -32,6 +32,10 @@ class CapaianBulanan extends Model
     {
         return $this->hasOne('App\Models\HistoryJabatan','id','p_jabatan_id');
     }
+    public function AtasanPejabatPenilai()
+    {
+        return $this->hasOne('App\Models\HistoryJabatan','id','ap_jabatan_id');
+    }
 
     public function GolonganYangDinilai()
     {

@@ -123,13 +123,13 @@
 	function on_submit_ke(){
 		$('.modal-penilaian_kode_etik').find('.button_simpan').addClass('fa-spinner faa-spin animated');
 		$('#simpan_penilaian_kode_etik').prop('disabled',true);
-		$('#submit-update').prop('disabled',true);
+		$('#update_penilaian_kode_etik').prop('disabled',true);
 	}
 	function reset_submit_ke(){
 		$('.modal-penilaian_kode_etik').find('.button_simpan').removeClass('fa-spinner faa-spin animated');
 		$('.modal-penilaian_kode_etik').find('.button_simpan').addClass('fa-floppy-o');
 		$('#simpan_penilaian_kode_etik').prop('disabled',false);
-		$('#submit-update').prop('disabled',false);
+		$('#update_penilaian_kode_etik').prop('disabled',false);
 	}
 
 
@@ -154,7 +154,7 @@
 					allowOutsideClick : false,
 					timer: 1500
 				}).then(function () {
-					status_pengisian();
+					penilaian_kode_etik_show();
 					$('.modal-penilaian_kode_etik').modal('hide');
 				},
 					function (dismiss) {
@@ -180,7 +180,7 @@
 		
     });
 
-	$(document).on('click', '#submit-update', function(){
+	$(document).on('click', '#update_penilaian_kode_etik', function(){
 		on_submit_ke();
         var data = $('.penilaian_kode_etik_form').serialize();
 		$.ajax({
@@ -200,7 +200,7 @@
 					allowOutsideClick : false,
 					timer: 1500
 				}).then(function () {
-					status_pengisian();
+					penilaian_kode_etik_show();
 					$('.modal-penilaian_kode_etik').modal('hide');
 				},
 					function (dismiss) {

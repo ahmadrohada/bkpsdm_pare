@@ -934,12 +934,16 @@ class RencanaAksiAPIController extends Controller {
                             ->leftjoin('db_pare_2018.renja_indikator_subkegiatan AS indikator_subkegiatan', function($join){
                                 $join   ->on('indikator_subkegiatan.subkegiatan_id','=','subkegiatan.id');
                             })
+                            ->join('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator_kegiatan', function($join){
+                                $join   ->on('skp_tahunan_kegiatan.id','=','indikator_kegiatan.kegiatan_id');
+                                
+                            })
                             ->join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                                 $join   ->on('rencana_aksi.indikator_kegiatan_tahunan_id','=','indikator_kegiatan.id');
                                 
                             })
                             ->leftjoin('db_pare_2018.renja_kegiatan AS kegiatan', function($join){
-                                $join   ->on('kegiatan.id','=','subkegiatan.subkegiatan_id');
+                                $join   ->on('kegiatan.id','=','subkegiatan.kegiatan_id');
                             })
                             ->leftjoin('db_pare_2018.renja_program AS program', function($join){
                                 $join   ->on('program.id','=','kegiatan.program_id');

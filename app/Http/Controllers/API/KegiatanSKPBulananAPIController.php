@@ -58,13 +58,13 @@ class KegiatanSKPBulananAPIController extends Controller {
             'kegiatan_bulanan_satuan'       => $x->satuan,
             'kegiatan_bulanan_output'       => $x->target.' '.$x->satuan,
             'pelaksana'                     => Pustaka::capital_string($x->RencanaAksi->Pelaksana->jabatan),
-            'penanggung_jawab'              => Pustaka::capital_string($x->RencanaAksi->KegiatanTahunan->Kegiatan->PenanggungJawab->jabatan),
-            'kegiatan_tahunan_label'        => $x->RencanaAksi->KegiatanTahunan->label,
-            'kegiatan_tahunan_target'       => $x->RencanaAksi->KegiatanTahunan->target,
-            'kegiatan_tahunan_satuan'       => $x->RencanaAksi->KegiatanTahunan->satuan,
-            'kegiatan_tahunan_waktu'        => $x->RencanaAksi->KegiatanTahunan->target_waktu,
-            'kegiatan_tahunan_cost'         => number_format($x->RencanaAksi->KegiatanTahunan->cost,'0',',','.'),
-            'kegiatan_tahunan_output'       => $x->RencanaAksi->KegiatanTahunan->target.' '.$x->RencanaAksi->KegiatanTahunan->satuan,
+            'penanggung_jawab'              => Pustaka::capital_string($x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->SubKegiatan->PenanggungJawab->jabatan),
+            'kegiatan_tahunan_label'        => $x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label,
+            'kegiatan_tahunan_target'       => $x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target,
+            'kegiatan_tahunan_satuan'       => $x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->satuan,
+            'kegiatan_tahunan_waktu'        => $x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target_waktu,
+            'kegiatan_tahunan_cost'         => number_format($x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->cost,'0',',','.'),
+            'kegiatan_tahunan_output'       => $x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target.' '.$x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->satuan,
  
         );
         return $rencana_aksi;
