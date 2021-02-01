@@ -289,7 +289,7 @@ $(document).ready(function() {
 		if ( id == 'pejabat'){ 
 			LoadDetailTab();
 		}else if ( id == 'kegiatan_skp_tahunan_tab'){
-			refreshTreeKegTahunan(); 
+			LoadKegiatanSKPTahunan(); 
 		}else if ( id == 'skp_bulanan_tab'){
 			refreshTreeKegBulanan();
 		}else if ( id == 'rencana_aksi_tab'){

@@ -98,10 +98,12 @@
 					allowOutsideClick : false,
 					timer:1500
 				}).then(function () {
-					$('.modal-subkegiatan').modal('hide');
+					$('.modal-subkegiatan').modal('hide'); 
 					$('#subkegiatan_table').DataTable().ajax.reload(null,false);
 					$('#subkegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
 					jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
+					jQuery('#ditribusi_renja').jstree(true).refresh(true);
+					
 					
 				},
 					
@@ -164,6 +166,7 @@
 					$('#subkegiatan_table').DataTable().ajax.reload(null,false);
 					$('#subkegiatan_table_non_anggaran').DataTable().ajax.reload(null,false);
 					jQuery('#renja_tree_kegiatan').jstree(true).refresh(true);
+					jQuery('#ditribusi_renja').jstree(true).refresh(true);
 					
 				},
 					

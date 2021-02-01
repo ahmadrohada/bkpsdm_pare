@@ -358,7 +358,7 @@ trait TraitCapaianTahunan
             if ( $x != null ){
                 $pelayanan = ($x->pelayanan_01+$x->pelayanan_02+$x->pelayanan_03)/15 * 100;
                 $integritas = ($x->integritas_01+$x->integritas_02+$x->integritas_03+$x->integritas_04)/20*100;
-                $komitmen = ($x->komitmen_03+$x->komitmen_03+$x->komitmen_03)/15*100;
+                $komitmen = ($x->komitmen_01+$x->komitmen_02+$x->komitmen_03)/15*100;
                 $disiplin = ($x->disiplin_01+$x->disiplin_02+$x->disiplin_03+$x->disiplin_04)/20*100;
                 $kerjasama = ($x->kerjasama_01+$x->kerjasama_02+$x->kerjasama_03+$x->kerjasama_04+$x->kerjasama_05)/25*100;
                 $kepemimpinan = ($x->kepemimpinan_01+$x->kepemimpinan_02+$x->kepemimpinan_03+$x->kepemimpinan_04+$x->kepemimpinan_05+$x->kepemimpinan_06)/30*100;

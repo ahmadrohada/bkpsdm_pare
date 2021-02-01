@@ -93,7 +93,14 @@ class PohonKinerjaAPIController extends Controller {
                     $sub_data_program['text']			= Pustaka::capital_string($d->label);
                     $sub_data_program['icon']           = "jstree-program";
                     $sub_data_program['type']           = "program";
-                    $sub_data_program['children']       = true ;
+
+                    //jika punya child maka true,
+                    if ( $d->Kegiatan()->exists() ){
+                        $sub_data_program['children']       = true ;
+                    }else{
+                        $sub_data_program['children']       = false ;
+                    }
+                    
                     //$sub_data_program['state']          = $state;
 
                     $program_list[] = $sub_data_program;
@@ -114,8 +121,13 @@ class PohonKinerjaAPIController extends Controller {
                     $sub_data_kegiatan['text']			= Pustaka::capital_string($e->label);
                     $sub_data_kegiatan['icon']          = "jstree-kegiatan";
                     $sub_data_kegiatan['type']          = "kegiatan";
-                    $sub_data_kegiatan['children']      = true ;
 
+                    //jika punya child maka true,
+                    if ( $e->SubKegiatan()->exists() ){
+                        $sub_data_kegiatan['children']       = true ;
+                    }else{
+                        $sub_data_kegiatan['children']       = false ;
+                    }
                     $kegiatan_list[] = $sub_data_kegiatan;
                 }
                 if(!empty($kegiatan_list)) { 

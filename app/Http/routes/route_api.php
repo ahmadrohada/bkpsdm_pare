@@ -68,7 +68,7 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
 	//=============================== POHON KINERJA ==========================================================//
 	Route::get('skpd_pohon_kinerja','API\PohonKinerjaAPIController@PohonKinerjaTree');
-	Route::get('skpd_pohon_kinerja_2021','API\PohonKinerjaAPIController_2021@PohonKinerjaTree');
+	//Route::get('skpd_pohon_kinerja_2021','API\PohonKinerjaAPIController_2021@PohonKinerjaTree');
 	
 
 	//========================================================================================================//
@@ -524,7 +524,8 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//kegiatan KASUBID
 	Route::get('kegiatan_skp_tahunan_3','API\KegiatanSKPTahunanAPIController@KegiatanSKPTahunan3');
 	Route::get('kegiatan_skp_tahunan_3_tree','API\KegiatanSKPTahunanAPIController@KegiatanSKPTahunanTree3');
-
+	Route::get('sikronisasi_kegiatan_skp_tahunan_eselon4','API\KegiatanSKPTahunanAPIController@SikronisasiKegiatanSKPTahunan3');
+	
 
 	//kegiatan PELAKSANA
 	Route::get('kegiatan_skp_tahunan_4','API\KegiatanSKPTahunanAPIController@KegiatanSKPTahunan4');

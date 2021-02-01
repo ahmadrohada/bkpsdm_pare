@@ -133,7 +133,7 @@
 										}else if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_sekda))){ //JIKA SEKDA
 											?>@include('pare_pns.modules.tabs.kegiatan_tahunan_sekda_detail')<?php
 										}else{ //normal kondisi
-											?>@include('pare_pns.modules.tabs.kegiatan_tahunan_1_detail')<?php
+											?>@include('pare_pns.tables.skp_tahunan-kegiatan_skp_tahunan_1')<?php
 										}
 										
 										break;
@@ -306,7 +306,7 @@ $(document).ready(function() {
 		if ( id == 'pejabat'){ 
 			LoadDetailTab();
 		}else if ( id == 'kegiatan_skp_tahunan_tab'){
-			refreshTreeKegTahunan(); 
+			LoadKegiatanSKPTahunan();
 		}else if ( id == 'skp_bulanan_tab'){
 			refreshTreeKegBulanan();
 		}else if ( id == 'rencana_aksi_tab'){

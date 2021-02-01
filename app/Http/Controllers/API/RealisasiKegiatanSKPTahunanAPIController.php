@@ -41,14 +41,14 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
 
     protected function hitung_quantity($capaian_id,$kegiatan_tahunan_id,$jm_indikator){
         $data_uing = KegiatanSKPTahunan::
-                //LEFT JOIN ke INDIKATOR SUB KEGIATAN
-                leftjoin('db_pare_2018.renja_indikator_subkegiatan AS renja_indikator_subkegiatan', function($join){
-                    $join   ->on('renja_indikator_subkegiatan.subkegiatan_id','=','skp_tahunan_kegiatan.subkegiatan_id');
+                //LEFT JOIN ke INDIKATOR KEGIATAN
+                leftjoin('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator', function($join){
+                    $join   ->on('indikator.kegiatan_id','=','skp_tahunan_kegiatan.id');
                     
                 })
                 //LEFT JOIN TERHADAP REALISASI INDIKATOR SUB KEGIATAN
-                ->join('db_pare_2018.realisasi_indikator_subkegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
-                    $join   ->on('realisasi_indikator.indikator_subkegiatan_id','=','renja_indikator_subkegiatan.id');
+                ->join('db_pare_2018.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
+                    $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','indikator.id');
                     $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
                     
                 })
@@ -319,7 +319,7 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
             //JFU tidak memiliki kegiatan tahunan, kegiatan tahunan nya adalah milik atasan nya yg eselon 4
             //jadi
             $capaian_id = $request->capaian_id;
-            $jabatan_id = $request->jabatan_id;
+            $jabatan_id = $request->jabatan_id; 
 
             $rencana_aksi = RencanaAksi::WHERE('skp_tahunan_rencana_aksi.jabatan_id',$jabatan_id)
                             ->LEFTJOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){

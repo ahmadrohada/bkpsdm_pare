@@ -44,6 +44,21 @@
           })
       }
 
+      function show_loader_sikronisasi(){
+        Swal.fire({
+            title				: "Sikronisasi data...",
+            text				: "Harap tunggu",
+            imageUrl			: "{{asset('assets/images/loader/loading.gif')}}",
+            showConfirmButton	: false,
+            allowOutsideClick 	: false,
+            closeOnClickOutside	: false,
+			closeOnEsc			: false,
+			//backdrop			: false,
+			//background			: "#cbef9f",
+			
+          })
+      }
+
 	  function show_loader_2(){
         Swal.fire({
             title				: "",

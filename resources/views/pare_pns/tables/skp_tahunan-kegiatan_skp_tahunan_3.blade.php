@@ -9,9 +9,10 @@
 		<thead>
 			<tr>
 				<th rowspan="2">No</th>
-				<th rowspan="2" style="white-space: nowrap; padding: 3px 120px;">KEGIATAN TAHUNAN</th>
+				<th rowspan="2" style="white-space: nowrap; padding: 3px 120px;">SUB KEGIATAN</th>
 				<th rowspan="2" style="padding: 3px 130px;">INDIKATOR</th>
 				<th colspan="4">TARGET</th>
+				<th rowspan="2"><i class="fa fa-refresh"></i></th>
 				<th rowspan="2"><i class="fa fa-cog"></i></th>
 			</tr>
 			<tr>
@@ -31,6 +32,7 @@
 
 <script type="text/javascript">
 
+function LoadKegiatanSKPTahunan(){
 	$('#kegiatan_skp_tahunan_3_table').DataTable({ 
 				destroy			: true,
 				processing      : true,
@@ -42,19 +44,19 @@
 				lengthChange	: false,
 				lengthMenu		: [25,50,100],
 				columnDefs		: [
-									{ className: "text-center", targets: [ 0,3,4,5,7 ] },
+									{ className: "text-center", targets: [ 0,3,4,5,7,8 ] },
 									{ className: "text-right", targets: [ 6 ] },
 									@if (request()->segment(4) == 'edit')  
-										{ visible: true, "targets": [7]},
+										{ visible: true, "targets": [7,8]},
 									@else
-										{ visible: false, "targets": [7]},
+										{ visible: false, "targets": [7,8]},
 									@endif
 								],
 				ajax			: {
 									url	: '{{ url("api/kegiatan_skp_tahunan_3") }}',
 									data: { "skp_tahunan_id" : {!! $skp->id !!} },
 								},
-				rowsGroup		: [ 0,1,3,5,6 ],
+				rowsGroup		: [ 0,1,3,5,6,7 ],
 				columns			: [
 									{ data: "no",searchable:false},
 									{ data: "kegiatan_skp_tahunan_label", name:"kegiatan_skp_tahunan_label"}, 
@@ -63,13 +65,18 @@
 									{ data: "target_quantity", name:"target_quantity"},
 									{ data: "target_waktu", name:"target_waktu"},
 									{ data: "target_cost", name:"target_cost"},
-									{  data: 'action',width:"60px",
+									{  data: 'kegiatan_skp_tahunan_id',width:"80px",
+										"render": function ( data, type, row ) {
+											return  '<span  data-toggle="tooltip" title="Sinkronisasi" style="margin:2px;" ><a class="btn btn-primary btn-xs sikronisasi_kegiatan_skp_tahunan"  data-id="'+row.kegiatan_skp_tahunan_id+'"><i class="fa fa-refresh " ></i></a></span>';	
+										}
+									},
+									{  data: 'action',width:"80px",
 											"render": function ( data, type, row ) {
 												if ( row.indikator_kegiatan_skp_tahunan_id == null ){
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_skp_tahunan"  data-id="'+row.kegiatan_skp_tahunan_label+'"><i class="fa fa-pencil" ></i></a></span>'+
+													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_kegiatan_skp_tahunan"  data-id="'+row.kegiatan_skp_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_kegiatan_skp_tahunan"  data-id="'+row.kegiatan_skp_tahunan_id+'" data-label="'+row.kegiatan_skp_tahunan_label+'" ><i class="fa fa-close " ></i></a></span>';
 												}else{
-													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_indikator_kegiatan_skp_tahunan"  data-id="'+row.indikator_kegiatan_skp_tahunan_label+'"><i class="fa fa-pencil" ></i></a></span>'+
+													return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_indikator_kegiatan_skp_tahunan"  data-id="'+row.indikator_kegiatan_skp_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'+
 															'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_indikator_kegiatan_skp_tahunan"  data-id="'+row.indikator_kegiatan_skp_tahunan_id+'" data-label="'+row.indikator_kegiatan_skp_tahunan_label+'" ><i class="fa fa-close " ></i></a></span>';
 												}
 											
@@ -81,6 +88,8 @@
 								
 							}
 	});	
+}
+	
 
 	$(document).on('click','.add_kegiatan_skp_tahunan',function(e){
 		$('#subkegiatan_list_add').DataTable({
@@ -126,12 +135,59 @@
 
 	});
 
-
-	$(document).on('click','.edit_kegiatan_tahunan',function(e){
-		var kegiatan_tahunan_id = $(this).data('id') ;
+	$(document).on('click','.sikronisasi_kegiatan_skp_tahunan',function(e){
+		var kegiatan_skp_tahunan_id = $(this).data('id') ;
+		show_loader_sikronisasi();
 		$.ajax({
-				url			: '{{ url("api/kegiatan_tahunan_detail") }}',
-				data 		: {kegiatan_tahunan_id : kegiatan_tahunan_id},
+				url		: '{{ url("api/sikronisasi_kegiatan_skp_tahunan_eselon4") }}',
+				type	: 'get',
+				data    : {id:kegiatan_skp_tahunan_id},
+				cache   : false,
+				success:function(data){
+						swal.close();
+						Swal.fire({
+								title: "",
+								text: "Sukses",
+								type: "success",
+								width: "200px",
+								showConfirmButton: false,
+								allowOutsideClick : false,
+								timer: 900
+								}).then(function () {
+									$('#kegiatan_skp_tahunan_3_table').DataTable().ajax.reload(null,false);
+									//$('#skp_bulanan_table').DataTable().ajax.reload(null,false);
+									//jQuery('#kegiatan_tahunan_3').jstree(true).refresh(true);
+									//jQuery('#skp_bulanan_tree').jstree(true).refresh(true);
+										
+								},
+								function (dismiss) {
+									if (dismiss === 'timer') {
+										
+									}
+								}
+							)
+							
+						
+				},
+				error: function(e) {
+						Swal.fire({
+								title: "Gagal",
+								text: "",
+								type: "warning"
+							}).then (function(){
+									
+							});
+						}
+		});	
+		
+	});	
+	
+
+	$(document).on('click','.edit_indikator_kegiatan_skp_tahunan',function(e){
+		var indikator_kegiatan_skp_tahunan_id = $(this).data('id') ;
+		$.ajax({
+				url			: '{{ url("api/indikator_kegiatan_skp_tahunan_detail") }}',
+				data 		: {indikator_kegiatan_skp_tahunan_id : indikator_kegiatan_skp_tahunan_id},
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {

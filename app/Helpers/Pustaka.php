@@ -953,7 +953,22 @@ class Pustaka {
 	public static function tgl_akhir($data) {
        
 		return date("Y-m-t", strtotime($data));
-    }
+	}
+	
+	//SINGKATAN NAMA SKPD
+	public static function singkatan($skpd){
+		
+		switch($skpd)
+			{
+				case "BADAN KEPEGAWAIAN DAN PENGEMBANGAN SUMBER DAYA MANUSIA" : return "BKPSDM";
+				break;
+			
+				default  : $skpd;
+				break;
+			}
+
+	}
+
 	
 
 

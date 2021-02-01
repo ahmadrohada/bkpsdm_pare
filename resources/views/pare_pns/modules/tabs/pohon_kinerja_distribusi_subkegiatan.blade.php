@@ -28,7 +28,7 @@
 			@include('pare_pns.tables.distribusi_subkegiatan-ka_skpd')
 			@include('pare_pns.tables.distribusi_subkegiatan-kabid')
 			@include('pare_pns.tables.distribusi_subkegiatan-kasubid')
-			@include('pare_pns.tables.distribusi_subkegiatan-ind_subkegiatan')
+			{{--  @include('pare_pns.tables.distribusi_subkegiatan-ind_subkegiatan')  --}}
 
 
 	</div>

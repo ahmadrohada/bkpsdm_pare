@@ -339,7 +339,7 @@ function load_kegiatan(kegiatan_id){
 					$('.modal-subkegiatan').find('[name=cost_subkegiatan]').val(data['cost']);
 					
 					$('.modal-subkegiatan').find('[name=subkegiatan_id]').val(data['subkegiatan_id']);
-					$('.modal-subkegiatan').find('h4').html('Edit Kegiatan');
+					$('.modal-subkegiatan').find('h4').html('Edit Sub Kegiatan');
 					$('.modal-subkegiatan').find('.btn-submit').attr('id', 'submit-update-subkegiatan');
 					$('.modal-subkegiatan').find('[name=text_button_submit]').html('Update Data');
 					$('.modal-subkegiatan').modal('show');

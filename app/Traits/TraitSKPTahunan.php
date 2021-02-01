@@ -745,6 +745,7 @@ trait TraitSKPTahunan
                                 $join   ->whereNull('indikator.deleted_at');
                             })
                             ->SELECT(   'skp_tahunan_kegiatan.id AS kegiatan_skp_tahunan_id',
+                                        'skp_tahunan_kegiatan.subkegiatan_id',
                                         'skp_tahunan_kegiatan.label AS kegiatan_skp_tahunan_label',
                                         'skp_tahunan_kegiatan.angka_kredit',
                                         'skp_tahunan_kegiatan.quality',
@@ -778,6 +779,7 @@ trait TraitSKPTahunan
             $item[] = array(
                         'no'                                    => $no,
                         'skp_tahunan_id'                        => $skp_tahunan_id,
+                        'subkegiatan_id'                        => $x->subkegiatan_id,
                         'kegiatan_skp_tahunan_id'	            => $x->kegiatan_skp_tahunan_id,
                         'indikator_kegiatan_skp_tahunan_id'	    => $x->indikator_kegiatan_skp_tahunan_id,
                         'kegiatan_skp_tahunan_label'	        => $x->kegiatan_skp_tahunan_label,

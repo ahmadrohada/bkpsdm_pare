@@ -320,6 +320,35 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
     }
 
+    public function SikronisasiKegiatanSKPTahunan3(Request $request)
+    {
+
+        $kegiatan_skp = KegiatanSKPTahunan::WHERE('id',$request->id)->first();
+
+        $subkegiatan = SubKegiatan::WHERE('id',$kegiatan_skp->subkegiatan_id)->first();
+
+        //update
+        $st_kt          = KegiatanSKPTahunan::find($kegiatan_skp->id);
+        $st_kt->cost    = $subkegiatan->cost;
+
+        if ( $st_kt->save() ){
+            $ind_keg = IndikatorSubKegiatan::WHERE('subkegiatan_id','=',$subkegiatan->id)->get();
+            foreach (  $ind_keg AS $indikator ) {
+              
+                $iks = IndikatorKegiatanSKPTahunan::WHERE('kegiatan_id','=',$request->id)->WHERE('label','like','%'.$indikator->label.'%')->first();
+            
+                if ( $iks ){
+                    $s_ind = IndikatorKegiatanSKPTahunan::find($iks->id);
+                    $s_ind->target         = $indikator->target;
+                    $s_ind->satuan         = $indikator->satuan ;
+                    $s_ind->save();
+                }
+                
+            }
+        }
+
+    }
+
     public function KegiatanSKPTahunanTree3(Request $request)
     {
        

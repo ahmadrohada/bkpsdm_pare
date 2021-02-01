@@ -763,7 +763,15 @@ class SubKegiatanAPIController extends Controller {
                     $data_level3['text']			= Pustaka::capital_string($z->skpd);
                     $data_level3['icon']            = "jstree-people   faa-pulse animated-hover ";
                     $data_level3['type']            = "pengawas";
-                    $data_level3['children']        = true ;
+
+
+                    //jika punya child maka true,
+                    if ( SubKegiatan::WHERE('jabatan_id','=',$z->id)->WHERE('renja_id',$request->renja_id)->exists() ){
+                        $data_level3['children']       = true ;
+                    }else{
+                        $data_level3['children']       = false ;
+                    }
+
                     //$data_level3['state']           = $state;
 
 

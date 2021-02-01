@@ -30,7 +30,7 @@
 							<tr>
 								<td>SKPD</td>
 								<td>&nbsp;&nbsp;:&nbsp;</td>
-								<td>{{ $renja->SKPD->skpd }} </td>
+								<td>{{ Pustaka::singkatan($renja->SKPD->skpd) }} </td>
 							</tr>
 							<tr>
 								<td>
