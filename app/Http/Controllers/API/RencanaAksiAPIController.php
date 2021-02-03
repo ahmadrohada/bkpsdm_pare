@@ -1666,6 +1666,7 @@ class RencanaAksiAPIController extends Controller {
                         $join   ->on('realisasi_rencana_aksi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                     })
                     ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                                'skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id',
                                 'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
                                 'skp_tahunan_rencana_aksi.target AS target_rencana_aksi',
                                 'skp_tahunan_rencana_aksi.satuan AS satuan_target_rencana_aksi',
@@ -1716,15 +1717,15 @@ class RencanaAksiAPIController extends Controller {
 
             'waktu_pelaksanaan'             => $x->waktu_pelaksanaan,
             'jabatan_id'                    => $x->pelaksana_id,
-            'penanggung_jawab'              => Pustaka::capital_string($x->KegiatanTahunan->SubKegiatan->PenanggungJawab->jabatan),
+            'penanggung_jawab'              => Pustaka::capital_string($x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->SubKegiatan->PenanggungJawab->jabatan),
             'nama_jabatan'                  => $pelaksana,
             'pelaksana'                     => $pelaksana,
-            'kegiatan_tahunan_label'        => $x->KegiatanTahunan->label,
-            'kegiatan_tahunan_target'       => $x->KegiatanTahunan->target,
-            'kegiatan_tahunan_satuan'       => $x->KegiatanTahunan->satuan,
-            'kegiatan_tahunan_waktu'        => $x->KegiatanTahunan->target_waktu,
-            'kegiatan_tahunan_cost'         => number_format($x->KegiatanTahunan->cost,'0',',','.'),
-            'kegiatan_tahunan_output'       => $x->KegiatanTahunan->target.' '.$x->KegiatanTahunan->satuan,
+            'kegiatan_tahunan_label'        => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label,
+            'kegiatan_tahunan_target'       => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target,
+            'kegiatan_tahunan_satuan'       => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->satuan,
+            'kegiatan_tahunan_waktu'        => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target_waktu,
+            'kegiatan_tahunan_cost'         => number_format($x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->cost,'0',',','.'),
+            'kegiatan_tahunan_output'       => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target.' '.$x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->satuan,
  
         );
         return $rencana_aksi;
