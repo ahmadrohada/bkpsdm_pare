@@ -44,10 +44,10 @@ class SubKegiatan extends Model
     }
 
 
-  /*   public function IndikatorKegiatan()
+    public function Kegiatan()
     {
-        return $this->belongsTo('App\Models\IndikatorKegiatan','id','indikator_kegiatan_id');
-    }  */
+        return $this->belongsTo('App\Models\Kegiatan','kegiatan_id');
+    }  
 
     public function PenanggungJawab()
     {

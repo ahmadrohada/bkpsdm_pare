@@ -85,7 +85,6 @@
 
 function load_perjanjian_kinerja(){
 
-
     $('#perjanjian_kinerja_sasaran_table').DataTable({
 			destroy			: true,
 			processing      : false,
@@ -101,16 +100,13 @@ function load_perjanjian_kinerja(){
 								{ className: "text-center", targets: [ 0,3,4 ] }
 							  ],
 			ajax			: {
-								url	: '{{ url("api/skpd-pk_sasaran_strategis") }}',
+								url	: '{{ url("api/skpd-pk_sasaran_strategis") }}', 
 								data: { renja_id: {!! $renja->id !!} },
 							 }, 
+			rowsGroup		: [0,1,4],
 			columns			:[
-							{ data: 'id' , orderable: false,searchable:false,width:"30px",
-									"render": function ( data, type, row ,meta) {
-										return meta.row + meta.settings._iDisplayStart + 1 ;
-									}
-								},
-							{ data: "sasaran", name:"sasaran_label", orderable: false, searchable: false,
+							{ data: 'no' },
+							{ data: "sasaran_label", name:"sasaran_label", orderable: false, searchable: false,
 								"render": function ( data, type, row ) {
 									if ( row.pk_status == 1 ){
 										return  row.sasaran_label;
@@ -119,12 +115,12 @@ function load_perjanjian_kinerja(){
 									}		
 								}
 							},
-							{ data: "indikator", name:"ind_sasaran_label", orderable: false, searchable: false,
+							{ data: "ind_sasaran_label", name:"ind_sasaran_label", orderable: false, searchable: false,
 								"render": function ( data, type, row ) {
 									if ( row.pk_status == 1 ){
-										return  row.indikator;
+										return  row.ind_sasaran_label;
 									}else{
-										return  '<text class="blm_add">'+row.indikator+'</text>';
+										return  '<text class="blm_add">'+row.ind_sasaran_label+'</text>';
 									}		
 								}
 							},
@@ -157,7 +153,6 @@ function load_perjanjian_kinerja(){
 		
 		});	
 
-
 		$('#perjanjian_kinerja_program_table').DataTable({
 			destroy			: true,
 			processing      : false,
@@ -166,7 +161,6 @@ function load_perjanjian_kinerja(){
 			bInfo			: false,
 			bSort			: false, 
 			lengthChange	: false,
-			deferRender		: true,
 			searching      	: false,
 			paging          : true,
 			columnDefs		: [
@@ -177,22 +171,19 @@ function load_perjanjian_kinerja(){
 								url	: '{{ url("api/skpd-pk_program") }}',
 								data: { renja_id: {!! $renja->id !!} },
 							 }, 
+			rowsGroup		: [0,1],
 			columns			:[
-							{ data: 'id' , orderable: false,searchable:false,width:"30px",
-									"render": function ( data, type, row ,meta) {
-										return meta.row + meta.settings._iDisplayStart + 1 ;
-									}
-								},
-							{ data: "program", name:"program_label", orderable: false, searchable: false},
-							{ data: "anggaran", name:"anggaran", orderable: false, searchable: false,width:"140px"},
-							{ data: "keterangan", name:"keterangan", orderable: false, searchable: false , width:"90px"},
-							
-							
-						],
-						initComplete: function(settings, json) {
-							
-							
-   				 		}
+								{ data: 'no' },
+								{ data: "program_label", name:"program_label", orderable: false, searchable: false},
+								{ data: "anggaran", name:"anggaran", orderable: false, searchable: false,width:"140px"},
+								{ data: "keterangan", name:"keterangan", orderable: false, searchable: false , width:"90px"},
+								
+								
+							],
+							initComplete: function(settings, json) {
+								
+								
+							}
 		
 		});	
 
@@ -236,8 +227,8 @@ function load_perjanjian_kinerja(){
 							allowOutsideClick : false,
 							timer: 1500
 						}).then(function () {
-                           	$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false);
 							$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
+							$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false);
 							hitung_total_anggaran();
 						},
 						function (dismiss) {
@@ -276,8 +267,9 @@ function load_perjanjian_kinerja(){
 							allowOutsideClick : false,
 							timer: 1500
 						}).then(function () {
-                           	$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false);
+                           	
 							$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
+							$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false);
 							hitung_total_anggaran();
 						},
 						function (dismiss) {
