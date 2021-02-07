@@ -75,17 +75,20 @@ trait TraitPerjanjianKinerja
                 //mencari nilai anggaran nya 
                 //Program->Kegiatan->SUbkegiatan
                 $program_id = $y->id;
-                $anggaran = SubKegiatan::with(['Kegiatan'])
+                $subkegiatan = SubKegiatan::with(['Kegiatan'])
                                     ->WhereHas('Kegiatan', function($q) use($program_id){
                                         $q->where('program_id',$program_id);
                                         $q->whereNull('deleted_at');
                                     })
-                                    ->WHERE('esl2_pk_status','1')
-                                    ->sum('cost');
+                                    ->WHERE('esl2_pk_status','1');
+
+                $jm_subkegiatan     = $subkegiatan->count();
+                $anggaran           = $subkegiatan->sum('cost');
 
                 $item[] = array(
                     'program_id'                => $y->id,
                     'program_label'             => $y->label,
+                    'jm_subkegiatan'            => $jm_subkegiatan,
                     'anggaran'                  => "Rp. ".number_format($anggaran,'0',',','.'),
                 );
                
@@ -133,6 +136,51 @@ trait TraitPerjanjianKinerja
 		//return  $kegiatan_tahunan;
         $ta = array(
             'total_anggaran'    => "Rp.   " . number_format( $total_anggaran, '0', ',', '.'),
+
+        );
+        return $ta;
+    }
+
+
+    protected function TraitSubKegiatanListSKPD($program_id){
+
+
+        $subkegiatan = SubKegiatan::with(['Kegiatan'])
+                                        ->WhereHas('Kegiatan', function($q) use($program_id){
+                                            $q->where('program_id',$program_id);
+                                            $q->whereNull('deleted_at');
+                                        })
+                                        ->GET();
+
+                                        $item = array();
+                             
+        foreach( $subkegiatan AS $x ){
+                $item[] = array(
+                        'id'                    => $x->id,
+                        'label'                 => $x->label,
+                        'esl2_pk_status'        => $x->esl2_pk_status,
+                        'kegiatan_target'       => $x->target.' '.$x->satuan,
+                        'kegiatan_anggaran'     => "Rp. ".number_format($x->cost,'0',',','.'),
+                );
+                                            
+        }
+        return $item; 
+     }
+
+     
+
+    protected function TraitTotalAnggaranSubKegiatanSKPD($program_id){
+
+
+       $anggaran = SubKegiatan::with(['Kegiatan'])
+                                    ->WhereHas('Kegiatan', function($q) use($program_id){
+                                        $q->where('program_id',$program_id);
+                                        $q->whereNull('deleted_at');
+                                    })
+                                    ->WHERE('esl2_pk_status','1')
+                                    ->sum('cost');
+        $ta = array(
+            'total_anggaran'    => "Rp.   " . number_format( $anggaran, '0', ',', '.'),
 
         );
         return $ta;

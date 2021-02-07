@@ -46,6 +46,10 @@ class Kegiatan extends Model
         return $this->hasMany('App\Models\SubKegiatan');
     }
 
+    public function Program()
+    {
+        return $this->belongsTo('App\Models\Program');
+    } 
 
     public function indikator_program()
     {

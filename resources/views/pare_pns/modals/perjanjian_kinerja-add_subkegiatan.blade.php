@@ -1,10 +1,10 @@
-<div class="modal fade modal-kegiatan_list" id="createKegiatan" role="dialog"  aria-hidden="true">
+<div class="modal fade modal-subkegiatan_list" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    Kegiatan List
+                    Sub Kegiatan List
                 </h4>
             </div>
 
@@ -14,7 +14,7 @@
 					<thead>
 						<tr class="success">
 							<th>NO</th>
-							<th>KEGIATAN</th>
+							<th>SUB KEGIATAN</th>
 							<th>ANGGARAN</th>
 							<th><i class="fa fa-cog" style="margin-left:10px;"></i></th>
 						</tr>
@@ -24,7 +24,7 @@
 				</table>
 				<ul class="list-group list-group-unbordered" style="margin-top:5px;">
 					<li class="list-group-item">
-						<b>TOTAL ANGGARAN KEGIATAN <span class="pull-right total_anggaran_kegiatan">Rp. </span></b>
+						<b>TOTAL ANGGARAN SUB KEGIATAN <span class="pull-right total_anggaran_subkegiatan">Rp. </span></b>
 					</li>
 				</ul>
 
@@ -44,19 +44,19 @@
 
 <script type="text/javascript">
 
-	$('.modal-kegiatan_list').on('hidden.bs.modal', function() {
+	$('.modal-subkegiatan_list').on('hidden.bs.modal', function() {
 		$('#subkegiatan_list_add').DataTable().clear();
 		$('#subkegiatan_list_add').DataTable().destroy();
-		$('.total_anggaran_kegiatan').html(0);
+		$('.total_anggaran_subkegiatan').html(0);
 	});
 	
-	$('.modal-kegiatan_list').on('shown.bs.modal', function(){
+	$('.modal-subkegiatan_list').on('shown.bs.modal', function(){
 			
 	});
 
-	function show_modal_kegiatan(program_id){
+	function show_modal_subkegiatan(program_id){
 		$('.program_id').val(program_id);
-		$('.modal-kegiatan_list').find('h4').html('List Kegiatan Perjanjian Kinerja Eselon II');
+		$('.modal-subkegiatan_list').find('h4').html('List Sub Kegiatan Perjanjian Kinerja Eselon II');
 
 
 		$('#subkegiatan_list_add').DataTable({
@@ -72,7 +72,7 @@
 										{ className: "text-right", targets: [ 2 ] }
 									],
 					ajax			: {
-										url	: '{{ url("api/eselon2_kegiatan_list") }}',
+										url	: '{{ url("api/eselon2_subkegiatan_list") }}',
 										data: { program_id : program_id },
 										delay:3000
 									},
@@ -90,17 +90,17 @@
 									{ data: "esl2_pk_status" ,  name:"esl2_pk_status", orderable: false, searchable: false, width:'40px',
 										"render": function ( data, type, row ) {
 											if ( row.esl2_pk_status == 1 ){
-												return  '<span  data-toggle="tooltip" title="Hapus Kegiatan" style="margin:1px;" ><a class="btn btn-success btn-xs remove_esl2_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa  fa-check" ></i></a></span>';
+												return  '<span  data-toggle="tooltip" title="Hapus Sub Kegiatan" style="margin:1px;" ><a class="btn btn-success btn-xs remove_esl2_pk_subkegiatan"  data-id="'+row.id+'"><i class="fa  fa-check" ></i></a></span>';
 											}else{
-												return  '<span  data-toggle="tooltip" title="Tambah Kegiatan" style="margin:1px;" ><a class="btn btn-default btn-xs add_esl2_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa  fa-minus" ></i></a></span>';
+												return  '<span  data-toggle="tooltip" title="Tambah Sub Kegiatan" style="margin:1px;" ><a class="btn btn-default btn-xs add_esl2_pk_subkegiatan"  data-id="'+row.id+'"><i class="fa  fa-minus" ></i></a></span>';
 											}	
 										}
 									},
 									
 								],
 					initComplete: function(settings, json) {
-						hitung_total_anggaran_kegiatan(program_id);
-						$('.modal-kegiatan_list').modal('show');
+						hitung_total_anggaran_subkegiatan(program_id);
+						$('.modal-subkegiatan_list').modal('show');
 					}
 				 
 		});
@@ -108,9 +108,9 @@
 			
 	}
 
-	function hitung_total_anggaran_kegiatan(program_id){
+	function hitung_total_anggaran_subkegiatan(program_id){
 		$.ajax({
-					url			: '{{ url("api/eselon2-total_anggaran_kegiatan") }}',
+					url			: '{{ url("api/eselon2-total_anggaran_subkegiatan") }}',
 					data		: { 
 										"program_id" : program_id
 									},
@@ -118,7 +118,7 @@
 					dataType	: "json",
 					success	: function(data) {
 						
-						$('.total_anggaran_kegiatan').html(data['total_anggaran_kegiatan']);
+						$('.total_anggaran_subkegiatan').html(data['total_anggaran']);
 						
 					},
 					error: function(data){
@@ -127,19 +127,19 @@
 		});
 	}
 
-	$(document).on('click','.remove_esl2_pk_kegiatan',function(e){
-		var kegiatan_id = $(this).data('id') ;
-		var program_id = $('.program_id').val();
+	$(document).on('click','.remove_esl2_pk_subkegiatan',function(e){
+		var subkegiatan_id 	= $(this).data('id') ;
+		var program_id 		= $('.program_id').val();
 		show_loader();
 		$.ajax({
-				url			: '{{ url("api/remove_esl2_kegiatan_from_pk") }}',
-				data 		: {kegiatan_id : kegiatan_id},
+				url			: '{{ url("api/remove_esl2_subkegiatan_from_pk") }}',
+				data 		: {subkegiatan_id : subkegiatan_id},
 				method		: "POST",
 				success		: function(data) {
 					$('#subkegiatan_list_add').DataTable().ajax.reload(null,false); 
 					$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
 					hitung_total_anggaran();
-					hitung_total_anggaran_kegiatan(program_id);
+					hitung_total_anggaran_subkegiatan(program_id);
 					Swal.fire({
 							title: "",
 							text: "Berhasil Dihapus",
@@ -171,19 +171,19 @@
 		});	
 	});
 
-	$(document).on('click','.add_esl2_pk_kegiatan',function(e){
-		var kegiatan_id = $(this).data('id') ;
-		var program_id = $('.program_id').val();
+	$(document).on('click','.add_esl2_pk_subkegiatan',function(e){
+		var subkegiatan_id 	= $(this).data('id') ;
+		var program_id 		= $('.program_id').val();
 		show_loader();
 		$.ajax({
-				url			: '{{ url("api/add_esl2_kegiatan_to_pk") }}',
-				data 		: {kegiatan_id : kegiatan_id},
+				url			: '{{ url("api/add_esl2_subkegiatan_to_pk") }}',
+				data 		: {subkegiatan_id : subkegiatan_id},
 				method		: "POST",
 				success		: function(data) {
 					$('#subkegiatan_list_add').DataTable().ajax.reload(null,false); 
 					$('#perjanjian_kinerja_program_table').DataTable().ajax.reload(null,false); 
 					hitung_total_anggaran();
-					hitung_total_anggaran_kegiatan(program_id);
+					hitung_total_anggaran_subkegiatan(program_id);
 					Swal.fire({
 							title: "",
 							text: "Berhasil ditambahkan",

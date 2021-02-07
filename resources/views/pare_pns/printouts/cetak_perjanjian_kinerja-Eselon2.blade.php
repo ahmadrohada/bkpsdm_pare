@@ -223,7 +223,7 @@
 		<thead>
 			<tr>
 				<th width="5%" >NO</th>
-				<th width="">PROGRAM / KEGIATAN</th>
+				<th width="">PROGRAM / SUB KEGIATAN</th>
 				<th width="18%">ANGGARAN</th>
 				<th width="20%" > KETERANGAN </th>
 															
@@ -231,10 +231,11 @@
 		</thead>
 
 		<tbody>
+			{{ $i=1 }} 
 			@foreach(  $program_list as $x)
 
 				<tr>
-                    <td align='right'></td>
+                    <td align='right'>{{ $i++ }}</td>
 					<td>{{ $x['program_label'] }}</td>
 					<td align='right'>{{ $x['anggaran'] }}</td>
 					<td></td>

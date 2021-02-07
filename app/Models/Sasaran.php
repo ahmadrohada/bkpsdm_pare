@@ -53,7 +53,7 @@ class Sasaran extends Model
 
 
 
-    public function tujuan()
+    public function Tujuan()
     {
         return $this->belongsTo('App\Models\Tujuan');
     }

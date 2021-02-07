@@ -122,10 +122,10 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
 
 	
-	Route::post('remove_esl2_kegiatan_from_pk','API\PerjanjianKinerjaAPIController@RemoveEsl2KegiatanFromPK');
-	Route::post('add_esl2_kegiatan_to_pk','API\PerjanjianKinerjaAPIController@AddEsl2KegiatanToPK');
-	Route::get('eselon2_kegiatan_list','API\PerjanjianKinerjaAPIController@KegiatanListSKPD');
-	Route::get('eselon2-total_anggaran_kegiatan','API\PerjanjianKinerjaAPIController@TotalAnggaranKegiatanSKPD');
+	Route::post('remove_esl2_subkegiatan_from_pk','API\PerjanjianKinerjaAPIController@RemoveEsl2SubKegiatanFromPK');
+	Route::post('add_esl2_subkegiatan_to_pk','API\PerjanjianKinerjaAPIController@AddEsl2SubKegiatanToPK');
+	Route::get('eselon2_subkegiatan_list','API\PerjanjianKinerjaAPIController@SubKegiatanListSKPD');
+	Route::get('eselon2-total_anggaran_subkegiatan','API\PerjanjianKinerjaAPIController@TotalAnggaranSubKegiatanSKPD');
 	
 
 
