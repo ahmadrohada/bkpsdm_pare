@@ -48,7 +48,7 @@ class Program extends Model
 
     public function IndikatorProgram()
     {
-        return $this->hasMany('App\Models\Indikatorprogram');
+        return $this->hasMany('App\Models\IndikatorProgram');
     }
 
     public function Kegiatan()
