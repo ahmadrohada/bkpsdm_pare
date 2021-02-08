@@ -130,8 +130,8 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
 
 	//ESELON 3 , KABID
-	Route::post('remove_esl3_kegiatan_from_pk','API\PerjanjianKinerjaAPIController@RemoveEsl3KegiatanFromPK');
-	Route::post('add_esl3_kegiatan_to_pk','API\PerjanjianKinerjaAPIController@AddEsl3KegiatanToPK');
+	Route::post('remove_esl3_subkegiatan_from_pk','API\PerjanjianKinerjaAPIController@RemoveEsl3SubKegiatanFromPK');
+	Route::post('add_esl3_subkegiatan_to_pk','API\PerjanjianKinerjaAPIController@AddEsl3SubKegiatanToPK');
 
 
 	Route::get('eselon3-pk_sasaran_strategis','API\PerjanjianKinerjaAPIController@SasaranStrategisEselon3');

@@ -8,6 +8,11 @@ use App\Models\Program;
 use App\Models\Kegiatan;
 use App\Models\SubKegiatan;
 
+
+use App\Models\SKPTahunan;
+use App\Models\Jabatan;
+
+
 use App\Helpers\Pustaka;
 
 trait TraitPerjanjianKinerja
@@ -186,5 +191,132 @@ trait TraitPerjanjianKinerja
         return $ta;
     }
 
+
+
+    protected function TraitSasaranEselon3($skp_tahunan_id){
+
+        $skp_tahunan    = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
+        $jabatan_id     = $skp_tahunan->PegawaiYangDinilai->id_jabatan;
+        $renja_id       = $skp_tahunan->Renja->id;
+
+        //cari bawahan nya, karena eselon 3 tidak punya kegiatan tahunan,yang punya nya adalah  bawahan nya
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
+
+        $kegiatan = Kegiatan::with(['SubKegiatan','Program'])
+                                    ->WhereHas('SubKegiatan', function($q) use($renja_id,$child){
+                                        $q->WHERE('renja_id', $renja_id );
+                                        $q->WHEREIN('jabatan_id',$child );
+                                        $q->whereNull('deleted_at');
+                                    })
+                                    ->WhereHas('Program', function($q) {
+                                        $q->whereNull('deleted_at');
+                                    })
+                                    ->GroupBy('program_id')
+                                    ->GET();
+        foreach( $kegiatan AS $x ){
+            foreach( $x->Program->IndikatorProgram AS $y ){
+                $item[] = array(
+                    //'sasaran_id'        => $x->Program->Sasaran->id,
+                    //'sasaran_label'     => $x->Program->Sasaran->label,
+
+                    'program_id'        => $x->Program->id,
+                    'program_label'     => $x->Program->Sasaran->label.'/'.$x->Program->label,
+
+                    'ind_program_id'    => $y->id,
+                    'ind_program_label' => $y->label, 
+                    'target'            => $y->target.' '.$y->satuan, 
+                    'pk_status'         => $y->pk_status,     
+                );
+
+            }                                                          
+        }
+        return $item; 
+       
+    }
+
+    protected function TraitProgramEselon3($skp_tahunan_id){
+    
+        $skp_tahunan    = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
+        $jabatan_id     = $skp_tahunan->PegawaiYangDinilai->id_jabatan;
+        $renja_id       = $skp_tahunan->Renja->id;
+        //cari bawahan nya, karena eselon 3 tidak punya kegiatan tahunan,yang punya nya adalah  bawahan nya
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
+
+        $program = Program::with(['IndikatorProgram','Kegiatan'])
+                                ->WhereHas('IndikatorProgram', function($q){
+                                    $q->WHERE('pk_status', '1' );
+                                    $q->whereNull('deleted_at');
+                                })
+                                ->WhereHas('Kegiatan', function($q) use($renja_id) {
+                                    $q->WHERE('renja_id', $renja_id );
+                                    $q->whereNull('deleted_at');
+                                })
+                                ->GET();
+        $item = array();
+        foreach( $program AS $x ){
+            $program_id = $x->id;
+            $data = SubKegiatan::with(['Kegiatan'])
+                                ->WhereHas('Kegiatan', function($q) use($program_id){
+                                    $q->where('program_id',$program_id);
+                                    $q->whereNull('deleted_at');
+                                })
+                                ->WHERE('renja_id', $renja_id )
+                                ->WHEREIN('jabatan_id',$child )
+                                ->WHERE('cost','>', 0 )
+                                ->get();
+            foreach( $data AS $y ){
+                $item[] = array(
+                    'subkegiatan_id'        => $y->id,
+                    'subkegiatan_label'     => $y->label,
+                    'subkegiatan_cost'      => "Rp. ".number_format($y->cost,'0',',','.'),
+                    'pk_status'             => $y->esl3_pk_status,
+                );     
+            }    
+        } 
+        return $item;
+    }
+
+    protected function TraitTotalAnggaranSubKegiatanEselon3($skp_tahunan_id){
+
+
+        $skp_tahunan    = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
+        $jabatan_id     = $skp_tahunan->PegawaiYangDinilai->id_jabatan;
+        $renja_id       = $skp_tahunan->Renja->id;
+        //cari bawahan nya, karena eselon 3 tidak punya kegiatan tahunan,yang punya nya adalah  bawahan nya
+        $child = Jabatan::SELECT('id')->WHERE('parent_id', $jabatan_id )->get()->toArray(); 
+
+        $program = Program::with(['IndikatorProgram','Kegiatan'])
+                                ->WhereHas('IndikatorProgram', function($q){
+                                    $q->WHERE('pk_status', '1' );
+                                    $q->whereNull('deleted_at');
+                                })
+                                ->WhereHas('Kegiatan', function($q) use($renja_id) {
+                                    $q->WHERE('renja_id', $renja_id );
+                                    $q->whereNull('deleted_at');
+                                })
+                                ->GET();
+
+        $total_anggaran = 0 ;
+        foreach( $program AS $x ){
+            $program_id = $x->id;
+            $data = SubKegiatan::with(['Kegiatan'])
+                                    ->WhereHas('Kegiatan', function($q) use($program_id){
+                                        $q->where('program_id',$program_id);
+                                        $q->whereNull('deleted_at');
+                                    })
+                                    ->WHERE('renja_id', $renja_id )
+                                    ->WHEREIN('jabatan_id',$child )
+                                    ->WHERE('esl3_pk_status', '1' )
+                                    ->get();
+            foreach( $data AS $y ){ 
+                $total_anggaran = $total_anggaran + $y->cost;
+            }    
+        } 
+                  
+        $ta = array(
+            'total_anggaran'    => "Rp.   " . number_format( $total_anggaran, '0', ',', '.'),
  
+        );
+        return $ta;
+     }
 }

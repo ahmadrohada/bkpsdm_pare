@@ -40,7 +40,12 @@ class Program extends Model
     }
 
 
-    
+     
+    public function Sasaran()
+    {
+        return $this->belongsTo('App\Models\Sasaran');
+    }
+
     public function IndikatorProgram()
     {
         return $this->hasMany('App\Models\Indikatorprogram');
