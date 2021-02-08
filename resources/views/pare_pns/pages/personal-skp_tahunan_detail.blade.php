@@ -158,7 +158,7 @@
 
 										break;
 								case '4':   
-										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_4_detail')<?php
+										?>@include('pare_pns.tables.skp_tahunan-kegiatan_skp_tahunan_4')<?php
 										break;
 								case '5':   // JFT
 										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_5_edit')<?php
