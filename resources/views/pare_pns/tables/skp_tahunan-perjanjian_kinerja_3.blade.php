@@ -21,8 +21,8 @@
 					<thead>
 						<tr class="success">
 							<th class="no-sort"  style="padding-right:8px;">NO</th>
-							<th >SASARAN STRATEGIS/PROGRAM</th>
-							<th >INDIKATOR PROGRAM</th>
+							<th >SASARAN STRATEGIS/SUB KEGIATAN</th>
+							<th >INDIKATOR SUB KEGIATAN</th>
 							<th >TARGET</th>
 							<th><i class="fa fa-cog"></i></th>
 						</tr>
@@ -50,7 +50,7 @@
 					<thead>
 						<tr class="success">
 							<th class="no-sort" style="padding-right:8px;">NO</th>
-							<th >KEGIATAN</th>
+							<th >SUB KEGIATAN</th>
 							<th >AGGARAN</th>
 							{{-- <th><i class="fa fa-cog"></i></th> --}}
 						</tr>
@@ -80,51 +80,50 @@ function load_perjanjian_kinerja(){
 
 
     $('#perjanjian_kinerja_sasaran_table').DataTable({
-				destroy			: true,
-				//processing      : false,
-				serverSide      : true,
-				searching      	: false,
-				paging          : false,
-				bInfo			: false,
-				bSort			: false,
+			destroy			: true,
+			processing      : false,
+			serverSide      : true,
+			autoWidth		: false,
+			bInfo			: false,
+			bSort			: false, 
+			lengthChange	: false,
+			deferRender		: true,
+			searching      	: false,
+			paging          : true,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0,3 ] }
+								{ className: "text-center", targets: [ 0,3 ] },
+								@if (request()->segment(4) == 'edit')  
+									{ visible: true, "targets": [4]},
+								@else
+									{ visible: false, "targets": [4]},
+								@endif
 							  ],
 			ajax			: {
 								url	: '{{ url("api/eselon4-pk_sasaran_strategis") }}',
-								data: { 
-										"renja_id" : {!! $skp->Renja->id !!} , 
-										"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
-										"skp_tahunan_id" : {!! $skp->id !!}
-
-								 	},
+								data: { "skp_tahunan_id" : {!! $skp->id !!} },
 							 }, 
 			columns			:[
-							{ data: 'id' , orderable: false,searchable:false,width:"30px",
-									"render": function ( data, type, row ,meta) {
-										return meta.row + meta.settings._iDisplayStart + 1 ;
-									}
-								},
-							{ data: "kegiatan", name:"kegiatan_label", orderable: false, searchable: false,
+							{ data: 'no' },
+							{ data: "subkegiatan_label",orderable: false, searchable: false,
 								"render": function ( data, type, row ) {
 									if ( row.pk_status == 1 ){
-										return  row.kegiatan;
+										return  row.subkegiatan_label;
 									}else{
-										return  '<text class="blm_add">'+row.kegiatan+'</text>';
+										return  '<text class="blm_add">'+row.subkegiatan_label+'</text>';
 									}		
 								}
 							},
-							{ data: "indikator", name:"indikator_kegiatan_label", orderable: false, searchable: false,
+							{ data:"indikator_subkegiatan_label", orderable: false, searchable: false,
 								"render": function ( data, type, row ) {
 									if ( row.pk_status == 1 ){
-										return  row.indikator;
+										return  row.indikator_subkegiatan_label;
 									}else{
-										return  '<text class="blm_add">'+row.indikator+'</text>';
+										return  '<text class="blm_add">'+row.indikator_subkegiatan_label+'</text>';
 									}		
 								}
 							
 							},
-							{ data: "target", name:"target", orderable: false, searchable: false , width:"80px",
+							{ data: "target", orderable: false, searchable: false , width:"80px",
 								"render": function ( data, type, row ) {
 									if ( row.pk_status == 1 ){
 										return  row.target;
@@ -137,9 +136,9 @@ function load_perjanjian_kinerja(){
 							{  data: 'action',width:"30px",orderable: false,
 									"render": function ( data, type, row ) {
 										if ( row.pk_status == 1 ){
-											return  '<span  data-toggle="tooltip" title="Hapus Kegiatan" style="margin:1px;" ><a class="btn btn-success btn-xs remove_esl4_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-check" ></i></a></span>';
+											return  '<span  data-toggle="tooltip" title="Hapus Sub Kegiatan" style="margin:1px;" ><a class="btn btn-success btn-xs remove_esl4_pk_subkegiatan"  data-id="'+row.subkegiatan_id+'"><i class="fa fa-check" ></i></a></span>';
 										}else{
-											return  '<span  data-toggle="tooltip" title="Tambah Kegiatan" style="margin:1px;" ><a class="btn btn-default btn-xs add_esl4_pk_kegiatan"  data-id="'+row.kegiatan_id+'"><i class="fa fa-minus" ></i></a></span>';
+											return  '<span  data-toggle="tooltip" title="Tambah Sub Kegiatan" style="margin:1px;" ><a class="btn btn-default btn-xs add_esl4_pk_subkegiatan"  data-id="'+row.subkegiatan_id+'"><i class="fa fa-minus" ></i></a></span>';
 										}
 										
 											
@@ -155,47 +154,46 @@ function load_perjanjian_kinerja(){
 
 
 		$('#perjanjian_kinerja_program_table').DataTable({
-				destroy			: true,
-				processing      : false,
-				serverSide      : true,
-				searching      	: false,
-				paging          : false,
-				bInfo			: false,
-				bSort			: false,
+			destroy			: true,
+			processing      : false,
+			serverSide      : true,
+			autoWidth		: false,
+			bInfo			: false,
+			bSort			: false, 
+			lengthChange	: false,
+			deferRender		: true,
+			searching      	: false,
+			paging          : true,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0 ] },
-								{ className: "text-right", targets: [ 2 ] }
-							  ],
+									{ className: "text-center", targets: [ 0 ] },
+									{ className: "text-right", targets: [ 2 ] },
+									
+								],
 			ajax			: {
 								url	: '{{ url("api/eselon4-pk_program") }}',
-								data: { 
-										"renja_id" : {!! $skp->Renja->id !!} , 
-										"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
-										"skp_tahunan_id" : {!! $skp->id !!}
-
-								 	},
+								data: { "skp_tahunan_id" : {!! $skp->id !!} },
 							 }, 
 			columns			:[
-								{ data: 'kegiatan_id' , orderable: false,searchable:false,width:"30px",
+								{ data: 'subkegiatan_id' , orderable: false,searchable:false,width:"30px",
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "kegiatan", name:"kegiatan_label", orderable: false, searchable: false,
+								{ data:"subkegiatan_label", orderable: false, searchable: false,
 									"render": function ( data, type, row ) {
 										if ( row.pk_status == 1 ){
-											return  row.kegiatan;
+											return  row.subkegiatan_label;
 										}else{
-											return  '<text class="blm_add">'+row.kegiatan+'</text>';
+											return  '<text class="blm_add">'+row.subkegiatan_label+'</text>';
 										}		
 									}
 								},
-								{ data: "anggaran", name:"anggaran", orderable: false, searchable: false,
+								{ data:"subkegiatan_cost", orderable: false, searchable: false,
 									"render": function ( data, type, row ) {
 										if ( row.pk_status == 1 ){
-											return  row.anggaran;
+											return  row.subkegiatan_cost;
 										}else{
-											return  '<text class="blm_add">'+row.anggaran+'</text>';
+											return  '<text class="blm_add">'+row.subkegiatan_cost+'</text>';
 										}		
 									}
 								},
@@ -217,11 +215,7 @@ function load_perjanjian_kinerja(){
 	function hitung_total_anggaran(){
 		$.ajax({
 				url			: '{{ url("api/eselon4-total_anggaran_pk") }}',
-				data		: { 
-									"renja_id" : {!! $skp->Renja->id !!} , 
-									"jabatan_id" : {!! $skp->PegawaiYangDinilai->Jabatan->id !!},
-									"skp_tahunan_id" : {!! $skp->id !!}
-								},
+				data		: { "skp_tahunan_id" : {!! $skp->id !!} },
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
@@ -237,12 +231,12 @@ function load_perjanjian_kinerja(){
 
 	
 
-	$(document).on('click','.remove_esl4_pk_kegiatan',function(e){
-		var kegiatan_id = $(this).data('id') ;
+	$(document).on('click','.remove_esl4_pk_subkegiatan',function(e){
+		var subkegiatan_id = $(this).data('id') ;
 		show_loader();
 		$.ajax({
-				url			: '{{ url("api/remove_esl4_kegiatan_from_pk") }}',
-				data 		: {kegiatan_id : kegiatan_id},
+				url			: '{{ url("api/remove_esl4_subkegiatan_from_pk") }}',
+				data 		: {subkegiatan_id : subkegiatan_id},
 				method		: "POST",
 				success		: function(data) {
 					$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false); 
@@ -279,12 +273,12 @@ function load_perjanjian_kinerja(){
 		});	
 	});
 
-	$(document).on('click','.add_esl4_pk_kegiatan',function(e){
-		var kegiatan_id = $(this).data('id') ;
+	$(document).on('click','.add_esl4_pk_subkegiatan',function(e){
+		var subkegiatan_id = $(this).data('id') ;
 		show_loader();
 		$.ajax({
-				url			: '{{ url("api/add_esl4_kegiatan_to_pk") }}',
-				data 		: {kegiatan_id : kegiatan_id},
+				url			: '{{ url("api/add_esl4_subkegiatan_to_pk") }}',
+				data 		: {subkegiatan_id : subkegiatan_id},
 				method		: "POST",
 				success		: function(data) {
 					$('#perjanjian_kinerja_sasaran_table').DataTable().ajax.reload(null,false); 

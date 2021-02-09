@@ -130,39 +130,7 @@
 	
 		<pagebreak></pagebreak>
 		<table class="kop" border="0">
-				{{-- <tr>
-					<td rowspan="4" align="right" valign="top">
-						<img src="{{asset('assets/images/logo_karawang.png')}}" width="90px" height="120px" >
-					</td>
-					<td align="center" valign="top">
-						<FONT style="font-size:14pt; font-family:Cambria; letter-spacing:1pt;  ">PEMERINTAH KABUPATEN KARAWANG</FONT>
-					</td>
-				</tr>
-				<tr>
-					<td align="center"  style="padding:0px;" valign="top">
-						<FONT style=" font-size:16pt; font-weight:bold; font-family:Cambria; letter-spacing:1.2pt;  ">BADAN KEPEGAWAIAN DAN PENGEMBANGAN SUMBER DAYA MANUSIA</FONT>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" style="padding-top:0px;"  valign="top">
-						<font style=" text-align:center;  font-size:11pt; ont-family:Times New Roman,verdana,calibri; " > 
-							Jl. Ahmad Yani No. 1 Karawang 41315
-						</font>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" style="padding-top:0px;" valign="top">
-						<font style=" text-align:center; font-size:11pt; font-family:Times New Roman,verdana,calibri; " > 
-							Telp. (0267) 404047
-						</font>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" valign="top">
-						<hr class="kop_hr">
-						<hr class="kop_hr2">
-					</td>
-				</tr> --}}
+				
 				<tr>
 					<td height="180px"></td>
 				</tr>
@@ -202,28 +170,48 @@
 	<font style=" font-size:8pt;  font-family:Trebuchet MS,Calibri;">
 		Tanggal Cetak &nbsp;&nbsp;: {{ $waktu_cetak }} <br>
 	</font>
+	@php
+		$arrayForTable = [];
+		foreach ($sasaran_list as $dbValue) {
+			$temp = [];
+			$temp['subkegiatan_label'] 				= $dbValue['subkegiatan_label'];
+			$temp['indikator_subkegiatan_label']			= $dbValue['indikator_subkegiatan_label'];
+			$temp['target'] 						= $dbValue['target'];
+
+			if(!isset($arrayForTable[$dbValue['subkegiatan_label']])){
+				$arrayForTable[$dbValue['subkegiatan_label']] = [];
+			}
+			$arrayForTable[$dbValue['subkegiatan_label']][] = $temp;
+		}
+
+		$no = 1 ;
+
+	@endphp
+
 	<table class="cetak_report">
 		<thead>
 			<tr>
 				<th width="5%" >NO</th>
-				<th width="">SASARAN STRATEGIS/KEGIATAN</th>
-				<th width="35%">INDIKATOR KEGIATAN</th>
+				<th width="">SASARAN STRATEGIS/SUB KEGIATAN</th>
+				<th width="35%">INDIKATOR SUB KEGIATAN</th>
 				<th width="15%" >TARGET</th>
 															
 			</tr>
 		</thead>
 
 		<tbody>
-			@php $i=1 @endphp
-			@foreach($data as $p)
-
+			@foreach ($arrayForTable as $id=>$values) :
+				@foreach ($values as $key=>$value) : 
 				<tr>
-                    <td align='right'>{{ $i++ }}</td>
-					<td>{{ $p->kegiatan_label }}</td>
-					<td>{{ $p->indikator_kegiatan_label }}</td>
-					<td align='center'>{{ $p->target." ".$p->satuan  }}</td>
-                </tr>
-			
+					@if ($key == 0) :
+						<td align='center' class='garis' rowspan={{ count($values) }} >{{ $no}} </td>
+						<td align='left' class='garis' rowspan={{ count($values) }}>{{ $value['subkegiatan_label'] }}</td>
+						@php $no++; @endphp
+					@endif
+						<td align='left' class='garis' >{{  $value['indikator_subkegiatan_label'] }}</td>
+						<td align='center' class='garis' >{{  $value['target'] }}</td>
+				</tr>
+				@endforeach
 			@endforeach
 		</tbody>
 	</table>
@@ -232,7 +220,7 @@
 		<thead>
 			<tr>
 				<th width="5%" >NO</th>
-				<th width="">KEGIATAN</th>
+				<th width="">SUB KEGIATAN</th>
 				<th width="18%">ANGGARAN</th>
 				<th width="20%" > KETERANGAN </th>
 															
@@ -241,19 +229,19 @@
 
 		<tbody>
 			{{ $i=1 }} 
-			@foreach($data_2 as $x)
+			@foreach(  $subkegiatan_list as $x)
 
 				<tr>
                     <td align='right'>{{ $i++ }}</td>
-					<td>{{ $x->kegiatan_label }}</td>
-					<td align='right'>Rp. {{ number_format( $x->anggaran, '0', ',', '.') }}</td>
+					<td>{{ $x['subkegiatan_label'] }}</td>
+					<td align='right'>{{ $x['subkegiatan_cost'] }}</td>
 					<td></td>
                 </tr>
 			
 			@endforeach
 			<tr>
 				<td colspan="2"><b>TOTAL ANGGARAN</b></td>
-				<td colspan="2" align='right'><b>Rp. {{ number_format( $total_anggaran, '0', ',', '.') }}</b></td>
+				<td colspan="2" align='right'><b>{{ $total_anggaran['total_anggaran'] }}</b></td>
 			</tr>
 		</tbody>
 	</table>

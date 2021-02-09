@@ -273,7 +273,7 @@ trait TraitPerjanjianKinerja
                 );     
             }    
         } 
-        return $item;
+        return $item; 
     }
 
     protected function TraitTotalAnggaranSubKegiatanEselon3($skp_tahunan_id){
@@ -319,4 +319,98 @@ trait TraitPerjanjianKinerja
         );
         return $ta;
      }
+
+
+    protected function TraitSasaranEselon4($skp_tahunan_id){
+        $skp_tahunan    = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
+        $jabatan_id     = $skp_tahunan->PegawaiYangDinilai->id_jabatan;
+        $renja_id       = $skp_tahunan->Renja->id;
+
+
+
+        $subkegitan = SubKegiatan::with(['IndikatorSubKegiatan'])
+                                    ->WhereHas('IndikatorSubKegiatan', function($q){
+                                        $q->whereNull('deleted_at');
+                                    }) 
+                                    ->WHERE('renja_id', $renja_id )
+                                    ->WHERE('jabatan_id',$jabatan_id )
+                                    ->get();
+
+        $item = array();
+        foreach( $subkegitan AS $x ){
+            foreach( $x->IndikatorSubKegiatan AS $y ){
+                $item[] = array(
+                    'subkegiatan_id'                => $x->id,
+                    'subkegiatan_label'             => $x->label,
+                    'pk_status'                     => $x->esl4_pk_status,
+
+                    'indikator_subkegiatan_id'      => $y->id,
+                    'indikator_subkegiatan_label'   => $y->label,
+                    'target'                        => $y->target.' '.$y->satuan, 
+                );
+            }       
+        }
+        return $item; 
+    }
+
+    protected function TraitProgramEselon4($skp_tahunan_id){
+        
+        $skp_tahunan    = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
+        $jabatan_id     = $skp_tahunan->PegawaiYangDinilai->id_jabatan;
+        $renja_id       = $skp_tahunan->Renja->id;
+
+
+
+        $subkegitan = SubKegiatan::with(['IndikatorSubKegiatan'])
+                                    ->WhereHas('IndikatorSubKegiatan', function($q){
+                                        $q->whereNull('deleted_at');
+                                    }) 
+                                    ->WHERE('renja_id', $renja_id )
+                                    ->WHERE('jabatan_id',$jabatan_id )
+                                    ->WHERE('cost','>',0)
+                                    ->WHERE('esl4_pk_status', '1' )
+                                    ->get();
+
+        $item = array();
+        foreach( $subkegitan AS $x ){
+                $item[] = array(
+                    'subkegiatan_id'                => $x->id,
+                    'subkegiatan_label'             => $x->label,
+                    'pk_status'                     => $x->esl4_pk_status,
+                    'subkegiatan_cost'              => "Rp. ".number_format( $x->cost, '0', ',', '.'),
+                );     
+        }
+        return $item; 
+    }
+
+    protected function TraitTotalAnggaranSubKegiatanEselon4($skp_tahunan_id){
+        $skp_tahunan    = SKPTahunan::WHERE('id',$skp_tahunan_id)->first();
+        $jabatan_id     = $skp_tahunan->PegawaiYangDinilai->id_jabatan;
+        $renja_id       = $skp_tahunan->Renja->id;
+
+
+
+        $subkegitan = SubKegiatan::with(['IndikatorSubKegiatan'])
+                                    ->WhereHas('IndikatorSubKegiatan', function($q){
+                                        $q->whereNull('deleted_at');
+                                    }) 
+                                    ->WHERE('renja_id', $renja_id )
+                                    ->WHERE('jabatan_id',$jabatan_id )
+                                    ->WHERE('cost','>',0)
+                                    ->WHERE('esl4_pk_status', '1' )
+                                    ->get();
+
+        $total_anggaran = 0 ;
+        foreach( $subkegitan AS $x ){
+                $total_anggaran = $total_anggaran + $x->cost;
+   
+        } 
+                  
+        $ta = array(
+            'total_anggaran'    => "Rp.   " . number_format( $total_anggaran, '0', ',', '.'),
+ 
+        );
+        return $ta;
+    }
+
 }

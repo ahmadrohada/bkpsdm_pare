@@ -140,8 +140,8 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
 	//ESELON 4 , KASUBID
 
-	Route::post('remove_esl4_kegiatan_from_pk','API\PerjanjianKinerjaAPIController@RemoveEsl4KegiatanFromPK');
-	Route::post('add_esl4_kegiatan_to_pk','API\PerjanjianKinerjaAPIController@AddEsl4KegiatanToPK');
+	Route::post('remove_esl4_subkegiatan_from_pk','API\PerjanjianKinerjaAPIController@RemoveEsl4SubKegiatanFromPK');
+	Route::post('add_esl4_subkegiatan_to_pk','API\PerjanjianKinerjaAPIController@AddEsl4SubKegiatanToPK');
 
 	Route::get('eselon4-pk_sasaran_strategis','API\PerjanjianKinerjaAPIController@SasaranStrategisEselon4');
 	Route::get('eselon4-pk_program','API\PerjanjianKinerjaAPIController@ProgramEselon4');

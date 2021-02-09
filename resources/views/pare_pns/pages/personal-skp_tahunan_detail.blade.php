@@ -206,7 +206,7 @@
 										break;
 								case '2': //Eselon 3
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
-											?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_3_edit')<?php
+											?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_3')<?php
 										}else{
 											?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_2')<?php
 										}
@@ -216,7 +216,7 @@
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_lurah))){ //JIKA LURAH
 											?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_2')<?php
 										}else{
-											?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_3_edit')<?php
+											?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_3')<?php
 										}
 										
 										break;
