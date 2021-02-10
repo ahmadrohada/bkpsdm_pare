@@ -243,7 +243,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	//====================================  PEGAWAI  =============================================//
 	//============================================================================================//
 	
-	/* Route::get('admin/pegawai/{pegawai_id}', [
+	Route::get('admin/pegawai/{pegawai_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@detailPegawai'
 	]);
@@ -252,17 +252,17 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/pegawai/{pegawai_id}/add', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@addPegawai'
-	]); */
+	]);
 
 	//============================================================================================//
 	//====================================  U S E R  =============================================//
 	//============================================================================================//
 	
 
-	/* Route::get('admin/users/{user_id}', [
+	Route::get('admin/users/{user_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'UserController@detailUser'
-	]); */
+	]); 
 
 	//============================================================================================//
 	//============================= PEGAWAI      S K P D  ========================================//
