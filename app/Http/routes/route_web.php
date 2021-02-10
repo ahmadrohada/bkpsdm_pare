@@ -524,6 +524,17 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]);
 
 
+	//=========================== P E G A W A I  =============================================//
+	Route::get('pegawai/{pegawai_id}', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'PegawaiController@detailPegawai'
+	]);
+
+	Route::get('pegawai/{pegawai_id}/add', [
+		'as' 			=> '{username}',
+		'uses' 			=> 'PegawaiController@addPegawai'
+	]);
+	
 	/* //========================== CAPAIAN PK TRIWULAN =======================================//
 	Route::get('capaian_pk-triwulan/{capaian_pk_triwulan_id}/edit', [
 		'as' 			=> '',
@@ -547,16 +558,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 
 
 
-	//=========================== P E G A W A I  =============================================//
-	Route::get('pegawai/{pegawai_id}', [
-		'as' 			=> '{username}',
-		'uses' 			=> 'PegawaiController@detailPegawai'
-	]);
-
-	Route::get('pegawai/{pegawai_id}/add', [
-		'as' 			=> '{username}',
-		'uses' 			=> 'PegawaiController@addPegawai'
-	]);
+	
 
 
 	//============================================================================================//
