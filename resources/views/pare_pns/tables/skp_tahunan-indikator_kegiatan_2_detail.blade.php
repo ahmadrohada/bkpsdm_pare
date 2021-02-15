@@ -62,6 +62,7 @@
 </div>
 
 
+
 <script type="text/javascript">
 
 	function load_indikator_kegiatan(kegiatan_tahunan_id){

@@ -18,6 +18,10 @@ class KegiatanSKPTahunanJFT extends Model
         return $this->belongsTo('App\Models\Sasaran','sasaran_id');
     } 
 
+    public function KegiatanSKPBulanan()
+    {
+        return $this->hasMany('App\Models\KegiatanSKPBulananJFT','kegiatan_tahunan_id');
+    }
     
 
 }

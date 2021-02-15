@@ -18,6 +18,7 @@ use App\Models\SKPBulanan;
 use App\Models\RencanaAksi;
 
 use App\Helpers\Pustaka;
+use App\Traits\TraitSKPBulanan;
 
 use Datatables;
 use Validator;
@@ -27,6 +28,7 @@ Use Alert;
 
 class KegiatanSKPBulananAPIController extends Controller {
 
+    use TraitSKPBulanan;
  
     public function KegiatanBulananDetail(Request $request)
     {
@@ -402,82 +404,10 @@ class KegiatanSKPBulananAPIController extends Controller {
     public function KegiatanBulanan3(Request $request)
     {
             
-        $jabatan_id = $request->jabatan_id;
-        $skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan','status')->first();
+        $rencana_aksi = $this->TraitKegiatanBulananEselon4($request->skp_bulanan_id);
        
-        //id eselon
-        //1 : I.a 2 : II.a 3 : II.b 4 : III.a  5 : III.b  6 : IV.a  7 : IV.b  8 : V.a  9 : JFU  10: JFT
-        
-        //cari bawahan  , jabatanpelaksanan atau jabatan sendiri ( untuk keg yang dilaksanakan sendiri)
-        $child = Jabatan::SELECT('id')->WHERE('parent_id',  $jabatan_id  )->ORWHERE('id',  $jabatan_id )->get()->toArray(); 
-        
-       
-
-
-        $dt = RencanaAksi::
-                    WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child )
-                    ->WHERE('skp_tahunan_rencana_aksi.renja_id',$request->renja_id )
-                    ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
-                    ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
-                        $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
-                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
-                    })
-                    ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                        $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.kegiatan_tahunan_id');
-                        //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
-                    })
-                    ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
-                                'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
-                                'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
-                                'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
-                                'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
-                                'kegiatan_bulanan.label AS kegiatan_bulanan_label',
-                                'kegiatan_bulanan.id AS kegiatan_bulanan_id',
-                                'kegiatan_bulanan.target AS target_pelaksana',
-                                'kegiatan_bulanan.satuan AS satuan_pelaksana'
-                            ) 
-                    ->GROUPBY('skp_tahunan_rencana_aksi.id')
-                    ->get();
-        
-        $skp_id = $request->skp_bulanan_id;
-
-
-        $datatables = Datatables::of($dt)
-        ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
-            return $skp_id;
-        })->addColumn('pelaksana', function ($x) {
-
-            if ( $x->pelaksana_id != null ){
-                $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
-                $pelaksana = Pustaka::capital_string($dt->skpd);
-            }else{
-                $pelaksana = "";
-            }
-
-            return $pelaksana;
-        })->addColumn('kegiatan_bulanan_id', function ($x) use($jabatan_id){
-            if ( $x->pelaksana_id == $jabatan_id ){
-                return 1;
-            }else{
-                return $x->kegiatan_bulanan_id;
-            }
-
-        })->addColumn('kegiatan_bulanan_label', function ($x) use($jabatan_id) {
-            if ( $x->pelaksana_id == $jabatan_id ){
-                return $x->rencana_aksi_label;
-            }else{
-                return $x->kegiatan_bulanan_label;
-            }
-            
-        })->addColumn('status_skp', function ($x) use($skp_bln){
-            return $skp_bln->status;
-        });
-
-        if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-        } 
-
-        return $datatables->make(true); 
+        return $rencana_aksi;
+        return  Datatables::of(collect($rencana_aksi))->make(true);
         
     } 
 

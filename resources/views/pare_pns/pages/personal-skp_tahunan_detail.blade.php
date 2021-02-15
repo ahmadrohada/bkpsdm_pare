@@ -161,7 +161,7 @@
 										?>@include('pare_pns.tables.skp_tahunan-kegiatan_skp_tahunan_4')<?php
 										break;
 								case '5':   // JFT
-										?>@include('pare_pns.modules.tabs.kegiatan_tahunan_5_edit')<?php
+										?>@include('pare_pns.tables.skp_tahunan-kegiatan_skp_tahunan_5')<?php
 										break;
 							}
 						?>
@@ -230,7 +230,7 @@
 										?>@include('pare_pns.tables.skp_tahunan-kontrak_kinerja_4_edit')<?php
 								break;
 								case '5':  //JFT 
-										?>@include('pare_pns.tables.skp_tahunan-kontrak_kinerja_5_edit')<?php
+										?>@include('pare_pns.tables.skp_tahunan-kontrak_kinerja_5')<?php
 								break;
 							
 							}
@@ -252,7 +252,7 @@
 								case '2': //eselon 3
 		
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
-											?>@include('pare_pns.modules.tabs.kegiatan_bulanan_3_edit')<?php
+											?>@include('pare_pns.modules.tabs.kegiatan_bulanan_3')<?php
 										}else{
 											?>@include('pare_pns.tables.skp_tahunan-skp_bulanan_2')<?php
 										}
@@ -262,7 +262,7 @@
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_lurah))){ //JIKA LURAH
 											?>@include('pare_pns.tables.skp_tahunan-skp_bulanan_2')<?php
 										}else{
-											?>@include('pare_pns.modules.tabs.kegiatan_bulanan_3_edit')<?php
+											?>@include('pare_pns.modules.tabs.kegiatan_bulanan_3')<?php
 										}
 										
 										break;

@@ -530,10 +530,6 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//kegiatan PELAKSANA
 	Route::get('kegiatan_skp_tahunan_4','API\KegiatanSKPTahunanAPIController@KegiatanSKPTahunan4');
 
-	//kegiatan JFT
-	Route::get('kegiatan_tahunan_5','API\KegiatanSKPTahunanJFTAPIController@KegiatanTahunan5');
-	
-
 	Route::post('simpan_kegiatan_tahunan','API\KegiatanSKPTahunanAPIController@Store');
 	Route::post('update_kegiatan_tahunan','API\KegiatanSKPTahunanAPIController@Update');
 	Route::post('hapus_kegiatan_skp_tahunan','API\KegiatanSKPTahunanAPIController@Hapus');
@@ -550,10 +546,16 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	Route::get('indikator_kegiatan_skp_tahunan_list','API\IndikatorKegiatanSKPTahunanAPIController@IndikatorKegiatanSKPTahunanList');
 	Route::get('indikator_kegiatan_skp_tahunan_detail','API\IndikatorKegiatanSKPTahunanAPIController@IndikatorKegiatanSKPTahunanDetail');
 	Route::post('hapus_indikator_kegiatan_skp_tahunan','API\IndikatorKegiatanSKPTahunanAPIController@Hapus');
-	
+	Route::post('update_indikator_kegiatan_skp_tahunan','API\IndikatorKegiatanSKPTahunanAPIController@Update');
+
+
 	//========================================================================================================//
 	//====================================== KEGIATAN THAUNAN JFT ================================================//
 	//========================================================================================================//
+
+	//kegiatan JFT
+	Route::get('kegiatan_skp_tahunan_5','API\KegiatanSKPTahunanJFTAPIController@KegiatanSKPTahunan');
+
 
 	Route::get('kegiatan_tahunan_detail_jft','API\KegiatanSKPTahunanJFTAPIController@KegiatanTahunanDetail');
 	Route::get('kegiatan_tahunan_list_JFT','API\KegiatanSKPTahunanJFTAPIController@KegiatanTahunanListelect2');

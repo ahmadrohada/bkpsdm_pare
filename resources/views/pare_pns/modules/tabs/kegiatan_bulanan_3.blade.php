@@ -31,7 +31,9 @@
 			<div class="box-body table-responsive">
 
 				<div class="toolbar">
-					<span  data-toggle="tooltip" title="Create SKP Bulanan"><a class="btn btn-info btn-xs create_skp_bulanan" ><i class="fa fa-plus" ></i> SKP Bulanan</a></span>
+					@if (request()->segment(4) == 'edit')  
+						<span  data-toggle="tooltip" title="Create SKP Bulanan"><a class="btn btn-info btn-xs create_skp_bulanan" ><i class="fa fa-plus" ></i> SKP Bulanan</a></span>
+					@endif
 				</div>
 
 				<table id="skp_bulanan_table" class="table table-striped table-hover" >

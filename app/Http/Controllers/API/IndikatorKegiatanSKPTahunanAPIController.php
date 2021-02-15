@@ -170,28 +170,26 @@ class IndikatorKegiatanSKPTahunanAPIController extends Controller {
     }
 
 
+    */
+
     public function Update(Request $request)
     {
 
         $messages = [
-                'kegiatan_tahunan_id.required'   => 'Harus diisi',
-                'label.required'                 => 'Harus diisi',
-                //'target.required'              => 'Harus diisi',
-                //'satuan.required'                => 'Harus diisi',
-                'quality.required'               => 'Harus diisi',
-                'target_waktu.required'          => 'Harus diisi',
+                'ind_kegiatan_skp_tahunan_id.required'  => 'Harus diisi',
+                'label.required'                        => 'Harus diisi',
+                'target.required'                       => 'Harus diisi',
+                'satuan.required'                       => 'Harus diisi',
 
         ];
 
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            'kegiatan_tahunan_id'   => 'required',
+                            'ind_kegiatan_skp_tahunan_id'   => 'required',
                             'label'                 => 'required',
-                            //'target'                => 'required|numeric',
-                            //'satuan'                => 'required',
-                            'quality'               => 'required|numeric|min:1|max:100',
-                            'target_waktu'          => 'required|numeric|min:1|max:12',
+                            'target'                => 'required|numeric',
+                            'satuan'                => 'required',
                         ),
                         $messages
         );
@@ -203,20 +201,16 @@ class IndikatorKegiatanSKPTahunanAPIController extends Controller {
         }
 
         
-        $st_kt    = KegiatanSKPTahunan::find(Input::get('kegiatan_tahunan_id'));
+        $st_kt    = IndikatorKegiatanSKPTahunan::find(Input::get('ind_kegiatan_skp_tahunan_id'));
         if (is_null($st_kt)) {
-            return $this->sendError('Kegiatan Tahunan tidak ditemukan.');
+            return $this->sendError('Indikator Kegiatan SKP Tahunan tidak ditemukan.');
         }
 
 
-        $st_kt->label             = Input::get('label');
-        $st_kt->target          = preg_replace('/[^0-9]/', '', Input::get('target'));
-        $st_kt->satuan            = Input::get('satuan');
-        $st_kt->angka_kredit      = Input::get('angka_kredit');
-        $st_kt->quality           = preg_replace('/[^0-9]/', '', Input::get('quality'));
-        $st_kt->cost              = preg_replace('/[^0-9]/', '', Input::get('cost'));
-        $st_kt->target_waktu      = preg_replace('/[^0-9]/', '', Input::get('target_waktu'));
-
+        $st_kt->label               = Input::get('label');
+        $st_kt->target              = preg_replace('/[^0-9]/', '', Input::get('target'));
+        $st_kt->satuan              = Input::get('satuan');
+       
         if ( $st_kt->save()){
             return \Response::make('sukses', 200);
         }else{
@@ -226,8 +220,7 @@ class IndikatorKegiatanSKPTahunanAPIController extends Controller {
             
 
     
-    } */
-
+    } 
 
     public function Hapus(Request $request)
     {

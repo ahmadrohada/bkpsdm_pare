@@ -7,7 +7,7 @@
 
 	<table id="kegiatan_skp_tahunan_3_table" class="table table-striped table-hover" >
 		<thead>
-			<tr>
+			<tr> 
 				<th rowspan="2">No</th>
 				<th rowspan="2" style="white-space: nowrap; padding: 3px 120px;">SUB KEGIATAN</th>
 				<th rowspan="2" style="padding: 3px 130px;">INDIKATOR</th>
@@ -29,6 +29,7 @@
 
 
 @include('pare_pns.modals.kegiatan_skp_tahunan-add')
+@include('pare_pns.modals.indikator_kegiatan_tahunan')
 
 <script type="text/javascript">
 
@@ -191,21 +192,15 @@ function LoadKegiatanSKPTahunan(){
 				method		: "GET",
 				dataType	: "json",
 				success	: function(data) {
-					$('.modal-kegiatan_tahunan').find('[name=label]').val(data['label']);
-					$('.modal-kegiatan_tahunan').find('[name=angka_kredit]').val(data['ak']);
-					$('.modal-kegiatan_tahunan').find('[name=target]').val(data['target']);
-					$('.modal-kegiatan_tahunan').find('[name=quality]').val(data['quality']);
-					$('.modal-kegiatan_tahunan').find('[name=satuan]').val(data['satuan']);
-					$('.modal-kegiatan_tahunan').find('[name=target_waktu]').val(data['target_waktu']);
-					$('.modal-kegiatan_tahunan').find('[name=cost]').val(data['cost']);
+					$('.modal-indikator_kegiatan_skp_tahunan').find('[name=label]').val(data['label']);
+					$('.modal-indikator_kegiatan_skp_tahunan').find('[name=target]').val(data['target']);
+					$('.modal-indikator_kegiatan_skp_tahunan').find('[name=satuan]').val(data['satuan']);
 
-				
-
-					$('.modal-kegiatan_tahunan').find('[name=kegiatan_tahunan_id]').val(data['id']);
-					$('.modal-kegiatan_tahunan').find('h4').html('Edit Kegiatan Tahunan');
-					$('.modal-kegiatan_tahunan').find('.btn-submit').attr('id', 'submit-update');
-					$('.modal-kegiatan_tahunan').find('[name=text_button_submit]').html('Update Data');
-					$('.modal-kegiatan_tahunan').modal('show');
+					$('.modal-indikator_kegiatan_skp_tahunan').find('[name=ind_kegiatan_id]').val(data['ind_kegiatan_id']);
+					$('.modal-indikator_kegiatan_skp_tahunan').find('h4').html('Edit Indikator Kegiatan Tahunan');
+					$('.modal-indikator_kegiatan_skp_tahunan').find('.btn-submit').attr('id', 'update_indikator_kegiatan_skp_tahunan');
+					$('.modal-indikator_kegiatan_skp_tahunan').find('[name=text_button_submit]').html('Update Data');
+					$('.modal-indikator_kegiatan_skp_tahunan').modal('show');
 				},
 				error: function(data){
 					

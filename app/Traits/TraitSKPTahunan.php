@@ -798,6 +798,35 @@ trait TraitSKPTahunan
     }
 
 
-    public function JFT($skp_tahunan_id){}
+    public function JFT($skp_tahunan_id){
+
+
+        $kegiatan = KegiatanSKPTahunanJFT::with(['KegiatanSKPBulanan','Sasaran'])
+                                        /* ->WhereHas('KegiatanSKPBulanan', function($q){
+                                            $q->whereNull('deleted_at');
+                                        })  */
+                                        ->WHERE('skp_tahunan_id',$skp_tahunan_id)
+                                        ->get();
+        
+        $item = array();
+        foreach( $kegiatan AS $x ){
+            $item[] = array(
+                                                        
+                'skp_tahunan_id'            => $skp_tahunan_id,
+                'kegiatan_skp_tahunan_id'	=> $x->id,
+                'kegiatan_skp_tahunan_label'=> $x->label,
+
+                'kegiatan_skp_bulanan_count'=> $x->KegiatanSKPBulanan->count(),
+                                                                                                             
+                'target_ak'                 => $x->angka_kredit,
+                'target_quality'            => $x->quality." %",
+                'target_quantity'           => $x->target.' '.$x->satuan,
+                'target_waktu'              => $x->target_waktu ." bln",
+                'target_cost'               => "Rp. ". number_format($x->cost,'0',',','.'),
+            );
+        }
+        return $item; 
+
+    }
  
 }

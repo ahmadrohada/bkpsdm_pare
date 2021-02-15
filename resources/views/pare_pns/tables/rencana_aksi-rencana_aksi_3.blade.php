@@ -9,14 +9,16 @@
 		<input type="hidden" class="indikator_kegiatan_tahunan_id">
 		<input type="hidden" class="kegiatan_tahunan_id">
 		
-		<label>Indikator Kegiatan SKP Tahunan: </label>
+		<label>Indikator Kegiatan SKP Tahunan: </label> 
 		<p class="text-muted " style="font-size:11pt;">
 			<span class="indikator_kegiatan_label"></span>
 		</p>
 		<i class="fa fa-industry"></i> <span class="txt_output_indikator_kegiatan" style="margin-right:10px;"></span>
 		<br>
 		<div class="toolbar pull-right">
-			<span  data-toggle="tooltip" title="Create Rencana Aksi"><a class="btn btn-info btn-xs create_rencana_aksi" ><i class="fa fa-plus" ></i> Rencana Aksi</a></span>
+			@if (request()->segment(4) == 'edit')  
+				<span  data-toggle="tooltip" title="Create Rencana Aksi"><a class="btn btn-info btn-xs create_rencana_aksi" ><i class="fa fa-plus" ></i> Rencana Aksi</a></span>
+			@endif
 		</div>
 
 	

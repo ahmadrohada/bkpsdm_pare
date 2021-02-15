@@ -21,9 +21,16 @@ class RencanaAksi extends Model
         return $this->hasOne('App\Models\Skpd','id','jabatan_id')->select('skpd as jabatan');
     }
     
+    public function KegiatanBulanan()
+    {
+        return $this->hasMany('App\Models\KegiatanSKPBulanan','rencana_aksi_id');
+    }
 
-    public function IndikatorKegiatanSKPTahunan() {
-		return $this->belongsTo('App\Models\IndikatorKegiatanSKPTahunan','indikator_kegiatan_tahunan_id');
-	}
+    
+    public function IndikatorKegiatanSKPTahunan() 
+    {
+        return $this->belongsTo('App\Models\IndikatorKegiatanSKPTahunan','indikator_kegiatan_tahunan_id'); 
+    } 
+
 
 }

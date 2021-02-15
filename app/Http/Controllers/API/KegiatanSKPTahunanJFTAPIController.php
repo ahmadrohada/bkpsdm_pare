@@ -14,6 +14,7 @@ use App\Models\SKPD;
 use App\Models\SKPTahunan;
 
 use App\Helpers\Pustaka;
+use App\Traits\TraitSKPTahunan;
 
 use Datatables;
 use Validator;
@@ -22,6 +23,8 @@ use Input;
 Use Alert;
 
 class KegiatanSKPTahunanJFTAPIController extends Controller {
+
+    use TraitSKPTahunan;
 
     public function KegiatanTahunanDetail(Request $request)
     {
@@ -71,51 +74,18 @@ class KegiatanSKPTahunanJFTAPIController extends Controller {
     }
 
 
-    public function KegiatanTahunan5(Request $request) 
+    public function KegiatanSKPTahunan(Request $request) 
     {
-             
-       //KEGIATAN Tahunan JFT
 
-        $rencana_aksi = KegiatanSKPTahunanJFT::
-                            leftjoin('db_pare_2018.skp_bulanan_kegiatan_jft AS kegiatan_bulanan', function($join){
-                                $join   ->on('kegiatan_bulanan.kegiatan_tahunan_id','=','skp_tahunan_kegiatan_jft.id');
-                            })
-                            ->SELECT(   'skp_tahunan_kegiatan_jft.id AS kegiatan_tahunan_id',
-                                        'skp_tahunan_kegiatan_jft.label',
-                                        'skp_tahunan_kegiatan_jft.target',
-                                        'skp_tahunan_kegiatan_jft.satuan',
-                                        'skp_tahunan_kegiatan_jft.angka_kredit',
-                                        'skp_tahunan_kegiatan_jft.quality',
-                                        'skp_tahunan_kegiatan_jft.cost',
-                                        'skp_tahunan_kegiatan_jft.target_waktu',
-                                        'kegiatan_bulanan.id AS kegiatan_bulanan_id'
+        $kegiatan = $this->Kegiatan($request->skp_tahunan_id);
 
-                                    ) 
-                            ->WHERE('skp_tahunan_kegiatan_jft.skp_tahunan_id',$request->skp_tahunan_id)
-                            ->GROUPBY('skp_tahunan_kegiatan_jft.id')
-                            ->get(); 
-             
-                
-        $datatables = Datatables::of($rencana_aksi)
-        ->addColumn('label', function ($x) {
-            return $x->label;
-        })->addColumn('ak', function ($x) {
-            return $x->angka_kredit;
-        })->addColumn('output', function ($x) {
-            return $x->target.' '.$x->satuan;
-        })->addColumn('mutu', function ($x) {
-            return $x->quality." %";
-        })->addColumn('waktu', function ($x) {
-            return $x->target_waktu." bln";
-        })->addColumn('biaya', function ($x) {
-            return "Rp.".number_format($x->cost,'0',',','.');
-        });
-
+        $datatables = Datatables::of(collect($kegiatan));
         if ($keyword = $request->get('search')['value']) {
             $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-        } 
-
-        return $datatables->make(true); 
+        }      
+        return $datatables->make(true);
+             
+      
         
     }
 

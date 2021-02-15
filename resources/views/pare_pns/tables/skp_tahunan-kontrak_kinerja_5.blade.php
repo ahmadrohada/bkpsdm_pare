@@ -54,7 +54,7 @@ function load_kontrak_kinerja(){
 				bInfo			: false,
 				bSort			: false,
 			columnDefs		: [
-								{ className: "text-center", targets: [ 0 ] }
+								{ className: "text-center", targets: [ 0,2 ] }
 							  ],
 			ajax			: {
 								url	: '{{ url("api/jft-kk_sasaran_strategis") }}',

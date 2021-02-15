@@ -77,10 +77,13 @@ class KegiatanSKPTahunanAPIController extends Controller {
         $renja_id   = $skp->Renja->id;    
         $jabatan_id = $skp->PegawaiYangDinilai->id_jabatan;
 
+       
       
         $dt = SubKegiatan::WHERE('renja_id', '=' ,$renja_id )
                         ->WHERE('jabatan_id',$jabatan_id )
                         ->get();
+
+                        
         $datatables = Datatables::of($dt)
                                     ->addColumn('subkegiatan_id', function ($x) {
                                         return $x->id;
@@ -387,7 +390,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                             $data_ind_kegiatan['text']			= Pustaka::capital_string($y->label);
                             $data_ind_kegiatan['icon']	        = 'jstree-ind_kegiatan_skp_tahunan';
                             $data_ind_kegiatan['type']          = "ind_kegiatan_skp_tahunan";
-                            $data_ind_kegiatan['children']      = true ;
+                            $data_ind_kegiatan['children']      = false ;
                             
 
 
