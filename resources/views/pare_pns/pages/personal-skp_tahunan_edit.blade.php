@@ -210,7 +210,7 @@
 						<?php
 							switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 								case '4':  //JFU / pelaksana
-										?>@include('pare_pns.tables.skp_tahunan-kontrak_kinerja_4_edit')<?php
+										?>@include('pare_pns.tables.skp_tahunan-kontrak_kinerja_4')<?php
 								break;
 								case '5':  //JFT 
 										?>@include('pare_pns.tables.skp_tahunan-kontrak_kinerja_5')<?php

@@ -6,7 +6,14 @@
 				
 				</h1>
 				<div class="box-tools pull-right" style="padding-top:5px;">
-					<form method="post" target="_blank" action="./cetak_kontrak_kinerja-JFU">
+
+					@if ( ( request()->segment(4) != 'edit' ) & ( request()->segment(4) != 'ralat' ) )
+						<?php $action = "{{$skp->id}}/cetak_kontrak_kinerja-JFU" ; ?>
+					@else
+						<?php $action = "./cetak_kontrak_kinerja-JFU" ; ?>
+					@endif
+
+					<form method="post" target="_blank" action="{{$action}}">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="renja_id" value="{{ $skp->Renja->id }}">
 						<input type="hidden" name="jabatan_id" value="{{$skp->PegawaiYangDinilai->Jabatan->id}}">
