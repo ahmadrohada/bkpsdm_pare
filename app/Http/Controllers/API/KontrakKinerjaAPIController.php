@@ -69,17 +69,17 @@ class KontrakKinerjaAPIController extends Controller {
                                     //->WHERE('kegiatan_tahunan.skp_tahunan_id','=',$skp_tahunan_id)
                                     ->distinct()
                                     ->get(); 
-        //$arrayForTable = [];
+        $arrayForTable = [];
         $no = 0 ;
-            foreach ($rencana_aksi as $databaseValue) {
-                    $temp = [];
-                        if(!isset($arrayForTable[$databaseValue['kegiatan_label']])){
-                            $arrayForTable[$databaseValue['kegiatan_label']] = [];
-                            $no += 1 ;
-                        }
-                    $temp['no']         = $no;
-                    $arrayForTable[$databaseValue['kegiatan_label']] = $temp;
+        foreach ($rencana_aksi as $databaseValue) {
+            $temp = [];
+            if(!isset($arrayForTable[$databaseValue['kegiatan_label']])){
+                $arrayForTable[$databaseValue['kegiatan_label']] = [];
+                $no += 1 ;
             }
+            $temp['no']         = $no;
+            $arrayForTable[$databaseValue['kegiatan_label']] = $temp;
+        }
 
        
 

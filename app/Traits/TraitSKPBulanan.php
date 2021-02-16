@@ -97,7 +97,7 @@ trait TraitSKPBulanan
         //cari bawahan  , jabatanpelaksanan atau jabatan sendiri ( untuk keg yang dilaksanakan sendiri)
         $child = Jabatan::SELECT('id')->WHERE('parent_id',  $jabatan_id  )->ORWHERE('id',  $jabatan_id )->get()->toArray(); 
     
-        $rencana_aksi = RencanaAksi::with(['KegiatanBulanan','IndikatorKegiatanSKPTahunan'])
+        /* $rencana_aksi = RencanaAksi::with(['KegiatanBulanan','IndikatorKegiatanSKPTahunan'])
                                     ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($renja_id){
                                         $q->with(['KegiatanSKPTahunan'])
                                         ->WhereHas('KegiatanSKPTahunan', function($r) use($renja_id){
@@ -108,22 +108,22 @@ trait TraitSKPBulanan
                                     ->WHEREIN('jabatan_id',$child )
                                     ->WHERE('waktu_pelaksanaan',$skp_bln->bulan)
                                     ->get();
-
+ 
 
         $item = array();
         foreach( $rencana_aksi AS $x ){
           
                  $item[] = array(
-                    'rencana_aksi_id'               => $x->id,
-                    'rencana_aksi_label'            => $x->label,
+                    'id'                            => $x->id,
+                    'label'                         => $x->label,
                     'target'                        => $x->target.' '.$x->satuan,
                     'pelaksana'                     => SKPD::WHERE('id',$x->jabatan_id)->firstOrFail()->skpd,
                 );
           
         }
         
-        return $item; 
-       /*  $rencana_aksi = RencanaAksi::
+        return $item;  */
+        $rencana_aksi = RencanaAksi::
                     WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child )
                     ->WHERE('skp_tahunan_rencana_aksi.renja_id',$renja_id )
                     ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
@@ -146,44 +146,9 @@ trait TraitSKPBulanan
                                 'kegiatan_bulanan.satuan AS satuan_pelaksana'
                             ) 
                     ->GROUPBY('skp_tahunan_rencana_aksi.id')
-                    ->get(); */
+                    ->get(); 
         
-        /* $datatables = Datatables::of($dt)
-        ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
-            return $skp_id;
-        })->addColumn('pelaksana', function ($x) {
-
-            if ( $x->pelaksana_id != null ){
-                $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
-                $pelaksana = Pustaka::capital_string($dt->skpd);
-            }else{
-                $pelaksana = "";
-            }
-
-            return $pelaksana;
-        })->addColumn('kegiatan_bulanan_id', function ($x) use($jabatan_id){
-            if ( $x->pelaksana_id == $jabatan_id ){
-                return 1;
-            }else{
-                return $x->kegiatan_bulanan_id;
-            }
-
-        })->addColumn('kegiatan_bulanan_label', function ($x) use($jabatan_id) {
-            if ( $x->pelaksana_id == $jabatan_id ){
-                return $x->rencana_aksi_label;
-            }else{
-                return $x->kegiatan_bulanan_label;
-            }
-            
-        })->addColumn('status_skp', function ($x) use($skp_bln){
-            return $skp_bln->status;
-        });
-
-        if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-        } 
-
-        return $datatables->make(true);  */
+      return $rencana_aksi; 
     }
 
  
