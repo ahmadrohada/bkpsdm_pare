@@ -196,14 +196,14 @@
 						$("<li class='list-group-item' style='background:#ededed; border-top:solid #3d3d3d 2px; padding:5px 4px 5px 4px;'><b>Total Kegiatan </b><a class='pull-right'>"+data['jm_kegiatan_bulanan']+"</a> </li>").appendTo(kegiatan_list);
 						
 						
-					$('#u_nip').html(data['u_nip']); 
-					$('#u_nama').html(data['u_nama']); 
-					$('#u_golongan').html(data['u_pangkat']+' / '+data['u_golongan']); 
-					$('#u_eselon').html(data['u_eselon']); 
-					$('#u_jabatan').html(data['u_jabatan']); 
-					$('#u_unit_kerja').html(data['u_unit_kerja']); 
-					$('#txt_u_jabatan').html(data['u_jabatan']); 
-					$('#txt_u_skpd').html(data['u_skpd']); 
+					$('#u_nip').html(data['u_detail'][0]['nip']); 
+					$('#u_nama').html(data['u_detail'][0]['nama']); 
+					$('#u_golongan').html(data['u_detail'][0]['pangkat']+' / '+data['u_detail'][0]['golongan']); 
+					$('#u_eselon').html(data['u_detail'][0]['eselon']); 
+					$('#u_jabatan').html(data['u_detail'][0]['jabatan']); 
+					$('#u_unit_kerja').html(data['u_detail'][0]['unit_kerja']); 
+					$('#txt_u_jabatan').html(data['u_detail'][0]['jabatan']); 
+					$('#txt_u_skpd').html(data['u_detail'][0]['skpd']); 
 
 
 					$('#p_nip').html(data['p_nip']); 
@@ -216,13 +216,15 @@
 					$('.pegawai_id').val(data['pegawai_id']); 
 					$('.skp_bulanan_id').val(data['skp_bulanan_id']); 
 					$('.jm_kegiatan_bulanan').val(data['jm_kegiatan_bulanan']);
-					$('.u_nama').val(data['u_nama']); 
-					$('.u_jabatan_id').val(data['u_jabatan_id']); 
+					$('.u_nama').val(data['u_detail'][0]['nama']); 
+					$('.u_jabatan_id').val(data['u_detail'][0]['jabatan_id']); 
+					$('.u_golongan_id').val(data['u_detail'][0]['golongan_id']); 
 					$('.p_nama').val(data['p_nama']); 
 					$('.p_jabatan_id').val(data['p_jabatan_id']);
+					$('.p_golongan_id').val(data['p_golongan_id']);
  
-					$('.jenis_jabatan').val(data['u_jenis_jabatan']); 
-					$('.jabatan_id').val(data['jabatan_id']);
+					$('.jenis_jabatan').val(data['u_detail'][0]['jenis_jabatan']); 
+					$('.jabatan_id').val(data['u_detail'][0]['jabatan_id']);
 					$('.renja_id').val(data['renja_id']);
 					$('.waktu_pelaksanaan').val(data['waktu_pelaksanaan']);
 					

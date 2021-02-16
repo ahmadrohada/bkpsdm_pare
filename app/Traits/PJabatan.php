@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\PerlakuanJabatan;
 use App\Models\HistoryJabatan;
+use App\Models\HistoryGolongan;
 
 use App\Helpers\Pustaka;
 
@@ -84,6 +85,38 @@ trait PJabatan
 
         return $tes->atasan_id;
        
+    }
+
+
+    //JABATAN AKTIF
+    protected function jabatan_aktif($pegawai_id){
+
+        $golongan = HistoryGolongan::with(['Golongan'])
+                                    ->WHERE('id_pegawai', $pegawai_id)
+                                    ->WHERE('status','active')
+                                    ->first();
+
+        $jabatan = HistoryJabatan::with(['Golongan','Eselon'])
+                                    ->WHERE('id_pegawai', $pegawai_id)
+                                    ->WHERE('status','active')
+                                    ->first();
+           
+        $item = array();
+            $item[] = array(
+                    'jabatan_id'    => $jabatan->id,
+                    'golongan_id'   => $golongan->id,
+                    'nip'           => $jabatan->nip,
+                    'nama'          => Pustaka::nama_pegawai($jabatan->Pegawai->gelardpn , $jabatan->Pegawai->nama , $jabatan->Pegawai->gelarblk),
+                    'pangkat'       => $jabatan->Golongan ? $jabatan->Golongan->pangkat : '',
+                    'golongan'      => $golongan->Golongan ? $golongan->Golongan->golongan : '',
+                    'eselon'        => $jabatan->Eselon ? $jabatan->Eselon->eselon : '',
+                    'jabatan'       => Pustaka::capital_string($jabatan->Jabatan ? $jabatan->Jabatan->skpd : ''),
+                    'unit_kerja'    => Pustaka::capital_string($jabatan->UnitKerja ? $jabatan->UnitKerja->unit_kerja : ''),
+                    'skpd'          => Pustaka::capital_string($jabatan->Skpd ? $jabatan->Skpd->skpd : ''),
+                    'jenis_jabatan' => $jabatan->Eselon->Jenis_jabatan->id,
+            );
+        return $item;
+
     }
 
 

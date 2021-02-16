@@ -34,6 +34,7 @@ use App\Helpers\Pustaka;
 use App\Traits\HitungCapaian; 
 use App\Traits\BawahanList;
 use App\Traits\TraitCapaianBulanan;
+use App\Traits\PJabatan;
 
 use Datatables;
 use Validator;
@@ -546,8 +547,8 @@ class CapaianBulananAPIController extends Controller {
         
         
         //DETAIL data pribadi dan atasan
-        $u_detail = HistoryJabatan::WHERE('id',$skp_bulanan->u_jabatan_id)->first();
-        $p_detail = HistoryJabatan::WHERE('id',$skp_bulanan->p_jabatan_id)->first();
+        //$u_detail = HistoryJabatan::WHERE('id',$skp_bulanan->u_jabatan_id)->first();
+        $p_detail = HistoryJabatan::WHERE('id',$skp_bulanan->p_jabatan_id)->first(); 
 
         if ( $skp_bulanan->p_jabatan_id >= 1 ){
             $data = array(
@@ -570,18 +571,10 @@ class CapaianBulananAPIController extends Controller {
                 'waktu_pelaksanaan'	    =>  $skp_bulanan->bulan,
 
                
-                'u_jabatan_id'	        => $u_detail->id,
-                'u_nip'	                => $u_detail->nip,
-                'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
-                'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
-                'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
-                'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
-                'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
-                'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
-                'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
-                'u_jenis_jabatan'	    => $u_detail->Eselon->Jenis_jabatan->id,
+                'u_detail'	            => $this->jabatan_aktif($skp_bulanan->pegawai_id),
 
                 'p_jabatan_id'	        => $p_detail->id,
+                'p_golongan_id'	        => '',
                 'p_nip'	                => $p_detail->nip,
                 'p_nama'                => Pustaka::nama_pegawai($p_detail->Pegawai->gelardpn , $p_detail->Pegawai->nama , $p_detail->Pegawai->gelarblk),
                 'p_pangkat'	            => $p_detail->Golongan ? $p_detail->Golongan->pangkat : '',
@@ -612,16 +605,7 @@ class CapaianBulananAPIController extends Controller {
                     'waktu_pelaksanaan'	    =>  $skp_bulanan->bulan,
 
                    
-                    'u_jabatan_id'	        => $u_detail->id,
-                    'u_nip'	                => $u_detail->nip,
-                    'u_nama'                => Pustaka::nama_pegawai($u_detail->Pegawai->gelardpn , $u_detail->Pegawai->nama , $u_detail->Pegawai->gelarblk),
-                    'u_pangkat'	            => $u_detail->Golongan ? $u_detail->Golongan->pangkat : '',
-                    'u_golongan'	        => $u_detail->Golongan ? $u_detail->Golongan->golongan : '',
-                    'u_eselon'	            => $u_detail->Eselon ? $u_detail->Eselon->eselon : '',
-                    'u_jabatan'	            => Pustaka::capital_string($u_detail->Jabatan ? $u_detail->Jabatan->skpd : ''),
-                    'u_unit_kerja'	        => Pustaka::capital_string($u_detail->UnitKerja ? $u_detail->UnitKerja->unit_kerja : ''),
-                    'u_skpd'	            => Pustaka::capital_string($u_detail->Skpd ? $u_detail->Skpd->skpd : ''),
-                    'u_jenis_jabatan'	    => $u_detail->Eselon->Jenis_jabatan->id,
+                    'u_detail'	            => $this->jabatan_aktif($skp_bulanan->pegawai_id),
 
                     'p_jabatan_id'	        => "",
                     'p_nip'	                => "",
@@ -804,8 +788,10 @@ class CapaianBulananAPIController extends Controller {
             $capaian_bulanan->skp_bulanan_id              = Input::get('skp_bulanan_id');
             $capaian_bulanan->u_nama                      = Input::get('u_nama');
             $capaian_bulanan->u_jabatan_id                = Input::get('u_jabatan_id');
+            $capaian_bulanan->u_golongan_id               = Input::get('u_golongan_id');
             $capaian_bulanan->p_nama                      = Input::get('p_nama');
             $capaian_bulanan->p_jabatan_id                = Input::get('p_jabatan_id');
+            $capaian_bulanan->p_golongan_id               = Input::get('p_golongan_id');
             $capaian_bulanan->tgl_mulai                   = Pustaka::tgl_sql(Input::get('tgl_mulai'));
             $capaian_bulanan->tgl_selesai                 = Pustaka::tgl_sql(Input::get('tgl_selesai'));
             

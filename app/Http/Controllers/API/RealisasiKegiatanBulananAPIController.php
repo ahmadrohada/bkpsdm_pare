@@ -577,6 +577,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                 'skp_bulanan_kegiatan_jft.label AS kegiatan_bulanan_label',
                                 'skp_bulanan_kegiatan_jft.target',
                                 'skp_bulanan_kegiatan_jft.satuan',
+                                'skp_bulanan_kegiatan_jft.kegiatan_tahunan_id',
                                 'realisasi_kegiatan_bulanan_jft.id AS realisasi_kegiatan_bulanan_id',
                                 'realisasi_kegiatan_bulanan_jft.realisasi AS realisasi',
                                 'realisasi_kegiatan_bulanan_jft.satuan AS realisasi_satuan',
@@ -595,7 +596,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             return $x->kegiatan_bulanan_id;
         })
         ->addColumn('kegiatan_tahunan_label', function ($x) use($skp_id){
-            return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
+            return $x->KegiatanTahunan->label;
         })
         ->addColumn('persentase_realisasi', function ($x) use($skp_id){
             return   Pustaka::persen($x->realisasi,$x->target);

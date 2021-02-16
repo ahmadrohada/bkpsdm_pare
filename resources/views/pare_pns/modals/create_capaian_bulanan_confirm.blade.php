@@ -170,9 +170,11 @@
 				
 					<input type="hidden" class="form-control u_nama	" name="u_nama"  />
 					<input type="hidden" class="form-control u_jabatan_id " name="u_jabatan_id"  />
+					<input type="hidden" class="form-control u_golongan_id " name="u_golongan_id"  />
 
 					<input type="hidden" class="form-control p_nama	" name="p_nama"  />
 					<input type="hidden" class="form-control p_jabatan_id	" name="p_jabatan_id"  />
+					<input type="hidden" class="form-control p_golongan_id	" name="p_golongan_id"  />
 
 					<input type="hidden" class="form-control jabatan_id" name="jabatan_id"  />
 					<input type="hidden" class="form-control renja_id" name="renja_id"  />
