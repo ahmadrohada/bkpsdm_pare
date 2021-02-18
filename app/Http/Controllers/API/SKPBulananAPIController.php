@@ -576,6 +576,7 @@ class SKPBulananAPIController extends Controller {
     public function skp_bulanan_tree3(Request $request)
     {
         $renja_id = $request->renja_id;
+        $skp_tahunan_id = $request->skp_tahunan_id;
         //bawahan atau jabatan sendiri untuk keg yang dilaksanakan sedniri
         $child = Jabatan::SELECT('id')->WHERE('parent_id', $request->jabatan_id )->ORWHERE('id', $request->jabatan_id )->get()->toArray(); 
 
@@ -599,9 +600,15 @@ class SKPBulananAPIController extends Controller {
                 $data_skp_bulanan['type']           = "skp_bulanan";
 
 
-                $keg_skp = RencanaAksi::WHEREIN('jabatan_id',$child)
+                $keg_skp = RencanaAksi::with(['IndikatorKegiatanSKPTahunan'])
+                                        ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($skp_tahunan_id){
+                                            $q->with(['KegiatanSKPTahunan'])
+                                            ->WhereHas('KegiatanSKPTahunan', function($r) use($skp_tahunan_id){
+                                                $r->WHERE('skp_tahunan_id',$skp_tahunan_id);
+                                            });
+                                        }) 
+                                        ->WHEREIN('jabatan_id',$child)
                                         ->WHERE('waktu_pelaksanaan','=',$y->bulan)
-                                        ->WHERE('renja_id','=',$renja_id)
                                         ->select('id','label')
                                         ->get();
 

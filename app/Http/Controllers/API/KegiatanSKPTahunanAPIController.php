@@ -330,7 +330,8 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
         $subkegiatan = SubKegiatan::WHERE('id',$kegiatan_skp->subkegiatan_id)->first();
 
-        //update
+        return  $kegiatan_skp->subkegiatan_id;
+        /* //update
         $st_kt          = KegiatanSKPTahunan::find($kegiatan_skp->id);
         $st_kt->cost    = $subkegiatan->cost;
 
@@ -348,7 +349,7 @@ class KegiatanSKPTahunanAPIController extends Controller {
                 }
                 
             }
-        }
+        } */
 
     }
 

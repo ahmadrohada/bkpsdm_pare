@@ -90,6 +90,8 @@ trait TraitSKPBulanan
         $renja_id       = $skp_bulanan->SKPTahunan->Renja->id;
 
         $skp_bln = SKPBulanan::WHERE('id',$skp_bulanan->id)->SELECT('bulan','status')->first();
+
+        $skp_tahunan_id = $skp_bln->skp_tahunan_id;
        
         //id eselon
         //1 : I.a 2 : II.a 3 : II.b 4 : III.a  5 : III.b  6 : IV.a  7 : IV.b  8 : V.a  9 : JFU  10: JFT
@@ -97,14 +99,28 @@ trait TraitSKPBulanan
         //cari bawahan  , jabatanpelaksanan atau jabatan sendiri ( untuk keg yang dilaksanakan sendiri)
         $child = Jabatan::SELECT('id')->WHERE('parent_id',  $jabatan_id  )->ORWHERE('id',  $jabatan_id )->get()->toArray(); 
     
-        /* $rencana_aksi = RencanaAksi::with(['KegiatanBulanan','IndikatorKegiatanSKPTahunan'])
-                                    ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($renja_id){
+
+                                        
+        $rencana_aksi = RencanaAksi::with(['IndikatorKegiatanSKPTahunan'])
+                                    ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($skp_tahunan_id){
                                         $q->with(['KegiatanSKPTahunan'])
-                                        ->WhereHas('KegiatanSKPTahunan', function($r) use($renja_id){
-                                            $r->with(['SubKegiatan']);
-                                            $r->WHERE('renja_id',$renja_id);
+                                        ->WhereHas('KegiatanSKPTahunan', function($r) use($skp_tahunan_id){
+                                            $r->WHERE('skp_tahunan_id',8562);
                                         });
                                     }) 
+                                    ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
+                                        $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                                    })
+                                    ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                                                'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                                'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
+                                                'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
+                                                'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
+                                                'kegiatan_bulanan.label AS kegiatan_bulanan_label',
+                                                'kegiatan_bulanan.id AS kegiatan_bulanan_id',
+                                                'kegiatan_bulanan.target AS target_pelaksana',
+                                                'kegiatan_bulanan.satuan AS satuan_pelaksana'
+                                    ) 
                                     ->WHEREIN('jabatan_id',$child )
                                     ->WHERE('waktu_pelaksanaan',$skp_bln->bulan)
                                     ->get();
@@ -112,18 +128,22 @@ trait TraitSKPBulanan
 
         $item = array();
         foreach( $rencana_aksi AS $x ){
-          
-                 $item[] = array(
-                    'id'                            => $x->id,
-                    'label'                         => $x->label,
-                    'target'                        => $x->target.' '.$x->satuan,
-                    'pelaksana'                     => SKPD::WHERE('id',$x->jabatan_id)->firstOrFail()->skpd,
+
+
+                $item[] = array(
+                    'id'                            => $x->rencana_aksi_id,
+                    'rencana_aksi_label'                         => $x->rencana_aksi_label,
+                    'rencana_aksi_target'                        => $x->rencana_aksi_target,
+                    'rencana_aksi_satuan'                        => $x->rencana_aksi_satuan,
+                    'pelaksana'                     => SKPD::WHERE('id',$x->pelaksana_id)->firstOrFail()->skpd,
+                    'kegiatan_bulanan_id'           => $x->kegiatan_bulanan_id,    
+                    'pelaksana_id'                  => SKPD::WHERE('id',$x->pelaksana_id)->firstOrFail()->skpd,
                 );
           
         }
         
-        return $item;  */
-        $rencana_aksi = RencanaAksi::
+        return $item; 
+        /* $rencana_aksi = RencanaAksi::
                     WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child )
                     ->WHERE('skp_tahunan_rencana_aksi.renja_id',$renja_id )
                     ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
@@ -148,7 +168,7 @@ trait TraitSKPBulanan
                     ->GROUPBY('skp_tahunan_rencana_aksi.id')
                     ->get(); 
         
-      return $rencana_aksi; 
+      return $rencana_aksi;  */
     }
 
  

@@ -406,6 +406,8 @@ class KegiatanSKPBulananAPIController extends Controller {
             
         $rencana_aksi = $this->TraitKegiatanBulananEselon4($request->skp_bulanan_id);
 
+        //return $rencana_aksi;
+
         $skp_id = $request->skp_bulanan_id;
 
         $skp_bulanan    = SKPBulanan::WHERE('id',$skp_id)->first();
@@ -417,31 +419,8 @@ class KegiatanSKPBulananAPIController extends Controller {
         $datatables = Datatables::of(collect($rencana_aksi))
         ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
             return $skp_id;
-        })->addColumn('pelaksana', function ($x) {
-
-            if ( $x->pelaksana_id != null ){
-                $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
-                $pelaksana = Pustaka::capital_string($dt->skpd);
-            }else{
-                $pelaksana = "";
-            }
-
-            return $pelaksana;
-        })->addColumn('kegiatan_bulanan_id', function ($x) use($jabatan_id){
-            if ( $x->pelaksana_id == $jabatan_id ){
-                return 1;
-            }else{
-                return $x->kegiatan_bulanan_id;
-            }
-
-        })->addColumn('kegiatan_bulanan_label', function ($x) use($jabatan_id) {
-            if ( $x->pelaksana_id == $jabatan_id ){
-                return $x->rencana_aksi_label;
-            }else{
-                return $x->kegiatan_bulanan_label;
-            }
-            
-        })->addColumn('status_skp', function ($x) use($skp_bln){
+        })
+        ->addColumn('status_skp', function ($x) use($skp_bln){
             return $skp_bln->status;
         });
 
