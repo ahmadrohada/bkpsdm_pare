@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class IndikatorKegiatanSKPTahunan extends Model
 {
     
-    use SoftDeletes;
+    //use SoftDeletes;
     protected $table = 'skp_tahunan_indikator_kegiatan';
     protected $dates = ['deleted_at'];
 

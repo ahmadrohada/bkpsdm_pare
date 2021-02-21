@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class KegiatanSKPTahunan extends Model
 {
 
-    use SoftDeletes;
+    //use SoftDeletes;
     protected $table = 'skp_tahunan_kegiatan';
     protected $dates = ['deleted_at'];
 
 
-    public static function boot()
+    /* public static function boot()
     {
         parent::boot();
 
@@ -29,7 +29,7 @@ class KegiatanSKPTahunan extends Model
             } 
         });
 
-    } 
+    }  */
 
 
 

@@ -120,10 +120,10 @@ class KegiatanSKPTahunanAPIController extends Controller {
         foreach ($subkegiatan as $x) {
             //cek apakah ada kegiatan yang subkeg_id dan skptahunanid nya sama, jika ada restore kegiatan
 
-            $dt_cek = KegiatanSKPTahunan::WHERE('subkegiatan_id',$x->id)->WHERE('skp_tahunan_id',$skp_tahunan_id)->withTrashed()->first();
+            $dt_cek = KegiatanSKPTahunan::WHERE('subkegiatan_id',$x->id)->WHERE('skp_tahunan_id',$skp_tahunan_id)/* ->withTrashed() */->first();
             if (  $dt_cek != null  ){
                 KegiatanSKPTahunan::WHERE('id',$dt_cek->id)->restore();
-                foreach ($dt_cek->IndikatorKegiatanSKPTahunan()->withTrashed()->get() as $indikator) {
+                foreach ($dt_cek->IndikatorKegiatanSKPTahunan()->/* withTrashed()-> */get() as $indikator) {
                     $indikator->restore();
                 } 
 
