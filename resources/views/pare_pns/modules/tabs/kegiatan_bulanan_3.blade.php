@@ -54,14 +54,13 @@
 			</div>
 		</div>
 <!--====================== KEGIATAN BULANAN LIST =========================================== -->
-		<div class="box box-kegiatan" id='kegiatan_bulanan' hidden>
+		<div class="box box-kegiatan" id='kegiatan_bulanan' hidden> 
 			<div class="box-header with-border">
 				<h1 class="box-title">
 					List Kegiatan Bulanan
 				</h1>
-
 				<div class="box-tools pull-right">
-					
+					{!! Form::button('<i class="fa  fa-level-up"></i>', array('class' => 'btn btn-box-tool tutup_detail_2','title' => 'List SKP Bulanan', 'data-toggle' => 'tooltip')) !!}
 				</div>
 			</div>
 			<div class="box-body table-responsive">
@@ -221,12 +220,8 @@
 													
 										
 							break;
-							case 'KegiatanRenja':
-												
-
-							break;
 							case 'RencanaAksi':
-											
+								alert();			
 
 							break;
 			
@@ -237,6 +232,13 @@
 
 
 	}
+
+	$(".tutup_detail_2").click(function(){
+			$("#kegiatan_bulanan").hide();
+			$("#skp_bulanan").show();
+			jQuery('#skp_bulanan_tree').jstree().deselect_all(true);
+	}); 
+
 
 
   function load_kegiatan_bulanan(skp_bulanan_id){

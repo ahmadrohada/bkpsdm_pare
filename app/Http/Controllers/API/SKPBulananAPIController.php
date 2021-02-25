@@ -705,9 +705,19 @@ class SKPBulananAPIController extends Controller {
             break;
             case 'skp_bulanan':
                 //cari bulan 
+                $renja_id = $request->renja_id;
                 $x = SKPBulanan::WHERE('id',$request->id)->first();
 
-                $keg_skp = RencanaAksi::where('renja_id','=',$request->renja_id)
+                $keg_skp = RencanaAksi::with(['IndikatorKegiatanSKPTahunan'])
+                                        ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($renja_id){
+                                            $q->with(['KegiatanSKPTahunan'])
+                                            ->WhereHas('KegiatanSKPTahunan', function($r) use($renja_id){
+                                                $r->with(['SKPTahunan'])
+                                                ->WhereHas('SKPTahunan', function($s) use($renja_id){
+                                                    $s->WHERE('renja_id',$renja_id);
+                                                });
+                                            });
+                                        }) 
                                         ->where('jabatan_id','=',$request->jabatan_id)
                                         ->WHERE('waktu_pelaksanaan','=',$x->bulan)
                                         ->select('id','label')
@@ -1101,16 +1111,10 @@ class SKPBulananAPIController extends Controller {
                     return "<font style='color:red'>Belum Ada</font>";
                 }
                 
-            })->addColumn('jm_kegiatan', function ($x) use($child,$renja_id,$jabatan_id) {
+            })->addColumn('jm_kegiatan', function ($x){
                 
+                return count($this->TraitKegiatanBulananEselon4($x->skp_bulanan_id)); 
               
-                return  RencanaAksi::WHEREIN('jabatan_id',$child )
-                                    ->WHERE('waktu_pelaksanaan','=',$x->bulan)
-                                    ->WHERE('renja_id','=',$renja_id)
-                                    ->select('id')
-                                    ->count();
-
-
                
             });
     

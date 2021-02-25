@@ -46,6 +46,11 @@ class KegiatanSKPTahunan extends Model
         return $this->belongsTo('App\Models\SubKegiatan','subkegiatan_id'); 
     } 
 
+    public function SKPTahunan() 
+    {
+        return $this->belongsTo('App\Models\SKPTahunan','skp_tahunan_id'); 
+    } 
+
     
 
 }

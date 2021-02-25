@@ -67,7 +67,7 @@
 				</h1>
 
 				<div class="box-tools pull-right">
-				
+					{!! Form::button('<i class="fa  fa-level-up"></i>', array('class' => 'btn btn-box-tool tutup_detail','title' => 'SKP Bulanan List', 'data-toggle' => 'tooltip')) !!}
 				</div>
 			</div>
 			<div class="box-body table-responsive">
@@ -217,12 +217,16 @@
 					
 			
 		}
-
-
 	}
+
+	$(".tutup_detail").click(function(){
+		$("#kegiatan_bulanan").hide();
+		$("#skp_bulanan").show();
+		jQuery('#skp_bulanan_tree').jstree().deselect_all(true);
+	}); 
  
 
-  function load_kegiatan_bulanan(skp_bulanan_id){
+  	function load_kegiatan_bulanan(skp_bulanan_id){
 		$('#kegiatan_bulanan_table').DataTable().clear().destroy();
 		
 

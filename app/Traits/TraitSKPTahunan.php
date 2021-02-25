@@ -516,17 +516,23 @@ trait TraitSKPTahunan
         $renja_id               = $skp_tahunan->Renja->id;
 
 
-        //KEGIATAN pelaksana
-        $kegiatan = RencanaAksi::
-                            
-                            leftjoin('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator', function($join){
+        $kegiatan=  RencanaAksi::with(['IndikatorKegiatanSKPTahunan'])
+                            ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($renja_id){
+                                $q->with(['KegiatanSKPTahunan'])
+                                ->WhereHas('KegiatanSKPTahunan', function($r) use($renja_id){
+                                    $r->with(['SKPTahunan'])
+                                    ->WhereHas('SKPTahunan', function($s) use($renja_id){
+                                        $s->WHERE('renja_id',$renja_id);
+                                    });
+                                });
+                            }) 
+                            ->leftjoin('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator', function($join){
                                 $join   ->on('skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id','=','indikator.id') ;
                             })
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->on('indikator.kegiatan_id','=','kegiatan_tahunan.id');
                             })
                             ->WHERE('skp_tahunan_rencana_aksi.jabatan_id',$jabatan_id)
-                            ->WHERE('skp_tahunan_rencana_aksi.renja_id',$renja_id)
                             ->SELECT(   'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
                                         'skp_tahunan_rencana_aksi.label AS kegiatan_skp_tahunan_label',
 
@@ -543,9 +549,10 @@ trait TraitSKPTahunan
 
                                     ) 
                             ->groupBy('kegiatan_tahunan.id')
-                            /*->orderBY('skp_tahunan_rencana_aksi.label')*/
                             ->distinct() 
-                            ->get(); 
+                            ->get();
+
+        
         $item = array(); 
         $no = 0 ;
         foreach( $kegiatan AS $x ){

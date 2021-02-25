@@ -38,6 +38,10 @@
 
 		$('.modal-kegiatan_skp_tahunan_add').on('hidden.bs.modal', function() {
 			$('#subkegiatan_list_add').DataTable().ajax.reload(null,false);
+
+			//reload tree dan table pada tab lain
+			jQuery('#kegiatan_skp_tahunan_3').jstree(true).refresh(true);
+			jQuery('#kegiatan_skp_tahunan_3').jstree().deselect_all(true);
 			
 		});
 	

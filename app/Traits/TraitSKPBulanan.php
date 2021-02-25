@@ -82,6 +82,15 @@ trait TraitSKPBulanan
         }
     }
 
+    protected function TraitKegiatanBulananJFU($skp_bulanan_id){
+
+
+
+
+        
+
+    }
+
 
     protected function TraitKegiatanBulananEselon4($skp_bulanan_id){
 
@@ -89,23 +98,25 @@ trait TraitSKPBulanan
         $jabatan_id     = $skp_bulanan->PegawaiYangDinilai->id_jabatan;
         $renja_id       = $skp_bulanan->SKPTahunan->Renja->id;
 
-        $skp_bln = SKPBulanan::WHERE('id',$skp_bulanan->id)->SELECT('bulan','status')->first();
+        $skp_bln = SKPBulanan::WHERE('id',$skp_bulanan->id)->first();
 
         $skp_tahunan_id = $skp_bln->skp_tahunan_id;
+
+       
        
         //id eselon
         //1 : I.a 2 : II.a 3 : II.b 4 : III.a  5 : III.b  6 : IV.a  7 : IV.b  8 : V.a  9 : JFU  10: JFT
         
         //cari bawahan  , jabatanpelaksanan atau jabatan sendiri ( untuk keg yang dilaksanakan sendiri)
         $child = Jabatan::SELECT('id')->WHERE('parent_id',  $jabatan_id  )->ORWHERE('id',  $jabatan_id )->get()->toArray(); 
-    
+        //return $jabatan_id;
 
                                         
         $rencana_aksi = RencanaAksi::with(['IndikatorKegiatanSKPTahunan'])
                                     ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($skp_tahunan_id){
                                         $q->with(['KegiatanSKPTahunan'])
                                         ->WhereHas('KegiatanSKPTahunan', function($r) use($skp_tahunan_id){
-                                            $r->WHERE('skp_tahunan_id',8562);
+                                            $r->WHERE('skp_tahunan_id',$skp_tahunan_id);
                                         });
                                     }) 
                                     ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
@@ -168,7 +179,7 @@ trait TraitSKPBulanan
                     ->GROUPBY('skp_tahunan_rencana_aksi.id')
                     ->get(); 
         
-      return $rencana_aksi;  */
+      return $rencana_aksi;  */ 
     }
 
  

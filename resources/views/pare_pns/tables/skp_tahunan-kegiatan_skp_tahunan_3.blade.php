@@ -47,10 +47,11 @@ function LoadKegiatanSKPTahunan(){
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,3,4,5,7,8 ] },
 									{ className: "text-right", targets: [ 6 ] },
+									{ visible: false, "targets": [7]},
 									@if (request()->segment(4) == 'edit')  
-										{ visible: true, "targets": [7,8]},
+										{ visible: true, "targets": [8]},
 									@else
-										{ visible: false, "targets": [7,8]},
+										{ visible: false, "targets": [8]},
 									@endif
 								],
 				ajax			: {
@@ -196,7 +197,7 @@ function LoadKegiatanSKPTahunan(){
 					$('.modal-indikator_kegiatan_skp_tahunan').find('[name=target]').val(data['target']);
 					$('.modal-indikator_kegiatan_skp_tahunan').find('[name=satuan]').val(data['satuan']);
 
-					$('.modal-indikator_kegiatan_skp_tahunan').find('[name=ind_kegiatan_id]').val(data['ind_kegiatan_id']);
+					$('.modal-indikator_kegiatan_skp_tahunan').find('[name=ind_kegiatan_skp_tahunan_id]').val(data['ind_kegiatan_id']);
 					$('.modal-indikator_kegiatan_skp_tahunan').find('h4').html('Edit Indikator Kegiatan Tahunan');
 					$('.modal-indikator_kegiatan_skp_tahunan').find('.btn-submit').attr('id', 'update_indikator_kegiatan_skp_tahunan');
 					$('.modal-indikator_kegiatan_skp_tahunan').find('[name=text_button_submit]').html('Update Data');

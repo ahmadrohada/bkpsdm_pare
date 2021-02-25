@@ -130,6 +130,7 @@
 	$('.modal-realisasi_rencana_aksi').on('hidden.bs.modal', function(){
 		$('.realisasi,.satuan, .bukti ').removeClass('has-error');
 		$('.modal-realisasi_rencana_aksi').find('[name=realisasi],[name=file_bukti]').val('');
+		
 	});
 
 

@@ -70,7 +70,7 @@
 <script src="{{asset('assets/jstree/jstree.min.js')}}"></script>
 
 <script type="text/javascript">
-	
+
 	function refreshTreeKegTahunan(){
 		jQuery('#kegiatan_skp_tahunan_3').jstree(true).refresh(true);
 		jQuery('#kegiatan_skp_tahunan_3').jstree().deselect_all(true);

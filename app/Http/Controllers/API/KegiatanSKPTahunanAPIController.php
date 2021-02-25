@@ -497,13 +497,13 @@ class KegiatanSKPTahunanAPIController extends Controller {
     public function KegiatanSKPTahunan4(Request $request)
     {
              
-        $kegiatan = $this->Kegiatan($request->skp_tahunan_id);
-
+        $kegiatan = $this->Kegiatan($request->skp_tahunan_id); 
+        //return $kegiatan;
         $datatables = Datatables::of(collect($kegiatan));
         if ($keyword = $request->get('search')['value']) {
             $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         }      
-        return $datatables->make(true); 
+        return $datatables->make(true);  
         
         
     }

@@ -11,12 +11,12 @@
             <form  id="indikator_kegiatan_skpd_tahunan-form" method="POST" action="">
 
 			<div class="modal-body">
-				<input type="text" name="ind_kegiatan_skp_tahunan_id" class="form-control ind_kegiatan_skp_tahunan_id" required="">
+				<input type="hidden" name="ind_kegiatan_skp_tahunan_id"  class="form-control ind_kegiatan_skp_tahunan_id" required="">
 						
 
                 <div class="form-group indikator_kegiatan_skpd_tahunan ">
                     <label>Indikator Kegiatan SKP</label>
-                    <textarea class="form-control" rows="2" name="label" placeholder="Indikator Kegiatan"></textarea>
+                    <textarea class="form-control" rows="2" name="label" placeholder="Indikator Kegiatan" style="resize:none;"></textarea>
                 </div>
 
 

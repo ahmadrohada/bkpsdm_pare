@@ -25,7 +25,7 @@
 
 <script type="text/javascript">
 
-	$('#kegiatan_skp_tahunan_4_table').DataTable({ 
+	$('#kegiatan_skp_tahunan_4_table').DataTable({  
 				destroy			: true,
 				processing      : true,
 				serverSide      : true,
@@ -34,7 +34,7 @@
 				bInfo			: false,
 				bSort			: false,
 				lengthChange	: false,
-				lengthMenu		: [25,50,100], 
+				lengthMenu		: [25,50,100],
 				columnDefs		: [
 									{ className: "text-center", targets: [ 0,3,4,5 ] },
 									{ className: "text-right", targets: [ 6 ] },
