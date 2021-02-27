@@ -30,7 +30,7 @@ class Kernel extends HttpKernel {
         'currentUser' 		=> \App\Http\Middleware\CheckCurrentUser::class,
         'administrator' 	=> \App\Http\Middleware\Administrator::class,
 		'personal' 			=> \App\Http\Middleware\Personal::class,
-		'skpd' 				=> \App\Http\Middleware\Skpd::class,
+		'skpd' 				=> \App\Http\Middleware\SKPD::class,
 		'puskesmas' 		=> \App\Http\Middleware\Puskesmas::class,
 		'non_pns' 			=> \App\Http\Middleware\NonPns::class,
 		'auth.api' 			=> \App\Http\Middleware\ApiAccess::class,

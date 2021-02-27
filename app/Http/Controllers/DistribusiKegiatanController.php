@@ -83,7 +83,7 @@ class DistribusiKegiatanController extends Controller {
 		$dtSnapshot = $this->dataSnapshots();	
 									
 		//CARI id skpd nya
-        $skpd       = Skpd::where('id_skpd', $id_skpd_admin)->first()->unit_kerja;
+        $skpd       = SKPD::where('id_skpd', $id_skpd_admin)->first()->unit_kerja;
        
 	   
       return view('pare_pns.pages.distribusi-kegiatan', [
@@ -111,7 +111,7 @@ class DistribusiKegiatanController extends Controller {
 		
     
         //CARI id skpd nya
-        $skpd       = Skpd::where('id_skpd', $id_skpd_admin)->first()->unit_kerja;
+        $skpd       = SKPD::where('id_skpd', $id_skpd_admin)->first()->unit_kerja;
        
 	   
         return view('pare_pns.pages.distribusi-kegiatan', [
@@ -402,7 +402,7 @@ class DistribusiKegiatanController extends Controller {
 		$dtSnapshot = $this->dataSnapshots();	
     
         //CARI id skpd nya
-        $skpd       = Skpd::where('id_skpd', $id_skpd_admin)->first()->unit_kerja;
+        $skpd       = SKPD::where('id_skpd', $id_skpd_admin)->first()->unit_kerja;
 		
 		
 		switch($jenis_jabatan)

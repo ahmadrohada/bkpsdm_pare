@@ -17,7 +17,7 @@ class PuskesmasAPIController extends Controller {
 
     public function AdministratorPuskesmasList(Request $request)
     {
-       $dt = Skpd::
+       $dt = SKPD::
                 leftjoin('demo_asn.m_unit_kerja AS unit_kerja', function($join){
                     $join   ->on('unit_kerja.id','=','m_skpd.id');
                 })

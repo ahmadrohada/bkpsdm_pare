@@ -91,7 +91,7 @@ class ProgramController extends Controller {
 		
 									
 		//CARI Nama
-        $skpd       = Skpd::where('id_skpd', $id_skpd_admin)->first()->unit_kerja;
+        $skpd       = SKPD::where('id_skpd', $id_skpd_admin)->first()->unit_kerja;
 		
 		//DETAIL SASARAN
 		$program	= Program::where('id', '=', $id)->firstOrFail();

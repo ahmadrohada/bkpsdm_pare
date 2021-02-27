@@ -261,7 +261,7 @@ class KegiatanSKPBulananAPIController extends Controller {
         })->addColumn('pelaksana', function ($x) {
 
             if ( $x->pelaksana_id != null ){
-                $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
+                $dt = SKPD::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
                 $pelaksana = Pustaka::capital_string($dt->skpd);
             }else{
                 $pelaksana = "s";
@@ -388,7 +388,7 @@ class KegiatanSKPBulananAPIController extends Controller {
         })->addColumn('pelaksana', function ($x) {
 
             if ( $x->pelaksana_id != null ){
-                $dt = Skpd::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
+                $dt = SKPD::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
                 $pelaksana = Pustaka::capital_string($dt->skpd);
             }else{
                 $pelaksana = "-";

@@ -57,7 +57,7 @@ class JabatanAPIController extends Controller {
 
 
         
-        $data       = Skpd::where('parent_id', $request->get('jabatan_id'))
+        $data       = SKPD::where('parent_id', $request->get('jabatan_id'))
                       ->get();
 
         $unit_kerja_list = [];
@@ -181,12 +181,12 @@ class JabatanAPIController extends Controller {
       $jabatan      = $request->jabatan;
 
       
-      $eselon = Skpd::WHERE('m_skpd.id',$jabatan_id)->SELECT('m_skpd.id_eselon AS id_eselon')->first()->id_eselon;
+      $eselon = SKPD::WHERE('m_skpd.id',$jabatan_id)->SELECT('m_skpd.id_eselon AS id_eselon')->first()->id_eselon;
       //id eselon
       //1 : I.a 2 : II.a 3 : II.b 4 : III.a  5 : III.b  6 : IV.a  7 : IV.b  8 : V.a  9 : JFU  10: JFT
       
 
-      $bawahan = Skpd::WHERE('m_skpd.parent_id',$jabatan_id)
+      $bawahan = SKPD::WHERE('m_skpd.parent_id',$jabatan_id)
                       ->WHERE('m_skpd.skpd','LIKE','%'.$jabatan.'%')
                       ->SELECT( 'm_skpd.id AS jabatan_id',
                                 'm_skpd.skpd',

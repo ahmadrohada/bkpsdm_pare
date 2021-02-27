@@ -59,7 +59,7 @@ class SasaranController extends Controller {
        
 									
 		//CARI Nama
-        $skpd       = Skpd::where('id_skpd', $this->id_skpd_admin() )->first()->unit_kerja;
+        $skpd       = SKPD::where('id_skpd', $this->id_skpd_admin() )->first()->unit_kerja;
        
 	   
       return view('pare_pns.pages.skpd-sasaran', [
@@ -76,7 +76,7 @@ class SasaranController extends Controller {
         $user                   = \Auth::user();
        							
 		//CARI Nama
-        $skpd       = Skpd::where('id_skpd', $this->id_skpd_admin() )->first()->unit_kerja;
+        $skpd       = SKPD::where('id_skpd', $this->id_skpd_admin() )->first()->unit_kerja;
        
         //DETAIL PerJanjian KInerja
 		$perjanjian_kinerja	= PerjanjianKinerja::where('id', '=', $x)->firstOrFail();
@@ -152,7 +152,7 @@ class SasaranController extends Controller {
         
 									
 		//CARI Nama
-        $skpd       = Skpd::where('id_skpd', $this->id_skpd_admin() )->first()->unit_kerja;
+        $skpd       = SKPD::where('id_skpd', $this->id_skpd_admin() )->first()->unit_kerja;
        
 	   
       return view('pare_pns.pages.add-indikator-sasaran', [

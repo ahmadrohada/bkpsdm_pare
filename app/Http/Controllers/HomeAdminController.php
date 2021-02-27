@@ -169,7 +169,7 @@ class HomeAdminController extends Controller {
 
         //CARI id skpd nya
         $id_skpd    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
-        $skpd       = Skpd::where('id_skpd', $id_skpd)->first()->unit_kerja;
+        $skpd       = SKPD::where('id_skpd', $id_skpd)->first()->unit_kerja;
        
        
 		return view('pare_pns.pages.administrator-pegawai', [
@@ -216,7 +216,7 @@ class HomeAdminController extends Controller {
 
          //CARI id skpd nya
         $id_skpd    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
-        $skpd       = Skpd::where('id_skpd', $id_skpd)->first()->unit_kerja;
+        $skpd       = SKPD::where('id_skpd', $id_skpd)->first()->unit_kerja;
        
        
 

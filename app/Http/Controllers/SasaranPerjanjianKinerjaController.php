@@ -48,7 +48,7 @@ class SasaranPerjanjianKinerjaController extends Controller {
     protected function skpd()
 	{
         $data =  \Auth::user()->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
-        return Skpd::where('id_skpd', $data)->first();
+        return SKPD::where('id_skpd', $data)->first();
 	}
 
     protected function user()
