@@ -146,9 +146,9 @@ trait TraitSKPBulanan
                     'rencana_aksi_label'                         => $x->rencana_aksi_label,
                     'rencana_aksi_target'                        => $x->rencana_aksi_target,
                     'rencana_aksi_satuan'                        => $x->rencana_aksi_satuan,
-                    'pelaksana'                     => SKPD::WHERE('id',$x->pelaksana_id)->firstOrFail()->skpd,
+                    'pelaksana'                     => Skpd::WHERE('id',$x->pelaksana_id)->firstOrFail()->skpd,
                     'kegiatan_bulanan_id'           => $x->kegiatan_bulanan_id,    
-                    'pelaksana_id'                  => SKPD::WHERE('id',$x->pelaksana_id)->firstOrFail()->skpd,
+                    'pelaksana_id'                  => Skpd::WHERE('id',$x->pelaksana_id)->firstOrFail()->skpd,
                 );
           
         }
