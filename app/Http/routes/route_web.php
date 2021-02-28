@@ -269,7 +269,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	//============================================================================================//
 	
 
-	/* Route::get('admin/skpd/{skpd_id}', [
+	Route::get('admin/skpd/{skpd_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'HomeAdminController@AdministratorSKPDPegawai'
 	]);
@@ -289,6 +289,7 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'PegawaiController@addPegawai'
 	]); 
 
+	/*
 	//============================================================================================//
 	//============================= PEGAWAI    PUSKESMAS  ========================================//
 	//============================================================================================//

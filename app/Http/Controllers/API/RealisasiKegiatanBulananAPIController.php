@@ -490,7 +490,8 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             return   Pustaka::persen($x->realisasi_rencana_aksi,$x->rencana_aksi_target);
         })
         ->addColumn('kegiatan_tahunan_label', function ($x) {
-            return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
+            /* return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label; */
+            return "";
         })
         ->addColumn('pelaksana', function ($x) {
             if ( $x->pelaksana_id != null ){

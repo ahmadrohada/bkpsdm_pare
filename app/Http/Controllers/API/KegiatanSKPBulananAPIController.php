@@ -426,7 +426,7 @@ class KegiatanSKPBulananAPIController extends Controller {
     public function KegiatanBulanan3(Request $request)
     {
             
-        $rencana_aksi = $this->TraitKegiatanBulananEselon4($request->skp_bulanan_id); 
+        $rencana_aksi = $this->TraitKegiatanBulananEselon4($request->skp_bulanan_id);  
 
         //return $rencana_aksi;
 

@@ -129,6 +129,7 @@ trait TraitSKPBulanan
                                                 'skp_tahunan_rencana_aksi.jabatan_id AS pelaksana_id',
                                                 'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                                 'kegiatan_bulanan.id AS kegiatan_bulanan_id',
+                                                'kegiatan_bulanan.label AS kegiatan_bulanan_label',
                                                 'kegiatan_bulanan.target AS target_pelaksana',
                                                 'kegiatan_bulanan.satuan AS satuan_pelaksana'
                                     ) 
@@ -143,11 +144,14 @@ trait TraitSKPBulanan
 
                 $item[] = array(
                     'id'                            => $x->rencana_aksi_id,
-                    'rencana_aksi_label'                         => $x->rencana_aksi_label,
-                    'rencana_aksi_target'                        => $x->rencana_aksi_target,
-                    'rencana_aksi_satuan'                        => $x->rencana_aksi_satuan,
-                    'pelaksana'                     => SKPD::WHERE('id',$x->pelaksana_id)->firstOrFail()->skpd,
-                    'kegiatan_bulanan_id'           => $x->kegiatan_bulanan_id,    
+                    'rencana_aksi_label'            => $x->rencana_aksi_label,
+                    'rencana_aksi_target'           => $x->rencana_aksi_target,
+                    'rencana_aksi_satuan'           => $x->rencana_aksi_satuan,
+                    'pelaksana'                     => Pustaka::capital_string(SKPD::WHERE('id',$x->pelaksana_id)->firstOrFail()->skpd),
+                    'kegiatan_bulanan_id'           => $x->kegiatan_bulanan_id, 
+                    'kegiatan_bulanan_label'        => $x->kegiatan_bulanan_label,   
+                    'target_pelaksana'              => $x->target_pelaksana,  
+                    'satuan_pelaksana'              => $x->satuan_pelaksana,   
                     'pelaksana_id'                  => SKPD::WHERE('id',$x->pelaksana_id)->firstOrFail()->skpd,
                 );
           

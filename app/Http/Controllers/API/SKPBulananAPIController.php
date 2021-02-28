@@ -600,16 +600,24 @@ class SKPBulananAPIController extends Controller {
                 $data_skp_bulanan['type']           = "skp_bulanan";
 
 
-                $keg_skp = RencanaAksi::with(['IndikatorKegiatanSKPTahunan'])
+                $keg_skp = RencanaAksi::
+                                        with(['IndikatorKegiatanSKPTahunan'])
                                         ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($skp_tahunan_id){
                                             $q->with(['KegiatanSKPTahunan'])
                                             ->WhereHas('KegiatanSKPTahunan', function($r) use($skp_tahunan_id){
                                                 $r->WHERE('skp_tahunan_id',$skp_tahunan_id);
                                             });
                                         }) 
-                                        ->WHEREIN('jabatan_id',$child)
-                                        ->WHERE('waktu_pelaksanaan','=',$y->bulan)
-                                        ->select('id','label')
+                                        ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
+                                            $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                                        })
+
+
+
+                                        ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child)
+                                        ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan','=',$y->bulan)
+                                        ->select('skp_tahunan_rencana_aksi.id AS id','skp_tahunan_rencana_aksi.label')
+                                       
                                         ->get();
 
                 foreach ($keg_skp as $z) {

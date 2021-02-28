@@ -567,7 +567,7 @@ class HomeAdminController extends Controller {
         
        
 
-		return view('pare_pns.pages.administrator-homeskpd-pegawai', [
+		return view('pare_pns.pages.administrator-skpd-pegawai', [
                 //'users' 		          => $users,
                 'skpd_id'                 => $skpd_id,
                 'nama_skpd'     	      => $this->nama_skpd($skpd_id),
