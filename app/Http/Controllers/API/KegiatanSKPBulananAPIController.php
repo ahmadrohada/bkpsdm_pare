@@ -317,27 +317,17 @@ class KegiatanSKPBulananAPIController extends Controller {
         $renja_id = SKPTahunan::find($skp_bln->skp_tahunan_id)->renja_id;
 
         $dt = RencanaAksi::
-                                with(['IndikatorKegiatanSKPTahunan'])
-                                    ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($renja_id){
-                                        $q->with(['KegiatanSKPTahunan'])
-                                        ->WhereHas('KegiatanSKPTahunan', function($e) use($renja_id){
-                                            $e->with(['SKPTahunan'])
-                                            ->WhereHas('SKPTahunan', function($r) use($renja_id){
-                                                $r->WHERE('renja_id',$renja_id);
-                                            });
-                                        });
-                                    }) 
-
-                ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
+                WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
                 ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
+                ->WHERE('skp_tahunan_rencana_aksi.renja_id',$renja_id)
                 ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
                     $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                     //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
                 })
-                /* ->join('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator_kegiatan_tahunan', function($join){
+                ->join('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator_kegiatan_tahunan', function($join){
                     $join   ->on('indikator_kegiatan_tahunan.id','=','skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id');
                     //$join   ->WHERE('kegiatan_bulanan.skp_tahunan_id','=', $skp_tahunan_id );
-                }) */
+                }) 
                 ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
                     $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
                 })
@@ -366,19 +356,19 @@ class KegiatanSKPBulananAPIController extends Controller {
         ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
             return $skp_id;
         })->addColumn('label', function ($x) {
-            if ( $x->pelaksana_id == $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subkegiatan->jabatan_id ){ //dilaksanakan sendiri
+            //if ( $x->pelaksana_id == $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subkegiatan->jabatan_id ){ //dilaksanakan sendiri
                 return $x->rencana_aksi_label;
-            }else{
-                return $x->kegiatan_bulanan_label;
-            } 
+            //}else{
+            //    return $x->kegiatan_bulanan_label;
+           // } 
         })->addColumn('ak', function ($x) {
             return '';
         })->addColumn('output', function ($x) {
-            if ( $x->pelaksana_id == $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subkegiatan->jabatan_id ){ //dilaksanakan sendiri
+            //if ( $x->pelaksana_id == $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subkegiatan->jabatan_id ){ //dilaksanakan sendiri
                 return $x->target_rencana_aksi.' '.$x->satuan_rencana_aksi;
-            }else{
-                return $x->target_pelaksana.' '.$x->satuan_pelaksana;
-            }
+            //}else{
+                //return $x->target_pelaksana.' '.$x->satuan_pelaksana;
+            //}
         })->addColumn('mutu', function ($x) {
             return '';
         })->addColumn('waktu', function ($x) {
