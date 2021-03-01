@@ -1735,7 +1735,7 @@ class RencanaAksiAPIController extends Controller {
     {
 
         $messages = [
-                
+                'renja_id.required'                         => 'Harus diisi',
                 'indikator_kegiatan_tahunan_id.required'    => 'Harus diisi',
                 'waktu_pelaksanaan.required'                => 'Harus diisi',
                 'pelaksana.required'                        => 'Harus diisi',
@@ -1747,7 +1747,7 @@ class RencanaAksiAPIController extends Controller {
         $validator = Validator::make(
                         Input::all(),
                         array(
-                            
+                            'renja_id'                      => 'required',
                             'indikator_kegiatan_tahunan_id' => 'required|numeric|min:1',
                             'pelaksana'                     => 'required|numeric|min:1',
                             'waktu_pelaksanaan'             => 'required',
@@ -1770,6 +1770,7 @@ class RencanaAksiAPIController extends Controller {
             $data[] = array(
 
             'indikator_kegiatan_tahunan_id' => Input::get('indikator_kegiatan_tahunan_id'),
+            'renja_id'                      => Input::get('renja_id'),
             'jabatan_id'                    => Input::get('pelaksana'),
             'label'                         => Input::get('label'),
             'waktu_pelaksanaan'             => $target[$i],
@@ -1878,6 +1879,44 @@ class RencanaAksiAPIController extends Controller {
         } 
             
             
+    
+    }
+
+
+
+
+
+    public function UpdateRencanaAksi(Request $request)
+    {
+
+
+
+        $dt = RencanaAksi::leftjoin('db_pare_2018.skp_tahunan_indikator_kegiatan AS ind_keg_skp_tahunan', function($join){
+                                $join   ->on('ind_keg_skp_tahunan.id','=','skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id');
+                            })
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS keg_skp_tahunan', function($join){
+                                $join   ->on('keg_skp_tahunan.id','=','ind_keg_skp_tahunan.kegiatan_id');
+                            })
+                            ->leftjoin('db_pare_2018.skp_tahunan AS skp_tahunan', function($join){
+                                $join   ->on('skp_tahunan.id','=','keg_skp_tahunan.skp_tahunan_id');
+                            })
+                           
+                            ->SELECT([  
+                                    'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                                    'skp_tahunan.renja_id AS renja_id'
+                                
+                                ])
+                            ->WHERE('skp_tahunan_rencana_aksi.renja_id','0')
+                            ->get();
+        $no = 0 ;
+        foreach ($dt as $x) {
+            $st_ra    = RencanaAksi::find($x->rencana_aksi_id);
+            $st_ra->renja_id               = $x->renja_id;
+            $st_ra->save();
+            $no++;
+        }
+        
+        return $no;
     
     }
 

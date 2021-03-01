@@ -1030,6 +1030,10 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	Route::post('update_rencana_aksi','API\RencanaAksiAPIController@Update');
 	Route::post('hapus_rencana_aksi','API\RencanaAksiAPIController@Hapus');
 
+
+	Route::get('update_data_rencana_aksi','API\RencanaAksiAPIController@UpdateRencanaAksi');
+	
+
 	//========================================================================================================//
 	//======================================= RENCANA AKSI  RENJA      ======================================//
 	//========================================================================================================//
