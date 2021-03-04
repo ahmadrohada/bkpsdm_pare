@@ -365,7 +365,9 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             return $skp_id;
        
         })->addColumn('kegiatan_tahunan_label', function ($x) {
-            return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
+
+            //return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
+            return "";
             
         })->addColumn('persentasi_realisasi_rencana_aksi', function ($x) {
           

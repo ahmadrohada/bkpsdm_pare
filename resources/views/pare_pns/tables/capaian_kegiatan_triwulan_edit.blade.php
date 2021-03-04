@@ -66,11 +66,14 @@ table.dataTable tbody td {
 		
 		var table_kegiatan_triwulan = $('#realisasi_kegiatan_triwulan_table').DataTable({
 				destroy			: true,
-				processing      : false,
+				processing      : true,
 				serverSide      : true,
-				searching      	: true,
+				searching      	: false,
 				paging          : false,
-				//order 			: [0 , 'asc' ],
+				bInfo			: false,
+				bSort			: false,
+				lengthChange	: false,
+				lengthMenu		: [25,50,100],
 				columnDefs		: [
 									{ "orderable": false, className: "text-center", targets: [ 0,3,5,7 ] },
 									{ className: "text-right", targets: [ 4,6] },
