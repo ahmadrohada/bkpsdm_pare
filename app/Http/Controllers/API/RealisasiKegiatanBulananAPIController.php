@@ -376,12 +376,12 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             
         })->addColumn('penanggung_jawab', function ($x) {
 
-            
-            if ( $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subegiatan ){
+            return "";
+            /* if ( $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subegiatan ){
                 return Pustaka::capital_string($x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subkegiatan->PenanggungJawab->jabatan);
             }else{
                 return "";
-            }
+            } */
 
         })->addColumn('pelaksana', function ($x) {
 
