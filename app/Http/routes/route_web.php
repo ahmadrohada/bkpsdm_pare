@@ -145,7 +145,7 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'HomeAdminController@showPohonKinerja'
 	]);
 
-	/* Route::get('admin/skp_tahunan', [
+	Route::get('admin/skp_tahunan', [
 		'as' 			=> 'admin-skp_tahunan',
 		'uses' 			=> 'HomeAdminController@showSKPTahunan'
 	]);
@@ -158,7 +158,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/puskesmas', [
 		'as' 			=> 'admin-puskesmas',
 		'uses' 			=> 'HomeAdminController@showPuskesmas'
-	]); */
+	]); 
 
 	
 	//========================================================================================//
@@ -166,8 +166,6 @@ Route::group(['middleware' => 'administrator'], function () {
 	//========================================================================================//
 
 	
-
-/* 
 	Route::get('admin/cetak_tpp_report', [
 		'as' 			=> '',
 		'uses' 			=> 'TPPReportController@AdministratorCetakTPPReport'
@@ -181,7 +179,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/tpp_report/{tpp_report_id}', [
 		'as' 			=> '',
 		'uses' 			=> 'TPPReportController@AdministratorTPPReport'
-	]); */
+	]); 
 
 	
  
