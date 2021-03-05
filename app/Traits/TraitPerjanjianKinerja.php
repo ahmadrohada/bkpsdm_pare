@@ -34,7 +34,7 @@ trait TraitPerjanjianKinerja
 
 
        
-
+        $item = array();
         foreach( $sasaran AS $x ){
             foreach( $x->IndikatorSasaran AS $y ){
                 $item[] = array(
