@@ -205,7 +205,7 @@
 						<?php
 							switch(  $skp->PegawaiYangDinilai->Eselon->id_jenis_jabatan ) {
 								case '1':  //eselon 2
-										?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_1_edit')<?php
+										?>@include('pare_pns.tables.skp_tahunan-perjanjian_kinerja_1')<?php
 										break;
 								case '2': //Eselon 3
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
