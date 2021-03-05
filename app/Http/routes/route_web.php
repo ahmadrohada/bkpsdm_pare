@@ -533,7 +533,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'PegawaiController@addPegawai'
 	]);
 	
-	/* //========================== CAPAIAN PK TRIWULAN =======================================//
+	//========================== CAPAIAN PK TRIWULAN =======================================//
 	Route::get('capaian_pk-triwulan/{capaian_pk_triwulan_id}/edit', [
 		'as' 			=> '',
 		'uses' 			=> 'CapaianPKTriwulanController@SKPDCapaianPKTriwulanEdit'
@@ -575,7 +575,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	Route::get('puskesmas/pegawai/{pegawai_id}', [
 		'as' 			=> '{username}',
 		'uses' 			=> 'PegawaiController@detailPegawai'
-	]);  */
+	]); 
 
 	//----------------------------------------------------------------------------------------//
 	//======================== POHON KINERJA PERANGKAT DAERAH ================================//
@@ -596,7 +596,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	]);
 	 
 	
-	/* //----------------------------------------------------------------------------------------//
+	//----------------------------------------------------------------------------------------//
 	//========================      SKP TAHUNAN SKPD       ================================//
 	//----------------------------------------------------------------------------------------//
 	Route::get('skp_tahunan/{skp_tahunan_id}',[
@@ -632,7 +632,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'as' 			=> '',
 		'uses' 			=> 'SKPBulananController@SKPBulananDetail'
 	]);
- */
+ 
 	
 
 
@@ -642,7 +642,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 Route::group(['prefix' => 'puskesmas','middleware' => 'puskesmas'], function () {
 		
 	
-	/* //========================================================================================//
+	//========================================================================================//
 	//=======================   Puskesmas HOME / PUSKESMAS SNAPSHOTS =========================//
 	//========================================================================================//
 	Route::get('', [
@@ -712,7 +712,7 @@ Route::group(['prefix' => 'puskesmas','middleware' => 'puskesmas'], function () 
 	Route::get('skp_bulanan/{id}',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPBulananController@SKPBulananDetail'
-	]); */
+	]);
 
 	
 
