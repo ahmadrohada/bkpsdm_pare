@@ -233,10 +233,10 @@ Route::group(['middleware' => 'administrator'], function () {
 	//----------------------------------------------------------------------------------------//
 	//========================      SKP TAHUNAN SKPD       ================================//
 	//----------------------------------------------------------------------------------------//
-	/* Route::get('admin/skp_tahunan/{skp_tahunan_id}',[
+	Route::get('admin/skp_tahunan/{skp_tahunan_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'SKPTahunanController@AdministratorSKPTahunanDetail'
-	]); */
+	]);
 
 
 	//============================================================================================//
@@ -289,7 +289,6 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'PegawaiController@addPegawai'
 	]); 
 
-	/*
 	//============================================================================================//
 	//============================= PEGAWAI    PUSKESMAS  ========================================//
 	//============================================================================================//
@@ -373,7 +372,7 @@ Route::group(['middleware' => 'administrator'], function () {
 	Route::get('admin/capaian_bulanan/{capaian_bulanan_id}',[
 		'as' 			=> '',
 		'uses' 			=> 'CapaianBulananController@PersonalCapaianBulananDetail'
-	]); */
+	]); 
 	
 
 
