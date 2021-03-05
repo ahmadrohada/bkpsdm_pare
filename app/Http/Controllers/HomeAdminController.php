@@ -400,7 +400,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('pare_pns.pages.administrator-homeSKP_tahunan', [
+		return view('pare_pns.pages.administrator-SKP_tahunan', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
