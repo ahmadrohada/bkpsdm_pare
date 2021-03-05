@@ -443,7 +443,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('pare_pns.pages.administrator-homeTPP_report', [
+		return view('pare_pns.pages.administrator-TPP_report', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
@@ -488,7 +488,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('pare_pns.pages.administrator-homePuskesmas', [
+		return view('pare_pns.pages.administrator-Puskesmas', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
@@ -516,7 +516,7 @@ class HomeAdminController extends Controller {
         
        
 
-		return view('pare_pns.pages.administrator-homepuskesmas-pegawai', [
+		return view('pare_pns.pages.administrator-puskesmas-pegawai', [
                 //'users' 		          => $users,
                 'puskesmas_id'            => $puskesmas_id,
                 'nama_puskesmas'     	  => $this->nama_puskesmas($puskesmas_id),
@@ -541,7 +541,7 @@ class HomeAdminController extends Controller {
         
        
 
-		return view('pare_pns.pages.administrator-homepuskesmas-pegawai_error', [
+		return view('pare_pns.pages.administrator-puskesmas-pegawai_error', [
                 //'users' 		          => $users,
                 'puskesmas_id'            => $puskesmas_id,
                 'nama_puskesmas'     	  => $this->nama_puskesmas($puskesmas_id),
@@ -635,7 +635,7 @@ class HomeAdminController extends Controller {
         //CARI id skpd nya
         $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
        
-		return view('pare_pns.pages.administrator-homecapaian_pk-triwulan', [
+		return view('pare_pns.pages.administrator-capaian_pk-triwulan', [
                 'users' 		          => $users,
                 'total_pegawai' 	      => $this->total_pegawai(),
                 'total_users' 	          => $this->total_users(),
