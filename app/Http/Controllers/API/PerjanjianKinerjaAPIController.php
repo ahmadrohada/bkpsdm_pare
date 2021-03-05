@@ -49,6 +49,7 @@ class PerjanjianKinerjaAPIController extends Controller {
         $sasaran = $this->TraitSasaranSKPD($request->renja_id);
        
         $no = 0 ;
+        $arrayForTable = array();
         foreach ( $sasaran as $dbValue) {
             $temp = [];
             if(!isset($arrayForTable[$dbValue['sasaran_label']])){
