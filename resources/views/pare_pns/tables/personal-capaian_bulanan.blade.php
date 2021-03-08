@@ -224,7 +224,7 @@
 					$('.p_golongan_id').val(data['p_golongan_id']);
  
 					$('.jenis_jabatan').val(data['u_detail'][0]['jenis_jabatan']); 
-					$('.jabatan_id').val(data['u_detail'][0]['jabatan_id']);
+					$('.jabatan_id').val(data['jabatan_id']);
 					$('.renja_id').val(data['renja_id']);
 					$('.waktu_pelaksanaan').val(data['waktu_pelaksanaan']);
 					

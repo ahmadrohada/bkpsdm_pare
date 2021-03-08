@@ -415,6 +415,7 @@ class CapaianBulananAPIController extends Controller {
                                 ->get()
                                 ->toArray();  */
 
+            
             //list bawahan
             $jm_kegiatan = 0 ; 
             foreach ($bawahan as $x) {
@@ -833,12 +834,10 @@ class CapaianBulananAPIController extends Controller {
 
 
 
-
                 //jika kabid atau lurah, auto add kegiatan
                 if ( $jenis_jabatan == '2'){
+
                     $bawahan_ls = Jabatan::SELECT('id')->WHERE('parent_id',Input::get('jabatan_id'))->get(); //->toArray();
-
-
                     //cari bawahan  , jabatanpelaksanan
                     $pelaksana_list = Jabatan::SELECT('id')->WHEREIN('parent_id', $bawahan_ls)->get(); //->toArray(); 
 
@@ -869,7 +868,6 @@ class CapaianBulananAPIController extends Controller {
                         );
                         $i++;
                     }
-                            
                     if ( $i >= 1 ){
                         $st_ra   = new RealisasiRencanaAksiEselon3;
                         $st_ra -> insert($data);

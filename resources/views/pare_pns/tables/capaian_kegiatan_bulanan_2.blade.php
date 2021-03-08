@@ -59,7 +59,7 @@
 											"capaian_id" 		: {!! $capaian->id !!},
 									 },
 									cache : false,
-									quietMillis: 500, 
+									quietMillis: 500,  
 								},
 				columns			: [
 									{ data: 'kegiatan_bulanan_id' ,width:"10px",

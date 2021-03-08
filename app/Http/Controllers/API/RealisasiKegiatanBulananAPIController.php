@@ -363,35 +363,23 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         $datatables = Datatables::of($dt)
         ->addColumn('skp_bulanan_id', function ($x) use($skp_id){
             return $skp_id;
-       
         })->addColumn('kegiatan_tahunan_label', function ($x) {
-
-            //return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
-            return "";
-            
+            return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
         })->addColumn('persentasi_realisasi_rencana_aksi', function ($x) {
-          
             return   Pustaka::persen($x->realisasi_rencana_aksi,$x->rencana_aksi_target);
-    
-            
         })->addColumn('penanggung_jawab', function ($x) {
-
-            return "";
-            /* if ( $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subegiatan ){
-                return Pustaka::capital_string($x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->Subkegiatan->PenanggungJawab->jabatan);
+            if ( $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->SubKegiatan ){
+                return Pustaka::capital_string($x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->SubKegiatan->PenanggungJawab->jabatan);
             }else{
                 return "";
-            } */
-
+            } 
         })->addColumn('pelaksana', function ($x) {
-
             if ( $x->pelaksana_id != null ){
                 $dt = SKPD::WHERE('id',$x->pelaksana_id)->SELECT('skpd')->first();
                 $pelaksana = Pustaka::capital_string($dt->skpd);
             }else{
                 $pelaksana = "-";
             }
-
             return $pelaksana;
         })->addColumn('status_skp', function ($x) use($skp_bln){
             return $skp_bln->status;
@@ -492,8 +480,8 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             return   Pustaka::persen($x->realisasi_rencana_aksi,$x->rencana_aksi_target);
         })
         ->addColumn('kegiatan_tahunan_label', function ($x) {
-            /* return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label; */
-            return "";
+            return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label; 
+            
         })
         ->addColumn('pelaksana', function ($x) {
             if ( $x->pelaksana_id != null ){
