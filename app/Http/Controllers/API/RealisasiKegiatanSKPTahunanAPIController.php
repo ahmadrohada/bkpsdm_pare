@@ -61,8 +61,11 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
         //LAkukan perulangan untuk menghitung rata-rata realisasi nya
         $jm_q = 0 ;
         foreach ($data_uing as $x) {
-            $cap = ( $x->realisasi / $x->target )*100;
-            $jm_q = $jm_q + $cap ;
+            if (( $x->target != '0' )&( $x->realisasi != '0' )){
+                $cap = ( $x->realisasi / $x->target )*100;
+                $jm_q = $jm_q + $cap ;
+            }
+            
         }   
 
         return number_format($jm_q / $jm_indikator ,'2');
@@ -1294,9 +1297,11 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
                 $rkt_update                           = RealisasiKegiatanTahunan::find(Input::get('realisasi_kegiatan_tahunan_id'));
                 $rkt_update->jumlah_indikator         = Input::get('jumlah_indikator');
                 //$rkt_update->realisasi_quality        = Input::get('realisasi_quality');
-                $rkt_update->target_angka_kredit    = Input::get('target_angka_kredit');
+                $rkt_update->target_angka_kredit        = Input::get('target_angka_kredit');
                 $rkt_update->realisasi_angka_kredit   = Input::get('realisasi_angka_kredit');
+                $rkt_update->target_cost                = preg_replace('/[^0-9]/', '', Input::get('target_cost'));
                 $rkt_update->realisasi_cost           = preg_replace('/[^0-9]/', '', Input::get('realisasi_cost'));
+                $rkt_update->target_waktu           = Input::get('target_waktu');
                 $rkt_update->realisasi_waktu          = Input::get('realisasi_waktu');
 
                 //HITUNG

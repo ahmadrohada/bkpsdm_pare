@@ -19,10 +19,10 @@
 			<input type="hidden"  name="satuan">
 
 			{{-- <input type="hidden"  name="target_angka_kredit"> --}}
-			<input type="hidden"  name="target_quantity">
-			<input type="hidden"  name="target_quality">
-			<input type="hidden"  name="target_waktu">
-			<input type="hidden"  name="target_cost">
+			{{-- <input type="hidden"  name="target_quantity"> --}}
+			{{-- <input type="hidden"  name="target_quality">
+			<input type="hidden"  name="target_waktu"> --}}
+			{{-- <input type="hidden"  name="target_cost"> --}}
 
 			
 
@@ -52,7 +52,8 @@
 						<div class="col-md-6 col-xs-6 form-group">	
 							<label class="control-label">Target Quality </label>
 							<div class="input-group">
-							<span type="text" class="form-control input-sm target_quality"></span>
+								<input type="text" name="target_quality" required class="form-control input-sm target_quality" placeholder="target" >
+							{{-- <span type="text" class="form-control input-sm target_quality"></span> --}}
 								<div class="input-group-addon">
 									<span class="">%</span>
 								</div>
@@ -73,7 +74,8 @@
 						<div class="col-md-6 col-xs-6 form-group">	
 							<label class="control-label">Target Waktu </label>
 							<div class="input-group">
-							<span type="text" class="form-control input-sm target_waktu"></span>
+								<input type="text" name="target_waktu"  required class="form-control input-sm target_waktu" placeholder="target">
+							{{-- <span type="text" class="form-control input-sm target_waktu"></span> --}}
 								<div class="input-group-addon">
 									<span class="">bln</span>
 								</div>
@@ -99,7 +101,8 @@
 								<div class="input-group-addon">
 									<span class="">Rp.</span>
 								</div>
-								<span type="text" class="form-control input-sm target_cost"></span>
+								<input type="text" id="rupiah" name="target_cost"  required class="form-control input-sm target_cost" placeholder="cost target">
+								{{-- <span type="text" class="form-control input-sm target_cost"></span> --}}
 							</div>
 						</div>
 						<div class="col-md-6 col-xs-6 form-group cost cost">	
@@ -127,7 +130,8 @@
 						<div class="col-md-6 col-xs-6 form-group">	
 							<label class="control-label">Target Quantity </label>
 							<div class="input-group">
-							<span type="text" class="form-control input-sm target_quantity"></span>
+							<input type="text" name="target_quantity" required class="form-control input-sm target_quantity" placeholder="target">
+							{{-- <span type="text" class="form-control input-sm target_quantity"></span> --}}
 								<div class="input-group-addon">
 									<span class="satuan"></span>
 								</div>
