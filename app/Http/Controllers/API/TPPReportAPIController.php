@@ -1589,7 +1589,9 @@ class TPPReportAPIController extends Controller
             $tpp_report_id = $st_kt->id; 
 
             //ambil data periode skp bulanan, jikatpp report januari, maka skp bulanan nya adalah skp bulan sebelumnya
+          
             $bulan_lalu = Pustaka::bulan_lalu($st_kt->bulan);
+            
             
 
             //jika bulan januari, maka periode nya cari yang periode sebelumnya
@@ -1600,19 +1602,23 @@ class TPPReportAPIController extends Controller
                 $data = Periode::WHERE('periode.akhir',$periode_akhir)->first();
                 $periode_id = $data->id;
 
+                //jika bln j\nya januari,maka tahuna nya pun min 1
+                $periode_tahun = Pustaka::periode_tahun($dt->label) - 1 ;
+
             }else{
                 $periode_id = $st_kt->periode_id;
+                $periode_tahun = Pustaka::periode_tahun($dt->label);
             }
 
 
             //AMBIL DATA KEHADIRAN   from SIAP WITH ID SKPD AND BULAN TAHUN
             if ( $st_kt->skpd_id != 19 ){
                 $dt             = Periode::WHERE('periode.id',$st_kt->periode_id)->first();
-                $month          = Pustaka::periode_tahun($dt->label).'-'.$bulan_lalu;
+                $month          = $periode_tahun.'-'.$bulan_lalu;
                 $data_kehadiran = $this->data_kehadiran($month,$st_kt->skpd_id);
             }else{
                 $dt             = Periode::WHERE('periode.id',$st_kt->periode_id)->first();
-                $month          = Pustaka::periode_tahun($dt->label).'-'.$bulan_lalu;
+                $month          = $periode_tahun.'-'.$bulan_lalu;
                 $data_kehadiran = null ;
             } 
             
