@@ -1591,12 +1591,12 @@ class TPPReportAPIController extends Controller
             //ambil data periode skp bulanan, jikatpp report januari, maka skp bulanan nya adalah skp bulan sebelumnya
           
             $bulan_lalu = Pustaka::bulan_lalu($st_kt->bulan);
-            
+            $dt = Periode::WHERE('periode.id',$st_kt->periode_id)->first();
             
 
             //jika bulan januari, maka periode nya cari yang periode sebelumnya
             if ( Input::get('bulan') == 01 ){
-                $dt = Periode::WHERE('periode.id',$st_kt->periode_id)->first();
+
                 $periode_akhir = date('Y-m-d', strtotime("-1 day", strtotime(date($dt->awal))));
 
                 $data = Periode::WHERE('periode.akhir',$periode_akhir)->first();
