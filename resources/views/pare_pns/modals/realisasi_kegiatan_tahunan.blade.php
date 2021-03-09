@@ -90,6 +90,9 @@
 								</div>
 							</div>
 						</div>
+						<div class="col-md-12 col-xs-12 form-group">	
+							** Isi Realisasi Waktu dengan nilai 0 apabila kegiatan tidak dikerjakan
+						</div>
 					</div>
 
 
@@ -146,6 +149,9 @@
 								</div>
 							</div>
 						</div>
+
+						
+
 					</div>
 
 					

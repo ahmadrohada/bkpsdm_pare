@@ -1,7 +1,16 @@
 <div class="box-body table-responsive" style="min-height:330px;">
-	<div class="toolbar">
-	</div>
+	
 	<div class="box-body table-responsive">
+		@if (  request()->segment(2) == 'capaian_tahunan_bawahan_approvement' )
+			<div class="toolbar">
+				Tampilkan Kolom : 	<a class="toggle-vis btn btn-xs btn-info" data-column="target">Target</a> 
+									<a class="toggle-vis btn btn-xs btn-info" data-column="realisasi">Realisasi</a>
+									<a class="toggle-vis btn btn-xs btn-info" data-column="hitung">Hitung</a>
+			
+			</div>
+		@endif
+
+		
 		<table id="realisasi_kegiatan_tahunan_table" class="table table-striped table-bordered">
 			<thead>
 				<tr>
@@ -83,6 +92,7 @@ table.dataTable tbody td {
 										{ visible: true, "targets": [20]},
 									@endif
 								],
+								
 				ajax			: {
 									url	: '{{ url("api/realisasi_kegiatan_tahunan_2") }}',
 									data: { 
@@ -270,6 +280,26 @@ table.dataTable tbody td {
 		});	
 
 		
+		$('a.toggle-vis').on( 'click', function (e) {
+			e.preventDefault();
+	
+			
+			if ( $(this).attr('data-column') == 'target'){
+				var data = [3,4,5,6,7];
+			}else if ( $(this).attr('data-column') == 'realisasi'){
+				var data = [8,9,10,11,12];
+			}else if ( $(this).attr('data-column') == 'hitung'){
+				var data = [13,14,15,16];
+			}
+			
+
+			data.forEach(myFunction);
+
+			function myFunction(item, index) {
+				var column = table_kegiatan_tahunan.column(item);
+				column.visible( ! column.visible() );
+			} 
+    	} );
 
 
 		

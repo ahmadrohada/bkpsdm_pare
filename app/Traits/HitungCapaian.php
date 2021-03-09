@@ -555,11 +555,19 @@ trait HitungCapaian
         $data_cap = RealisasiKegiatanTahunan::WHERE('capaian_id',$capaian_id)->get();
         $nilai_capaian_kegiatan_tahunan = 0 ;
         foreach ($data_cap as $x) {
-            if ( $x->hitung_cost <=0 ){
-                $nilai_capaian_kegiatan_tahunan =  $nilai_capaian_kegiatan_tahunan + ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/3 ;
+
+            //jika kegiatan tsb tidak dilaksnakan, kasih nilai 100 aja
+            if ( $x->realisasi_waktu == 0 ){
+                $nilai_capaian_kegiatan_tahunan = $nilai_capaian_kegiatan_tahunan + 100;
             }else{
-                $nilai_capaian_kegiatan_tahunan =  $nilai_capaian_kegiatan_tahunan + ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/4 ;
+                if ( $x->hitung_cost <=0 ){
+                    $nilai_capaian_kegiatan_tahunan =  $nilai_capaian_kegiatan_tahunan + ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/3 ;
+                }else{
+                    $nilai_capaian_kegiatan_tahunan =  $nilai_capaian_kegiatan_tahunan + ($x->hitung_quantity + $x->hitung_quality + $x->hitung_waktu +$x->hitung_cost )/4 ;
+                }
             }
+
+            
         }
 
         return array(
