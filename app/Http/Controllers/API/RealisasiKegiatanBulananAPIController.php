@@ -419,8 +419,11 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         //return  $keg_tahunan;
      
 
-        $dt = RencanaAksi::
-                    WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child )
+        $dt = RencanaAksi:: 
+                    WITH(['IndikatorKegiatanSKPTahunan'])
+                        ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                    }) 
+                    ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child )
                     //->WHEREIN('skp_tahunan_rencana_aksi.kegiatan_tahunan_id',$keg_tahunan )
                     ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan','=',$skp_bln->bulan)
                     ->WHERE('skp_tahunan_rencana_aksi.renja_id','=',$renja_id)
