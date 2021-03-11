@@ -148,7 +148,10 @@ trait HitungCapaian
 
         //hitung capaian kinerja bulanan
         $xdata = RencanaAksi::
-            leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
+            WITH(['IndikatorKegiatanSKPTahunan'])
+                ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+            }) 
+            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
                 $join   ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan.id');
             })
             ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join) use($capaian_id){
