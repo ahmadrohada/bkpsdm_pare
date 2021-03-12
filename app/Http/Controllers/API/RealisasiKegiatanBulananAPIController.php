@@ -304,7 +304,10 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         $capaian_id = $request->capaian_id;
         
         $dt = RencanaAksi::
-                    WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
+                    WITH(['IndikatorKegiatanSKPTahunan'])
+                        ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                    }) 
+                    ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
                     ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
                     ->WHERE('skp_tahunan_rencana_aksi.renja_id',$skp_bln->SKPTahunan->renja_id)
                     ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
