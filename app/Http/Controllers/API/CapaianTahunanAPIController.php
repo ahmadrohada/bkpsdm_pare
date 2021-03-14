@@ -218,7 +218,10 @@ class CapaianTahunanAPIController extends Controller {
                             })
                             ->groupBy('kegiatan_tahunan.id')
                             ->count();  */
-            $jm_kegiatan = RencanaAksi::WHERE('jabatan_id',$jabatan_id)
+            $jm_kegiatan = RencanaAksi::WITH(['IndikatorKegiatanSKPTahunan'])
+                                ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                            })
+                            ->WHERE('jabatan_id',$jabatan_id)
                             ->WHERE('renja_id',$renja_id)
                             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
                                 $join  ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');

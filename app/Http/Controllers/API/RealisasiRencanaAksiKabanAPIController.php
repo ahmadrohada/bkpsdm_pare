@@ -42,7 +42,18 @@ class RealisasiRencanaAksiKabanAPIController extends Controller {
     {
         
 
-        $x = RealisasiRencanaAksiKaban::WHERE('realisasi_rencana_aksi_eselon2.id', $request->realisasi_rencana_aksi_id)
+        $x = RealisasiRencanaAksiKaban::
+                        WITH(['RencanaAksi'])
+                                            ->WhereHas('RencanaAksi', function($q){
+                                                $q->with(['IndikatorKegiatanSKPTahunan'])
+                                                ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                                                    $q->with(['KegiatanSKPTahunan'])
+                                                    ->WhereHas('KegiatanSKPTahunan', function($r){
+                                                        
+                                                    });
+                                                }); 
+                                        })
+                    ->WHERE('realisasi_rencana_aksi_eselon2.id', $request->realisasi_rencana_aksi_id)
                     ->leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS skp_tahunan_rencana_aksi', function($join){
                         $join   ->on('skp_tahunan_rencana_aksi.id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
                        
@@ -108,7 +119,7 @@ class RealisasiRencanaAksiKabanAPIController extends Controller {
 
             'waktu_pelaksanaan'             => $x->waktu_pelaksanaan,
             'jabatan_id'                    => $x->pelaksana_id,
-            'penanggung_jawab'              => Pustaka::capital_string($x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->SubKegiatan->PenanggungJawab->jabatan),
+            'penanggung_jawab'              => $x->RencanaAksi->IndikatorKegiatanSKPTahunan/* Pustaka::capital_string($x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->SubKegiatan->PenanggungJawab->jabatan) */,
             'nama_jabatan'                  => $pelaksana,
             'pelaksana'                     => $pelaksana,
             'kegiatan_tahunan_label'        => $x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label,

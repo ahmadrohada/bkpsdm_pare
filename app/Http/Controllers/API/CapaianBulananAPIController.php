@@ -284,11 +284,17 @@ class CapaianBulananAPIController extends Controller {
             $jm_kegiatan = 0 ; 
             foreach ($bawahan as $x) {
             
-                $dt_reaksi = RencanaAksi::WHERE('jabatan_id',$x->id)
+                $dt_reaksi = RencanaAksi::WITH(['IndikatorKegiatanSKPTahunan'])
+                                                ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                                            })
+                                            ->WHERE('jabatan_id',$x->id)
                                             ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
                                             ->WHERE('renja_id',$renja_id)
                                             ->count();
-                $ls_reaksi = RencanaAksi::WHERE('jabatan_id',$x->id)
+                $ls_reaksi = RencanaAksi::WITH(['IndikatorKegiatanSKPTahunan'])
+                                                ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                                            })
+                                            ->WHERE('jabatan_id',$x->id)
                                             ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
                                             ->WHERE('renja_id',$renja_id)
                                             ->SELECT('id')
@@ -362,11 +368,17 @@ class CapaianBulananAPIController extends Controller {
             $jm_kegiatan = 0 ; 
             foreach ($bawahan as $x) {
               
-                $dt_reaksi = RencanaAksi::WHERE('jabatan_id',$x->id)
+                $dt_reaksi = RencanaAksi::WITH(['IndikatorKegiatanSKPTahunan'])
+                                                ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                                            })
+                                            ->WHERE('jabatan_id',$x->id)
                                             ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
                                             ->WHERE('renja_id',$renja_id)
                                             ->count();
-                $ls_reaksi = RencanaAksi::WHERE('jabatan_id',$x->id)
+                $ls_reaksi = RencanaAksi::WITH(['IndikatorKegiatanSKPTahunan'])
+                                                ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                                            })
+                                            ->WHERE('jabatan_id',$x->id)
                                             ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
                                             ->WHERE('renja_id',$renja_id)
                                             ->SELECT('id')
@@ -428,11 +440,17 @@ class CapaianBulananAPIController extends Controller {
 
 
 
-                $dt_reaksi = RencanaAksi::WHEREIN('jabatan_id',$child)
+                $dt_reaksi = RencanaAksi::WITH(['IndikatorKegiatanSKPTahunan'])
+                                                ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                                            })
+                                            ->WHEREIN('jabatan_id',$child)
                                             ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
                                             ->WHERE('renja_id',$renja_id)
                                             ->count();
-                $ls_reaksi = RencanaAksi::WHEREIN('jabatan_id',$child)
+                $ls_reaksi = RencanaAksi::WITH(['IndikatorKegiatanSKPTahunan'])
+                                                ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                                            })
+                                            ->WHEREIN('jabatan_id',$child)
                                             ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
                                             ->WHERE('renja_id',$renja_id)
                                             ->SELECT('id')
@@ -848,7 +866,10 @@ class CapaianBulananAPIController extends Controller {
 
 
         
-                    $kegiatan_list = RencanaAksi::WHEREIN('jabatan_id',$pelaksana_list)
+                    $kegiatan_list = RencanaAksi::WITH(['IndikatorKegiatanSKPTahunan'])
+                                                    ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                                                })
+                                                ->WHEREIN('jabatan_id',$pelaksana_list)
                                                 ->leftjoin('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi', function($join){
                                                     $join   ->on('realisasi.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
                                                 })

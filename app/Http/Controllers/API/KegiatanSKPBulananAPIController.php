@@ -213,7 +213,10 @@ class KegiatanSKPBulananAPIController extends Controller {
         //return $pelaksana_id;
         $renja_id = SKPTahunan::find($skp_bln->skp_tahunan_id)->renja_id;
         $dt = RencanaAksi::
-                    WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
+                    WITH(['IndikatorKegiatanSKPTahunan'])
+                        ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                    })
+                    ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
                     ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
                     ->WHERE('skp_tahunan_rencana_aksi.renja_id',$renja_id)
                     ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){
@@ -239,7 +242,7 @@ class KegiatanSKPBulananAPIController extends Controller {
                                 'kegiatan_tahunan.satuan' */
                             ) 
                     ->ORDERBY('skp_tahunan_rencana_aksi.label','ASC')
-                    ->GroupBY('kegiatan_tahunan.id')
+                    //->GroupBY('kegiatan_tahunan.id')
                     ->get();
         
         $skp_id = $request->skp_bulanan_id;
@@ -316,8 +319,10 @@ class KegiatanSKPBulananAPIController extends Controller {
         $pelaksana_id = $pelaksana_id->merge($penanggung_jawab_id);                 
         $renja_id = SKPTahunan::find($skp_bln->skp_tahunan_id)->renja_id;
 
-        $dt = RencanaAksi::
-                WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
+        $dt = RencanaAksi::WITH(['IndikatorKegiatanSKPTahunan'])
+                    ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                })
+                ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
                 ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
                 ->WHERE('skp_tahunan_rencana_aksi.renja_id',$renja_id)
                 ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join){

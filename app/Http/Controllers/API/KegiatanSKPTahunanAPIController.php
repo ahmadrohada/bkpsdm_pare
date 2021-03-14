@@ -417,7 +417,10 @@ class KegiatanSKPTahunanAPIController extends Controller {
 
                
                 $keg_skp = KegiatanSKPTahunan::SELECT('id')->WHERE('skp_tahunan_id', $request->skp_tahunan_id )->get()->toArray(); 
-                $ra = RencanaAksi::WHERE('skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id',$request->id)
+                $ra = RencanaAksi::WITH(['IndikatorKegiatanSKPTahunan'])
+                                        ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                                    })
+                                    ->WHERE('skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id',$request->id)
                                     ->WHEREIN('skp_tahunan_rencana_aksi.kegiatan_tahunan_id',$keg_skp)
                                     ->orderBy('skp_tahunan_rencana_aksi.waktu_pelaksanaan','ASC')
                                     ->orderBy('skp_tahunan_rencana_aksi.id','DESC')

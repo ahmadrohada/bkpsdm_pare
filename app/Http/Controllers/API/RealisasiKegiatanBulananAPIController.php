@@ -192,8 +192,21 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                     ->SELECT('capaian_bulanan.id AS capaian_id')
                                     ->get()->toArray();
 
-        $dt1 = RealisasiRencanaAksiKaban::
-                                        join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+        $dt1 = RealisasiRencanaAksiKaban::WITH(['RencanaAksi'])
+                                            ->WhereHas('RencanaAksi', function($q) use($renja_id){
+                                                $q->with(['IndikatorKegiatanSKPTahunan'])
+                                                ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($renja_id){
+                                                    $q->with(['KegiatanSKPTahunan'])
+                                                    ->WhereHas('KegiatanSKPTahunan', function($r) use($renja_id){
+                                                        $r->with(['SKPTahunan'])
+                                                        ->WhereHas('SKPTahunan', function($s) use($renja_id){
+                                                            $s->WHERE('renja_id',$renja_id);
+                                                        });
+                                                    });
+                                                }); 
+                                        })
+
+                                        ->join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                                             $join   ->ON('rencana_aksi.id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
                                         }) 
                                         ->join('db_pare_2018.realisasi_rencana_aksi_kabid AS realisasi_eselon3', function($join) use($capaian_id_bawahan){
@@ -218,8 +231,20 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                                         ->WHERE('realisasi_rencana_aksi_eselon2.capaian_id',$capaian_id);
                                         //->get(); 
 
-        $dt2 = RealisasiRencanaAksiKaban::
-                                        join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+        $dt2 = RealisasiRencanaAksiKaban::WITH(['RencanaAksi'])
+                                            ->WhereHas('RencanaAksi', function($q) use($renja_id){
+                                                $q->with(['IndikatorKegiatanSKPTahunan'])
+                                                ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($renja_id){
+                                                    $q->with(['KegiatanSKPTahunan'])
+                                                    ->WhereHas('KegiatanSKPTahunan', function($r) use($renja_id){
+                                                        $r->with(['SKPTahunan'])
+                                                        ->WhereHas('SKPTahunan', function($s) use($renja_id){
+                                                            $s->WHERE('renja_id',$renja_id);
+                                                        });
+                                                    });
+                                                }); 
+                                        })
+                                        ->join('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                                             $join   ->ON('rencana_aksi.id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
                                         }) 
                                         ->join('db_pare_2018.realisasi_rencana_aksi_kasubid AS realisasi_eselon3', function($join) use($capaian_id_bawahan){

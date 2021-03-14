@@ -280,7 +280,17 @@ trait HitungCapaian
                             ->WHERE('skp_tahunan_rencana_aksi.renja_id', $renja_id)
                             ->get(); */
         $xdata = RealisasiRencanaAksiKaban::
-                            leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
+                                WITH(['RencanaAksi'])
+                                ->WhereHas('RencanaAksi', function($q){
+                                    $q->with(['IndikatorKegiatanSKPTahunan'])
+                                    ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                                        $q->with(['KegiatanSKPTahunan'])
+                                        ->WhereHas('KegiatanSKPTahunan', function($r){
+                                            
+                                        });
+                                    }); 
+                            })
+                            ->leftjoin('db_pare_2018.skp_tahunan_rencana_aksi AS rencana_aksi', function($join){
                                 $join   ->on('rencana_aksi.id','=','realisasi_rencana_aksi_eselon2.rencana_aksi_id');
                             })
                             
