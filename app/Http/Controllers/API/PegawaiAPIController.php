@@ -20,6 +20,8 @@ use App\Models\RoleUser;
 
 use App\Helpers\Pustaka;
 
+use App\Traits\TraitPegawai;
+
 use Datatables;
 use Validator;
 use Gravatar;
@@ -28,6 +30,8 @@ Use Alert;
 Use Hash;
 
 class PegawaiAPIController extends Controller {
+
+    use TraitPegawai;
 
     public function add_pegawai(Request $request)
     {
@@ -358,95 +362,37 @@ class PegawaiAPIController extends Controller {
 
     
    
-    public function SKPDPegawaiList(Request $request)
+    public function SKPDPegawaiList(Request $request) 
     {
-        $id_skpd = $request->skpd_id ;
-        $dt = \DB::table('demo_asn.tb_pegawai AS pegawai')
-                ->rightjoin('demo_asn.tb_history_jabatan AS a', function($join) use($id_skpd){
-                    $join   ->on('a.id_pegawai','=','pegawai.id');
-                    $join   ->where('a.id_skpd','=', $id_skpd);
-                    $join   ->where('a.status', '=', 'active');
-                })
-                //SKPD
-                ->leftjoin('demo_asn.m_skpd AS skpd', function($join){
-                             $join   ->on('skpd.id','=','a.id_skpd');
-                })  
-                //jabatan
-                ->leftjoin('demo_asn.m_skpd AS jabatan', function($join){
-                            $join   ->on('jabatan.id','=','a.id_jabatan');
-                })  
-                //eselon
-                ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
-                            $join   ->on('eselon.id','=','jabatan.id_eselon');
-                })  
-                //GOL
-                ->leftjoin('demo_asn.tb_history_golongan AS b', function($join){
-                            $join   ->on('b.id_pegawai','=','pegawai.id');
-                            $join   ->WHERE('b.status','=','active');
-                })  
-                //GOLONGAN
-                ->leftjoin('demo_asn.m_golongan AS golongan', function($join){
-                            $join   ->on('golongan.id','=','b.id_golongan');
-                })  
-                
-                //LEFT JOIN ke user
-                ->leftjoin('db_pare_2018.users', 'users.id_pegawai','=','pegawai.id')
-
-                //LEFT JOIN ke roles admin SKPD
-                ->leftjoin('db_pare_2018.role_user AS role', function($join){
-                            $join   ->on('role.user_id','=','users.id');
-                            $join   ->where('role.role_id','=','2');
-                })
-                
-                ->select([  'pegawai.nama',
-                            'pegawai.id AS pegawai_id',
-                            'pegawai.nip',
-                            'pegawai.gelardpn',
-                            'pegawai.gelarblk',
-                            'eselon.eselon AS eselon',
-                            'golongan.golongan AS golongan',
-                            'jabatan.skpd AS jabatan',
-                            'a.unit_kerja AS unit_kerja',
-                            'users.id AS user_id',
-                            'role.id AS admin_role_user'
-                
-                        ])
-                ->where('pegawai.status', '=', 'active')
-                //->ORDERBY('golongan.golongan','IS NULL')
-                ->ORDERBY('a.id_eselon','ASC');
+        
                
-        
-        //unit kerja pegawai yaitu history_jabatan(id_unit_kerja)->m_skpd(parent_id)->m_unit_kerja(unit_kerja)
+        $pegawai_list = $this->PegawaiSKPD($request->skpd_id);
 
-        $datatables = Datatables::of($dt)
-        ->addColumn('nama_pegawai', function ($x) {
-            return Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk);
-        })->addColumn('nama_unit_kerja', function ($x) {
-            return Pustaka::capital_string($x->unit_kerja);
-        })->addColumn('jabatan', function ($x) {
-            return Pustaka::capital_string($x->jabatan);
-        })->addColumn('user', function ($x) {
-           // $num_rows = User::WHERE('id_pegawai',$x->pegawai_id)->count();
-            //return $num_rows;
-            if ( $x->user_id != null ){
-                return 1 ;
-            }else{
-                return 0 ;
-            }
-        })->addColumn('role_admin', function ($x) {
-            if ( $x->admin_role_user != null ){
-                return 1 ;
-            }else{
-                return 0 ;
-            }
-        });
+        $datatables = Datatables::of(collect($pegawai_list))
+                                    ->addColumn('nama_pegawai', function ($x) {
+                                        return $x['nama'];
+                                    })->addColumn('nama_unit_kerja', function ($x) {
+                                        return $x['unit_kerja'];
+                                    })->addColumn('jabatan', function ($x) {
+                                        return $x['jabatan'];
+                                    })->addColumn('user', function ($x) {
+                                        if ( $x['user_id'] != null ){
+                                            return 1 ;
+                                        }else{
+                                            return 0 ;
+                                        }
+                                    })->addColumn('role_admin', function ($x) {
+                                        if ( $x['admin_role_user'] != null ){
+                                            return 1 ;
+                                        }else{
+                                            return 0 ;
+                                        }
+                                    });
 
-        
         if ($keyword = $request->get('search')['value']) {
-            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+             $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
-
-        return $datatables->make(true);
+        return $datatables->make(true); 
     } 
 
     public function PuskesmasPegawaiList(Request $request)
