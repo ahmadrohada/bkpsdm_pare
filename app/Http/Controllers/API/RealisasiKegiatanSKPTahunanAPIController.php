@@ -402,7 +402,7 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
 
 
                                     ) 
-                            //->groupBy('kegiatan_tahunan.id')
+                            ->groupBy('kegiatan_tahunan.id')
                             ->DISTINCT('kegiatan_tahunan.id')
                             ->WHERE('skp_tahunan_rencana_aksi.renja_id',$request->renja_id)
                             ->GET();
