@@ -50,8 +50,8 @@ class TPPReportAPIController extends Controller
         $skpd_id = $request->skpd_id;
         $tpp_data = TPPReportData::WHERE('skpd_id','=',$skpd_id)->get();
 
-       return $tpp_data;
-       /*  $no = 0 ;
+       //return $tpp_data;
+        $no = 0 ;
         foreach ($tpp_data as $x) {
 
             //ubah ID menjadi text data
@@ -91,7 +91,7 @@ class TPPReportAPIController extends Controller
             $tpp_report_data->save();
             $no++;
         }
-        return $no; */
+        return $no; 
     }
 
 
