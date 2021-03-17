@@ -687,6 +687,9 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	Route::get('puskesmas_tpp_report_data_list','API\TPPReportAPIController@PuskesmasTPPReportDataList');
 
 
+	//UPDTE DATA REPORT
+	Route::get('update_table_tpp_report_data','API\TPPReportAPIController@UpdateOldTable');
+
 	//============================= TPP REPORT DATA =====================================================//
 	
 	Route::get('tpp_report_data_detail','API\TPPReportAPIController@TPPReportDataDetail');

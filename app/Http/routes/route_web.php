@@ -386,7 +386,7 @@ Route::group(['middleware' => 'administrator'], function () {
 Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		
 	
-	//========================================================================================//
+	/* //========================================================================================//
 	//=======================   SKPD HOME / SKPD SNAPSHOTS ===================================//
 	//========================================================================================//
 	Route::get('', [
@@ -713,7 +713,7 @@ Route::group(['prefix' => 'puskesmas','middleware' => 'puskesmas'], function () 
 		'as' 			=> '',
 		'uses' 			=> 'SKPBulananController@SKPBulananDetail'
 	]);
-
+ */
 	
 
 
@@ -727,7 +727,7 @@ Route::group(['prefix' => 'puskesmas','middleware' => 'puskesmas'], function () 
 
 Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 
-	Route::get('', [
+	/* Route::get('', [
 		'as' 			=> '',
 		'uses' 			=> 'HomePersonalController@showHomePersonal'
 	]);
@@ -1014,7 +1014,7 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 	Route::get('capaian-tahunan/{capaian_tahunan_id}/cetak',[
 		'as' 			=> '',
 		'uses' 			=> 'CapaianTahunanController@PersonalCapaianTahunancetak'
-	]);
+	]); */
 	
 
 

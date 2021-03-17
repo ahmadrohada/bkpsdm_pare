@@ -43,6 +43,55 @@ class TPPReportAPIController extends Controller
  
 
 
+    //============================= UPADTE TABEL LAMA TPP REPORT DATA KE MODEL BARU ========================//
+    protected function UpdateOldTable()
+    {
+        $tpp_data = TPPReportData::get();
+
+        $no = 0 ;
+        foreach ($tpp_data as $x) {
+
+            //ubah ID menjadi text data
+            $nama_skpd       = \DB::table('demo_asn.m_skpd AS skpd')
+                                            ->WHERE('id', $x->skpd_id)
+                                            ->SELECT(['skpd.skpd AS skpd'])
+                                            ->first();
+            //return Pustaka::capital_string($nama_skpd->skpd);
+            $nama_unit_kerja       = \DB::table('demo_asn.m_unit_kerja AS unit_kerja')
+                                            ->WHERE('id', $x->unit_kerja_id)
+                                            ->SELECT(['unit_kerja.unit_kerja AS unit_kerja'])
+                                            ->first();
+            //return Pustaka::capital_string($nama_unit_kerja->unit_kerja);
+            $nama_jabatan       = \DB::table('demo_asn.m_skpd AS jabatan')
+                                        ->WHERE('id', $x->jabatan_id)
+                                        ->SELECT(['jabatan.skpd AS jabatan'])
+                                        ->first();
+            //return Pustaka::capital_string($nama_jabatan->jabatan);
+            $nama_golongan       = \DB::table('demo_asn.m_golongan AS golongan')
+                                            ->WHERE('id', $x->golongan_id)
+                                            ->SELECT(['golongan.golongan AS golongan'])
+                                            ->first();
+            //return $nama_golongan->golongan;
+            $nama_eselon       = \DB::table('demo_asn.m_eselon AS eselon')
+                                            ->WHERE('id', $x->eselon_id)
+                                            ->SELECT(['eselon.eselon AS eselon'])
+                                            ->first();
+            //return $nama_eselon->eselon;
+
+            $tpp_report_data    = TPPReportData::find($x->id);
+          
+            $tpp_report_data->skpd_id           = $nama_skpd ? Pustaka::capital_string($nama_skpd->skpd)  : '';
+            $tpp_report_data->unit_kerja_id     = $nama_unit_kerja ? Pustaka::capital_string($nama_unit_kerja->unit_kerja) : '';
+            $tpp_report_data->jabatan_id        = $nama_jabatan ? Pustaka::capital_string($nama_jabatan->jabatan) : '';
+            $tpp_report_data->golongan_id       = $nama_golongan ? $nama_golongan->golongan : '';
+            $tpp_report_data->eselon_id         = $nama_eselon ? $nama_eselon->eselon : '';
+            $tpp_report_data->save();
+            $no++;
+        }
+        return $no;
+    }
+
+
     //============================= AMBIL DATA ABSENSI SIAP PER NIP==========================================//
     protected function skor_kehadiran($month,$nip){
         
