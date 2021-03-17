@@ -51,7 +51,7 @@ class TPPReportAPIController extends Controller
         $no = 0 ;
         foreach ($tpp_data as $x) {
 
-            //ubah ID menjadi text data
+            /* //ubah ID menjadi text data
             $nama_skpd       = \DB::table('demo_asn.m_skpd AS skpd')
                                             ->WHERE('id', $x->skpd_id)
                                             ->SELECT(['skpd.skpd AS skpd'])
@@ -85,7 +85,7 @@ class TPPReportAPIController extends Controller
             $tpp_report_data->jabatan_id        = $nama_jabatan ? Pustaka::capital_string($nama_jabatan->jabatan) : '';
             $tpp_report_data->golongan_id       = $nama_golongan ? $nama_golongan->golongan : '';
             $tpp_report_data->eselon_id         = $nama_eselon ? $nama_eselon->eselon : '';
-            $tpp_report_data->save();
+            $tpp_report_data->save(); */
             $no++;
         }
         return $no;
