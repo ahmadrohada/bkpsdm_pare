@@ -83,7 +83,7 @@ class TPPReportAPIController extends Controller
 
             $tpp_report_data    = TPPReportData::find($x->id);
           
-            $tpp_report_data->skpd_id           = $nama_skpd ? Pustaka::capital_string($nama_skpd->skpd)  : '';
+            $tpp_report_data->skpd              = $nama_skpd ? Pustaka::capital_string($nama_skpd->skpd)  : '';
             $tpp_report_data->unit_kerja_id     = $nama_unit_kerja ? Pustaka::capital_string($nama_unit_kerja->unit_kerja) : '';
             $tpp_report_data->jabatan_id        = $nama_jabatan ? Pustaka::capital_string($nama_jabatan->jabatan) : '';
             $tpp_report_data->golongan_id       = $nama_golongan ? $nama_golongan->golongan : '';
