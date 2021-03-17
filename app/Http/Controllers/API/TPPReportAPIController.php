@@ -46,9 +46,11 @@ class TPPReportAPIController extends Controller
     //============================= UPADTE TABEL LAMA TPP REPORT DATA KE MODEL BARU ========================//
     protected function UpdateOldTable()
     {
-        $tpp_data = TPPReportData::WHERE('id',4147)->get();
 
-       return "tes";
+        $skpd_id = $request->skpd_id;
+        $tpp_data = TPPReportData::WHERE('skpd_id','=',$skpd_id)->get();
+
+       return $tpp_data;
        /*  $no = 0 ;
         foreach ($tpp_data as $x) {
 
