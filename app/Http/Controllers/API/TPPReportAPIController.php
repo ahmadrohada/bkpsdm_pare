@@ -44,7 +44,7 @@ class TPPReportAPIController extends Controller
 
 
     //============================= UPADTE TABEL LAMA TPP REPORT DATA KE MODEL BARU ========================//
-    protected function UpdateOldTable()
+    protected function UpdateOldTable(Request $request)
     {
 
         $skpd_id = $request->skpd_id;
