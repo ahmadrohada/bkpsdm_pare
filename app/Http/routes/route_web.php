@@ -443,10 +443,10 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'HomeSKPDController@showSKPBulanan'
 	]);
 
-	Route::get('tpp_report', [
+	/* Route::get('tpp_report', [
 		'as' 			=> 'skpd-tpp_report',
 		'uses' 			=> 'HomeSKPDController@showSKPDTPPReport'
-	]);
+	]); */
 
 	Route::get('capaian_pk', [
 		'as' 			=> '',
@@ -468,7 +468,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 
 
 	//=======================   TPP R E P O R T   ==================================//
-	Route::get('report/tpp', [
+	/* Route::get('report/tpp', [
 		'as' 			=> '',
 		'uses' 			=> 'TPPReportController@showSKPDTPPReport'
 	]);
@@ -486,7 +486,7 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 	Route::post('tpp_report/cetak', [
 		'as' 			=> '',
 		'uses' 			=> 'API\TPPReportAPIController@cetakTPPReportData'
-	]);
+	]); */
 
 	//========================================================================================//
 	//=============================       PERJANJIAN KINERJA       ===========================//

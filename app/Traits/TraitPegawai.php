@@ -15,11 +15,8 @@ trait TraitPegawai
 
 
 
-    $pegawai_list = Pegawai::WITH(['JabatanAktif'])
-                            ->WhereHas('JabatanAktif', function($q) use($skpd_id){
-                                $q->WHERE('id_skpd',$skpd_id);
-                            })
-                ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
+    $pegawai_list = Pegawai::
+                leftjoin('demo_asn.tb_history_jabatan AS a', function($join) use($skpd_id){
                     $join   ->on('a.id_pegawai','=','tb_pegawai.id');
                     $join   ->where('a.status', '=', 'active');
                 }) 
@@ -51,7 +48,7 @@ trait TraitPegawai
                 //LEFT JOIN ke roles admin SKPD
                 ->leftjoin('db_pare_2018.role_user AS role', function($join){
                             $join   ->on('role.user_id','=','users.id');
-                            $join   ->where('role.role_id','=','2');
+                            //$join   ->where('role.role_id','=','2');
                 })
                 
                 ->select([  'tb_pegawai.nama',
@@ -60,6 +57,7 @@ trait TraitPegawai
                             'tb_pegawai.gelardpn',
                             'tb_pegawai.gelarblk',
                             'eselon.eselon AS eselon',
+                            'eselon.id AS eselon_id',
                             'golongan.golongan AS golongan',
                             'jabatan.skpd AS jabatan',
                             'a.unit_kerja AS unit_kerja',
@@ -68,7 +66,8 @@ trait TraitPegawai
                 
                         ])
                 ->where('tb_pegawai.status', '=', 'active')
-                ->ORDERBY('a.id_eselon','ASC') 
+                ->ORDERBY('eselon.id_jenis_jabatan','ASC')
+                ->where('a.id_skpd', '=', $skpd_id)
                 ->get();
 
 
