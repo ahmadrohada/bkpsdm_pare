@@ -154,6 +154,22 @@
 			</div>
 
 			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-aqua capaian_bulanan" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							{{$total_capaian_bulanan}}
+						</h3>
+						<p>
+							CAPAIAN BULANAN
+						</p>
+					</div>
+					<div class="icon">
+						<i class="ion ion-stats-bars"></i>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-yellow capaian_perjanjian_kinerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -164,7 +180,7 @@
 						</p>
 					</div>
 					<div class="icon">
-						<i class="fa fa-tasks"></i>
+						<i class="ion ion-stats-bars"></i>
 					</div>
 				</div>
 			</div>
@@ -206,6 +222,10 @@ $(document).ready(function(){
 
 	$(".skp_bulanan").click(function(){
 		window.location.assign("skp_bulanan");
+    });
+
+	$(".capaian_bulanan").click(function(){
+		window.location.assign("capaian_bulanan");
     });
 
 	$(".tpp_report").click(function(){

@@ -6,6 +6,7 @@ use App\Models\Pegawai;
 use App\Models\CapaianBulanan;
 use App\Models\FormulaHitungTPP;
 use App\Models\TPPReportData;
+use App\Models\SKPTahunan;
 use App\Models\Jabatan;
 use App\Models\RencanaAksi;
 use App\Models\RealisasiRencanaAksiKaban;
@@ -13,6 +14,8 @@ use App\Models\KegiatanSKPBulanan;
 use App\Models\KegiatanSKPBulananJFT;
 use App\Models\Periode;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 use App\Helpers\Pustaka;
 use App\Traits\HitungCapaian;
@@ -20,9 +23,170 @@ use App\Traits\HitungCapaian;
 trait UpdateCapaian
 {
 
+
+     //============================= AMBIL DATA ABSENSI SIAP PER NIP==========================================//
+     protected function skor_kehadiran_personal($month,$nip){
+        
+
+        $client = new Client([
+            // Base URI is used with relative requests
+            'base_uri' => 'https://api-siap.silk.bkpsdm.karawangkab.go.id',
+        ]);
+          
+        $response = $client->request('GET', '/absensi/'.$nip.'/monthly-report', [
+            'form_params' => [
+                'access_token'  => 'MjIzNTZmZjItNTJmOS00NjA1LTk5YWEtOGQwN2VhNmIwNjVm',
+                'approvedOnly'  => true
+             ],
+            'query' =>       [
+                            'month'         => $month ,
+                        ]
+        ]);
+         
+        //get status code using $response->getStatusCode();
+        $body = $response->getBody();
+        $arr_body = json_decode($body); 
+
+        return  $arr_body->summary->percentage;
+
+    }
+
+
+    public function update_capaian($pegawai_id,$nip,$periode_id,$bulan,$formula_hitung_id,$pot_kinerja){
+
+       
+        $data = SKPTahunan::WITH(['Renja'])
+                            ->WhereHas('Renja', function($s) use($periode_id){
+                                    $s->WHERE('periode_id',$periode_id);
+                            })
+                            ->join('db_pare_2018.skp_bulanan AS skp_bulanan', function ($join) use($bulan){
+                                $join   ->on('skp_bulanan.skp_tahunan_id', '=', 'skp_tahunan.id') 
+                                        ->where('skp_bulanan.bulan', '=', $bulan) ;
+                            })
+                            ->join('db_pare_2018.capaian_bulanan AS capaian_bulanan', function ($join) {
+                                $join   ->on('capaian_bulanan.skp_bulanan_id', '=', 'skp_bulanan.id')
+                                        ->where('capaian_bulanan.status_approve', '=', 1   );
+                            })
+                            ->join('db_pare_2018.penilaian_kode_etik AS pke', function($join){
+                                $join   ->on('pke.capaian_bulanan_id','=','capaian_bulanan.id');
+                            })
+                             //JABATN FROM SKP BULANAN -> JABATAN ->SKPD
+                            ->leftjoin('demo_asn.tb_history_jabatan AS jab', function ($join) {
+                                $join->on('jab.id', '=', 'capaian_bulanan.u_jabatan_id');
+                            })
+                            ->leftjoin('demo_asn.m_skpd AS skpd', function ($join) {
+                                $join->on('skpd.id', '=', 'jab.id_jabatan');
+                            })
+                            ->where('skp_tahunan.pegawai_id',$pegawai_id)
+                            ->SELECT(   'skp_bulanan.id AS skp_bulanan_id',
+                                        'capaian_bulanan.id AS capaian_id',
+                                        'pke.id AS penilaian_kode_etik_id',
+                                        'pke.santun',
+                                        'pke.amanah',
+                                        'pke.harmonis',
+                                        'pke.adaptif',
+                                        'pke.terbuka',
+                                        'pke.efektif',
+                                        'skpd.tunjangan AS tpp_rupiah'
+                            
+                        )
+                        ->first();
+
+        //CAri formulasi perhitungan nya
+        $formula    = FormulaHitungTPP::WHERE('id', $formula_hitung_id)->first();
+        $kinerja    = $formula->kinerja;
+        $kehadiran  = $formula->kehadiran;
+
+        if( $data ) {
+            //$data = $data->first();
+            
+
+            //HITUNG CAPAIAN KINERJA
+            $data_kinerja               = $this->hitung_capaian($data->capaian_id); 
+            $jm_capaian                 = $data_kinerja['jm_capaian'];
+            $jm_kegiatan_bulanan        = $data_kinerja['jm_kegiatan_bulanan'];
+
+            $capaian_kinerja_bulanan  = Pustaka::persen2($jm_capaian,$jm_kegiatan_bulanan);
+
+
+            //HITUNG PENILAIAN KODE ETIK
+            if ( ($data->penilaian_kode_etik_id) >= 1 ){
+                $jm = ($data->santun + $data->amanah + $data->harmonis+$data->adaptif+$data->terbuka+$data->efektif);
+   
+                $penilaian_kode_etik = Pustaka::persen($jm,30) ;
+                $cap_skp = number_format( ($capaian_kinerja_bulanan * 70 / 100)+( $penilaian_kode_etik * 30 / 100 ) , 2 );
+            }else{
+                $penilaian_kode_etik = 0 ;
+                $cap_skp = 0 ;
+            } 
+
+            if ( $cap_skp >= 85 ){
+                $skor_cap = 100 ;
+            }else if ( $cap_skp < 50 ){
+                $skor_cap = 0 ;
+            }else{
+                $skor_cap	= number_format( (50 + (1.43*($cap_skp-50))),2 );
+            }
+                $capaian_id = $data->capaian_id;
+
+        }else{
+            $cap_skp  = 0 ;
+            $skor_cap = 0 ;
+            $capaian_id = null ;
+        }
+
+        //HITUNG SKOR KEHADIRAN TERBARU
+         //ambil data periode skp bulanan, jikatpp report januari, maka skp bulanan nya adalah skp bulan sebelumnya
+         $bulan_lalu = Pustaka::bulan_lalu($bulan);
+         $dt = Periode::WHERE('periode.id',$periode_id)->first();
+
+        //jika bulan januari, maka periode nya cari yang periode sebelumnya
+        if ( $bulan == 01 ){
+            //jika bln j\nya januari,maka tahuna nya pun min 1
+            $periode_tahun = Pustaka::periode_tahun($dt->label) - 1 ;
+        }else{
+            $periode_tahun = Pustaka::periode_tahun($dt->label);
+        }
+        $month          = $periode_tahun.'-'.$bulan_lalu;
+        $skor_kehadiran = $this->skor_kehadiran_personal($month,$nip); 
+        $pot_kehadiran  = 0 ;
+
+        $report_data    = new TPPReportData;
+           
+            $report_data->capaian_bulanan_id    = ($data) ? $data->capaian_id :  null;
+            $tpp_rupiah                         = ($data) ? ( ($data->tpp_rupiah != null) ? $data->tpp_rupiah :  0 ) : null ;
+            $report_data->tpp_rupiah            = "Rp. " . number_format($tpp_rupiah, '0', ',', '.');
+            $report_data->ntpp_rupiah           = $tpp_rupiah;
+            
+            $report_data->persen_kinerja        = $kinerja." %";
+            $report_data->persen_kehadiran      = $kehadiran." %";
+            
+            //KINERJA
+            $tpp_kinerja                        = ($data) ? ( ($data->tpp_rupiah != null) ? $data->tpp_rupiah * $kinerja / 100 : 0 ) : null ;
+            $report_data->tpp_kinerja           = "Rp. " . number_format($tpp_kinerja, '0', ',', '.');
+            $report_data->ntpp_kinerja          = $tpp_kinerja;
+            $report_data->capaian               = $cap_skp;
+            $report_data->skor_capaian          = Pustaka::persen_bulat($skor_cap)." %";
+            $report_data->nskor_capaian         = $skor_cap;
+            $report_data->pot_kinerja           = $pot_kinerja;
+            $report_data->jm_tpp_kinerja        = "Rp. " . number_format( (($tpp_kinerja)*($skor_cap/100) ) - ( ($pot_kinerja/100 )*$tpp_kinerja), '0', ',', '.');
+
+            //KEHADIRAN
+            $tpp_kehadiran                      = ($data) ? (($data->tpp_rupiah != null) ? $data->tpp_rupiah * $kehadiran / 100 : 0 ) : null ;
+            $report_data->tpp_kehadiran         = "Rp. " . number_format($tpp_kehadiran, '0', ',', '.');
+            $report_data->ntpp_kehadiran        = $tpp_kehadiran;
+            $report_data->skor_kehadiran        = Pustaka::persen_bulat($skor_kehadiran)." %";
+            $report_data->nskor_kehadiran       = $skor_kehadiran;
+            $report_data->pot_kehadiran         = $pot_kehadiran;
+            $report_data->jm_tpp_kehadiran      = "Rp. " . number_format( (($tpp_kehadiran)*($skor_kehadiran/100) ) - ( ($pot_kehadiran/100 )*$tpp_kehadiran), '0', ',', '.');
+
+
+            return $report_data;
+          
+    }
   
 
-    public function update_capaian($bulan,$periode_id,$pegawai_id,$skpd_id,$formula_hitung_id,$pot_kinerja,$skor_kehadiran,$pot_kehadiran)
+    public function _update_capaian($bulan,$periode_id,$pegawai_id,$skpd_id,$formula_hitung_id,$pot_kinerja,$skor_kehadiran,$pot_kehadiran)
     {
         //ambil data periode skp bulanan, jikatpp report januari, maka skp bulanan nya adalah skp bulan sebelumnya
         $bulan_lalu = Pustaka::bulan_lalu($bulan);

@@ -622,7 +622,7 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//============================== =======    CAPAIAN BULANAN ================================================//
 	//========================================================================================================//
 	Route::get('personal_capaian_bulanan_list','API\CapaianBulananAPIController@PersonalCapaianBulananList');
-	
+	Route::get('skpd_capaian_bulanan_list','API\CapaianBulananAPIController@SKPDCapaianBulananList');
 	
 	Route::get('capaian_bulanan_status_pengisian','API\CapaianBulananAPIController@CapaianBulananStatusPengisian');
 	Route::get('approval_request_capaian_bulanan_list','API\CapaianBulananAPIController@ApprovalRequestList');
@@ -638,6 +638,9 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	Route::post('terima_capaian_bulanan','API\CapaianBulananAPIController@TerimaByAtasan');
 	Route::post('simpan_capaian_bulanan','API\CapaianBulananAPIController@Store');
 	Route::post('hapus_capaian_bulanan','API\CapaianBulananAPIController@Destroy');
+
+	
+	Route::post('ubah_status_capaian_bulanan','API\CapaianBulananAPIController@UbahStatus');
 
 
 	//=====================        PENILAIAN KODE ETIK      = =====================================//

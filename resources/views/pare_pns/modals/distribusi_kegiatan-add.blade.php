@@ -22,6 +22,8 @@
 					
 					
 				</table>
+
+				<span class="text-danger">* Sub Kegiatan tanpa Indikator tidak ditampilkan pada tabel diatas</span>
 				<hr>
 
 				<button class="form-control btn-block btn-sm btn-warning" type="button" id="add_to_pejabat">SIMPAN</button>

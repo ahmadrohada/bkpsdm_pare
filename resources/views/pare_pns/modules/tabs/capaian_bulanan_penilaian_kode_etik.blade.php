@@ -51,7 +51,7 @@
 					
 	
 
-@include('pare_pns.modals.penilaian_kode_etik')
+
 
 
 <script type="text/javascript">

@@ -21,6 +21,7 @@
 					
 					
 				</table>
+				<span class="text-danger">* Sub Kegiatan tanpa Indikator tidak ditampilkan pada tabel diatas</span>
 				<hr>
 				<button class="form-control btn-block btn-sm btn-warning add_to_kegiatan_skp_tahunan" type="button" >ADD TO KEGIATAN SKP TAHUNAN</button>
 				<input type="hidden" class="skp_tahunan_id" value="{{ $skp->id }}">

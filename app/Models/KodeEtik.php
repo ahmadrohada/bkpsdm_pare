@@ -8,14 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class KodeEtik extends Model
 {
    
-    use SoftDeletes;
+    //use SoftDeletes;
     protected $table = 'penilaian_kode_etik';
-    protected $dates = ['deleted_at'];
+    //protected $dates = ['deleted_at'];
 
 
     public function CapaianBulanan()
     {
-        return $this->hasOne('App\Models\CapaianBulanan','id','capaian_bulanan_id');
+        return $this->belongsTo('App\Models\CapaianBulanan','capaian_bulanan_id');
     }
-    
 }

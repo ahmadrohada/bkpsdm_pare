@@ -213,6 +213,89 @@ class CapaianBulananAPIController extends Controller {
         
     }
 
+    public function SKPDCapaianBulananList(Request $request) 
+    {
+
+        $skpd_id = $request->skpd_id;
+        $skp = SKPBulanan::WITH(['SKPTahunan'])
+                            ->WhereHas('SKPTahunan', function($q) use($skpd_id){
+                                $q->with(['Renja'])
+                                ->WhereHas('Renja', function($r) use($skpd_id){
+                                    $r->WHERE('skpd_id', $skpd_id );
+                                }); 
+                            })
+                            ->join('db_pare_2018.capaian_bulanan', function($join){
+                                $join   ->on('capaian_bulanan.skp_bulanan_id','=','skp_bulanan.id');
+                            })
+                            ->join('demo_asn.tb_pegawai AS pegawai', function($join) {
+                                $join   ->ON('pegawai.id','=','capaian_bulanan.pegawai_id');
+                            })
+                            ->join('demo_asn.tb_history_jabatan AS jabatan', function($join){
+                                $join   ->ON('jabatan.id','=','capaian_bulanan.u_jabatan_id');
+                            })
+                            //eselon
+                            ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
+                                        $join   ->on('eselon.id','=','jabatan.id_eselon');
+                            })  
+                            ->select(
+                                'skp_bulanan.bulan AS bulan',
+                                'capaian_bulanan.id AS capaian_id',
+                                'capaian_bulanan.created_at',
+                                'capaian_bulanan.tgl_mulai AS tgl_mulai',
+                                'capaian_bulanan.tgl_selesai AS tgl_selesai',
+                                'capaian_bulanan.id AS capaian_id',
+                                'capaian_bulanan.u_nama AS nama_pegawai',
+                                'capaian_bulanan.u_jabatan_id AS u_jabatan_id',
+                                'capaian_bulanan.status_approve AS capaian_status_approve',
+                                'capaian_bulanan.send_to_atasan AS capaian_send_to_atasan',
+                                'pegawai.nip AS nip',
+                                'jabatan.jabatan AS jabatan',
+                                'eselon.eselon AS eselon'
+
+            
+                            )
+                            ->orderBy('skp_bulanan.tgl_selesai','DESC')
+                            ->get();
+     
+       
+            $datatables = Datatables::of($skp)
+            ->addColumn('periode', function ($x) {
+                return Pustaka::Tahun($x->tgl_mulai) ;
+            }) 
+            ->addColumn('bulan', function ($x) {
+                return Pustaka::bulan($x->bulan);
+            })
+            ->addColumn('nip_pegawai', function ($x) {
+                return  $x->nip;
+            })
+            ->addColumn('nama_pegawai', function ($x) {
+                return  $x->nama_pegawai;
+            })
+            ->addColumn('eselon', function ($x) {
+                return  $x->eselon;
+            })
+            ->addColumn('pelaksanaan', function ($x) {
+                $masa_penilaian = Pustaka::tgl_form($x->tgl_mulai). ' &nbsp; s.d &nbsp; ' . Pustaka::tgl_form($x->tgl_selesai);
+                return   $masa_penilaian;
+            }) 
+            ->addColumn('jabatan', function ($x) {
+                if ( $this->jabatan($x->u_jabatan_id) == null ){
+                    return "ID Jabatan : ".$x->u_jabatan_id;
+                }else{
+                    return  $this->jabatan($x->u_jabatan_id);
+                }
+            });
+            
+    
+            if ($keyword = $request->get('search')['value']) {
+                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            } 
+            
+    
+        return $datatables->make(true);
+        
+    }
+
    
 
     public function CreateConfirm(Request $request)
@@ -718,7 +801,8 @@ class CapaianBulananAPIController extends Controller {
             $capaian_skp_bulanan = number_format( ($capaian_kinerja_bulanan * 70 / 100)+( $penilaian_kode_etik * 30 / 100 ) , 2 );
         }else{
             $penilaian_kode_etik = 0 ;
-            $capaian_skp_bulanan = 0 ;
+           // $capaian_skp_bulanan = 0 ;
+           $capaian_skp_bulanan = number_format( ($capaian_kinerja_bulanan * 70 / 100)  , 2 );
         } 
         
         
@@ -1341,6 +1425,48 @@ class CapaianBulananAPIController extends Controller {
 
         return $datatables->make(true);
         
+    }
+
+    public function UbahStatus(Request $request)
+    {
+        $messages = [
+                'capaian_bulanan_id.required'   => 'Harus diisi'
+
+        ];
+
+        $validator = Validator::make(
+                        Input::all(),
+                        array(
+                            'capaian_bulanan_id'   => 'required'
+                        ),
+                        $messages
+        );
+
+        if ( $validator->fails() ){
+            //$messages = $validator->messages();
+            return response()->json(['errors'=>$validator->messages()],422);
+            
+        }
+
+        
+        $capaian    = CapaianBulanan::find(Input::get('capaian_bulanan_id'));
+        if (is_null($capaian)) {
+            return $this->sendError('ID capaian bulanan tidak ditemukan.');
+        }
+
+
+        $capaian->date_of_approve       = '0000-00-00 00:00:00';
+        $capaian->status_approve        = '0';
+        $capaian->send_to_atasan        = '0';
+
+        if ( $capaian->save()){
+            //return back();
+            return \Response::make('sukses', 200);
+            
+        }else{
+            return \Response::make('error', 500);
+        } 
+            
     }
 
     public function Destroy(Request $request)

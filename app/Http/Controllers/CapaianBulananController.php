@@ -107,10 +107,9 @@ class CapaianBulananController extends Controller {
 	{
 
         $user               = \Auth::user();
-        $capaian_bulanan    = CapaianBulanan::WHERE('id', $request->capaian_bulanan_id)->first();
+        $capaian_bulanan    = CapaianBulanan::WITH(['PenilaianKodeEtik'])->WHERE('id', $request->capaian_bulanan_id)->first();
         
 
-        
         //hanya atasan yang bisa approve
         if ( $capaian_bulanan->PejabatPenilai->id_pegawai == $user->id_pegawai ){
             if ( $capaian_bulanan->status_approve == '0' ){

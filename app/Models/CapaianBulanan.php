@@ -20,7 +20,10 @@ class CapaianBulanan extends Model
         return $this->hasOne('App\Models\SKPBulanan','id','skp_bulanan_id');
     }
 
-    
+    public function PenilaianKodeEtik()
+    {
+        return $this->hasOne('App\Models\KodeEtik','capaian_bulanan_id');
+    }
 
    
     public function PegawaiYangDinilai()

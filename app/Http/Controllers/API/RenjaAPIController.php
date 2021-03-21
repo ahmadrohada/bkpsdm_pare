@@ -68,9 +68,9 @@ class RenjaAPIController extends Controller {
                 $kaban_jabatan_id   = $pegawai->JabatanAktif->id;
                 $kaban_nip          = $pegawai->nip;
                 $kaban_nama         = Pustaka::nama_pegawai($pegawai->gelardpn , $pegawai->nama , $pegawai->gelarblk);
-                $kaban_pangkat      = $pegawai->JabatanAktif->golongan->pangkat;
-                $kaban_golongan     = $pegawai->JabatanAktif->golongan->pangkat;
-                $kaban_eselon       = $pegawai->JabatanAktif->eselon->eselon;
+                $kaban_pangkat      = ($pegawai->JabatanAktif->golongan)?$pegawai->JabatanAktif->golongan->pangkat : "-";
+                $kaban_golongan     = ($pegawai->JabatanAktif->golongan)?$pegawai->JabatanAktif->golongan->pangkat : "-";
+                $kaban_eselon       = ($pegawai->JabatanAktif->eselon) ? $pegawai->JabatanAktif->eselon->eselon : "-";
                 $kaban_jabatan      = Pustaka::capital_string($pegawai->JabatanAktif->Jabatan->skpd);
            
            

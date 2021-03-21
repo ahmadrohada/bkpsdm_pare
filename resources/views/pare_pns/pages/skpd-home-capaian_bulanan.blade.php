@@ -9,7 +9,7 @@
 	 <div class="content-wrapper">
 	    <section class="content-header">
 			<h1>
-				SKP Bulanan SKPD
+				Capaian Bulanan SKPD
 			</h1>
       </section>
 	    <section class="content">

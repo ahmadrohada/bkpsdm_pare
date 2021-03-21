@@ -70,7 +70,7 @@
 
 					</table>
 				</div>
-				<div class="row data_baru hidden"  style="margin-top:-10px;">
+				<div class="row data_baru_tpp hidden"  style="margin-top:-10px;">
 					<hr>
 					<div class="col-md-12 form-group text-center" style="margin-top:-10px;">
 						<strong>DATA BARU</strong>
@@ -82,7 +82,7 @@
 						</p>
 					</div>
 				</div>
-				<div class="row data_baru hidden" style="padding-left:15px; padding-right:15px;">
+				<div class="row data_baru_kinerja hidden" style="padding-left:15px; padding-right:15px;">
 					<strong>KINERJA</strong>
 					<table class="table table table-striped table-condensed table-hover no-footer dataTable">
 						<thead>
@@ -104,7 +104,7 @@
 
 					</table>
 				</div>
-				<div class="row data_baru hidden" style="margin-top:10px; padding-left:15px; padding-right:15px;">
+				<div class="row data_baru_kehadiran hidden" style="margin-top:10px; padding-left:15px; padding-right:15px;">
 					<strong>KEHADIRAN</strong>
 					<table class="table table table-striped table-condensed table-hover no-footer dataTable">
 						<thead>
@@ -155,9 +155,12 @@
 
 <script type="text/javascript">
 
+	
+
 	$('.modal-tpp_report_data').on('hidden.bs.modal', function(){
 	
-		$('.sidebar-mini').attr("style", "padding-right:0px;"); 
+		$('.sidebar-mini').attr("style", "padding-right:0px;");
+		$('.data_baru_kehadiran,.data_baru_kinerja,.data_baru_tpp').hidden(); 
 
 	});
 
@@ -181,14 +184,14 @@
 						timer:1500
 					}).then(function () {
 						$('.modal-tpp_report_data').modal('hide');
-						$('#tpp_report_table').DataTable().ajax.reload(null,false);
+						$('#tpp_report_data_table').DataTable().ajax.reload(null,false);
 						
 					},
 						
 						function (dismiss) {
 							if (dismiss === 'timer') {
 								$('.modal-tpp_report_data').modal('hide');
-								$('#tpp_report_table').DataTable().ajax.reload(null,false);
+								$('#tpp_report_data_table').DataTable().ajax.reload(null,false);
 							}
 						}
 				)	

@@ -365,9 +365,9 @@ class PegawaiAPIController extends Controller {
     public function SKPDPegawaiList(Request $request) 
     {
         
-               
+                
         $pegawai_list = $this->PegawaiSKPD($request->skpd_id);
-
+       
         $datatables = Datatables::of(collect($pegawai_list))
                                     ->addColumn('nama_pegawai', function ($x) {
                                         return $x['nama'];
@@ -392,7 +392,7 @@ class PegawaiAPIController extends Controller {
         if ($keyword = $request->get('search')['value']) {
              $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
-        return $datatables->make(true); 
+        return $datatables->make(true);
     } 
 
     public function PuskesmasPegawaiList(Request $request)

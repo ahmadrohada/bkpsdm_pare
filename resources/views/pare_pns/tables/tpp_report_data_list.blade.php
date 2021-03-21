@@ -17,11 +17,19 @@
 </style>
 
 <div class="box-body table-responsive">
-	<table id="tpp_report_table" class="table table-striped table-hover">
+	<div class="toolbar_2" style="padding:0 0 20px 0;">
+		Tampilkan Kolom : 	<a class="toggle-vis btn btn-xs btn-info" data-column="nip_pegawai">NIP</a> 
+							<a class="toggle-vis btn btn-xs btn-info" data-column="gol">Golongan</a>
+							<a class="toggle-vis btn btn-xs btn-info" data-column="jabatan">Jabatan</a>
+							<a class="toggle-vis btn btn-xs btn-info" data-column="eselon">Eselon</a>
+	
+	</div>
+
+	<table id="tpp_report_data_table" class="table table-striped table-hover">
 		<thead>
 			<tr>
 				<th rowspan="2" class="no-sort" width="23px;">NO</th>
-				<th rowspan="2" width="200px;">NAMA</th>
+				<th rowspan="2" width="250px;">NAMA</th>
 				<th rowspan="2" width="145px;">NIP</th>
 				<th rowspan="2" width="60px;">GOL</th>
 				<th rowspan="2" width="250px;">JABATAN</th>
@@ -53,13 +61,13 @@
 
 
 <script type="text/javascript">
-	$('#tpp_report_table').DataTable({
+	$('#tpp_report_data_table').DataTable({
 		destroy: true,
 	});
 
 
 	function load_table_tpp() {
-		$('#tpp_report_table').DataTable({
+		var tpp_report_data_table = $('#tpp_report_data_table').DataTable({
 						destroy			: true,
 						processing      : true,
 						serverSide      : true,
@@ -74,6 +82,7 @@
 						columnDefs	: [	{ className: "text-center",targets: [0, 2,3,5,8,9,10,13,14,17]},
 										{className: "text-right",targets: [6,7,11,12,15,16]},
 										{ className: "dt-nowrap", "targets": [6,7,11,12,15,16 ] },
+										{ "visible": false, "targets": [2,3,4,5]},
 										@if ( request()->segment(5) == 'edit' )
 											{ "visible": true, "targets": [17]}
 										@else
@@ -231,8 +240,32 @@
 						]
 
 		});
-	};
+	
 
+		$('a.toggle-vis').on( 'click', function (e) {
+			e.preventDefault();
+	
+			
+			if ( $(this).attr('data-column') == 'nip_pegawai'){
+				var data = [2];
+			}else if ( $(this).attr('data-column') == 'gol'){
+				var data = [3];
+			}else if ( $(this).attr('data-column') == 'jabatan'){
+				var data = [4];
+			}else if ( $(this).attr('data-column') == 'eselon'){
+				var data = [5];
+			}
+			
+
+			data.forEach(myFunction);
+
+			function myFunction(item, index) {
+				var column = tpp_report_data_table.column(item);
+				column.visible( ! column.visible() );
+			} 
+    	} );
+
+	};
 
 
 	$(document).on('click','.ubah_tpp_report_data_id',function(e){
@@ -247,7 +280,7 @@
 			success	: function(data) {
 
 					
-					$('.nama_pegawai').html(data['nama_pegawai']); 
+					$('.nama_pegawai').html(data['nama_pegawai']);  
 					$('.jabatan').html(data['jabatan']+' [ '+data['eselon']+' ]'); 
 					$('.tpp_rupiah').html(data['tpp_rupiah']); 
 
@@ -293,10 +326,26 @@
 					$('.new_pot_kehadiran').val(data['data_baru'].pot_kehadiran); 
 
 
-					if ( ( ( data['tpp_rupiah'] != data['data_baru'].tpp_rupiah )|( data['capaian'] != data['data_baru'].capaian ) ) && ( data['data_baru'].capaian_bulanan_id != null ) ){
-						$('.data_baru').removeClass('hidden');
+					if ( ( ( data['tpp_rupiah'] != data['data_baru'].tpp_rupiah )|( data['capaian'] != data['data_baru'].capaian ) | ( data['skor_kehadiran'] != data['data_baru'].skor_kehadiran ) ) && ( data['data_baru'].capaian_bulanan_id != null ) ){
+						$('.data_baru_tpp').removeClass('hidden');
+						$('#simpan').removeClass('hidden');
 					}else{
-						$('.data_baru').addClass('hidden');
+						$('.data_baru_tpp').addClass('hidden');
+						$('#simpan').addClass('hidden');
+						
+					}
+
+					if ( ( ( data['tpp_rupiah'] != data['data_baru'].tpp_rupiah ) | ( data['capaian'] != data['data_baru'].capaian ) ) && ( data['data_baru'].capaian_bulanan_id != null ) ){
+						$('.data_baru_kinerja').removeClass('hidden');
+					}else{
+						$('.data_baru_kinerja').addClass('hidden');
+					}
+
+					if ( ( ( data['tpp_rupiah'] != data['data_baru'].tpp_rupiah ) | ( data['skor_kehadiran'] != data['data_baru'].skor_kehadiran ) ) && ( data['data_baru'].capaian_bulanan_id != null ) ){
+						$('.data_baru_kehadiran').removeClass('hidden');
+					}else{
+						$('.data_baru_kehadiran').addClass('hidden');
+						
 					}
 					
 					

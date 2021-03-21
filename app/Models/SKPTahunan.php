@@ -21,6 +21,11 @@ class SKPTahunan extends Model
     {
         return $this->hasMany('App\Models\KegiatanSKPTahunan','skp_tahunan_id')->select('id');
     }
+
+    public function SKPBulanan()
+    {
+        return $this->hasMany('App\Models\SKPBulanan','skp_tahunan_id')->select('id');
+    }
     
     public function PegawaiYangDinilai()
     {

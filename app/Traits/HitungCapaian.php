@@ -153,7 +153,11 @@ trait HitungCapaian
         $xdata = RencanaAksi::
             WITH(['IndikatorKegiatanSKPTahunan'])
                 ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
-            }) 
+                    $q->with(['KegiatanSKPTahunan'])
+                        ->WhereHas('KegiatanSKPTahunan', function($r){
+                        
+                        });
+            })  
             ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
                 $join   ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan.id');
             })
@@ -213,7 +217,11 @@ trait HitungCapaian
         $xdata = RencanaAksi::
                                 WITH(['IndikatorKegiatanSKPTahunan'])
                                     ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
-                                }) 
+                                        $q->with(['KegiatanSKPTahunan'])
+                                            ->WhereHas('KegiatanSKPTahunan', function($r){
+                                            
+                                            });
+                                })  
                                 ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan', function($join){
                                     $join   ->on('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan.id');
                                 })

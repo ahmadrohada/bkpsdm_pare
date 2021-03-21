@@ -57,12 +57,11 @@
 					</table>
 					
 					<hr>
-					<div class="col-xs-12 col-lg-2 no-padding" style="margin-top:-15px;">
+					<div class="col-xs-12 col-lg-3 no-padding" style="margin-top:-15px;">
 						@if ( $capaian->status_approve == 0 )
 							<button class="btn btn-sm btn-danger tolak_capaian_bulanan">TOLAK</button>
-							<button id="btn_terima" class="btn btn-sm btn-primary  terima_capaian_bulanan">TERIMA</button>
+							<button id="btn_terima" class="btn btn-sm btn-primary  btn_terima terima_capaian_bulanan"><span class="span_terima">TERIMA</span></button>
 						@endif
-					
 					</div>
 					
 				</div>
@@ -140,6 +139,9 @@
 			
 	    </section>
 	</div>
+
+@include('pare_pns.modals.penilaian_kode_etik')
+
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -212,74 +214,76 @@ $(document).ready(function() {
 
 	
 	$(document).on('click','.terima_capaian_bulanan',function(e){
-		Swal.fire({
-				title: "Terima",
-				text: "Anda akan menerima dan menyetujui Laporan Capaian Bulanan",
-				type: "question",
-				showCancelButton: true,
-				cancelButtonText: "Batal",
-				confirmButtonText: "Terima",
-				cancelButtonColor: "#7a7a7a",
-				closeOnConfirm: false,
-				showLoaderOnConfirm	: true,
-		}).then ((result) => {
-			if (result.value){
-				$.ajax({
-					url		: '{{ url("api/terima_capaian_bulanan") }}',
-					type	: 'POST',
-					data    : { capaian_bulanan_id:{!! $capaian->id !!}
-							   },
-					cache   : false,
-					success:function(data){
-						Swal.fire({
-									title: "",
-									text: "Sukses",
-									type: "success",
-									width: "200px",
-									showConfirmButton: false,
-									allowOutsideClick : false,
-									timer: 900
-									}).then(function () {
-										location.reload();
+		
+			Swal.fire({
+					title: "Terima",
+					text: "Anda akan menerima dan menyetujui Laporan Capaian Bulanan",
+					type: "question",
+					showCancelButton: true,
+					cancelButtonText: "Batal",
+					confirmButtonText: "Terima",
+					cancelButtonColor: "#7a7a7a",
+					closeOnConfirm: false,
+					showLoaderOnConfirm	: true,
+			}).then ((result) => {
+				if (result.value){
+					$.ajax({
+						url		: '{{ url("api/terima_capaian_bulanan") }}',
+						type	: 'POST',
+						data    : { capaian_bulanan_id:{!! $capaian->id !!}
+								},
+						cache   : false,
+						success:function(data){
+							Swal.fire({
+										title: "",
+										text: "Sukses",
+										type: "success",
+										width: "200px",
+										showConfirmButton: false,
+										allowOutsideClick : false,
+										timer: 900
+										}).then(function () {
+											location.reload();
 
-									},
-									function (dismiss) {
-										if (dismiss === 'timer') {
-											
-											
+										},
+										function (dismiss) {
+											if (dismiss === 'timer') {
+												
+												
+											}
 										}
-									}
-								)
+									)
+									
 								
-							
-					},
-					error: function(e) {
-						Swal.fire({
-									title: "Gagal",
-									text: "",
-									type: "warning"
-								}).then (function(){
-										
-								});
+						},
+						error: function(e) {
+							Swal.fire({
+										title: "Gagal",
+										text: "",
+										type: "warning"
+									}).then (function(){
+											
+									});
 
-								/* const Toast = Swal.mixin({
-								toast: true,
-								position: 'top-end',
-								showConfirmButton: false,
-								timer: 3000
-								});
+									/* const Toast = Swal.mixin({
+									toast: true,
+									position: 'top-end',
+									showConfirmButton: false,
+									timer: 3000
+									});
 
-								Toast.fire({
-								type: 'success',
-								title: 'Signed in successfully'
-								}) */
-							}
-					});	
-				
-
+									Toast.fire({
+									type: 'success',
+									title: 'Signed in successfully'
+									}) */
+								}
+						});	
 					
-			}
-		});
+
+						
+				}
+			});
+
 	});
 
 	
@@ -290,6 +294,8 @@ $(document).ready(function() {
 		//$('html, body').animate({scrollTop:0}, 0);
 		
 	}); 
+
+	sumary_show();
 
 	// store the currently selected tab in the hash value
 	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
@@ -304,6 +310,7 @@ $(document).ready(function() {
 			LoadKegiatanBulananTable(); 
 		}else if ( id == 'sumary'){
 			sumary_show();
+			penilaian_kode_etik_show();
 		}else if ( id == 'uraian_tugas_tambahan_tab'){
 			LoadUraianTugasTambahanTable();
 		}else if ( id == 'penilaian_kode_etik_tab'){

@@ -35,16 +35,16 @@
 <script type="text/javascript">
 
 		$('#pegawai_table').DataTable({
-			destroy			: true,
+				destroy			: true,
 				processing      : true,
 				serverSide      : true,
 				searching      	: true,
 				paging          : true,
 				autoWidth		: false,
 				bInfo			: false,
-				bSort			: true,
+				bSort			: false,
 				lengthChange	: false,
-				order 			: [ 3 , 'desc' ],
+				//order 			: [ 0 , 'asc' ],
 				lengthMenu		: [10,25,50],
 				columnDefs		: [
 									{ 	className: "text-center", targets: [ 0,1,3,5,7,8] }/* ,
@@ -67,7 +67,7 @@
 								{ data: "nip" ,  name:"pegawai.nip", orderable: true, searchable: false},
 								{ data: "nama_pegawai", name:"pegawai.nama", orderable: true, searchable: true},
 								{ data: "golongan" ,  name:"golongan.golongan", orderable: true, searchable: true},
-								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true},
+								{ data: "jabatan" ,  name:"a.jabatan", orderable: true, searchable: true},
 								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true},
 								{ data: "nama_unit_kerja" , name:"unit_kerja.unit_kerja", orderable: true, searchable: false},
 								{ data: "action" , orderable: false,searchable:false,width:"50px",

@@ -34,6 +34,8 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades;
 use Illuminate\Http\Request;
 
+use App\Traits\TraitPegawai;
+
 
 use Datatables;
 use Validator;
@@ -43,7 +45,7 @@ Use Alert;
 
 class HomeAdminController extends Controller {
     
-    
+    use TraitPegawai;
 
     //=======================================================================================//
     protected function nama_skpd($skpd_id){
@@ -92,11 +94,15 @@ class HomeAdminController extends Controller {
 
     protected function total_skp_tahunan(){
         
-        return 	SKPTahunan::count();
+        return 	SKPTahunan::count(); 
     } 
 
     protected function total_pegawai_skpd( $skpd_id){
-        
+
+
+        return 	count($this->PegawaiSKPD($skpd_id)); 
+
+
         return 	Pegawai::rightjoin('demo_asn.tb_history_jabatan AS a', function($join){
                                             $join   ->on('a.id_pegawai','=','tb_pegawai.id');
                                             $join   ->where('a.status','=', 'active');
@@ -594,7 +600,7 @@ class HomeAdminController extends Controller {
         $skpd_id     = $request->skpd_id;
        
 
-        return view('pare_pns.pages.administrator-homeskpd-struktur_organisasi', [
+        return view('pare_pns.pages.administrator-skpd-struktur_organisasi', [
                //'users' 		         => $users,
                'skpd_id'                => $skpd_id,
                'nama_skpd'     	        => $this->nama_skpd($skpd_id),

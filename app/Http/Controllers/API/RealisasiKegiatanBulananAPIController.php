@@ -331,6 +331,10 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         $dt = RencanaAksi::
                     WITH(['IndikatorKegiatanSKPTahunan'])
                         ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                            $q->with(['KegiatanSKPTahunan'])
+                                ->WhereHas('KegiatanSKPTahunan', function($r){
+                                
+                                });
                     }) 
                     ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$pelaksana_id )
                     ->WHERE('skp_tahunan_rencana_aksi.waktu_pelaksanaan',$skp_bln->bulan)
@@ -450,6 +454,10 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         $dt = RencanaAksi:: 
                     WITH(['IndikatorKegiatanSKPTahunan'])
                         ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+                            $q->with(['KegiatanSKPTahunan'])
+                                ->WhereHas('KegiatanSKPTahunan', function($r){
+                                
+                                });
                     }) 
                     ->WHEREIN('skp_tahunan_rencana_aksi.jabatan_id',$child )
                     //->WHEREIN('skp_tahunan_rencana_aksi.kegiatan_tahunan_id',$keg_tahunan )
@@ -513,7 +521,9 @@ class RealisasiKegiatanBulananAPIController extends Controller {
         ->addColumn('kegiatan_tahunan_label', function ($x) {
 
             if ( $x->IndikatorKegiatanSKPTahunan ){
-                return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label; 
+                $label = ( $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan ) ? $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label : " - ";
+                //return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label; 
+                return $label; 
             }else{
                 return "-"; 
             }

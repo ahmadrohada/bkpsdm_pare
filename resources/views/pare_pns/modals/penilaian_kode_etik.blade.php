@@ -93,6 +93,8 @@
 
 	$('.modal-penilaian_kode_etik').on('hidden.bs.modal', function(){
 		$('.sidebar-mini').attr("style", "padding-right:0px;");
+
+		sumary_show();
 	});
 
 	

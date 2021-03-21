@@ -967,6 +967,13 @@ class Pustaka {
 		switch($skpd)
 			{
 				case "BADAN KEPEGAWAIAN DAN PENGEMBANGAN SUMBER DAYA MANUSIA" : return "BKPSDM";
+				case "SEKRETARIAT DAERAH" : return "SEKDA";
+				case "SATUAN POLISI PAMONG PRAJA" : return "SATPOL PP";
+				case "DINAS KESEHATAN" : return "DINKES";
+				case "DINAS PEKERJAAN UMUM DAN PENATAAN RUANG " : return "DINAS PUPR";
+
+
+				
 				break;
 			
 				default  : $skpd;
@@ -976,6 +983,4 @@ class Pustaka {
 	}
 
 	
-
-
 }

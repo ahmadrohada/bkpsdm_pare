@@ -12,9 +12,10 @@
 	<div class="row" style="padding:5px 30px; min-height:200px;">
 		<div class="box-body table-responsive">
 			<span data-toggle="tooltip" title="Create Report"><a class="btn btn-info btn-md create_tpp_report "><i class="fa fa-plus"></i> Create TPP Report</a></span>
-			<div class="toolbar">
-				
-			</div>
+	
+			
+		
+
 			<table id="skpd_tpp_report_list_table" class="table table-striped table-hover table-condensed">
 				<thead>
 					<tr class="success">
@@ -24,7 +25,7 @@
 						<th>JUMLAH DATA</th>
 						<th>CREATED AT</th> 
 						<th>STATUS</th>
-						<th><i class="fa fa-cog"></i></th>
+						<th><i class="fa fa-cog"></i></th> 
 					</tr>
 				</thead>
 			</table>

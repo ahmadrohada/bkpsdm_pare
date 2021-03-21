@@ -19,8 +19,8 @@ class StrukturOrganisasiAPIController extends Controller {
 		$skpd_id     = $request->skpd_id;
         //PETA JABATAN yaitu tabel Mm_skpd
 		$peta_jabatan 		= PetaJabatan::join('demo_asn.tb_history_jabatan AS a', function($join){
-										$join   ->on('a.id_jabatan','=','m_skpd.id');
-										$join   ->WHERE('a.status','=','active');
+										$join   ->on('a.id_jabatan','=','m_skpd.id')
+												->WHERE('a.status','=','active');
 											
 									})
 									->leftjoin('demo_asn.tb_pegawai AS pegawai', 'a.id_pegawai','=','pegawai.id')
@@ -42,7 +42,7 @@ class StrukturOrganisasiAPIController extends Controller {
 										'eselon.eselon',
 										'c.jenis_jabatan'
 									)
-									//->where('pegawai.status', '=', 'active')
+									
 									->where('m_skpd.id_skpd','=',$skpd_id)
 									->where('m_skpd.id','!=',$skpd_id)
 									//->limit(10)

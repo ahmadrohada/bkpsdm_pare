@@ -36,60 +36,30 @@ class SKPDAPIController extends Controller {
 
     public function administrator_skpd_list(Request $request)
     {
-        //\DB::statement(\DB::raw('set @rownum='.$request->get('start')));
-        \DB::statement(\DB::raw('set @rownum=0'));
-      
+       
         $dt = \DB::table('demo_asn.m_skpd AS skpd')
 
                 ->whereRaw('id = id_skpd AND id != 1 AND id != 6 AND id != 8 AND id != 10 AND id != 12 ')
                 ->select([  'skpd.id_skpd AS skpd_id',
-                            'skpd.id_unit_kerja AS unit_kerja_id',
-                            'skpd.skpd AS skpd',
-                            \DB::raw('@rownum  := @rownum  + 1 AS rownum')
+                            'skpd.skpd AS skpd'
                 ]);
         
 
 
-
         $datatables = Datatables::of($dt)
-        ->addColumn('jm_unit_kerja', function ($x) {
-            
-            $dx = SKPD::WHERE('parent_id',$x->skpd_id)
-                            ->SELECT('id AS parent_id')
-                            ->first();
-
-            if ( $dx != null ){
-                $jm_uk = SKPD::WHERE('parent_id',$dx->parent_id)->count();
-                return  $jm_uk;
-            }else{
-                return  0;
-            }
-           
-        
-        })->addColumn('jm_pegawai', function ($x) {
-            
-         
-            $jm_p = HistoryJabatan::WHERE('status','active')
-                            ->WHERE('id_skpd',$x->skpd_id)
-                            ->count();
-            
-
-
-
-            return  $jm_p;
-        
-        })->addColumn('skpd', function ($x) {
-            
-            return Pustaka::capital_string($x->skpd);
-        
-        });
+                    ->addColumn('skpd', function ($x) {
+                        return Pustaka::capital_string($x->skpd);
+                    })
+                    ->addColumn('singkatan', function ($x) {
+                        return Pustaka::singkatan($x->skpd);
+                    });
 
         
         if ($keyword = $request->get('search')['value']) {
             $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         } 
 
-        return $datatables->make(true);
+        return $datatables->make(true); 
         
     }
 

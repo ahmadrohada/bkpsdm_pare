@@ -44,6 +44,9 @@
 		status_pengisian();	
 	}
 
+	$('.modal-penilaian_kode_etik').on('hidden.bs.modal', function(){
+		sumary_show();
+	});
 	
 
 	function status_pengisian(){
@@ -65,11 +68,25 @@
 
 					$('.st_penilaian_kode_etik').html(data['penilaian_kode_etik']);
 					$('.st_capaian_skp_bulanan').html(data['capaian_skp_bulanan']);
+					
+
+					if (data['penilaian_kode_etik_id'] != null ){
+						$('.btn_terima').addClass('terima_capaian_bulanan');
+						$('.btn_terima').removeClass('penilaian_kode_etik');
+
+						//$('.span_terima').html('TERIMA');
+						
+					}else{
+						$('.btn_terima').removeClass('terima_capaian_bulanan');
+						$('.btn_terima').addClass('penilaian_kode_etik');
+						//$('.span_terima').html('PENILAIAN KODE ETIK');
+					}
+
 
 					if ( data['alasan_penolakan'] != ""){
 						$('.st_alasan_penolakan_div').removeClass('hidden');
 					} 
-					
+
 					
 				},
 				error: function(data){

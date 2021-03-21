@@ -1847,12 +1847,16 @@ class SubKegiatanAPIController extends Controller {
     {
         
         
-        $dt = SubKegiatan::WHERE('renja_id','=',$request->renja_id)
+        $dt = SubKegiatan::
+                rightjoin('renja_indikator_subkegiatan AS indikator', function($join){
+                    $join   ->on('renja_subkegiatan.id','=','indikator.subkegiatan_id');
+                })
+                ->WHERE('renja_id','=',$request->renja_id)
                 ->WHERE('jabatan_id','0')
                 ->select([   
-                    'id AS subkegiatan_id',
-                    'label',
-                    'cost'
+                    'renja_subkegiatan.id AS subkegiatan_id',
+                    'renja_subkegiatan.label',
+                    'renja_subkegiatan.cost'
                     
                     ])
                 ->get();

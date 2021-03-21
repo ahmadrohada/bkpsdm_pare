@@ -57,7 +57,9 @@
 						case '1': // eselon 2
 								break;
 						case '2': // eselon 3
-								//echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
+								if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
+									echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
+								}
 								break;
 						case '3': // eselon 4
 								echo '<li class="rencana_aksi_tab"><a href="#rencana_aksi_tab" data-toggle="tab">Rencana Aksi</a></li>';
@@ -125,7 +127,8 @@
 								case '2': //
 		
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan, json_decode($jabatan_irban) )){ //JIKA IRBAN
-											?>@include('pare_pns.modules.tabs.kegiatan_tahunan_3_edit')<?php
+											/* ?>@include('pare_pns.modules.tabs.kegiatan_tahunan_3_edit')<?php */
+											?>@include('pare_pns.tables.skp_tahunan-kegiatan_skp_tahunan_3')<?php
 										}else{
 											?>@include('pare_pns.tables.skp_tahunan-kegiatan_skp_tahunan_2')<?php
 										}
@@ -158,7 +161,7 @@
 								break;
 								case '2': //eselon 3
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_irban)  )){ //JIKA IRBAN
-											?>@include('pare_pns.tables.skp_tahunan-rencana_aksi_time_table_3')<?php
+											?>@include('pare_pns.modules.tabs.skp_tahunan_rencana_aksi_3')<?php
 										}else{
 											?>@include('pare_pns.tables.skp_tahunan-rencana_aksi_time_table_2')<?php
 										}
