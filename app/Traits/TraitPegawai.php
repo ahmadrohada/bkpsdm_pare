@@ -69,6 +69,7 @@ trait TraitPegawai
                                     
                                     
                                     ])
+                            ->WHERE('tb_pegawai.status','=','active')
                             ->orderBy('a.id_eselon','ASC')
                             ->get();
                           
