@@ -10,7 +10,11 @@
         </div>
 	</div>
 	<div class="row" style="padding:5px 30px; min-height:200px;">
-		<div class="box-body table-responsive">
+		
+		<span  data-toggle="tooltip" title="Create SKP Tahunan"><a class="btn btn-info btn-sm create_skp_tahunan"><i class="fa fa-plus" ></i> SKP Tahunan</a></span>
+		
+		<div class="box-body table-responsive ">
+		
 			<table id="rkpd_table" class="table table-striped table-hover table-condensed">
 				<thead>
 					<tr class="success">
@@ -30,7 +34,7 @@
 	</div>
 </div>
 
-
+@include('pare_pns.modals.skpd_create_skp_tahunan')
 
 <script type="text/javascript">
 
@@ -85,9 +89,17 @@
 	$(document).on('click','.lihat_skp_tahunan',function(e){
 		var skp_tahunan_id = $(this).data('id') ;
 		//alert(skp_tahunan_id);
-
-
-
 		window.location.assign("skp_tahunan/"+skp_tahunan_id);
 	});
+
+
+	$(document).on('click','.create_skp_tahunan',function(e){
+		//var skpd_id = {{ $skpd_id }};
+		$('.modal-skpd_create_skp_tahunan').modal('show');
+
+
+
+	});
+
+
 </script>

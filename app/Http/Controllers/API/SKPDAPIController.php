@@ -46,7 +46,7 @@ class SKPDAPIController extends Controller {
         
 
 
-        $datatables = Datatables::of($dt)
+        $datatables = Datatables::of($dt) 
                     ->addColumn('skpd', function ($x) {
                         return Pustaka::capital_string($x->skpd);
                     })

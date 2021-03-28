@@ -137,7 +137,8 @@
 								case '3': 
 
 										if (in_array( $skp->PegawaiYangDinilai->id_jabatan,  json_decode($jabatan_lurah))){ //JIKA LURAH
-											?>@include('pare_pns.modules.tabs.kegiatan_tahunan_2_detail')<?php
+											/* ?>@include('pare_pns.modules.tabs.kegiatan_tahunan_2_detail')<?php */
+											?>@include('pare_pns.tables.skp_tahunan-kegiatan_skp_tahunan_2')<?php
 										}else{
 											?>@include('pare_pns.tables.skp_tahunan-kegiatan_skp_tahunan_3')<?php
 										}

@@ -119,7 +119,7 @@ class UserAPIController extends Controller {
                                 'skpd.skpd AS skpd'
                                     
                             ])
-                    
+                    ->WHERE('tb_pegawai.status','active')
                     ->ORDERBY('golongan.golongan','IS NULL');
         
 

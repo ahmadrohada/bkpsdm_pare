@@ -100,12 +100,15 @@ class UserController extends Controller {
         return 	\DB::table('db_pare_2018.users AS users')
                                 ->leftjoin('demo_asn.tb_pegawai AS pegawai', function($join){
                                     $join   ->on('users.id_pegawai','=','pegawai.id');
-                                    $join   ->where('pegawai.status','=', 'active');
+                                    
                                 })
                                 ->leftjoin('demo_asn.tb_history_jabatan AS a', function($join){
                                     $join   ->on('a.id_pegawai','=','pegawai.id');
                                     $join   ->where('a.status','=', 'active');
-                                })->count();
+                                })
+                                ->ORDERBY('golongan.golongan','IS NULL')
+                                ->where('pegawai.status','=', 'active')
+                                ->count();
     }
     
 
