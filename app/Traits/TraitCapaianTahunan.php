@@ -793,28 +793,29 @@ trait TraitCapaianTahunan
     public function Eselon4($capaian_id){
         
 
-        //kegiatan eselon 3
+        //kegiatan eselon 4
         $data       = CapaianTahunan::WHERE('id',$capaian_id)->first();
         $renja_id   = $data->SKPTahunan->renja_id;    
         $jabatan_id = $data->PegawaiYangDinilai->id_jabatan;
+        $skp_tahunan_id = $data->SKPTahunan->id;
 
 
 
         $kegiatan = Kegiatan::WHERE('renja_kegiatan.renja_id', $renja_id )
                             ->WHERE('renja_kegiatan.jabatan_id','=',  $jabatan_id  )
                             //LEFT JOIN ke Kegiatan SKP TAHUNAN
-                            ->JOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                            ->JOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) use($skp_tahunan_id){
                                 $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
+                                $join   ->WHERE('kegiatan_tahunan.skp_tahunan_id','=',$skp_tahunan_id);
                                 
                             })
-                            //LEFT JOIN ke INDIKATOR KEGIATAN
-                            ->leftjoin('db_pare_2018.renja_indikator_kegiatan AS renja_indikator_kegiatan', function($join){
-                                $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
-                                
+                            ->leftjoin('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator', function($join){
+                                $join   ->on('indikator.kegiatan_id','=','kegiatan_tahunan.id') ;
+                                $join   ->whereNull('indikator.deleted_at');
                             })
                              //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
                              ->leftjoin('db_pare_2018.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
-                                $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
+                                $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','indikator.id');
                                 $join   ->WHERE('realisasi_indikator.capaian_id','=',  $capaian_id );
                                 
                             })
@@ -833,10 +834,10 @@ trait TraitCapaianTahunan
                                         'renja_kegiatan.jabatan_id',
                                         'renja_kegiatan.label AS kegiatan_label',
 
-                                        'renja_indikator_kegiatan.id AS indikator_kegiatan_id',
-                                        'renja_indikator_kegiatan.label AS indikator_kegiatan_label',
-                                        'renja_indikator_kegiatan.target AS indikator_kegiatan_target',
-                                        'renja_indikator_kegiatan.satuan AS indikator_kegiatan_satuan',
+                                        'indikator.id AS indikator_kegiatan_id',
+                                        'indikator.label AS indikator_kegiatan_label',
+                                        'indikator.target AS indikator_kegiatan_target',
+                                        'indikator.satuan AS indikator_kegiatan_satuan',
 
                                         'kegiatan_tahunan.id AS kegiatan_tahunan_id',
                                         'kegiatan_tahunan.label AS kegiatan_tahunan_label',
