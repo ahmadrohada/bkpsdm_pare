@@ -25,6 +25,7 @@ use App\Models\SKPBulanan;
 use App\Models\RencanaAksi;
 use App\Models\Kegiatan;
 use App\Models\IndikatorKegiatan;
+use App\Models\IndikatorKegiatanSKPTahunan;
 
 use App\Helpers\Pustaka;
 use App\Traits\TraitCapaianTahunan;
@@ -665,16 +666,16 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
         $capaian_id = $request->capaian_id;
         $indikator_kegiatan_id = $request->indikator_kegiatan_id;
 
-        $x = IndikatorKegiatan::
-                            leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
+        $x = IndikatorKegiatanSKPTahunan::
+                            /* leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join) {
                                 $join   ->on('renja_indikator_kegiatan.kegiatan_id','=','renja_kegiatan.id');
-                            })
-                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) {
-                                $join   ->on('kegiatan_tahunan.subkegiatan_id','=','renja_kegiatan.id');
+                            }) */
+                            leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join) {
+                                $join   ->on('kegiatan_tahunan.id','=','skp_tahunan_indikator_kegiatan.kegiatan_id');
                             })
                             //REALISASINYA
                             ->leftjoin('db_pare_2018.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use($capaian_id) {
-                                $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','renja_indikator_kegiatan.id');
+                                $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','skp_tahunan_indikator_kegiatan.id');
                                 $join   ->WHERE('realisasi_indikator.capaian_id','=', $capaian_id );
                             })
                             ->leftjoin('db_pare_2018.realisasi_kegiatan_tahunan AS realisasi_kegiatan', function($join) use($capaian_id) {
@@ -682,11 +683,11 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
                                 $join   ->WHERE('realisasi_kegiatan.capaian_id','=', $capaian_id );
                             })
                 
-                            ->SELECT(       'renja_kegiatan.id AS kegiatan_id',
-                                            'renja_indikator_kegiatan.id AS ind_kegiatan_id',
-                                            'renja_indikator_kegiatan.label AS indikator_label',
-                                            'renja_indikator_kegiatan.target AS indikator_quantity',
-                                            'renja_indikator_kegiatan.satuan AS indikator_satuan',
+                            ->SELECT(       //'renja_kegiatan.id AS kegiatan_id',
+                                            'skp_tahunan_indikator_kegiatan.id AS ind_kegiatan_id',
+                                            'skp_tahunan_indikator_kegiatan.label AS indikator_label',
+                                            'skp_tahunan_indikator_kegiatan.target AS indikator_quantity',
+                                            'skp_tahunan_indikator_kegiatan.satuan AS indikator_satuan',
 
                                             'kegiatan_tahunan.id AS kegiatan_tahunan_id',
                                             'kegiatan_tahunan.label AS kegiatan_tahunan_label',
@@ -716,11 +717,11 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
 
                                             
                                     ) 
-                            ->WHERE('renja_indikator_kegiatan.id', $indikator_kegiatan_id)
+                            ->WHERE('skp_tahunan_indikator_kegiatan.id', $indikator_kegiatan_id)
                             ->first();
 
        
-        $jm_indikator = IndikatorKegiatan::WHERE('kegiatan_id',$x->kegiatan_id)->count();
+        $jm_indikator = IndikatorKegiatanSKPTahunan::WHERE('kegiatan_id',$x->kegiatan_tahunan_id)->count();
 
 
         $ind_kegiatan = array(
