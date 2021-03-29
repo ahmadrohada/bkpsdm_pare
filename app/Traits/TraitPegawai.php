@@ -91,7 +91,7 @@ trait TraitPegawai
                             'eselon'            => $x->eselon,
                             'admin_role_user'   => $x->admin_role_user, 
                             'user_id'           => $x->user_id,
-                            'tpp_rupiah'        => $x->tpp_rupiah,
+                            'tpp_rupiah'        => $x->tpp_rupiah?$x->tpp_rupiah:0,
             );
         }
                 
