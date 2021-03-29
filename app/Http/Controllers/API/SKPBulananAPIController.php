@@ -1472,10 +1472,11 @@ class SKPBulananAPIController extends Controller {
 
 
             //cari tgl mulai dan selesai
-            $inisial     = date($thn."-".$periode[$i]."-d");
+            $inisial     = date($thn."-".$periode[$i]."-1");
             $tgl_mulai   = date('Y-m-01',strtotime($inisial));
             $tgl_selesai = date('Y-m-t',strtotime($inisial));
 
+           
 
             $data[] = array(
 
@@ -1499,20 +1500,7 @@ class SKPBulananAPIController extends Controller {
         $skp_bulanan   = new SKPBulanan;
         $skp_bulanan   -> insert($data);
 
-      /*   $skp_tahunan    = new SKPTahunan;
-        $skp_tahunan->pegawai_id                  = Input::get('pegawai_id');
-        $skp_tahunan->perjanjian_kinerja_id       = Input::get('perjanjian_kinerja_id');
-        $skp_tahunan->jabatan_id                  = Input::get('jabatan_id');
-        $skp_tahunan->tgl_mulai                   = Pustaka::tgl_sql(Input::get('tgl_mulai'));
-        $skp_tahunan->tgl_selesai                 = Pustaka::tgl_sql(Input::get('tgl_selesai'));
-        $skp_tahunan->u_nama                      = Input::get('u_nama');
-
-        if ( $skp_tahunan->save()){
-            return \Response::make('sukses', 200);
-        }else{
-            return \Response::make('error', 500);
-        }  */
-            
+     
             
     }   
 
