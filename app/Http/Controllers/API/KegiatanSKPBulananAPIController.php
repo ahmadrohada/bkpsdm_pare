@@ -65,7 +65,7 @@ class KegiatanSKPBulananAPIController extends Controller {
             'kegiatan_tahunan_target'       => ($x->RencanaAksi->IndikatorKegiatanSKPTahunan)?$x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target:"",
             'kegiatan_tahunan_satuan'       => ($x->RencanaAksi->IndikatorKegiatanSKPTahunan)?$x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->satuan:"",
             'kegiatan_tahunan_waktu'        => ($x->RencanaAksi->IndikatorKegiatanSKPTahunan)?$x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target_waktu:"",
-            'kegiatan_tahunan_cost'         => number_format( ($x->RencanaAksi->IndikatorKegiatanSKPTahunan)?$x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->cost,'0',',','.' : "0"),
+            'kegiatan_tahunan_cost'         => ($x->RencanaAksi->IndikatorKegiatanSKPTahunan)? (number_format($x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->cost,'0',',','.')):"",
             'kegiatan_tahunan_output'       => ($x->RencanaAksi->IndikatorKegiatanSKPTahunan)?$x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->target:"".' '.($x->RencanaAksi->IndikatorKegiatanSKPTahunan)?$x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->satuan:"",
  
         );
