@@ -325,8 +325,12 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
             $capaian_id = $request->capaian_id;
             $jabatan_id = $request->jabatan_id; 
 
-            $rencana_aksi = RencanaAksi::WITH(['IndikatorKegiatanSKPTahunan'])
-                                ->WhereHas('IndikatorKegiatanSKPTahunan', function($q){
+            $rencana_aksi = RencanaAksi::with(['KegiatanSKPTahunan'])
+                            ->WhereHas('KegiatanSKPTahunan', function($r){
+                               /*  $r->with(['SKPTahunan'])
+                                ->WhereHas('SKPTahunan', function($s) use($renja_id){
+                                    $s->WHERE('renja_id',$renja_id);
+                                }); */
                             })
                             ->WHERE('skp_tahunan_rencana_aksi.jabatan_id',$jabatan_id)
                             ->LEFTJOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){

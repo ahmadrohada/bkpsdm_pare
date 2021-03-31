@@ -32,5 +32,10 @@ class RencanaAksi extends Model
         return $this->belongsTo('App\Models\IndikatorKegiatanSKPTahunan','indikator_kegiatan_tahunan_id'); 
     } 
 
+    public function KegiatanSKPTahunan() 
+    {
+        return $this->belongsTo('App\Models\KegiatanSKPTahunan','kegiatan_tahunan_id'); 
+    } 
+
 
 }
