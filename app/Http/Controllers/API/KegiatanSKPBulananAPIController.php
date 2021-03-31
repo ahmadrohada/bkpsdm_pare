@@ -121,7 +121,7 @@ class KegiatanSKPBulananAPIController extends Controller {
     public function KegiatanBulanan4(Request $request)
     {
             
-        $skp_bulanan_id = $request->skp_bulanan_id;
+        $skp_bulanan_id = $request->skp_bulanan_id; 
 
         $skp_bulanan    = SKPBulanan::WHERE('id',$skp_bulanan_id)->first();
         $jabatan_id     = $skp_bulanan->PegawaiYangDinilai->id_jabatan;

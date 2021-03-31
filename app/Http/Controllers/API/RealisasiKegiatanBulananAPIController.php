@@ -556,7 +556,7 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             
         //$skp_bln = SKPBulanan::WHERE('id',$request->skp_bulanan_id)->SELECT('bulan')->first();
 
-        $dt = KegiatanSKPBulanan::
+        /* $dt = KegiatanSKPBulanan::
                     WHERE('skp_bulanan_kegiatan.skp_bulanan_id','=', $request->skp_bulanan_id )
                     ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
                         $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','skp_bulanan_kegiatan.id');
@@ -575,22 +575,66 @@ class RealisasiKegiatanBulananAPIController extends Controller {
                     
                     ->get();
         
-        $skp_id = $request->skp_bulanan_id;
+        $skp_id = $request->skp_bulanan_id; */
+        $skp_bulanan_id = $request->skp_bulanan_id; 
 
+        $skp_bulanan    = SKPBulanan::WHERE('id',$skp_bulanan_id)->first();
+        $jabatan_id     = $skp_bulanan->PegawaiYangDinilai->id_jabatan;
+        $renja_id       = $skp_bulanan->SKPTahunan->Renja->id;
+
+        $dt = RencanaAksi::with(['IndikatorKegiatanSKPTahunan'])
+                    ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($renja_id){
+                        $q->with(['KegiatanSKPTahunan'])
+                        ->WhereHas('KegiatanSKPTahunan', function($r) use($renja_id){
+                            $r->with(['SKPTahunan'])
+                            ->WhereHas('SKPTahunan', function($s) use($renja_id){
+                                $s->WHERE('renja_id',$renja_id);
+                            });
+                        });
+                    }) 
+                    ->WHERE('jabatan_id','=', $jabatan_id )
+                    ->WHERE('waktu_pelaksanaan',$skp_bulanan->bulan)
+                    ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join) use($skp_bulanan_id){
+                        $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                        $join   ->WHERE('kegiatan_bulanan.skp_bulanan_id','=', $skp_bulanan_id );
+                    })
+                    ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
+                        $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
+                    })
+                    ->SELECT(   'kegiatan_bulanan.id AS kegiatan_bulanan_id',
+                                'kegiatan_bulanan.label AS kegiatan_bulanan_label',
+                                'kegiatan_bulanan.target',
+                                'kegiatan_bulanan.satuan',
+                                'realisasi_kegiatan_bulanan.id AS realisasi_kegiatan_bulanan_id',
+                                'realisasi_kegiatan_bulanan.realisasi AS realisasi',
+                                'realisasi_kegiatan_bulanan.satuan AS realisasi_satuan',
+                                'realisasi_kegiatan_bulanan.bukti',
+                                'realisasi_kegiatan_bulanan.alasan_tidak_tercapai',
+                                'kegiatan_bulanan.rencana_aksi_id',
+                                'skp_tahunan_rencana_aksi.id AS rencana_aksi_id',
+                                'skp_tahunan_rencana_aksi.label AS rencana_aksi_label',
+                                'skp_tahunan_rencana_aksi.target AS rencana_aksi_target',
+                                'skp_tahunan_rencana_aksi.satuan AS rencana_aksi_satuan',
+                                'skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id',
+                                'skp_tahunan_rencana_aksi.kegiatan_tahunan_id'
+                            ) 
+                    ->get();
+       
 
         $datatables = Datatables::of($dt)
-        ->addColumn('kegiatan_bulanan_id', function ($x) use($skp_id){
+        ->addColumn('kegiatan_bulanan_id', function ($x){
             return $x->kegiatan_bulanan_id;
         })
-        ->addColumn('kegiatan_tahunan_label', function ($x) use($skp_id){
+        ->addColumn('kegiatan_tahunan_label', function ($x){
 
-            return ($x->RencanaAksi->IndikatorKegiatanSKPTahunan)?$x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label:"";
+            //return $x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
+            return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
         })
-        ->addColumn('persentase_realisasi', function ($x) use($skp_id){
+        ->addColumn('persentase_realisasi', function ($x){
             return   Pustaka::persen($x->realisasi,$x->target);
 
         })
-        ->addColumn('capaian_kegiatan_bulanan_id', function ($x) use($skp_id){
+        ->addColumn('capaian_kegiatan_bulanan_id', function ($x){
             return $x->capaian_kegiatan_bulanan_id;
         });
 
