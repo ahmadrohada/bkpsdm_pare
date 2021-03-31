@@ -325,26 +325,24 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
             $capaian_id = $request->capaian_id;
             $jabatan_id = $request->jabatan_id; 
 
+            $capaian_tahunan        = CapaianTahunan::WHERE('id',$capaian_id)->first();
+            $jabatan_id             = $capaian_tahunan->PegawaiYangDinilai->id_jabatan;
+            $renja_id               = $capaian_tahunan->SKPTahunan->Renja->id;
+    
+
             $rencana_aksi = RencanaAksi::with(['KegiatanSKPTahunan'])
-                            ->WhereHas('KegiatanSKPTahunan', function($r){
-                               /*  $r->with(['SKPTahunan'])
+                            ->WhereHas('KegiatanSKPTahunan', function($r) use($renja_id){
+                               $r->with(['SKPTahunan'])
                                 ->WhereHas('SKPTahunan', function($s) use($renja_id){
                                     $s->WHERE('renja_id',$renja_id);
-                                }); */
+                                }); 
                             })
                             ->WHERE('skp_tahunan_rencana_aksi.jabatan_id',$jabatan_id)
-                            ->LEFTJOIN('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
-                                $join  ->ON('skp_tahunan_rencana_aksi.kegiatan_tahunan_id','=','kegiatan_tahunan.id');
-                            })
-                            //LEFT JOIN ke KEGIATAN RENJA
-                            ->leftjoin('db_pare_2018.renja_kegiatan AS renja_kegiatan', function($join){
-                                $join   ->on('renja_kegiatan.id','=','kegiatan_tahunan.subkegiatan_id');
-                                
-                            })
-                             //LEFT JOIN ke INDIKATOR KEGIATAN
                             ->leftjoin('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator_kegiatan', function($join){
-                                $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan_tahunan.id') ;
-                                $join   ->whereNull('indikator_kegiatan.deleted_at');
+                                $join   ->on('skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id','=','indikator_kegiatan.id') ;
+                            })
+                            ->leftjoin('db_pare_2018.skp_tahunan_kegiatan AS kegiatan_tahunan', function($join){
+                                $join  ->on('indikator_kegiatan.kegiatan_id','=','kegiatan_tahunan.id');
                             })
                            
                            
@@ -364,7 +362,7 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
                             ->leftjoin('db_pare_2018.capaian_tahunan AS capaian_tahunan', function($join){
                                 $join   ->on('capaian_tahunan.id','=','realisasi_kegiatan.capaian_id');
                             })
-                            ->SELECT(   'renja_kegiatan.id AS kegiatan_id',
+                            ->SELECT(   //'renja_kegiatan.id AS kegiatan_id',
                                         'kegiatan_tahunan.label AS kegiatan_tahunan_label',
                                         'kegiatan_tahunan.id AS kegiatan_tahunan_id',
                                         'kegiatan_tahunan.target AS kegiatan_tahunan_target',
@@ -409,10 +407,10 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
 
 
                                     ) 
-                            //->groupBy('kegiatan_tahunan.id')
-                            ->DISTINCT('kegiatan_tahunan.id')
-                            ->WHERE('skp_tahunan_rencana_aksi.renja_id',$request->renja_id)
-                            ->WHERE('kegiatan_tahunan.label','!=',"")
+                            ->groupBy('kegiatan_tahunan.id')
+                            ->distinct()
+                            //->WHERE('skp_tahunan_rencana_aksi.renja_id',$request->renja_id)
+                            //->WHERE('kegiatan_tahunan.label','!=',"")
                             ->GET();
 
             $no = 0 ;
