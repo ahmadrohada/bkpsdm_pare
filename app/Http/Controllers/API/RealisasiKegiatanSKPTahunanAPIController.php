@@ -401,8 +401,7 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
                                         'realisasi_kegiatan.keterampilan',
 
 
-                                        'capaian_tahunan.status',
-                                        'skp_tahunan_rencana_aksi.id AS rencana_aksi_id'
+                                        'capaian_tahunan.status'
 
 
                                     ) 
