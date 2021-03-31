@@ -46,7 +46,10 @@
 							<td style="text-align:center;"><span class="text-info nilai_kerjasama">-</span></td>
 							<td style="text-align:center;"><span class="text-info ket_kerjasama">-</span></td>
 						</tr>
-						@if ( $capaian->PegawaiYangDinilai->Jabatan->Eselon->id_jenis_jabatan  < 4 )
+						<?php
+							$id_jenis_jabatan = ($capaian->PegawaiYangDinilai->Jabatan->Eselon)?$capaian->PegawaiYangDinilai->Jabatan->Eselon->id_jenis_jabatan:4;
+						?>
+						@if ( $id_jenis_jabatan  < 4 )
 						<tr>
 							<td style="padding-left:10px;">6.</td>
 							<td>Kepemimpinan</td>
