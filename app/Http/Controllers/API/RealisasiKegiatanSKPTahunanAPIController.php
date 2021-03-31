@@ -318,7 +318,7 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
 
         public function RealisasiKegiatanTahunan4(Request $request){ 
             
-            $kegiatan = $this->Kegiatan($request->capaian_id); 
+            //$kegiatan = $this->Kegiatan($request->capaian_id); 
             
             //JFU tidak memiliki kegiatan tahunan, kegiatan tahunan nya adalah milik atasan nya yg eselon 4
             //jadi
@@ -337,11 +337,13 @@ class RealisasiKegiatanSKPTahunanAPIController extends Controller {
                                 $join   ->on('renja_kegiatan.id','=','kegiatan_tahunan.subkegiatan_id');
                                 
                             })
-                            //LEFT JOIN ke INDIKATOR KEGIATAN
-                            ->LEFTJOIN('db_pare_2018.renja_indikator_kegiatan AS indikator_kegiatan', function($join){
-                                $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan_tahunan.subkegiatan_id');
-                                
+                             //LEFT JOIN ke INDIKATOR KEGIATAN
+                            ->leftjoin('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator_kegiatan', function($join){
+                                $join   ->on('indikator_kegiatan.kegiatan_id','=','kegiatan_tahunan.id') ;
+                                $join   ->whereNull('indikator_kegiatan.deleted_at');
                             })
+                           
+                           
                             //LEFT JOIN TERHADAP REALISASI INDIKATOR KEGIATAN
                             ->leftjoin('db_pare_2018.realisasi_indikator_kegiatan_tahunan AS realisasi_indikator', function($join) use ( $capaian_id ){
                                 $join   ->on('realisasi_indikator.indikator_kegiatan_id','=','indikator_kegiatan.id');
