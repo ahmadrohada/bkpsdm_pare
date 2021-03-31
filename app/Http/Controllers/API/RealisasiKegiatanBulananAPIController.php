@@ -626,8 +626,6 @@ class RealisasiKegiatanBulananAPIController extends Controller {
             return $x->kegiatan_bulanan_id;
         })
         ->addColumn('kegiatan_tahunan_label', function ($x){
-
-            //return $x->RencanaAksi->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
             return $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label;
         })
         ->addColumn('persentase_realisasi', function ($x){

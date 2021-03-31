@@ -19,6 +19,7 @@ use App\Models\TugasTambahan;
 use App\Models\RealisasiTugasTambahan;
 use App\Models\UnsurPenunjangTugasTambahan;
 use App\Models\UnsurPenunjangKreativitas;
+use App\Models\SKPBulanan;
 
 use App\Traits\HitungUnsurPenunjang; 
 
@@ -105,14 +106,45 @@ trait HitungCapaian
 
     protected function capaian_kinerja_jfu($capaian_id,$skp_bulanan_id,$bulan,$renja_id)
     {
-        $xdata = KegiatanSKPBulanan::
+
+
+        $skp_bulanan    = SKPBulanan::WHERE('id',$skp_bulanan_id)->first();
+        $jabatan_id     = $skp_bulanan->PegawaiYangDinilai->id_jabatan;
+
+        $xdata = RencanaAksi::with(['IndikatorKegiatanSKPTahunan'])
+                            ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($renja_id){
+                                $q->with(['KegiatanSKPTahunan'])
+                                ->WhereHas('KegiatanSKPTahunan', function($r) use($renja_id){
+                                    $r->with(['SKPTahunan'])
+                                    ->WhereHas('SKPTahunan', function($s) use($renja_id){
+                                        $s->WHERE('renja_id',$renja_id);
+                                    });
+                                });
+                            }) 
+                            ->WHERE('jabatan_id','=', $jabatan_id )
+                            ->WHERE('waktu_pelaksanaan',$bulan)
+                            ->leftjoin('db_pare_2018.skp_bulanan_kegiatan AS kegiatan_bulanan', function($join) use($skp_bulanan_id){
+                                $join   ->on('kegiatan_bulanan.rencana_aksi_id','=','skp_tahunan_rencana_aksi.id');
+                                $join   ->WHERE('kegiatan_bulanan.skp_bulanan_id','=', $skp_bulanan_id );
+                            })
+                            ->leftjoin('db_pare_2018.realisasi_kegiatan_bulanan', function($join){
+                                $join   ->on('realisasi_kegiatan_bulanan.kegiatan_bulanan_id','=','kegiatan_bulanan.id');
+                            })
+                            ->SELECT(   
+                                        'kegiatan_bulanan.target',
+                                        'realisasi_kegiatan_bulanan.realisasi'
+                                    ) 
+                            ->get();
+
+
+        /* $xdata = KegiatanSKPBulanan::
                             leftjoin('db_pare_2018.realisasi_kegiatan_bulanan AS realisasi', function($join) use($capaian_id){
                                 $join   ->on('realisasi.kegiatan_bulanan_id','=','skp_bulanan_kegiatan.id');
                                 $join   ->where('realisasi.capaian_id','=',$capaian_id);
                             })
                             ->SELECT('skp_bulanan_kegiatan.target','realisasi.realisasi')
                             ->WHERE('skp_bulanan_kegiatan.skp_bulanan_id','=',$skp_bulanan_id)
-                            ->get();
+                            ->get(); */
         $jm_capaian = 0 ;
         $jm_kegiatan_bulanan = 0 ;
 
