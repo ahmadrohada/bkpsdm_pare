@@ -9,7 +9,7 @@
             </div>
 
             <form  id="skpd_create_skp_tahunan_form" method="POST" action="">
-			<input type="text"  name="skpd_id" value="{{ $skpd_id }}">
+			<input type="hidden"  name="skpd_id" value="{{ $skpd_id }}">
 			<div class="modal-body">
 					
 					<br>
@@ -18,17 +18,14 @@
 						<select class="form-control  periode_skp" name="periode_skp" style="width: 100%;"></select>
 					</div>
 					<div class="col-md-12 form-group form-group-sm">
-						<label>NIP / NAMA ASN</label>
+						<label>Nama Pegawai</label>
 						<select class="form-control u_nip_edit" name="u_nip" style="width:100%;"></select>
 					</div>
 
-					<div class="col-md-12 form-group form-group-sm">
-						<label>Nama Pegawai</label>
-							<span class="form-control u_nama"></span>
-					</div>
+				
 
 					<div class="col-md-12 form-group form-group-sm">
-						<label>PILIH JABATAN</label>
+						<label>Jabatan</label>
 						<select class="form-control jabatan" name="u_jabatan" style="width:100%;"></select>
 					</div>
 
@@ -55,14 +52,45 @@
 <script type="text/javascript">
 
 
+	//$('.periode_skp,.periode_skpd_create_skp_tahunan_edit').select2();
+
+	$('.periode_skp').select2({
+        placeholder         : "Periode SKP Tahunan",
+		//minimumInputLength  : 3,
+		
+        ajax: {
+            url				: '{{ url("api/periode_list_select2") }}',
+            dataType		: 'json',
+            quietMillis		: 250,
+            data			: function (params) {
+                var queryParameters = {
+                    nama				: params.term,
+                }
+                return queryParameters;
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        
+                        return {
+                            text	: item.label,
+						    id		: item.id,
+                        }
+                        
+                    })
+                };  
+            }
+        },
+
+    });
 
 
-$('.u_nip_edit').select2({
+	$('.u_nip_edit').select2({
         placeholder         : "Ketik NIP atau Nama Pegawai",
 		minimumInputLength  : 3,
 		
         ajax: {
-            url				: '{{ url("api/pegawai_list") }}',
+            url				: '{{ url("api/skpd_pegawai_list_select2") }}',
             dataType		: 'json',
             quietMillis		: 250,
             data			: function (params) {
@@ -88,8 +116,39 @@ $('.u_nip_edit').select2({
 
     });
 
+	$('.jabatan').select2({
+        placeholder         : "Pilih Jabatan",
+		//minimumInputLength  : 3,
+		
+        ajax: {
+            url				: '{{ url("api/select2_skpd_jabatan_list") }}',
+            dataType		: 'json',
+            quietMillis		: 250,
+            data			: function (params) {
+                var queryParameters = {
+                    skpd				: params.term,
+					skpd_id				: {{ $skpd_id }}
+                }
+                return queryParameters;
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        
+                        return {
+                            text	: item.label,
+						    id		: item.id,
+                        }
+                        
+                    })
+                };  
+            }
+        },
 
-	$('.periode_skpd_create_skp_tahunan,.periode_skpd_create_skp_tahunan_edit').select2();
+    });
+
+
+	
 	
 
 	$('.modal-skpd_create_skp_tahunan').on('shown.bs.modal', function(){

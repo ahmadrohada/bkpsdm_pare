@@ -87,6 +87,29 @@ class JabatanAPIController extends Controller {
 
     }
 
+    public function SKPDJabatanListSelect2(Request $request)
+    {
+
+        $jabatan       = SKPD::where('id_skpd', $request->get('skpd_id'))
+                              ->where('id','!=',$request->get('skpd_id'))
+                              ->Where('skpd','like', '%'.$request->get('skpd').'%')
+                              ->get();
+
+        $no = 0;
+        $jabatan_list = [];
+        foreach  ( $jabatan as $x){
+            $no++;
+            $jabatan_list[] = array(
+                            'id'		  => $x->id,
+                            'label'		=> Pustaka::capital_string($x->skpd),
+                            );
+            } 
+        
+        return $jabatan_list;
+
+
+    }
+
 
 
     public function PejabatAktifDetail(Request $request)

@@ -56,7 +56,7 @@
 									}
 								},
 								{ data: "skpd" , name:"skpd.skpd", orderable: true, searchable: true},
-								{ data: "singkatan",orderable: true, searchable: false},
+								{ data: "singkatan",namw:"singkatan",orderable: true, searchable: true},
 								{ data: "action" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
 											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" class=""><a href="../admin/skpd/'+row.skpd_id+'/pegawai" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></span>';

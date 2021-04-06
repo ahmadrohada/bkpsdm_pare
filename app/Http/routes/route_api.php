@@ -27,8 +27,9 @@ Route::group(['prefix' => 'api'], function () {
 
 Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
-	Route::resource('periode_tahunan','API\PeriodeTahunanAPIController');
-
+	//========================= PERIODE ======================================================================//
+	Route::resource('periode_tahunan','API\PeriodeAPIController');
+	Route::get('periode_list_select2','API\PeriodeAPIController@PeriodeListSelect2');
 
 	//========================================================================================================//
 	//=================================================  U S E R =============================================//
@@ -1058,6 +1059,7 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
 	Route::get('administrator_pegawai_list','API\PegawaiAPIController@administrator_pegawai_list');
 	Route::get('skpd_pegawai_list','API\PegawaiAPIController@SKPDPegawaiList');
+	Route::get('skpd_pegawai_list_select2','API\PegawaiAPIController@SKPDPegawaiListSelect2');
 	
 	Route::get('select_ka_skpd_list','API\PegawaiAPIController@select_ka_skpd_list');
 	
@@ -1078,6 +1080,8 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//========================================================================================================//
 	Route::get('select2_jabatan_list','API\JabatanAPIController@select2_jabatan_list');
 	Route::get('detail_pejabat_aktif','API\JabatanAPIController@PejabatAktifDetail');
+
+	Route::get('select2_skpd_jabatan_list','API\JabatanAPIController@SKPDJabatanListSelect2');
 
 
 	Route::get('select2_bawahan_list','API\JabatanAPIController@Select2BawahanList');

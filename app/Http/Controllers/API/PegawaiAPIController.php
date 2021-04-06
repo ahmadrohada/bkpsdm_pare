@@ -126,6 +126,41 @@ class PegawaiAPIController extends Controller {
         
     }
 
+    public function SKPDPegawaiListSelect2(Request $request)
+    {
+        $skpd_id = $request->get('skpd_id');
+        $pegawai     = Pegawai::
+                                join("demo_asn.tb_history_jabatan AS a",function($join)use($skpd_id){
+                                    $join->on("a.id_pegawai","=","tb_pegawai.id")
+                                        ->where("a.id_skpd","=",$skpd_id)
+                                        ->where('a.status', '=', 'active');
+                                })
+                                ->select([  'tb_pegawai.id AS pegawai_id',
+                                            'tb_pegawai.nama',
+                                            'tb_pegawai.gelardpn',
+                                            'tb_pegawai.gelarblk',
+                                           
+                                        ])
+                                ->Where('tb_pegawai.nama','like', '%'.$request->get('nama').'%')
+                                ->where('tb_pegawai.status','active')
+                                ->get();
+
+
+        $no = 0;
+        $pegawai_list = [];
+        foreach  ( $pegawai as $x){
+            $no++;
+            $pegawai_list[] = array(
+                            'id'		=> $x->pegawai_id,
+                            'nama'		=> Pustaka::nama_pegawai($x->gelardpn , $x->nama , $x->gelarblk),
+                            );
+            } 
+        
+        return $pegawai_list;
+        
+        
+    }
+
     /* public function select_pejabat_penilai_list(Request $request)
     {
 

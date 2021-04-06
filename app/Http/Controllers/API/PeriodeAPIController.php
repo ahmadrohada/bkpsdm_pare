@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 
-use App\Models\PeriodeTahunan;
+use App\Models\Periode;
 
 use App\Helpers\Pustaka;
 
@@ -17,7 +17,7 @@ use Input;
 Use PDF;
 
 
-class PeriodeTahunanAPIController extends Controller 
+class PeriodeAPIController extends Controller 
 
 {
 
@@ -29,8 +29,28 @@ class PeriodeTahunanAPIController extends Controller
 
     public function index()
     {
-        $periode_tahunan =  PeriodeTahunan::all();
+        $periode_tahunan =  Periode::all();
         return $this->sendResponse($periode_tahunan->toArray(), 'Posts retrieved successfully.');
+    }
+
+    public function PeriodeListSelect2(Request $request)
+    {
+        $periode     = Periode::ORDERBY('id','DESC')->get();
+
+
+        $no = 0;
+        $periode_list = [];
+        foreach  ( $periode as $x){
+            $no++;
+            $periode_list[] = array(
+                            'id'		=> $x->id,
+                            'label'		=> $x->label,
+                            );
+            } 
+        
+        return $periode_list;
+        
+        
     }
 
 

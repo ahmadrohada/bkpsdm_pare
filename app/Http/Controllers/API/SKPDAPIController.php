@@ -42,16 +42,30 @@ class SKPDAPIController extends Controller {
                 ->whereRaw('id = id_skpd AND id != 1 AND id != 6 AND id != 8 AND id != 10 AND id != 12 ')
                 ->select([  'skpd.id_skpd AS skpd_id',
                             'skpd.skpd AS skpd'
-                ]);
+                ])
+                ->get();
+            
+        $data = array();
+        foreach( $dt AS $x ){
+                    $data[] = array(
+                                    'skpd_id'       => $x->skpd_id,
+                                    'skpd'          => $x->skpd,
+                                    'singkatan'     => Pustaka::singkatan($x->skpd),
+                    );
+        }
+        
         
 
 
-        $datatables = Datatables::of($dt) 
+        $datatables = Datatables::of(collect($data)) 
+                    ->addColumn('skpd_id', function ($x) {
+                        return $x['skpd_id'];
+                    })
                     ->addColumn('skpd', function ($x) {
-                        return Pustaka::capital_string($x->skpd);
+                        return Pustaka::capital_string($x['skpd']);
                     })
                     ->addColumn('singkatan', function ($x) {
-                        return Pustaka::singkatan($x->skpd);
+                        return $x['singkatan'];
                     });
 
         
