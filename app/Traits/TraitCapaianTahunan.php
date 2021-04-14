@@ -66,7 +66,7 @@ trait TraitCapaianTahunan
             $kerjasama = ($x->kerjasama_01+$x->kerjasama_02+$x->kerjasama_03+$x->kerjasama_04+$x->kerjasama_05)/25*100;
             $kepemimpinan = ($x->kepemimpinan_01+$x->kepemimpinan_02+$x->kepemimpinan_03+$x->kepemimpinan_04+$x->kepemimpinan_05+$x->kepemimpinan_06)/30*100;
 
-            $id_jenis_jabatan = ( $x->CapaianTahunan->PegawaiYangDinilai->Jabatan->Eselon)?$capaian->PegawaiYangDinilai->Jabatan->Eselon->id_jenis_jabatan:4;
+            $id_jenis_jabatan = ( $x->CapaianTahunan->PegawaiYangDinilai->Jabatan->Eselon)?$x->CapaianTahunan->PegawaiYangDinilai->Jabatan->Eselon->id_jenis_jabatan:4;
                 
             if ( $id_jenis_jabatan < 4 ){
                 $jumlah = $pelayanan+$integritas+$komitmen+$disiplin+$kerjasama+$kepemimpinan;
@@ -365,7 +365,7 @@ trait TraitCapaianTahunan
                 $kerjasama = ($x->kerjasama_01+$x->kerjasama_02+$x->kerjasama_03+$x->kerjasama_04+$x->kerjasama_05)/25*100;
                 $kepemimpinan = ($x->kepemimpinan_01+$x->kepemimpinan_02+$x->kepemimpinan_03+$x->kepemimpinan_04+$x->kepemimpinan_05+$x->kepemimpinan_06)/30*100;
     
-                $id_jenis_jabatan = ( $x->CapaianTahunan->PegawaiYangDinilai->Jabatan->Eselon)?$capaian->PegawaiYangDinilai->Jabatan->Eselon->id_jenis_jabatan:4;
+                $id_jenis_jabatan = ( $x->CapaianTahunan->PegawaiYangDinilai->Jabatan->Eselon)?$x->CapaianTahunan->PegawaiYangDinilai->Jabatan->Eselon->id_jenis_jabatan:4;
                 
                 if ( $id_jenis_jabatan < 4 ){
                     $jumlah = $pelayanan+$integritas+$komitmen+$disiplin+$kerjasama+$kepemimpinan;

@@ -89,14 +89,16 @@ trait PJabatan
 
 
     //JABATAN AKTIF
-    protected function jabatan_aktif($pegawai_id){
+    protected function jabatan_aktif($pegawai_id){ 
 
         $golongan = HistoryGolongan::with(['Golongan'])
                                     ->WHERE('id_pegawai', $pegawai_id)
                                     ->WHERE('status','active')
                                     ->first();
 
-        $jabatan = HistoryJabatan::with(['Golongan','Eselon'])
+        $jabatan = HistoryJabatan::with(['Golongan','Eselon','skpd'])
+                                    ->WhereHas('skpd', function($q){
+                                    })
                                     ->WHERE('id_pegawai', $pegawai_id)
                                     ->WHERE('status','active')
                                     ->first();
