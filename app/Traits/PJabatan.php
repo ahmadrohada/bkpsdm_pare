@@ -92,7 +92,7 @@ trait PJabatan
     protected function jabatan_aktif($pegawai_id){ 
 
         $golongan = HistoryGolongan::with(['Golongan'])
-                                    ->WHERE('id_pegawai', $pegawhadaai_id)
+                                    ->WHERE('id_pegawai', $pegawai_id)
                                     ->WHERE('status','active')
                                     ->first();
 
