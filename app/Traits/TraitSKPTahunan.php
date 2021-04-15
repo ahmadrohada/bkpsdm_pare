@@ -518,10 +518,10 @@ trait TraitSKPTahunan
 
         $kegiatan=  RencanaAksi::with(['KegiatanSKPTahunan'])
                                 ->WhereHas('KegiatanSKPTahunan', function($r) use($renja_id){
-                                    $r->with(['SKPTahunan'])
+                                    /* $r->with(['SKPTahunan'])
                                     ->WhereHas('SKPTahunan', function($s) use($renja_id){
                                         $s->WHERE('renja_id',$renja_id);
-                                    });
+                                    }); */
                                 })
                             ->leftjoin('db_pare_2018.skp_tahunan_indikator_kegiatan AS indikator', function($join){
                                 $join   ->on('skp_tahunan_rencana_aksi.indikator_kegiatan_tahunan_id','=','indikator.id') ;
