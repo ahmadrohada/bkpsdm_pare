@@ -17,7 +17,7 @@
 				<a class="back_button" data-toggle="tooltip" title="kembali" href="{{ route($route_name) }}"><span class="fa fa-angle-left"></span></a>
 				Capaian SKP Tahunan  {{ $capaian->PegawaiYangDinilai->Eselon->eselon }}
 			</h1>
-	  </section>
+	  	</section>
 	 
 	
 	   

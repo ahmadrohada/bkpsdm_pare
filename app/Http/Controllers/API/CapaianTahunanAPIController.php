@@ -20,6 +20,7 @@ use App\Models\KegiatanSKPTahunanJFT;
 use App\Models\Kegiatan;
 use App\Models\PerilakuKerja;
 use App\Models\RencanaAksi;
+use App\Models\Periode;
 
 
 use App\Helpers\Pustaka;
@@ -27,6 +28,7 @@ use App\Traits\HitungCapaian;
 use App\Traits\BawahanList;
 use App\Traits\PJabatan;
 use App\Traits\TraitCapaianTahunan;
+
 
 use Datatables;
 use Validator;
@@ -39,7 +41,47 @@ class CapaianTahunanAPIController extends Controller {
     use PJabatan;
     use TraitCapaianTahunan;
 
+    public function CapaianTahunanSKPD(Request $request)
+    {
+        $periode = Periode::
+                        orderBy('periode.id','DESC')
+                        ->get();
+
+        $data = array();
+        foreach( $periode AS $p ){
+
+            $dt = \DB::table('demo_asn.m_skpd AS skpd')
+
+                        ->whereRaw('id = id_skpd AND id != 1 AND id != 6 AND id != 8 AND id != 10 AND id != 12 ')
+                        ->select([  'skpd.id_skpd AS skpd_id',
+                                    'skpd.skpd AS skpd'
+                        ])
+                        ->get();
+        
+            
+            foreach( $dt AS $x ){
+                        $data[] = array(
+                                        'periode'       => Pustaka::periode_tahun($p->label), 
+                                        'periode_id'    => $p->id, 
+                                        'skpd_id'       => $x->skpd_id,
+                                        'skpd'          => $x->skpd
+                        );
+            }
+
+        }
+
+        //return $data;
     
+        $datatables = Datatables::of(collect($data));
+    
+            if ($keyword = $request->get('search')['value']) {
+                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            } 
+            
+    
+        return $datatables->make(true);
+        
+    }
 
    
 

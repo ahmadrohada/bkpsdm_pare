@@ -120,6 +120,22 @@
 				</div>
 			</div>
 
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-yellow capaian_tahunan" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							CAPAIAN TAHUNAN
+						</p>
+					</div>
+					<div class="icon">
+						<i class="fa fa-tasks"></i>
+					</div>
+				</div>
+			</div>
+
 
 		</div>
 	</div>
@@ -163,6 +179,10 @@ $(document).ready(function(){
 
 	$(".capaian_perjanjian_kinerja").click(function(){
 		window.location.assign("capaian_pk");
+    });
+
+	$(".capaian_tahunan").click(function(){
+		window.location.assign("capaian_tahunan");
     });
 
 

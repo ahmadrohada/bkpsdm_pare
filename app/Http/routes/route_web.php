@@ -379,6 +379,15 @@ Route::group(['middleware' => 'administrator'], function () {
 		'uses' 			=> 'HomeAdminController@AdministratorSKPDSKPTahunan'
 	]);
 
+	//======================== CAPAIAN TAHUNAN E LAPKIN ==========================================//
+	Route::get('admin/capaian_tahunan', [
+		'as' 			=> 'administrator-capaian_tahunan',
+		'uses' 			=> 'HomeAdminController@showSKPDCapaianTahunan'
+	]);
+	Route::get('admin/capaian_tahunan/skpd/{skpd_id}/periode/{periode_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'CapaianTahunanController@showSKPDCapaianTahunanELapkin'
+	]);
 
 	
 

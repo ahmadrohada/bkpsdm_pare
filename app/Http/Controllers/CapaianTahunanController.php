@@ -4,6 +4,8 @@ use App\Http\Controllers\Controller;
 
 use App\Models\CapaianBulanan;
 use App\Models\CapaianTahunan;
+use App\Models\SKPD;
+use App\Models\Periode;
 
 use App\Models\Kegiatan;
 use App\Models\UnsurPenunjangTugasTambahan;
@@ -21,6 +23,7 @@ use Illuminate\Http\Request;
 use App\Traits\PJabatan;
 use App\Traits\HitungCapaian; 
 use App\Traits\TraitCapaianTahunan;
+
 
 use PDF;
 use Datatables;
@@ -240,6 +243,26 @@ class CapaianTahunanController extends Controller {
 
         
 
+    }
+
+
+    public function showSKPDCapaianTahunanELapkin(Request $request)
+    {
+            
+        
+        //$user                     = \Auth::user();
+        //$capaian_tahunan          = CapaianTahunan::WHERE('id', $request->capaian_tahunan_id)->first();
+        $skpd = SKPD::WHERE('id',$request->skpd_id)->first();
+        $periode = Periode::WHERE('id',$request->periode_id)->first();
+
+        return view('pare_pns.pages.administrator-capaian_tahunan_elapkin', [
+                                                                            
+                                                                            'periode'   => Pustaka::periode_tahun($periode->label),
+                                                                            'skpd'      => $skpd->skpd,
+                                                                            'h_box'     => 'box-teal',
+                                                                            
+                                                                            ]);  
+         
     }
 
 }

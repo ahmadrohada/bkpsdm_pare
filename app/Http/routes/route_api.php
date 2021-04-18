@@ -735,6 +735,10 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//========================================================================================================//
 	//============================== =======    CAPAIAN TAHUNAN ================================================//
 	//========================================================================================================//
+
+	Route::get('administrator_skpd_capaian_tahunan','API\CapaianTahunanAPIController@CapaianTahunanSKPD');
+
+
 	Route::get('personal_capaian_tahunan_list','API\CapaianTahunanAPIController@PersonalCapaianTahunanList');
 	
 	Route::get('create_capaian_tahunan_confirm','API\CapaianTahunanAPIController@CreateConfirm');

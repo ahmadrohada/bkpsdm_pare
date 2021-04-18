@@ -14,14 +14,13 @@
 			<h1>
 				Administrator
 			</h1>
-
 	    </section>
 	    <section class="content">
 
 			
 				@include('pare_pns.modules.snapshots-boxes.administrator-home')
 
- 				@include('pare_pns.tables.administrator-skpd-list-datatable')
+ 				@include('pare_pns.tables.administrator-skpd-capaian_tahunan')
 		
 	    </section>
 	</div>
