@@ -71,39 +71,37 @@
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
-									url	: '{{ url("api/approval_request_capaian_tahunan_list") }}',
+									url	: '{{ url("api/capaian_tahunan_elapkin") }}',
 									
-									data: { pegawai_id : 47 },
-									delay:3000
+									data: { periode_id : {{$periode_id}} ,skpd_id : {{$skpd_id}} },
 								},
 				
 
 				columns	:[
-								{ data: 'capaian_tahunan_id' , orderable: true,searchable:false,
+								{ data: 'id' , orderable: true,searchable:false,
 									"render": function ( data, type, row ,meta) {
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
 								
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
-								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
+								{ data: "nip_atasan_pejabat_penilai" ,  name:"nip_atasan_pejabat_penilai", orderable: true, searchable: true},
+								{ data: "nip_pejabat_penilai" ,  name:"nip_pejabat_penilai", orderable: true, searchable: true},
+								{ data: "pns_id" ,  name:"pns_id", orderable: true, searchable: true},
+								{ data: "nip_baru" ,  name:"nip_baru", orderable: true, searchable: true},
+								{ data: "nama" ,  name:"nama", orderable: true, searchable: true},
+								{ data: "dinas" ,  name:"dinas", orderable: true, searchable: true},
+								{ data: "tahun" ,  name:"tahun", orderable: true, searchable: true},
+								{ data: "nilai_skp" ,  name:"nilai_skp", orderable: true, searchable: true},
+								{ data: "orientasi_pelayanan" ,  name:"orientasi_pelayanan", orderable: true, searchable: true},
+								{ data: "integritas" ,  name:"integritas", orderable: true, searchable: true},
+								{ data: "komitmen" ,  name:"komitmen", orderable: true, searchable: true},
+								{ data: "disiplin" ,  name:"disiplin", orderable: true, searchable: true},
+								{ data: "kerjasama" ,  name:"kerjasama", orderable: true, searchable: true},
+								{ data: "kepemimpinan" ,  name:"kepemimpinan", orderable: true, searchable: true},
+								{ data: "atasan_penilai_jabatan" ,  name:"atasan_penilai_jabatan", orderable: true, searchable: true},
+								{ data: "penilai_jabatan" ,  name:"penilai_jabatan", orderable: true, searchable: true},
+								{ data: "penilai_golongan" ,  name:"penilai_golongan", orderable: true, searchable: true},
+								{ data: "atasan_penilai_golongan" ,  name:"atasan_penilai_golongan", orderable: true, searchable: true},
 								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
 								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},
 								{ data: "periode" ,  name:"periode", orderable: true, searchable: true},

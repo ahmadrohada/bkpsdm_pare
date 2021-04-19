@@ -737,7 +737,8 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	//========================================================================================================//
 
 	Route::get('administrator_skpd_capaian_tahunan','API\CapaianTahunanAPIController@CapaianTahunanSKPD');
-
+	Route::get('capaian_tahunan_elapkin','API\CapaianTahunanAPIController@CapaianTahunanELapkin');
+	
 
 	Route::get('personal_capaian_tahunan_list','API\CapaianTahunanAPIController@PersonalCapaianTahunanList');
 	

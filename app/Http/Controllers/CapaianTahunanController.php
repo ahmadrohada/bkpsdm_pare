@@ -259,6 +259,8 @@ class CapaianTahunanController extends Controller {
                                                                             
                                                                             'periode'   => Pustaka::periode_tahun($periode->label),
                                                                             'skpd'      => $skpd->skpd,
+                                                                            'skpd_id'   => $request->skpd_id,
+                                                                            'periode_id'=> $request->periode_id,
                                                                             'h_box'     => 'box-teal',
                                                                             
                                                                             ]);  

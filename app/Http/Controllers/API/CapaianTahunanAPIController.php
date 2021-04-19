@@ -83,7 +83,105 @@ class CapaianTahunanAPIController extends Controller {
         
     }
 
-   
+    
+    public function CapaianTahunanELapkin(Request $request)
+    {
+        $periode_id = $request->periode_id;
+        $skpd_id    = $request->skpd_id;
+
+       
+
+        $dt = CapaianTahunan::WITH(['SKPTahunan'])
+                                ->WhereHas('SKPTahunan', function($r) use($skpd_id,$periode_id){
+                                    $r->WITH(['Renja'])
+                                    ->WhereHas('Renja', function($s) use($skpd_id,$periode_id){
+                                        $s->where('periode_id','=',$periode_id);
+                                        $s->where('skpd_id',$skpd_id);
+                                        
+                                    });
+                                })
+                                ->get();
+
+        foreach( $dt AS $x ){
+
+            //Data atasan_pejabat_penilai
+            if ($x->AtasanPejabatPenilai){
+                $nip_atasan_pejabat_penilai = $x->AtasanPejabatPenilai->nip;
+                $jabatan_atasan_penilai     = Pustaka::capital_string($x->AtasanPejabatPenilai->jabatan);
+                $golongan_atasan_penilai    = $x->AtasanPejabatPenilai->Golongan->label;
+            }else{
+                $nip_atasan_pejabat_penilai = "";
+                $jabatan_atasan_penilai     = "";
+                $golongan_atasan_penilai    = "";
+            }
+
+            //Data pejabat_penilai
+            if ($x->PejabatPenilai){
+                $nip_pejabat_penilai        = $x->PejabatPenilai->nip;
+                $jabatan_penilai            = Pustaka::capital_string($x->PejabatPenilai->jabatan);
+                $golongan_penilai           = $x->PejabatPenilai->Golongan->label;
+            }else{
+                $nip_pejabat_penilai = "";
+                $jabatan_penilai     = "";
+                $golongan_penilai    = "";
+            }
+
+            //Data Pegawai
+            $nip_pegawai = $x->PegawaiYangDinilai->nip;
+
+            //PNS ID
+            $dt = \DB::table('demo_asn.m_pns_id AS pns_id')->where('nip',$nip_pegawai)->first();
+            $pns_id = $dt?$dt->pns_id:"";
+
+
+            //NILAI SKP
+            $data_kinerja       = $this->hitung_capaian_tahunan($x->id); 
+            $nilai_skp          = $data_kinerja['nilai_capaian_skp'];
+            $perilaku_kerja     = $this->NilaiPerilakuKerja($x->id);
+              
+
+
+            $data[] = array(
+                    'id'                            => $x->id, 
+                    //Atasan Pejabat Penilai
+                    'nip_atasan_pejabat_penilai'    => $nip_atasan_pejabat_penilai, 
+                    'atasan_penilai_jabatan'        => $jabatan_atasan_penilai,
+                    'atasan_penilai_golongan'       => $golongan_atasan_penilai,
+
+                    //Pejabat Penilai
+                    'nip_pejabat_penilai'           => $nip_pejabat_penilai, 
+                    'penilai_jabatan'               => $jabatan_penilai,
+                    'penilai_golongan'              => $golongan_penilai,
+
+                    //Pegawai
+                    'pns_id'                        => $pns_id,
+                    'nip_baru'                      => $nip_pegawai,
+                    'nama'                          => $x->u_nama,
+                    'dinas'                         => Pustaka::capital_string($x->PegawaiYangDinilai->SKPD->skpd),
+                    'tahun'                         => Pustaka::periode_tahun($x->SKPTahunan->Renja->Periode->label),
+                    'nilai_skp'                     => $nilai_skp,
+                    'orientasi_pelayanan'           => $perilaku_kerja['pelayanan'],
+                    'integritas'                    => $perilaku_kerja['integritas'],
+                    'komitmen'                      => $perilaku_kerja['komitmen'],
+                    'disiplin'                      => $perilaku_kerja['disiplin'],
+                    'kerjasama'                     => $perilaku_kerja['kerjasama'],
+                    'kepemimpinan'                  => $perilaku_kerja['kepemimpinan'],
+
+                    'periode'                       => "",
+            );
+        }
+            
+
+        $datatables = Datatables::of(collect($data));
+    
+            if ($keyword = $request->get('search')['value']) {
+                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            } 
+            
+    
+        return $datatables->make(true);
+        
+    }
 
     public function PersonalCapaianTahunanList(Request $request)
     {
