@@ -67,7 +67,7 @@
 				order 			: [ 0 , 'desc' ],
 				lengthMenu		: [20,45,80],
 				columnDefs		: [
-									{ 	className: "text-center", targets: [ 0,1,4 ] }/* ,
+									{ 	className: "text-center", targets: [ 0,1,2,3,4,7,8,9,10,11,12,13,14,17,18 ] }/* ,
 									//{ 	className: "hidden-xs", targets: [ 5 ] } */
 								],
 				ajax			: {
