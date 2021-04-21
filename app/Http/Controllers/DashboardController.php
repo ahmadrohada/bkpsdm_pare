@@ -102,9 +102,6 @@ class DashboardController extends Controller
                 $join->on('a.id_pegawai', '=', 'tb_pegawai.id');
                 $join->where('a.status', '=', 'active');
             })
-
-            
-
             //skpd
             ->leftjoin('demo_asn.m_skpd AS c', 'a.id_skpd', '=', 'c.id')
 
@@ -124,8 +121,6 @@ class DashboardController extends Controller
             ->leftjoin('demo_asn.foto AS y ', function ($join) {
                 $join->on('tb_pegawai.nip', '=', 'y.nipbaru');
             })
-
-
             ->SELECT(
                 'tb_pegawai.*',
                 'a.*',
@@ -134,11 +129,6 @@ class DashboardController extends Controller
                 'd.eselon AS eselon',
                 'e.jenis_jabatan AS jenis_jabatan',
                 'y.isi AS foto'
-
-
-
-
-
             )
             ->first();
 
@@ -220,6 +210,10 @@ class DashboardController extends Controller
                 'info'                  => $info,
                 'author'                => $author,
                 'waktu'                 => $waktu,
+
+
+
+                
             ])->withUser($user)->withAccess($access);
         } else {
             \Auth::logout();

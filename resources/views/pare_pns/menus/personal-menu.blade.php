@@ -12,7 +12,9 @@
 			<li>
 				{!! HTML::icon_link( "personal/tpp", 'fa '.Lang::get('sidebar-nav.link_icon_tpp'), Lang::get('sidebar-nav.link_title_tpp'), array('title' => Lang::get('sidebar-nav.link_title_tpp'),'data-toggle' => 'tooltip')) !!}
 			</li>
-			@if ( \Auth::user()->Pegawai->JabatanAktif->Eselon->id_jenis_jabatan  <= 3 )
+
+			<!-- Ada lurah yang jadi JFT, jadi JFT pun boleh punya bawahan -->
+			@if ( ( \Auth::user()->Pegawai->JabatanAktif->Eselon->id_jenis_jabatan  <= 3 ) | ( \Auth::user()->Pegawai->JabatanAktif->Eselon->id_jenis_jabatan  == 3 ) )
 				<li>
 					{!! HTML::icon_link( "personal/approval", 'fa '.Lang::get('sidebar-nav.link_icon_approval-request'), "<span>".Lang::get('sidebar-nav.link_title_approval-request')."</span>", array('title' => Lang::get('sidebar-nav.link_title_approval-request'), 'data-toggle' => 'tooltip')) !!}
 				</li>

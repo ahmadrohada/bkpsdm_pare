@@ -80,6 +80,7 @@ class HomePersonalController extends Controller {
                'jm_skp_bulanan'         => $this->jm_skp_bulanan($pegawai->id),
                'h_box'                  => 'box-info',
                
+               
            ]
         );   
     }

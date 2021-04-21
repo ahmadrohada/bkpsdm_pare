@@ -86,7 +86,7 @@ class CapaianBulananController extends Controller {
         $pegawai   = $user->pegawai;       
         //return $pegawai->JabatanAktif->Eselon->id_jenis_jabatan;
 
-        if ( $pegawai->JabatanAktif->Eselon->id_jenis_jabatan <= 3 ) {
+        if ( $pegawai->JabatanAktif->Eselon->id_jenis_jabatan <= 5 ) {
             return view('pare_pns.pages.bawahan-capaian_bulanan', [
                     'pegawai' 		             => $pegawai,
                     'nama_skpd'     	         => 'x',
