@@ -14,7 +14,7 @@
 			</li>
 
 			<!-- Ada lurah yang jadi JFT, jadi JFT pun boleh punya bawahan -->
-			@if ( ( \Auth::user()->Pegawai->JabatanAktif->Eselon->id_jenis_jabatan  <= 3 ) | ( \Auth::user()->Pegawai->JabatanAktif->Eselon->id_jenis_jabatan  == 3 ) )
+			@if ( \Auth::user()->Pegawai->JabatanAktif->Eselon->id_jenis_jabatan  <= 5 )
 				<li>
 					{!! HTML::icon_link( "personal/approval", 'fa '.Lang::get('sidebar-nav.link_icon_approval-request'), "<span>".Lang::get('sidebar-nav.link_title_approval-request')."</span>", array('title' => Lang::get('sidebar-nav.link_title_approval-request'), 'data-toggle' => 'tooltip')) !!}
 				</li>
