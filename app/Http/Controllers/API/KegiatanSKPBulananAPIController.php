@@ -134,10 +134,10 @@ class KegiatanSKPBulananAPIController extends Controller {
                     ->WhereHas('IndikatorKegiatanSKPTahunan', function($q) use($renja_id){
                         $q->with(['KegiatanSKPTahunan'])
                         ->WhereHas('KegiatanSKPTahunan', function($r) use($renja_id){
-                            /* $r->with(['SKPTahunan'])
+                            $r->with(['SKPTahunan'])
                             ->WhereHas('SKPTahunan', function($s) use($renja_id){
                                 $s->WHERE('renja_id',$renja_id);
-                            });  */
+                            }); 
                         });
                     }) 
                     ->WHERE('jabatan_id','=', $jabatan_id )

@@ -678,7 +678,7 @@ class Pustaka {
 				break;
 		case 06 : $nm_bulan=6;
 				break;
-		case 07 : $nm_bulan=6;
+		case 07 : $nm_bulan=7;
 				break;
 		case 08 : $nm_bulan=8;
 				break;
