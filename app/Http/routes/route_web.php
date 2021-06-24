@@ -463,6 +463,11 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'HomeSKPDController@showCapaianBulanan'
 	]);
 
+	Route::get('capaian_tahunan', [
+		'as' 			=> 'skpd-capaian_tahunan',
+		'uses' 			=> 'HomeSKPDController@showCapaianTahunan'
+	]);
+
 	Route::get('tpp_report', [
 		'as' 			=> 'skpd-tpp_report',
 		'uses' 			=> 'HomeSKPDController@showSKPDTPPReport'
@@ -508,6 +513,18 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'API\TPPReportAPIController@cetakTPPReportData'
 	]); 
 
+
+	//================= capaian tahunan ======================================================//
+	Route::get('capaian-tahunan/{capaian_tahunan_id}', [
+		'as' 			=> '',
+		'uses' 			=> 'CapaianTahunanController@CapaianTahunanSKPDDetail'
+	]);
+
+	Route::get('capaian-tahunan/{capaian_tahunan_id}/cetak',[
+		'as' 			=> '',
+		'uses' 			=> 'CapaianTahunanController@PersonalCapaianTahunancetak'
+	]);
+	
 	//========================================================================================//
 	//=============================       PERJANJIAN KINERJA       ===========================//
 	//========================================================================================//

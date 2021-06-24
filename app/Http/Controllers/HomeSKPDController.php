@@ -431,6 +431,34 @@ class HomeSKPDController extends Controller {
     }
 
 
+    public function showCapaianTahunan(Request $request)
+    {
+        $user                   = \Auth::user();
+        
+        //CARI id skpd nya
+        $skpd_id    = $user->pegawai->history_jabatan->where('status','active')->first()->id_skpd;
+       
+
+        return view('pare_pns.pages.skpd-home-capaian_tahunan', [
+                'skpd_id'                => $skpd_id,
+                'nama_skpd'     	     => $this->nama_skpd($skpd_id),
+                'total_pegawai' 	     => $this->total_pegawai_skpd($skpd_id),
+                'total_unit_kerja' 	     => $this->total_unit_kerja($skpd_id),
+                'total_pohon_kinerja' 	 => $this->total_pohon_kinerja($skpd_id),
+                'total_skp_tahunan' 	 => $this->total_skp_tahunan($skpd_id),
+                'total_tpp_report' 	     => $this->total_tpp_report($skpd_id),
+                'total_puskesmas'        => $this->total_puskesmas(),
+                'total_capaian_bulanan'  => $this->total_capaian_bulanan($skpd_id),
+
+
+                'h_box'                  => 'box-aqua',
+               
+           ]
+        );   
+
+        
+    }
+
     public function showSKPDTPPReport(Request $request)
     {
         $user      = \Auth::user();

@@ -56,7 +56,7 @@
 			@endif
 
 			
-			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+			{{-- <div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-green struktur_organisasi" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -70,7 +70,7 @@
 						<i class="fa fa-sitemap"></i>
 					</div>
 				</div>
-			</div>
+			</div> --}}
 			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-light-blue rencana_kerja" style="cursor:pointer;">
 					<div class="inner">
@@ -170,6 +170,22 @@
 			</div>
 
 			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
+				<div class="small-box bg-green capaian_tahunan" style="cursor:pointer;">
+					<div class="inner">
+						<h3>
+							*
+						</h3>
+						<p>
+							CAPAIAN TAHUNAN
+						</p>
+					</div>
+					<div class="icon">
+						<i class="ion ion-stats-bars"></i>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-sm-6 col-lg-3 col-xs-12">
 				<div class="small-box bg-yellow capaian_perjanjian_kinerja" style="cursor:pointer;">
 					<div class="inner">
 						<h3>
@@ -226,6 +242,10 @@ $(document).ready(function(){
 
 	$(".capaian_bulanan").click(function(){
 		window.location.assign("capaian_bulanan");
+    });
+
+	$(".capaian_tahunan").click(function(){
+		window.location.assign("capaian_tahunan");
     });
 
 	$(".tpp_report").click(function(){

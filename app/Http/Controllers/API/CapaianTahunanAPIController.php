@@ -283,6 +283,79 @@ class CapaianTahunanAPIController extends Controller {
     }
    
 
+    public function SKPDCapaianTahunanList(Request $request) 
+    {
+
+        $skpd_id = $request->skpd_id;
+        
+      
+        
+        $skp = CapaianTahunan::WITH(['SKPTahunan'])
+                            ->WhereHas('SKPTahunan', function($q) use($skpd_id){
+                                $q->with(['Renja'])
+                                ->WhereHas('Renja', function($r) use($skpd_id){
+                                    $r->WHERE('skpd_id', $skpd_id );
+                                }); 
+                            })
+                            ->join('demo_asn.tb_pegawai AS pegawai', function($join) {
+                                $join   ->ON('pegawai.id','=','capaian_tahunan.pegawai_id');
+                            })
+                            ->join('demo_asn.tb_history_jabatan AS jabatan', function($join){
+                                $join   ->ON('jabatan.id','=','capaian_tahunan.u_jabatan_id');
+                            })
+                            //eselon
+                            ->leftjoin('demo_asn.m_eselon AS eselon', function($join){
+                                        $join   ->on('eselon.id','=','jabatan.id_eselon');
+                            })  
+                            ->select(
+                                'capaian_tahunan.id AS capaian_id',
+                                'capaian_tahunan.created_at',
+                                'capaian_tahunan.tgl_mulai AS tgl_mulai',
+                                'capaian_tahunan.tgl_selesai AS tgl_selesai',
+                                'capaian_tahunan.u_nama AS nama_pegawai',
+                                'capaian_tahunan.u_jabatan_id AS u_jabatan_id',
+                                'capaian_tahunan.status_approve AS capaian_status_approve',
+                                'capaian_tahunan.send_to_atasan AS capaian_send_to_atasan',
+                                'pegawai.nip AS nip',
+                                'jabatan.jabatan AS jabatan',
+                                'eselon.eselon AS eselon'
+
+            
+                            )
+                            //->orderBy('capaian_tahunan.id','DESC')
+                            ->get();
+     
+       
+            $datatables = Datatables::of($skp)
+            ->addColumn('periode', function ($x) {
+                return "Periode ".Pustaka::Tahun($x->tgl_mulai) ;
+            }) 
+            ->addColumn('nip_pegawai', function ($x) {
+                return  $x->nip;
+            })
+            ->addColumn('nama_pegawai', function ($x) {
+                return  $x->nama_pegawai;
+            })
+            ->addColumn('eselon', function ($x) {
+                return  $x->eselon;
+            })
+            ->addColumn('jabatan', function ($x) {
+                if ( $this->jabatan($x->u_jabatan_id) == null ){
+                    return "ID Jabatan : ".$x->u_jabatan_id;
+                }else{
+                    return  $this->jabatan($x->u_jabatan_id);
+                }
+            });
+            
+    
+            if ($keyword = $request->get('search')['value']) {
+                $datatables->filterColumn('rownum', 'whereRawx', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            } 
+            
+    
+        return $datatables->make(true); 
+        
+    }
 
 
     

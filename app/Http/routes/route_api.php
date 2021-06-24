@@ -625,6 +625,7 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 	Route::get('personal_capaian_bulanan_list','API\CapaianBulananAPIController@PersonalCapaianBulananList');
 	Route::get('skpd_capaian_bulanan_list','API\CapaianBulananAPIController@SKPDCapaianBulananList');
 	
+	
 	Route::get('capaian_bulanan_status_pengisian','API\CapaianBulananAPIController@CapaianBulananStatusPengisian');
 	Route::get('approval_request_capaian_bulanan_list','API\CapaianBulananAPIController@ApprovalRequestList');
 	Route::get('capaian_bulanan_detail','API\CapaianBulananAPIController@CapaianBulananDetail');
@@ -738,7 +739,7 @@ Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
 
 	Route::get('administrator_skpd_capaian_tahunan','API\CapaianTahunanAPIController@CapaianTahunanSKPD');
 	Route::post('capaian_tahunan_elapkin','API\CapaianTahunanAPIController@CapaianTahunanELapkin');
-	
+	Route::get('skpd_capaian_tahunan_list','API\CapaianTahunanAPIController@SKPDCapaianTahunanList');
 
 	Route::get('personal_capaian_tahunan_list','API\CapaianTahunanAPIController@PersonalCapaianTahunanList');
 	

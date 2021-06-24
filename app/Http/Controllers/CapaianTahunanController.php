@@ -137,6 +137,14 @@ class CapaianTahunanController extends Controller {
         }
     }
 
+    public function CapaianTahunanSKPDDetail(Request $request)
+	{
+        $user               = \Auth::user();
+        $capaian_tahunan    = CapaianTahunan::WHERE('id', $request->capaian_tahunan_id)->first();
+        return view('pare_pns.pages.skpd-capaian_tahunan_detail', ['capaian'=> $capaian_tahunan]);  
+        
+    }
+
 
 
 
