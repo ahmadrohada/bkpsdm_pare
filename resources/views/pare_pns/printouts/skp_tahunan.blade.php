@@ -139,15 +139,15 @@
 		@foreach ($arrayForTable as $id=>$values) :
 		@foreach ($values as $key=>$value) :
 		<tr>
-			<td align='center' class='garis' rowspan={{ count($values) }} >{{ $no}} </td>
+			<td align='center' class='garis' >{{ $no}} </td>
 			@php $no++; @endphp
 			
 			<td class='garis' >{{  $value['kegiatan_skp_tahunan_label'].' ( '. $value['indikator_kegiatan_skp_tahunan_label'].' )'}}</td>
-			<td align='center' class='garis' rowspan={{ count($values) }} >{{  $value['target_ak'] }}</td>
+			<td align='center' class='garis' >{{  $value['target_ak'] }}</td>
 			<td align='center' class='garis' >{{  $value['target_quantity'] }}</td>
 			<td align='center' class='garis' >{{  $value['target_quality'].' %' }}</td>
-			<td align='center' class='garis' rowspan={{ count($values) }} >{{  $value['target_waktu'] }}</td>
-			<td align='right' class='garis' rowspan={{ count($values) }} >{{  $value['target_biaya'] }}</td>
+			<td align='center' class='garis' >{{  $value['target_waktu'] }}</td>
+			<td align='right' class='garis'  >{{  $value['target_biaya'] }}</td>
 		</tr>
 		@endforeach
 		@endforeach
