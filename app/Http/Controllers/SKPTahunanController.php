@@ -142,7 +142,7 @@ class SKPTahunanController extends Controller {
 				<td width="33%" style="text-align: right;"></td>
 			</tr>
         </table>');
-        return $pdf->stream('SKPTahunan_'.$pejabat['u_nip'].'.pdf'); 
+        return $pdf->download('SKPTahunan_'.$pejabat['u_nip'].'.pdf'); 
 
 
         
