@@ -29,8 +29,9 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
-use App\Traits\PJabatan;
+use App\Traits\TraitSKPTahunan;
 
+use PDF;
 use Datatables;
 use Validator;
 use Gravatar;
@@ -40,7 +41,7 @@ Use Alert;
 class SKPTahunanController extends Controller {
 
 
-    use PJabatan;
+    use TraitSKPTahunan;
 
     public function AdministratorSKPTahunanDetail(Request $request)
 	{
@@ -101,6 +102,50 @@ class SKPTahunanController extends Controller {
             //return view('pare_pns.errors.users403');
             return redirect('/dashboard');
         }
+
+    }
+
+    
+    public function PersonalSKPTahunancetak(Request $request)
+    {
+       
+        $skp_tahunan_id = $request->skp_tahunan_id;
+
+        $tgl_dibuat = SKPTahunan::Select('created_at AS tgl')->WHERE('id',$skp_tahunan_id)->first();
+			
+        $user       = \Auth::user();
+        $pegawai    = $user->pegawai;   
+        $tgl        = date('Y'."-".'m'."-".'d');
+        $waktu      = date('H'.":".'i'.":".'s');
+
+
+        $pdf = PDF::loadView('pare_pns.printouts.skp_tahunan', [  
+                                                                'user'                                      => $pegawai->nama,
+                                                                'tgl_cetak'                                 => Pustaka::balik($tgl).' / '.$waktu,
+                                                                'tgl_dibuat'                                => Pustaka::balik($tgl_dibuat->tgl),
+                                                                'kegiatan_list'                             => $this->Kegiatan($skp_tahunan_id),
+                                                                'pejabat'                                   => $this->Pejabat($skp_tahunan_id),
+
+                                                    ], [], [
+                                                    'format' => 'A4-L'
+                                                    ]);
+       
+        $pdf->getMpdf()->shrink_tables_to_fit = 1;
+        $pdf->getMpdf()->setWatermarkImage('assets/images/form/watermark.png');
+        $pdf->getMpdf()->showWatermarkImage = true;
+        
+        $pdf->getMpdf()->SetHTMLFooter('
+		<table width="100%">
+			<tr>
+				<td width="33%"></td>
+				<td width="33%" align="center">{PAGENO}/{nbpg}</td>
+				<td width="33%" style="text-align: right;"></td>
+			</tr>
+        </table>');
+        return $pdf->stream('SKPTahunan_'.$pejabat['u_nip'].'.pdf'); 
+
+
+        
 
     }
 

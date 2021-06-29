@@ -641,6 +641,11 @@ Route::group(['prefix' => 'skpd','middleware' => 'skpd'], function () {
 		'uses' 			=> 'SKPTahunanController@SKPDSKPTahunanDetail'
 	]);
 
+	Route::get('skp-tahunan/{skp_tahunan_id}/cetak',[
+		'as' 			=> '',
+		'uses' 			=> 'SKPTahunanController@PersonalSKPTahunancetak'
+	]);
+
 
 	//----------------------------------------------------------------------------------------//
 	//============================== PERJANJIAN KINERJA  =====================================//

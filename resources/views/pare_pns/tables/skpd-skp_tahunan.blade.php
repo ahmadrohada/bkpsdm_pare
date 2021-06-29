@@ -75,9 +75,10 @@
 								{ data: "jabatan" ,  name:"jabatan.skpd", orderable: true, searchable: true},
 								{ data: "eselon" ,  name:"eselon.eselon", orderable: true, searchable: true,width:"40px"},
 								{ data: "nama_atasan" ,  name:"skp_tahunan.p_nama", orderable: true, searchable: true},
-								{ data: "status" , orderable: false,searchable:false,width:"35px",
+								{ data: "status" , orderable: false,searchable:false,width:"65px",
 										"render": function ( data, type, row ) {
-											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-eye" ></i></a></span>';
+											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-eye" ></i></a></span>'+
+													'<span  data-toggle="tooltip" title="cetak" style="margin:2px;" ><a class="btn btn-primary btn-xs cetak_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-print" ></i></a></span>';
 									}
 								},
 								
@@ -96,10 +97,11 @@
 	$(document).on('click','.create_skp_tahunan',function(e){
 		//var skpd_id = {{ $skpd_id }};
 		$('.modal-skpd_create_skp_tahunan').modal('show');
-
-
-
 	});
 
+	$(document).on('click','.cetak_skp_tahunan',function(e){
+		var skp_tahunan_id = $(this).data('id') ;
+		window.location.assign("skp-tahunan/"+skp_tahunan_id+"/cetak");
+	});
 
 </script>
