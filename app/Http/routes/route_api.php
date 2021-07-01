@@ -25,7 +25,7 @@ Route::group(['prefix' => 'api'], function () {
 });
 
 
-Route::group(['prefix' => 'api'/* ,'middleware'=> 'auth' */ ], function () {
+Route::group(['prefix' => 'api' ,'middleware'=> 'auth' ], function () {
 
 	//========================= PERIODE ======================================================================//
 	Route::resource('periode_tahunan','API\PeriodeAPIController');
