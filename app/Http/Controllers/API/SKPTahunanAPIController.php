@@ -263,7 +263,7 @@ class SKPTahunanAPIController extends Controller {
     {
 
 
-        /* $pegawai  = Pegawai::SELECT('nip','id')->WHERE('id', $request->pegawai_id )->first();
+        $pegawai  = Pegawai::SELECT('nip','id')->WHERE('id', $request->pegawai_id )->first();
 
         $mp = MasaPemerintahan::WHERE('status','1')->first();
         //status true artinya sudah bikin, false  artinya blm bikin pada jabatan ini
@@ -283,7 +283,7 @@ class SKPTahunanAPIController extends Controller {
                 'periode_aktif'          => $mp->PeriodeAktif->label,
         );
        
-        return $response; */
+        return $response;
 
 
     }

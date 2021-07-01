@@ -18,6 +18,13 @@
 			{!! Form::button('<i class="fa fa-sign-in" aria-hidden="true"></i> '.Lang::get('auth.login-button'), array('class' => 'btn btn-primary btn-block btn-flat','type' => 'submit')) !!}
 		</div>
 	</div>
+	<hr>
+	{{-- or Login with
+	<div class="row" style="margin-top:10px;">
+		<div class="col-xs-12">
+			
+		</div>
+	</div> --}}
 
 
 

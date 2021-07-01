@@ -51,7 +51,7 @@
 @endsection
 @section('content')
 
-	<div class="col-lg-4">
+	<div class="col-lg-12 text-center">
 		<div class="login-box box-login-style">
 			<div class="login-logo">
 				<img src="{{asset('assets/images/form/logo.png')}}" >
@@ -66,18 +66,18 @@
 					  {{-- Lang::get('auth.login') --}}
 				</h4>
 				@include('pare_pns.forms.login-form')
-				<hr>
+				
 			  </div>
 		</div>
 	</div>
-	<div class="col-lg-8 visible-lg">
+	{{-- <div class="col-lg-8 visible-lg">
 		
 			<div style="height:495px; padding:10px 10px;" class="nav-tabs-custom table-responsive">
 				
 				@include('pare_pns.tables.unauth_capaian_pk_sasaran_triwulan')
 			
 			</div>
-	</div>
+	</div> --}}
 @endsection
 
 @section('template_scripts')
