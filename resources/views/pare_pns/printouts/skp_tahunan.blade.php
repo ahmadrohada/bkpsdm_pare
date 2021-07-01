@@ -99,7 +99,7 @@
 		foreach ($kegiatan_list as $dbValue) {
 			$temp = [];
 			$temp['kegiatan_skp_tahunan_label'] = $dbValue['kegiatan_skp_tahunan_label'];
-			$temp['indikator_kegiatan_skp_tahunan_label'] = ($dbValue['indikator_kegiatan_skp_tahunan_label'] != null )?$dbValue['indikator_kegiatan_skp_tahunan_label']: '';
+			$temp['indikator_kegiatan_skp_tahunan_label'] = ( $dbValue['indikator_kegiatan_skp_tahunan_label'] != "" )? '('.$dbValue['indikator_kegiatan_skp_tahunan_label'].')': '';
 			//TARGET
 			$temp['target_ak'] 					= $dbValue['target_ak'];
 			$temp['target_quantity'] 			= $dbValue['target_quantity'];
@@ -142,7 +142,7 @@
 			<td align='center' class='garis' >{{ $no}} </td>
 			@php $no++; @endphp
 			
-			<td class='garis' >{{  $value['kegiatan_skp_tahunan_label'].' ( '. $value['indikator_kegiatan_skp_tahunan_label'].' )'}}</td>
+			<td class='garis' >{{  $value['kegiatan_skp_tahunan_label'].'  '. $value['indikator_kegiatan_skp_tahunan_label'] }}</td>
 			<td align='center' class='garis' >{{  $value['target_ak'] }}</td>
 			<td align='center' class='garis' >{{  $value['target_quantity'] }}</td>
 			<td align='center' class='garis' >{{  $value['target_quality'].' %' }}</td>

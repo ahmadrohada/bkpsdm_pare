@@ -819,6 +819,7 @@ trait TraitSKPTahunan
                 'skp_tahunan_id'            => $skp_tahunan_id,
                 'kegiatan_skp_tahunan_id'	=> $x->id,
                 'kegiatan_skp_tahunan_label'=> $x->label,
+                'indikator_kegiatan_skp_tahunan_label' => "",
 
                 'kegiatan_skp_bulanan_count'=> $x->KegiatanSKPBulanan->count(),
                                                                                                              
