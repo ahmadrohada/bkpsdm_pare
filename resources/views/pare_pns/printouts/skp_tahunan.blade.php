@@ -99,7 +99,7 @@
 		foreach ($kegiatan_list as $dbValue) {
 			$temp = [];
 			$temp['kegiatan_skp_tahunan_label'] = $dbValue['kegiatan_skp_tahunan_label'];
-			$temp['indikator_kegiatan_skp_tahunan_label'] = ($dbValue['indikator_kegiatan_skp_tahunan_label'])?$dbValue['indikator_kegiatan_skp_tahunan_label']: '';
+			$temp['indikator_kegiatan_skp_tahunan_label'] = ($dbValue['indikator_kegiatan_skp_tahunan_label'] != null )?$dbValue['indikator_kegiatan_skp_tahunan_label']: '';
 			//TARGET
 			$temp['target_ak'] 					= $dbValue['target_ak'];
 			$temp['target_quantity'] 			= $dbValue['target_quantity'];
