@@ -12,7 +12,6 @@
 	</p>
 </div>
 
-{{ \Auth::user()->pegawai }}
 
 @if (  \Auth::user()->pegawai->JabatanAktif == null )				
 	<div class="callout callout-danger skp_tahunan_status" style="height:60px;">
