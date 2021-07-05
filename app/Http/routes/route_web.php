@@ -974,6 +974,10 @@ Route::group(['prefix' => 'personal','middleware' => 'personal'], function () {
 		'uses' 			=> 'SKPTahunanController@PersonalSKPTahunanRalat'
 	]);
 
+	Route::get('skp-tahunan/{skp_tahunan_id}/cetak',[
+		'as' 			=> '',
+		'uses' 			=> 'SKPTahunanController@PersonalSKPTahunancetak'
+	]);
 	
 
 	//=========================================================================================//

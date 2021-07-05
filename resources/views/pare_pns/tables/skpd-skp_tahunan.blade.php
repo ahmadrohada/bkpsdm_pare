@@ -80,7 +80,7 @@
 											return  '<span  data-toggle="tooltip" title="Lihat" style="margin:1px;" ><a class="btn btn-info btn-xs lihat_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-eye" ></i></a></span>'+
 													'<span  data-toggle="tooltip" title="cetak" style="margin:2px;" ><a class="btn btn-primary btn-xs cetak_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-print" ></i></a></span>';
 									}
-								},
+								}, 
 								
 							]
 			
