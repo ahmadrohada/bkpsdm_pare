@@ -39,56 +39,56 @@
 	<tr>
 		<td align="center"  style="border-left:1.3pt solid black;">1</td>
 		<td  width="14%" style="border-left:1.3pt solid black;">Nama</td>
-		<td width="30%">{{ $pejabat['u_nama'] }}</td>
+		<td width="30%">{{ $pejabat['p_nama'] }}</td>
 		
 		<td align="center"  style="border-left:1.3pt solid black;">1</td>
 		<td  width="14%" style="border-left:1.3pt solid black;">Nama</td>
-		<td width="30%" style="border-right:1.3pt solid black;">{{ $pejabat['p_nama'] }}</td>
+		<td width="30%" style="border-right:1.3pt solid black;">{{ $pejabat['u_nama'] }}</td>
 	</tr>
 	<tr>
 		<td align="center"  style="border-left:1.3pt solid black;">2</td>
 		<td style="border-left:1.3pt solid black;">NIP</td>
-		<td >{{ $pejabat['u_nip'] }}</td>
+		<td >{{ $pejabat['p_nip'] }}</td>
 		
 		<td align="center"  style="border-left:1.3pt solid black;">2</td>
 		<td style="border-left:1.3pt solid black;">NIP</td>
-		<td style="border-right:1.3pt solid black;">{{ $pejabat['p_nip'] }}</td>
+		<td style="border-right:1.3pt solid black;">{{ $pejabat['u_nip'] }}</td>
 	</tr>
 	<tr>
 		<td align="center"  style="border-left:1.3pt solid black;">3</td>
 		<td style="border-left:1.3pt solid black;">Pangkat/ Gol.Ruang</td>
-		<td >{{ $pejabat['u_pangkat'] }}</td>
+		<td >{{ $pejabat['p_pangkat'] }}</td>
 		
 		<td align="center"  style="border-left:1.3pt solid black;">3</td>
 		<td style="border-left:1.3pt solid black;">Pangkat/ Gol.Ruang</td>
-		<td style="border-right:1.3pt solid black;">{{ $pejabat['p_pangkat'] }}</td>
+		<td style="border-right:1.3pt solid black;">{{ $pejabat['u_pangkat'] }}</td>
 	</tr>
 	<tr>
 		<td align="center"  style="border-left:1.3pt solid black;">4</td>
 		<td style="border-left:1.3pt solid black;">Jabatan</td>
-		<td >{{ $pejabat['u_jabatan'] }}</td>
+		<td >{{ $pejabat['p_jabatan'] }}</td>
 		
 		<td align="center"  style="border-left:1.3pt solid black;">4</td>
 		<td style="border-left:1.3pt solid black;">Jabatan</td>
-		<td style="border-right:1.3pt solid black;">{{ $pejabat['p_jabatan'] }}</td>
+		<td style="border-right:1.3pt solid black;">{{ $pejabat['u_jabatan'] }}</td>
 	</tr>
 	<tr>
 		<td align="center"  style="border-left:1.3pt solid black;">4</td>
 		<td style="border-left:1.3pt solid black;">Unit Kerja</td>
-		<td >{{ $pejabat['u_unit_kerja'] }}</td>
+		<td >{{ $pejabat['p_unit_kerja'] }}</td>
 		
 		<td align="center"  style="border-left:1.3pt solid black;">4</td>
 		<td style="border-left:1.3pt solid black;">Unit Kerja</td>
-		<td style="border-right:1.3pt solid black;">{{ $pejabat['p_unit_kerja'] }}</td>
+		<td style="border-right:1.3pt solid black;">{{ $pejabat['u_unit_kerja'] }}</td>
 	</tr>
 	<tr>
 		<td align="center"  style="border-left:1.3pt solid black; border-bottom:1.3pt solid black;">5</td>
 		<td style="border-left:1.3pt solid black; border-bottom:1.3pt solid black;">SKPD</td>
-		<td style="border-bottom:1.3pt solid black;">{{ $pejabat['u_skpd'] }}</td>
+		<td style="border-bottom:1.3pt solid black;">{{ $pejabat['p_skpd'] }}</td>
 		
 		<td align="center"  style="border-left:1.3pt solid black; border-bottom:1.3pt solid black;">5</td>
 		<td style="border-left:1.3pt solid black; border-bottom:1.3pt solid black;">SKPD</td>
-		<td style="border-right:1.3pt solid black; border-bottom:1.3pt solid black;">{{ $pejabat['p_skpd'] }}</td>
+		<td style="border-right:1.3pt solid black; border-bottom:1.3pt solid black;">{{ $pejabat['u_skpd'] }}</td>
 	</tr>
 
 	
