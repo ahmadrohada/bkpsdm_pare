@@ -71,8 +71,8 @@
 										
 										if ( row.error_status == 0 ){
 											if ( row.status == 0 ){
-												return  '<span style="margin:2px;" ><a class="btn btn-default btn-xs" disabled><i class="fa fa-eye" ></i></a></span>'
-														+'<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'
+												return  '<span  data-toggle="tooltip" title="Edit" style="margin:2px;" ><a class="btn btn-success btn-xs edit_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-pencil" ></i></a></span>'
+														+'<span  data-toggle="tooltip" title="cetak" style="margin:2px;" ><a class="btn btn-primary btn-xs cetak_skp_tahunan"  data-id="'+row.skp_tahunan_id+'"><i class="fa fa-print" ></i></a></span>'
 														+'<span  data-toggle="tooltip" title="Hapus" style="margin:2px;" ><a class="btn btn-danger btn-xs hapus_skp_tahunan"  data-id="'+row.skp_tahunan_id+'" data-periode="'+row.periode+'" ><i class="fa fa-close " ></i></a></span>';
 											
 											}else{
