@@ -255,7 +255,7 @@ class CapaianBulananAPIController extends Controller {
             
                             )
                             ->orderBy('skp_bulanan.tgl_selesai','DESC')
-                            ->limit(100)
+                            ->limit(1000)
                             ->get();
      
        
