@@ -1718,7 +1718,7 @@ class RencanaAksiAPIController extends Controller {
 
             'waktu_pelaksanaan'             => $x->waktu_pelaksanaan,
             'jabatan_id'                    => $x->pelaksana_id,
-            'penanggung_jawab'              => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->SubKegiatan->PenanggungJawab,//->jabatan,
+            'penanggung_jawab'              => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->SubKegiatan,//->PenanggungJawab->jabatan,
             'nama_jabatan'                  => $pelaksana,
             'pelaksana'                     => $pelaksana,
             'kegiatan_tahunan_label'        => $x->IndikatorKegiatanSKPTahunan->KegiatanSKPTahunan->label,
