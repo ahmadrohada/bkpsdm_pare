@@ -217,14 +217,14 @@ class CapaianBulananAPIController extends Controller {
     {
 
         $skpd_id = $request->skpd_id;
-        $skp = SKPBulanan::WITH(['SKPTahunan'])
+        $skp = SKPBulanan::/* WITH(['SKPTahunan'])
                             ->WhereHas('SKPTahunan', function($q) use($skpd_id){
                                 $q->with(['Renja'])
                                 ->WhereHas('Renja', function($r) use($skpd_id){
                                     $r->WHERE('skpd_id', $skpd_id );
                                 }); 
-                            })
-                            ->join('db_pare_2018.capaian_bulanan', function($join){
+                            }) */
+                            join('db_pare_2018.capaian_bulanan', function($join){
                                 $join   ->on('capaian_bulanan.skp_bulanan_id','=','skp_bulanan.id');
                             })
                             ->join('demo_asn.tb_pegawai AS pegawai', function($join) {
