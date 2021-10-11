@@ -32,7 +32,7 @@
 <script type="text/javascript">
 	$('#capaian_bulanan_skpd').DataTable({
 				destroy			: true,
-				processing      : false,
+				processing      : true,
 				serverSide      : true,
 				searching      	: true,
 				paging          : true,
@@ -59,7 +59,7 @@
 										return meta.row + meta.settings._iDisplayStart + 1 ;
 									}
 								},
-								{ data: "periode" ,searchable: true,width:"40px",
+								{ data: "periode" ,searchable: true,width:"40px"/* ,
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
 											return "<span class='text-danger'>"+row.periode+"</span>";
@@ -68,8 +68,8 @@
 										}
 
 									}	
-								},
-								{ data: "bulan" ,  name:"skp_bulanan.bulan",searchable: true,width:"95px",
+								 */},
+								{ data: "bulan" ,  name:"skp_bulanan.bulan",searchable: true,width:"95px"/* ,
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
 											return "<span class='text-danger'>"+row.bulan+"</span>";
@@ -78,8 +78,8 @@
 										}
 
 									}	
-								},
-								{ data: "nip_pegawai",name:"nip",searchable: true,
+								 */},
+								{ data: "nip_pegawai",name:"nip",searchable: true/* ,
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
 											return "<span class='text-danger'>"+row.nip_pegawai+"</span>";
@@ -88,8 +88,8 @@
 										}
 
 									}	
-								},
-								{ data: "nama_pegawai",searchable: true,width:"250px",
+								 */},
+								{ data: "nama_pegawai",searchable: true,width:"250px"/* ,
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
 											return "<span class='text-danger'>"+row.nama_pegawai+"</span>";
@@ -98,8 +98,8 @@
 										}
 
 									}	
-								},
-								{ data: "eselon", name:"eselon" , searchable: true,width:"150px",
+								 */},
+								{ data: "eselon", name:"eselon" , searchable: true,width:"150px"/* ,
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
 											return "<span class='text-danger'>"+row.eselon+"</span>";
@@ -108,8 +108,8 @@
 										}
 
 									}	
-								},
-								{ data: "jabatan" , name:"jabatan" ,searchable: true,
+								 */},
+								{ data: "jabatan" , name:"jabatan" ,searchable: true/* ,
 									"render": function ( data, type, row ) {
 										if (row.capaian_status_approve == 2){
 											return "<span class='text-danger'>"+row.jabatan+"</span>";
@@ -118,7 +118,7 @@
 										}
 
 									}	
-								},
+								 */},
 								{ data: "status" , orderable: false,searchable:false,width:"50px",
 										"render": function ( data, type, row ) {
 											if ( row.capaian_send_to_atasan == '0'){
