@@ -32,7 +32,7 @@
 <script type="text/javascript">
 	$('#capaian_bulanan_skpd').DataTable({
 				destroy			: true,
-				processing      : true,
+				processing      : false,
 				serverSide      : true,
 				searching      	: true,
 				paging          : true,
