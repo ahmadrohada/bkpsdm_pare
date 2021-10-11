@@ -464,6 +464,9 @@ class CapaianTahunanAPIController extends Controller {
          
         //================================= KABAN     / ESELON 2 ===========================================//
         }else if ( $jenis_jabatan == 1 ){
+            $jm_kegiatan = 1 ;
+
+
 
         }else{
 
